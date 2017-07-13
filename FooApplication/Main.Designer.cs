@@ -59,10 +59,10 @@
 			this.drone_status_yaw_title = new System.Windows.Forms.Label();
 			this.btn_connect = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btn_land = new System.Windows.Forms.Button();
+			this.btn_takeoff = new System.Windows.Forms.Button();
+			this.btn_disarm = new System.Windows.Forms.Button();
+			this.btn_arm = new System.Windows.Forms.Button();
 			this.opertaion_table_title = new System.Windows.Forms.Label();
 			this.gmapControl = new GMap.NET.WindowsForms.GMapControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -413,55 +413,58 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.button4);
-			this.panel1.Controls.Add(this.button3);
-			this.panel1.Controls.Add(this.button2);
-			this.panel1.Controls.Add(this.button1);
+			this.panel1.Controls.Add(this.btn_land);
+			this.panel1.Controls.Add(this.btn_takeoff);
+			this.panel1.Controls.Add(this.btn_disarm);
+			this.panel1.Controls.Add(this.btn_arm);
 			this.panel1.Controls.Add(this.opertaion_table_title);
 			this.panel1.Location = new System.Drawing.Point(477, 51);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(200, 173);
 			this.panel1.TabIndex = 1;
 			// 
-			// button4
+			// btn_land
 			// 
-			this.button4.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button4.Location = new System.Drawing.Point(26, 132);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(155, 25);
-			this.button4.TabIndex = 4;
-			this.button4.Text = "Land";
-			this.button4.UseVisualStyleBackColor = true;
+			this.btn_land.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btn_land.Location = new System.Drawing.Point(26, 132);
+			this.btn_land.Name = "btn_land";
+			this.btn_land.Size = new System.Drawing.Size(155, 25);
+			this.btn_land.TabIndex = 4;
+			this.btn_land.Text = "Land";
+			this.btn_land.UseVisualStyleBackColor = true;
+			this.btn_land.Click += new System.EventHandler(this.btn_land_Click);
 			// 
-			// button3
+			// btn_takeoff
 			// 
-			this.button3.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button3.Location = new System.Drawing.Point(26, 101);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(155, 25);
-			this.button3.TabIndex = 3;
-			this.button3.Text = "Takeoff";
-			this.button3.UseVisualStyleBackColor = true;
+			this.btn_takeoff.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btn_takeoff.Location = new System.Drawing.Point(26, 101);
+			this.btn_takeoff.Name = "btn_takeoff";
+			this.btn_takeoff.Size = new System.Drawing.Size(155, 25);
+			this.btn_takeoff.TabIndex = 3;
+			this.btn_takeoff.Text = "Takeoff";
+			this.btn_takeoff.UseVisualStyleBackColor = true;
+			this.btn_takeoff.Click += new System.EventHandler(this.btn_takeoff_Click);
 			// 
-			// button2
+			// btn_disarm
 			// 
-			this.button2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button2.Location = new System.Drawing.Point(26, 70);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(155, 25);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Disarm";
-			this.button2.UseVisualStyleBackColor = true;
+			this.btn_disarm.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btn_disarm.Location = new System.Drawing.Point(26, 70);
+			this.btn_disarm.Name = "btn_disarm";
+			this.btn_disarm.Size = new System.Drawing.Size(155, 25);
+			this.btn_disarm.TabIndex = 2;
+			this.btn_disarm.Text = "Disarm";
+			this.btn_disarm.UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// btn_arm
 			// 
-			this.button1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.button1.Location = new System.Drawing.Point(26, 39);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(155, 25);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "Arm";
-			this.button1.UseVisualStyleBackColor = true;
+			this.btn_arm.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btn_arm.Location = new System.Drawing.Point(26, 39);
+			this.btn_arm.Name = "btn_arm";
+			this.btn_arm.Size = new System.Drawing.Size(155, 25);
+			this.btn_arm.TabIndex = 1;
+			this.btn_arm.Text = "Arm";
+			this.btn_arm.UseVisualStyleBackColor = true;
+			this.btn_arm.Click += new System.EventHandler(this.btn_arm_Click);
 			// 
 			// opertaion_table_title
 			// 
@@ -611,10 +614,10 @@
 		private GMap.NET.WindowsForms.GMapControl gmapControl;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label opertaion_table_title;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btn_land;
+		private System.Windows.Forms.Button btn_takeoff;
+		private System.Windows.Forms.Button btn_disarm;
+		private System.Windows.Forms.Button btn_arm;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label drone_status_title;
 		private System.Windows.Forms.Label drone_status_vspeed_value;

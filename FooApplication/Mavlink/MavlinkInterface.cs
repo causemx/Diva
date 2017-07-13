@@ -19,6 +19,9 @@ namespace FooApplication.Mavlink
 	{
 		public static readonly int SLEEP_TIME_SETMODE = 10;
 		public static readonly double CONNECT_TIMEOUT_SECONDS = 30;
+		public static readonly string COMPORT_PORT_NAME = "com4";
+		public static readonly int COMPORT_BAUDRATE = 57600;
+
 		public bool giveComport
 		{
 			get { return _giveComport; }
@@ -100,21 +103,30 @@ namespace FooApplication.Mavlink
 		public MavlinkInterface()
 		{
 			_mav = new MavStatus(this, 1, 0);
+			BaseStream = new SerialPort();
+			BaseStream.PortName = COMPORT_PORT_NAME;
+			BaseStream.BaudRate = COMPORT_BAUDRATE;
 		}
 
-		public void connect()
+		public void open()
 		{
-		}
-
-		public void disConnect()
-		{
+			openBg(false);
+			log.Info("connection establish");
 		}
 
 		public void close()
 		{
+			try
+			{
+				if (BaseStream.IsOpen)
+					BaseStream.Close();
+			}
+			catch
+			{
+			}
 		}
 
-		public void openBg(object PRsender, bool getparams)
+		public void openBg(bool getparams)
 		{
 			// frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MavlinkConnecting);
 
@@ -269,9 +281,10 @@ namespace FooApplication.Mavlink
 				generatePacket((byte)MAVLINK_MSG_ID.STATUSTEXT,
 					new mavlink_statustext_t() { severity = (byte)MAV_SEVERITY.INFO, text = temp }, sysid, compid);
 				// mavlink2
+				/**
 				generatePacket((byte)MAVLINK_MSG_ID.STATUSTEXT,
 					new mavlink_statustext_t() { severity = (byte)MAV_SEVERITY.INFO, text = temp }, sysidcurrent,
-					compidcurrent, true, true);
+					compidcurrent, true, true); */
 
 				// this ensures a mavlink2 change has been noticed
 				getHeartBeat();
@@ -793,8 +806,9 @@ namespace FooApplication.Mavlink
 
 			log.InfoFormat("doCommand cmd {0} {1} {2} {3} {4} {5} {6} {7}", actionid.ToString(), p1, p2, p3, p4, p5, p6,
 				p7);
-
+			
 			generatePacket((byte)MAVLINK_MSG_ID.COMMAND_LONG, req, sysid, compid);
+
 
 			if (!requireack)
 			{
@@ -917,6 +931,27 @@ namespace FooApplication.Mavlink
 			generatePacket((byte)(byte)MAVLink.MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
 			System.Threading.Thread.Sleep(SLEEP_TIME_SETMODE);
 			generatePacket((byte)(byte)MAVLink.MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
+		}
+
+
+		public void getDatastream(MAV_DATA_STREAM id, byte hzrate)
+		{
+			getDatastream(sysid, compid, id, hzrate);
+		}
+
+		public void getDatastream(byte sysid, byte compid, MAV_DATA_STREAM id, byte hzrate)
+		{
+			mavlink_request_data_stream_t req = new mavlink_request_data_stream_t();
+			req.target_system = sysid;
+			req.target_component = compid;
+
+			req.req_message_rate = hzrate;
+			req.start_stop = 1; // start
+			req.req_stream_id = (byte)id; // id
+
+			// send each one twice.
+			generatePacket((byte)MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req, sysid, compid);
+			generatePacket((byte)MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req, sysid, compid);
 		}
 
 		public void Dispose()

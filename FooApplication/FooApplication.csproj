@@ -152,7 +152,6 @@
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\Utility.cs" />
-    <Compile Include="Views\FlightData.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -185,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MAVLink\MAVLink.csproj">
