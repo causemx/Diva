@@ -897,6 +897,7 @@ namespace FooApplication.Mavlink
 						}
 
 						log.InfoFormat("doCommand cmd resp {0} - {1}", (MAV_CMD)ack.command, (MAV_RESULT)ack.result);
+						Console.WriteLine(ack.ToString());
 
 						if (ack.result == (byte)MAV_RESULT.ACCEPTED)
 						{

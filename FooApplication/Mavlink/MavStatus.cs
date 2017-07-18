@@ -62,6 +62,10 @@ namespace FooApplication.Mavlink
 
 		public string Guid { get; set; }
 
+		public double current_lat { get; set; }
+
+		public double current_lng { get; set; }
+
 		/// <summary>
 		/// the static global state of the currently connected MAV
 		/// </summary>

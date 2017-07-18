@@ -16,6 +16,8 @@ using System.Reflection;
 using System.Threading;
 using System.Net;
 using FooApplication.Utilities;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms.Markers;
 
 namespace FooApplication
 {
@@ -23,7 +25,8 @@ namespace FooApplication
 	{
 
 		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		public static readonly byte REQUEST_DATA_STREAM_RATE = 1; // hz 
+		public static readonly byte REQUEST_DATA_STREAM_RATE = 1; // hz
+		public static readonly int NUM_TRACK_POINT = 1;
 
 		public static MavlinkInterface comPort
 		{
@@ -47,6 +50,10 @@ namespace FooApplication
 		private ManualResetEvent SerialThreadrunner = new ManualResetEvent(false); // control the thread waiting behavior
 		private DateTime lastupdate = DateTime.Now;
 		private DateTime lastdata = DateTime.MinValue;
+		private List<PointLatLng> trackPoints = new List<PointLatLng>();
+		private GMapOverlay routes;
+		private GMapOverlay markers;
+		private GMapRoute route;
 
 		public Main()
 		{
@@ -94,6 +101,42 @@ namespace FooApplication
 				}
 
 				UpdateCurrentSettings(true);
+				updateMapPosition(new PointLatLng(24.7726628, 121.0468916));
+
+
+				// Update the tracking point
+				if (route == null)
+				{
+					route = new GMapRoute(trackPoints, "track");
+					routes.Routes.Add(route);
+				}
+
+				PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+
+				gMapControl1.HoldInvalidation = true;
+
+				// maintain route history length
+				if (route.Points.Count > NUM_TRACK_POINT)
+				{
+					route.Points.RemoveRange(0,
+						route.Points.Count - NUM_TRACK_POINT);
+				}
+				
+
+				// add new route point
+				if (comPort.MAV.current_lat != 0 && comPort.MAV.current_lng != 0)
+				{
+					route.Points.Add(currentloc);
+				}
+
+				if (!this.IsHandleCreated)
+					continue;
+
+				updateDronePosition(new PointLatLng(24.7726628, 121.0468916));
+				//updateRoutePosition();
+				// updateClearRoutesMarkers();
+
+
 
 			}
 
@@ -336,28 +379,74 @@ namespace FooApplication
 
 		private void gMapControl1_Load(object sender, EventArgs e)
 		{
-			gmapControl.MapProvider = GMap.NET.MapProviders.BingMapProvider.Instance;
-			GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
-			gmapControl.SetPositionByKeywords("Paris, France");
-			GMapOverlay overlay1 = new GMapOverlay("overlay1");
-			gmapControl.Overlays.Add(overlay1);
+
+			gmapControl.MapProvider = OpenStreetMapProvider.Instance;
+
+			routes = new GMapOverlay("routes");
+			markers = new GMapOverlay("markers");
+			gmapControl.Overlays.Add(routes);
+			gmapControl.Overlays.Add(markers);
 
 
-			gMapControl1.MapProvider = GMapProviders.GoogleSatelliteMap
-			gMapControl1.MinZoom = 0;
-			gMapControl1.MaxZoom = 24;
-			gMapControl1.Zoom = 3;
-
-			gMapControl1.OnMapZoomChanged += gMapControl1_OnMapZoomChanged;
-
-			gMapControl1.DisableFocusOnMouseEnter = true;
-
-			gMapControl1.OnMarkerEnter += gMapControl1_OnMarkerEnter;
-			gMapControl1.OnMarkerLeave += gMapControl1_OnMarkerLeave;
-
-			gMapControl1.RoutesEnabled = true;
-			gMapControl1.PolygonsEnabled = true;
 		}
+
+		private void updateDronePosition(PointLatLng loc)
+		{
+			Invoke((MethodInvoker)delegate
+			{
+				try
+				{
+					markers.Markers.Clear();
+					markers.Markers.Add(new GMarkerGoogle(loc, GMarkerGoogleType.green));
+				}
+				catch
+				{
+				}
+			});
+		}
+
+		DateTime lastmapposchange = DateTime.MinValue;
+		private void updateMapPosition(PointLatLng currentloc)
+		{
+			Invoke((MethodInvoker)delegate
+			{
+				try
+				{
+					if (lastmapposchange.Second != DateTime.Now.Second)
+					{
+						if (Math.Abs(currentloc.Lat - gmapControl.Position.Lat) > 0.0001 || Math.Abs(currentloc.Lng - gmapControl.Position.Lng) > 0.0001)
+						{
+							gmapControl.Position = currentloc;
+						}
+
+						lastmapposchange = DateTime.Now;
+					}
+					//hud1.Refresh();
+				}
+				catch
+				{
+				}
+			});
+		}
+
+		private void updateRoutePosition()
+		{
+			// not async
+			Invoke((MethodInvoker)delegate
+			{
+				gmapControl.UpdateRouteLocalPosition(route);
+			});
+		}
+
+		private void updateClearRoutesMarkers()
+		{
+			Invoke((MethodInvoker)delegate
+			{
+				routes.Markers.Clear();
+			});
+		}
+
+
 
 		private void btn_connect_Click(object sender, EventArgs e)
 		{
