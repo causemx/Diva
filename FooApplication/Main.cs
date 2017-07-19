@@ -18,6 +18,7 @@ using System.Net;
 using FooApplication.Utilities;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms.Markers;
+using FooApplication.Controls;
 
 namespace FooApplication
 {
@@ -291,87 +292,6 @@ namespace FooApplication
 							}
 						}
 					}
-					
-					/**
-
-					mavLinkMessage = MAV.getPacket((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT);
-					if (mavLinkMessage != null)
-					{
-						var gps = mavLinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
-
-						if (!useLocation)
-						{
-							lat = gps.lat * 1.0e-7;
-							lng = gps.lon * 1.0e-7;
-
-							altasl = gps.alt / 1000.0f;
-							// alt = gps.alt; // using vfr as includes baro calc
-						}
-
-						gpsstatus = gps.fix_type;
-						//                    Console.WriteLine("gpsfix {0}",gpsstatus);
-
-						gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
-
-						satcount = gps.satellites_visible;
-
-						groundspeed = gps.vel * 1.0e-2f;
-						groundcourse = gps.cog * 1.0e-2f;
-
-						//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
-					}
-
-					mavLinkMessage = MAV.getPacket((uint)MAVLink.MAVLINK_MSG_ID.GPS2_RAW);
-					if (mavLinkMessage != null)
-					{
-						var gps = mavLinkMessage.ToStructure<MAVLink.mavlink_gps2_raw_t>();
-
-						lat2 = gps.lat * 1.0e-7;
-						lng2 = gps.lon * 1.0e-7;
-						altasl2 = gps.alt / 1000.0f;
-
-						gpsstatus2 = gps.fix_type;
-						gpshdop2 = (float)Math.Round((double)gps.eph / 100.0, 2);
-
-						satcount2 = gps.satellites_visible;
-
-						groundspeed2 = gps.vel * 1.0e-2f;
-						groundcourse2 = gps.cog * 1.0e-2f;
-					}
-
-					mavLinkMessage = MAV.getPacket((uint)MAVLink.MAVLINK_MSG_ID.GPS_STATUS);
-					if (mavLinkMessage != null)
-					{
-						var gps = mavLinkMessage.ToStructure<MAVLink.mavlink_gps_status_t>();
-						satcount = gps.satellites_visible;
-					}
-
-					mavLinkMessage = MAV.getPacket((uint)MAVLink.MAVLINK_MSG_ID.RADIO);
-					if (mavLinkMessage != null)
-					{
-						var radio = mavLinkMessage.ToStructure<MAVLink.mavlink_radio_t>();
-						rssi = radio.rssi;
-						remrssi = radio.remrssi;
-						txbuffer = radio.txbuf;
-						rxerrors = radio.rxerrors;
-						noise = radio.noise;
-						remnoise = radio.remnoise;
-						fixedp = radio.@fixed;
-					}
-
-					mavLinkMessage = MAV.getPacket((uint)MAVLink.MAVLINK_MSG_ID.RADIO_STATUS);
-					if (mavLinkMessage != null)
-					{
-						var radio = mavLinkMessage.ToStructure<MAVLink.mavlink_radio_status_t>();
-						rssi = radio.rssi;
-						remrssi = radio.remrssi;
-						txbuffer = radio.txbuf;
-						rxerrors = radio.rxerrors;
-						noise = radio.noise;
-						remnoise = radio.remnoise;
-						fixedp = radio.@fixed;
-					}
-					**/
 				}
 			}
 		}
@@ -387,8 +307,79 @@ namespace FooApplication
 			gmapControl.Overlays.Add(routes);
 			gmapControl.Overlays.Add(markers);
 
-
 		}
+
+		internal PointLatLng MouseDownStart;
+
+		private void gMapControl1_MouseDown(object sender, MouseEventArgs e)
+		{
+			Console.WriteLine("mouse down");
+
+			MouseDownStart = gMapControl1.FromLocalToLatLng(e.X, e.Y);
+
+			if (ModifierKeys == Keys.Control)
+			{
+				goHereToolStripMenuItem_Click(null, null);
+			}
+			/**
+			if (gMapControl1.IsMouseOverMarker)
+			{
+				if (CurrentGMapMarker is GMapMarkerADSBPlane)
+				{
+					var marker = CurrentGMapMarker as GMapMarkerADSBPlane;
+					if (marker.Tag is adsb.PointLatLngAltHdg)
+					{
+						var plla = marker.Tag as adsb.PointLatLngAltHdg;
+						plla.DisplayICAO = !plla.DisplayICAO;
+					}
+				}
+			}*/
+		}
+
+		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Console.WriteLine("go here");
+			
+			if (!comPort.BaseStream.IsOpen)
+			{
+				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
+				MessageBox.Show("no connection");
+				return;
+			}
+			
+			if (comPort.MAV.GuidedMode.z == 0)
+			{
+				// flyToHereAltToolStripMenuItem_Click(null, null);
+
+				if (comPort.MAV.GuidedMode.z == 0)
+					return;
+			}
+
+			if (MouseDownStart.Lat == 0 || MouseDownStart.Lng == 0)
+			{
+				// CustomMessageBox.Show(Strings.BadCoords, Strings.ERROR);
+				MessageBox.Show("can not get position");
+				return;
+			}
+
+			Locationwp gotohere = new Locationwp();
+
+			gotohere.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+			gotohere.alt = comPort.MAV.GuidedMode.z; // back to m
+			gotohere.lat = (MouseDownStart.Lat);
+			gotohere.lng = (MouseDownStart.Lng);
+
+			try
+			{
+				comPort.setGuidedModeWP(gotohere);
+			}
+			catch (Exception ex)
+			{
+				comPort.giveComport = false;
+				MessageBox.Show(ex.Message);
+			}
+		}
+
 
 		private void updateDronePosition(PointLatLng loc)
 		{
@@ -492,7 +483,8 @@ namespace FooApplication
 
 				try
 				{
-					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, comPort.MAV.GuidedMode.z);
+					// comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, comPort.MAV.GuidedMode.z);
+					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 1);
 				}
 				catch
 				{

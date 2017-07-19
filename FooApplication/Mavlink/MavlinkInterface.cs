@@ -1,4 +1,5 @@
 ﻿using FooApplication.Comms;
+using FooApplication.Utilities;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -934,6 +935,308 @@ namespace FooApplication.Mavlink
 			generatePacket((byte)(byte)MAVLink.MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
 		}
 
+		public void setGuidedModeWP(Locationwp gotohere, bool setguidedmode = true)
+		{
+			setGuidedModeWP(MAV.sysid, MAV.compid, gotohere, setguidedmode);
+		}
+
+		public void setGuidedModeWP(byte sysid, byte compid, Locationwp gotohere, bool setguidedmode = true)
+		{
+			if (gotohere.alt == 0 || gotohere.lat == 0 || gotohere.lng == 0)
+				return;
+
+			giveComport = true;
+
+			try
+			{
+				gotohere.id = (ushort)MAV_CMD.WAYPOINT;
+
+				// Set guided mode first
+
+				MAV_MISSION_RESULT ans = setWP(sysid, compid, gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT,
+					(byte)2);
+
+				if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+					throw new Exception("Guided Mode Failed");
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex);
+			}
+
+			giveComport = false;
+		}
+
+		/// <summary>
+		/// Save wp to eeprom
+		/// </summary>
+		/// <param name="loc">location struct</param>
+		/// <param name="index">wp no</param>
+		/// <param name="frame">global or relative</param>
+		/// <param name="current">0 = no , 2 = guided mode</param>
+		public MAV_MISSION_RESULT setWP(byte sysid, byte compid, Locationwp loc, ushort index, MAV_FRAME frame, byte current = 0,
+			byte autocontinue = 1, bool use_int = false)
+		{
+			if (use_int)
+			{
+				mavlink_mission_item_int_t req = new mavlink_mission_item_int_t();
+
+				req.target_system = sysid;
+				req.target_component = compid;
+
+				req.command = loc.id;
+
+				req.current = current;
+				req.autocontinue = autocontinue;
+
+				req.frame = (byte)frame;
+				if (loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
+				{
+					req.y = (int)(loc.lng);
+					req.x = (int)(loc.lat);
+				}
+				else
+				{
+					req.y = (int)(loc.lng * 1.0e7);
+					req.x = (int)(loc.lat * 1.0e7);
+				}
+				req.z = (float)(loc.alt);
+
+				req.param1 = loc.p1;
+				req.param2 = loc.p2;
+				req.param3 = loc.p3;
+				req.param4 = loc.p4;
+
+				req.seq = index;
+
+				return setWP(req);
+			}
+			else
+			{
+				mavlink_mission_item_t req = new mavlink_mission_item_t();
+
+				req.target_system = sysid;
+				req.target_component = compid;
+
+				req.command = loc.id;
+
+				req.current = current;
+				req.autocontinue = autocontinue;
+
+				req.frame = (byte)frame;
+				req.y = (float)(loc.lng);
+				req.x = (float)(loc.lat);
+				req.z = (float)(loc.alt);
+
+				req.param1 = loc.p1;
+				req.param2 = loc.p2;
+				req.param3 = loc.p3;
+				req.param4 = loc.p4;
+
+				req.seq = index;
+
+				return setWP(req);
+			}
+		}
+
+
+		public MAV_MISSION_RESULT setWP(mavlink_mission_item_t req)
+		{
+			giveComport = true;
+
+			ushort index = req.seq;
+			
+			// request
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM, req, sysid, compid);
+
+
+			DateTime start = DateTime.Now;
+			int retrys = 10;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(400) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("setWP Retry " + retrys);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM, req, sysid, compid);
+
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - setWP");
+				}
+				MAVLinkMessage buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ACK)
+					{
+						var ans = buffer.ToStructure<mavlink_mission_ack_t>();
+						log.Info("set wp " + index + " ACK 47 : " + buffer.msgid + " ans " +
+								 Enum.Parse(typeof(MAV_MISSION_RESULT), ans.type.ToString()));
+
+
+						if (req.current == 2)
+						{
+							// MAVlist[req.target_system, req.target_component].GuidedMode = req;
+						}
+						else if (req.current == 3)
+						{
+						}
+						else
+						{
+							// MAVlist[req.target_system, req.target_component].wps[req.seq] = req;
+						}
+
+						//if (ans.target_system == req.target_system && ans.target_component == req.target_component)
+						{
+							giveComport = false;
+							return (MAV_MISSION_RESULT)ans.type;
+						}
+					}
+					else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
+					{
+						var ans = buffer.ToStructure<mavlink_mission_request_t>();
+						if (ans.seq == (index + 1))
+						{
+							log.Info("set wp doing " + index + " req " + ans.seq + " REQ 40 : " + buffer.msgid);
+							giveComport = false;
+
+							if (req.current == 2)
+							{
+								// MAVlist[req.target_system, req.target_component].GuidedMode = req;
+							}
+							else if (req.current == 3)
+							{
+							}
+							else
+							{
+								// MAVlist[req.target_system, req.target_component].wps[req.seq] = req;
+							}
+
+							//if (ans.target_system == req.target_system && ans.target_component == req.target_component)
+							{
+								giveComport = false;
+								return MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
+							}
+						}
+						else
+						{
+							start = DateTime.MinValue;
+						}
+					}
+					else
+					{
+						Console.WriteLine(DateTime.Now + " PC setwp " + buffer.msgid);
+					}
+				}
+			}
+
+			// return MAV_MISSION_RESULT.MAV_MISSION_INVALID;
+		}
+
+		public MAV_MISSION_RESULT setWP(mavlink_mission_item_int_t req)
+		{
+			giveComport = true;
+
+			ushort index = req.seq;
+
+			// request
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM_INT, req, sysid, compid);
+
+			DateTime start = DateTime.Now;
+			int retrys = 10;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(400) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("setWP Retry " + retrys);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM_INT, req, sysid, compid);
+
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - setWP");
+				}
+				MAVLinkMessage buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ACK)
+					{
+						var ans = buffer.ToStructure<mavlink_mission_ack_t>();
+						log.Info("set wp " + index + " ACK 47 : " + buffer.msgid + " ans " +
+								 Enum.Parse(typeof(MAV_MISSION_RESULT), ans.type.ToString()));
+						giveComport = false;
+
+						if (req.current == 2)
+						{
+							// MAVlist[req.target_system, req.target_component].GuidedMode = (Locationwp)req;
+						}
+						else if (req.current == 3)
+						{
+						}
+						else
+						{
+							// MAVlist[req.target_system, req.target_component].wps[req.seq] = (Locationwp)req;
+						}
+
+						//if (ans.target_system == req.target_system && ans.target_component == req.target_component)
+						{
+							giveComport = false;
+							return (MAV_MISSION_RESULT)ans.type;
+						}
+					}
+					else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
+					{
+						var ans = buffer.ToStructure<mavlink_mission_request_t>();
+						if (ans.seq == (index + 1))
+						{
+							log.Info("set wp doing " + index + " req " + ans.seq + " REQ 40 : " + buffer.msgid);
+							giveComport = false;
+
+							if (req.current == 2)
+							{
+								// MAVlist[req.target_system, req.target_component].GuidedMode = (Locationwp)req;
+							}
+							else if (req.current == 3)
+							{
+
+							}
+							else
+							{
+								// MAVlist[req.target_system, req.target_component].wps[req.seq] = (Locationwp)req;
+							}
+
+							//if (ans.target_system == req.target_system && ans.target_component == req.target_component)
+							{
+								giveComport = false;
+								return MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
+							}
+						}
+						else
+						{
+							
+							// resend point now
+							start = DateTime.MinValue;
+						}
+					}
+					else
+					{
+						Console.WriteLine(DateTime.Now + " PC setwp " + buffer.msgid);
+					}
+				}
+			}
+
+			// return MAV_MISSION_RESULT.MAV_MISSION_INVALID;
+		}
 
 		public void getDatastream(MAV_DATA_STREAM id, byte hzrate)
 		{

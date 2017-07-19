@@ -156,6 +156,7 @@
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
+    <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

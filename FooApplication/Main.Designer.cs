@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +66,10 @@
 			this.btn_arm = new System.Windows.Forms.Button();
 			this.opertaion_table_title = new System.Windows.Forms.Label();
 			this.gmapControl = new GMap.NET.WindowsForms.GMapControl();
+			this.contextMenuStripMap = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.flyToHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.flyToHereAltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.takeOFfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -84,6 +89,7 @@
 			this.drone_ack_panel.SuspendLayout();
 			this.drone_status_panel.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.contextMenuStripMap.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -186,7 +192,7 @@
 			this.splitContainer2.Panel2.Controls.Add(this.drone_ack_panel);
 			this.splitContainer2.Panel2.Controls.Add(this.drone_status_panel);
 			this.splitContainer2.Size = new System.Drawing.Size(351, 597);
-			this.splitContainer2.SplitterDistance = 278;
+			this.splitContainer2.SplitterDistance = 266;
 			this.splitContainer2.TabIndex = 0;
 			// 
 			// label1
@@ -480,6 +486,7 @@
 			// 
 			this.gmapControl.Bearing = 0F;
 			this.gmapControl.CanDragMap = true;
+			this.gmapControl.ContextMenuStrip = this.contextMenuStripMap;
 			this.gmapControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gmapControl.EmptyTileColor = System.Drawing.Color.Navy;
 			this.gmapControl.GrayScaleMode = false;
@@ -502,6 +509,35 @@
 			this.gmapControl.TabIndex = 0;
 			this.gmapControl.Zoom = 0D;
 			this.gmapControl.Load += new System.EventHandler(this.gMapControl1_Load);
+			this.gmapControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseDown);
+			// 
+			// contextMenuStripMap
+			// 
+			this.contextMenuStripMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.flyToHereToolStripMenuItem,
+            this.flyToHereAltToolStripMenuItem,
+            this.takeOFfToolStripMenuItem});
+			this.contextMenuStripMap.Name = "contextMenuStripMap";
+			this.contextMenuStripMap.Size = new System.Drawing.Size(158, 70);
+			// 
+			// flyToHereToolStripMenuItem
+			// 
+			this.flyToHereToolStripMenuItem.Name = "flyToHereToolStripMenuItem";
+			this.flyToHereToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.flyToHereToolStripMenuItem.Text = "Fly To Here";
+			this.flyToHereToolStripMenuItem.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
+			// 
+			// flyToHereAltToolStripMenuItem
+			// 
+			this.flyToHereAltToolStripMenuItem.Name = "flyToHereAltToolStripMenuItem";
+			this.flyToHereAltToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.flyToHereAltToolStripMenuItem.Text = "Fly To Here Alt";
+			// 
+			// takeOFfToolStripMenuItem
+			// 
+			this.takeOFfToolStripMenuItem.Name = "takeOFfToolStripMenuItem";
+			this.takeOFfToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.takeOFfToolStripMenuItem.Text = "TakeOff";
 			// 
 			// tabPage3
 			// 
@@ -592,6 +628,7 @@
 			this.drone_status_panel.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.contextMenuStripMap.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -641,6 +678,10 @@
 		private GMap.NET.WindowsForms.GMapControl gMapControl1;
 		private System.Windows.Forms.Button btn_connect;
 		private System.Windows.Forms.PrintDialog printDialog1;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStripMap;
+		private System.Windows.Forms.ToolStripMenuItem flyToHereToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem flyToHereAltToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem takeOFfToolStripMenuItem;
 	}
 }
 
