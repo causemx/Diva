@@ -59,6 +59,9 @@ namespace FooApplication
 		public Main()
 		{
 			InitializeComponent();
+			
+
+			// TODO: put it into setting page futrue.
 			comPort.MAV.GuidedMode.x = 0;
 			comPort.MAV.GuidedMode.y = 0;
 			comPort.MAV.GuidedMode.z = 1;
@@ -300,7 +303,7 @@ namespace FooApplication
 		private void gMapControl1_Load(object sender, EventArgs e)
 		{
 
-			gmapControl.MapProvider = OpenStreetMapProvider.Instance;
+			gmapControl.MapProvider = GoogleSatelliteMapProvider.Instance;
 
 			routes = new GMapOverlay("routes");
 			markers = new GMapOverlay("markers");
@@ -478,7 +481,7 @@ namespace FooApplication
 					{
 						target_system = comPort.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)5,
+						custom_mode = (uint)4,
 					});
 
 				try

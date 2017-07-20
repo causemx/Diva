@@ -23,7 +23,7 @@ namespace FooApplication.Comms
 		public int WriteBufferSize { get; set; }
 		public int WriteTimeout { get; set; }
 		public bool RtsEnable { get; set; }
-		public Stream BaseStream { get { return Stream.Null; } }
+		public Stream BaseStream { get { return this.BaseStream; } }
 
 		public UdpSerial()
 		{
@@ -86,7 +86,7 @@ namespace FooApplication.Comms
 
 		public void Open()
 		{
-			if (client.Client.Connected || IsOpen)
+			if (client.Client.Connected)
 			{
 				log.Info("UDPSerial socket already open");
 				return;
@@ -94,14 +94,6 @@ namespace FooApplication.Comms
 
 			client.Close();
 
-			string dest = Port;
-
-			// TODO: Configuring setting page 
-			/**
-			dest = OnSettings("UDP_port", dest
-			Port = dest;
-			OnSettings("UDP_port", Port, true);
-			**/
 
 			try
 			{
@@ -114,6 +106,7 @@ namespace FooApplication.Comms
 
 			client = new UdpClient(int.Parse(Port));
 
+			/**
 			while (true)
 			{
 				System.Threading.Thread.Sleep(500);
@@ -133,7 +126,7 @@ namespace FooApplication.Comms
 			}
 
 			if (BytesToRead == 0)
-				return;
+				return;*/
 
 			try
 			{
