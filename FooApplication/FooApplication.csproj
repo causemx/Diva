@@ -182,6 +182,8 @@
     <Compile Include="Strings.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
+    <Compile Include="Utilities\PointLatLngAlt.cs" />
+    <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -217,7 +219,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Content Include="mavcmd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MAVLink\MAVLink.csproj">
