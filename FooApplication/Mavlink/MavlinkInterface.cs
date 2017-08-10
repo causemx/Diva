@@ -967,6 +967,12 @@ namespace FooApplication.Mavlink
 			giveComport = false;
 		}
 
+		public MAV_MISSION_RESULT setWP(Locationwp loc, ushort index, MAV_FRAME frame, byte current = 0,
+			byte autocontinue = 1, bool use_int = false)
+		{
+			return setWP(MAV.sysid, MAV.compid, loc, index, frame, current, autocontinue, use_int);
+		}
+
 		/// <summary>
 		/// Save wp to eeprom
 		/// </summary>
@@ -1262,5 +1268,128 @@ namespace FooApplication.Mavlink
 		{
 			throw new NotImplementedException();
 		}
+
+		/// <summary>
+		/// Set start and finish for partial wp upload.
+		/// </summary>
+		/// <param name="startwp"></param>
+		/// <param name="endwp"></param>
+		public void setWPPartialUpdate(ushort startwp, ushort endwp)
+		{
+			mavlink_mission_write_partial_list_t req = new mavlink_mission_write_partial_list_t();
+
+			req.target_system = MAV.sysid;
+			req.target_component = MAV.compid;
+
+			req.start_index = (short)startwp;
+			req.end_index = (short)endwp;
+
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_WRITE_PARTIAL_LIST, req, MAV.sysid, MAV.compid);
+		}
+
+		/// <summary>
+		/// Sets wp total count
+		/// </summary>
+		/// <param name="wp_total"></param>
+		public void setWPTotal(ushort wp_total)
+		{
+			giveComport = true;
+			mavlink_mission_count_t req = new mavlink_mission_count_t();
+
+			req.target_system = MAV.sysid;
+			req.target_component = MAV.compid; // MSG_NAMES.MISSION_COUNT
+
+			req.count = wp_total;
+
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_COUNT, req, MAV.sysid, MAV.compid);
+
+			DateTime start = DateTime.Now;
+			int retrys = 3;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("setWPTotal Retry " + retrys);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_COUNT, req, MAV.sysid, MAV.compid);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - setWPTotal");
+				}
+				MAVLinkMessage buffer = readPacket();
+				if (buffer.Length > 9)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
+					{
+						var request = buffer.ToStructure<mavlink_mission_request_t>();
+
+						if (request.seq == 0)
+						{
+							if (MAV.param["WP_TOTAL"] != null)
+								MAV.param["WP_TOTAL"].Value = wp_total - 1;
+							if (MAV.param["CMD_TOTAL"] != null)
+								MAV.param["CMD_TOTAL"].Value = wp_total - 1;
+							if (MAV.param["MIS_TOTAL"] != null)
+								MAV.param["MIS_TOTAL"].Value = wp_total - 1;
+
+							MAV.wps.Clear();
+
+							giveComport = false;
+							return;
+						}
+					}
+					else
+					{
+						//Console.WriteLine(DateTime.Now + " PC getwp " + buffer.msgid);
+					}
+				}
+			}
+		}
+
+		public int getRequestedWPNo()
+		{
+			giveComport = true;
+			DateTime start = DateTime.Now;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(1500) > DateTime.Now))
+				{
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - getRequestedWPNo");
+				}
+				MAVLinkMessage buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
+					{
+						var ans = buffer.ToStructure<mavlink_mission_request_t>();
+
+						log.InfoFormat("getRequestedWPNo seq {0} ts {1} tc {2}", ans.seq, ans.target_system, ans.target_component);
+
+						giveComport = false;
+
+						return ans.seq;
+					}
+				}
+			}
+		}
+
+
+		public void setWPACK()
+		{
+			mavlink_mission_ack_t req = new mavlink_mission_ack_t();
+			req.target_system = MAV.sysid;
+			req.target_component = MAV.compid;
+			req.type = 0;
+
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ACK, req, MAV.sysid, MAV.compid);
+		}
+
 	}
 }

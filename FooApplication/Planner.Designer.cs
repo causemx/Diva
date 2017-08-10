@@ -30,6 +30,10 @@
 		{
 			this.myMap = new FooApplication.Controls.MyGMap();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.BUT_Write_wp = new System.Windows.Forms.Button();
+			this.BUT_Auto = new System.Windows.Forms.Button();
+			this.BUT_Arm = new System.Windows.Forms.Button();
+			this.BUT_Connect = new System.Windows.Forms.Button();
 			this.TXT_DefaultAlt = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.TXT_homealt = new System.Windows.Forms.TextBox();
@@ -48,6 +52,8 @@
 			this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.label3 = new System.Windows.Forms.Label();
+			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
 			this.SuspendLayout();
@@ -81,6 +87,12 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.TXT_Mode);
+			this.panel1.Controls.Add(this.label3);
+			this.panel1.Controls.Add(this.BUT_Write_wp);
+			this.panel1.Controls.Add(this.BUT_Auto);
+			this.panel1.Controls.Add(this.BUT_Arm);
+			this.panel1.Controls.Add(this.BUT_Connect);
 			this.panel1.Controls.Add(this.TXT_DefaultAlt);
 			this.panel1.Controls.Add(this.label2);
 			this.panel1.Controls.Add(this.TXT_homealt);
@@ -93,6 +105,46 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
+			// 
+			// BUT_Write_wp
+			// 
+			this.BUT_Write_wp.Location = new System.Drawing.Point(831, 45);
+			this.BUT_Write_wp.Name = "BUT_Write_wp";
+			this.BUT_Write_wp.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Write_wp.TabIndex = 16;
+			this.BUT_Write_wp.Text = "Write_WP";
+			this.BUT_Write_wp.UseVisualStyleBackColor = true;
+			this.BUT_Write_wp.Click += new System.EventHandler(this.BUT_write_Click);
+			// 
+			// BUT_Auto
+			// 
+			this.BUT_Auto.Location = new System.Drawing.Point(912, 74);
+			this.BUT_Auto.Name = "BUT_Auto";
+			this.BUT_Auto.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Auto.TabIndex = 15;
+			this.BUT_Auto.Text = "Auto";
+			this.BUT_Auto.UseVisualStyleBackColor = true;
+			this.BUT_Auto.Click += new System.EventHandler(this.BUT_Auto_Click);
+			// 
+			// BUT_Arm
+			// 
+			this.BUT_Arm.Location = new System.Drawing.Point(912, 45);
+			this.BUT_Arm.Name = "BUT_Arm";
+			this.BUT_Arm.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Arm.TabIndex = 14;
+			this.BUT_Arm.Text = "Arm";
+			this.BUT_Arm.UseVisualStyleBackColor = true;
+			this.BUT_Arm.Click += new System.EventHandler(this.BUT_Arm_Click);
+			// 
+			// BUT_Connect
+			// 
+			this.BUT_Connect.Location = new System.Drawing.Point(912, 16);
+			this.BUT_Connect.Name = "BUT_Connect";
+			this.BUT_Connect.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Connect.TabIndex = 13;
+			this.BUT_Connect.Text = "Connect";
+			this.BUT_Connect.UseVisualStyleBackColor = true;
+			this.BUT_Connect.Click += new System.EventHandler(this.BUT_Connect_Click);
 			// 
 			// TXT_DefaultAlt
 			// 
@@ -168,9 +220,12 @@
 			this.Commands.Name = "Commands";
 			this.Commands.RowHeadersWidth = 50;
 			this.Commands.RowTemplate.Height = 24;
-			this.Commands.Size = new System.Drawing.Size(1008, 80);
+			this.Commands.Size = new System.Drawing.Size(707, 80);
 			this.Commands.TabIndex = 6;
 			this.Commands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
+			this.Commands.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
+			this.Commands.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Commands_RowsAdded);
+			this.Commands.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.Commands_RowValidating);
 			// 
 			// Command
 			// 
@@ -274,6 +329,24 @@
 			this.TagData.Visible = false;
 			this.TagData.Width = 50;
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(585, 4);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(55, 23);
+			this.label3.TabIndex = 17;
+			this.label3.Text = "Mode";
+			// 
+			// TXT_Mode
+			// 
+			this.TXT_Mode.Location = new System.Drawing.Point(646, 5);
+			this.TXT_Mode.Name = "TXT_Mode";
+			this.TXT_Mode.Size = new System.Drawing.Size(100, 22);
+			this.TXT_Mode.TabIndex = 18;
+			this.TXT_Mode.Text = "NULL";
+			// 
 			// Planner
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -312,5 +385,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
 		private System.Windows.Forms.DataGridViewButtonColumn Delete;
 		private System.Windows.Forms.DataGridViewTextBoxColumn TagData;
+		private System.Windows.Forms.Button BUT_Write_wp;
+		private System.Windows.Forms.Button BUT_Auto;
+		private System.Windows.Forms.Button BUT_Arm;
+		private System.Windows.Forms.Button BUT_Connect;
+		private System.Windows.Forms.TextBox TXT_Mode;
+		private System.Windows.Forms.Label label3;
 	}
 }

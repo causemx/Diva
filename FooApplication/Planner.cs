@@ -1,4 +1,5 @@
 ﻿using FooApplication.Controls;
+using FooApplication.Mavlink;
 using FooApplication.Utilities;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -29,6 +30,7 @@ namespace FooApplication
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private static readonly double MY_LAT = 24.773518;
 		private static readonly double MY_LNG = 121.0443385;
+		private static readonly double WARN_ALT = 100D;
 		private GMapOverlay top;
 		private GMapOverlay routesOverlay;
 		private GMapOverlay polygonsOverlay;
@@ -894,7 +896,6 @@ namespace FooApplication
 		private List<Locationwp> GetCommandList()
 		{
 			List<Locationwp> commands = new List<Locationwp>();
-			Console.WriteLine(Commands.Rows.Count);
 
 			for (int a = 0; a < Commands.Rows.Count - 0; a++)
 			{
@@ -908,8 +909,8 @@ namespace FooApplication
 
 		private Locationwp DataViewtoLocationwp(int a)
 		{
-			try
-			{
+			// try
+			// {
 				Locationwp temp = new Locationwp();
 				if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
 				{
@@ -923,14 +924,13 @@ namespace FooApplication
 									Commands.Rows[a].Cells[Command.Index].Value.ToString(),
 									false);
 				}
-				
-				// TODO: I don't know where currentstate come from..
-				
-				temp.alt =
-					(float)
-						(double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()));
 
-				Console.WriteLine("debug alt: " + Commands.Rows[a].Cells[Alt.Index].Value.ToString());
+			// TODO: I don't know where currentstate come from..
+	
+			temp.alt =
+				(float)
+					(double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()));
+			
 				temp.lat = (double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()));
 				temp.lng = (double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()));
 				temp.p1 = float.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString());
@@ -941,11 +941,11 @@ namespace FooApplication
 				temp.Tag = Commands.Rows[a].Cells[TagData.Index].Value;
 
 				return temp;
-			}
-			catch (Exception ex)
-			{
-				throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
-			}
+			// }
+			// catch (Exception ex)
+			// {
+			//	throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
+			//}
 		}
 
 
@@ -957,17 +957,17 @@ namespace FooApplication
 				return;
 			}
 
-			try
-			{
+			//try
+			//{
 				// get current command list
 				var currentlist = GetCommandList();
 				// add history
 				history.Add(currentlist);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("A invalid entry has been detected\n" + ex.Message);
-			}
+			//}
+			//catch (Exception ex)
+			//{
+			//	MessageBox.Show("A invalid entry has been detected\n" + ex.Message);
+			//}
 
 			// remove more than 20 revisions
 			if (history.Count > 20)
@@ -1000,7 +1000,7 @@ namespace FooApplication
 					if (pass == false)
 					{
 						MessageBox.Show("You must have a home altitude");
-						string homealt = "100";
+						string homealt = "10";
 						if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
 							return;
 						TXT_homealt.Text = homealt;
@@ -1347,7 +1347,7 @@ namespace FooApplication
 			}
 		}
 
-		void updateRowNumbers()
+		private void updateRowNumbers()
 		{
 			// number rows 
 			this.BeginInvoke((MethodInvoker)delegate
@@ -1375,6 +1375,473 @@ namespace FooApplication
 					}
 				}
 			});
+		}
+
+
+		private void Commands_RowEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			if (quickadd)
+				return;
+			try
+			{
+				selectedrow = e.RowIndex;
+				string option = Commands[Command.Index, selectedrow].EditedFormattedValue.ToString();
+				string cmd;
+				try
+				{
+					if (Commands[Command.Index, selectedrow].Value != null)
+						cmd = Commands[Command.Index, selectedrow].Value.ToString();
+					else
+						cmd = option;
+				}
+				catch
+				{
+					cmd = option;
+				}
+				//Console.WriteLine("editformat " + option + " value " + cmd);
+				ChangeColumnHeader(cmd);
+
+				if (cmd == "WAYPOINT")
+				{
+				}
+
+				//  writeKML();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.ToString());
+			}
+		}
+
+		private void Commands_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+		{
+			for (int i = 0; i < Commands.ColumnCount; i++)
+			{
+				DataGridViewCell tcell = Commands.Rows[e.RowIndex].Cells[i];
+				if (tcell.GetType() == typeof(DataGridViewTextBoxCell))
+				{
+					if (tcell.Value == null)
+						tcell.Value = "0";
+				}
+			}
+
+			DataGridViewComboBoxCell cell = Commands.Rows[e.RowIndex].Cells[Command.Index] as DataGridViewComboBoxCell;
+			if (cell.Value == null)
+			{
+				cell.Value = "WAYPOINT";
+				cell.DropDownWidth = 200;
+				Commands.Rows[e.RowIndex].Cells[Delete.Index].Value = "X";
+				if (!quickadd)
+				{
+					Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0)); // do header labels
+					Commands_RowValidating(sender, new DataGridViewCellCancelEventArgs(0, e.RowIndex));
+					// do default values
+				}
+			}
+
+			if (quickadd)
+				return;
+
+			try
+			{
+				Commands.CurrentCell = Commands.Rows[e.RowIndex].Cells[0];
+
+				if (Commands.Rows.Count > 1)
+				{
+					if (Commands.Rows[e.RowIndex - 1].Cells[Command.Index].Value.ToString() == "WAYPOINT")
+					{
+						Commands.Rows[e.RowIndex].Selected = true; // highlight row
+					}
+					else
+					{
+						Commands.CurrentCell = Commands[1, e.RowIndex - 1];
+						//Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex-1));
+					}
+				}
+			}
+			catch (Exception)
+			{
+			}
+			// Commands.EndEdit();
+		}
+
+		private void Commands_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+		{
+			selectedrow = e.RowIndex;
+			Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0));
+			// do header labels - encure we dont 0 out valid colums
+			int cols = Commands.Columns.Count;
+			for (int a = 1; a < cols; a++)
+			{
+				DataGridViewTextBoxCell cell;
+				cell = Commands.Rows[selectedrow].Cells[a] as DataGridViewTextBoxCell;
+
+				if (Commands.Columns[a].HeaderText.Equals("") && cell != null && cell.Value == null)
+				{
+					cell.Value = "0";
+				}
+				else
+				{
+					if (cell != null && (cell.Value == null || cell.Value.ToString() == ""))
+					{
+						cell.Value = "?";
+					}
+				}
+			}
+		}
+
+		public void BUT_write_Click(object sender, EventArgs e)
+		{
+		
+
+			// check home
+			Locationwp home = new Locationwp();
+			try
+			{
+				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+				home.lat = (double.Parse(TXT_homelat.Text));
+				home.lng = (double.Parse(TXT_homelng.Text));
+				home.alt = (float.Parse(TXT_homealt.Text)); // use saved home
+			}
+			catch
+			{
+				MessageBox.Show("Your home location is invalid");
+				return;
+			}
+
+			// check for invalid grid data
+			for (int a = 0; a < Commands.Rows.Count - 0; a++)
+			{
+				for (int b = 0; b < Commands.ColumnCount - 0; b++)
+				{
+					double answer;
+					if (b >= 1 && b <= 7)
+					{
+						if (!double.TryParse(Commands[b, a].Value.ToString(), out answer))
+						{
+							MessageBox.Show("There are errors in your mission");
+							return;
+						}
+					}
+
+					// if (TXT_altwarn.Text == "")
+					// 	TXT_altwarn.Text = (0).ToString();
+
+					if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
+						continue;
+
+					ushort cmd =
+						(ushort)
+								Enum.Parse(typeof(MAVLink.MAV_CMD),
+									Commands.Rows[a].Cells[Command.Index].Value.ToString(), false);
+
+					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
+						double.Parse(Commands[Alt.Index, a].Value.ToString()) < WARN_ALT)
+					{
+						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
+							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
+							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
+						{
+							MessageBox.Show("Low alt on WP#" + (a + 1) +
+												  "\nPlease reduce the alt warning, or increase the altitude");
+							return;
+						}
+					}
+				}
+			}
+
+			saveWPs();
+			
+
+			myMap.Focus();
+		}
+
+		private MavlinkInterface port = new MavlinkInterface();
+
+		private void saveWPs()
+		{
+			try
+			{
+				
+				if (!port.BaseStream.IsOpen)
+				{
+					throw new Exception("Please connect first!");
+				}
+
+				port.giveComport = true;
+				int a = 0;
+
+				// define the home point
+				Locationwp home = new Locationwp();
+				try
+				{
+					home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+					home.lat = (double.Parse(TXT_homelat.Text));
+					home.lng = (double.Parse(TXT_homelng.Text));
+					home.alt = (float.Parse(TXT_homealt.Text)); // use saved home
+				}
+				catch
+				{
+					throw new Exception("Your home location is invalid");
+				}
+
+				// log
+				log.Info("wps values " + port.MAV.wps.Values.Count);
+				log.Info("cmd rows " + (Commands.Rows.Count + 1)); // + home
+
+				// check for changes / future mod to send just changed wp's
+				if (port.MAV.wps.Values.Count == (Commands.Rows.Count + 1))
+				{
+					Hashtable wpstoupload = new Hashtable();
+
+					a = -1;
+					foreach (var item in port.MAV.wps.Values)
+					{
+						// skip home
+						if (a == -1)
+						{
+							a++;
+							continue;
+						}
+
+						MAVLink.mavlink_mission_item_t temp = DataViewtoLocationwp(a);
+
+						if (temp.command == item.command &&
+							temp.x == item.x &&
+							temp.y == item.y &&
+							temp.z == item.z &&
+							temp.param1 == item.param1 &&
+							temp.param2 == item.param2 &&
+							temp.param3 == item.param3 &&
+							temp.param4 == item.param4
+							)
+						{
+							log.Info("wp match " + (a + 1));
+						}
+						else
+						{
+							log.Info("wp no match" + (a + 1));
+							wpstoupload[a] = "";
+						}
+
+						a++;
+					}
+				}
+
+				uint capabilities = (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FLOAT;
+				bool use_int = (capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
+
+				// set wp total
+				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set total wps ");
+
+				ushort totalwpcountforupload = (ushort)(Commands.Rows.Count + 1);
+
+				if (port.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
+				{
+					totalwpcountforupload--;
+				}
+
+				port.setWPTotal(totalwpcountforupload); // + home
+
+				// set home location - overwritten/ignored depending on firmware.
+				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set home");
+
+				// upload from wp0
+				a = 0;
+
+				if (port.MAV.apname != MAVLink.MAV_AUTOPILOT.PX4)
+				{
+					try
+					{
+						var homeans = port.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+						{
+							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
+							{
+								MessageBox.Show("reject by mav1");
+								return;
+							}
+						}
+						a++;
+					}
+					catch (TimeoutException)
+					{
+						use_int = false;
+						// added here to prevent timeout errors
+						port.setWPTotal(totalwpcountforupload);
+						var homeans = port.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+						{
+							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
+							{
+								MessageBox.Show("reject by mav2");
+								return;
+							}
+						}
+						a++;
+					}
+				}
+				else
+				{
+					use_int = false;
+				}
+
+				// define the default frame.
+				MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+
+				// get the command list from the datagrid
+				var commandlist = GetCommandList();
+
+				// process commandlist to the mav
+				for (a = 1; a <= commandlist.Count; a++)
+				{
+					var temp = commandlist[a - 1];
+
+					// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(a * 100 / Commands.Rows.Count,
+					//	"Setting WP " + a);
+
+					// make sure we are using the correct frame for these commands
+					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
+					{
+						var mode = altmode.Relative;
+
+						if (mode == altmode.Terrain)
+						{
+							frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
+						}
+						else if (mode == altmode.Absolute)
+						{
+							frame = MAVLink.MAV_FRAME.GLOBAL;
+						}
+						else
+						{
+							frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+						}
+					}
+
+					// handle current wp upload number
+					int uploadwpno = a;
+					if (port.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
+						uploadwpno--;
+
+					// try send the wp
+					MAVLink.MAV_MISSION_RESULT ans = port.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+
+					// we timed out while uploading wps/ command wasnt replaced/ command wasnt added
+					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
+					{
+						// resend for partial upload
+						port.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
+						// reupload this point.
+						ans = port.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+					}
+
+					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
+					{
+						Console.WriteLine("Upload failed, please reduce the number of wp's");
+						return;
+					}
+					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
+					{
+						
+							Console.WriteLine("Upload failed, mission was rejected byt the Mav,\n " +
+								"item had a bad option wp# " + a + " " +
+							ans);
+						return;
+					}
+					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
+					{
+						// invalid sequence can only occur if we failed to see a response from the apm when we sent the request.
+						// or there is io lag and we send 2 mission_items and get 2 responces, one valid, one a ack of the second send
+
+						// the ans is received via mission_ack, so we dont know for certain what our current request is for. as we may have lost the mission_request
+
+						// get requested wp no - 1;
+						a = port.getRequestedWPNo() - 1;
+
+						continue;
+					}
+					if (ans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+					{
+						Console.WriteLine("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
+										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
+						return;
+					}
+				}
+
+				port.setWPACK();
+				/**
+				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(95, "Setting params");
+
+				// m
+				port.setParam("WP_RADIUS", float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist);
+
+				// cm's
+				port.setParam("WPNAV_RADIUS", float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist * 100.0);
+
+				try
+				{
+					port.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
+						float.Parse(TXT_loiterrad.Text) / CurrentState.multiplierdist);
+				}
+				catch
+				{
+				}
+
+				((ProgressReporterDialogue)sender).UpdateProgressAndStatus(100, "Done.");*/
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex);
+				port.giveComport = false;
+				throw;
+			}
+
+			port.giveComport = false;
+		}
+
+		private void BUT_Connect_Click(object sender, EventArgs e)
+		{
+			port.open();
+		}
+
+		private void BUT_Arm_Click(object sender, EventArgs e)
+		{
+			if (!port.BaseStream.IsOpen)
+			{
+				log.Info("basestream have opened");
+				return;
+			}
+
+			// arm the MAV
+			try
+			{
+				bool ans = port.doARM(true);
+				if (ans == false)
+					log.Info("arm failed");
+			}
+			catch
+			{
+				log.Info("unknown arm failed");
+			}
+		}
+
+		private void BUT_Auto_Click(object sender, EventArgs e)
+		{
+			if (port.BaseStream.IsOpen)
+			{
+				// flyToHereAltToolStripMenuItem_Click(null, null);
+
+				port.setMode(
+					port.sysid,
+					port.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = port.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)4,
+					});
+			}
 		}
 	}
 }
