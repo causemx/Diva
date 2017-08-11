@@ -28,8 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.myMap = new FooApplication.Controls.MyGMap();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.TXT_Mode = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
 			this.BUT_Write_wp = new System.Windows.Forms.Button();
 			this.BUT_Auto = new System.Windows.Forms.Button();
 			this.BUT_Arm = new System.Windows.Forms.Button();
@@ -52,16 +55,19 @@
 			this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.label3 = new System.Windows.Forms.Label();
-			this.TXT_Mode = new System.Windows.Forms.TextBox();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
+			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// myMap
 			// 
 			this.myMap.Bearing = 0F;
 			this.myMap.CanDragMap = true;
+			this.myMap.ContextMenuStrip = this.contextMenuStrip1;
 			this.myMap.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
 			this.myMap.GrayScaleMode = false;
@@ -105,6 +111,24 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
+			// 
+			// TXT_Mode
+			// 
+			this.TXT_Mode.Location = new System.Drawing.Point(646, 5);
+			this.TXT_Mode.Name = "TXT_Mode";
+			this.TXT_Mode.Size = new System.Drawing.Size(100, 22);
+			this.TXT_Mode.TabIndex = 18;
+			this.TXT_Mode.Text = "NULL";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(585, 4);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(55, 23);
+			this.label3.TabIndex = 17;
+			this.label3.Text = "Mode";
 			// 
 			// BUT_Write_wp
 			// 
@@ -329,23 +353,27 @@
 			this.TagData.Visible = false;
 			this.TagData.Width = 50;
 			// 
-			// label3
+			// contextMenuStrip1
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(585, 4);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(55, 23);
-			this.label3.TabIndex = 17;
-			this.label3.Text = "Mode";
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteWPToolStripMenuItem,
+            this.setHomeHereToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(163, 70);
 			// 
-			// TXT_Mode
+			// setHomeHereToolStripMenuItem
 			// 
-			this.TXT_Mode.Location = new System.Drawing.Point(646, 5);
-			this.TXT_Mode.Name = "TXT_Mode";
-			this.TXT_Mode.Size = new System.Drawing.Size(100, 22);
-			this.TXT_Mode.TabIndex = 18;
-			this.TXT_Mode.Text = "NULL";
+			this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
+			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+			this.setHomeHereToolStripMenuItem.Text = "Set Home Here";
+			this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
+			// 
+			// deleteWPToolStripMenuItem
+			// 
+			this.deleteWPToolStripMenuItem.Name = "deleteWPToolStripMenuItem";
+			this.deleteWPToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+			this.deleteWPToolStripMenuItem.Text = "Delete WP";
+			this.deleteWPToolStripMenuItem.Click += new System.EventHandler(this.deleteWPToolStripMenuItem_Click);
 			// 
 			// Planner
 			// 
@@ -359,6 +387,7 @@
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -391,5 +420,8 @@
 		private System.Windows.Forms.Button BUT_Connect;
 		private System.Windows.Forms.TextBox TXT_Mode;
 		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem deleteWPToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
 	}
 }

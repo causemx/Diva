@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace FooApplication
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private static readonly double MY_LAT = 24.773518;
 		private static readonly double MY_LNG = 121.0443385;
-		private static readonly double WARN_ALT = 100D;
+		private static readonly double WARN_ALT = 2D;
 		private GMapOverlay top;
 		private GMapOverlay routesOverlay;
 		private GMapOverlay polygonsOverlay;
@@ -48,6 +49,9 @@ namespace FooApplication
 		private GMapMarker currentMarker;
 		private GMapMarker center = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
 		private GMapMarker currentGMapMarker;
+
+		public GMapRoute route = new GMapRoute("wp route");
+		public GMapRoute homeroute = new GMapRoute("home route");
 
 		private bool isMouseDown;
 		private bool isMouseDraging;
@@ -70,6 +74,7 @@ namespace FooApplication
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
+		private MavlinkInterface port = new MavlinkInterface();
 
 		public enum altmode
 		{
@@ -98,6 +103,8 @@ namespace FooApplication
 			myMap.DisableFocusOnMouseEnter = true;
 			myMap.RoutesEnabled = true;
 			myMap.ForceDoubleBuffer = false;
+
+
 
 			// draw this layer first
 			kmlPolygonsOverlay = new GMapOverlay("kmlpolygons");
@@ -803,6 +810,32 @@ namespace FooApplication
 			}
 		}
 
+
+		private void addpolygonmarkergrid(string tag, double lng, double lat, int alt)
+		{
+			try
+			{
+				PointLatLng point = new PointLatLng(lat, lng);
+				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red);
+				m.ToolTipMode = MarkerTooltipMode.Never;
+				m.ToolTipText = "grid" + tag;
+				m.Tag = "grid" + tag;
+
+				//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
+				GMapMarkerRect mBorders = new GMapMarkerRect(point);
+				{
+					mBorders.InnerMarker = m;
+				}
+
+				drawnPolygonsOverlay.Markers.Add(m);
+				drawnPolygonsOverlay.Markers.Add(mBorders);
+			}
+			catch (Exception ex)
+			{
+				log.Info(ex.ToString());
+			}
+		}
+
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			try
@@ -909,8 +942,8 @@ namespace FooApplication
 
 		private Locationwp DataViewtoLocationwp(int a)
 		{
-			// try
-			// {
+			try
+			{
 				Locationwp temp = new Locationwp();
 				if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
 				{
@@ -927,9 +960,9 @@ namespace FooApplication
 
 			// TODO: I don't know where currentstate come from..
 	
-			temp.alt =
-				(float)
-					(double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()));
+				temp.alt =
+					(float)
+						(double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()));
 			
 				temp.lat = (double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()));
 				temp.lng = (double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()));
@@ -941,11 +974,11 @@ namespace FooApplication
 				temp.Tag = Commands.Rows[a].Cells[TagData.Index].Value;
 
 				return temp;
-			// }
-			// catch (Exception ex)
-			// {
-			//	throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
-			//}
+			}
+			catch (Exception ex)
+			{
+				throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
+			}
 		}
 
 
@@ -957,17 +990,17 @@ namespace FooApplication
 				return;
 			}
 
-			//try
-			//{
+			try
+			{
 				// get current command list
 				var currentlist = GetCommandList();
 				// add history
 				history.Add(currentlist);
-			//}
-			//catch (Exception ex)
-			//{
-			//	MessageBox.Show("A invalid entry has been detected\n" + ex.Message);
-			//}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("A invalid entry has been detected\n" + ex.Message);
+			}
 
 			// remove more than 20 revisions
 			if (history.Count > 20)
@@ -1288,7 +1321,7 @@ namespace FooApplication
 						lookat = "<LookAt>     <longitude>" + (minlong + longdiff / 2).ToString(new CultureInfo("en-US")) +
 								 "</longitude>     <latitude>" + (minlat + latdiff / 2).ToString(new CultureInfo("en-US")) +
 								 "</latitude> <range>" + range + "</range> </LookAt>";
-						//MainMap.ZoomAndCenterMarkers("objects");
+						// MainMap.ZoomAndCenterMarkers("objects");
 						//MainMap.Zoom -= 1;
 						//MainMap_OnMapZoomChanged();
 					}
@@ -1312,7 +1345,7 @@ namespace FooApplication
 
 				//RegeneratePolygon();
 
-				// RegenerateWPRoute(fullpointlist);
+				RegenerateWPRoute(fullpointlist);
 
 				if (fullpointlist.Count > 0)
 				{
@@ -1346,6 +1379,101 @@ namespace FooApplication
 				log.Info(ex.ToString());
 			}
 		}
+
+
+		private void RegenerateWPRoute(List<PointLatLngAlt> fullpointlist)
+		{
+			route.Clear();
+			homeroute.Clear();
+
+			polygonsOverlay.Routes.Clear();
+
+			PointLatLngAlt lastpnt = fullpointlist[0];
+			PointLatLngAlt lastpnt2 = fullpointlist[0];
+			PointLatLngAlt lastnonspline = fullpointlist[0];
+			List<PointLatLngAlt> splinepnts = new List<PointLatLngAlt>();
+			List<PointLatLngAlt> wproute = new List<PointLatLngAlt>();
+
+
+			// add home - this causeszx the spline to always have a straight finish
+			fullpointlist.Add(fullpointlist[0]);
+
+			for (int a = 0; a < fullpointlist.Count; a++)
+			{
+				if (fullpointlist[a] == null)
+					continue;
+
+				if (fullpointlist[a].Tag2 == "spline")
+				{
+					if (splinepnts.Count == 0)
+						splinepnts.Add(lastpnt);
+
+					splinepnts.Add(fullpointlist[a]);
+				}
+				else
+				{
+					wproute.Add(fullpointlist[a]);
+
+					lastpnt2 = lastpnt;
+					lastpnt = fullpointlist[a];
+				}
+			}
+
+			/**
+			List<PointLatLng> list = new List<PointLatLng>();
+			fullpointlist.ForEach(x => { list.Add(x); });
+			route.Points.AddRange(list); */
+
+			// route is full need to get 1, 2 and last point as "HOME" route
+
+			int count = wproute.Count;
+			int counter = 0;
+			PointLatLngAlt homepoint = new PointLatLngAlt();
+			PointLatLngAlt firstpoint = new PointLatLngAlt();
+			PointLatLngAlt lastpoint = new PointLatLngAlt();
+
+			if (count > 2)
+			{
+				// homeroute = last, home, first
+				wproute.ForEach(x =>
+				{
+					counter++;
+					if (counter == 1)
+					{
+						homepoint = x;
+						return;
+					}
+					if (counter == 2)
+					{
+						firstpoint = x;
+					}
+					if (counter == count - 1)
+					{
+						lastpoint = x;
+					}
+					if (counter == count)
+					{
+						homeroute.Points.Add(lastpoint);
+						homeroute.Points.Add(homepoint);
+						homeroute.Points.Add(firstpoint);
+						return;
+					}
+					route.Points.Add(x);
+				});
+
+				homeroute.Stroke = new Pen(Color.Yellow, 2);
+				// if we have a large distance between home and the first/last point, it hangs on the draw of a the dashed line.
+				if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
+					homeroute.Stroke.DashStyle = DashStyle.Dash;
+
+				polygonsOverlay.Routes.Add(homeroute);
+
+				route.Stroke = new Pen(Color.Yellow, 4);
+				route.Stroke.DashStyle = DashStyle.Custom;
+				polygonsOverlay.Routes.Add(route);
+			}
+		}
+
 
 		private void updateRowNumbers()
 		{
@@ -1556,7 +1684,7 @@ namespace FooApplication
 			myMap.Focus();
 		}
 
-		private MavlinkInterface port = new MavlinkInterface();
+		
 
 		private void saveWPs()
 		{
@@ -1843,5 +1971,91 @@ namespace FooApplication
 					});
 			}
 		}
+
+
+		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			TXT_homealt.Text = "0";
+			TXT_homelat.Text = MouseDownStart.Lat.ToString();
+			TXT_homelng.Text = MouseDownStart.Lng.ToString();
+		}
+
+
+		private void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			int no = 0;
+			if (currentRectMarker != null)
+			{
+				if (int.TryParse(currentRectMarker.InnerMarker.Tag.ToString(), out no))
+				{
+					try
+					{
+						Commands.Rows.RemoveAt(no - 1); // home is 0
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+						MessageBox.Show("error selecting wp, please try again.");
+					}
+				}
+				else if (int.TryParse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out no))
+				{
+					try
+					{
+						drawnPolygon.Points.RemoveAt(no - 1);
+						drawnPolygonsOverlay.Markers.Clear();
+
+						int a = 1;
+						foreach (PointLatLng pnt in drawnPolygon.Points)
+						{
+							addpolygonmarkergrid(a.ToString(), pnt.Lng, pnt.Lat, 0);
+							a++;
+						}
+
+						myMap.UpdatePolygonLocalPosition(drawnPolygon);
+
+						myMap.Invalidate();
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+						MessageBox.Show("Remove point Failed. Please try again.");
+					}
+				}
+			}
+			else if (currentRallyPt != null)
+			{
+				rallypointOverlay.Markers.Remove(currentRallyPt);
+				myMap.Invalidate(true);
+
+				currentRallyPt = null;
+			}
+			else if (groupmarkers.Count > 0)
+			{
+				for (int a = Commands.Rows.Count; a > 0; a--)
+				{
+					try
+					{
+						if (groupmarkers.Contains(a))
+							Commands.Rows.RemoveAt(a - 1); // home is 0
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+						MessageBox.Show("error selecting wp, please try again.");
+					}
+				}
+
+				groupmarkers.Clear();
+			}
+
+
+			if (currentMarker != null)
+				currentRectMarker = null;
+
+			writeKML();
+		}
+
+
 	}
 }
