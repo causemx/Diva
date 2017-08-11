@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -75,6 +76,14 @@ namespace FooApplication
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 		private MavlinkInterface port = new MavlinkInterface();
+
+		// Thread setup
+		private Thread SerialReaderThread = null;
+		private bool serialThread = false;
+
+		private DateTime heartbeatSend = DateTime.Now;
+		private DateTime lastupdate = DateTime.Now;
+		private DateTime lastdata = DateTime.MinValue;
 
 		public enum altmode
 		{
@@ -159,6 +168,125 @@ namespace FooApplication
 			{
 				log.Error(ex);
 			}
+		}
+
+
+		private void SerialReader()
+		{
+			if (serialThread == true)
+				return;
+
+			serialThread = true;
+
+
+			while (serialThread)
+			{
+				Thread.Sleep(10);
+
+				if (heartbeatSend.Second != DateTime.Now.Second)
+				{
+					MAVLink.mavlink_heartbeat_t htb = new MAVLink.mavlink_heartbeat_t()
+					{
+						type = (byte)MAVLink.MAV_TYPE.GCS,
+						autopilot = (byte)MAVLink.MAV_AUTOPILOT.INVALID,
+						mavlink_version = 3 // MAVLink.MAVLINK_VERSION
+					};
+
+					if (!port.BaseStream.IsOpen) continue;
+					port.sendPacket(htb, port.sysid, port.compid);
+
+				}
+
+				heartbeatSend = DateTime.Now;
+
+				if (!port.BaseStream.IsOpen || port.giveComport == true)
+				{
+					if (!port.BaseStream.IsOpen)
+					{
+						System.Threading.Thread.Sleep(1000);
+					}
+				}
+
+				UpdateCurrentSettings(true);
+				//updateMapPosition(new PointLatLng(24.7726628, 121.0468916));
+
+
+
+				// PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+				// gMapControl1.HoldInvalidation = true;
+
+				//updateRoutePosition();
+				// updateClearRoutesMarkers();
+
+
+
+			}
+
+			Console.WriteLine("serialreader done");
+
+		}
+
+		public void UpdateCurrentSettings(bool updatenow)
+		{
+			MAVLink.MAVLinkMessage mavlinkMessage = port.readPacket();
+
+			lock (this)
+			{
+				if (DateTime.Now > lastupdate.AddMilliseconds(50) || updatenow) // 20 hz
+				{
+					lastupdate = DateTime.Now;
+
+
+					// re-request streams
+					if (!(lastdata.AddSeconds(8) > DateTime.Now) && port.BaseStream.IsOpen)
+					{
+						try
+						{
+							port.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, 1);
+						}
+						catch
+						{
+							Console.WriteLine("Failed to request rates");
+						}
+						lastdata = DateTime.Now.AddSeconds(30); // prevent flooding
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.HEARTBEAT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
+
+							Console.WriteLine("mode: " + hb.custom_mode);
+							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
+							{
+								
+							}
+						}
+					}
+
+				}
+			}
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+			SerialReaderThread = new Thread(SerialReader)
+			{
+				IsBackground = true,
+				Name = "Main Serial reader",
+				Priority = ThreadPriority.AboveNormal
+			};
+			SerialReaderThread.Start();
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+			serialThread = false;
+			if (SerialReaderThread != null)
+				SerialReaderThread.Join();
 		}
 
 		private void updateCMDParams()
@@ -1967,7 +2095,7 @@ namespace FooApplication
 					{
 						target_system = port.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)4,
+						custom_mode = (uint)3,
 					});
 			}
 		}

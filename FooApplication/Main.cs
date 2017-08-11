@@ -194,7 +194,7 @@ namespace FooApplication
 						}
 						catch
 						{
-							log.Error("Failed to request rates");
+							Console.WriteLine("Failed to request rates");
 						}
 						lastdata = DateTime.Now.AddSeconds(30); // prevent flooding
 					}
