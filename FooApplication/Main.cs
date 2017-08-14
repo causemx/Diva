@@ -64,7 +64,7 @@ namespace FooApplication
 			// TODO: put it into setting page futrue.
 			comPort.MAV.GuidedMode.x = 0;
 			comPort.MAV.GuidedMode.y = 0;
-			comPort.MAV.GuidedMode.z = 2;
+			comPort.MAV.GuidedMode.z = 5;
 		}
 
 		private void SerialReader()
@@ -78,7 +78,7 @@ namespace FooApplication
 			
 			while (serialThread)
 			{
-				Thread.Sleep(100);
+				Thread.Sleep(10);
 
 				if (heartbeatSend.Second != DateTime.Now.Second)
 				{
@@ -105,8 +105,7 @@ namespace FooApplication
 				}
 
 				UpdateCurrentSettings(true);
-				// updateMapPosition(new PointLatLng(24.7726628, 121.0468916));
-				updateMapPosition(new PointLatLng(current_lat, current_lng));
+		
 
 				// Update the tracking point
 				if (route == null)
@@ -135,13 +134,6 @@ namespace FooApplication
 
 				if (!this.IsHandleCreated)
 					continue;
-
-				//updateDronePosition(new PointLatLng(24.7726628, 121.0468916));
-				updateDronePosition(new PointLatLng(current_lat, current_lng));
-				//updateRoutePosition();
-				// updateClearRoutesMarkers();
-
-
 
 			}
 
@@ -191,10 +183,6 @@ namespace FooApplication
 						try
 						{
 							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTRA1, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTRA2, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTRA3, REQUEST_DATA_STREAM_RATE);
 							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.POSITION, REQUEST_DATA_STREAM_RATE);
 						}
 						catch
@@ -230,7 +218,7 @@ namespace FooApplication
 						if (mavlinkMessage != null)
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-
+							TXT_Mode.Text = (hb.custom_mode).ToString();
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
 								// skip gcs hb's
@@ -249,6 +237,8 @@ namespace FooApplication
 							float load = (float)sysstatus.load / 10.0f;
 
 							float battery_voltage = (float)sysstatus.voltage_battery / 1000.0f;
+							TXT_Battery.Text = battery_voltage.ToString();
+
 							byte battery_remaining = sysstatus.battery_remaining;
 							float current = (float)sysstatus.current_battery / 100.0f;
 
@@ -291,9 +281,7 @@ namespace FooApplication
 								double lat = loc.lat / 10000000.0;
 								double lng = loc.lon / 10000000.0;
 
-								current_lat = lat;
-								current_lng = lng;
-
+								updateMapPosition(new PointLatLng(lat, lng));
 
 								double altasl = loc.alt / 1000.0f;
 
@@ -311,10 +299,10 @@ namespace FooApplication
 		private void gMapControl1_Load(object sender, EventArgs e)
 		{
 
-			gmapControl.MapProvider = OpenStreet4UMapProvider.Instance;
+			gmapControl.MapProvider = BingSatelliteMapProvider.Instance;
 			gmapControl.MaxZoom = 18;
 			gmapControl.MinZoom = 3;
-			gmapControl.Zoom = 10;
+			gmapControl.Zoom = 16;
 
 
 			routes = new GMapOverlay("routes");

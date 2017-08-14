@@ -104,11 +104,11 @@ namespace FooApplication.Mavlink
 		public MavlinkInterface()
 		{
 			_mav = new MavStatus(this, 1, 0);
-			BaseStream = new SerialPort();
-			BaseStream.PortName = COMPORT_PORT_NAME;
-			BaseStream.BaudRate = COMPORT_BAUDRATE;
+			//BaseStream = new SerialPort();
+			//BaseStream.PortName = COMPORT_PORT_NAME;
+			//BaseStream.BaudRate = COMPORT_BAUDRATE;
 
-			// BaseStream = new UdpSerial();
+			BaseStream = new UdpSerial();
 		}
 
 		public void open()

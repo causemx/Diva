@@ -30,7 +30,11 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.myMap = new FooApplication.Controls.MyGMap();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.btn_takeoff = new System.Windows.Forms.Button();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.BUT_Write_wp = new System.Windows.Forms.Button();
@@ -55,12 +59,9 @@
 			this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
-			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// myMap
@@ -74,6 +75,7 @@
 			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
 			this.myMap.LevelsKeepInMemmory = 5;
 			this.myMap.Location = new System.Drawing.Point(0, 0);
+			this.myMap.Margin = new System.Windows.Forms.Padding(4);
 			this.myMap.MarkersEnabled = true;
 			this.myMap.MaxZoom = 2;
 			this.myMap.MinZoom = 2;
@@ -86,13 +88,37 @@
 			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
 			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
 			this.myMap.ShowTileGridLines = false;
-			this.myMap.Size = new System.Drawing.Size(1008, 537);
+			this.myMap.Size = new System.Drawing.Size(1512, 806);
 			this.myMap.TabIndex = 0;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
 			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ClearMissionToolStripMenuItem,
+            this.setHomeHereToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(224, 97);
+			// 
+			// ClearMissionToolStripMenuItem
+			// 
+			this.ClearMissionToolStripMenuItem.Name = "ClearMissionToolStripMenuItem";
+			this.ClearMissionToolStripMenuItem.Size = new System.Drawing.Size(223, 30);
+			this.ClearMissionToolStripMenuItem.Text = "Clear Mission";
+			this.ClearMissionToolStripMenuItem.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
+			// 
+			// setHomeHereToolStripMenuItem
+			// 
+			this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
+			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(223, 30);
+			this.setHomeHereToolStripMenuItem.Text = "Set Home Here";
+			this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
+			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.btn_takeoff);
 			this.panel1.Controls.Add(this.TXT_Mode);
 			this.panel1.Controls.Add(this.label3);
 			this.panel1.Controls.Add(this.BUT_Write_wp);
@@ -107,16 +133,29 @@
 			this.panel1.Controls.Add(this.label1);
 			this.panel1.Controls.Add(this.Commands);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 428);
+			this.panel1.Location = new System.Drawing.Point(0, 642);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1008, 109);
+			this.panel1.Size = new System.Drawing.Size(1512, 164);
 			this.panel1.TabIndex = 1;
+			// 
+			// btn_takeoff
+			// 
+			this.btn_takeoff.Location = new System.Drawing.Point(1246, 26);
+			this.btn_takeoff.Margin = new System.Windows.Forms.Padding(4);
+			this.btn_takeoff.Name = "btn_takeoff";
+			this.btn_takeoff.Size = new System.Drawing.Size(112, 34);
+			this.btn_takeoff.TabIndex = 19;
+			this.btn_takeoff.Text = "Takeoff";
+			this.btn_takeoff.UseVisualStyleBackColor = true;
+			this.btn_takeoff.Click += new System.EventHandler(this.btn_takeoff_Click);
 			// 
 			// TXT_Mode
 			// 
-			this.TXT_Mode.Location = new System.Drawing.Point(646, 5);
+			this.TXT_Mode.Location = new System.Drawing.Point(969, 8);
+			this.TXT_Mode.Margin = new System.Windows.Forms.Padding(4);
 			this.TXT_Mode.Name = "TXT_Mode";
-			this.TXT_Mode.Size = new System.Drawing.Size(100, 22);
+			this.TXT_Mode.Size = new System.Drawing.Size(148, 29);
 			this.TXT_Mode.TabIndex = 18;
 			this.TXT_Mode.Text = "NULL";
 			// 
@@ -124,17 +163,19 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(585, 4);
+			this.label3.Location = new System.Drawing.Point(878, 6);
+			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(55, 23);
+			this.label3.Size = new System.Drawing.Size(84, 36);
 			this.label3.TabIndex = 17;
 			this.label3.Text = "Mode";
 			// 
 			// BUT_Write_wp
 			// 
-			this.BUT_Write_wp.Location = new System.Drawing.Point(831, 45);
+			this.BUT_Write_wp.Location = new System.Drawing.Point(1246, 68);
+			this.BUT_Write_wp.Margin = new System.Windows.Forms.Padding(4);
 			this.BUT_Write_wp.Name = "BUT_Write_wp";
-			this.BUT_Write_wp.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Write_wp.Size = new System.Drawing.Size(112, 34);
 			this.BUT_Write_wp.TabIndex = 16;
 			this.BUT_Write_wp.Text = "Write_WP";
 			this.BUT_Write_wp.UseVisualStyleBackColor = true;
@@ -142,9 +183,10 @@
 			// 
 			// BUT_Auto
 			// 
-			this.BUT_Auto.Location = new System.Drawing.Point(912, 74);
+			this.BUT_Auto.Location = new System.Drawing.Point(1368, 111);
+			this.BUT_Auto.Margin = new System.Windows.Forms.Padding(4);
 			this.BUT_Auto.Name = "BUT_Auto";
-			this.BUT_Auto.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Auto.Size = new System.Drawing.Size(112, 34);
 			this.BUT_Auto.TabIndex = 15;
 			this.BUT_Auto.Text = "Auto";
 			this.BUT_Auto.UseVisualStyleBackColor = true;
@@ -152,9 +194,10 @@
 			// 
 			// BUT_Arm
 			// 
-			this.BUT_Arm.Location = new System.Drawing.Point(912, 45);
+			this.BUT_Arm.Location = new System.Drawing.Point(1368, 68);
+			this.BUT_Arm.Margin = new System.Windows.Forms.Padding(4);
 			this.BUT_Arm.Name = "BUT_Arm";
-			this.BUT_Arm.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Arm.Size = new System.Drawing.Size(112, 34);
 			this.BUT_Arm.TabIndex = 14;
 			this.BUT_Arm.Text = "Arm";
 			this.BUT_Arm.UseVisualStyleBackColor = true;
@@ -162,9 +205,10 @@
 			// 
 			// BUT_Connect
 			// 
-			this.BUT_Connect.Location = new System.Drawing.Point(912, 16);
+			this.BUT_Connect.Location = new System.Drawing.Point(1368, 24);
+			this.BUT_Connect.Margin = new System.Windows.Forms.Padding(4);
 			this.BUT_Connect.Name = "BUT_Connect";
-			this.BUT_Connect.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Connect.Size = new System.Drawing.Size(112, 34);
 			this.BUT_Connect.TabIndex = 13;
 			this.BUT_Connect.Text = "Connect";
 			this.BUT_Connect.UseVisualStyleBackColor = true;
@@ -172,9 +216,10 @@
 			// 
 			// TXT_DefaultAlt
 			// 
-			this.TXT_DefaultAlt.Location = new System.Drawing.Point(469, 3);
+			this.TXT_DefaultAlt.Location = new System.Drawing.Point(704, 4);
+			this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4);
 			this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
-			this.TXT_DefaultAlt.Size = new System.Drawing.Size(100, 22);
+			this.TXT_DefaultAlt.Size = new System.Drawing.Size(148, 29);
 			this.TXT_DefaultAlt.TabIndex = 12;
 			this.TXT_DefaultAlt.Text = "10";
 			// 
@@ -182,40 +227,45 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(392, 4);
+			this.label2.Location = new System.Drawing.Point(588, 6);
+			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(71, 23);
+			this.label2.Size = new System.Drawing.Size(109, 36);
 			this.label2.TabIndex = 11;
 			this.label2.Text = "Altitude";
 			// 
 			// TXT_homealt
 			// 
-			this.TXT_homealt.Location = new System.Drawing.Point(275, 4);
+			this.TXT_homealt.Location = new System.Drawing.Point(412, 6);
+			this.TXT_homealt.Margin = new System.Windows.Forms.Padding(4);
 			this.TXT_homealt.Name = "TXT_homealt";
-			this.TXT_homealt.Size = new System.Drawing.Size(100, 22);
+			this.TXT_homealt.Size = new System.Drawing.Size(148, 29);
 			this.TXT_homealt.TabIndex = 10;
 			// 
 			// TXT_homelng
 			// 
-			this.TXT_homelng.Location = new System.Drawing.Point(169, 3);
+			this.TXT_homelng.Location = new System.Drawing.Point(254, 4);
+			this.TXT_homelng.Margin = new System.Windows.Forms.Padding(4);
 			this.TXT_homelng.Name = "TXT_homelng";
-			this.TXT_homelng.Size = new System.Drawing.Size(100, 22);
+			this.TXT_homelng.Size = new System.Drawing.Size(148, 29);
 			this.TXT_homelng.TabIndex = 9;
 			// 
 			// TXT_homelat
 			// 
-			this.TXT_homelat.Location = new System.Drawing.Point(63, 3);
+			this.TXT_homelat.Location = new System.Drawing.Point(94, 4);
+			this.TXT_homelat.Margin = new System.Windows.Forms.Padding(4);
 			this.TXT_homelat.Name = "TXT_homelat";
-			this.TXT_homelat.Size = new System.Drawing.Size(100, 22);
+			this.TXT_homelat.Size = new System.Drawing.Size(148, 29);
 			this.TXT_homelat.TabIndex = 8;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(3, 3);
+			this.label1.Location = new System.Drawing.Point(4, 4);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(56, 23);
+			this.label1.Size = new System.Drawing.Size(85, 36);
 			this.label1.TabIndex = 7;
 			this.label1.Text = "Home";
 			// 
@@ -240,11 +290,12 @@
             this.Column5,
             this.Delete,
             this.TagData});
-			this.Commands.Location = new System.Drawing.Point(0, 29);
+			this.Commands.Location = new System.Drawing.Point(0, 44);
+			this.Commands.Margin = new System.Windows.Forms.Padding(4);
 			this.Commands.Name = "Commands";
 			this.Commands.RowHeadersWidth = 50;
 			this.Commands.RowTemplate.Height = 24;
-			this.Commands.Size = new System.Drawing.Size(707, 80);
+			this.Commands.Size = new System.Drawing.Size(1060, 120);
 			this.Commands.TabIndex = 6;
 			this.Commands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.Commands.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -353,41 +404,20 @@
 			this.TagData.Visible = false;
 			this.TagData.Width = 50;
 			// 
-			// contextMenuStrip1
-			// 
-			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteWPToolStripMenuItem,
-            this.setHomeHereToolStripMenuItem});
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(163, 70);
-			// 
-			// setHomeHereToolStripMenuItem
-			// 
-			this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
-			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-			this.setHomeHereToolStripMenuItem.Text = "Set Home Here";
-			this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
-			// 
-			// deleteWPToolStripMenuItem
-			// 
-			this.deleteWPToolStripMenuItem.Name = "deleteWPToolStripMenuItem";
-			this.deleteWPToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-			this.deleteWPToolStripMenuItem.Text = "Delete WP";
-			this.deleteWPToolStripMenuItem.Click += new System.EventHandler(this.deleteWPToolStripMenuItem_Click);
-			// 
 			// Planner
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1008, 537);
+			this.ClientSize = new System.Drawing.Size(1512, 806);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.myMap);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "Planner";
 			this.Text = "Planner";
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
-			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -421,7 +451,8 @@
 		private System.Windows.Forms.TextBox TXT_Mode;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem deleteWPToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ClearMissionToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
+		private System.Windows.Forms.Button btn_takeoff;
 	}
 }

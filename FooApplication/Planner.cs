@@ -68,6 +68,9 @@ namespace FooApplication
 		private bool quickadd = false;
 		private bool sethome = false;
 		private int selectedrow = 0;
+		private double current_lat;
+		private double current_lng;
+	
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<Locationwp>> history = new List<List<Locationwp>>();
@@ -208,7 +211,7 @@ namespace FooApplication
 				}
 
 				UpdateCurrentSettings(true);
-				//updateMapPosition(new PointLatLng(24.7726628, 121.0468916));
+				//updateMapPosition(new PointLatLng(current_lat, current_lng));
 
 
 
@@ -224,6 +227,30 @@ namespace FooApplication
 
 			Console.WriteLine("serialreader done");
 
+		}
+
+		DateTime lastmapposchange = DateTime.MinValue;
+		private void updateMapPosition(PointLatLng currentloc)
+		{
+			Invoke((MethodInvoker)delegate
+			{
+				try
+				{
+					if (lastmapposchange.Second != DateTime.Now.Second)
+					{
+						if (Math.Abs(currentloc.Lat - myMap.Position.Lat) > 0.0001 || Math.Abs(currentloc.Lng - myMap.Position.Lng) > 0.0001)
+						{
+							myMap.Position = currentloc;
+						}
+
+						lastmapposchange = DateTime.Now;
+					}
+					//hud1.Refresh();
+				}
+				catch
+				{
+				}
+			});
 		}
 
 		public void UpdateCurrentSettings(bool updatenow)
@@ -243,6 +270,7 @@ namespace FooApplication
 						try
 						{
 							port.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, 1);
+							port.getDatastream(MAVLink.MAV_DATA_STREAM.POSITION, 1);
 						}
 						catch
 						{
@@ -256,11 +284,41 @@ namespace FooApplication
 						if (mavlinkMessage != null)
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-
-							Console.WriteLine("mode: " + hb.custom_mode);
+							TXT_Mode.Text = (hb.custom_mode).ToString();
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
 								
+							}
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GLOBAL_POSITION_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var loc = mavlinkMessage.ToStructure<MAVLink.mavlink_global_position_int_t>();
+
+							// the new arhs deadreckoning may send 0 alt and 0 long. check for and undo
+
+							float alt = loc.relative_alt / 1000.0f;
+
+							bool useLocation = true;
+							if (loc.lat == 0 && loc.lon == 0)
+							{
+								useLocation = false;
+							}
+							else
+							{
+								double lat = loc.lat / 10000000.0;
+								double lng = loc.lon / 10000000.0;
+
+								updateMapPosition(new PointLatLng(lat, lng));
+
+								double altasl = loc.alt / 1000.0f;
+
+								double vx = loc.vx * 0.01;
+								double vy = loc.vy * 0.01;
+								double vz = loc.vz * 0.01;
 							}
 						}
 					}
@@ -2061,6 +2119,47 @@ namespace FooApplication
 			port.open();
 		}
 
+		private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			quickadd = true;
+
+			// mono fix
+			Commands.CurrentCell = null;
+
+			Commands.Rows.Clear();
+
+			selectedrow = 0;
+			quickadd = false;
+			writeKML();
+		}
+
+		private void btn_takeoff_Click(object sender, EventArgs e)
+		{
+			if (port.BaseStream.IsOpen)
+			{
+				// flyToHereAltToolStripMenuItem_Click(null, null);
+
+				port.setMode(
+					port.sysid,
+					port.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = port.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)4,
+					});
+
+				try
+				{
+					port.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+				}
+				catch
+				{
+					log.Info("unknown takeoff failed");
+				}
+			}
+		}
+
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
 			if (!port.BaseStream.IsOpen)
@@ -2111,77 +2210,7 @@ namespace FooApplication
 
 		private void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			int no = 0;
-			if (currentRectMarker != null)
-			{
-				if (int.TryParse(currentRectMarker.InnerMarker.Tag.ToString(), out no))
-				{
-					try
-					{
-						Commands.Rows.RemoveAt(no - 1); // home is 0
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show("error selecting wp, please try again.");
-					}
-				}
-				else if (int.TryParse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out no))
-				{
-					try
-					{
-						drawnPolygon.Points.RemoveAt(no - 1);
-						drawnPolygonsOverlay.Markers.Clear();
 
-						int a = 1;
-						foreach (PointLatLng pnt in drawnPolygon.Points)
-						{
-							addpolygonmarkergrid(a.ToString(), pnt.Lng, pnt.Lat, 0);
-							a++;
-						}
-
-						myMap.UpdatePolygonLocalPosition(drawnPolygon);
-
-						myMap.Invalidate();
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show("Remove point Failed. Please try again.");
-					}
-				}
-			}
-			else if (currentRallyPt != null)
-			{
-				rallypointOverlay.Markers.Remove(currentRallyPt);
-				myMap.Invalidate(true);
-
-				currentRallyPt = null;
-			}
-			else if (groupmarkers.Count > 0)
-			{
-				for (int a = Commands.Rows.Count; a > 0; a--)
-				{
-					try
-					{
-						if (groupmarkers.Contains(a))
-							Commands.Rows.RemoveAt(a - 1); // home is 0
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show("error selecting wp, please try again.");
-					}
-				}
-
-				groupmarkers.Clear();
-			}
-
-
-			if (currentMarker != null)
-				currentRectMarker = null;
-
-			writeKML();
 		}
 
 
