@@ -94,6 +94,7 @@ namespace FooApplication.Comms
 
 			client.Close();
 
+
 			try
 			{
 				if (client != null)
@@ -122,8 +123,10 @@ namespace FooApplication.Comms
 
 				if (BytesToRead > 0)
 					break;
+
 					
 			}**/
+
 
 			// if (BytesToRead == 0)
 			// 	return; 

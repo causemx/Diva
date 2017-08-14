@@ -59,6 +59,9 @@ namespace FooApplication
 		public Main()
 		{
 			InitializeComponent();
+			
+
+			// TODO: put it into setting page futrue.
 			comPort.MAV.GuidedMode.x = 0;
 			comPort.MAV.GuidedMode.y = 0;
 			comPort.MAV.GuidedMode.z = 2;
@@ -196,7 +199,7 @@ namespace FooApplication
 						}
 						catch
 						{
-							log.Error("Failed to request rates");
+							Console.WriteLine("Failed to request rates");
 						}
 						lastdata = DateTime.Now.AddSeconds(30); // prevent flooding
 					}
@@ -307,10 +310,12 @@ namespace FooApplication
 
 		private void gMapControl1_Load(object sender, EventArgs e)
 		{
+
 			gmapControl.MapProvider = OpenStreet4UMapProvider.Instance;
 			gmapControl.MaxZoom = 18;
 			gmapControl.MinZoom = 3;
 			gmapControl.Zoom = 10;
+
 
 			routes = new GMapOverlay("routes");
 			markers = new GMapOverlay("markers");

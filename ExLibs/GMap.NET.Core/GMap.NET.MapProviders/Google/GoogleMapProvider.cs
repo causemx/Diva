@@ -41,7 +41,7 @@ namespace GMap.NET.MapProviders
 		/// Must provide either API key or Maps for Work credentials.
 		/// </summary>
 		// public string ApiKey = string.Empty;
-		public string ApiKey = " AIzaSyCRuQra1KkRZRpHwjF2EcxIdsjt9aWgSYs ";
+		public string ApiKey = " AIzaSyC-EIDHuHlbcav2W2NamMq0ZLmbVkERARc ";
 
 		#region GMapProvider Members
 		public override Guid Id

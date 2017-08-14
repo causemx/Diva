@@ -8,6 +8,21 @@ namespace FooApplication.Utilities
 {
 	public struct Locationwp
 	{
+
+		private ushort _seq;
+		private byte _frame;
+		public object Tag;
+
+		public ushort id;               // command id
+		public byte options;
+		public float p1;                // param 1
+		public float p2;                // param 2
+		public float p3;                // param 3
+		public float p4;                // param 4
+		public double lat;              // Lattitude * 10**7
+		public double lng;              // Longitude * 10**7
+		public float alt;               // Altitude in centimeters (meters * 100)
+
 		public Locationwp Set(double lat, double lng, double alt, ushort id)
 		{
 			this.lat = lat;
@@ -142,18 +157,6 @@ namespace FooApplication.Utilities
 			}
 		}
 
-		private ushort _seq;
-		private byte _frame;
-		public object Tag;
-
-		public ushort id;               // command id
-		public byte options;
-		public float p1;                // param 1
-		public float p2;                // param 2
-		public float p3;                // param 3
-		public float p4;                // param 4
-		public double lat;              // Lattitude * 10**7
-		public double lng;              // Longitude * 10**7
-		public float alt;               // Altitude in centimeters (meters * 100)
+		
 	};
 }
