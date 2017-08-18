@@ -88,7 +88,7 @@ namespace FooApplication.Comms
 		{
 			if (client.Client.Connected)
 			{
-				log.Info("UDPSerial socket already open");
+				log.Info("udpserial socket already open");
 				return;
 			}
 
@@ -123,16 +123,20 @@ namespace FooApplication.Comms
 
 				if (BytesToRead > 0)
 					break;
-			}
 
-			if (BytesToRead == 0)
-				return;*/
+					
+			}**/
 
+
+			// if (BytesToRead == 0)
+			// 	return; 
+			
 			try
 			{
 				client.Receive(ref RemoteIpEndPoint);
 				log.InfoFormat("UDPSerial connecting to {0} : {1}", RemoteIpEndPoint.Address, RemoteIpEndPoint.Port);
 				_isopen = true;
+				
 			}
 			catch (Exception ex)
 			{

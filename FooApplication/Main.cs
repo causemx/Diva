@@ -64,7 +64,7 @@ namespace FooApplication
 			// TODO: put it into setting page futrue.
 			comPort.MAV.GuidedMode.x = 0;
 			comPort.MAV.GuidedMode.y = 0;
-			comPort.MAV.GuidedMode.z = 1;
+			comPort.MAV.GuidedMode.z = 5;
 		}
 
 		private void SerialReader()
@@ -78,7 +78,7 @@ namespace FooApplication
 			
 			while (serialThread)
 			{
-				Thread.Sleep(1000);
+				Thread.Sleep(10);
 
 				if (heartbeatSend.Second != DateTime.Now.Second)
 				{
@@ -105,8 +105,7 @@ namespace FooApplication
 				}
 
 				UpdateCurrentSettings(true);
-				updateMapPosition(new PointLatLng(24.7726628, 121.0468916));
-
+		
 
 				// Update the tracking point
 				if (route == null)
@@ -136,12 +135,6 @@ namespace FooApplication
 				if (!this.IsHandleCreated)
 					continue;
 
-				updateDronePosition(new PointLatLng(24.7726628, 121.0468916));
-				//updateRoutePosition();
-				// updateClearRoutesMarkers();
-
-
-
 			}
 
 			Console.WriteLine("serialreader done");
@@ -169,8 +162,12 @@ namespace FooApplication
 				SerialReaderThread.Join();
 		}
 
+		internal double current_lat = 0;
+		internal double current_lng = 0;
+
 		public void UpdateCurrentSettings(bool updatenow)
 		{
+
 			MAVLink.MAVLinkMessage mavlinkMessage = comPort.readPacket();
 
 			lock (this)
@@ -186,10 +183,6 @@ namespace FooApplication
 						try
 						{
 							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTRA1, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTRA2, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.EXTRA3, REQUEST_DATA_STREAM_RATE);
 							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.POSITION, REQUEST_DATA_STREAM_RATE);
 						}
 						catch
@@ -225,7 +218,7 @@ namespace FooApplication
 						if (mavlinkMessage != null)
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-
+							TXT_Mode.Text = (hb.custom_mode).ToString();
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
 								// skip gcs hb's
@@ -244,6 +237,8 @@ namespace FooApplication
 							float load = (float)sysstatus.load / 10.0f;
 
 							float battery_voltage = (float)sysstatus.voltage_battery / 1000.0f;
+							TXT_Battery.Text = battery_voltage.ToString();
+
 							byte battery_remaining = sysstatus.battery_remaining;
 							float current = (float)sysstatus.current_battery / 100.0f;
 
@@ -280,12 +275,13 @@ namespace FooApplication
 							if (loc.lat == 0 && loc.lon == 0)
 							{
 								useLocation = false;
-								Console.WriteLine("no position");
 							}
 							else
 							{
 								double lat = loc.lat / 10000000.0;
 								double lng = loc.lon / 10000000.0;
+
+								updateMapPosition(new PointLatLng(lat, lng));
 
 								double altasl = loc.alt / 1000.0f;
 
@@ -303,7 +299,11 @@ namespace FooApplication
 		private void gMapControl1_Load(object sender, EventArgs e)
 		{
 
-			gmapControl.MapProvider = GoogleSatelliteMapProvider.Instance;
+			gmapControl.MapProvider = BingSatelliteMapProvider.Instance;
+			gmapControl.MaxZoom = 18;
+			gmapControl.MinZoom = 3;
+			gmapControl.Zoom = 16;
+
 
 			routes = new GMapOverlay("routes");
 			markers = new GMapOverlay("markers");
@@ -316,9 +316,8 @@ namespace FooApplication
 
 		private void gMapControl1_MouseDown(object sender, MouseEventArgs e)
 		{
-			Console.WriteLine("mouse down");
-
-			MouseDownStart = gMapControl1.FromLocalToLatLng(e.X, e.Y);
+			Console.WriteLine(SerialReaderThread.IsAlive);
+			MouseDownStart = gmapControl.FromLocalToLatLng(e.X, e.Y);
 
 			if (ModifierKeys == Keys.Control)
 			{
@@ -341,7 +340,6 @@ namespace FooApplication
 
 		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Console.WriteLine("go here");
 			
 			if (!comPort.BaseStream.IsOpen)
 			{
@@ -371,6 +369,7 @@ namespace FooApplication
 			gotohere.alt = comPort.MAV.GuidedMode.z; // back to m
 			gotohere.lat = (MouseDownStart.Lat);
 			gotohere.lng = (MouseDownStart.Lng);
+			
 
 			try
 			{
@@ -386,6 +385,7 @@ namespace FooApplication
 
 		private void updateDronePosition(PointLatLng loc)
 		{
+
 			Invoke((MethodInvoker)delegate
 			{
 				try
@@ -454,8 +454,18 @@ namespace FooApplication
 				log.Info("basestream have opened");
 				return;
 			}
-			
+
 			// arm the MAV
+			comPort.setMode(
+					comPort.sysid,
+					comPort.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = comPort.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)0,
+					});
+
 			try
 			{
 				bool ans = comPort.doARM(true);
@@ -486,8 +496,7 @@ namespace FooApplication
 
 				try
 				{
-					// comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, comPort.MAV.GuidedMode.z);
-					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 1);
+					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, comPort.MAV.GuidedMode.z);
 				}
 				catch
 				{

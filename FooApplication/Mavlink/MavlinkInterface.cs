@@ -20,7 +20,7 @@ namespace FooApplication.Mavlink
 	{
 		public static readonly int SLEEP_TIME_SETMODE = 10;
 		public static readonly double CONNECT_TIMEOUT_SECONDS = 30;
-		public static readonly string COMPORT_PORT_NAME = "com4";
+		public static readonly string COMPORT_PORT_NAME = "com3";
 		public static readonly int COMPORT_BAUDRATE = 57600;
 
 		public bool giveComport
@@ -107,6 +107,8 @@ namespace FooApplication.Mavlink
 			BaseStream = new SerialPort();
 			BaseStream.PortName = COMPORT_PORT_NAME;
 			BaseStream.BaudRate = COMPORT_BAUDRATE;
+
+			// BaseStream = new UdpSerial();
 		}
 
 		public void open()
@@ -1136,7 +1138,7 @@ namespace FooApplication.Mavlink
 					}
 					else
 					{
-						Console.WriteLine(DateTime.Now + " PC setwp " + buffer.msgid);
+						// Console.WriteLine(DateTime.Now + " PC setwp " + buffer.msgid);
 					}
 				}
 			}
@@ -1242,6 +1244,206 @@ namespace FooApplication.Mavlink
 			}
 
 			// return MAV_MISSION_RESULT.MAV_MISSION_INVALID;
+		}
+
+		/// <summary>
+		/// Returns WP count
+		/// </summary>
+		/// <returns></returns>
+		public ushort getWPCount()
+		{
+			giveComport = true;
+			MAVLinkMessage buffer;
+			mavlink_mission_request_list_t req = new mavlink_mission_request_list_t();
+
+			req.target_system = MAV.sysid;
+			req.target_component = MAV.compid;
+
+			// request list
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req, sysid, compid);
+
+			DateTime start = DateTime.Now;
+			int retrys = 6;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("getWPCount Retry " + retrys + " - giv com " + giveComport);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req, sysid, compid);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					//return (byte)int.Parse(param["WP_TOTAL"].ToString());
+					throw new TimeoutException("Timeout on read - getWPCount");
+				}
+
+				buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
+					{
+						var count = buffer.ToStructure<mavlink_mission_count_t>();
+
+
+						log.Info("wpcount: " + count.count);
+						giveComport = false;
+						return count.count; // should be ushort, but apm has limited wp count < byte
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets specfied WP
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns>WP</returns>
+		public Locationwp getWP(ushort index)
+		{
+			while (giveComport)
+			{
+				System.Threading.Thread.Sleep(100);
+			}
+
+			// bool use_int = (MAV.cs.capabilities & MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
+			bool use_int = true;
+
+			object req;
+
+			if (use_int)
+			{
+				mavlink_mission_request_int_t reqi = new mavlink_mission_request_int_t();
+
+				reqi.target_system = MAV.sysid;
+				reqi.target_component = MAV.compid;
+
+				reqi.seq = index;
+
+				// request
+				generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, reqi, sysid, compid);
+
+				req = reqi;
+			}
+			else
+			{
+				mavlink_mission_request_t reqf = new mavlink_mission_request_t();
+
+				reqf.target_system = MAV.sysid;
+				reqf.target_component = MAV.compid;
+
+				reqf.seq = index;
+
+				// request
+				generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, reqf, sysid, compid);
+
+				req = reqf;
+			}
+
+			giveComport = true;
+			Locationwp loc = new Locationwp();
+
+			DateTime start = DateTime.Now;
+			int retrys = 5;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(3500) > DateTime.Now)) // apm times out after 5000ms
+				{
+					if (retrys > 0)
+					{
+						log.Info("getWP Retry " + retrys);
+						if (use_int)
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, req, sysid, compid);
+						else
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, req, sysid, compid);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - getWP");
+				}
+				//Console.WriteLine("getwp read " + DateTime.Now.Millisecond);
+				MAVLinkMessage buffer = readPacket();
+				//Console.WriteLine("getwp readend " + DateTime.Now.Millisecond);
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
+					{
+						//Console.WriteLine("getwp ans " + DateTime.Now.Millisecond);
+
+						var wp = buffer.ToStructure<mavlink_mission_item_t>();
+
+						// received a packet, but not what we requested
+						if (index != wp.seq)
+						{
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, req, sysid, compid);
+							continue;
+						}
+
+						loc.options = (byte)(wp.frame);
+						loc.id = (ushort)(wp.command);
+						loc.p1 = (wp.param1);
+						loc.p2 = (wp.param2);
+						loc.p3 = (wp.param3);
+						loc.p4 = (wp.param4);
+
+						loc.alt = ((wp.z));
+						loc.lat = ((wp.x));
+						loc.lng = ((wp.y));
+
+						log.InfoFormat("getWP {0} {1} {2} {3} {4} opt {5}", loc.id, loc.p1, loc.alt, loc.lat, loc.lng,
+							loc.options);
+
+						break;
+					}
+					else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM_INT)
+					{
+						//Console.WriteLine("getwp ans " + DateTime.Now.Millisecond);
+
+						var wp = buffer.ToStructure<mavlink_mission_item_int_t>();
+
+						// received a packet, but not what we requested
+						if (index != wp.seq)
+						{
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, req, sysid, compid);
+							continue;
+						}
+
+						loc.options = (byte)(wp.frame);
+						loc.id = (ushort)(wp.command);
+						loc.p1 = (wp.param1);
+						loc.p2 = (wp.param2);
+						loc.p3 = (wp.param3);
+						loc.p4 = (wp.param4);
+
+						loc.alt = ((wp.z));
+						loc.lat = ((wp.x / 1.0e7));
+						loc.lng = ((wp.y / 1.0e7));
+
+						if (loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
+						{
+							loc.lat = wp.x;
+						}
+
+						log.InfoFormat("getWPint {0} {1} {2} {3} {4} opt {5}", loc.id, loc.p1, loc.alt, loc.lat, loc.lng,
+							loc.options);
+
+						break;
+					}
+					else
+					{
+						//log.Info(DateTime.Now + " PC getwp " + buffer.msgid);
+					}
+				}
+			}
+			giveComport = false;
+			return loc;
 		}
 
 		public void getDatastream(MAV_DATA_STREAM id, byte hzrate)

@@ -68,6 +68,9 @@ namespace FooApplication
 		private bool quickadd = false;
 		private bool sethome = false;
 		private int selectedrow = 0;
+		private double current_lat;
+		private double current_lng;
+	
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<Locationwp>> history = new List<List<Locationwp>>();
@@ -208,7 +211,7 @@ namespace FooApplication
 				}
 
 				UpdateCurrentSettings(true);
-				//updateMapPosition(new PointLatLng(24.7726628, 121.0468916));
+				//updateMapPosition(new PointLatLng(current_lat, current_lng));
 
 
 
@@ -224,6 +227,30 @@ namespace FooApplication
 
 			Console.WriteLine("serialreader done");
 
+		}
+
+		DateTime lastmapposchange = DateTime.MinValue;
+		private void updateMapPosition(PointLatLng currentloc)
+		{
+			Invoke((MethodInvoker)delegate
+			{
+				try
+				{
+					if (lastmapposchange.Second != DateTime.Now.Second)
+					{
+						if (Math.Abs(currentloc.Lat - myMap.Position.Lat) > 0.0001 || Math.Abs(currentloc.Lng - myMap.Position.Lng) > 0.0001)
+						{
+							myMap.Position = currentloc;
+						}
+
+						lastmapposchange = DateTime.Now;
+					}
+					//hud1.Refresh();
+				}
+				catch
+				{
+				}
+			});
 		}
 
 		public void UpdateCurrentSettings(bool updatenow)
@@ -243,6 +270,7 @@ namespace FooApplication
 						try
 						{
 							port.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, 1);
+							port.getDatastream(MAVLink.MAV_DATA_STREAM.POSITION, 1);
 						}
 						catch
 						{
@@ -256,11 +284,41 @@ namespace FooApplication
 						if (mavlinkMessage != null)
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-
-							Console.WriteLine("mode: " + hb.custom_mode);
+							TXT_Mode.Text = (hb.custom_mode).ToString();
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
 								
+							}
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GLOBAL_POSITION_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var loc = mavlinkMessage.ToStructure<MAVLink.mavlink_global_position_int_t>();
+
+							// the new arhs deadreckoning may send 0 alt and 0 long. check for and undo
+
+							float alt = loc.relative_alt / 1000.0f;
+
+							bool useLocation = true;
+							if (loc.lat == 0 && loc.lon == 0)
+							{
+								useLocation = false;
+							}
+							else
+							{
+								double lat = loc.lat / 10000000.0;
+								double lng = loc.lon / 10000000.0;
+
+								updateMapPosition(new PointLatLng(lat, lng));
+
+								double altasl = loc.alt / 1000.0f;
+
+								double vx = loc.vx * 0.01;
+								double vy = loc.vy * 0.01;
+								double vz = loc.vz * 0.01;
 							}
 						}
 					}
@@ -2056,9 +2114,253 @@ namespace FooApplication
 			port.giveComport = false;
 		}
 
+		void getWPs(object passdata = null)
+		{
+			List<Locationwp> cmds = new List<Locationwp>();
+
+			try
+			{
+
+				if (!port.BaseStream.IsOpen)
+				{
+					throw new Exception("Please Connect First!");
+				}
+
+				port.giveComport = true;
+
+				// param = port.MAV.param;
+
+				log.Info("Getting Home");
+				log.Info("Getting WP #");
+
+				int cmdcount = port.getWPCount();
+
+				for (ushort a = 0; a < cmdcount; a++)
+				{
+					log.Info("Getting WP" + a);
+					cmds.Add(port.getWP(a));
+				}
+
+				port.setWPACK();
+
+				log.Info("Done");
+			}
+			catch
+			{
+				throw;
+			}
+
+			WPtoScreen(cmds);
+		}
+
+		public void WPtoScreen(List<Locationwp> cmds, bool withrally = true)
+		{
+			try
+			{
+				Invoke((MethodInvoker)delegate
+				{
+					try
+					{
+						log.Info("Process " + cmds.Count);
+						processToScreen(cmds);
+					}
+					catch (Exception exx)
+					{
+						log.Info(exx.ToString());
+					}
+
+					/**
+					try
+					{
+						if (withrally && MainV2.comPort.MAV.param.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(MainV2.comPort.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
+							getRallyPointsToolStripMenuItem_Click(null, null);
+					}
+					catch
+					{
+					}*/
+
+					port.giveComport = false;
+
+					BUT_Read_WP.Enabled = true;
+
+					writeKML();
+				});
+			}
+			catch (Exception exx)
+			{
+				log.Info(exx.ToString());
+			}
+		}
+
+		/// <summary>
+		/// Processes a loaded EEPROM to the map and datagrid
+		/// </summary>
+		void processToScreen(List<Locationwp> cmds, bool append = false)
+		{
+			quickadd = true;
+
+
+			// mono fix
+			Commands.CurrentCell = null;
+
+			while (Commands.Rows.Count > 0 && !append)
+				Commands.Rows.Clear();
+
+			if (cmds.Count == 0)
+			{
+				quickadd = false;
+				return;
+			}
+
+			Commands.SuspendLayout();
+			Commands.Enabled = false;
+
+			int i = Commands.Rows.Count - 1;
+			foreach (Locationwp temp in cmds)
+			{
+				i++;
+				//Console.WriteLine("FP processToScreen " + i);
+				if (temp.id == 0 && i != 0) // 0 and not home
+					break;
+				if (temp.id == 255 && i != 0) // bad record - never loaded any WP's - but have started the board up.
+					break;
+				if (i == 0 && append) // we dont want to add home again.
+					continue;
+				if (i + 1 >= Commands.Rows.Count)
+				{
+					selectedrow = Commands.Rows.Add();
+				}
+				//if (i == 0 && temp.alt == 0) // skip 0 home
+				//  continue;
+				DataGridViewTextBoxCell cell;
+				DataGridViewComboBoxCell cellcmd;
+				cellcmd = Commands.Rows[i].Cells[Command.Index] as DataGridViewComboBoxCell;
+				cellcmd.Value = "UNKNOWN";
+				cellcmd.Tag = temp.id;
+
+				foreach (object value in Enum.GetValues(typeof(MAVLink.MAV_CMD)))
+				{
+					if ((int)value == temp.id)
+					{
+						cellcmd.Value = value.ToString();
+						break;
+					}
+				}
+
+				cell = Commands.Rows[i].Cells[Alt.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.alt;
+				cell = Commands.Rows[i].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.lat;
+				cell = Commands.Rows[i].Cells[Lon.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.lng;
+
+				cell = Commands.Rows[i].Cells[Param1.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p1;
+				cell = Commands.Rows[i].Cells[Param2.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p2;
+				cell = Commands.Rows[i].Cells[Param3.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p3;
+				cell = Commands.Rows[i].Cells[Param4.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p4;
+
+				// convert to utm
+				// convertFromGeographic(temp.lat, temp.lng);
+			}
+
+			Commands.Enabled = true;
+			Commands.ResumeLayout();
+
+			// We don't have parameter panel.
+			// setWPParams();
+
+			try
+			{
+				DataGridViewTextBoxCell cellhome;
+				cellhome = Commands.Rows[0].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				if (cellhome.Value != null)
+				{
+					if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
+					{
+						DialogResult dr = MessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
+							MessageBoxButtons.YesNo);
+
+						if (dr == DialogResult.Yes)
+						{
+							TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
+							TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
+							TXT_homealt.Text =
+								(double.Parse(cellhome.Value.ToString())).ToString();
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex.ToString());
+			} // if there is no valid home
+
+			if (Commands.RowCount > 0)
+			{
+				log.Info("remove home from list");
+				Commands.Rows.Remove(Commands.Rows[0]); // remove home row
+			}
+
+			quickadd = false;
+
+			writeKML();
+
+			myMap.ZoomAndCenterMarkers("objects");
+
+			// MainMap_OnMapZoomChanged();
+		}
+
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 			port.open();
+		}
+
+		private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			quickadd = true;
+
+			// mono fix
+			Commands.CurrentCell = null;
+
+			Commands.Rows.Clear();
+
+			selectedrow = 0;
+			quickadd = false;
+			writeKML();
+		}
+
+		private void btn_takeoff_Click(object sender, EventArgs e)
+		{
+			if (port.BaseStream.IsOpen)
+			{
+				// flyToHereAltToolStripMenuItem_Click(null, null);
+
+				port.setMode(
+					port.sysid,
+					port.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = port.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)4,
+					});
+
+				try
+				{
+					port.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+				}
+				catch
+				{
+					log.Info("unknown takeoff failed");
+				}
+			}
 		}
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
@@ -2101,6 +2403,27 @@ namespace FooApplication
 		}
 
 
+		/// <summary>
+		/// Reads the EEPROM from a com port
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void BUT_read_Click(object sender, EventArgs e)
+		{
+			if (Commands.Rows.Count > 0)
+			{
+				
+				if (MessageBox.Show("This will clear your existing planned mission, Continue?", "Confirm",
+						MessageBoxButtons.OKCancel) != DialogResult.OK)
+				{
+					return;
+				}
+				
+			}
+
+			getWPs();
+		}
+
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TXT_homealt.Text = "0";
@@ -2111,79 +2434,28 @@ namespace FooApplication
 
 		private void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			int no = 0;
-			if (currentRectMarker != null)
-			{
-				if (int.TryParse(currentRectMarker.InnerMarker.Tag.ToString(), out no))
-				{
-					try
-					{
-						Commands.Rows.RemoveAt(no - 1); // home is 0
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show("error selecting wp, please try again.");
-					}
-				}
-				else if (int.TryParse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out no))
-				{
-					try
-					{
-						drawnPolygon.Points.RemoveAt(no - 1);
-						drawnPolygonsOverlay.Markers.Clear();
 
-						int a = 1;
-						foreach (PointLatLng pnt in drawnPolygon.Points)
-						{
-							addpolygonmarkergrid(a.ToString(), pnt.Lng, pnt.Lat, 0);
-							a++;
-						}
-
-						myMap.UpdatePolygonLocalPosition(drawnPolygon);
-
-						myMap.Invalidate();
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show("Remove point Failed. Please try again.");
-					}
-				}
-			}
-			else if (currentRallyPt != null)
-			{
-				rallypointOverlay.Markers.Remove(currentRallyPt);
-				myMap.Invalidate(true);
-
-				currentRallyPt = null;
-			}
-			else if (groupmarkers.Count > 0)
-			{
-				for (int a = Commands.Rows.Count; a > 0; a--)
-				{
-					try
-					{
-						if (groupmarkers.Contains(a))
-							Commands.Rows.RemoveAt(a - 1); // home is 0
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show("error selecting wp, please try again.");
-					}
-				}
-
-				groupmarkers.Clear();
-			}
-
-
-			if (currentMarker != null)
-				currentRectMarker = null;
-
-			writeKML();
 		}
 
+		private void BUT_Disarm_Click(object sender, EventArgs e)
+		{
+			if (!port.BaseStream.IsOpen)
+			{
+				log.Info("basestream have opened");
+				return;
+			}
 
+			// arm the MAV
+			try
+			{
+				bool ans = port.doARM(false);
+				if (ans == false)
+					log.Info("arm failed");
+			}
+			catch
+			{
+				log.Info("unknown arm failed");
+			}
+		}
 	}
 }
