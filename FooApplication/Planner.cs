@@ -2114,6 +2114,209 @@ namespace FooApplication
 			port.giveComport = false;
 		}
 
+		void getWPs(object passdata = null)
+		{
+			List<Locationwp> cmds = new List<Locationwp>();
+
+			try
+			{
+
+				if (!port.BaseStream.IsOpen)
+				{
+					throw new Exception("Please Connect First!");
+				}
+
+				port.giveComport = true;
+
+				// param = port.MAV.param;
+
+				log.Info("Getting Home");
+				log.Info("Getting WP #");
+
+				int cmdcount = port.getWPCount();
+
+				for (ushort a = 0; a < cmdcount; a++)
+				{
+					log.Info("Getting WP" + a);
+					cmds.Add(port.getWP(a));
+				}
+
+				port.setWPACK();
+
+				log.Info("Done");
+			}
+			catch
+			{
+				throw;
+			}
+
+			WPtoScreen(cmds);
+		}
+
+		public void WPtoScreen(List<Locationwp> cmds, bool withrally = true)
+		{
+			try
+			{
+				Invoke((MethodInvoker)delegate
+				{
+					try
+					{
+						log.Info("Process " + cmds.Count);
+						processToScreen(cmds);
+					}
+					catch (Exception exx)
+					{
+						log.Info(exx.ToString());
+					}
+
+					/**
+					try
+					{
+						if (withrally && MainV2.comPort.MAV.param.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(MainV2.comPort.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
+							getRallyPointsToolStripMenuItem_Click(null, null);
+					}
+					catch
+					{
+					}*/
+
+					port.giveComport = false;
+
+					BUT_Read_WP.Enabled = true;
+
+					writeKML();
+				});
+			}
+			catch (Exception exx)
+			{
+				log.Info(exx.ToString());
+			}
+		}
+
+		/// <summary>
+		/// Processes a loaded EEPROM to the map and datagrid
+		/// </summary>
+		void processToScreen(List<Locationwp> cmds, bool append = false)
+		{
+			quickadd = true;
+
+
+			// mono fix
+			Commands.CurrentCell = null;
+
+			while (Commands.Rows.Count > 0 && !append)
+				Commands.Rows.Clear();
+
+			if (cmds.Count == 0)
+			{
+				quickadd = false;
+				return;
+			}
+
+			Commands.SuspendLayout();
+			Commands.Enabled = false;
+
+			int i = Commands.Rows.Count - 1;
+			foreach (Locationwp temp in cmds)
+			{
+				i++;
+				//Console.WriteLine("FP processToScreen " + i);
+				if (temp.id == 0 && i != 0) // 0 and not home
+					break;
+				if (temp.id == 255 && i != 0) // bad record - never loaded any WP's - but have started the board up.
+					break;
+				if (i == 0 && append) // we dont want to add home again.
+					continue;
+				if (i + 1 >= Commands.Rows.Count)
+				{
+					selectedrow = Commands.Rows.Add();
+				}
+				//if (i == 0 && temp.alt == 0) // skip 0 home
+				//  continue;
+				DataGridViewTextBoxCell cell;
+				DataGridViewComboBoxCell cellcmd;
+				cellcmd = Commands.Rows[i].Cells[Command.Index] as DataGridViewComboBoxCell;
+				cellcmd.Value = "UNKNOWN";
+				cellcmd.Tag = temp.id;
+
+				foreach (object value in Enum.GetValues(typeof(MAVLink.MAV_CMD)))
+				{
+					if ((int)value == temp.id)
+					{
+						cellcmd.Value = value.ToString();
+						break;
+					}
+				}
+
+				cell = Commands.Rows[i].Cells[Alt.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.alt;
+				cell = Commands.Rows[i].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.lat;
+				cell = Commands.Rows[i].Cells[Lon.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.lng;
+
+				cell = Commands.Rows[i].Cells[Param1.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p1;
+				cell = Commands.Rows[i].Cells[Param2.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p2;
+				cell = Commands.Rows[i].Cells[Param3.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p3;
+				cell = Commands.Rows[i].Cells[Param4.Index] as DataGridViewTextBoxCell;
+				cell.Value = temp.p4;
+
+				// convert to utm
+				// convertFromGeographic(temp.lat, temp.lng);
+			}
+
+			Commands.Enabled = true;
+			Commands.ResumeLayout();
+
+			// We don't have parameter panel.
+			// setWPParams();
+
+			try
+			{
+				DataGridViewTextBoxCell cellhome;
+				cellhome = Commands.Rows[0].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				if (cellhome.Value != null)
+				{
+					if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
+					{
+						DialogResult dr = MessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
+							MessageBoxButtons.YesNo);
+
+						if (dr == DialogResult.Yes)
+						{
+							TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
+							TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
+							TXT_homealt.Text =
+								(double.Parse(cellhome.Value.ToString())).ToString();
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex.ToString());
+			} // if there is no valid home
+
+			if (Commands.RowCount > 0)
+			{
+				log.Info("remove home from list");
+				Commands.Rows.Remove(Commands.Rows[0]); // remove home row
+			}
+
+			quickadd = false;
+
+			writeKML();
+
+			myMap.ZoomAndCenterMarkers("objects");
+
+			// MainMap_OnMapZoomChanged();
+		}
+
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 			port.open();
@@ -2200,6 +2403,27 @@ namespace FooApplication
 		}
 
 
+		/// <summary>
+		/// Reads the EEPROM from a com port
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void BUT_read_Click(object sender, EventArgs e)
+		{
+			if (Commands.Rows.Count > 0)
+			{
+				
+				if (MessageBox.Show("This will clear your existing planned mission, Continue?", "Confirm",
+						MessageBoxButtons.OKCancel) != DialogResult.OK)
+				{
+					return;
+				}
+				
+			}
+
+			getWPs();
+		}
+
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TXT_homealt.Text = "0";
@@ -2213,6 +2437,25 @@ namespace FooApplication
 
 		}
 
+		private void BUT_Disarm_Click(object sender, EventArgs e)
+		{
+			if (!port.BaseStream.IsOpen)
+			{
+				log.Info("basestream have opened");
+				return;
+			}
 
+			// arm the MAV
+			try
+			{
+				bool ans = port.doARM(false);
+				if (ans == false)
+					log.Info("arm failed");
+			}
+			catch
+			{
+				log.Info("unknown arm failed");
+			}
+		}
 	}
 }

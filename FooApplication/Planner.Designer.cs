@@ -34,6 +34,7 @@
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.BUT_Disarm = new System.Windows.Forms.Button();
 			this.btn_takeoff = new System.Windows.Forms.Button();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
@@ -59,6 +60,8 @@
 			this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.BUT_Land = new System.Windows.Forms.Button();
+			this.BUT_Read_WP = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
@@ -100,24 +103,27 @@
             this.ClearMissionToolStripMenuItem,
             this.setHomeHereToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(224, 97);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(211, 60);
 			// 
 			// ClearMissionToolStripMenuItem
 			// 
 			this.ClearMissionToolStripMenuItem.Name = "ClearMissionToolStripMenuItem";
-			this.ClearMissionToolStripMenuItem.Size = new System.Drawing.Size(223, 30);
+			this.ClearMissionToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
 			this.ClearMissionToolStripMenuItem.Text = "Clear Mission";
 			this.ClearMissionToolStripMenuItem.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
 			// 
 			// setHomeHereToolStripMenuItem
 			// 
 			this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
-			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(223, 30);
+			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
 			this.setHomeHereToolStripMenuItem.Text = "Set Home Here";
 			this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.BUT_Read_WP);
+			this.panel1.Controls.Add(this.BUT_Land);
+			this.panel1.Controls.Add(this.BUT_Disarm);
 			this.panel1.Controls.Add(this.btn_takeoff);
 			this.panel1.Controls.Add(this.TXT_Mode);
 			this.panel1.Controls.Add(this.label3);
@@ -138,6 +144,17 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1512, 164);
 			this.panel1.TabIndex = 1;
+			// 
+			// BUT_Disarm
+			// 
+			this.BUT_Disarm.Location = new System.Drawing.Point(1368, 110);
+			this.BUT_Disarm.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Disarm.Name = "BUT_Disarm";
+			this.BUT_Disarm.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Disarm.TabIndex = 20;
+			this.BUT_Disarm.Text = "Disarm";
+			this.BUT_Disarm.UseVisualStyleBackColor = true;
+			this.BUT_Disarm.Click += new System.EventHandler(this.BUT_Disarm_Click);
 			// 
 			// btn_takeoff
 			// 
@@ -172,18 +189,19 @@
 			// 
 			// BUT_Write_wp
 			// 
-			this.BUT_Write_wp.Location = new System.Drawing.Point(1246, 68);
+			this.BUT_Write_wp.BackColor = System.Drawing.SystemColors.HotTrack;
+			this.BUT_Write_wp.Location = new System.Drawing.Point(1126, 54);
 			this.BUT_Write_wp.Margin = new System.Windows.Forms.Padding(4);
 			this.BUT_Write_wp.Name = "BUT_Write_wp";
 			this.BUT_Write_wp.Size = new System.Drawing.Size(112, 34);
 			this.BUT_Write_wp.TabIndex = 16;
 			this.BUT_Write_wp.Text = "Write_WP";
-			this.BUT_Write_wp.UseVisualStyleBackColor = true;
+			this.BUT_Write_wp.UseVisualStyleBackColor = false;
 			this.BUT_Write_wp.Click += new System.EventHandler(this.BUT_write_Click);
 			// 
 			// BUT_Auto
 			// 
-			this.BUT_Auto.Location = new System.Drawing.Point(1368, 111);
+			this.BUT_Auto.Location = new System.Drawing.Point(1246, 110);
 			this.BUT_Auto.Margin = new System.Windows.Forms.Padding(4);
 			this.BUT_Auto.Name = "BUT_Auto";
 			this.BUT_Auto.Size = new System.Drawing.Size(112, 34);
@@ -216,7 +234,7 @@
 			// 
 			// TXT_DefaultAlt
 			// 
-			this.TXT_DefaultAlt.Location = new System.Drawing.Point(704, 4);
+			this.TXT_DefaultAlt.Location = new System.Drawing.Point(705, 8);
 			this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4);
 			this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
 			this.TXT_DefaultAlt.Size = new System.Drawing.Size(148, 29);
@@ -295,7 +313,7 @@
 			this.Commands.Name = "Commands";
 			this.Commands.RowHeadersWidth = 50;
 			this.Commands.RowTemplate.Height = 24;
-			this.Commands.Size = new System.Drawing.Size(1060, 120);
+			this.Commands.Size = new System.Drawing.Size(1117, 120);
 			this.Commands.TabIndex = 6;
 			this.Commands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.Commands.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -404,6 +422,28 @@
 			this.TagData.Visible = false;
 			this.TagData.Width = 50;
 			// 
+			// BUT_Land
+			// 
+			this.BUT_Land.Location = new System.Drawing.Point(1248, 68);
+			this.BUT_Land.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Land.Name = "BUT_Land";
+			this.BUT_Land.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Land.TabIndex = 21;
+			this.BUT_Land.Text = "Land";
+			this.BUT_Land.UseVisualStyleBackColor = true;
+			// 
+			// BUT_Read_WP
+			// 
+			this.BUT_Read_WP.BackColor = System.Drawing.SystemColors.HotTrack;
+			this.BUT_Read_WP.Location = new System.Drawing.Point(1125, 96);
+			this.BUT_Read_WP.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Read_WP.Name = "BUT_Read_WP";
+			this.BUT_Read_WP.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Read_WP.TabIndex = 22;
+			this.BUT_Read_WP.Text = "Read_WP";
+			this.BUT_Read_WP.UseVisualStyleBackColor = false;
+			this.BUT_Read_WP.Click += new System.EventHandler(this.BUT_read_Click);
+			// 
 			// Planner
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -454,5 +494,8 @@
 		private System.Windows.Forms.ToolStripMenuItem ClearMissionToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
 		private System.Windows.Forms.Button btn_takeoff;
+		private System.Windows.Forms.Button BUT_Disarm;
+		private System.Windows.Forms.Button BUT_Land;
+		private System.Windows.Forms.Button BUT_Read_WP;
 	}
 }
