@@ -66,7 +66,7 @@ namespace FooApplication
 		internal GMapPolygon wpPolygon;
 
 		private bool quickadd = false;
-		private bool sethome = false;
+		private bool sethome;
 		private int selectedrow = 0;
 		private double current_lat;
 		private double current_lng;
@@ -2502,11 +2502,7 @@ namespace FooApplication
 			}
 		}
 
-		private void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
+		
 	
 	}
 }
