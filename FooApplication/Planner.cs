@@ -2130,20 +2130,20 @@ namespace FooApplication
 
 				// param = port.MAV.param;
 
-				log.Info("Getting Home");
-				log.Info("Getting WP #");
+				Console.WriteLine("Getting Home");
+				Console.WriteLine("Getting WP #");
 
 				int cmdcount = port.getWPCount();
 
 				for (ushort a = 0; a < cmdcount; a++)
 				{
-					log.Info("Getting WP" + a);
+					Console.WriteLine("Getting WP" + a);
 					cmds.Add(port.getWP(a));
 				}
 
 				port.setWPACK();
 
-				log.Info("Done");
+				Console.WriteLine("Done");
 			}
 			catch
 			{
@@ -2161,24 +2161,28 @@ namespace FooApplication
 				{
 					try
 					{
-						log.Info("Process " + cmds.Count);
+						Console.WriteLine("Process " + cmds.Count);
 						processToScreen(cmds);
 					}
 					catch (Exception exx)
 					{
-						log.Info(exx.ToString());
+						Console.WriteLine(exx.ToString());
 					}
 
-					/**
+					
 					try
 					{
-						if (withrally && MainV2.comPort.MAV.param.ContainsKey("RALLY_TOTAL") &&
-							int.Parse(MainV2.comPort.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
-							getRallyPointsToolStripMenuItem_Click(null, null);
+						if (withrally && port.MAV.param.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(port.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
+						{
+							Console.WriteLine("get rally points");
+							getRallyPoints();
+						}
+							
 					}
 					catch
 					{
-					}*/
+					}
 
 					port.giveComport = false;
 
@@ -2241,7 +2245,8 @@ namespace FooApplication
 
 				foreach (object value in Enum.GetValues(typeof(MAVLink.MAV_CMD)))
 				{
-					if ((int)value == temp.id)
+					
+					if ((ushort)value == temp.id)
 					{
 						cellcmd.Value = value.ToString();
 						break;
@@ -2299,7 +2304,8 @@ namespace FooApplication
 			}
 			catch (Exception ex)
 			{
-				log.Error(ex.ToString());
+				Console.WriteLine(ex.ToString());
+
 			} // if there is no valid home
 
 			if (Commands.RowCount > 0)
@@ -2317,10 +2323,48 @@ namespace FooApplication
 			// MainMap_OnMapZoomChanged();
 		}
 
-		private void BUT_Connect_Click(object sender, EventArgs e)
+		public void getRallyPoints()
 		{
-			port.open();
+			if (port.MAV.param["RALLY_TOTAL"] == null)
+			{
+				MessageBox.Show("Not Supported");
+				return;
+			}
+
+			if (int.Parse(port.MAV.param["RALLY_TOTAL"].ToString()) < 1)
+			{
+				MessageBox.Show("Rally points - Nothing to download");
+				return;
+			}
+
+			rallypointOverlay.Markers.Clear();
+
+			int count = int.Parse(port.MAV.param["RALLY_TOTAL"].ToString());
+
+			for (int a = 0; a < (count); a++)
+			{
+				try
+				{
+					PointLatLngAlt plla = port.getRallyPoint(a, ref count);
+					rallypointOverlay.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
+					{
+						Alt = (int)plla.Alt,
+						ToolTipMode = MarkerTooltipMode.OnMouseOver,
+						ToolTipText = "Rally Point" + "\nAlt: " + (plla.Alt * 1)
+					});
+				}
+				catch
+				{
+					MessageBox.Show("Failed to get rally point");
+					return;
+				}
+			}
+
+			myMap.UpdateMarkerLocalPosition(rallypointOverlay.Markers[0]);
+
+			myMap.Invalidate();
 		}
+
 
 		private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -2334,6 +2378,11 @@ namespace FooApplication
 			selectedrow = 0;
 			quickadd = false;
 			writeKML();
+		}
+
+		private void BUT_Connect_Click(object sender, EventArgs e)
+		{
+			port.open();
 		}
 
 		private void btn_takeoff_Click(object sender, EventArgs e)
@@ -2432,11 +2481,6 @@ namespace FooApplication
 		}
 
 
-		private void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void BUT_Disarm_Click(object sender, EventArgs e)
 		{
 			if (!port.BaseStream.IsOpen)
@@ -2457,5 +2501,12 @@ namespace FooApplication
 				log.Info("unknown arm failed");
 			}
 		}
+
+		private void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+	
 	}
 }

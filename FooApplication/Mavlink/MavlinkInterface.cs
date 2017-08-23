@@ -104,11 +104,11 @@ namespace FooApplication.Mavlink
 		public MavlinkInterface()
 		{
 			_mav = new MavStatus(this, 1, 0);
-			BaseStream = new SerialPort();
-			BaseStream.PortName = COMPORT_PORT_NAME;
-			BaseStream.BaudRate = COMPORT_BAUDRATE;
+			// BaseStream = new SerialPort();
+			// BaseStream.PortName = COMPORT_PORT_NAME;
+			// BaseStream.BaudRate = COMPORT_BAUDRATE;
 
-			// BaseStream = new UdpSerial();
+			BaseStream = new UdpSerial();
 		}
 
 		public void open()
@@ -328,6 +328,94 @@ namespace FooApplication.Mavlink
 			log.Info("Done open " + MAV.sysid + " " + MAV.compid);
 			MAV.packetslost = 0;
 			MAV.synclost = 0;
+		}
+
+		public List<PointLatLngAlt> getRallyPoints()
+		{
+			List<PointLatLngAlt> points = new List<PointLatLngAlt>();
+
+			if (!MAV.param.ContainsKey("RALLY_TOTAL"))
+				return points;
+
+			int count = int.Parse(MAV.param["RALLY_TOTAL"].ToString());
+
+			for (int a = 0; a < (count - 1); a++)
+			{
+				try
+				{
+					PointLatLngAlt plla = getRallyPoint(a, ref count);
+					points.Add(plla);
+				}
+				catch
+				{
+					return points;
+				}
+			}
+
+			return points;
+		}
+
+		public PointLatLngAlt getRallyPoint(int no, ref int total)
+		{
+			MAVLinkMessage buffer;
+
+			giveComport = true;
+
+			PointLatLngAlt plla = new PointLatLngAlt();
+			mavlink_rally_fetch_point_t req = new mavlink_rally_fetch_point_t();
+
+			req.idx = (byte)no;
+			req.target_component = MAV.compid;
+			req.target_system = MAV.sysid;
+
+			// request point
+			generatePacket((byte)MAVLINK_MSG_ID.RALLY_FETCH_POINT, req, sysid, compid);
+
+			DateTime start = DateTime.Now;
+			int retrys = 3;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("getRallyPoint Retry " + retrys + " - giv com " + giveComport);
+						generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req, sysid, compid);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - getRallyPoint");
+				}
+
+				buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.RALLY_POINT)
+					{
+						mavlink_rally_point_t fp = buffer.ToStructure<mavlink_rally_point_t>();
+
+						if (req.idx != fp.idx)
+						{
+							generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req, sysid, compid);
+							continue;
+						}
+
+						plla.Lat = fp.lat / 1.0e7;
+						plla.Lng = fp.lng / 1.0e7;
+						plla.Tag = fp.idx.ToString();
+						plla.Alt = fp.alt;
+
+						total = fp.count;
+
+						giveComport = false;
+
+						return plla;
+					}
+				}
+			}
 		}
 
 		private string getAppVersion()
