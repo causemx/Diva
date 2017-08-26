@@ -17,7 +17,7 @@ namespace FooApplication
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Planner());
+			Application.Run(new Main());
 			
 		}
 	}

@@ -50,11 +50,15 @@ namespace FooApplication
 		private DateTime heartbeatSend = DateTime.Now;
 		private ManualResetEvent SerialThreadrunner = new ManualResetEvent(false); // control the thread waiting behavior
 		private DateTime lastupdate = DateTime.Now;
+		private DateTime lastscreenupdate = DateTime.Now;
 		private DateTime lastdata = DateTime.MinValue;
+		private DateTime tracklast = DateTime.Now.AddSeconds(0);
 		private List<PointLatLng> trackPoints = new List<PointLatLng>();
 		private GMapOverlay routes;
 		private GMapOverlay markers;
 		private GMapRoute route;
+
+		private bool useLocation = false;
 
 		public Main()
 		{
@@ -78,7 +82,8 @@ namespace FooApplication
 			
 			while (serialThread)
 			{
-				Thread.Sleep(10);
+
+				Thread.Sleep(50);
 
 				if (heartbeatSend.Second != DateTime.Now.Second)
 				{
@@ -104,8 +109,11 @@ namespace FooApplication
 					}
 				}
 
+				
 				UpdateCurrentSettings(true);
-		
+
+				updateMapPosition(new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng));
+
 
 				// Update the tracking point
 				if (route == null)
@@ -135,6 +143,27 @@ namespace FooApplication
 				if (!this.IsHandleCreated)
 					continue;
 
+				var marker = new GMapMarkerQuad(new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng), 
+					comPort.MAV.yaw, comPort.MAV.groundcourse, comPort.MAV.nav_bearing, 1);
+				addMissionRouteMarker(marker);
+
+
+				// update map
+				if (tracklast.AddSeconds(1.5) < DateTime.Now)
+				{
+					log.Info("value: "+ tracklast.AddSeconds(0.5));
+					updateClearRoutesMarkers();
+
+					gmapControl.HoldInvalidation = false;
+
+					if (gmapControl.Visible)
+					{
+						gmapControl.Invalidate();
+					}
+
+					tracklast = DateTime.Now;
+				}
+
 			}
 
 			Console.WriteLine("serialreader done");
@@ -162,6 +191,19 @@ namespace FooApplication
 				SerialReaderThread.Join();
 		}
 
+		private void updateBindingSource()
+		{
+			if (lastscreenupdate.AddMilliseconds(40) < DateTime.Now) //25Hz frame rate
+			{
+				this.BeginInvoke((MethodInvoker) delegate
+				{
+					UpdateCurrentSettings(true);
+					lastscreenupdate = DateTime.Now;
+				});
+			}
+		}
+
+
 		internal double current_lat = 0;
 		internal double current_lng = 0;
 
@@ -182,8 +224,15 @@ namespace FooApplication
 					{
 						try
 						{
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, REQUEST_DATA_STREAM_RATE);
-							comPort.getDatastream(MAVLink.MAV_DATA_STREAM.POSITION, REQUEST_DATA_STREAM_RATE);
+							// comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.ALL, REQUEST_DATA_STREAM_RATE);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
+
 						}
 						catch
 						{
@@ -256,9 +305,65 @@ namespace FooApplication
 							float roll = (float)(att.roll * MathHelper.rad2deg);
 							float pitch = (float)(att.pitch * MathHelper.rad2deg);
 							float yaw = (float)(att.yaw * MathHelper.rad2deg);
+
+							Console.WriteLine("yaw: " + yaw);
+
+							comPort.MAV.yaw = yaw;
 						}
 					}
 
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var gps = mavlinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
+
+							if (!useLocation)
+							{
+								double lat = gps.lat * 1.0e-7;
+								double lng = gps.lon * 1.0e-7;
+
+								double altasl = gps.alt / 1000.0f;
+								// alt = gps.alt; // using vfr as includes baro calc
+							}
+
+							byte gpsstatus = gps.fix_type;
+							//                    Console.WriteLine("gpsfix {0}",gpsstatus);
+
+							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
+
+							byte satcount = gps.satellites_visible;
+
+							float groundspeed = gps.vel * 1.0e-2f;
+							float groundcourse = gps.cog * 1.0e-2f;
+
+							comPort.MAV.groundcourse = groundcourse;
+							Console.WriteLine("groundcourse: " + groundcourse);
+
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var nav = mavlinkMessage.ToStructure<MAVLink.mavlink_nav_controller_output_t>();
+
+							float nav_roll = nav.nav_roll;
+							float nav_pitch = nav.nav_pitch;
+							short nav_bearing = nav.nav_bearing;
+							short target_bearing = nav.target_bearing;
+							ushort wp_dist = nav.wp_dist;
+							float alt_error = nav.alt_error;
+							float aspd_error = nav.aspd_error / 100.0f;
+							float xtrack_error = nav.xtrack_error;
+
+							comPort.MAV.nav_bearing = nav_bearing;
+
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.NAV_CONTROLLER_OUTPUT);
+						}
+					}
 
 
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GLOBAL_POSITION_INT))
@@ -281,13 +386,15 @@ namespace FooApplication
 								double lat = loc.lat / 10000000.0;
 								double lng = loc.lon / 10000000.0;
 
-								updateMapPosition(new PointLatLng(lat, lng));
-
 								double altasl = loc.alt / 1000.0f;
 
 								double vx = loc.vx * 0.01;
 								double vy = loc.vy * 0.01;
 								double vz = loc.vz * 0.01;
+
+								comPort.MAV.current_lat = lat;
+								comPort.MAV.current_lng = lng;
+
 							}
 						}
 					}
@@ -310,6 +417,15 @@ namespace FooApplication
 			gmapControl.Overlays.Add(routes);
 			gmapControl.Overlays.Add(markers);
 
+		}
+
+		private void addMissionRouteMarker(GMapMarker marker)
+		{
+			// not async
+			Invoke((MethodInvoker)delegate
+			{
+				routes.Markers.Add(marker);
+			});
 		}
 
 		internal PointLatLng MouseDownStart;

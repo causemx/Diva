@@ -66,6 +66,46 @@ namespace FooApplication.Mavlink
 
 		public double current_lng { get; set; }
 
+		// Copter parameter
+
+		public float nav_bearing { get; set; }
+
+		public float yaw
+		{
+			get { return _yaw; }
+			set
+			{
+				if (value < 0)
+				{
+					_yaw = value + 360;
+				}
+				else
+				{
+					_yaw = value;
+				}
+			}
+		}
+
+		private float _yaw = 0;
+
+		public float groundcourse
+		{
+			get { return _groundcourse; }
+			set
+			{
+				if (value < 0)
+				{
+					_groundcourse = value + 360;
+				}
+				else
+				{
+					_groundcourse = value;
+				}
+			}
+		}
+
+		private float _groundcourse = 0;
+
 		/// <summary>
 		/// the static global state of the currently connected MAV
 		/// </summary>
