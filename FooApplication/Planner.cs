@@ -66,7 +66,7 @@ namespace FooApplication
 		internal GMapPolygon wpPolygon;
 
 		private bool quickadd = false;
-		private bool sethome;
+		private bool sethome = false;
 		private int selectedrow = 0;
 		private double current_lat;
 		private double current_lng;
@@ -95,10 +95,20 @@ namespace FooApplication
 			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
 		}
 
+		public enum flightMode
+		{
+			STABILIZE = 0,
+			AUTO = 3,
+			GUIDED = 4,
+			RTL = 6,
+			LAND = 9
+		}
+
 
 		public Planner()
 		{
 			InitializeComponent();
+
 
 			quickadd = false;
 
@@ -284,7 +294,18 @@ namespace FooApplication
 						if (mavlinkMessage != null)
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-							TXT_Mode.Text = (hb.custom_mode).ToString();
+							// for different thread
+							Invoke((MethodInvoker)delegate
+							{
+								foreach (int mode in Enum.GetValues(typeof(flightMode)))
+								{
+									if ((uint)mode == hb.custom_mode)
+									{
+										TXT_Mode.Text = Enum.GetName(typeof(flightMode), mode);
+									}
+								}
+							});
+							
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
 								
@@ -1058,6 +1079,16 @@ namespace FooApplication
 				MainV2.comPort.MAV.cs.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
 				return;
 			}*/
+			
+			// dragging a WP
+			if (pointno == "H")
+			{
+				// auto update home alt
+				TXT_homealt.Text = "0";
+				TXT_homelat.Text = lat.ToString();
+				TXT_homelng.Text = lng.ToString();
+				return;
+			}
 
 			try
 			{
@@ -1071,20 +1102,32 @@ namespace FooApplication
 				return;
 			}
 
+			
 			setfromMap(lat, lng, alt);
 		}
 
 		public void AddWPToMap(double lat, double lng, int alt)
 		{
-			
+			/**
 			if (sethome)
 			{
 				sethome = false;
 				callMeDrag("H", lat, lng, alt);
 				return;
-			}
-			// creating a WP
+			}*/
 
+			// home check
+			if (IsHomeEmpty())
+			{
+				MessageBox.Show("Please set home first");
+				return;
+			}
+			else
+			{
+				sethome = true;
+			}
+
+			// creating a WP
 			selectedrow = Commands.Rows.Add();
 
 			
@@ -1093,6 +1136,14 @@ namespace FooApplication
 			
 
 			setfromMap(lat, lng, alt);
+		}
+
+		private bool IsHomeEmpty()
+		{
+			if (TXT_homealt.Text != "" && TXT_homelat.Text != "" && TXT_homelng.Text != "")
+				return false;
+			else
+				return true;
 		}
 
 		private void ChangeColumnHeader(string command)
@@ -1219,6 +1270,7 @@ namespace FooApplication
 					if (pass == false)
 					{
 						MessageBox.Show("You must have a home altitude");
+					
 						string homealt = "10";
 						if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
 							return;
@@ -1260,6 +1312,8 @@ namespace FooApplication
 					cell.Style.BackColor = Color.Red;
 				}
 			}
+
+			
 
 			// convert to utm
 			// convertFromGeographic(lat, lng);

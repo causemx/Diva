@@ -117,6 +117,7 @@
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\MyProgressDialog.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
