@@ -149,9 +149,9 @@ namespace FooApplication
 
 
 				// update map
-				if (tracklast.AddSeconds(1.5) < DateTime.Now)
+				if (tracklast.AddSeconds(0.5) < DateTime.Now)
 				{
-					log.Info("value: "+ tracklast.AddSeconds(0.5));
+					Console.WriteLine("Time: " + tracklast.ToString() + "Now: " + DateTime.Now);
 					updateClearRoutesMarkers();
 
 					gmapControl.HoldInvalidation = false;

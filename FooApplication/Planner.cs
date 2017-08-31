@@ -43,6 +43,7 @@ namespace FooApplication
 		private GMapOverlay kmlPolygonsOverlay;
 		private GMapOverlay geofenceOverlay;
 		private GMapOverlay rallypointOverlay;
+		private GMapOverlay commonsOverlay;
 
 		private GMapMarkerRect currentRectMarker;
 		private GMapMarkerRallyPt currentRallyPt;
@@ -88,6 +89,8 @@ namespace FooApplication
 		private DateTime lastupdate = DateTime.Now;
 		private DateTime lastdata = DateTime.MinValue;
 
+		private bool useLocation = false;
+
 		public enum altmode
 		{
 			Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
@@ -111,6 +114,9 @@ namespace FooApplication
 
 
 			quickadd = false;
+
+			// MAVLinkInterface setup
+			port.MAV.GuidedMode.z = 10;
 
 			// setup map events
 			myMap.OnPositionChanged += MainMap_OnCurrentPositionChanged;
@@ -147,6 +153,9 @@ namespace FooApplication
 			objectsOverlay = new GMapOverlay("objects");
 			myMap.Overlays.Add(objectsOverlay);
 
+			commonsOverlay = new GMapOverlay("commons");
+			myMap.Overlays.Add(commonsOverlay);
+
 			drawnPolygonsOverlay = new GMapOverlay("drawnpolygons");
 			myMap.Overlays.Add(drawnPolygonsOverlay);
 
@@ -174,7 +183,7 @@ namespace FooApplication
 			{
 				
 				myMap.Position = new PointLatLng(MY_LAT, MY_LNG);
-				myMap.Zoom = 15;
+				myMap.Zoom = 20;
 				
 			}
 			catch (Exception ex)
@@ -279,8 +288,13 @@ namespace FooApplication
 					{
 						try
 						{
-							port.getDatastream(MAVLink.MAV_DATA_STREAM.ALL, 1);
-							port.getDatastream(MAVLink.MAV_DATA_STREAM.POSITION, 1);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
+							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
 						}
 						catch
 						{
@@ -343,6 +357,68 @@ namespace FooApplication
 							}
 						}
 					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.SYS_STATUS))
+					{
+						if (mavlinkMessage != null)
+						{
+							var sysstatus = mavlinkMessage.ToStructure<MAVLink.mavlink_sys_status_t>();
+
+							float load = (float)sysstatus.load / 10.0f;
+
+							float battery_voltage = (float)sysstatus.voltage_battery / 1000.0f;
+
+							byte battery_remaining = sysstatus.battery_remaining;
+							float current = (float)sysstatus.current_battery / 100.0f;
+
+							ushort packetdropremote = sysstatus.drop_rate_comm;
+						}
+					}
+
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var gps = mavlinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
+
+							if (!useLocation)
+							{
+								double lat = gps.lat * 1.0e-7;
+								double lng = gps.lon * 1.0e-7;
+
+								double altasl = gps.alt / 1000.0f;
+								// alt = gps.alt; // using vfr as includes baro calc
+								Invoke((MethodInvoker)delegate
+								{
+									
+									this.Gauge_alt.Value = (float) altasl;
+									this.lbl_alt.Text = altasl.ToString();
+								});
+
+							}
+
+							byte gpsstatus = gps.fix_type;
+							//                    Console.WriteLine("gpsfix {0}",gpsstatus);
+
+							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
+
+							byte satcount = gps.satellites_visible;
+
+							float groundspeed = gps.vel * 1.0e-2f;
+							float groundcourse = gps.cog * 1.0e-2f;
+
+							Invoke((MethodInvoker)delegate
+							{
+								this.Gauge_speed.Value = groundspeed;
+								this.lbl_speed.Text = groundspeed.ToString();
+							});
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
+						}
+					}
+
+
+
 
 				}
 			}
@@ -1011,6 +1087,43 @@ namespace FooApplication
 
 				objectsOverlay.Markers.Add(m);
 				//objectsOverlay.Markers.Add(mBorders);
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		private void addpolygonmarker(string tag, double lng, double lat, int alt, Color? color, GMapOverlay overlay)
+		{
+			try
+			{
+				PointLatLng point = new PointLatLng(lat, lng);
+				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot);
+				m.ToolTipMode = MarkerTooltipMode.Always;
+				m.ToolTipText = tag;
+				m.Tag = tag;
+
+				GMapMarkerRect mBorders = new GMapMarkerRect(point);
+				{
+					mBorders.InnerMarker = m;
+					try
+					{
+						// mBorders.wprad = (int)(Settings.Instance.GetFloat("TXT_WPRad"));
+					}
+					catch
+					{
+					}
+					if (color.HasValue)
+					{
+						mBorders.Color = color.Value;
+					}
+				}
+
+				Invoke((MethodInvoker)delegate
+				{
+					overlay.Markers.Add(m);
+					overlay.Markers.Add(mBorders);
+				});
 			}
 			catch (Exception)
 			{
@@ -2434,6 +2547,56 @@ namespace FooApplication
 			writeKML();
 		}
 
+		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+			if (!port.BaseStream.IsOpen)
+			{
+				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
+				MessageBox.Show("no connection");
+				return;
+			}
+
+			if (port.MAV.GuidedMode.z == 0)
+			{
+				// flyToHereAltToolStripMenuItem_Click(null, null);
+
+				if (port.MAV.GuidedMode.z == 0)
+					return;
+			}
+
+			if (MouseDownStart.Lat == 0 || MouseDownStart.Lng == 0)
+			{
+				// CustomMessageBox.Show(Strings.BadCoords, Strings.ERROR);
+				MessageBox.Show("can not get position");
+				return;
+			}
+
+			Locationwp gotohere = new Locationwp();
+
+			gotohere.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+			gotohere.alt = 10; // back to m
+			gotohere.lat = (MouseDownStart.Lat);
+			gotohere.lng = (MouseDownStart.Lng);
+
+
+			try
+			{
+				port.setGuidedModeWP(gotohere);
+			}
+			catch (Exception ex)
+			{
+				port.giveComport = false;
+				MessageBox.Show(ex.Message);
+			}
+
+
+			commonsOverlay.Markers.Clear();
+			
+			addpolygonmarker("Guided Mode", gotohere.lng,
+								  gotohere.lat, (int)gotohere.alt, Color.Blue, commonsOverlay);
+		}
+
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 			port.open();
@@ -2556,7 +2719,9 @@ namespace FooApplication
 			}
 		}
 
-		
-	
+		private void BUT_Rotation_Click(object sender, EventArgs e)
+		{
+			throw new NotImplementedException { };
+		}
 	}
 }

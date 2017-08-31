@@ -1648,7 +1648,7 @@ namespace FooApplication.Mavlink
 
 			while (true)
 			{
-				if (!(start.AddMilliseconds(1500) > DateTime.Now))
+				if (!(start.AddMilliseconds(5000) > DateTime.Now))
 				{
 					giveComport = false;
 					throw new TimeoutException("Timeout on read - getRequestedWPNo");

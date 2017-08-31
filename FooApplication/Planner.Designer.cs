@@ -34,6 +34,9 @@
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.BUT_Rotation = new System.Windows.Forms.Button();
+			this.BUT_Read_WP = new System.Windows.Forms.Button();
+			this.BUT_Land = new System.Windows.Forms.Button();
 			this.BUT_Disarm = new System.Windows.Forms.Button();
 			this.btn_takeoff = new System.Windows.Forms.Button();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
@@ -60,8 +63,15 @@
 			this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.BUT_Land = new System.Windows.Forms.Button();
-			this.BUT_Read_WP = new System.Windows.Forms.Button();
+			this.Gauge_alt = new System.Windows.Forms.AGauge();
+			this.Gauge_speed = new System.Windows.Forms.AGauge();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.lbl_alt = new System.Windows.Forms.Label();
+			this.lbl_speed = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
@@ -69,6 +79,7 @@
 			// 
 			// myMap
 			// 
+			this.myMap.BackColor = System.Drawing.Color.Transparent;
 			this.myMap.Bearing = 0F;
 			this.myMap.CanDragMap = true;
 			this.myMap.ContextMenuStrip = this.contextMenuStrip1;
@@ -78,7 +89,6 @@
 			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
 			this.myMap.LevelsKeepInMemmory = 5;
 			this.myMap.Location = new System.Drawing.Point(0, 0);
-			this.myMap.Margin = new System.Windows.Forms.Padding(4);
 			this.myMap.MarkersEnabled = true;
 			this.myMap.MaxZoom = 2;
 			this.myMap.MinZoom = 2;
@@ -91,7 +101,7 @@
 			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
 			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
 			this.myMap.ShowTileGridLines = false;
-			this.myMap.Size = new System.Drawing.Size(1512, 806);
+			this.myMap.Size = new System.Drawing.Size(1008, 537);
 			this.myMap.TabIndex = 0;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
@@ -101,26 +111,28 @@
 			this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ClearMissionToolStripMenuItem,
-            this.setHomeHereToolStripMenuItem});
+            this.setHomeHereToolStripMenuItem,
+            this.clearAllMissionsToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(211, 60);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(174, 92);
 			// 
 			// ClearMissionToolStripMenuItem
 			// 
 			this.ClearMissionToolStripMenuItem.Name = "ClearMissionToolStripMenuItem";
-			this.ClearMissionToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
-			this.ClearMissionToolStripMenuItem.Text = "Clear Mission";
-			this.ClearMissionToolStripMenuItem.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
+			this.ClearMissionToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.ClearMissionToolStripMenuItem.Text = "Takeoff to Here";
+			this.ClearMissionToolStripMenuItem.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
 			// 
 			// setHomeHereToolStripMenuItem
 			// 
 			this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
-			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
+			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
 			this.setHomeHereToolStripMenuItem.Text = "Set Home Here";
 			this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.BUT_Rotation);
 			this.panel1.Controls.Add(this.BUT_Read_WP);
 			this.panel1.Controls.Add(this.BUT_Land);
 			this.panel1.Controls.Add(this.BUT_Disarm);
@@ -139,18 +151,46 @@
 			this.panel1.Controls.Add(this.label1);
 			this.panel1.Controls.Add(this.Commands);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 642);
-			this.panel1.Margin = new System.Windows.Forms.Padding(4);
+			this.panel1.Location = new System.Drawing.Point(0, 428);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1512, 164);
+			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
+			// 
+			// BUT_Rotation
+			// 
+			this.BUT_Rotation.Location = new System.Drawing.Point(750, 17);
+			this.BUT_Rotation.Name = "BUT_Rotation";
+			this.BUT_Rotation.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Rotation.TabIndex = 23;
+			this.BUT_Rotation.Text = "Rotation";
+			this.BUT_Rotation.UseVisualStyleBackColor = true;
+			this.BUT_Rotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
+			// 
+			// BUT_Read_WP
+			// 
+			this.BUT_Read_WP.BackColor = System.Drawing.SystemColors.HotTrack;
+			this.BUT_Read_WP.Location = new System.Drawing.Point(750, 73);
+			this.BUT_Read_WP.Name = "BUT_Read_WP";
+			this.BUT_Read_WP.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Read_WP.TabIndex = 22;
+			this.BUT_Read_WP.Text = "Read_WP";
+			this.BUT_Read_WP.UseVisualStyleBackColor = false;
+			this.BUT_Read_WP.Click += new System.EventHandler(this.BUT_read_Click);
+			// 
+			// BUT_Land
+			// 
+			this.BUT_Land.Location = new System.Drawing.Point(832, 45);
+			this.BUT_Land.Name = "BUT_Land";
+			this.BUT_Land.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Land.TabIndex = 21;
+			this.BUT_Land.Text = "Land";
+			this.BUT_Land.UseVisualStyleBackColor = true;
 			// 
 			// BUT_Disarm
 			// 
-			this.BUT_Disarm.Location = new System.Drawing.Point(1368, 110);
-			this.BUT_Disarm.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Disarm.Location = new System.Drawing.Point(912, 73);
 			this.BUT_Disarm.Name = "BUT_Disarm";
-			this.BUT_Disarm.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Disarm.Size = new System.Drawing.Size(75, 23);
 			this.BUT_Disarm.TabIndex = 20;
 			this.BUT_Disarm.Text = "Disarm";
 			this.BUT_Disarm.UseVisualStyleBackColor = true;
@@ -158,10 +198,9 @@
 			// 
 			// btn_takeoff
 			// 
-			this.btn_takeoff.Location = new System.Drawing.Point(1246, 26);
-			this.btn_takeoff.Margin = new System.Windows.Forms.Padding(4);
+			this.btn_takeoff.Location = new System.Drawing.Point(831, 17);
 			this.btn_takeoff.Name = "btn_takeoff";
-			this.btn_takeoff.Size = new System.Drawing.Size(112, 34);
+			this.btn_takeoff.Size = new System.Drawing.Size(75, 23);
 			this.btn_takeoff.TabIndex = 19;
 			this.btn_takeoff.Text = "Takeoff";
 			this.btn_takeoff.UseVisualStyleBackColor = true;
@@ -169,10 +208,9 @@
 			// 
 			// TXT_Mode
 			// 
-			this.TXT_Mode.Location = new System.Drawing.Point(969, 8);
-			this.TXT_Mode.Margin = new System.Windows.Forms.Padding(4);
+			this.TXT_Mode.Location = new System.Drawing.Point(646, 5);
 			this.TXT_Mode.Name = "TXT_Mode";
-			this.TXT_Mode.Size = new System.Drawing.Size(148, 29);
+			this.TXT_Mode.Size = new System.Drawing.Size(100, 22);
 			this.TXT_Mode.TabIndex = 18;
 			this.TXT_Mode.Text = "NULL";
 			// 
@@ -180,20 +218,18 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(878, 6);
-			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label3.Location = new System.Drawing.Point(585, 4);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(84, 36);
+			this.label3.Size = new System.Drawing.Size(55, 23);
 			this.label3.TabIndex = 17;
 			this.label3.Text = "Mode";
 			// 
 			// BUT_Write_wp
 			// 
 			this.BUT_Write_wp.BackColor = System.Drawing.SystemColors.HotTrack;
-			this.BUT_Write_wp.Location = new System.Drawing.Point(1126, 54);
-			this.BUT_Write_wp.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Write_wp.Location = new System.Drawing.Point(751, 44);
 			this.BUT_Write_wp.Name = "BUT_Write_wp";
-			this.BUT_Write_wp.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Write_wp.Size = new System.Drawing.Size(75, 23);
 			this.BUT_Write_wp.TabIndex = 16;
 			this.BUT_Write_wp.Text = "Write_WP";
 			this.BUT_Write_wp.UseVisualStyleBackColor = false;
@@ -201,10 +237,9 @@
 			// 
 			// BUT_Auto
 			// 
-			this.BUT_Auto.Location = new System.Drawing.Point(1246, 110);
-			this.BUT_Auto.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Auto.Location = new System.Drawing.Point(831, 73);
 			this.BUT_Auto.Name = "BUT_Auto";
-			this.BUT_Auto.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Auto.Size = new System.Drawing.Size(75, 23);
 			this.BUT_Auto.TabIndex = 15;
 			this.BUT_Auto.Text = "Auto";
 			this.BUT_Auto.UseVisualStyleBackColor = true;
@@ -212,10 +247,9 @@
 			// 
 			// BUT_Arm
 			// 
-			this.BUT_Arm.Location = new System.Drawing.Point(1368, 68);
-			this.BUT_Arm.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Arm.Location = new System.Drawing.Point(912, 45);
 			this.BUT_Arm.Name = "BUT_Arm";
-			this.BUT_Arm.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Arm.Size = new System.Drawing.Size(75, 23);
 			this.BUT_Arm.TabIndex = 14;
 			this.BUT_Arm.Text = "Arm";
 			this.BUT_Arm.UseVisualStyleBackColor = true;
@@ -223,10 +257,9 @@
 			// 
 			// BUT_Connect
 			// 
-			this.BUT_Connect.Location = new System.Drawing.Point(1368, 24);
-			this.BUT_Connect.Margin = new System.Windows.Forms.Padding(4);
+			this.BUT_Connect.Location = new System.Drawing.Point(912, 16);
 			this.BUT_Connect.Name = "BUT_Connect";
-			this.BUT_Connect.Size = new System.Drawing.Size(112, 34);
+			this.BUT_Connect.Size = new System.Drawing.Size(75, 23);
 			this.BUT_Connect.TabIndex = 13;
 			this.BUT_Connect.Text = "Connect";
 			this.BUT_Connect.UseVisualStyleBackColor = true;
@@ -234,10 +267,9 @@
 			// 
 			// TXT_DefaultAlt
 			// 
-			this.TXT_DefaultAlt.Location = new System.Drawing.Point(705, 8);
-			this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4);
+			this.TXT_DefaultAlt.Location = new System.Drawing.Point(470, 5);
 			this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
-			this.TXT_DefaultAlt.Size = new System.Drawing.Size(148, 29);
+			this.TXT_DefaultAlt.Size = new System.Drawing.Size(100, 22);
 			this.TXT_DefaultAlt.TabIndex = 12;
 			this.TXT_DefaultAlt.Text = "10";
 			// 
@@ -245,45 +277,40 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(588, 6);
-			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label2.Location = new System.Drawing.Point(392, 4);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(109, 36);
+			this.label2.Size = new System.Drawing.Size(71, 23);
 			this.label2.TabIndex = 11;
 			this.label2.Text = "Altitude";
 			// 
 			// TXT_homealt
 			// 
-			this.TXT_homealt.Location = new System.Drawing.Point(412, 6);
-			this.TXT_homealt.Margin = new System.Windows.Forms.Padding(4);
+			this.TXT_homealt.Location = new System.Drawing.Point(275, 4);
 			this.TXT_homealt.Name = "TXT_homealt";
-			this.TXT_homealt.Size = new System.Drawing.Size(148, 29);
+			this.TXT_homealt.Size = new System.Drawing.Size(100, 22);
 			this.TXT_homealt.TabIndex = 10;
 			// 
 			// TXT_homelng
 			// 
-			this.TXT_homelng.Location = new System.Drawing.Point(254, 4);
-			this.TXT_homelng.Margin = new System.Windows.Forms.Padding(4);
+			this.TXT_homelng.Location = new System.Drawing.Point(169, 3);
 			this.TXT_homelng.Name = "TXT_homelng";
-			this.TXT_homelng.Size = new System.Drawing.Size(148, 29);
+			this.TXT_homelng.Size = new System.Drawing.Size(100, 22);
 			this.TXT_homelng.TabIndex = 9;
 			// 
 			// TXT_homelat
 			// 
-			this.TXT_homelat.Location = new System.Drawing.Point(94, 4);
-			this.TXT_homelat.Margin = new System.Windows.Forms.Padding(4);
+			this.TXT_homelat.Location = new System.Drawing.Point(63, 3);
 			this.TXT_homelat.Name = "TXT_homelat";
-			this.TXT_homelat.Size = new System.Drawing.Size(148, 29);
+			this.TXT_homelat.Size = new System.Drawing.Size(100, 22);
 			this.TXT_homelat.TabIndex = 8;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(4, 4);
-			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label1.Location = new System.Drawing.Point(3, 3);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(85, 36);
+			this.label1.Size = new System.Drawing.Size(56, 23);
 			this.label1.TabIndex = 7;
 			this.label1.Text = "Home";
 			// 
@@ -294,7 +321,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
-			this.Commands.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -308,12 +334,11 @@
             this.Column5,
             this.Delete,
             this.TagData});
-			this.Commands.Location = new System.Drawing.Point(0, 44);
-			this.Commands.Margin = new System.Windows.Forms.Padding(4);
+			this.Commands.Location = new System.Drawing.Point(0, 29);
 			this.Commands.Name = "Commands";
 			this.Commands.RowHeadersWidth = 50;
 			this.Commands.RowTemplate.Height = 24;
-			this.Commands.Size = new System.Drawing.Size(1117, 120);
+			this.Commands.Size = new System.Drawing.Size(745, 80);
 			this.Commands.TabIndex = 6;
 			this.Commands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.Commands.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -422,36 +447,176 @@
 			this.TagData.Visible = false;
 			this.TagData.Width = 50;
 			// 
-			// BUT_Land
+			// Gauge_alt
 			// 
-			this.BUT_Land.Location = new System.Drawing.Point(1248, 68);
-			this.BUT_Land.Margin = new System.Windows.Forms.Padding(4);
-			this.BUT_Land.Name = "BUT_Land";
-			this.BUT_Land.Size = new System.Drawing.Size(112, 34);
-			this.BUT_Land.TabIndex = 21;
-			this.BUT_Land.Text = "Land";
-			this.BUT_Land.UseVisualStyleBackColor = true;
+			this.Gauge_alt.BackColor = System.Drawing.SystemColors.Menu;
+			this.Gauge_alt.BaseArcColor = System.Drawing.Color.Gray;
+			this.Gauge_alt.BaseArcRadius = 50;
+			this.Gauge_alt.BaseArcStart = 135;
+			this.Gauge_alt.BaseArcSweep = 270;
+			this.Gauge_alt.BaseArcWidth = 2;
+			this.Gauge_alt.Center = new System.Drawing.Point(100, 100);
+			this.Gauge_alt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Gauge_alt.Location = new System.Drawing.Point(0, 38);
+			this.Gauge_alt.MaxValue = 100F;
+			this.Gauge_alt.MinValue = 0F;
+			this.Gauge_alt.Name = "Gauge_alt";
+			this.Gauge_alt.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray;
+			this.Gauge_alt.NeedleColor2 = System.Drawing.Color.DimGray;
+			this.Gauge_alt.NeedleRadius = 30;
+			this.Gauge_alt.NeedleType = System.Windows.Forms.NeedleType.Advance;
+			this.Gauge_alt.NeedleWidth = 2;
+			this.Gauge_alt.ScaleLinesInterColor = System.Drawing.Color.Black;
+			this.Gauge_alt.ScaleLinesInterInnerRadius = 45;
+			this.Gauge_alt.ScaleLinesInterOuterRadius = 50;
+			this.Gauge_alt.ScaleLinesInterWidth = 1;
+			this.Gauge_alt.ScaleLinesMajorColor = System.Drawing.Color.Black;
+			this.Gauge_alt.ScaleLinesMajorInnerRadius = 40;
+			this.Gauge_alt.ScaleLinesMajorOuterRadius = 50;
+			this.Gauge_alt.ScaleLinesMajorStepValue = 10F;
+			this.Gauge_alt.ScaleLinesMajorWidth = 2;
+			this.Gauge_alt.ScaleLinesMinorColor = System.Drawing.Color.Gray;
+			this.Gauge_alt.ScaleLinesMinorInnerRadius = 45;
+			this.Gauge_alt.ScaleLinesMinorOuterRadius = 50;
+			this.Gauge_alt.ScaleLinesMinorTicks = 9;
+			this.Gauge_alt.ScaleLinesMinorWidth = 1;
+			this.Gauge_alt.ScaleNumbersColor = System.Drawing.Color.Black;
+			this.Gauge_alt.ScaleNumbersFormat = null;
+			this.Gauge_alt.ScaleNumbersRadius = 60;
+			this.Gauge_alt.ScaleNumbersRotation = 0;
+			this.Gauge_alt.ScaleNumbersStartScaleLine = 0;
+			this.Gauge_alt.ScaleNumbersStepScaleLines = 1;
+			this.Gauge_alt.Size = new System.Drawing.Size(203, 184);
+			this.Gauge_alt.TabIndex = 2;
+			this.Gauge_alt.Text = "aGauge1";
+			this.Gauge_alt.Value = 0F;
 			// 
-			// BUT_Read_WP
+			// Gauge_speed
 			// 
-			this.BUT_Read_WP.BackColor = System.Drawing.SystemColors.HotTrack;
-			this.BUT_Read_WP.Location = new System.Drawing.Point(1125, 96);
-			this.BUT_Read_WP.Margin = new System.Windows.Forms.Padding(4);
-			this.BUT_Read_WP.Name = "BUT_Read_WP";
-			this.BUT_Read_WP.Size = new System.Drawing.Size(112, 34);
-			this.BUT_Read_WP.TabIndex = 22;
-			this.BUT_Read_WP.Text = "Read_WP";
-			this.BUT_Read_WP.UseVisualStyleBackColor = false;
-			this.BUT_Read_WP.Click += new System.EventHandler(this.BUT_read_Click);
+			this.Gauge_speed.BackColor = System.Drawing.SystemColors.Menu;
+			this.Gauge_speed.BaseArcColor = System.Drawing.Color.Gray;
+			this.Gauge_speed.BaseArcRadius = 50;
+			this.Gauge_speed.BaseArcStart = 135;
+			this.Gauge_speed.BaseArcSweep = 270;
+			this.Gauge_speed.BaseArcWidth = 2;
+			this.Gauge_speed.Center = new System.Drawing.Point(100, 100);
+			this.Gauge_speed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Gauge_speed.Location = new System.Drawing.Point(0, 219);
+			this.Gauge_speed.MaxValue = 30F;
+			this.Gauge_speed.MinValue = 0F;
+			this.Gauge_speed.Name = "Gauge_speed";
+			this.Gauge_speed.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray;
+			this.Gauge_speed.NeedleColor2 = System.Drawing.Color.DimGray;
+			this.Gauge_speed.NeedleRadius = 30;
+			this.Gauge_speed.NeedleType = System.Windows.Forms.NeedleType.Advance;
+			this.Gauge_speed.NeedleWidth = 2;
+			this.Gauge_speed.ScaleLinesInterColor = System.Drawing.Color.Black;
+			this.Gauge_speed.ScaleLinesInterInnerRadius = 45;
+			this.Gauge_speed.ScaleLinesInterOuterRadius = 50;
+			this.Gauge_speed.ScaleLinesInterWidth = 1;
+			this.Gauge_speed.ScaleLinesMajorColor = System.Drawing.Color.Black;
+			this.Gauge_speed.ScaleLinesMajorInnerRadius = 40;
+			this.Gauge_speed.ScaleLinesMajorOuterRadius = 50;
+			this.Gauge_speed.ScaleLinesMajorStepValue = 5F;
+			this.Gauge_speed.ScaleLinesMajorWidth = 2;
+			this.Gauge_speed.ScaleLinesMinorColor = System.Drawing.Color.Gray;
+			this.Gauge_speed.ScaleLinesMinorInnerRadius = 45;
+			this.Gauge_speed.ScaleLinesMinorOuterRadius = 50;
+			this.Gauge_speed.ScaleLinesMinorTicks = 9;
+			this.Gauge_speed.ScaleLinesMinorWidth = 1;
+			this.Gauge_speed.ScaleNumbersColor = System.Drawing.Color.Black;
+			this.Gauge_speed.ScaleNumbersFormat = null;
+			this.Gauge_speed.ScaleNumbersRadius = 60;
+			this.Gauge_speed.ScaleNumbersRotation = 0;
+			this.Gauge_speed.ScaleNumbersStartScaleLine = 0;
+			this.Gauge_speed.ScaleNumbersStepScaleLines = 1;
+			this.Gauge_speed.Size = new System.Drawing.Size(203, 184);
+			this.Gauge_speed.TabIndex = 3;
+			this.Gauge_speed.Text = "aGauge1";
+			this.Gauge_speed.Value = 0F;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point(68, 51);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(67, 19);
+			this.label4.TabIndex = 4;
+			this.label4.Text = "Altitude";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(71, 232);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(58, 19);
+			this.label5.TabIndex = 5;
+			this.label5.Text = "Speed";
+			// 
+			// lbl_alt
+			// 
+			this.lbl_alt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lbl_alt.Location = new System.Drawing.Point(64, 186);
+			this.lbl_alt.Name = "lbl_alt";
+			this.lbl_alt.Size = new System.Drawing.Size(50, 20);
+			this.lbl_alt.TabIndex = 6;
+			this.lbl_alt.Text = "00";
+			this.lbl_alt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// lbl_speed
+			// 
+			this.lbl_speed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lbl_speed.Location = new System.Drawing.Point(59, 369);
+			this.lbl_speed.Name = "lbl_speed";
+			this.lbl_speed.Size = new System.Drawing.Size(50, 20);
+			this.lbl_speed.TabIndex = 7;
+			this.lbl_speed.Text = "00";
+			this.lbl_speed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(120, 186);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(23, 19);
+			this.label6.TabIndex = 8;
+			this.label6.Text = "m";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.Location = new System.Drawing.Point(111, 370);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(32, 19);
+			this.label7.TabIndex = 9;
+			this.label7.Text = "ms";
+			// 
+			// clearAllMissionsToolStripMenuItem
+			// 
+			this.clearAllMissionsToolStripMenuItem.Name = "clearAllMissionsToolStripMenuItem";
+			this.clearAllMissionsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.clearAllMissionsToolStripMenuItem.Text = "Clear All Missions";
+			this.clearAllMissionsToolStripMenuItem.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
 			// 
 			// Planner
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1512, 806);
+			this.ClientSize = new System.Drawing.Size(1008, 537);
+			this.Controls.Add(this.label7);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.lbl_speed);
+			this.Controls.Add(this.lbl_alt);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.Gauge_speed);
+			this.Controls.Add(this.Gauge_alt);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.myMap);
-			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "Planner";
 			this.Text = "Planner";
 			this.contextMenuStrip1.ResumeLayout(false);
@@ -459,6 +624,7 @@
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -497,5 +663,15 @@
 		private System.Windows.Forms.Button BUT_Disarm;
 		private System.Windows.Forms.Button BUT_Land;
 		private System.Windows.Forms.Button BUT_Read_WP;
+		private System.Windows.Forms.Button BUT_Rotation;
+		private System.Windows.Forms.AGauge Gauge_alt;
+		private System.Windows.Forms.AGauge Gauge_speed;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label lbl_alt;
+		private System.Windows.Forms.Label lbl_speed;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.ToolStripMenuItem clearAllMissionsToolStripMenuItem;
 	}
 }
