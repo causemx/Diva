@@ -63,59 +63,19 @@ namespace FooApplication.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap if_13_2135926 {
-            get {
-                object obj = ResourceManager.GetObject("if_13_2135926", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_15_2135924 {
-            get {
-                object obj = ResourceManager.GetObject("if_15_2135924", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_17_2135920 {
-            get {
-                object obj = ResourceManager.GetObject("if_17_2135920", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_20_2135919 {
-            get {
-                object obj = ResourceManager.GetObject("if_20_2135919", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_3_15636567 {
-            get {
-                object obj = ResourceManager.GetObject("if_3_15636567", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
         internal static System.Drawing.Bitmap if_50_111142 {
             get {
                 object obj = ResourceManager.GetObject("if_50_111142", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap if_airplane_32 {
+            get {
+                object obj = ResourceManager.GetObject("if_airplane_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,29 +93,9 @@ namespace FooApplication.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap if_cable__connector__usb__tech__plug__connection__device_2317814 {
+        internal static System.Drawing.Bitmap if_location_32 {
             get {
-                object obj = ResourceManager.GetObject("if_cable__connector__usb__tech__plug__connection__device_2317814", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_ic_flight_48px_352370 {
-            get {
-                object obj = ResourceManager.GetObject("if_ic_flight_48px_352370", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_miscellaneous_25_809411 {
-            get {
-                object obj = ResourceManager.GetObject("if_miscellaneous_25_809411", resourceCulture);
+                object obj = ResourceManager.GetObject("if_location_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,19 +113,9 @@ namespace FooApplication.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap if_performance_clock_speed_353431 {
+        internal static System.Drawing.Bitmap if_paper_plane_32 {
             get {
-                object obj = ResourceManager.GetObject("if_performance_clock_speed_353431", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_plane_48 {
-            get {
-                object obj = ResourceManager.GetObject("if_plane_48", resourceCulture);
+                object obj = ResourceManager.GetObject("if_paper_plane_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

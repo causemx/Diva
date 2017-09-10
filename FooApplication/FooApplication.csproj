@@ -121,6 +121,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\MyProgressDialog.cs" />
+    <Compile Include="Controls\ProgressInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ProgressInputDialog.Designer.cs">
+      <DependentUpon>ProgressInputDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +134,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Mavlink\MavlinkInterface.cs" />
+    <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>
@@ -143,6 +150,9 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
+      <DependentUpon>ProgressInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mavcmd.xml" />
+    <None Include="Resources\if_airplane_32.png" />
+    <None Include="Resources\if_location_32.png" />
+    <None Include="Resources\if_paper-plane_32.png" />
     <None Include="Resources\if_plane_48.png" />
     <None Include="Resources\ic_quadcopter_48.png" />
   </ItemGroup>
@@ -188,34 +201,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\if_3_15636567.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_13_2135926.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_15_2135924.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_17_2135920.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_20_2135919.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\if_50_111142.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\if_battery-reduce-energy-charge_2203543.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_cable__connector__usb__tech__plug__connection__device_2317814.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_ic_flight_48px_352370.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_miscellaneous-25_809411.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\if_mountain_biking_310319.png" />

@@ -226,7 +226,7 @@ namespace FooApplication.Utilities
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
-		private readonly Bitmap icon = Resources.if_plane_48;
+		private readonly Bitmap icon = Resources.if_location_32;
 
 		float heading = 0;
 		float cog = -1;
@@ -318,11 +318,11 @@ namespace FooApplication.Utilities
 	{
 		public float? Bearing;
 
-		static readonly System.Drawing.Size SizeSt = new System.Drawing.Size(Resources.if_3_15636567.Width,
-			Resources.if_3_15636567.Height);
+		static readonly System.Drawing.Size SizeSt = new System.Drawing.Size(Resources.if_location_32.Width,
+			Resources.if_location_32.Height);
 
 		//static Bitmap localcache1 = Resources.shadow50;
-		static Bitmap localcache2 = Resources.if_3_15636567;
+		static Bitmap localcache2 = Resources.if_location_32;
 
 		public int Alt { get; set; }
 

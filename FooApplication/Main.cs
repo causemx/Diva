@@ -95,7 +95,7 @@ namespace FooApplication
 					};
 
 					if (!comPort.BaseStream.IsOpen) continue;
-					comPort.sendPacket(htb, comPort.sysid, comPort.compid);
+					comPort.sendPacket(htb, comPort.MAV.sysid, comPort.MAV.compid);
 
 				}
 
@@ -573,11 +573,11 @@ namespace FooApplication
 
 			// arm the MAV
 			comPort.setMode(
-					comPort.sysid,
-					comPort.compid,
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = comPort.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)0,
 					});
@@ -601,11 +601,11 @@ namespace FooApplication
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
 				comPort.setMode(
-					comPort.sysid, 
-					comPort.compid, 
+					comPort.MAV.sysid, 
+					comPort.MAV.compid, 
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = comPort.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)4,
 					});
@@ -626,11 +626,11 @@ namespace FooApplication
 			if (comPort.BaseStream.IsOpen)
 			{
 				comPort.setMode(
-					comPort.sysid,
-					comPort.compid,
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = comPort.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)9,
 					});

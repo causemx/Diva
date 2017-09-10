@@ -33,6 +33,7 @@
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.BUT_Rotation = new System.Windows.Forms.Button();
 			this.BUT_Read_WP = new System.Windows.Forms.Button();
@@ -71,10 +72,22 @@
 			this.lbl_speed = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
-			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.ts_lbl_gps = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+			this.ts_lbl_battery = new System.Windows.Forms.ToolStripLabel();
+			this.but_connection = new System.Windows.Forms.Button();
+			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+			this.ts_but_drone_one = new System.Windows.Forms.ToolStripButton();
+			this.ts_but_drone_two = new System.Windows.Forms.ToolStripButton();
+			this.ts_but_drone_three = new System.Windows.Forms.ToolStripButton();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
+			this.toolStrip1.SuspendLayout();
+			this.toolStrip2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// myMap
@@ -114,7 +127,7 @@
             this.setHomeHereToolStripMenuItem,
             this.clearAllMissionsToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(174, 92);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(174, 70);
 			// 
 			// ClearMissionToolStripMenuItem
 			// 
@@ -126,9 +139,16 @@
 			// setHomeHereToolStripMenuItem
 			// 
 			this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
-			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+			this.setHomeHereToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
 			this.setHomeHereToolStripMenuItem.Text = "Set Home Here";
 			this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
+			// 
+			// clearAllMissionsToolStripMenuItem
+			// 
+			this.clearAllMissionsToolStripMenuItem.Name = "clearAllMissionsToolStripMenuItem";
+			this.clearAllMissionsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.clearAllMissionsToolStripMenuItem.Text = "Clear All Missions";
+			this.clearAllMissionsToolStripMenuItem.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
 			// 
 			// panel1
 			// 
@@ -185,6 +205,7 @@
 			this.BUT_Land.TabIndex = 21;
 			this.BUT_Land.Text = "Land";
 			this.BUT_Land.UseVisualStyleBackColor = true;
+			this.BUT_Land.Click += new System.EventHandler(this.BUT_Land_Click);
 			// 
 			// BUT_Disarm
 			// 
@@ -321,6 +342,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
+			this.Commands.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -595,18 +617,130 @@
 			this.label7.TabIndex = 9;
 			this.label7.Text = "ms";
 			// 
-			// clearAllMissionsToolStripMenuItem
+			// toolStrip1
 			// 
-			this.clearAllMissionsToolStripMenuItem.Name = "clearAllMissionsToolStripMenuItem";
-			this.clearAllMissionsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-			this.clearAllMissionsToolStripMenuItem.Text = "Clear All Missions";
-			this.clearAllMissionsToolStripMenuItem.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
+			this.toolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.ts_lbl_gps,
+            this.toolStripSeparator1,
+            this.toolStripButton2,
+            this.ts_lbl_battery});
+			this.toolStrip1.Location = new System.Drawing.Point(874, 0);
+			this.toolStrip1.Name = "toolStrip1";
+			this.toolStrip1.Size = new System.Drawing.Size(125, 25);
+			this.toolStrip1.TabIndex = 10;
+			this.toolStrip1.Text = "toolStrip1";
+			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton1.Image = global::FooApplication.Properties.Resources.if_50_111142;
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton1.Text = "toolStripButton1";
+			// 
+			// ts_lbl_gps
+			// 
+			this.ts_lbl_gps.Name = "ts_lbl_gps";
+			this.ts_lbl_gps.Size = new System.Drawing.Size(44, 22);
+			this.ts_lbl_gps.Text = "strong";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripButton2
+			// 
+			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton2.Image = global::FooApplication.Properties.Resources.if_battery_reduce_energy_charge_2203543;
+			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton2.Name = "toolStripButton2";
+			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton2.Text = "toolStripButton2";
+			// 
+			// ts_lbl_battery
+			// 
+			this.ts_lbl_battery.Name = "ts_lbl_battery";
+			this.ts_lbl_battery.Size = new System.Drawing.Size(26, 22);
+			this.ts_lbl_battery.Text = "0%";
+			// 
+			// but_connection
+			// 
+			this.but_connection.BackColor = System.Drawing.SystemColors.Menu;
+			this.but_connection.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.but_connection.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
+			this.but_connection.Location = new System.Drawing.Point(470, 0);
+			this.but_connection.Name = "but_connection";
+			this.but_connection.Size = new System.Drawing.Size(75, 62);
+			this.but_connection.TabIndex = 11;
+			this.but_connection.Text = "Connect";
+			this.but_connection.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.but_connection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.but_connection.UseVisualStyleBackColor = false;
+			this.but_connection.Click += new System.EventHandler(this.but_connection_Click);
+			// 
+			// toolStrip2
+			// 
+			this.toolStrip2.AutoSize = false;
+			this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ts_but_drone_one,
+            this.ts_but_drone_two,
+            this.ts_but_drone_three});
+			this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+			this.toolStrip2.Location = new System.Drawing.Point(943, 157);
+			this.toolStrip2.Name = "toolStrip2";
+			this.toolStrip2.Size = new System.Drawing.Size(56, 188);
+			this.toolStrip2.TabIndex = 12;
+			this.toolStrip2.Text = "toolStrip2";
+			// 
+			// ts_but_drone_one
+			// 
+			this.ts_but_drone_one.Enabled = false;
+			this.ts_but_drone_one.Image = global::FooApplication.Properties.Resources.if_airplane_32;
+			this.ts_but_drone_one.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.ts_but_drone_one.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ts_but_drone_one.Name = "ts_but_drone_one";
+			this.ts_but_drone_one.Size = new System.Drawing.Size(54, 52);
+			this.ts_but_drone_one.Text = "00";
+			this.ts_but_drone_one.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			// 
+			// ts_but_drone_two
+			// 
+			this.ts_but_drone_two.Enabled = false;
+			this.ts_but_drone_two.Image = global::FooApplication.Properties.Resources.if_airplane_32;
+			this.ts_but_drone_two.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.ts_but_drone_two.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ts_but_drone_two.Name = "ts_but_drone_two";
+			this.ts_but_drone_two.Size = new System.Drawing.Size(54, 52);
+			this.ts_but_drone_two.Text = "00";
+			this.ts_but_drone_two.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			// 
+			// ts_but_drone_three
+			// 
+			this.ts_but_drone_three.Enabled = false;
+			this.ts_but_drone_three.Image = global::FooApplication.Properties.Resources.if_airplane_32;
+			this.ts_but_drone_three.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.ts_but_drone_three.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.ts_but_drone_three.Name = "ts_but_drone_three";
+			this.ts_but_drone_three.Size = new System.Drawing.Size(54, 52);
+			this.ts_but_drone_three.Text = "00";
+			this.ts_but_drone_three.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			// 
 			// Planner
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 537);
+			this.Controls.Add(this.toolStrip2);
+			this.Controls.Add(this.but_connection);
+			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.lbl_speed);
@@ -623,6 +757,10 @@
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
+			this.toolStrip1.ResumeLayout(false);
+			this.toolStrip1.PerformLayout();
+			this.toolStrip2.ResumeLayout(false);
+			this.toolStrip2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -673,5 +811,16 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ToolStripMenuItem clearAllMissionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStrip toolStrip1;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
+		private System.Windows.Forms.ToolStripLabel ts_lbl_gps;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton toolStripButton2;
+		private System.Windows.Forms.ToolStripLabel ts_lbl_battery;
+		private System.Windows.Forms.Button but_connection;
+		private System.Windows.Forms.ToolStrip toolStrip2;
+		private System.Windows.Forms.ToolStripButton ts_but_drone_one;
+		private System.Windows.Forms.ToolStripButton ts_but_drone_two;
+		private System.Windows.Forms.ToolStripButton ts_but_drone_three;
 	}
 }

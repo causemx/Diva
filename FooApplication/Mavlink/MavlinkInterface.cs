@@ -73,12 +73,18 @@ namespace FooApplication.Mavlink
 			}
 		}
 
+		public MavList MAVlist;
+
+		public MavStatus MAV
+		{
+			get { return MAVlist[sysidcurrent, compidcurrent]; }
+			set { MAVlist[sysidcurrent, compidcurrent] = value; }
+		}
+
 		public BufferedStream logfile { get; set; }
 		public BufferedStream rawlogfile { get; set; }
 		public DateTime _bpstime { get; set; }
-		public byte sysid { get { return _sysid; } set { _sysid = value; } }
-		public byte compid { get { return _compid; } set { _compid = value; } }
-		public MavStatus MAV { get { return _mav; } set { _mav = value; } }
+		
 
 
 		internal string plaintxtline = "";
@@ -93,17 +99,17 @@ namespace FooApplication.Mavlink
 		private int pacCount = 0;
 		private const int gcssysid = 255;
 		private ICommsSerial _baseStream = null;
-		private MavStatus _mav;
 		private byte sysidcurrent;
 		private byte compidcurrent;
 		private BinaryReader _logplaybackfile;
 		private string buildplaintxtline = "";
-		private byte _sysid = 1;
-		private byte _compid = 0;
+		private byte mavlinkversion = 0;
+
 
 		public MavlinkInterface()
 		{
-			_mav = new MavStatus(this, 1, 0);
+			MAVlist = new MavList(this);
+
 			// BaseStream = new SerialPort();
 			// BaseStream.PortName = COMPORT_PORT_NAME;
 			// BaseStream.BaudRate = COMPORT_BAUDRATE;
@@ -113,6 +119,7 @@ namespace FooApplication.Mavlink
 
 		public void open()
 		{
+			MAVlist.Clear();
 			openBg(false);
 			log.Info("connection establish");
 		}
@@ -282,7 +289,7 @@ namespace FooApplication.Mavlink
 				Array.Resize(ref temp, 50);
 				// 
 				generatePacket((byte)MAVLINK_MSG_ID.STATUSTEXT,
-					new mavlink_statustext_t() { severity = (byte)MAV_SEVERITY.INFO, text = temp }, sysid, compid);
+					new mavlink_statustext_t() { severity = (byte)MAV_SEVERITY.INFO, text = temp }, sysidcurrent, compidcurrent);
 				// mavlink2
 				/**
 				generatePacket((byte)MAVLINK_MSG_ID.STATUSTEXT,
@@ -369,7 +376,7 @@ namespace FooApplication.Mavlink
 			req.target_system = MAV.sysid;
 
 			// request point
-			generatePacket((byte)MAVLINK_MSG_ID.RALLY_FETCH_POINT, req, sysid, compid);
+			generatePacket((byte)MAVLINK_MSG_ID.RALLY_FETCH_POINT, req, sysidcurrent, compidcurrent);
 
 			DateTime start = DateTime.Now;
 			int retrys = 3;
@@ -381,7 +388,7 @@ namespace FooApplication.Mavlink
 					if (retrys > 0)
 					{
 						log.Info("getRallyPoint Retry " + retrys + " - giv com " + giveComport);
-						generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req, sysid, compid);
+						generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req, sysidcurrent, compidcurrent);
 						start = DateTime.Now;
 						retrys--;
 						continue;
@@ -399,7 +406,7 @@ namespace FooApplication.Mavlink
 
 						if (req.idx != fp.idx)
 						{
-							generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req, sysid, compid);
+							generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req, sysidcurrent, compidcurrent);
 							continue;
 						}
 
@@ -443,22 +450,17 @@ namespace FooApplication.Mavlink
 		{
 			sysidcurrent = message.sysid;
 			compidcurrent = message.compid;
-			MAV.sysid = message.sysid;
-			MAV.compid = message.compid;
 
-			// TODO: get parameters future.
-			/**
 			mavlinkversion = hb.mavlink_version;
 			MAV.aptype = (MAV_TYPE)hb.type;
 			MAV.apname = (MAV_AUTOPILOT)hb.autopilot;
 
-			setAPType(message.sysid, message.compid);
+			// for different firmwares.
+			// setAPType(message.sysid, message.compid);
 
 			MAV.sysid = message.sysid;
 			MAV.compid = message.compid;
 			MAV.recvpacketcount = message.seq;
-			log.InfoFormat("ID sys {0} comp {1} ver{2} type {3} name {4}", MAV.sysid, MAV.compid, mavlinkversion,
-				MAV.aptype.ToString(), MAV.apname.ToString()); */
 		}
 
 		public MAVLinkMessage readPacket()
@@ -769,7 +771,7 @@ namespace FooApplication.Mavlink
 			req.target_system = MAV.sysid;
 
 			// request point
-			generatePacket((byte)MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req, sysid, compid);
+			generatePacket((byte)MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req, sysidcurrent, compidcurrent);
 
 			DateTime start = DateTime.Now;
 			int retrys = 3;
@@ -781,7 +783,7 @@ namespace FooApplication.Mavlink
 					if (retrys > 0)
 					{
 						log.Info("getVersion Retry " + retrys + " - giv com " + giveComport);
-						generatePacket((byte)MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req, sysid, compid);
+						generatePacket((byte)MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req, sysidcurrent, compidcurrent);
 						start = DateTime.Now;
 						retrys--;
 						continue;
@@ -1012,9 +1014,9 @@ namespace FooApplication.Mavlink
 			ack.result = 0;
 
 			// send twice
-			generatePacket(MAVLINK_MSG_ID.COMMAND_ACK, ack, sysid, compid);
+			generatePacket(MAVLINK_MSG_ID.COMMAND_ACK, ack, sysidcurrent, compidcurrent);
 			Thread.Sleep(20);
-			generatePacket(MAVLINK_MSG_ID.COMMAND_ACK, ack, sysid, compid);
+			generatePacket(MAVLINK_MSG_ID.COMMAND_ACK, ack, sysidcurrent, compidcurrent);
 		}
 
 		public void setMode(byte sysid, byte compid, MAVLink.mavlink_set_mode_t mode, MAVLink.MAV_MODE_FLAG base_mode = 0)
@@ -1143,7 +1145,7 @@ namespace FooApplication.Mavlink
 			ushort index = req.seq;
 			
 			// request
-			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM, req, sysid, compid);
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM, req, sysidcurrent, compidcurrent);
 
 
 			DateTime start = DateTime.Now;
@@ -1156,7 +1158,7 @@ namespace FooApplication.Mavlink
 					if (retrys > 0)
 					{
 						log.Info("setWP Retry " + retrys);
-						generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM, req, sysid, compid);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM, req, sysidcurrent, compidcurrent);
 
 						start = DateTime.Now;
 						retrys--;
@@ -1241,7 +1243,7 @@ namespace FooApplication.Mavlink
 			ushort index = req.seq;
 
 			// request
-			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM_INT, req, sysid, compid);
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM_INT, req, sysidcurrent, compidcurrent);
 
 			DateTime start = DateTime.Now;
 			int retrys = 10;
@@ -1253,7 +1255,7 @@ namespace FooApplication.Mavlink
 					if (retrys > 0)
 					{
 						log.Info("setWP Retry " + retrys);
-						generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM_INT, req, sysid, compid);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_ITEM_INT, req, sysidcurrent, compidcurrent);
 
 						start = DateTime.Now;
 						retrys--;
@@ -1348,7 +1350,7 @@ namespace FooApplication.Mavlink
 			req.target_component = MAV.compid;
 
 			// request list
-			generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req, sysid, compid);
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req, sysidcurrent, compidcurrent);
 
 			DateTime start = DateTime.Now;
 			int retrys = 6;
@@ -1360,7 +1362,7 @@ namespace FooApplication.Mavlink
 					if (retrys > 0)
 					{
 						log.Info("getWPCount Retry " + retrys + " - giv com " + giveComport);
-						generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req, sysid, compid);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req, sysidcurrent, compidcurrent);
 						start = DateTime.Now;
 						retrys--;
 						continue;
@@ -1413,7 +1415,7 @@ namespace FooApplication.Mavlink
 				reqi.seq = index;
 
 				// request
-				generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, reqi, sysid, compid);
+				generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, reqi, sysidcurrent, compidcurrent);
 
 				req = reqi;
 			}
@@ -1427,7 +1429,7 @@ namespace FooApplication.Mavlink
 				reqf.seq = index;
 
 				// request
-				generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, reqf, sysid, compid);
+				generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, reqf, sysidcurrent, compidcurrent);
 
 				req = reqf;
 			}
@@ -1446,9 +1448,9 @@ namespace FooApplication.Mavlink
 					{
 						log.Info("getWP Retry " + retrys);
 						if (use_int)
-							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, req, sysid, compid);
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, req, sysidcurrent, compidcurrent);
 						else
-							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, req, sysid, compid);
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, req, sysidcurrent, compidcurrent);
 						start = DateTime.Now;
 						retrys--;
 						continue;
@@ -1470,7 +1472,7 @@ namespace FooApplication.Mavlink
 						// received a packet, but not what we requested
 						if (index != wp.seq)
 						{
-							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, req, sysid, compid);
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST, req, sysidcurrent, compidcurrent);
 							continue;
 						}
 
@@ -1499,7 +1501,7 @@ namespace FooApplication.Mavlink
 						// received a packet, but not what we requested
 						if (index != wp.seq)
 						{
-							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, req, sysid, compid);
+							generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_INT, req, sysidcurrent, compidcurrent);
 							continue;
 						}
 
@@ -1536,7 +1538,7 @@ namespace FooApplication.Mavlink
 
 		public void getDatastream(MAV_DATA_STREAM id, byte hzrate)
 		{
-			getDatastream(sysid, compid, id, hzrate);
+			getDatastream(sysidcurrent, compidcurrent, id, hzrate);
 		}
 
 		public void getDatastream(byte sysid, byte compid, MAV_DATA_STREAM id, byte hzrate)

@@ -1,5 +1,6 @@
 ﻿using FooApplication.Controls;
 using FooApplication.Mavlink;
+using FooApplication.Properties;
 using FooApplication.Utilities;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -215,7 +216,7 @@ namespace FooApplication
 					};
 
 					if (!port.BaseStream.IsOpen) continue;
-					port.sendPacket(htb, port.sysid, port.compid);
+					port.sendPacket(htb, port.MAV.sysid, port.MAV.compid);
 
 				}
 
@@ -372,6 +373,11 @@ namespace FooApplication
 							float current = (float)sysstatus.current_battery / 100.0f;
 
 							ushort packetdropremote = sysstatus.drop_rate_comm;
+
+							Invoke((MethodInvoker)delegate
+							{
+								this.ts_lbl_battery.Text = battery_voltage.ToString() + "%";
+							});
 						}
 					}
 
@@ -466,7 +472,7 @@ namespace FooApplication
 
 			// do lang stuff here
 			
-			string file = Settings.GetRunningDirectory() + "mavcmd.xml";
+			string file = Utilities.Settings.GetRunningDirectory() + "mavcmd.xml";
 		
 
 			if (!File.Exists(file))
@@ -2600,6 +2606,12 @@ namespace FooApplication
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 			port.open();
+			if (port.BaseStream.IsOpen)
+			{
+				ts_but_drone_one.Enabled = true;
+				ts_but_drone_one.Text = (port.MAV.sysid).ToString();
+			}
+			
 		}
 
 		private void btn_takeoff_Click(object sender, EventArgs e)
@@ -2609,11 +2621,11 @@ namespace FooApplication
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
 				port.setMode(
-					port.sysid,
-					port.compid,
+					port.MAV.sysid,
+					port.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = port.sysid,
+						target_system = port.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)4,
 					});
@@ -2657,11 +2669,11 @@ namespace FooApplication
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
 				port.setMode(
-					port.sysid,
-					port.compid,
+					port.MAV.sysid,
+					port.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = port.sysid,
+						target_system = port.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)3,
 					});
@@ -2721,7 +2733,47 @@ namespace FooApplication
 
 		private void BUT_Rotation_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException { };
+			if (port.BaseStream.IsOpen)
+			{
+				port.doARM(true);
+				Thread.Sleep(2000);
+				port.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+				Thread.Sleep(5000);
+			
+				// flyToHereAltToolStripMenuItem_Click(null, null);
+
+				port.setMode(
+					port.MAV.sysid,
+					port.MAV.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = port.MAV.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)3,
+					});
+			}
+
+		}
+
+		private void BUT_Land_Click(object sender, EventArgs e)
+		{
+			if (port.BaseStream.IsOpen)
+			{
+				port.setMode(
+					port.MAV.sysid,
+					port.MAV.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = port.MAV.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)9,
+					});
+			}
+		}
+
+		private void but_connection_Click(object sender, EventArgs e)
+		{
+			port.open();
 		}
 	}
 }
