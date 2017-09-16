@@ -1,4 +1,5 @@
-﻿using FooApplication.Controls;
+﻿using FooApplication.Comms;
+using FooApplication.Controls;
 using FooApplication.Mavlink;
 using FooApplication.Properties;
 using FooApplication.Utilities;
@@ -29,6 +30,27 @@ namespace FooApplication
 {
 	public partial class Planner : Form
 	{
+
+		public static List<MavlinkInterface> comPorts = new List<MavlinkInterface>();
+
+		public MavlinkInterface comPort
+		{
+			get
+			{
+				return _comPort;
+			}
+			set
+			{
+				if (_comPort == value)
+					return;
+				_comPort = value;
+				_comPort.MavChanged -= comPort_MavChanged;
+				_comPort.MavChanged += comPort_MavChanged;
+				comPort_MavChanged(null, null);
+			}
+		}
+
+		static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private static readonly double MY_LAT = 24.773518;
@@ -80,7 +102,6 @@ namespace FooApplication
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
-		private MavlinkInterface port = new MavlinkInterface();
 
 		// Thread setup
 		private Thread SerialReaderThread = null;
@@ -115,9 +136,6 @@ namespace FooApplication
 
 
 			quickadd = false;
-
-			// MAVLinkInterface setup
-			port.MAV.GuidedMode.z = 10;
 
 			// setup map events
 			myMap.OnPositionChanged += MainMap_OnCurrentPositionChanged;
@@ -215,16 +233,16 @@ namespace FooApplication
 						mavlink_version = 3 // MAVLink.MAVLINK_VERSION
 					};
 
-					if (!port.BaseStream.IsOpen) continue;
-					port.sendPacket(htb, port.MAV.sysid, port.MAV.compid);
+					if (!comPort.BaseStream.IsOpen) continue;
+					comPort.sendPacket(htb, comPort.MAV.sysid, comPort.MAV.compid);
 
 				}
 
 				heartbeatSend = DateTime.Now;
 
-				if (!port.BaseStream.IsOpen || port.giveComport == true)
+				if (!comPort.BaseStream.IsOpen || comPort.giveComport == true)
 				{
-					if (!port.BaseStream.IsOpen)
+					if (!comPort.BaseStream.IsOpen)
 					{
 						System.Threading.Thread.Sleep(1000);
 					}
@@ -275,7 +293,7 @@ namespace FooApplication
 
 		public void UpdateCurrentSettings(bool updatenow)
 		{
-			MAVLink.MAVLinkMessage mavlinkMessage = port.readPacket();
+			MAVLink.MAVLinkMessage mavlinkMessage = comPort.readPacket();
 
 			lock (this)
 			{
@@ -285,17 +303,17 @@ namespace FooApplication
 
 
 					// re-request streams
-					if (!(lastdata.AddSeconds(8) > DateTime.Now) && port.BaseStream.IsOpen)
+					if (!(lastdata.AddSeconds(8) > DateTime.Now) && comPort.BaseStream.IsOpen)
 					{
 						try
 						{
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
-							port.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
+							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
 						}
 						catch
 						{
@@ -430,6 +448,35 @@ namespace FooApplication
 			}
 		}
 
+		private void updateConnectPanel()
+		{
+			Invoke((MethodInvoker)delegate
+			{
+				switch (comPorts.Count) {
+					case 1:
+						this.but_drone_one.Enabled = true;
+						this.but_drone_one.Text = comPort.MAV.ToString();
+						break;
+					case 2:
+						this.but_drone_two.Enabled = true;
+						this.but_drone_two.Text = comPort.MAV.ToString();
+						break;
+					case 3:
+						this.but_drone_three.Enabled = true;
+						this.but_drone_three.Text = comPort.MAV.ToString();
+						break;
+					default:
+						break;
+				}
+				
+			});
+		}
+
+		private void UpdateConnectIcon()
+		{
+			// TODO: update connect icon when not connected.
+		}
+
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
@@ -464,6 +511,12 @@ namespace FooApplication
 			cmds.Add("UNKNOWN");
 
 			Command.DataSource = cmds;
+		}
+
+		void comPort_MavChanged(object sender, EventArgs e)
+		{
+
+			// TODO: Change mav when calling.
 		}
 
 		private Dictionary<string, string[]> readCMDXML()
@@ -1052,6 +1105,103 @@ namespace FooApplication
 			}
 		}
 
+		public void doConnect(MavlinkInterface comPort, string portname, string baud)
+		{
+			
+			log.Info("We are connecting to " + portname + " " + baud);
+			// Setup comport.basestream
+			// comPort.BaseStream = new UdpSerial();
+			comPort.BaseStream = new SerialPort();
+
+			// Tell the connection UI that we are now connected.
+			// TODO re-write UI behavior in panel X.
+
+			// Here we want to reset the connection stats counter etc.
+			// TODO refresh the connect icon.
+			// this.ResetConnectionStats();
+
+			// comPort.MAV.cs.ResetInternals();
+
+			try
+			{
+				log.Info("Set Portname");
+				// set port, then options
+				if (portname.ToLower() != "preset")
+					comPort.BaseStream.PortName = portname;
+
+				log.Info("Set Baudrate");
+				try
+				{
+					if (baud != "" && baud != "0")
+						comPort.BaseStream.BaudRate = int.Parse(baud);
+				}
+				catch (Exception exp)
+				{
+					log.Error(exp);
+				}
+
+				// prevent serialreader from doing anything
+				comPort.giveComport = true;
+
+				comPort.giveComport = false;
+
+
+				// reset connect time - for timeout functions
+				DateTime connecttime = DateTime.Now;
+
+				// do the connect
+				comPort.open();
+
+				if (!comPort.BaseStream.IsOpen)
+				{
+					log.Info("comport is closed. existing connect");
+					try
+					{
+						// _connectionControl.IsConnected(false);
+						UpdateConnectIcon();
+						comPort.close();
+					}
+					catch
+					{
+					}
+					return;
+				}
+
+				// get all the params
+				foreach (var mavstate in comPort.MAVlist)
+				{
+					comPort.sysidcurrent = mavstate.sysid;
+					comPort.compidcurrent = mavstate.compid;
+					// TODO: comPort.getParamList();
+				}
+
+				// set to first seen
+				comPort.sysidcurrent = comPort.MAVlist.First().sysid;
+				comPort.compidcurrent = comPort.MAVlist.First().compid;
+
+				updateConnectPanel();
+
+				// _connectionControl.UpdateSysIDS();
+
+			}
+			catch (Exception ex)
+			{
+				log.Warn(ex);
+				try
+				{
+					// _connectionControl.IsConnected(false);
+					UpdateConnectIcon();
+					comPort.close();
+				}
+				catch (Exception ex2)
+				{
+					log.Warn(ex2);
+				}
+				MessageBox.Show("Can not establish a connection\n\n" + ex.Message);
+				return;
+			}
+		}
+
 
 		/// <summary>
 		/// used to add a marker to the map display
@@ -1161,6 +1311,9 @@ namespace FooApplication
 				log.Info(ex.ToString());
 			}
 		}
+
+
+		
 
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -2050,12 +2203,12 @@ namespace FooApplication
 			try
 			{
 				
-				if (!port.BaseStream.IsOpen)
+				if (!comPort.BaseStream.IsOpen)
 				{
 					throw new Exception("Please connect first!");
 				}
 
-				port.giveComport = true;
+				comPort.giveComport = true;
 				int a = 0;
 
 				// define the home point
@@ -2073,16 +2226,16 @@ namespace FooApplication
 				}
 
 				// log
-				log.Info("wps values " + port.MAV.wps.Values.Count);
+				log.Info("wps values " + comPort.MAV.wps.Values.Count);
 				log.Info("cmd rows " + (Commands.Rows.Count + 1)); // + home
 
 				// check for changes / future mod to send just changed wp's
-				if (port.MAV.wps.Values.Count == (Commands.Rows.Count + 1))
+				if (comPort.MAV.wps.Values.Count == (Commands.Rows.Count + 1))
 				{
 					Hashtable wpstoupload = new Hashtable();
 
 					a = -1;
-					foreach (var item in port.MAV.wps.Values)
+					foreach (var item in comPort.MAV.wps.Values)
 					{
 						// skip home
 						if (a == -1)
@@ -2123,12 +2276,12 @@ namespace FooApplication
 
 				ushort totalwpcountforupload = (ushort)(Commands.Rows.Count + 1);
 
-				if (port.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
+				if (comPort.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
 				{
 					totalwpcountforupload--;
 				}
 
-				port.setWPTotal(totalwpcountforupload); // + home
+				comPort.setWPTotal(totalwpcountforupload); // + home
 
 				// set home location - overwritten/ignored depending on firmware.
 				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set home");
@@ -2136,11 +2289,11 @@ namespace FooApplication
 				// upload from wp0
 				a = 0;
 
-				if (port.MAV.apname != MAVLink.MAV_AUTOPILOT.PX4)
+				if (comPort.MAV.apname != MAVLink.MAV_AUTOPILOT.PX4)
 				{
 					try
 					{
-						var homeans = port.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						var homeans = comPort.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
 						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
@@ -2155,8 +2308,8 @@ namespace FooApplication
 					{
 						use_int = false;
 						// added here to prevent timeout errors
-						port.setWPTotal(totalwpcountforupload);
-						var homeans = port.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						comPort.setWPTotal(totalwpcountforupload);
+						var homeans = comPort.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
 						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
@@ -2208,19 +2361,19 @@ namespace FooApplication
 
 					// handle current wp upload number
 					int uploadwpno = a;
-					if (port.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
+					if (comPort.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
 						uploadwpno--;
 
 					// try send the wp
-					MAVLink.MAV_MISSION_RESULT ans = port.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+					MAVLink.MAV_MISSION_RESULT ans = comPort.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
 
 					// we timed out while uploading wps/ command wasnt replaced/ command wasnt added
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
 					{
 						// resend for partial upload
-						port.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
+						comPort.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
 						// reupload this point.
-						ans = port.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+						ans = comPort.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
 					}
 
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
@@ -2244,7 +2397,7 @@ namespace FooApplication
 						// the ans is received via mission_ack, so we dont know for certain what our current request is for. as we may have lost the mission_request
 
 						// get requested wp no - 1;
-						a = port.getRequestedWPNo() - 1;
+						a = comPort.getRequestedWPNo() - 1;
 
 						continue;
 					}
@@ -2256,7 +2409,7 @@ namespace FooApplication
 					}
 				}
 
-				port.setWPACK();
+				comPort.setWPACK();
 				/**
 				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(95, "Setting params");
 
@@ -2280,11 +2433,11 @@ namespace FooApplication
 			catch (Exception ex)
 			{
 				log.Error(ex);
-				port.giveComport = false;
+				comPort.giveComport = false;
 				throw;
 			}
 
-			port.giveComport = false;
+			comPort.giveComport = false;
 		}
 
 		void getWPs(object passdata = null)
@@ -2294,27 +2447,27 @@ namespace FooApplication
 			try
 			{
 
-				if (!port.BaseStream.IsOpen)
+				if (!comPort.BaseStream.IsOpen)
 				{
 					throw new Exception("Please Connect First!");
 				}
 
-				port.giveComport = true;
+				comPort.giveComport = true;
 
 				// param = port.MAV.param;
 
 				Console.WriteLine("Getting Home");
 				Console.WriteLine("Getting WP #");
 
-				int cmdcount = port.getWPCount();
+				int cmdcount = comPort.getWPCount();
 
 				for (ushort a = 0; a < cmdcount; a++)
 				{
 					Console.WriteLine("Getting WP" + a);
-					cmds.Add(port.getWP(a));
+					cmds.Add(comPort.getWP(a));
 				}
 
-				port.setWPACK();
+				comPort.setWPACK();
 
 				Console.WriteLine("Done");
 			}
@@ -2345,8 +2498,8 @@ namespace FooApplication
 					
 					try
 					{
-						if (withrally && port.MAV.param.ContainsKey("RALLY_TOTAL") &&
-							int.Parse(port.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
+						if (withrally && comPort.MAV.param.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
 						{
 							Console.WriteLine("get rally points");
 							getRallyPoints();
@@ -2357,7 +2510,7 @@ namespace FooApplication
 					{
 					}
 
-					port.giveComport = false;
+					comPort.giveComport = false;
 
 					BUT_Read_WP.Enabled = true;
 
@@ -2498,13 +2651,13 @@ namespace FooApplication
 
 		public void getRallyPoints()
 		{
-			if (port.MAV.param["RALLY_TOTAL"] == null)
+			if (comPort.MAV.param["RALLY_TOTAL"] == null)
 			{
 				MessageBox.Show("Not Supported");
 				return;
 			}
 
-			if (int.Parse(port.MAV.param["RALLY_TOTAL"].ToString()) < 1)
+			if (int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString()) < 1)
 			{
 				MessageBox.Show("Rally points - Nothing to download");
 				return;
@@ -2512,13 +2665,13 @@ namespace FooApplication
 
 			rallypointOverlay.Markers.Clear();
 
-			int count = int.Parse(port.MAV.param["RALLY_TOTAL"].ToString());
+			int count = int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString());
 
 			for (int a = 0; a < (count); a++)
 			{
 				try
 				{
-					PointLatLngAlt plla = port.getRallyPoint(a, ref count);
+					PointLatLngAlt plla = comPort.getRallyPoint(a, ref count);
 					rallypointOverlay.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
 					{
 						Alt = (int)plla.Alt,
@@ -2556,18 +2709,18 @@ namespace FooApplication
 		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
-			if (!port.BaseStream.IsOpen)
+			if (!comPort.BaseStream.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
 				MessageBox.Show("no connection");
 				return;
 			}
 
-			if (port.MAV.GuidedMode.z == 0)
+			if (comPort.MAV.GuidedMode.z == 0)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
-				if (port.MAV.GuidedMode.z == 0)
+				if (comPort.MAV.GuidedMode.z == 0)
 					return;
 			}
 
@@ -2588,11 +2741,11 @@ namespace FooApplication
 
 			try
 			{
-				port.setGuidedModeWP(gotohere);
+				comPort.setGuidedModeWP(gotohere);
 			}
 			catch (Exception ex)
 			{
-				port.giveComport = false;
+				comPort.giveComport = false;
 				MessageBox.Show(ex.Message);
 			}
 
@@ -2603,36 +2756,48 @@ namespace FooApplication
 								  gotohere.lat, (int)gotohere.alt, Color.Blue, commonsOverlay);
 		}
 
-		private void BUT_Connect_Click(object sender, EventArgs e)
+		
+		public void updateConnectionParam(string target, string baud)
 		{
-			port.open();
-			if (port.BaseStream.IsOpen)
+			try
 			{
-				ts_but_drone_one.Enabled = true;
-				ts_but_drone_one.Text = (port.MAV.sysid).ToString();
+				var mav = new MavlinkInterface();
+				doConnect(mav, target, baud);
+				comPorts.Add(mav);
+				comPort = mav;
+				updateConnectPanel();
+			} catch (Exception ex) {
 			}
 			
 		}
 
+		private void BUT_Connect_Click(object sender, EventArgs e)
+		{
+
+			ProgressInputDialog dialog = new ProgressInputDialog(this);
+			dialog.Show();
+
+		}
+
 		private void btn_takeoff_Click(object sender, EventArgs e)
 		{
-			if (port.BaseStream.IsOpen)
+			if (comPort.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
-				port.setMode(
-					port.MAV.sysid,
-					port.MAV.compid,
+				comPort.setMode(
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = port.MAV.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)4,
 					});
 
 				try
 				{
-					port.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 				}
 				catch
 				{
@@ -2643,7 +2808,7 @@ namespace FooApplication
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
-			if (!port.BaseStream.IsOpen)
+			if (!comPort.BaseStream.IsOpen)
 			{
 				log.Info("basestream have opened");
 				return;
@@ -2652,7 +2817,7 @@ namespace FooApplication
 			// arm the MAV
 			try
 			{
-				bool ans = port.doARM(true);
+				bool ans = comPort.doARM(true);
 				if (ans == false)
 					log.Info("arm failed");
 			}
@@ -2664,16 +2829,16 @@ namespace FooApplication
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
 		{
-			if (port.BaseStream.IsOpen)
+			if (comPort.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
-				port.setMode(
-					port.MAV.sysid,
-					port.MAV.compid,
+				comPort.setMode(
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = port.MAV.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)3,
 					});
@@ -2712,7 +2877,7 @@ namespace FooApplication
 
 		private void BUT_Disarm_Click(object sender, EventArgs e)
 		{
-			if (!port.BaseStream.IsOpen)
+			if (!comPort.BaseStream.IsOpen)
 			{
 				log.Info("basestream have opened");
 				return;
@@ -2721,7 +2886,7 @@ namespace FooApplication
 			// arm the MAV
 			try
 			{
-				bool ans = port.doARM(false);
+				bool ans = comPort.doARM(false);
 				if (ans == false)
 					log.Info("arm failed");
 			}
@@ -2733,21 +2898,21 @@ namespace FooApplication
 
 		private void BUT_Rotation_Click(object sender, EventArgs e)
 		{
-			if (port.BaseStream.IsOpen)
+			if (comPort.BaseStream.IsOpen)
 			{
-				port.doARM(true);
+				comPort.doARM(true);
 				Thread.Sleep(2000);
-				port.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+				comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 				Thread.Sleep(5000);
-			
+
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
-				port.setMode(
-					port.MAV.sysid,
-					port.MAV.compid,
+				comPort.setMode(
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = port.MAV.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)3,
 					});
@@ -2757,23 +2922,19 @@ namespace FooApplication
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
-			if (port.BaseStream.IsOpen)
+			if (comPort.BaseStream.IsOpen)
 			{
-				port.setMode(
-					port.MAV.sysid,
-					port.MAV.compid,
+				comPort.setMode(
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = port.MAV.sysid,
+						target_system = comPort.MAV.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)9,
 					});
 			}
 		}
 
-		private void but_connection_Click(object sender, EventArgs e)
-		{
-			port.open();
-		}
 	}
 }
