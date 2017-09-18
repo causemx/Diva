@@ -226,7 +226,7 @@ namespace FooApplication.Utilities
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
-		private readonly Bitmap icon = Resources.if_location_32;
+		private readonly Bitmap icon = Resources.if_plane_24;
 
 		float heading = 0;
 		float cog = -1;

@@ -50,6 +50,8 @@ namespace FooApplication
 			}
 		}
 
+		public bool autopan { get; set; }
+
 		static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -110,6 +112,7 @@ namespace FooApplication
 		private DateTime heartbeatSend = DateTime.Now;
 		private DateTime lastupdate = DateTime.Now;
 		private DateTime lastdata = DateTime.MinValue;
+		private DateTime mapupdate = DateTime.MinValue;
 
 		private bool useLocation = false;
 
@@ -134,7 +137,7 @@ namespace FooApplication
 		{
 			InitializeComponent();
 
-
+			
 			quickadd = false;
 
 			// setup map events
@@ -366,6 +369,8 @@ namespace FooApplication
 								double lat = loc.lat / 10000000.0;
 								double lng = loc.lon / 10000000.0;
 
+								comPort.MAV.current_lat = lat;
+								comPort.MAV.current_lng = lng;
 								updateMapPosition(new PointLatLng(lat, lng));
 
 								double altasl = loc.alt / 1000.0f;
@@ -450,26 +455,17 @@ namespace FooApplication
 
 		private void updateConnectPanel()
 		{
-			Invoke((MethodInvoker)delegate
+			if (comPorts.Count == 1)
 			{
-				switch (comPorts.Count) {
-					case 1:
-						this.but_drone_one.Enabled = true;
-						this.but_drone_one.Text = comPort.MAV.ToString();
-						break;
-					case 2:
-						this.but_drone_two.Enabled = true;
-						this.but_drone_two.Text = comPort.MAV.ToString();
-						break;
-					case 3:
-						this.but_drone_three.Enabled = true;
-						this.but_drone_three.Text = comPort.MAV.ToString();
-						break;
-					default:
-						break;
-				}
-				
-			});
+				this.but_drone_one.Enabled = true;
+				this.but_drone_one.Text = comPort.MAV.ToString();
+			}
+
+			if (comPorts.Count == 2)
+			{
+				this.but_drone_two.Enabled = true;
+				this.but_drone_two.Text = comPort.MAV.ToString();
+			}
 		}
 
 		private void UpdateConnectIcon()
@@ -487,6 +483,7 @@ namespace FooApplication
 				Priority = ThreadPriority.AboveNormal
 			};
 			SerialReaderThread.Start();
+			timer1.Start();
 		}
 
 		protected override void OnClosed(EventArgs e)
@@ -495,6 +492,7 @@ namespace FooApplication
 			serialThread = false;
 			if (SerialReaderThread != null)
 				SerialReaderThread.Join();
+			timer1.Stop();
 		}
 
 		private void updateCMDParams()
@@ -1110,8 +1108,18 @@ namespace FooApplication
 			
 			log.Info("We are connecting to " + portname + " " + baud);
 			// Setup comport.basestream
-			// comPort.BaseStream = new UdpSerial();
-			comPort.BaseStream = new SerialPort();
+			switch (portname)
+			{
+				
+				case "udp":
+					comPort.BaseStream = new UdpSerial();
+					break;
+				default:
+					comPort.BaseStream = new SerialPort();
+					break;
+			}
+			
+	
 
 			// Tell the connection UI that we are now connected.
 			// TODO re-write UI behavior in panel X.
@@ -1178,8 +1186,6 @@ namespace FooApplication
 				// set to first seen
 				comPort.sysidcurrent = comPort.MAVlist.First().sysid;
 				comPort.compidcurrent = comPort.MAVlist.First().compid;
-
-				updateConnectPanel();
 
 				// _connectionControl.UpdateSysIDS();
 
@@ -2767,6 +2773,7 @@ namespace FooApplication
 				comPort = mav;
 				updateConnectPanel();
 			} catch (Exception ex) {
+				Console.WriteLine(ex.ToString());
 			}
 			
 		}
@@ -2936,5 +2943,54 @@ namespace FooApplication
 			}
 		}
 
+		/// <summary>
+		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+			try
+			{
+				if (isMouseDown || currentRectMarker != null)
+					return;
+
+				routesOverlay.Markers.Clear();
+				
+
+				if (comPort.MAV.current_lat == 0 || comPort.MAV.current_lng == 0)
+					return;
+
+				var marker = new GMapMarkerQuad(new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng),
+					comPort.MAV.yaw, comPort.MAV.groundcourse, comPort.MAV.nav_bearing, 1);
+
+				routesOverlay.Markers.Add(marker);
+
+				//autopan
+				if (autopan)
+				{
+					if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+					{
+						PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+						updateMapPosition(currentloc);
+						mapupdate = DateTime.Now;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				log.Warn(ex);
+			}
+		}
+
+		private void but_drone_one_Click(object sender, EventArgs e)
+		{
+			this.comPort = comPorts[0];
+		}
+
+		private void but_drone_two_Click(object sender, EventArgs e)
+		{
+			this.comPort = comPorts[1];
+		}
 	}
 }

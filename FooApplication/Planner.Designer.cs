@@ -82,6 +82,7 @@
 			this.but_drone_one = new System.Windows.Forms.ToolStripButton();
 			this.but_drone_two = new System.Windows.Forms.ToolStripButton();
 			this.but_drone_three = new System.Windows.Forms.ToolStripButton();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
@@ -698,6 +699,7 @@
 			this.but_drone_one.Size = new System.Drawing.Size(54, 52);
 			this.but_drone_one.Text = "00";
 			this.but_drone_one.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.but_drone_one.Click += new System.EventHandler(this.but_drone_one_Click);
 			// 
 			// but_drone_two
 			// 
@@ -709,6 +711,7 @@
 			this.but_drone_two.Size = new System.Drawing.Size(54, 52);
 			this.but_drone_two.Text = "00";
 			this.but_drone_two.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.but_drone_two.Click += new System.EventHandler(this.but_drone_two_Click);
 			// 
 			// but_drone_three
 			// 
@@ -720,6 +723,11 @@
 			this.but_drone_three.Size = new System.Drawing.Size(54, 52);
 			this.but_drone_three.Text = "00";
 			this.but_drone_three.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			// 
+			// timer1
+			// 
+			this.timer1.Interval = 1200;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// Planner
 			// 
@@ -809,5 +817,6 @@
 		private System.Windows.Forms.ToolStripButton but_drone_one;
 		private System.Windows.Forms.ToolStripButton but_drone_two;
 		private System.Windows.Forms.ToolStripButton but_drone_three;
+		private System.Windows.Forms.Timer timer1;
 	}
 }
