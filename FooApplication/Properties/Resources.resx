@@ -127,6 +127,15 @@
   <data name="if_battery_reduce_energy_charge_2203543" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\if_battery-reduce-energy-charge_2203543.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="if_drone_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_drone_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_drone_xxx_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_drone_xxx_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_drone_xxx_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_drone_xxx_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="if_location_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\if_location_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -135,8 +144,5 @@
   </data>
   <data name="if_paper_plane_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\if_paper-plane_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="if_plane_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\if_plane_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

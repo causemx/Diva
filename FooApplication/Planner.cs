@@ -215,6 +215,29 @@ namespace FooApplication
 		}
 
 
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+			SerialReaderThread = new Thread(SerialReader)
+			{
+				IsBackground = true,
+				Name = "Main Serial reader",
+				Priority = ThreadPriority.AboveNormal
+			};
+			SerialReaderThread.Start();
+			timer1.Start();
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+			serialThread = false;
+			if (SerialReaderThread != null)
+				SerialReaderThread.Join();
+			timer1.Stop();
+		}
+
+
 		private void SerialReader()
 		{
 			if (serialThread == true)
@@ -382,6 +405,20 @@ namespace FooApplication
 						}
 					}
 
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.ATTITUDE))
+					{
+						if (mavlinkMessage != null)
+						{
+							var att = mavlinkMessage.ToStructure<MAVLink.mavlink_attitude_t>();
+
+							float roll = (float)(att.roll * MathHelper.rad2deg);
+							float pitch = (float)(att.pitch * MathHelper.rad2deg);
+							float yaw = (float)(att.yaw * MathHelper.rad2deg);
+
+							comPort.MAV.yaw = yaw;
+						}
+					}
+
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.SYS_STATUS))
 					{
 						if (mavlinkMessage != null)
@@ -428,7 +465,6 @@ namespace FooApplication
 							}
 
 							byte gpsstatus = gps.fix_type;
-							//                    Console.WriteLine("gpsfix {0}",gpsstatus);
 
 							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
 
@@ -442,12 +478,32 @@ namespace FooApplication
 								this.Gauge_speed.Value = groundspeed;
 								this.lbl_speed.Text = groundspeed.ToString();
 							});
+
+							comPort.MAV.groundcourse = groundcourse;
 							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
 					}
 
 
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var nav = mavlinkMessage.ToStructure<MAVLink.mavlink_nav_controller_output_t>();
 
+							float nav_roll = nav.nav_roll;
+							float nav_pitch = nav.nav_pitch;
+							short nav_bearing = nav.nav_bearing;
+							short target_bearing = nav.target_bearing;
+							ushort wp_dist = nav.wp_dist;
+							float alt_error = nav.alt_error;
+							float aspd_error = nav.aspd_error / 100.0f;
+							float xtrack_error = nav.xtrack_error;
+
+							comPort.MAV.nav_bearing = nav_bearing;
+							
+						}
+					}
 
 				}
 			}
@@ -468,32 +524,38 @@ namespace FooApplication
 			}
 		}
 
-		private void UpdateConnectIcon()
-		{
-			// TODO: update connect icon when not connected.
-		}
 
-		protected override void OnLoad(EventArgs e)
+		private void updateRowNumbers()
 		{
-			base.OnLoad(e);
-			SerialReaderThread = new Thread(SerialReader)
+			// number rows 
+			this.BeginInvoke((MethodInvoker)delegate
 			{
-				IsBackground = true,
-				Name = "Main Serial reader",
-				Priority = ThreadPriority.AboveNormal
-			};
-			SerialReaderThread.Start();
-			timer1.Start();
+				// thread for updateing row numbers
+				for (int a = 0; a < Commands.Rows.Count - 0; a++)
+				{
+					try
+					{
+						if (Commands.Rows[a].HeaderCell.Value == null)
+						{
+							//Commands.Rows[a].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+							Commands.Rows[a].HeaderCell.Value = (a + 1).ToString();
+						}
+						// skip rows with the correct number
+						string rowno = Commands.Rows[a].HeaderCell.Value.ToString();
+						if (!rowno.Equals((a + 1).ToString()))
+						{
+							// this code is where the delay is when deleting.
+							Commands.Rows[a].HeaderCell.Value = (a + 1).ToString();
+						}
+					}
+					catch (Exception)
+					{
+					}
+				}
+			});
 		}
 
-		protected override void OnClosed(EventArgs e)
-		{
-			base.OnClosed(e);
-			serialThread = false;
-			if (SerialReaderThread != null)
-				SerialReaderThread.Join();
-			timer1.Stop();
-		}
+		
 
 		private void updateCMDParams()
 		{
@@ -511,11 +573,7 @@ namespace FooApplication
 			Command.DataSource = cmds;
 		}
 
-		void comPort_MavChanged(object sender, EventArgs e)
-		{
-
-			// TODO: Change mav when calling.
-		}
+	
 
 		private Dictionary<string, string[]> readCMDXML()
 		{
@@ -587,7 +645,13 @@ namespace FooApplication
 			myMap.Zoom = 15;
 		}
 
-	
+
+		void comPort_MavChanged(object sender, EventArgs e)
+		{
+
+			// TODO: Change mav when calling.
+		}
+
 		private void MainMap_OnCurrentPositionChanged(PointLatLng point)
 		{
 			if (point.Lat > 90)
@@ -1166,7 +1230,7 @@ namespace FooApplication
 					try
 					{
 						// _connectionControl.IsConnected(false);
-						UpdateConnectIcon();
+						
 						comPort.close();
 					}
 					catch
@@ -1196,7 +1260,7 @@ namespace FooApplication
 				try
 				{
 					// _connectionControl.IsConnected(false);
-					UpdateConnectIcon();
+					
 					comPort.close();
 				}
 				catch (Exception ex2)
@@ -1318,9 +1382,6 @@ namespace FooApplication
 			}
 		}
 
-
-		
-
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			try
@@ -1394,7 +1455,7 @@ namespace FooApplication
 				return;
 			}*/
 
-			// home check
+			// check home point setup.
 			if (IsHomeEmpty())
 			{
 				MessageBox.Show("Please set home first");
@@ -1993,35 +2054,7 @@ namespace FooApplication
 		}
 
 
-		private void updateRowNumbers()
-		{
-			// number rows 
-			this.BeginInvoke((MethodInvoker)delegate
-			{
-				// thread for updateing row numbers
-				for (int a = 0; a < Commands.Rows.Count - 0; a++)
-				{
-					try
-					{
-						if (Commands.Rows[a].HeaderCell.Value == null)
-						{
-							//Commands.Rows[a].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-							Commands.Rows[a].HeaderCell.Value = (a + 1).ToString();
-						}
-						// skip rows with the correct number
-						string rowno = Commands.Rows[a].HeaderCell.Value.ToString();
-						if (!rowno.Equals((a + 1).ToString()))
-						{
-							// this code is where the delay is when deleting.
-							Commands.Rows[a].HeaderCell.Value = (a + 1).ToString();
-						}
-					}
-					catch (Exception)
-					{
-					}
-				}
-			});
-		}
+		
 
 
 		private void Commands_RowEnter(object sender, DataGridViewCellEventArgs e)

@@ -512,7 +512,7 @@
 			this.Gauge_speed.BaseArcWidth = 2;
 			this.Gauge_speed.Center = new System.Drawing.Point(100, 100);
 			this.Gauge_speed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Gauge_speed.Location = new System.Drawing.Point(0, 219);
+			this.Gauge_speed.Location = new System.Drawing.Point(0, 223);
 			this.Gauge_speed.MaxValue = 30F;
 			this.Gauge_speed.MinValue = 0F;
 			this.Gauge_speed.Name = "Gauge_speed";
@@ -660,6 +660,8 @@
 			// 
 			// but_connection
 			// 
+			this.but_connection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.but_connection.BackColor = System.Drawing.SystemColors.Menu;
 			this.but_connection.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.but_connection.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
@@ -675,6 +677,7 @@
 			// 
 			// toolStrip2
 			// 
+			this.toolStrip2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.toolStrip2.AutoSize = false;
 			this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;

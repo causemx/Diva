@@ -93,6 +93,36 @@ namespace FooApplication.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap if_drone_24 {
+            get {
+                object obj = ResourceManager.GetObject("if_drone_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap if_drone_xxx_24 {
+            get {
+                object obj = ResourceManager.GetObject("if_drone_xxx_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap if_drone_xxx_48 {
+            get {
+                object obj = ResourceManager.GetObject("if_drone_xxx_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap if_location_32 {
             get {
                 object obj = ResourceManager.GetObject("if_location_32", resourceCulture);
@@ -116,16 +146,6 @@ namespace FooApplication.Properties {
         internal static System.Drawing.Bitmap if_paper_plane_32 {
             get {
                 object obj = ResourceManager.GetObject("if_paper_plane_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_plane_24 {
-            get {
-                object obj = ResourceManager.GetObject("if_plane_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

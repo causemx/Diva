@@ -226,7 +226,7 @@ namespace FooApplication.Utilities
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
-		private readonly Bitmap icon = Resources.if_plane_24;
+		private readonly Bitmap icon = Resources.if_drone_xxx_48;
 
 		float heading = 0;
 		float cog = -1;
@@ -244,6 +244,7 @@ namespace FooApplication.Utilities
 			this.target = target;
 			this.sysid = sysid;
 			Size = icon.Size;
+			icon.SetResolution(100, 100);
 		}
 
 		public override void OnRender(Graphics g)
@@ -279,9 +280,10 @@ namespace FooApplication.Utilities
 			}
 
 			g.DrawImageUnscaled(icon, icon.Width / -2 + 2, icon.Height / -2);
+			
 
-			g.DrawString(sysid.ToString(), new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Red, -8,
-				-8);
+			// Show SYSID on the drone icon.
+			// g.DrawString(sysid.ToString(), new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Red, -8, -8);
 
 			g.Transform = temp;
 
