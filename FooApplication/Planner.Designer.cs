@@ -78,16 +78,12 @@
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.ts_lbl_battery = new System.Windows.Forms.ToolStripLabel();
 			this.but_connection = new System.Windows.Forms.Button();
-			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-			this.but_drone_one = new System.Windows.Forms.ToolStripButton();
-			this.but_drone_two = new System.Windows.Forms.ToolStripButton();
-			this.but_drone_three = new System.Windows.Forms.ToolStripButton();
+			this.toolStrip_dronelist = new System.Windows.Forms.ToolStrip();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
 			this.toolStrip1.SuspendLayout();
-			this.toolStrip2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// myMap
@@ -512,7 +508,7 @@
 			this.Gauge_speed.BaseArcWidth = 2;
 			this.Gauge_speed.Center = new System.Drawing.Point(100, 100);
 			this.Gauge_speed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Gauge_speed.Location = new System.Drawing.Point(0, 223);
+			this.Gauge_speed.Location = new System.Drawing.Point(0, 222);
 			this.Gauge_speed.MaxValue = 30F;
 			this.Gauge_speed.MinValue = 0F;
 			this.Gauge_speed.Name = "Gauge_speed";
@@ -675,57 +671,18 @@
 			this.but_connection.UseVisualStyleBackColor = false;
 			this.but_connection.Click += new System.EventHandler(this.BUT_Connect_Click);
 			// 
-			// toolStrip2
+			// toolStrip_dronelist
 			// 
-			this.toolStrip2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.toolStrip2.AutoSize = false;
-			this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-			this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.but_drone_one,
-            this.but_drone_two,
-            this.but_drone_three});
-			this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-			this.toolStrip2.Location = new System.Drawing.Point(943, 157);
-			this.toolStrip2.Name = "toolStrip2";
-			this.toolStrip2.Size = new System.Drawing.Size(56, 188);
-			this.toolStrip2.TabIndex = 12;
-			this.toolStrip2.Text = "toolStrip2";
-			// 
-			// but_drone_one
-			// 
-			this.but_drone_one.Enabled = false;
-			this.but_drone_one.Image = global::FooApplication.Properties.Resources.if_airplane_32;
-			this.but_drone_one.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.but_drone_one.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.but_drone_one.Name = "but_drone_one";
-			this.but_drone_one.Size = new System.Drawing.Size(54, 52);
-			this.but_drone_one.Text = "00";
-			this.but_drone_one.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.but_drone_one.Click += new System.EventHandler(this.but_drone_one_Click);
-			// 
-			// but_drone_two
-			// 
-			this.but_drone_two.Enabled = false;
-			this.but_drone_two.Image = global::FooApplication.Properties.Resources.if_airplane_32;
-			this.but_drone_two.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.but_drone_two.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.but_drone_two.Name = "but_drone_two";
-			this.but_drone_two.Size = new System.Drawing.Size(54, 52);
-			this.but_drone_two.Text = "00";
-			this.but_drone_two.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.but_drone_two.Click += new System.EventHandler(this.but_drone_two_Click);
-			// 
-			// but_drone_three
-			// 
-			this.but_drone_three.Enabled = false;
-			this.but_drone_three.Image = global::FooApplication.Properties.Resources.if_airplane_32;
-			this.but_drone_three.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.but_drone_three.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.but_drone_three.Name = "but_drone_three";
-			this.but_drone_three.Size = new System.Drawing.Size(54, 52);
-			this.but_drone_three.Text = "00";
-			this.but_drone_three.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.toolStrip_dronelist.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.toolStrip_dronelist.AutoSize = false;
+			this.toolStrip_dronelist.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolStrip_dronelist.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolStrip_dronelist.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+			this.toolStrip_dronelist.Location = new System.Drawing.Point(943, 157);
+			this.toolStrip_dronelist.Name = "toolStrip_dronelist";
+			this.toolStrip_dronelist.Size = new System.Drawing.Size(56, 188);
+			this.toolStrip_dronelist.TabIndex = 12;
+			this.toolStrip_dronelist.Text = "toolStrip2";
 			// 
 			// timer1
 			// 
@@ -737,7 +694,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 537);
-			this.Controls.Add(this.toolStrip2);
+			this.Controls.Add(this.toolStrip_dronelist);
 			this.Controls.Add(this.but_connection);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.label7);
@@ -751,6 +708,7 @@
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.myMap);
 			this.Name = "Planner";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Planner";
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
@@ -758,8 +716,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
-			this.toolStrip2.ResumeLayout(false);
-			this.toolStrip2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -816,10 +772,7 @@
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.ToolStripLabel ts_lbl_battery;
 		private System.Windows.Forms.Button but_connection;
-		private System.Windows.Forms.ToolStrip toolStrip2;
-		private System.Windows.Forms.ToolStripButton but_drone_one;
-		private System.Windows.Forms.ToolStripButton but_drone_two;
-		private System.Windows.Forms.ToolStripButton but_drone_three;
+		private System.Windows.Forms.ToolStrip toolStrip_dronelist;
 		private System.Windows.Forms.Timer timer1;
 	}
 }

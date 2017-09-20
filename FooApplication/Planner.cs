@@ -66,7 +66,6 @@ namespace FooApplication
 		private GMapOverlay drawnPolygonsOverlay;
 		private GMapOverlay objectsOverlay;
 		private GMapOverlay kmlPolygonsOverlay;
-		private GMapOverlay geofenceOverlay;
 		private GMapOverlay rallypointOverlay;
 		private GMapOverlay commonsOverlay;
 
@@ -83,7 +82,6 @@ namespace FooApplication
 		private bool isMouseDown;
 		private bool isMouseDraging;
 		private bool isMouseClickOffMenu;
-		bool polygongridmode = false;
 		private PointLatLng MouseDownStart;
 		internal PointLatLng MouseDownEnd;
 
@@ -94,8 +92,7 @@ namespace FooApplication
 		private bool quickadd = false;
 		private bool sethome = false;
 		private int selectedrow = 0;
-		private double current_lat;
-		private double current_lng;
+
 	
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
@@ -132,11 +129,28 @@ namespace FooApplication
 			LAND = 9
 		}
 
+		public static readonly int NUMBER_DRONES = 3;
+		private ToolStripButton[] droneButtons = new ToolStripButton[NUMBER_DRONES];
 
 		public Planner()
 		{
 			InitializeComponent();
 
+			// Initialize button array.
+			for (int i = 0; i < droneButtons.Length; i++)
+			{
+				droneButtons[i] = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
+				droneButtons[i].ImageScaling = ToolStripItemImageScaling.None;
+				droneButtons[i].DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+				droneButtons[i].TextImageRelation = TextImageRelation.ImageAboveText;
+				droneButtons[i].Enabled = false;
+				droneButtons[i].Text = "00";
+				droneButtons[i].Tag = i;
+				droneButtons[i].Click += BUT_DroneList_Click;
+			}
+
+			toolStrip_dronelist.Items.AddRange(droneButtons);
+				
 			
 			quickadd = false;
 
@@ -509,20 +523,6 @@ namespace FooApplication
 			}
 		}
 
-		private void updateConnectPanel()
-		{
-			if (comPorts.Count == 1)
-			{
-				this.but_drone_one.Enabled = true;
-				this.but_drone_one.Text = comPort.MAV.ToString();
-			}
-
-			if (comPorts.Count == 2)
-			{
-				this.but_drone_two.Enabled = true;
-				this.but_drone_two.Text = comPort.MAV.ToString();
-			}
-		}
 
 
 		private void updateRowNumbers()
@@ -573,7 +573,28 @@ namespace FooApplication
 			Command.DataSource = cmds;
 		}
 
-	
+		public void updateConnectionParam(string target, string baud)
+		{
+			try
+			{
+				var mav = new MavlinkInterface();
+				doConnect(mav, target, baud);
+				comPorts.Add(mav);
+				comPort = mav;
+				updateConnectionPannel(mav);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+
+		}
+
+		private void updateConnectionPannel(MavlinkInterface mav)
+		{
+			droneButtons[comPorts.Count-1].Enabled = true;
+			droneButtons[comPorts.Count-1].Text = (mav.MAV.sysid).ToString();
+		}
 
 		private Dictionary<string, string[]> readCMDXML()
 		{
@@ -2796,20 +2817,7 @@ namespace FooApplication
 		}
 
 		
-		public void updateConnectionParam(string target, string baud)
-		{
-			try
-			{
-				var mav = new MavlinkInterface();
-				doConnect(mav, target, baud);
-				comPorts.Add(mav);
-				comPort = mav;
-				updateConnectPanel();
-			} catch (Exception ex) {
-				Console.WriteLine(ex.ToString());
-			}
-			
-		}
+		
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
@@ -2976,6 +2984,15 @@ namespace FooApplication
 			}
 		}
 
+		private void BUT_DroneList_Click(object sender, EventArgs e)
+		{
+			
+			ToolStripButton tsb = (ToolStripButton)sender;
+			Console.WriteLine("index: "+tsb.Tag);
+			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)];
+		}
+		
+
 		/// <summary>
 		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
 		/// </summary>
@@ -3016,14 +3033,6 @@ namespace FooApplication
 			}
 		}
 
-		private void but_drone_one_Click(object sender, EventArgs e)
-		{
-			this.comPort = comPorts[0];
-		}
-
-		private void but_drone_two_Click(object sender, EventArgs e)
-		{
-			this.comPort = comPorts[1];
-		}
+		
 	}
 }
