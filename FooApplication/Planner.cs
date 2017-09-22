@@ -59,7 +59,7 @@ namespace FooApplication
 		private static readonly double MY_LNG = 121.0443385;
 		private static readonly double WARN_ALT = 2D;
 		private GMapOverlay top;
-		private GMapOverlay routesOverlay;
+		private GMapOverlay[] routesOverlay = new GMapOverlay[3];
 		private GMapOverlay polygonsOverlay;
 		private GMapOverlay airportsOverlay;
 		private GMapOverlay poiOverlay = new GMapOverlay("POI");
@@ -93,7 +93,6 @@ namespace FooApplication
 		private bool sethome = false;
 		private int selectedrow = 0;
 
-	
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<Locationwp>> history = new List<List<Locationwp>>();
@@ -101,6 +100,8 @@ namespace FooApplication
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
+		private List<System.Windows.Forms.Timer> mavtimers = new List<System.Windows.Forms.Timer>();
+
 
 		// Thread setup
 		private Thread SerialReaderThread = null;
@@ -110,6 +111,7 @@ namespace FooApplication
 		private DateTime lastupdate = DateTime.Now;
 		private DateTime lastdata = DateTime.MinValue;
 		private DateTime mapupdate = DateTime.MinValue;
+
 
 		private bool useLocation = false;
 
@@ -177,8 +179,19 @@ namespace FooApplication
 			rallypointOverlay = new GMapOverlay("rallypoints");
 			myMap.Overlays.Add(rallypointOverlay);
 
-			routesOverlay = new GMapOverlay("routes");
-			myMap.Overlays.Add(routesOverlay);
+			/*
+			for (int i = 0; i < 3; i++)
+			{
+				routesOverlay[i] = new GMapOverlay(String.Format("routes_{0}", i));
+				myMap.Overlays.Add(routesOverlay[i]);
+			}*/
+
+			routesOverlay[0] = new GMapOverlay("routeone");
+			routesOverlay[1] = new GMapOverlay("routetwo");
+			routesOverlay[2] = new GMapOverlay("routethree");
+			myMap.Overlays.Add(routesOverlay[0]);
+			myMap.Overlays.Add(routesOverlay[1]);
+			myMap.Overlays.Add(routesOverlay[2]);
 
 			polygonsOverlay = new GMapOverlay("polygons");
 			myMap.Overlays.Add(polygonsOverlay);
@@ -573,6 +586,8 @@ namespace FooApplication
 			Command.DataSource = cmds;
 		}
 
+		private int dronenum_current = 0;
+
 		public void updateConnectionParam(string target, string baud)
 		{
 			try
@@ -581,6 +596,8 @@ namespace FooApplication
 				doConnect(mav, target, baud);
 				comPorts.Add(mav);
 				comPort = mav;
+				dronenum_current = comPorts.Count;
+
 				updateConnectionPannel(mav);
 			}
 			catch (Exception ex)
@@ -592,8 +609,8 @@ namespace FooApplication
 
 		private void updateConnectionPannel(MavlinkInterface mav)
 		{
-			droneButtons[comPorts.Count-1].Enabled = true;
-			droneButtons[comPorts.Count-1].Text = (mav.MAV.sysid).ToString();
+			droneButtons[comPorts.Count - 1].Enabled = true;
+			droneButtons[comPorts.Count - 1].Text = (mav.MAV.sysid).ToString();
 		}
 
 		private Dictionary<string, string[]> readCMDXML()
@@ -3000,21 +3017,27 @@ namespace FooApplication
 		/// <param name="e"></param>
 		private void timer1_Tick(object sender, EventArgs e)
 		{
+			Console.WriteLine("drone_num: " + dronenum_current);
 			try
 			{
 				if (isMouseDown || currentRectMarker != null)
 					return;
 
-				routesOverlay.Markers.Clear();
+				for (int i = 0; i < dronenum_current; i++)
+				{
+					MavlinkInterface _port = comPorts[i];
+					routesOverlay[i].Markers.Clear();
+
+					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
+						return;
+
+					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
+						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
+
+					routesOverlay[i].Markers.Add(marker);
+				}
+					
 				
-
-				if (comPort.MAV.current_lat == 0 || comPort.MAV.current_lng == 0)
-					return;
-
-				var marker = new GMapMarkerQuad(new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng),
-					comPort.MAV.yaw, comPort.MAV.groundcourse, comPort.MAV.nav_bearing, 1);
-
-				routesOverlay.Markers.Add(marker);
 
 				//autopan
 				if (autopan)
