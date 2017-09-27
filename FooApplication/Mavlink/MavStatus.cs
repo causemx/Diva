@@ -15,6 +15,15 @@ namespace FooApplication.Mavlink
 
 		public MavlinkInterface parent;
 
+		public enum flightMode
+		{
+			STABILIZE = 0,
+			AUTO = 3,
+			GUIDED = 4,
+			RTL = 6,
+			LAND = 9
+		}
+
 		public MavStatus(MavlinkInterface mavLinkInterface, byte sysid, byte compid)
 		{
 			this.parent = mavLinkInterface;
@@ -64,11 +73,52 @@ namespace FooApplication.Mavlink
 
 		public double current_lat { get; set; }
 
+		public double altasl { get; set; }
+
 		public double current_lng { get; set; }
+
+		public float groundspeed { get; set; }
+
+		// TODO: stupid work
+		public string mode
+		{
+			get
+			{
+				
+				foreach (int m in Enum.GetValues(typeof(flightMode)))
+				{
+					if (m == Convert.ToInt32(_mode))
+					{
+						return Enum.GetName(typeof(flightMode), m);
+					}
+					
+				}
+				return _mode;
+
+			}
+			set
+			{
+				_mode = value;
+			}
+		}
+
+		private string _mode = "";
 
 		// Copter parameter
 
 		public float nav_bearing { get; set; }
+
+		public double battery_voltage
+		{
+			get { return _battery_voltage; }
+			set
+			{
+				if (_battery_voltage == 0) _battery_voltage = value;
+				_battery_voltage = value * 0.2f + _battery_voltage * 0.8f;
+			}
+		}
+
+		internal double _battery_voltage;
 
 		public float yaw
 		{

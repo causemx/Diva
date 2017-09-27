@@ -104,7 +104,7 @@ namespace FooApplication
 
 
 		// Thread setup
-		private Thread SerialReaderThread = null;
+		private Thread mainThread = null;
 		private bool serialThread = false;
 
 		private DateTime heartbeatSend = DateTime.Now;
@@ -122,14 +122,7 @@ namespace FooApplication
 			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
 		}
 
-		public enum flightMode
-		{
-			STABILIZE = 0,
-			AUTO = 3,
-			GUIDED = 4,
-			RTL = 6,
-			LAND = 9
-		}
+		
 
 		public static readonly int NUMBER_DRONES = 3;
 		private ToolStripButton[] droneButtons = new ToolStripButton[NUMBER_DRONES];
@@ -245,13 +238,13 @@ namespace FooApplication
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-			SerialReaderThread = new Thread(SerialReader)
+			mainThread = new Thread(MainLoop)
 			{
 				IsBackground = true,
 				Name = "Main Serial reader",
 				Priority = ThreadPriority.AboveNormal
 			};
-			SerialReaderThread.Start();
+			mainThread.Start();
 			timer1.Start();
 		}
 
@@ -259,13 +252,19 @@ namespace FooApplication
 		{
 			base.OnClosed(e);
 			serialThread = false;
-			if (SerialReaderThread != null)
-				SerialReaderThread.Join();
+			if (mainThread != null)
+				mainThread.Join();
+
+			foreach (MavlinkInterface mav in comPorts)
+			{
+				mav.onDestroy();
+			}
+
 			timer1.Stop();
 		}
 
 
-		private void SerialReader()
+		private void MainLoop()
 		{
 			if (serialThread == true)
 				return;
@@ -275,48 +274,30 @@ namespace FooApplication
 
 			while (serialThread)
 			{
-				Thread.Sleep(10);
-
-				if (heartbeatSend.Second != DateTime.Now.Second)
+				Thread.Sleep(20);
+				if (comPort.BaseStream.IsOpen)
 				{
-					MAVLink.mavlink_heartbeat_t htb = new MAVLink.mavlink_heartbeat_t()
+					Invoke((MethodInvoker)delegate
 					{
-						type = (byte)MAVLink.MAV_TYPE.GCS,
-						autopilot = (byte)MAVLink.MAV_AUTOPILOT.INVALID,
-						mavlink_version = 3 // MAVLink.MAVLINK_VERSION
-					};
+						// TXT_Mode.Text = comPort.MAV.mode;
+						ts_lbl_battery.Text = comPort.MAV.battery_voltage.ToString() + "%";
+						Gauge_alt.Value = (float)comPort.MAV.altasl;
+						Gauge_alt.Text = (comPort.MAV.altasl).ToString();
+						Gauge_speed.Value = comPort.MAV.groundspeed;
+						lbl_speed.Text = (comPort.MAV.groundspeed).ToString();
 
-					if (!comPort.BaseStream.IsOpen) continue;
-					comPort.sendPacket(htb, comPort.MAV.sysid, comPort.MAV.compid);
+					});
 
-				}
+					PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
 
-				heartbeatSend = DateTime.Now;
-
-				if (!comPort.BaseStream.IsOpen || comPort.giveComport == true)
-				{
-					if (!comPort.BaseStream.IsOpen)
+					if (comPort.MAV.current_lat != 0 && comPort.MAV.current_lng != 0)
 					{
-						System.Threading.Thread.Sleep(1000);
+						updateMapPosition(currentloc);
 					}
 				}
 
-				UpdateCurrentSettings(true);
-				//updateMapPosition(new PointLatLng(current_lat, current_lng));
-
-
-
-				// PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
-				// gMapControl1.HoldInvalidation = true;
-
-				//updateRoutePosition();
-				// updateClearRoutesMarkers();
-
-
-
 			}
 
-			Console.WriteLine("serialreader done");
 
 		}
 
@@ -336,206 +317,12 @@ namespace FooApplication
 
 						lastmapposchange = DateTime.Now;
 					}
-					//hud1.Refresh();
 				}
 				catch
 				{
 				}
 			});
 		}
-
-		public void UpdateCurrentSettings(bool updatenow)
-		{
-			MAVLink.MAVLinkMessage mavlinkMessage = comPort.readPacket();
-
-			lock (this)
-			{
-				if (DateTime.Now > lastupdate.AddMilliseconds(50) || updatenow) // 20 hz
-				{
-					lastupdate = DateTime.Now;
-
-
-					// re-request streams
-					if (!(lastdata.AddSeconds(8) > DateTime.Now) && comPort.BaseStream.IsOpen)
-					{
-						try
-						{
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
-							comPort.getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
-						}
-						catch
-						{
-							Console.WriteLine("Failed to request rates");
-						}
-						lastdata = DateTime.Now.AddSeconds(30); // prevent flooding
-					}
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.HEARTBEAT))
-					{
-						if (mavlinkMessage != null)
-						{
-							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-							// for different thread
-							Invoke((MethodInvoker)delegate
-							{
-								foreach (int mode in Enum.GetValues(typeof(flightMode)))
-								{
-									if ((uint)mode == hb.custom_mode)
-									{
-										TXT_Mode.Text = Enum.GetName(typeof(flightMode), mode);
-									}
-								}
-							});
-							
-							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
-							{
-								
-							}
-						}
-					}
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GLOBAL_POSITION_INT))
-					{
-						if (mavlinkMessage != null)
-						{
-							var loc = mavlinkMessage.ToStructure<MAVLink.mavlink_global_position_int_t>();
-
-							// the new arhs deadreckoning may send 0 alt and 0 long. check for and undo
-
-							float alt = loc.relative_alt / 1000.0f;
-
-							bool useLocation = true;
-							if (loc.lat == 0 && loc.lon == 0)
-							{
-								useLocation = false;
-							}
-							else
-							{
-								double lat = loc.lat / 10000000.0;
-								double lng = loc.lon / 10000000.0;
-
-								comPort.MAV.current_lat = lat;
-								comPort.MAV.current_lng = lng;
-								updateMapPosition(new PointLatLng(lat, lng));
-
-								double altasl = loc.alt / 1000.0f;
-
-								double vx = loc.vx * 0.01;
-								double vy = loc.vy * 0.01;
-								double vz = loc.vz * 0.01;
-							}
-						}
-					}
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.ATTITUDE))
-					{
-						if (mavlinkMessage != null)
-						{
-							var att = mavlinkMessage.ToStructure<MAVLink.mavlink_attitude_t>();
-
-							float roll = (float)(att.roll * MathHelper.rad2deg);
-							float pitch = (float)(att.pitch * MathHelper.rad2deg);
-							float yaw = (float)(att.yaw * MathHelper.rad2deg);
-
-							comPort.MAV.yaw = yaw;
-						}
-					}
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.SYS_STATUS))
-					{
-						if (mavlinkMessage != null)
-						{
-							var sysstatus = mavlinkMessage.ToStructure<MAVLink.mavlink_sys_status_t>();
-
-							float load = (float)sysstatus.load / 10.0f;
-
-							float battery_voltage = (float)sysstatus.voltage_battery / 1000.0f;
-
-							byte battery_remaining = sysstatus.battery_remaining;
-							float current = (float)sysstatus.current_battery / 100.0f;
-
-							ushort packetdropremote = sysstatus.drop_rate_comm;
-
-							Invoke((MethodInvoker)delegate
-							{
-								this.ts_lbl_battery.Text = battery_voltage.ToString() + "%";
-							});
-						}
-					}
-
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
-					{
-						if (mavlinkMessage != null)
-						{
-							var gps = mavlinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
-
-							if (!useLocation)
-							{
-								double lat = gps.lat * 1.0e-7;
-								double lng = gps.lon * 1.0e-7;
-
-								double altasl = gps.alt / 1000.0f;
-								// alt = gps.alt; // using vfr as includes baro calc
-								Invoke((MethodInvoker)delegate
-								{
-									
-									this.Gauge_alt.Value = (float) altasl;
-									this.lbl_alt.Text = altasl.ToString();
-								});
-
-							}
-
-							byte gpsstatus = gps.fix_type;
-
-							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
-
-							byte satcount = gps.satellites_visible;
-
-							float groundspeed = gps.vel * 1.0e-2f;
-							float groundcourse = gps.cog * 1.0e-2f;
-
-							Invoke((MethodInvoker)delegate
-							{
-								this.Gauge_speed.Value = groundspeed;
-								this.lbl_speed.Text = groundspeed.ToString();
-							});
-
-							comPort.MAV.groundcourse = groundcourse;
-							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
-						}
-					}
-
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT))
-					{
-						if (mavlinkMessage != null)
-						{
-							var nav = mavlinkMessage.ToStructure<MAVLink.mavlink_nav_controller_output_t>();
-
-							float nav_roll = nav.nav_roll;
-							float nav_pitch = nav.nav_pitch;
-							short nav_bearing = nav.nav_bearing;
-							short target_bearing = nav.target_bearing;
-							ushort wp_dist = nav.wp_dist;
-							float alt_error = nav.alt_error;
-							float aspd_error = nav.aspd_error / 100.0f;
-							float xtrack_error = nav.xtrack_error;
-
-							comPort.MAV.nav_bearing = nav_bearing;
-							
-						}
-					}
-
-				}
-			}
-		}
-
 
 
 		private void updateRowNumbers()
@@ -594,6 +381,7 @@ namespace FooApplication
 			{
 				var mav = new MavlinkInterface();
 				doConnect(mav, target, baud);
+				mav.onCreate();
 				comPorts.Add(mav);
 				comPort = mav;
 				dronenum_current = comPorts.Count;
@@ -957,7 +745,6 @@ namespace FooApplication
 
 		private void MainMap_MouseUp(object sender, MouseEventArgs e)
 		{
-			
 			if (isMouseClickOffMenu)
 			{
 				isMouseClickOffMenu = false;
@@ -965,22 +752,22 @@ namespace FooApplication
 			}
 
 			// check if the mouse up happend over our button
-			/**
-			if (polyIcon.Rectangle.Contains(e.Location))
+			/*
+			if (polyicon.Rectangle.Contains(e.Location))
 			{
-				polyIcon.IsSelected = !polyIcon.IsSelected;
+				polyicon.IsSelected = !polyicon.IsSelected;
 
 				if (e.Button == MouseButtons.Right)
 				{
-					polyIcon.IsSelected = false;
-					// clearPolygonToolStripMenuItem_Click(this, null);
+					polyicon.IsSelected = false;
+					clearPolygonToolStripMenuItem_Click(this, null);
 
-					// contextMenuStrip1.Visible = false;
+					contextMenuStrip1.Visible = false;
 
 					return;
 				}
 
-				if (polyIcon.IsSelected)
+				if (polyicon.IsSelected)
 				{
 					polygongridmode = true;
 				}
@@ -991,7 +778,6 @@ namespace FooApplication
 
 				return;
 			}*/
-
 
 			MouseDownEnd = myMap.FromLocalToLatLng(e.X, e.Y);
 
@@ -1005,11 +791,12 @@ namespace FooApplication
 			if (isMouseDown) // mouse down on some other object and dragged to here.
 			{
 				// drag finished, update poi db
-				/**if (CurrentPOIMarker != null)
+				/*
+				if (CurrentPOIMarker != null)
 				{
 					POI.POIMove(CurrentPOIMarker);
 					CurrentPOIMarker = null;
-				}**/
+				}*/
 
 				if (e.Button == MouseButtons.Left)
 				{
@@ -1054,9 +841,7 @@ namespace FooApplication
 					}
 					else
 					{
-						
 						AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
-
 					}
 				}
 				else
@@ -1083,7 +868,7 @@ namespace FooApplication
 						{
 							var value = item.Value;
 							quickadd = true;
-							// callMeDrag(item.Key, value.Lat, value.Lng, -1);
+							callMeDrag(item.Key, value.Lat, value.Lng, -1);
 							quickadd = false;
 						}
 
@@ -1091,7 +876,6 @@ namespace FooApplication
 						groupmarkers.Clear();
 						// redraw to remove selection
 						writeKML();
-
 
 						currentRectMarker = null;
 					}
@@ -1116,13 +900,13 @@ namespace FooApplication
 						else
 						{
 							callMeDrag(currentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
-							currentMarker.Position.Lng, -2);
+								currentMarker.Position.Lng, -2);
 						}
 						currentRectMarker = null;
 					}
 				}
 			}
-		
+
 			isMouseDraging = false;
 		}
 
@@ -1350,7 +1134,7 @@ namespace FooApplication
 				}
 
 				objectsOverlay.Markers.Add(m);
-				//objectsOverlay.Markers.Add(mBorders);
+				// objectsOverlay.Markers.Add(mBorders);
 			}
 			catch (Exception)
 			{
@@ -1762,7 +1546,7 @@ namespace FooApplication
 				}
 				catch (Exception ex)
 				{
-					log.Error(ex);
+					Console.WriteLine(ex.ToString());
 				}
 			
 				int usable = 0;
@@ -3017,7 +2801,7 @@ namespace FooApplication
 		/// <param name="e"></param>
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-			Console.WriteLine("drone_num: " + dronenum_current);
+			
 			try
 			{
 				if (isMouseDown || currentRectMarker != null)
@@ -3035,8 +2819,9 @@ namespace FooApplication
 						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
 
 					routesOverlay[i].Markers.Add(marker);
+
 				}
-					
+
 				
 
 				//autopan

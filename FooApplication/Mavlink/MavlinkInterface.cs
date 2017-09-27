@@ -138,7 +138,16 @@ namespace FooApplication.Mavlink
 		private int _mavlink2signed = 0;
 		private int _bps1 = 0;
 		private int _bps2 = 0;
+		private bool useLocation = false;
 
+		// threading
+		private bool threadRunnable = false;
+		private Thread SerialReaderThread = null;
+
+		// ticker
+		private DateTime heartbeatSend = DateTime.Now;
+		private DateTime lastupdate = DateTime.Now;
+		private DateTime lastdata = DateTime.MinValue;
 
 		public MavlinkInterface()
 		{
@@ -146,7 +155,287 @@ namespace FooApplication.Mavlink
 			this.BaseStream = new SerialPort();
 			this.WhenPacketLost = new Subject<int>();
 			this.WhenPacketReceived = new Subject<int>();
-	}
+		}
+
+
+		private void SerialReader()
+		{
+			if (threadRunnable == true)
+				return;
+
+			threadRunnable = true;
+
+
+			while (threadRunnable)
+			{
+				Thread.Sleep(10);
+
+				if (heartbeatSend.Second != DateTime.Now.Second)
+				{
+					MAVLink.mavlink_heartbeat_t htb = new MAVLink.mavlink_heartbeat_t()
+					{
+						type = (byte)MAVLink.MAV_TYPE.GCS,
+						autopilot = (byte)MAVLink.MAV_AUTOPILOT.INVALID,
+						mavlink_version = 3 // MAVLink.MAVLINK_VERSION
+					};
+
+					if (!BaseStream.IsOpen) continue;
+					sendPacket(htb, MAV.sysid, MAV.compid);
+
+				}
+
+				heartbeatSend = DateTime.Now;
+
+				if (!BaseStream.IsOpen || giveComport == true)
+				{
+					if (!BaseStream.IsOpen)
+					{
+						System.Threading.Thread.Sleep(1000);
+					}
+				}
+
+				UpdateCurrentSettings(true);
+				//updateMapPosition(new PointLatLng(current_lat, current_lng));
+
+				// gMapControl1.HoldInvalidation = true;
+
+				//updateRoutePosition();
+
+			}
+
+			Console.WriteLine("serialreader done");
+
+		}
+
+		public void UpdateCurrentSettings(bool updatenow)
+		{
+			MAVLink.MAVLinkMessage mavlinkMessage = readPacket();
+
+			lock (this)
+			{
+				if (DateTime.Now > lastupdate.AddMilliseconds(50) || updatenow) // 20 hz
+				{
+					lastupdate = DateTime.Now;
+
+
+					// re-request streams
+					if (!(lastdata.AddSeconds(8) > DateTime.Now) && BaseStream.IsOpen)
+					{
+						try
+						{
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
+							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
+						}
+						catch
+						{
+							Console.WriteLine("Failed to request rates");
+						}
+						lastdata = DateTime.Now.AddSeconds(30); // prevent flooding
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.HEARTBEAT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
+							// for different thread
+							/*
+							Invoke((MethodInvoker)delegate
+							{
+								foreach (int mode in Enum.GetValues(typeof(flightMode)))
+								{
+									if ((uint)mode == hb.custom_mode)
+									{
+										TXT_Mode.Text = Enum.GetName(typeof(flightMode), mode);
+									}
+								}
+							});*/
+
+							MAV.mode = hb.custom_mode.ToString();
+
+							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
+							{
+
+							}
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GLOBAL_POSITION_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var loc = mavlinkMessage.ToStructure<MAVLink.mavlink_global_position_int_t>();
+
+							// the new arhs deadreckoning may send 0 alt and 0 long. check for and undo
+
+							float alt = loc.relative_alt / 1000.0f;
+
+							bool useLocation = true;
+							if (loc.lat == 0 && loc.lon == 0)
+							{
+								useLocation = false;
+							}
+							else
+							{
+								double lat = loc.lat / 10000000.0;
+								double lng = loc.lon / 10000000.0;
+
+								MAV.current_lat = lat;
+								MAV.current_lng = lng;
+
+								double altasl = loc.alt / 1000.0f;
+
+								double vx = loc.vx * 0.01;
+								double vy = loc.vy * 0.01;
+								double vz = loc.vz * 0.01;
+							}
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.ATTITUDE))
+					{
+						if (mavlinkMessage != null)
+						{
+							var att = mavlinkMessage.ToStructure<MAVLink.mavlink_attitude_t>();
+
+							float roll = (float)(att.roll * MathHelper.rad2deg);
+							float pitch = (float)(att.pitch * MathHelper.rad2deg);
+							float yaw = (float)(att.yaw * MathHelper.rad2deg);
+
+							MAV.yaw = yaw;
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.SYS_STATUS))
+					{
+						if (mavlinkMessage != null)
+						{
+							var sysstatus = mavlinkMessage.ToStructure<MAVLink.mavlink_sys_status_t>();
+
+							float load = (float)sysstatus.load / 10.0f;
+
+							float battery_voltage = (float)sysstatus.voltage_battery / 1000.0f;
+
+							byte battery_remaining = sysstatus.battery_remaining;
+							float current = (float)sysstatus.current_battery / 100.0f;
+
+							ushort packetdropremote = sysstatus.drop_rate_comm;
+
+							MAV.battery_voltage = battery_voltage;
+
+							/*
+							Invoke((MethodInvoker)delegate
+							{
+								this.ts_lbl_battery.Text = battery_voltage.ToString() + "%";
+							});*/
+						}
+					}
+
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var gps = mavlinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
+
+							if (!useLocation)
+							{
+								double lat = gps.lat * 1.0e-7;
+								double lng = gps.lon * 1.0e-7;
+
+								double altasl = gps.alt / 1000.0f;
+								// alt = gps.alt; // using vfr as includes baro calc
+
+								MAV.altasl = altasl;
+								/*
+								Invoke((MethodInvoker)delegate
+								{
+
+									this.Gauge_alt.Value = (float)altasl;
+									this.lbl_alt.Text = altasl.ToString();
+								});*/
+
+							}
+
+							byte gpsstatus = gps.fix_type;
+
+							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
+
+							byte satcount = gps.satellites_visible;
+
+							float groundspeed = gps.vel * 1.0e-2f;
+							float groundcourse = gps.cog * 1.0e-2f;
+
+							/*
+							Invoke((MethodInvoker)delegate
+							{
+								this.Gauge_speed.Value = groundspeed;
+								this.lbl_speed.Text = groundspeed.ToString();
+							});*/
+
+							MAV.groundspeed = groundspeed;
+							MAV.groundcourse = groundcourse;
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
+						}
+					}
+
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var nav = mavlinkMessage.ToStructure<MAVLink.mavlink_nav_controller_output_t>();
+
+							float nav_roll = nav.nav_roll;
+							float nav_pitch = nav.nav_pitch;
+							short nav_bearing = nav.nav_bearing;
+							short target_bearing = nav.target_bearing;
+							ushort wp_dist = nav.wp_dist;
+							float alt_error = nav.alt_error;
+							float aspd_error = nav.aspd_error / 100.0f;
+							float xtrack_error = nav.xtrack_error;
+
+							MAV.nav_bearing = nav_bearing;
+
+						}
+					}
+
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Called when object was created
+		/// </summary>
+		/// <returns></returns>
+		public void onCreate()
+		{
+			SerialReaderThread = new Thread(SerialReader)
+			{
+				IsBackground = true,
+				Name = "mav serial reader",
+				// Priority = ThreadPriority.AboveNormal
+			};
+			SerialReaderThread.Start();
+		}
+
+
+		/// <summary>
+		/// Called when object was not used
+		/// </summary>
+		/// <returns></returns>
+		public void onDestroy()
+		{
+			threadRunnable = false;
+			if (SerialReaderThread != null)
+				SerialReaderThread.Join();
+		}
 
 		public void open()
 		{
