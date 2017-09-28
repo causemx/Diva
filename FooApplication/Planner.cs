@@ -280,9 +280,9 @@ namespace FooApplication
 					Invoke((MethodInvoker)delegate
 					{
 						// TXT_Mode.Text = comPort.MAV.mode;
-						ts_lbl_battery.Text = comPort.MAV.battery_voltage.ToString() + "%";
+						ts_lbl_battery.Text = comPort.MAV.battery_voltage.ToString("F2") + "%";
 						Gauge_alt.Value = (float)comPort.MAV.altasl;
-						Gauge_alt.Text = (comPort.MAV.altasl).ToString();
+						lbl_alt.Text = (comPort.MAV.altasl).ToString();
 						Gauge_speed.Value = comPort.MAV.groundspeed;
 						lbl_speed.Text = (comPort.MAV.groundspeed).ToString();
 
@@ -373,7 +373,6 @@ namespace FooApplication
 			Command.DataSource = cmds;
 		}
 
-		private int dronenum_current = 0;
 
 		public void updateConnectionParam(string target, string baud)
 		{
@@ -384,7 +383,6 @@ namespace FooApplication
 				mav.onCreate();
 				comPorts.Add(mav);
 				comPort = mav;
-				dronenum_current = comPorts.Count;
 
 				updateConnectionPannel(mav);
 			}
@@ -2807,13 +2805,14 @@ namespace FooApplication
 				if (isMouseDown || currentRectMarker != null)
 					return;
 
-				for (int i = 0; i < dronenum_current; i++)
+				for (int i = 0; i < comPorts.Count; i++)
 				{
 					MavlinkInterface _port = comPorts[i];
 					routesOverlay[i].Markers.Clear();
 
 					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
-						return;
+						continue;
+						
 
 					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
 						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
@@ -2821,8 +2820,6 @@ namespace FooApplication
 					routesOverlay[i].Markers.Add(marker);
 
 				}
-
-				
 
 				//autopan
 				if (autopan)
@@ -2837,7 +2834,7 @@ namespace FooApplication
 			}
 			catch (Exception ex)
 			{
-				log.Warn(ex);
+				Console.WriteLine(ex.ToString());
 			}
 		}
 
