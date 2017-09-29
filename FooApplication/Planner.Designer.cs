@@ -35,7 +35,7 @@
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.BUT_Rotation = new System.Windows.Forms.Button();
+			this.BUT_Rotation_OLD = new System.Windows.Forms.Button();
 			this.BUT_Read_WP = new System.Windows.Forms.Button();
 			this.BUT_Land = new System.Windows.Forms.Button();
 			this.BUT_Disarm = new System.Windows.Forms.Button();
@@ -77,13 +77,19 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.ts_lbl_battery = new System.Windows.Forms.ToolStripLabel();
-			this.but_connection = new System.Windows.Forms.Button();
 			this.toolStrip_dronelist = new System.Windows.Forms.ToolStrip();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+			this.BUT_Connect = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.BUT_Rotation = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
 			this.toolStrip1.SuspendLayout();
+			this.toolStrip2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// myMap
@@ -148,7 +154,7 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.BUT_Rotation);
+			this.panel1.Controls.Add(this.BUT_Rotation_OLD);
 			this.panel1.Controls.Add(this.BUT_Read_WP);
 			this.panel1.Controls.Add(this.BUT_Land);
 			this.panel1.Controls.Add(this.BUT_Disarm);
@@ -171,15 +177,15 @@
 			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
 			// 
-			// BUT_Rotation
+			// BUT_Rotation_OLD
 			// 
-			this.BUT_Rotation.Location = new System.Drawing.Point(750, 17);
-			this.BUT_Rotation.Name = "BUT_Rotation";
-			this.BUT_Rotation.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Rotation.TabIndex = 23;
-			this.BUT_Rotation.Text = "Rotation";
-			this.BUT_Rotation.UseVisualStyleBackColor = true;
-			this.BUT_Rotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
+			this.BUT_Rotation_OLD.Location = new System.Drawing.Point(750, 17);
+			this.BUT_Rotation_OLD.Name = "BUT_Rotation_OLD";
+			this.BUT_Rotation_OLD.Size = new System.Drawing.Size(75, 23);
+			this.BUT_Rotation_OLD.TabIndex = 23;
+			this.BUT_Rotation_OLD.Text = "Rotation";
+			this.BUT_Rotation_OLD.UseVisualStyleBackColor = true;
+			this.BUT_Rotation_OLD.Click += new System.EventHandler(this.BUT_Rotation_Click);
 			// 
 			// BUT_Read_WP
 			// 
@@ -456,6 +462,7 @@
 			// 
 			// Gauge_alt
 			// 
+			this.Gauge_alt.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.Gauge_alt.BackColor = System.Drawing.SystemColors.Menu;
 			this.Gauge_alt.BaseArcColor = System.Drawing.Color.Gray;
 			this.Gauge_alt.BaseArcRadius = 50;
@@ -500,6 +507,7 @@
 			// 
 			// Gauge_speed
 			// 
+			this.Gauge_speed.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.Gauge_speed.BackColor = System.Drawing.SystemColors.Menu;
 			this.Gauge_speed.BaseArcColor = System.Drawing.Color.Gray;
 			this.Gauge_speed.BaseArcRadius = 50;
@@ -544,6 +552,7 @@
 			// 
 			// label4
 			// 
+			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.Location = new System.Drawing.Point(68, 51);
@@ -554,6 +563,7 @@
 			// 
 			// label5
 			// 
+			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label5.AutoSize = true;
 			this.label5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label5.Location = new System.Drawing.Point(71, 232);
@@ -564,6 +574,7 @@
 			// 
 			// lbl_alt
 			// 
+			this.lbl_alt.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.lbl_alt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lbl_alt.Location = new System.Drawing.Point(64, 186);
 			this.lbl_alt.Name = "lbl_alt";
@@ -574,6 +585,7 @@
 			// 
 			// lbl_speed
 			// 
+			this.lbl_speed.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.lbl_speed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lbl_speed.Location = new System.Drawing.Point(59, 369);
 			this.lbl_speed.Name = "lbl_speed";
@@ -584,6 +596,7 @@
 			// 
 			// label6
 			// 
+			this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label6.AutoSize = true;
 			this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label6.Location = new System.Drawing.Point(120, 186);
@@ -594,6 +607,7 @@
 			// 
 			// label7
 			// 
+			this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.Location = new System.Drawing.Point(111, 370);
@@ -654,23 +668,6 @@
 			this.ts_lbl_battery.Size = new System.Drawing.Size(26, 22);
 			this.ts_lbl_battery.Text = "0%";
 			// 
-			// but_connection
-			// 
-			this.but_connection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.but_connection.BackColor = System.Drawing.SystemColors.Menu;
-			this.but_connection.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.but_connection.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
-			this.but_connection.Location = new System.Drawing.Point(470, 0);
-			this.but_connection.Name = "but_connection";
-			this.but_connection.Size = new System.Drawing.Size(75, 62);
-			this.but_connection.TabIndex = 11;
-			this.but_connection.Text = "Connect";
-			this.but_connection.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.but_connection.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.but_connection.UseVisualStyleBackColor = false;
-			this.but_connection.Click += new System.EventHandler(this.BUT_Connect_Click);
-			// 
 			// toolStrip_dronelist
 			// 
 			this.toolStrip_dronelist.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -689,13 +686,75 @@
 			this.timer1.Interval = 1200;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
+			// toolStrip2
+			// 
+			this.toolStrip2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BUT_Connect,
+            this.toolStripSeparator2,
+            this.BUT_Rotation,
+            this.toolStripSeparator3,
+            this.BUT_Configure});
+			this.toolStrip2.Location = new System.Drawing.Point(417, 0);
+			this.toolStrip2.Name = "toolStrip2";
+			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
+			this.toolStrip2.Size = new System.Drawing.Size(197, 58);
+			this.toolStrip2.TabIndex = 13;
+			this.toolStrip2.Text = "toolStrip2";
+			// 
+			// BUT_Connect
+			// 
+			this.BUT_Connect.Font = new System.Drawing.Font("Arial", 9F);
+			this.BUT_Connect.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
+			this.BUT_Connect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Connect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Connect.Name = "BUT_Connect";
+			this.BUT_Connect.Size = new System.Drawing.Size(57, 51);
+			this.BUT_Connect.Text = "Connect";
+			this.BUT_Connect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Connect.Click += new System.EventHandler(this.BUT_Connect_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 54);
+			// 
+			// BUT_Rotation
+			// 
+			this.BUT_Rotation.Font = new System.Drawing.Font("Arial", 9F);
+			this.BUT_Rotation.Image = global::FooApplication.Properties.Resources.if_rotation_32;
+			this.BUT_Rotation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Rotation.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Rotation.Name = "BUT_Rotation";
+			this.BUT_Rotation.Size = new System.Drawing.Size(57, 51);
+			this.BUT_Rotation.Text = "Rotation";
+			this.BUT_Rotation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 54);
+			// 
+			// BUT_Configure
+			// 
+			this.BUT_Configure.Font = new System.Drawing.Font("Arial", 9F);
+			this.BUT_Configure.Image = global::FooApplication.Properties.Resources.if_settings_32;
+			this.BUT_Configure.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Configure.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Configure.Name = "BUT_Configure";
+			this.BUT_Configure.Size = new System.Drawing.Size(65, 51);
+			this.BUT_Configure.Text = "Configure";
+			this.BUT_Configure.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			// 
 			// Planner
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 537);
+			this.Controls.Add(this.toolStrip2);
 			this.Controls.Add(this.toolStrip_dronelist);
-			this.Controls.Add(this.but_connection);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.label6);
@@ -716,6 +775,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
+			this.toolStrip2.ResumeLayout(false);
+			this.toolStrip2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -755,7 +816,7 @@
 		private System.Windows.Forms.Button BUT_Disarm;
 		private System.Windows.Forms.Button BUT_Land;
 		private System.Windows.Forms.Button BUT_Read_WP;
-		private System.Windows.Forms.Button BUT_Rotation;
+		private System.Windows.Forms.Button BUT_Rotation_OLD;
 		private System.Windows.Forms.AGauge Gauge_alt;
 		private System.Windows.Forms.AGauge Gauge_speed;
 		private System.Windows.Forms.Label label4;
@@ -771,8 +832,13 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.ToolStripLabel ts_lbl_battery;
-		private System.Windows.Forms.Button but_connection;
 		private System.Windows.Forms.ToolStrip toolStrip_dronelist;
 		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.ToolStrip toolStrip2;
+		private System.Windows.Forms.ToolStripButton BUT_Connect;
+		private System.Windows.Forms.ToolStripButton BUT_Rotation;
+		private System.Windows.Forms.ToolStripButton BUT_Configure;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 	}
 }

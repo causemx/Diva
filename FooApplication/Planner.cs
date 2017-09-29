@@ -139,12 +139,15 @@ namespace FooApplication
 				droneButtons[i].DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 				droneButtons[i].TextImageRelation = TextImageRelation.ImageAboveText;
 				droneButtons[i].Enabled = false;
-				droneButtons[i].Text = "00";
+				droneButtons[i].Text = "sysid";
 				droneButtons[i].Tag = i;
 				droneButtons[i].Click += BUT_DroneList_Click;
+				droneButtons[i].MouseUp += DroneButton_MouseUp;
+				droneButtons[i].MouseDown += DroneButton_MouseDown;
 			}
 
 			toolStrip_dronelist.Items.AddRange(droneButtons);
+
 				
 			
 			quickadd = false;
@@ -2790,7 +2793,31 @@ namespace FooApplication
 			Console.WriteLine("index: "+tsb.Tag);
 			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)];
 		}
-		
+
+		// drone button long click 
+		// when drone button triggered long click, mav will disconnect
+		private DateTime droneSelectTime = DateTime.Now;
+
+		private void DroneButton_MouseUp(object sender, EventArgs e)
+		{
+			ToolStripButton drone_button = (ToolStripButton)sender;
+			int index = Convert.ToInt32(drone_button.Tag);
+			if (droneSelectTime.AddMilliseconds(1000) < DateTime.Now)
+			{
+				// release the mav
+				comPorts[index].close();
+				comPorts.RemoveAt(index);
+				drone_button.Enabled = false;
+				drone_button.Text = "sysid";
+				routesOverlay[index].Markers.Clear();
+			}
+			
+		}
+
+		private void DroneButton_MouseDown(object sender, EventArgs e)
+		{
+			droneSelectTime = DateTime.Now;
+		}
 
 		/// <summary>
 		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen

@@ -188,6 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mavcmd.xml" />
+    <None Include="Resources\if_settings_32.png" />
+    <None Include="Resources\if_rotation_32.png" />
     <None Include="Resources\if_drone_xxx_48.png" />
     <None Include="Resources\if_drone_xxx_24.png" />
     <None Include="Resources\if_drone_24.png" />

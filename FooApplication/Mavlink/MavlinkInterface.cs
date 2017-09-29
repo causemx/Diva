@@ -435,6 +435,8 @@ namespace FooApplication.Mavlink
 			threadRunnable = false;
 			if (SerialReaderThread != null)
 				SerialReaderThread.Join();
+
+			close();
 		}
 
 		public void open()
