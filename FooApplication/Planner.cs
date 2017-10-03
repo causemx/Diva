@@ -59,7 +59,7 @@ namespace FooApplication
 		private static readonly double MY_LNG = 121.0443385;
 		private static readonly double WARN_ALT = 2D;
 		private GMapOverlay top;
-		private GMapOverlay[] routesOverlay = new GMapOverlay[3];
+		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
 		private GMapOverlay polygonsOverlay;
 		private GMapOverlay airportsOverlay;
 		private GMapOverlay poiOverlay = new GMapOverlay("POI");
@@ -100,7 +100,6 @@ namespace FooApplication
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
-		private List<System.Windows.Forms.Timer> mavtimers = new List<System.Windows.Forms.Timer>();
 
 
 		// Thread setup
@@ -122,33 +121,11 @@ namespace FooApplication
 			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
 		}
 
-		
-
-		public static readonly int NUMBER_DRONES = 3;
-		private ToolStripButton[] droneButtons = new ToolStripButton[NUMBER_DRONES];
+		private List<ToolStripButton> droneButtons = new List<ToolStripButton>();
 
 		public Planner()
 		{
 			InitializeComponent();
-
-			// Initialize button array.
-			for (int i = 0; i < droneButtons.Length; i++)
-			{
-				droneButtons[i] = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
-				droneButtons[i].ImageScaling = ToolStripItemImageScaling.None;
-				droneButtons[i].DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-				droneButtons[i].TextImageRelation = TextImageRelation.ImageAboveText;
-				droneButtons[i].Enabled = false;
-				droneButtons[i].Text = "sysid";
-				droneButtons[i].Tag = i;
-				droneButtons[i].Click += BUT_DroneList_Click;
-				droneButtons[i].MouseUp += DroneButton_MouseUp;
-				droneButtons[i].MouseDown += DroneButton_MouseDown;
-			}
-
-			toolStrip_dronelist.Items.AddRange(droneButtons);
-
-				
 			
 			quickadd = false;
 
@@ -166,8 +143,6 @@ namespace FooApplication
 			myMap.RoutesEnabled = true;
 			myMap.ForceDoubleBuffer = false;
 
-
-
 			// draw this layer first
 			kmlPolygonsOverlay = new GMapOverlay("kmlpolygons");
 			myMap.Overlays.Add(kmlPolygonsOverlay);
@@ -175,19 +150,6 @@ namespace FooApplication
 			rallypointOverlay = new GMapOverlay("rallypoints");
 			myMap.Overlays.Add(rallypointOverlay);
 
-			/*
-			for (int i = 0; i < 3; i++)
-			{
-				routesOverlay[i] = new GMapOverlay(String.Format("routes_{0}", i));
-				myMap.Overlays.Add(routesOverlay[i]);
-			}*/
-
-			routesOverlay[0] = new GMapOverlay("routeone");
-			routesOverlay[1] = new GMapOverlay("routetwo");
-			routesOverlay[2] = new GMapOverlay("routethree");
-			myMap.Overlays.Add(routesOverlay[0]);
-			myMap.Overlays.Add(routesOverlay[1]);
-			myMap.Overlays.Add(routesOverlay[2]);
 
 			polygonsOverlay = new GMapOverlay("polygons");
 			myMap.Overlays.Add(polygonsOverlay);
@@ -237,6 +199,27 @@ namespace FooApplication
 			}
 		}
 
+		private void AddDroneButton(int count)
+		{
+			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
+			droneButton.ImageScaling = ToolStripItemImageScaling.None;
+			droneButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+			droneButton.TextImageRelation = TextImageRelation.ImageAboveText;
+			droneButton.Enabled = true;
+			droneButton.Text = "sysid";
+			droneButton.Tag = count;
+			droneButton.Click += BUT_DroneList_Click;
+			droneButton.MouseUp += DroneButton_MouseUp;
+			droneButton.MouseDown += DroneButton_MouseDown;
+			toolStrip_dronelist.Items.Add(droneButton);
+		}
+
+		private void AddRouteOverlay(int count)
+		{
+			GMapOverlay routesOverlay = new GMapOverlay(string.Format("route_{0}", count));
+			routesOverlays.Add(routesOverlay);
+			myMap.Overlays.Add(routesOverlay);
+		}
 
 		protected override void OnLoad(EventArgs e)
 		{
@@ -376,8 +359,7 @@ namespace FooApplication
 			Command.DataSource = cmds;
 		}
 
-
-		public void updateConnectionParam(string target, string baud)
+		public void AddItemtoConnectPannel(string target, string baud)
 		{
 			try
 			{
@@ -385,9 +367,10 @@ namespace FooApplication
 				doConnect(mav, target, baud);
 				mav.onCreate();
 				comPorts.Add(mav);
-				comPort = mav;
+				AddDroneButton(comPorts.Count);
+				AddRouteOverlay(comPorts.Count);
+				this.comPort = mav;
 
-				updateConnectionPannel(mav);
 			}
 			catch (Exception ex)
 			{
@@ -396,11 +379,6 @@ namespace FooApplication
 
 		}
 
-		private void updateConnectionPannel(MavlinkInterface mav)
-		{
-			droneButtons[comPorts.Count - 1].Enabled = true;
-			droneButtons[comPorts.Count - 1].Text = (mav.MAV.sysid).ToString();
-		}
 
 		private Dictionary<string, string[]> readCMDXML()
 		{
@@ -2790,8 +2768,8 @@ namespace FooApplication
 		{
 			
 			ToolStripButton tsb = (ToolStripButton)sender;
-			Console.WriteLine("index: "+tsb.Tag);
-			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)];
+			Console.WriteLine("click_index: "+tsb.Tag);
+			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
 		}
 
 		// drone button long click 
@@ -2800,18 +2778,38 @@ namespace FooApplication
 
 		private void DroneButton_MouseUp(object sender, EventArgs e)
 		{
-			ToolStripButton drone_button = (ToolStripButton)sender;
-			int index = Convert.ToInt32(drone_button.Tag);
-			if (droneSelectTime.AddMilliseconds(1000) < DateTime.Now)
+			try
 			{
-				// release the mav
-				comPorts[index].close();
-				comPorts.RemoveAt(index);
-				drone_button.Enabled = false;
-				drone_button.Text = "sysid";
-				routesOverlay[index].Markers.Clear();
+				ToolStripButton drone_button = (ToolStripButton)sender;
+				int index = Convert.ToInt32(drone_button.Tag);
+				if (droneSelectTime.AddMilliseconds(1000) < DateTime.Now)
+				{
+					// release the mav
+					// remove the drone button
+					comPorts[index - 1].onDestroy();
+					comPorts[index - 1].close();
+					comPorts.RemoveAt(index - 1);
+					myMap.Overlays.Remove(routesOverlays[index - 1]);
+					routesOverlays.RemoveAt(index - 1);
+					toolStrip_dronelist.Items.RemoveAt(index - 1);
+
+					// refresh button index
+					int max = 1;
+					foreach (ToolStripButton but in toolStrip_dronelist.Items)
+					{
+						if (max <= comPorts.Count)
+						{
+							but.Tag = max;
+							max++;
+						}
+					}
+				}
 			}
-			
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+		
 		}
 
 		private void DroneButton_MouseDown(object sender, EventArgs e)
@@ -2829,13 +2827,14 @@ namespace FooApplication
 			
 			try
 			{
+				
 				if (isMouseDown || currentRectMarker != null)
 					return;
 
 				for (int i = 0; i < comPorts.Count; i++)
 				{
 					MavlinkInterface _port = comPorts[i];
-					routesOverlay[i].Markers.Clear();
+					routesOverlays[i].Markers.Clear();
 
 					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
 						continue;
@@ -2844,7 +2843,7 @@ namespace FooApplication
 					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
 						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
 
-					routesOverlay[i].Markers.Add(marker);
+					routesOverlays[i].Markers.Add(marker);
 
 				}
 

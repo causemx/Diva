@@ -24,7 +24,7 @@ namespace FooApplication.Controls
 		{
 			if (txt_target.Text != "" && txt_baud.Text != "")
 			{
-				mPlanner.updateConnectionParam(txt_target.Text, txt_baud.Text);
+				mPlanner.AddItemtoConnectPannel(txt_target.Text, txt_baud.Text);
 			}
 			this.Dispose();
 		}
