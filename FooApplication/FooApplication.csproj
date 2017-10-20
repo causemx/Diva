@@ -120,7 +120,18 @@
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\MyProgressDialog.cs" />
+    <Compile Include="Controls\MyListView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MyListView.Designer.cs">
+      <DependentUpon>MyListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ProgressDialog.Designer.cs">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProgressInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +161,12 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <EmbeddedResource Include="Controls\MyListView.resx">
+      <DependentUpon>MyListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProgressDialog.resx">
+      <DependentUpon>ProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mavcmd.xml" />
+    <None Include="Resources\if_warning_32.png" />
     <None Include="Resources\if_settings_32.png" />
     <None Include="Resources\if_rotation_32.png" />
     <None Include="Resources\if_drone_xxx_48.png" />

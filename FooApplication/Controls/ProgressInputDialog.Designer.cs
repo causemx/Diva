@@ -106,7 +106,7 @@
 			this.Controls.Add(this.but_confirm);
 			this.Controls.Add(this.txt_target);
 			this.Controls.Add(this.label1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "ProgressInputDialog";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "ProgressInputDialog";

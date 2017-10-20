@@ -112,6 +112,7 @@ namespace FooApplication.Mavlink
 			}
 		}
 
+
 		public BufferedStream logfile { get; set; }
 		public BufferedStream rawlogfile { get; set; }
 		public DateTime _bpstime { get; set; }
@@ -243,24 +244,13 @@ namespace FooApplication.Mavlink
 						if (mavlinkMessage != null)
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
-							// for different thread
-							/*
-							Invoke((MethodInvoker)delegate
-							{
-								foreach (int mode in Enum.GetValues(typeof(flightMode)))
-								{
-									if ((uint)mode == hb.custom_mode)
-									{
-										TXT_Mode.Text = Enum.GetName(typeof(flightMode), mode);
-									}
-								}
-							});*/
 
-							MAV.mode = hb.custom_mode.ToString();
+							// Console.WriteLine("hb_sys_status: " + hb.system_status);
+							MAV.mode = hb.custom_mode;
 
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
-
+								// TODO: do something when recived GCS hb
 							}
 						}
 					}

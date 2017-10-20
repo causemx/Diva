@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.myMap = new FooApplication.Controls.MyGMap();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +78,7 @@
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.ts_lbl_battery = new System.Windows.Forms.ToolStripLabel();
-			this.toolStrip_dronelist = new System.Windows.Forms.ToolStrip();
+			this.TS_drones = new System.Windows.Forms.ToolStrip();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
 			this.BUT_Connect = new System.Windows.Forms.ToolStripButton();
@@ -333,7 +334,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
-			this.Commands.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -347,6 +355,8 @@
             this.Column5,
             this.Delete,
             this.TagData});
+			this.Commands.EnableHeadersVisualStyles = false;
+			this.Commands.GridColor = System.Drawing.Color.White;
 			this.Commands.Location = new System.Drawing.Point(0, 29);
 			this.Commands.Name = "Commands";
 			this.Commands.RowHeadersWidth = 50;
@@ -668,18 +678,18 @@
 			this.ts_lbl_battery.Size = new System.Drawing.Size(26, 22);
 			this.ts_lbl_battery.Text = "0%";
 			// 
-			// toolStrip_dronelist
+			// TS_drones
 			// 
-			this.toolStrip_dronelist.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.toolStrip_dronelist.AutoSize = false;
-			this.toolStrip_dronelist.Dock = System.Windows.Forms.DockStyle.None;
-			this.toolStrip_dronelist.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolStrip_dronelist.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-			this.toolStrip_dronelist.Location = new System.Drawing.Point(943, 157);
-			this.toolStrip_dronelist.Name = "toolStrip_dronelist";
-			this.toolStrip_dronelist.Size = new System.Drawing.Size(56, 188);
-			this.toolStrip_dronelist.TabIndex = 12;
-			this.toolStrip_dronelist.Text = "toolStrip2";
+			this.TS_drones.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.TS_drones.AutoSize = false;
+			this.TS_drones.Dock = System.Windows.Forms.DockStyle.None;
+			this.TS_drones.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.TS_drones.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+			this.TS_drones.Location = new System.Drawing.Point(943, 157);
+			this.TS_drones.Name = "TS_drones";
+			this.TS_drones.Size = new System.Drawing.Size(56, 188);
+			this.TS_drones.TabIndex = 12;
+			this.TS_drones.Text = "toolStrip2";
 			// 
 			// timer1
 			// 
@@ -700,7 +710,7 @@
 			this.toolStrip2.Location = new System.Drawing.Point(417, 0);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
-			this.toolStrip2.Size = new System.Drawing.Size(197, 58);
+			this.toolStrip2.Size = new System.Drawing.Size(228, 58);
 			this.toolStrip2.TabIndex = 13;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -754,7 +764,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 537);
 			this.Controls.Add(this.toolStrip2);
-			this.Controls.Add(this.toolStrip_dronelist);
+			this.Controls.Add(this.TS_drones);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.label6);
@@ -832,7 +842,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.ToolStripLabel ts_lbl_battery;
-		private System.Windows.Forms.ToolStrip toolStrip_dronelist;
+		private System.Windows.Forms.ToolStrip TS_drones;
 		private System.Windows.Forms.Timer timer1;
 		private System.Windows.Forms.ToolStrip toolStrip2;
 		private System.Windows.Forms.ToolStripButton BUT_Connect;

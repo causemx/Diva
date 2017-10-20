@@ -15,15 +15,6 @@ namespace FooApplication.Mavlink
 
 		public MavlinkInterface parent;
 
-		public enum flightMode
-		{
-			STABILIZE = 0,
-			AUTO = 3,
-			GUIDED = 4,
-			RTL = 6,
-			LAND = 9
-		}
-
 		public MavStatus(MavlinkInterface mavLinkInterface, byte sysid, byte compid)
 		{
 			this.parent = mavLinkInterface;
@@ -79,30 +70,7 @@ namespace FooApplication.Mavlink
 
 		public float groundspeed { get; set; }
 
-		// TODO: stupid work
-		public string mode
-		{
-			get
-			{
-				
-				foreach (int m in Enum.GetValues(typeof(flightMode)))
-				{
-					if (m == Convert.ToInt32(_mode))
-					{
-						return Enum.GetName(typeof(flightMode), m);
-					}
-					
-				}
-				return _mode;
-
-			}
-			set
-			{
-				_mode = value;
-			}
-		}
-
-		private string _mode = "";
+		public uint mode{ get; set; }
 
 		// Copter parameter
 

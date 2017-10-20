@@ -121,6 +121,16 @@ namespace FooApplication
 			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
 		}
 
+		public enum flightmode
+		{
+			STABILIZE = 0,
+			AUTO = 3,
+			GUIDED = 4,
+			RTL = 6,
+			LAND = 9
+		}
+
+
 		private List<ToolStripButton> droneButtons = new List<ToolStripButton>();
 
 		public Planner()
@@ -183,7 +193,29 @@ namespace FooApplication
 
 			myMap.Zoom = 3;
 
+			// RegeneratePolygon();
 			updateCMDParams();
+
+			foreach (DataGridViewColumn commandsColumn in Commands.Columns)
+			{
+				if (commandsColumn is DataGridViewTextBoxColumn)
+					commandsColumn.CellTemplate.Value = "0";
+			}
+
+			Commands.Columns[Delete.Index].CellTemplate.Value = "X";
+
+			// setup geofence
+			/*
+			List<PointLatLng> polygonPoints = new List<PointLatLng>();
+			geofencePolygon = new GMapPolygon(polygonPoints, "geofence");
+			geofencePolygon.Stroke = new Pen(Color.Pink, 5);
+			geofencePolygon.Fill = Brushes.Transparent;*/
+
+			//setup drawnpolgon
+			List<PointLatLng> polygonPoints2 = new List<PointLatLng>();
+			drawnPolygon = new GMapPolygon(polygonPoints2, "drawnpoly");
+			drawnPolygon.Stroke = new Pen(Color.Red, 2);
+			drawnPolygon.Fill = Brushes.Transparent;
 
 			//set home
 			try
@@ -211,7 +243,7 @@ namespace FooApplication
 			droneButton.Click += BUT_DroneList_Click;
 			droneButton.MouseUp += DroneButton_MouseUp;
 			droneButton.MouseDown += DroneButton_MouseDown;
-			toolStrip_dronelist.Items.Add(droneButton);
+			TS_drones.Items.Add(droneButton);
 		}
 
 		private void AddRouteOverlay(int count)
@@ -263,9 +295,17 @@ namespace FooApplication
 				Thread.Sleep(20);
 				if (comPort.BaseStream.IsOpen)
 				{
+		
 					Invoke((MethodInvoker)delegate
 					{
-						// TXT_Mode.Text = comPort.MAV.mode;
+						foreach (int mode in Enum.GetValues(typeof(flightmode)))
+						{
+							if ((uint)mode == comPort.MAV.mode)
+							{
+								TXT_Mode.Text = Enum.GetName(typeof(flightmode), mode);
+							}
+						}
+
 						ts_lbl_battery.Text = comPort.MAV.battery_voltage.ToString("F2") + "%";
 						Gauge_alt.Value = (float)comPort.MAV.altasl;
 						lbl_alt.Text = (comPort.MAV.altasl).ToString();
@@ -1482,7 +1522,6 @@ namespace FooApplication
 
 			fullpointlist.Clear();
 
-			Console.WriteLine("write_KML: " + DateTime.Now);
 			try
 			{
 				if (objectsOverlay != null) // hasnt been created yet
@@ -2724,18 +2763,48 @@ namespace FooApplication
 			}
 		}
 
+		
 		private void BUT_Rotation_Click(object sender, EventArgs e)
 		{
-			if (comPort.BaseStream.IsOpen)
+			ProgressDialog _dialog = new ProgressDialog();
+			_dialog.isActive = true;
+
+			_dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
 			{
-				comPort.doARM(true);
-				Thread.Sleep(2000);
-				comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-				Thread.Sleep(5000);
+				while (comPort.BaseStream.IsOpen && _dialog.isActive)
+				{
+					// switch mode to STABILIZE
+					comPort.setMode(
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = comPort.MAV.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)0,
+					});
 
-				// flyToHereAltToolStripMenuItem_Click(null, null);
+					comPort.doARM(true);
+			
+					Thread.Sleep(1000);
 
-				comPort.setMode(
+					// switch mode to GUIDED
+					comPort.setMode(
+					comPort.MAV.sysid,
+					comPort.MAV.compid,
+					new MAVLink.mavlink_set_mode_t()
+					{
+						target_system = comPort.MAV.sysid,
+						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+						custom_mode = (uint)4,
+					});
+
+					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+			
+					Thread.Sleep(3000);
+
+					// switch mode to AUTO
+					comPort.setMode(
 					comPort.MAV.sysid,
 					comPort.MAV.compid,
 					new MAVLink.mavlink_set_mode_t()
@@ -2744,7 +2813,21 @@ namespace FooApplication
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)3,
 					});
-			}
+
+					Thread.Sleep(120000);
+				}
+			};
+
+			_dialog.ProgressChanged += delegate (object dialog, ProgressChangedEventArgs pce) {
+				// _dialog.Message = pce.ProgressPercentage + "/100";
+			};
+
+			_dialog.Completed += delegate (object dialog, RunWorkerCompletedEventArgs rce) {
+				// TODO: use heartbeat sys_status from 3->4->3 to terminate
+				
+			};
+
+			_dialog.Run();
 
 		}
 
@@ -2791,16 +2874,16 @@ namespace FooApplication
 					comPorts.RemoveAt(index - 1);
 					myMap.Overlays.Remove(routesOverlays[index - 1]);
 					routesOverlays.RemoveAt(index - 1);
-					toolStrip_dronelist.Items.RemoveAt(index - 1);
+					TS_drones.Items.RemoveAt(index - 1);
 
 					// refresh button index
-					int max = 1;
-					foreach (ToolStripButton but in toolStrip_dronelist.Items)
+					int current_tag = 1;
+					foreach (ToolStripButton but in TS_drones.Items)
 					{
-						if (max <= comPorts.Count)
+						if (current_tag <= comPorts.Count)
 						{
-							but.Tag = max;
-							max++;
+							but.Tag = current_tag;
+							current_tag++;
 						}
 					}
 				}
