@@ -2763,58 +2763,70 @@ namespace FooApplication
 			}
 		}
 
+		// cusor point to current drone.
+		private int drone_cursor = 0;
 		
 		private void BUT_Rotation_Click(object sender, EventArgs e)
 		{
 			ProgressDialog _dialog = new ProgressDialog();
 			_dialog.isActive = true;
 
+			
+
 			_dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
 			{
-				while (comPort.BaseStream.IsOpen && _dialog.isActive)
+				while (_dialog.isActive)
 				{
-					// switch mode to STABILIZE
-					comPort.setMode(
-					comPort.MAV.sysid,
-					comPort.MAV.compid,
-					new MAVLink.mavlink_set_mode_t()
+					Console.WriteLine("drone_cursor point to: " + drone_cursor);
+					MavlinkInterface _comport = comPorts[drone_cursor];
+					if (_comport.BaseStream.IsOpen)
 					{
-						target_system = comPort.MAV.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)0,
-					});
+						// switch mode to STABILIZE
+						_comport.setMode(
+						_comport.MAV.sysid,
+						_comport.MAV.compid,
+						new MAVLink.mavlink_set_mode_t()
+						{
+							target_system = _comport.MAV.sysid,
+							base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+							custom_mode = (uint)0,
+						});
 
-					comPort.doARM(true);
-			
-					Thread.Sleep(1000);
+						_comport.doARM(true);
 
-					// switch mode to GUIDED
-					comPort.setMode(
-					comPort.MAV.sysid,
-					comPort.MAV.compid,
-					new MAVLink.mavlink_set_mode_t()
-					{
-						target_system = comPort.MAV.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)4,
-					});
+						Thread.Sleep(1000);
 
-					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-			
-					Thread.Sleep(3000);
+						// switch mode to GUIDED
+						_comport.setMode(
+						_comport.MAV.sysid,
+						_comport.MAV.compid,
+						new MAVLink.mavlink_set_mode_t()
+						{
+							target_system = _comport.MAV.sysid,
+							base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+							custom_mode = (uint)4,
+						});
 
-					// switch mode to AUTO
-					comPort.setMode(
-					comPort.MAV.sysid,
-					comPort.MAV.compid,
-					new MAVLink.mavlink_set_mode_t()
-					{
-						target_system = comPort.MAV.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)3,
-					});
+						_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 
-					Thread.Sleep(120000);
+						Thread.Sleep(3000);
+
+						// switch mode to AUTO
+						_comport.setMode(
+						_comport.MAV.sysid,
+						_comport.MAV.compid,
+						new MAVLink.mavlink_set_mode_t()
+						{
+							target_system = _comport.MAV.sysid,
+							base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+							custom_mode = (uint)3,
+						});
+
+						Thread.Sleep(60000);
+					}
+
+					drone_cursor = (drone_cursor+1) % comPorts.Count;
+					
 				}
 			};
 
