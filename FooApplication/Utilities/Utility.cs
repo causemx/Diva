@@ -283,7 +283,7 @@ namespace FooApplication.Utilities
 			
 
 			// Show SYSID on the drone icon.
-			// g.DrawString(sysid.ToString(), new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Red, -8, -8);
+			g.DrawString(sysid.ToString(), new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Blue, -8, -8);
 
 			g.Transform = temp;
 

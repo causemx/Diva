@@ -238,7 +238,7 @@ namespace FooApplication
 			droneButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 			droneButton.TextImageRelation = TextImageRelation.ImageAboveText;
 			droneButton.Enabled = true;
-			droneButton.Text = "sysid";
+			droneButton.Text = "00";
 			droneButton.Tag = count;
 			droneButton.Click += BUT_DroneList_Click;
 			droneButton.MouseUp += DroneButton_MouseUp;
