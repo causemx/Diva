@@ -231,14 +231,14 @@ namespace FooApplication
 			}
 		}
 
-		private void AddDroneButton(int count)
+		private void AddDroneButton(int count, string sysid)
 		{
 			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
 			droneButton.ImageScaling = ToolStripItemImageScaling.None;
 			droneButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 			droneButton.TextImageRelation = TextImageRelation.ImageAboveText;
 			droneButton.Enabled = true;
-			droneButton.Text = "00";
+			droneButton.Text = sysid;
 			droneButton.Tag = count;
 			droneButton.Click += BUT_DroneList_Click;
 			droneButton.MouseUp += DroneButton_MouseUp;
@@ -407,7 +407,7 @@ namespace FooApplication
 				doConnect(mav, target, baud);
 				mav.onCreate();
 				comPorts.Add(mav);
-				AddDroneButton(comPorts.Count);
+				AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
 				AddRouteOverlay(comPorts.Count);
 				this.comPort = mav;
 

@@ -280,9 +280,10 @@ namespace FooApplication.Utilities
 			}
 
 			g.DrawImageUnscaled(icon, icon.Width / -2 + 2, icon.Height / -2);
-			
+
 
 			// Show SYSID on the drone icon.
+			g.RotateTransform(180);
 			g.DrawString(sysid.ToString(), new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Blue, -8, -8);
 
 			g.Transform = temp;
