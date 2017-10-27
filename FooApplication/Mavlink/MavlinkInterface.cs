@@ -247,6 +247,7 @@ namespace FooApplication.Mavlink
 
 							// Console.WriteLine("hb_sys_status: " + hb.system_status);
 							MAV.mode = hb.custom_mode;
+							MAV.sys_status = hb.system_status;
 
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
@@ -488,7 +489,8 @@ namespace FooApplication.Mavlink
 						Thread.Sleep(1000);
 					}
 				}
-
+				
+				
 				MAVLinkMessage buffer = MAVLinkMessage.Invalid;
 				MAVLinkMessage buffer1 = MAVLinkMessage.Invalid;
 
@@ -514,16 +516,6 @@ namespace FooApplication.Mavlink
 
 				while (true)
 				{
-					/**
-					if (CancelRequested)
-					{
-						progressWorkerEventArgs.CancelAcknowledged = true;
-						countDown.Stop();
-						if (BaseStream.IsOpen)
-							BaseStream.Close();
-						giveComport = false;
-						return;
-					} */
 
 					log.Info(DateTime.Now.Millisecond + " Start connect loop ");
 
@@ -565,6 +557,7 @@ namespace FooApplication.Mavlink
 					// 2 hbs that match
 					if (buffer.Length > 5 && buffer1.Length > 5 && buffer.sysid == buffer1.sysid && buffer.compid == buffer1.compid)
 					{
+						Console.WriteLine("2 hbs that match");
 						mavlink_heartbeat_t hb = buffer.ToStructure<mavlink_heartbeat_t>();
 
 						if (hb.type != (byte)MAV_TYPE.GCS)
@@ -577,6 +570,7 @@ namespace FooApplication.Mavlink
 					// 2 hb's that dont match. more than one sysid here
 					if (buffer.Length > 5 && buffer1.Length > 5 && (buffer.sysid == buffer1.sysid || buffer.compid == buffer1.compid))
 					{
+						Console.WriteLine("2 hbs that dont match. more than one sysid here");
 						mavlink_heartbeat_t hb = buffer.ToStructure<mavlink_heartbeat_t>();
 
 						if (hb.type != (byte)MAV_TYPE.ANTENNA_TRACKER && hb.type != (byte)MAV_TYPE.GCS)

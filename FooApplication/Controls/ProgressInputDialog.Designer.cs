@@ -34,15 +34,18 @@
 			this.but_cancel = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txt_baud = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.txt_port = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
 			this.label1.ForeColor = System.Drawing.Color.White;
 			this.label1.Location = new System.Drawing.Point(23, 21);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(35, 12);
+			this.label1.Size = new System.Drawing.Size(44, 14);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Target";
 			// 
@@ -57,18 +60,20 @@
 			// but_confirm
 			// 
 			this.but_confirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.but_confirm.Location = new System.Drawing.Point(257, 100);
+			this.but_confirm.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_confirm.Location = new System.Drawing.Point(257, 125);
 			this.but_confirm.Name = "but_confirm";
 			this.but_confirm.Size = new System.Drawing.Size(75, 23);
 			this.but_confirm.TabIndex = 2;
 			this.but_confirm.Text = "Confirm";
 			this.but_confirm.UseVisualStyleBackColor = true;
-			this.but_confirm.Click += new System.EventHandler(this.but_confirm_Click);
+			this.but_confirm.Click += new System.EventHandler(this.but_confirm_click);
 			// 
 			// but_cancel
 			// 
 			this.but_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.but_cancel.Location = new System.Drawing.Point(343, 100);
+			this.but_cancel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_cancel.Location = new System.Drawing.Point(343, 125);
 			this.but_cancel.Name = "but_cancel";
 			this.but_cancel.Size = new System.Drawing.Size(75, 23);
 			this.but_cancel.TabIndex = 3;
@@ -79,27 +84,49 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
 			this.label2.ForeColor = System.Drawing.Color.White;
-			this.label2.Location = new System.Drawing.Point(23, 56);
+			this.label2.Location = new System.Drawing.Point(19, 87);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(47, 12);
+			this.label2.Size = new System.Drawing.Size(56, 14);
 			this.label2.TabIndex = 4;
 			this.label2.Text = "Baudrate";
 			// 
 			// txt_baud
 			// 
 			this.txt_baud.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txt_baud.Location = new System.Drawing.Point(83, 53);
+			this.txt_baud.Location = new System.Drawing.Point(83, 84);
 			this.txt_baud.Name = "txt_baud";
 			this.txt_baud.Size = new System.Drawing.Size(338, 22);
 			this.txt_baud.TabIndex = 5;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.label3.ForeColor = System.Drawing.Color.White;
+			this.label3.Location = new System.Drawing.Point(28, 56);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(30, 14);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "Port";
+			// 
+			// txt_port
+			// 
+			this.txt_port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txt_port.Location = new System.Drawing.Point(82, 51);
+			this.txt_port.Name = "txt_port";
+			this.txt_port.Size = new System.Drawing.Size(338, 22);
+			this.txt_port.TabIndex = 7;
 			// 
 			// ProgressInputDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-			this.ClientSize = new System.Drawing.Size(449, 135);
+			this.ClientSize = new System.Drawing.Size(449, 160);
+			this.Controls.Add(this.txt_port);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.txt_baud);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.but_cancel);
@@ -123,5 +150,7 @@
 		private System.Windows.Forms.Button but_cancel;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox txt_baud;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox txt_port;
 	}
 }

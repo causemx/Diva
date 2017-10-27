@@ -381,7 +381,6 @@ namespace FooApplication
 			});
 		}
 
-		
 
 		private void updateCMDParams()
 		{
@@ -399,25 +398,7 @@ namespace FooApplication
 			Command.DataSource = cmds;
 		}
 
-		public void AddItemtoConnectPannel(string target, string baud)
-		{
-			try
-			{
-				var mav = new MavlinkInterface();
-				doConnect(mav, target, baud);
-				mav.onCreate();
-				comPorts.Add(mav);
-				AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
-				AddRouteOverlay(comPorts.Count);
-				this.comPort = mav;
-
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
-
-		}
+	
 
 
 		private Dictionary<string, string[]> readCMDXML()
@@ -1008,7 +989,10 @@ namespace FooApplication
 			}
 		}
 
-		public void doConnect(MavlinkInterface comPort, string portname, string baud)
+		
+
+
+		public void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
 		{
 			
 			log.Info("We are connecting to " + portname + " " + baud);
@@ -1017,7 +1001,7 @@ namespace FooApplication
 			{
 				
 				case "udp":
-					comPort.BaseStream = new UdpSerial();
+					comPort.BaseStream = new UdpSerial(port);
 					break;
 				default:
 					comPort.BaseStream = new SerialPort();
@@ -2635,13 +2619,23 @@ namespace FooApplication
 								  gotohere.lat, (int)gotohere.alt, Color.Blue, commonsOverlay);
 		}
 
-		
-		
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 
 			ProgressInputDialog dialog = new ProgressInputDialog(this);
+			dialog.confirm_click += delegate (object o, EventArgs ex)
+			{
+				var mav = new MavlinkInterface();
+				var mav2 = new MavlinkInterface();
+				// TODO: doConnect(mav, target, baud);
+				doConnect(mav, dialog.port_name, dialog.port, dialog.baudrate);
+				mav.onCreate();
+				comPorts.Add(mav);
+				AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
+				AddRouteOverlay(comPorts.Count);
+				this.comPort = mav;
+			};
 			dialog.Show();
 
 		}
@@ -2822,7 +2816,15 @@ namespace FooApplication
 							custom_mode = (uint)3,
 						});
 
-						Thread.Sleep(60000);
+						//Thread.Sleep(60000);
+
+						while (true)
+						{
+							if (_comport.MAV.sys_status == 3)
+								break;
+						}
+					
+
 					}
 
 					drone_cursor = (drone_cursor+1) % comPorts.Count;

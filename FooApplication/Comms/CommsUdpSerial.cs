@@ -25,7 +25,7 @@ namespace FooApplication.Comms
 		public bool RtsEnable { get; set; }
 		public Stream BaseStream { get { return this.BaseStream; } }
 
-		public UdpSerial()
+		public UdpSerial(string port)
 		{
 			//System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
 			//System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");

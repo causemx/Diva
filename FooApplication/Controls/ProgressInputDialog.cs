@@ -12,6 +12,23 @@ namespace FooApplication.Controls
 {
 	public partial class ProgressInputDialog : Form
 	{
+		public event EventHandler confirm_click;
+
+		public string port_name
+		{
+			get { return txt_target.Text; }
+		}
+
+		public string port
+		{
+			get { return txt_port.Text; }
+		}
+
+		public string baudrate
+		{
+			get { return txt_baud.Text; }
+		}
+
 		Planner mPlanner;
 
 		public ProgressInputDialog(Planner parent)
@@ -20,13 +37,12 @@ namespace FooApplication.Controls
 			this.mPlanner = parent;
 		}
 
-		private void but_confirm_Click(object sender, EventArgs e)
+		private void but_confirm_click(object sender, EventArgs e)
 		{
-			if (txt_target.Text != "" && txt_baud.Text != "")
+			if (confirm_click != null)
 			{
-				mPlanner.AddItemtoConnectPannel(txt_target.Text, txt_baud.Text);
+				confirm_click(this, e);
 			}
-			this.Dispose();
 		}
 
 		private void but_cancel_Click(object sender, EventArgs e)

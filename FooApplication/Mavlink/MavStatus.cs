@@ -148,6 +148,8 @@ namespace FooApplication.Mavlink
 
 		public byte sendlinkid { get; internal set; }
 
+		public byte sys_status { get; set; }
+
 		public UInt64 timestamp { get; set; }
 
 		internal byte[] signingKey;
