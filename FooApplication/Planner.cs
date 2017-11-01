@@ -2847,7 +2847,16 @@ namespace FooApplication
 			
 			ToolStripButton tsb = (ToolStripButton)sender;
 			Console.WriteLine("click_index: "+tsb.Tag);
+			SelectToolStripButton(tsb);
 			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
+		}
+
+		private void SelectToolStripButton(ToolStripButton selected_button)
+		{
+			foreach (ToolStripButton _tsbutton in TS_drones.Items)
+			{
+				_tsbutton.Checked = (_tsbutton == selected_button);
+			}
 		}
 
 		// drone button long click 
