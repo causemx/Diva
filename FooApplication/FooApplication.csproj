@@ -117,6 +117,9 @@
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
     <Compile Include="Controls\InputBox.cs" />
+    <Compile Include="Controls\MyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>
     </Compile>

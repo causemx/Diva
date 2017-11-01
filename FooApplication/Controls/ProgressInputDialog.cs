@@ -26,7 +26,7 @@ namespace FooApplication.Controls
 
 		public string baudrate
 		{
-			get { return txt_baud.Text; }
+			get { return cb_baud.Text; }
 		}
 
 		Planner mPlanner;

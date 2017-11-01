@@ -33,9 +33,9 @@
 			this.but_confirm = new System.Windows.Forms.Button();
 			this.but_cancel = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
-			this.txt_baud = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.txt_port = new System.Windows.Forms.TextBox();
+			this.cb_baud = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -92,14 +92,6 @@
 			this.label2.TabIndex = 4;
 			this.label2.Text = "Baudrate";
 			// 
-			// txt_baud
-			// 
-			this.txt_baud.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txt_baud.Location = new System.Drawing.Point(83, 84);
-			this.txt_baud.Name = "txt_baud";
-			this.txt_baud.Size = new System.Drawing.Size(338, 22);
-			this.txt_baud.TabIndex = 5;
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -119,15 +111,27 @@
 			this.txt_port.Size = new System.Drawing.Size(338, 22);
 			this.txt_port.TabIndex = 7;
 			// 
+			// cb_baud
+			// 
+			this.cb_baud.FormattingEnabled = true;
+			this.cb_baud.Items.AddRange(new object[] {
+            "9600",
+            "97600",
+            "115200"});
+			this.cb_baud.Location = new System.Drawing.Point(82, 85);
+			this.cb_baud.Name = "cb_baud";
+			this.cb_baud.Size = new System.Drawing.Size(339, 20);
+			this.cb_baud.TabIndex = 8;
+			// 
 			// ProgressInputDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
 			this.ClientSize = new System.Drawing.Size(449, 160);
+			this.Controls.Add(this.cb_baud);
 			this.Controls.Add(this.txt_port);
 			this.Controls.Add(this.label3);
-			this.Controls.Add(this.txt_baud);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.but_cancel);
 			this.Controls.Add(this.but_confirm);
@@ -149,8 +153,8 @@
 		private System.Windows.Forms.Button but_confirm;
 		private System.Windows.Forms.Button but_cancel;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox txt_baud;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox txt_port;
+		private System.Windows.Forms.ComboBox cb_baud;
 	}
 }

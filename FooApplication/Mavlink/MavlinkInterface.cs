@@ -245,7 +245,7 @@ namespace FooApplication.Mavlink
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
 
-							// Console.WriteLine("hb_sys_status: " + hb.system_status);
+							Console.WriteLine("hb_sys_status: " + hb.system_status);
 							MAV.mode = hb.custom_mode;
 							MAV.sys_status = hb.system_status;
 

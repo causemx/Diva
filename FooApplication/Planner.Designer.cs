@@ -29,23 +29,23 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.myMap = new FooApplication.Controls.MyGMap();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.BUT_Rotation_OLD = new System.Windows.Forms.Button();
-			this.BUT_Read_WP = new System.Windows.Forms.Button();
-			this.BUT_Land = new System.Windows.Forms.Button();
-			this.BUT_Disarm = new System.Windows.Forms.Button();
-			this.btn_takeoff = new System.Windows.Forms.Button();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.label8 = new System.Windows.Forms.Label();
+			this.but_read_wp = new FooApplication.Controls.MyButton();
+			this.but_write_wp = new FooApplication.Controls.MyButton();
+			this.but_land = new FooApplication.Controls.MyButton();
+			this.but_takeoff = new FooApplication.Controls.MyButton();
+			this.but_disarm = new FooApplication.Controls.MyButton();
+			this.but_arm_throttle = new FooApplication.Controls.MyButton();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.BUT_Write_wp = new System.Windows.Forms.Button();
-			this.BUT_Auto = new System.Windows.Forms.Button();
-			this.BUT_Arm = new System.Windows.Forms.Button();
 			this.TXT_DefaultAlt = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.TXT_homealt = new System.Windows.Forms.TextBox();
@@ -88,6 +88,7 @@
 			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
@@ -155,16 +156,9 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.BUT_Rotation_OLD);
-			this.panel1.Controls.Add(this.BUT_Read_WP);
-			this.panel1.Controls.Add(this.BUT_Land);
-			this.panel1.Controls.Add(this.BUT_Disarm);
-			this.panel1.Controls.Add(this.btn_takeoff);
+			this.panel1.Controls.Add(this.panel2);
 			this.panel1.Controls.Add(this.TXT_Mode);
 			this.panel1.Controls.Add(this.label3);
-			this.panel1.Controls.Add(this.BUT_Write_wp);
-			this.panel1.Controls.Add(this.BUT_Auto);
-			this.panel1.Controls.Add(this.BUT_Arm);
 			this.panel1.Controls.Add(this.TXT_DefaultAlt);
 			this.panel1.Controls.Add(this.label2);
 			this.panel1.Controls.Add(this.TXT_homealt);
@@ -178,56 +172,96 @@
 			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
 			// 
-			// BUT_Rotation_OLD
+			// panel2
 			// 
-			this.BUT_Rotation_OLD.Location = new System.Drawing.Point(750, 17);
-			this.BUT_Rotation_OLD.Name = "BUT_Rotation_OLD";
-			this.BUT_Rotation_OLD.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Rotation_OLD.TabIndex = 23;
-			this.BUT_Rotation_OLD.Text = "Rotation";
-			this.BUT_Rotation_OLD.UseVisualStyleBackColor = true;
-			this.BUT_Rotation_OLD.Click += new System.EventHandler(this.BUT_Rotation_Click);
+			this.panel2.Controls.Add(this.label8);
+			this.panel2.Controls.Add(this.but_read_wp);
+			this.panel2.Controls.Add(this.but_write_wp);
+			this.panel2.Controls.Add(this.but_land);
+			this.panel2.Controls.Add(this.but_takeoff);
+			this.panel2.Controls.Add(this.but_disarm);
+			this.panel2.Controls.Add(this.but_arm_throttle);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+			this.panel2.Location = new System.Drawing.Point(761, 0);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(247, 109);
+			this.panel2.TabIndex = 14;
 			// 
-			// BUT_Read_WP
+			// label8
 			// 
-			this.BUT_Read_WP.BackColor = System.Drawing.SystemColors.HotTrack;
-			this.BUT_Read_WP.Location = new System.Drawing.Point(750, 73);
-			this.BUT_Read_WP.Name = "BUT_Read_WP";
-			this.BUT_Read_WP.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Read_WP.TabIndex = 22;
-			this.BUT_Read_WP.Text = "Read_WP";
-			this.BUT_Read_WP.UseVisualStyleBackColor = false;
-			this.BUT_Read_WP.Click += new System.EventHandler(this.BUT_read_Click);
+			this.label8.AutoSize = true;
+			this.label8.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(3, 5);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(68, 23);
+			this.label8.TabIndex = 19;
+			this.label8.Text = "Maunal";
 			// 
-			// BUT_Land
+			// but_read_wp
 			// 
-			this.BUT_Land.Location = new System.Drawing.Point(832, 45);
-			this.BUT_Land.Name = "BUT_Land";
-			this.BUT_Land.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Land.TabIndex = 21;
-			this.BUT_Land.Text = "Land";
-			this.BUT_Land.UseVisualStyleBackColor = true;
-			this.BUT_Land.Click += new System.EventHandler(this.BUT_Land_Click);
+			this.but_read_wp.BorderThickness = 2F;
+			this.but_read_wp.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_read_wp.Location = new System.Drawing.Point(5, 68);
+			this.but_read_wp.Name = "but_read_wp";
+			this.but_read_wp.Size = new System.Drawing.Size(75, 23);
+			this.but_read_wp.TabIndex = 28;
+			this.but_read_wp.Text = "read_WPs";
+			this.but_read_wp.Click += new System.EventHandler(this.BUT_read_Click);
 			// 
-			// BUT_Disarm
+			// but_write_wp
 			// 
-			this.BUT_Disarm.Location = new System.Drawing.Point(912, 73);
-			this.BUT_Disarm.Name = "BUT_Disarm";
-			this.BUT_Disarm.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Disarm.TabIndex = 20;
-			this.BUT_Disarm.Text = "Disarm";
-			this.BUT_Disarm.UseVisualStyleBackColor = true;
-			this.BUT_Disarm.Click += new System.EventHandler(this.BUT_Disarm_Click);
+			this.but_write_wp.BorderThickness = 2F;
+			this.but_write_wp.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_write_wp.Location = new System.Drawing.Point(4, 40);
+			this.but_write_wp.Name = "but_write_wp";
+			this.but_write_wp.Size = new System.Drawing.Size(75, 23);
+			this.but_write_wp.TabIndex = 27;
+			this.but_write_wp.Text = "write_WPs";
+			this.but_write_wp.Click += new System.EventHandler(this.BUT_write_Click);
 			// 
-			// btn_takeoff
+			// but_land
 			// 
-			this.btn_takeoff.Location = new System.Drawing.Point(831, 17);
-			this.btn_takeoff.Name = "btn_takeoff";
-			this.btn_takeoff.Size = new System.Drawing.Size(75, 23);
-			this.btn_takeoff.TabIndex = 19;
-			this.btn_takeoff.Text = "Takeoff";
-			this.btn_takeoff.UseVisualStyleBackColor = true;
-			this.btn_takeoff.Click += new System.EventHandler(this.btn_takeoff_Click);
+			this.but_land.BorderThickness = 2F;
+			this.but_land.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_land.Location = new System.Drawing.Point(86, 68);
+			this.but_land.Name = "but_land";
+			this.but_land.Size = new System.Drawing.Size(75, 23);
+			this.but_land.TabIndex = 26;
+			this.but_land.Text = "land";
+			this.but_land.Click += new System.EventHandler(this.BUT_Land_Click);
+			// 
+			// but_takeoff
+			// 
+			this.but_takeoff.BorderThickness = 2F;
+			this.but_takeoff.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_takeoff.Location = new System.Drawing.Point(86, 40);
+			this.but_takeoff.Name = "but_takeoff";
+			this.but_takeoff.Size = new System.Drawing.Size(75, 23);
+			this.but_takeoff.TabIndex = 25;
+			this.but_takeoff.Text = "takeoff";
+			this.but_takeoff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
+			// 
+			// but_disarm
+			// 
+			this.but_disarm.BorderThickness = 2F;
+			this.but_disarm.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_disarm.Location = new System.Drawing.Point(166, 69);
+			this.but_disarm.Name = "but_disarm";
+			this.but_disarm.Size = new System.Drawing.Size(75, 23);
+			this.but_disarm.TabIndex = 24;
+			this.but_disarm.Text = "disarm";
+			this.but_disarm.Click += new System.EventHandler(this.BUT_Disarm_Click);
+			// 
+			// but_arm_throttle
+			// 
+			this.but_arm_throttle.BorderThickness = 2F;
+			this.but_arm_throttle.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.but_arm_throttle.Location = new System.Drawing.Point(166, 40);
+			this.but_arm_throttle.Name = "but_arm_throttle";
+			this.but_arm_throttle.Size = new System.Drawing.Size(75, 23);
+			this.but_arm_throttle.TabIndex = 23;
+			this.but_arm_throttle.Text = "arm";
+			this.but_arm_throttle.Click += new System.EventHandler(this.BUT_Arm_Click);
 			// 
 			// TXT_Mode
 			// 
@@ -246,37 +280,6 @@
 			this.label3.Size = new System.Drawing.Size(55, 23);
 			this.label3.TabIndex = 17;
 			this.label3.Text = "Mode";
-			// 
-			// BUT_Write_wp
-			// 
-			this.BUT_Write_wp.BackColor = System.Drawing.SystemColors.HotTrack;
-			this.BUT_Write_wp.Location = new System.Drawing.Point(751, 44);
-			this.BUT_Write_wp.Name = "BUT_Write_wp";
-			this.BUT_Write_wp.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Write_wp.TabIndex = 16;
-			this.BUT_Write_wp.Text = "Write_WP";
-			this.BUT_Write_wp.UseVisualStyleBackColor = false;
-			this.BUT_Write_wp.Click += new System.EventHandler(this.BUT_write_Click);
-			// 
-			// BUT_Auto
-			// 
-			this.BUT_Auto.Location = new System.Drawing.Point(831, 73);
-			this.BUT_Auto.Name = "BUT_Auto";
-			this.BUT_Auto.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Auto.TabIndex = 15;
-			this.BUT_Auto.Text = "Auto";
-			this.BUT_Auto.UseVisualStyleBackColor = true;
-			this.BUT_Auto.Click += new System.EventHandler(this.BUT_Auto_Click);
-			// 
-			// BUT_Arm
-			// 
-			this.BUT_Arm.Location = new System.Drawing.Point(912, 45);
-			this.BUT_Arm.Name = "BUT_Arm";
-			this.BUT_Arm.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Arm.TabIndex = 14;
-			this.BUT_Arm.Text = "Arm";
-			this.BUT_Arm.UseVisualStyleBackColor = true;
-			this.BUT_Arm.Click += new System.EventHandler(this.BUT_Arm_Click);
 			// 
 			// TXT_DefaultAlt
 			// 
@@ -334,14 +337,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -710,7 +713,7 @@
 			this.toolStrip2.Location = new System.Drawing.Point(417, 0);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
-			this.toolStrip2.Size = new System.Drawing.Size(228, 58);
+			this.toolStrip2.Size = new System.Drawing.Size(197, 58);
 			this.toolStrip2.TabIndex = 13;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -741,6 +744,7 @@
 			this.BUT_Rotation.Size = new System.Drawing.Size(57, 51);
 			this.BUT_Rotation.Text = "Rotation";
 			this.BUT_Rotation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Rotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
 			// 
 			// toolStripSeparator3
 			// 
@@ -782,6 +786,8 @@
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
@@ -814,19 +820,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
 		private System.Windows.Forms.DataGridViewButtonColumn Delete;
 		private System.Windows.Forms.DataGridViewTextBoxColumn TagData;
-		private System.Windows.Forms.Button BUT_Write_wp;
-		private System.Windows.Forms.Button BUT_Auto;
-		private System.Windows.Forms.Button BUT_Arm;
 		private System.Windows.Forms.TextBox TXT_Mode;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem ClearMissionToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
-		private System.Windows.Forms.Button btn_takeoff;
-		private System.Windows.Forms.Button BUT_Disarm;
-		private System.Windows.Forms.Button BUT_Land;
-		private System.Windows.Forms.Button BUT_Read_WP;
-		private System.Windows.Forms.Button BUT_Rotation_OLD;
 		private System.Windows.Forms.AGauge Gauge_alt;
 		private System.Windows.Forms.AGauge Gauge_speed;
 		private System.Windows.Forms.Label label4;
@@ -850,5 +848,13 @@
 		private System.Windows.Forms.ToolStripButton BUT_Configure;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.Panel panel2;
+		private Controls.MyButton but_arm_throttle;
+		private Controls.MyButton but_write_wp;
+		private Controls.MyButton but_land;
+		private Controls.MyButton but_takeoff;
+		private Controls.MyButton but_disarm;
+		private System.Windows.Forms.Label label8;
+		private Controls.MyButton but_read_wp;
 	}
 }

@@ -240,7 +240,7 @@ namespace FooApplication
 			droneButton.Enabled = true;
 			droneButton.Text = sysid;
 			droneButton.Tag = count;
-			droneButton.Click += BUT_DroneList_Click;
+			droneButton.Click += BUT_Drone_Click;
 			droneButton.MouseUp += DroneButton_MouseUp;
 			droneButton.MouseDown += DroneButton_MouseDown;
 			TS_drones.Items.Add(droneButton);
@@ -2375,7 +2375,7 @@ namespace FooApplication
 
 					comPort.giveComport = false;
 
-					BUT_Read_WP.Enabled = true;
+					but_read_wp.Enabled = true;
 
 					writeKML();
 				});
@@ -2635,36 +2635,25 @@ namespace FooApplication
 				AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
 				AddRouteOverlay(comPorts.Count);
 				this.comPort = mav;
+				dialog.Dispose();
 			};
 			dialog.Show();
 
 		}
 
-		private void btn_takeoff_Click(object sender, EventArgs e)
+		private void BUT_Takeoff_Click(object sender, EventArgs e)
 		{
-			if (comPort.BaseStream.IsOpen)
+			comPort.setMode(
+			comPort.MAV.sysid,
+			comPort.MAV.compid,
+			new MAVLink.mavlink_set_mode_t()
 			{
-				// flyToHereAltToolStripMenuItem_Click(null, null);
+				target_system = comPort.MAV.sysid,
+				base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+				custom_mode = (uint)4,
+			});
 
-				comPort.setMode(
-					comPort.MAV.sysid,
-					comPort.MAV.compid,
-					new MAVLink.mavlink_set_mode_t()
-					{
-						target_system = comPort.MAV.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)4,
-					});
-
-				try
-				{
-					comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-				}
-				catch
-				{
-					log.Info("unknown takeoff failed");
-				}
-			}
+			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 		}
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
@@ -2775,20 +2764,6 @@ namespace FooApplication
 					MavlinkInterface _comport = comPorts[drone_cursor];
 					if (_comport.BaseStream.IsOpen)
 					{
-						// switch mode to STABILIZE
-						_comport.setMode(
-						_comport.MAV.sysid,
-						_comport.MAV.compid,
-						new MAVLink.mavlink_set_mode_t()
-						{
-							target_system = _comport.MAV.sysid,
-							base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-							custom_mode = (uint)0,
-						});
-
-						_comport.doARM(true);
-
-						Thread.Sleep(1000);
 
 						// switch mode to GUIDED
 						_comport.setMode(
@@ -2801,6 +2776,12 @@ namespace FooApplication
 							custom_mode = (uint)4,
 						});
 
+						// do command - arm throttle
+						_comport.doARM(true);
+
+						Thread.Sleep(1000);
+						
+						// do command - takeoff 10m
 						_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 
 						Thread.Sleep(3000);
@@ -2861,7 +2842,7 @@ namespace FooApplication
 			}
 		}
 
-		private void BUT_DroneList_Click(object sender, EventArgs e)
+		private void BUT_Drone_Click(object sender, EventArgs e)
 		{
 			
 			ToolStripButton tsb = (ToolStripButton)sender;
