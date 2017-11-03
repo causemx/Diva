@@ -116,7 +116,7 @@
 			this.cb_baud.FormattingEnabled = true;
 			this.cb_baud.Items.AddRange(new object[] {
             "9600",
-            "97600",
+            "57600",
             "115200"});
 			this.cb_baud.Location = new System.Drawing.Point(82, 85);
 			this.cb_baud.Name = "cb_baud";

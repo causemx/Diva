@@ -152,6 +152,14 @@ namespace FooApplication.Mavlink
 
 		public UInt64 timestamp { get; set; }
 
+		public bool armed { get; set; }
+
+		public bool landed { get; set; }
+		
+		public bool actived { get; set; }
+
+		public bool failsafe { get; set; }
+
 		internal byte[] signingKey;
 
 		/// <summary>

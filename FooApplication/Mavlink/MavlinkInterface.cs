@@ -208,6 +208,8 @@ namespace FooApplication.Mavlink
 
 		}
 
+		uint _mode = 99999;
+
 		public void UpdateCurrentSettings(bool updatenow)
 		{
 			MAVLink.MAVLinkMessage mavlinkMessage = readPacket();
@@ -252,6 +254,25 @@ namespace FooApplication.Mavlink
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
 								// TODO: do something when recived GCS hb
+							}
+							else
+							{
+								MAV.armed = (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED) ==
+								   (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED;
+
+								// saftey switch
+								/*
+								if (armed && sensors_enabled.motor_control == false && sensors_enabled.seen)
+								{
+									messageHigh = "(SAFE)";
+									messageHighTime = DateTime.Now;
+								}*/
+
+								// for future use
+								MAV.landed = hb.system_status == (byte)MAVLink.MAV_STATE.STANDBY;
+								MAV.actived = hb.system_status == (byte)MAVLink.MAV_STATE.ACTIVE;
+								MAV.failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;
+
 							}
 						}
 					}

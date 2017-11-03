@@ -147,7 +147,6 @@ namespace FooApplication.Controls
 		protected override void OnClosed(EventArgs e)
 		{
 			base.OnClosed(e);
-			Console.WriteLine("onClosed");
 			DoDispose();
 		}
 

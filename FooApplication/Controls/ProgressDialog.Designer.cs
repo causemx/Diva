@@ -51,14 +51,14 @@
 			// 
 			this.progressBar.Location = new System.Drawing.Point(16, 50);
 			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new System.Drawing.Size(295, 23);
+			this.progressBar.Size = new System.Drawing.Size(356, 23);
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
 			this.progressBar.TabIndex = 1;
 			// 
 			// but_nagtive
 			// 
 			this.but_nagtive.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.but_nagtive.Location = new System.Drawing.Point(234, 82);
+			this.but_nagtive.Location = new System.Drawing.Point(297, 82);
 			this.but_nagtive.Name = "but_nagtive";
 			this.but_nagtive.Size = new System.Drawing.Size(75, 31);
 			this.but_nagtive.TabIndex = 3;
@@ -69,7 +69,7 @@
 			// but_positive
 			// 
 			this.but_positive.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.but_positive.Location = new System.Drawing.Point(153, 82);
+			this.but_positive.Location = new System.Drawing.Point(216, 82);
 			this.but_positive.Name = "but_positive";
 			this.but_positive.Size = new System.Drawing.Size(75, 31);
 			this.but_positive.TabIndex = 4;
@@ -92,7 +92,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-			this.ClientSize = new System.Drawing.Size(332, 123);
+			this.ClientSize = new System.Drawing.Size(384, 123);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.but_positive);
 			this.Controls.Add(this.but_nagtive);

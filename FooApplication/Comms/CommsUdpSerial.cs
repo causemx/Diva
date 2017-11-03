@@ -30,7 +30,7 @@ namespace FooApplication.Comms
 			//System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
 			//System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
-			Port = "14550";
+			Port = port;
 			ReadTimeout = 500;
 		}
 

@@ -2669,7 +2669,7 @@ namespace FooApplication
 			{
 				bool ans = comPort.doARM(true);
 				if (ans == false)
-					log.Info("arm failed");
+					Console.WriteLine("arm failed");
 			}
 			catch
 			{
@@ -2760,61 +2760,96 @@ namespace FooApplication
 			{
 				while (_dialog.isActive)
 				{
-					Console.WriteLine("drone_cursor point to: " + drone_cursor);
+					Console.WriteLine("current selected drone: " + drone_cursor+1);
 					MavlinkInterface _comport = comPorts[drone_cursor];
 					if (_comport.BaseStream.IsOpen)
 					{
 
 						// switch mode to GUIDED
-						_comport.setMode(
-						_comport.MAV.sysid,
-						_comport.MAV.compid,
-						new MAVLink.mavlink_set_mode_t()
+						
+						
+						
+						while (_comport.MAV.mode != (uint)4)
 						{
-							target_system = _comport.MAV.sysid,
-							base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-							custom_mode = (uint)4,
-						});
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
+
+							_comport.setMode(
+								_comport.MAV.sysid,
+								_comport.MAV.compid,
+								new MAVLink.mavlink_set_mode_t()
+								{
+									target_system = _comport.MAV.sysid,
+									base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+									custom_mode = (uint)4,
+								}
+							);
+						}
+
+						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
 
 						// do command - arm throttle
-						_comport.doARM(true);
+						while (!_comport.MAV.armed)
+						{
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "do command: arm");
+							_comport.doARM(true);
+						}
 
-						Thread.Sleep(1000);
+						_dialog.ReportProgress(-1, "status: armed");
+
+
 						
-						// do command - takeoff 10m
-						_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+
+						while (!_comport.MAV.actived)
+						{
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "do command: takeoff");
+							// do command - takeoff 10m
+							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						}
+
+						_dialog.ReportProgress(-1, "status: takeoff");
 
 						Thread.Sleep(3000);
 
-						// switch mode to AUTO
-						_comport.setMode(
-						_comport.MAV.sysid,
-						_comport.MAV.compid,
-						new MAVLink.mavlink_set_mode_t()
+						while (_comport.MAV.mode != (uint)3)
 						{
-							target_system = _comport.MAV.sysid,
-							base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-							custom_mode = (uint)3,
-						});
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+							// switch mode to AUTO
+							_comport.setMode(
+								_comport.MAV.sysid,
+								_comport.MAV.compid,
+								new MAVLink.mavlink_set_mode_t()
+								{
+									target_system = _comport.MAV.sysid,
+									base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
+									custom_mode = (uint)3,
+								}
+							);
+						}
+
+						_dialog.ReportProgress(-1, "Mode has switching to AUTO");
 
 						//Thread.Sleep(60000);
 
 						while (true)
 						{
-							if (_comport.MAV.sys_status == 3)
+							if (_comport.MAV.landed)
 								break;
 						}
 					
 
 					}
-
-					drone_cursor = (drone_cursor+1) % comPorts.Count;
 					
+					drone_cursor = (drone_cursor+1) % comPorts.Count;
+					_dialog.ReportProgress(-1, "Next drone standby");
 				}
 			};
 
 			_dialog.ProgressChanged += delegate (object dialog, ProgressChangedEventArgs pce) {
-				// _dialog.Message = pce.ProgressPercentage + "/100";
+				_dialog.Message = pce.UserState + ".";
 			};
 
 			_dialog.Completed += delegate (object dialog, RunWorkerCompletedEventArgs rce) {
