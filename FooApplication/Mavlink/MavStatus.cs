@@ -152,6 +152,7 @@ namespace FooApplication.Mavlink
 
 		public UInt64 timestamp { get; set; }
 
+
 		public bool armed { get; set; }
 
 		public bool landed { get; set; }

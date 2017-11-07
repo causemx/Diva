@@ -247,9 +247,18 @@ namespace FooApplication.Mavlink
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
 
-							Console.WriteLine("hb_sys_status: " + hb.system_status);
+							// Console.WriteLine("hb_sys_status: " + hb.system_status);
 							MAV.mode = hb.custom_mode;
+
+							// drop the packet when recive uninitialize packet
+							if (hb.system_status == (byte)MAVLink.MAV_STATE.UNINIT)
+								return;
+
+
 							MAV.sys_status = hb.system_status;
+
+							if (MAV.sys_status == 0)
+								Console.WriteLine(BitConverter.ToString(mavlinkMessage.buffer));
 
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{

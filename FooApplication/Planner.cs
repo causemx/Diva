@@ -2760,7 +2760,7 @@ namespace FooApplication
 			{
 				while (_dialog.isActive)
 				{
-					Console.WriteLine("current selected drone: " + drone_cursor+1);
+					// Console.WriteLine("current selected drone: " + drone_cursor+1);
 					MavlinkInterface _comport = comPorts[drone_cursor];
 					if (_comport.BaseStream.IsOpen)
 					{
@@ -2881,7 +2881,7 @@ namespace FooApplication
 		{
 			
 			ToolStripButton tsb = (ToolStripButton)sender;
-			Console.WriteLine("click_index: "+tsb.Tag);
+			// Console.WriteLine("click_index: "+tsb.Tag);
 			SelectToolStripButton(tsb);
 			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
 		}
