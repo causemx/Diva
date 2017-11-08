@@ -76,6 +76,52 @@ namespace FooApplication.Mavlink
 
 		public float nav_bearing { get; set; }
 
+
+		public float alt
+		{
+			get { return _alt; }
+			set
+			{
+				// check update rate, and ensure time hasnt gone backwards                
+				_alt = value;
+
+				if ((datetime - lastalt).TotalSeconds >= 0.2 && oldalt != alt || lastalt > datetime)
+				{
+					climbrate = (alt - oldalt) / (float)(datetime - lastalt).TotalSeconds;
+					verticalspeed = (alt - oldalt) / (float)(datetime - lastalt).TotalSeconds;
+					if (float.IsInfinity(_verticalspeed))
+						_verticalspeed = 0;
+					lastalt = datetime;
+					oldalt = alt;
+				}
+			}
+		}
+
+		float _verticalspeed;
+		public float verticalspeed
+		{
+			get
+			{
+				if (float.IsNaN(_verticalspeed)) _verticalspeed = 0;
+				return _verticalspeed;
+			}
+			set { _verticalspeed = _verticalspeed * 0.4f + value * 0.6f; }
+		}
+
+		float _climbrate;
+		public float climbrate
+		{
+			get { return _climbrate; }
+			set { _climbrate = value; }
+		}
+
+		public DateTime datetime { get; set; }
+
+		DateTime lastalt = DateTime.MinValue;
+
+		private float _alt = 0;
+		float oldalt = 0;
+
 		public double battery_voltage
 		{
 			get { return _battery_voltage; }

@@ -294,9 +294,11 @@ namespace FooApplication.Mavlink
 
 							// the new arhs deadreckoning may send 0 alt and 0 long. check for and undo
 
-							float alt = loc.relative_alt / 1000.0f;
+							
+							MAV.alt = loc.relative_alt / 1000.0f;
+							Console.WriteLine("relative_alt: " + MAV.alt);
 
-							bool useLocation = true;
+							useLocation = true;
 							if (loc.lat == 0 && loc.lon == 0)
 							{
 								useLocation = false;
@@ -305,6 +307,8 @@ namespace FooApplication.Mavlink
 							{
 								double lat = loc.lat / 10000000.0;
 								double lng = loc.lon / 10000000.0;
+
+								MAV.altasl = loc.alt / 1000.0f;
 
 								MAV.current_lat = lat;
 								MAV.current_lng = lng;
@@ -315,6 +319,44 @@ namespace FooApplication.Mavlink
 								double vy = loc.vy * 0.01;
 								double vz = loc.vz * 0.01;
 							}
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var gps = mavlinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
+
+							if (!useLocation)
+							{
+								MAV.current_lat = gps.lat * 1.0e-7;
+								MAV.current_lng = gps.lon * 1.0e-7;
+
+								MAV.altasl = gps.alt / 1000.0f;
+								// alt = gps.alt; // using vfr as includes baro calc
+								
+							}
+
+							byte gpsstatus = gps.fix_type;
+
+							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
+
+							byte satcount = gps.satellites_visible;
+
+							float groundspeed = gps.vel * 1.0e-2f;
+							float groundcourse = gps.cog * 1.0e-2f;
+
+							/*
+							Invoke((MethodInvoker)delegate
+							{
+								this.Gauge_speed.Value = groundspeed;
+								this.lbl_speed.Text = groundspeed.ToString();
+							});*/
+
+							MAV.groundspeed = groundspeed;
+							MAV.groundcourse = groundcourse;
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
 					}
 
@@ -354,54 +396,6 @@ namespace FooApplication.Mavlink
 							{
 								this.ts_lbl_battery.Text = battery_voltage.ToString() + "%";
 							});*/
-						}
-					}
-
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
-					{
-						if (mavlinkMessage != null)
-						{
-							var gps = mavlinkMessage.ToStructure<MAVLink.mavlink_gps_raw_int_t>();
-
-							if (!useLocation)
-							{
-								double lat = gps.lat * 1.0e-7;
-								double lng = gps.lon * 1.0e-7;
-
-								double altasl = gps.alt / 1000.0f;
-								// alt = gps.alt; // using vfr as includes baro calc
-
-								MAV.altasl = altasl;
-								/*
-								Invoke((MethodInvoker)delegate
-								{
-
-									this.Gauge_alt.Value = (float)altasl;
-									this.lbl_alt.Text = altasl.ToString();
-								});*/
-
-							}
-
-							byte gpsstatus = gps.fix_type;
-
-							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
-
-							byte satcount = gps.satellites_visible;
-
-							float groundspeed = gps.vel * 1.0e-2f;
-							float groundcourse = gps.cog * 1.0e-2f;
-
-							/*
-							Invoke((MethodInvoker)delegate
-							{
-								this.Gauge_speed.Value = groundspeed;
-								this.lbl_speed.Text = groundspeed.ToString();
-							});*/
-
-							MAV.groundspeed = groundspeed;
-							MAV.groundcourse = groundcourse;
-							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
 					}
 
@@ -836,7 +830,7 @@ namespace FooApplication.Mavlink
 						}
 						readcount++;
 						
-
+						MAV.datetime = DateTime.Now;
 						DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
 						// Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
@@ -886,7 +880,7 @@ namespace FooApplication.Mavlink
 							}
 
 							// TCPConsole.Write(buffer[0]);
-							Console.Write((char)buffer[0]);
+							Console.WriteLine((char)buffer[0]);
 							buildplaintxtline += (char)buffer[0];
 						}
 						_bytesReceivedSubj.OnNext(1);

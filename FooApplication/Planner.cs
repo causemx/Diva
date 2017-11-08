@@ -307,7 +307,7 @@ namespace FooApplication
 						}
 
 						ts_lbl_battery.Text = comPort.MAV.battery_voltage.ToString("F2") + "%";
-						Gauge_alt.Value = (float)comPort.MAV.altasl;
+						Gauge_alt.Value = comPort.MAV.alt;
 						lbl_alt.Text = (comPort.MAV.altasl).ToString();
 						Gauge_speed.Value = comPort.MAV.groundspeed;
 						lbl_speed.Text = (comPort.MAV.groundspeed).ToString();
