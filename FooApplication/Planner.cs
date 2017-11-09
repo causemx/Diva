@@ -130,6 +130,18 @@ namespace FooApplication
 			LAND = 9
 		}
 
+		public enum Firmwares
+		{
+			ArduPlane,
+			ArduCopter2,
+			ArduRover,
+			ArduSub,
+			Ateryx,
+			ArduTracker,
+			Gymbal,
+			PX4
+		}
+
 
 		private List<ToolStripButton> droneButtons = new List<ToolStripButton>();
 
@@ -2623,7 +2635,10 @@ namespace FooApplication
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 
-			ProgressInputDialog dialog = new ProgressInputDialog(this);
+			ProgressInputDialog dialog = new ProgressInputDialog(this)
+			{
+				Text = "Connection",
+			};
 			dialog.confirm_click += delegate (object o, EventArgs ex)
 			{
 				var mav = new MavlinkInterface();

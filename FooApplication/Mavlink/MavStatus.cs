@@ -76,6 +76,7 @@ namespace FooApplication.Mavlink
 
 		public float nav_bearing { get; set; }
 
+		public Planner.Firmwares firmware = Planner.Firmwares.ArduCopter2;
 
 		public float alt
 		{
