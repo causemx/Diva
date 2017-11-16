@@ -243,7 +243,16 @@ namespace FooApplication
 			}
 		}
 
-		private void AddDroneButton(int count, string sysid)
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            foreach (MavlinkInterface _port in comPorts)
+            {
+                _port.onDestroy();
+            }
+        }
+
+        private void AddDroneButton(int count, string sysid)
 		{
 			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
 			droneButton.ImageScaling = ToolStripItemImageScaling.None;
@@ -2635,10 +2644,7 @@ namespace FooApplication
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 
-			ProgressInputDialog dialog = new ProgressInputDialog(this)
-			{
-				Text = "Connection",
-			};
+            ProgressInputDialog dialog = new ProgressInputDialog(this);
 			dialog.confirm_click += delegate (object o, EventArgs ex)
 			{
 				var mav = new MavlinkInterface();
@@ -2786,7 +2792,7 @@ namespace FooApplication
 						
 						while (_comport.MAV.mode != (uint)4)
 						{
-							Thread.Sleep(1000);
+							Thread.Sleep(500);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
 
 							_comport.setMode(
@@ -2809,28 +2815,18 @@ namespace FooApplication
 							Thread.Sleep(1000);
 							_dialog.ReportProgress(-1, "do command: arm");
 							_comport.doARM(true);
-						}
+                            _dialog.ReportProgress(-1, "do command: takeoff");
+                            // do command - takeoff 10m
+                            _comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+                        }
 
-						_dialog.ReportProgress(-1, "status: armed");
-
-
-						
-
-						while (!_comport.MAV.actived)
-						{
-							Thread.Sleep(1000);
-							_dialog.ReportProgress(-1, "do command: takeoff");
-							// do command - takeoff 10m
-							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-						}
 
 						_dialog.ReportProgress(-1, "status: takeoff");
 
-						Thread.Sleep(3000);
 
 						while (_comport.MAV.mode != (uint)3)
 						{
-							Thread.Sleep(1000);
+							Thread.Sleep(500);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
 							// switch mode to AUTO
 							_comport.setMode(
