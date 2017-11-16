@@ -231,13 +231,13 @@ namespace FooApplication.Mavlink
 					{
 						try
 						{
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.POSITION, 2);
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
-							getDatastream(1, 0, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.POSITION, 2);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
+							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
 						}
 						catch
 						{
@@ -252,14 +252,10 @@ namespace FooApplication.Mavlink
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
 
-							// Console.WriteLine("hb_sys_status: " + hb.system_status);
 							MAV.mode = hb.custom_mode;
 
 
 							MAV.sys_status = hb.system_status;
-
-							if (MAV.sys_status == 0)
-								Console.WriteLine(BitConverter.ToString(mavlinkMessage.buffer));
 
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
@@ -267,7 +263,9 @@ namespace FooApplication.Mavlink
 							}
 							else
 							{
-								
+
+								Console.WriteLine("base_mode:" + hb.base_mode);
+								Console.WriteLine("armd: " + (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED));
 								MAV.armed = (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED) ==
 								   (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED;
 
@@ -1014,8 +1012,8 @@ namespace FooApplication.Mavlink
 				{
 					btr = logplaybackfile.BaseStream.Length - logplaybackfile.BaseStream.Position;
 				}
-				Console.Write("bps {0} loss {1} left {2} mem {3} mav2 {4} sign {5} mav1 {6} mav2 {7} signed {8}      \n", _bps1, MAV.synclost, btr,
-					GC.GetTotalMemory(false) / 1024 / 1024.0, MAV.mavlinkv2, MAV.signing, _mavlink1count, _mavlink2count, _mavlink2signed);
+				/*Console.Write("bps {0} loss {1} left {2} mem {3} mav2 {4} sign {5} mav1 {6} mav2 {7} signed {8}      \n", _bps1, MAV.synclost, btr,
+					GC.GetTotalMemory(false) / 1024 / 1024.0, MAV.mavlinkv2, MAV.signing, _mavlink1count, _mavlink2count, _mavlink2signed); */
 				_bps2 = _bps1; // prev sec
 				_bps1 = 0; // current sec
 				_bpstime = DateTime.Now;
