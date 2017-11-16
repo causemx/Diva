@@ -2642,11 +2642,11 @@ namespace FooApplication
 			dialog.confirm_click += delegate (object o, EventArgs ex)
 			{
 				var mav = new MavlinkInterface();
-				var mav2 = new MavlinkInterface();
-				// TODO: doConnect(mav, target, baud);
 				doConnect(mav, dialog.port_name, dialog.port, dialog.baudrate);
 				mav.onCreate();
 				comPorts.Add(mav);
+				// TODO: move guidemodez to initialize
+				mav.MAV.GuidedMode.z = 10;
 				AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
 				AddRouteOverlay(comPorts.Count);
 				this.comPort = mav;

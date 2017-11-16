@@ -19,6 +19,7 @@ namespace FooApplication.Mavlink
 {
 	public class MavlinkInterface : MAVLink, IDisposable
 	{
+
 		public static readonly int SLEEP_TIME_SETMODE = 10;
 		public static readonly double CONNECT_TIMEOUT_SECONDS = 30;
 
@@ -266,6 +267,7 @@ namespace FooApplication.Mavlink
 							}
 							else
 							{
+								
 								MAV.armed = (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED) ==
 								   (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED;
 
@@ -2045,12 +2047,103 @@ namespace FooApplication.Mavlink
 			generatePacket(MAVLINK_MSG_ID.COMMAND_ACK, ack);
 		}
 
-		public void setMode(byte sysid, byte compid, MAVLink.mavlink_set_mode_t mode, MAVLink.MAV_MODE_FLAG base_mode = 0)
+		public bool translateMode(byte sysid, byte compid, string modein, ref mavlink_set_mode_t mode)
+		{
+			mode.target_system = sysid;
+
+			if (modein == null || modein == "")
+				return false;
+
+			try
+			{
+				
+				var temp = new List<KeyValuePair<int, string>>()
+				{
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_MANUAL << 16, "Manual"),
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_ACRO << 16, "Acro"),
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_STABILIZED << 16,
+						"Stabalized"),
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_RATTITUDE << 16,
+						"Rattitude"),
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_ALTCTL << 16,
+						"Altitude Control"),
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_POSCTL << 16,
+						"Position Control"),
+					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_OFFBOARD << 16,
+						"Offboard Control"),
+					new KeyValuePair<int, string>(
+						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
+						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_READY << 24, "Auto: Ready"),
+					new KeyValuePair<int, string>(
+						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
+						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF << 24, "Auto: Takeoff"),
+					new KeyValuePair<int, string>(
+						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
+						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_LOITER << 24, "Loiter"),
+					new KeyValuePair<int, string>(
+						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
+						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_MISSION << 24, "Auto"),
+					new KeyValuePair<int, string>(
+						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
+						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_RTL << 24, "RTL"),
+					new KeyValuePair<int, string>(
+						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
+						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_LAND << 24, "Auto: Landing")
+				};
+
+				List<KeyValuePair<int, string>> modelist = temp;
+
+				foreach (KeyValuePair<int, string> pair in modelist)
+				{
+					if (pair.Value.ToLower() == modein.ToLower())
+					{
+						mode.base_mode = (byte)MAV_MODE_FLAG.CUSTOM_MODE_ENABLED;
+						mode.custom_mode = (uint)pair.Key;
+					}
+				}
+
+				if (mode.base_mode == 0)
+				{
+					log.Error("No Mode Changed " + modein);
+					return false;
+				}
+			}
+			catch
+			{
+				log.Error("Failed to find Mode");
+				return false;
+			}
+
+			return true;
+		}
+
+		public void setMode(string modein)
+		{
+			setMode(MAV.sysid, MAV.compid, modein);
+		}
+
+		public void setMode(byte sysid, byte compid, string modein)
+		{
+			mavlink_set_mode_t mode = new mavlink_set_mode_t();
+
+			if (translateMode(sysid, compid, modein, ref mode))
+			{
+				setMode(sysid, compid, mode);
+			}
+		}
+
+		public void setMode(mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
+		{
+			setMode(MAV.sysid, MAV.compid, mode, base_mode);
+		}
+
+		public void setMode(byte sysid, byte compid, mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
 		{
 			mode.base_mode |= (byte)base_mode;
-			generatePacket((byte)(byte)MAVLink.MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
-			System.Threading.Thread.Sleep(SLEEP_TIME_SETMODE);
-			generatePacket((byte)(byte)MAVLink.MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
+
+			generatePacket((byte)(byte)MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
+			Thread.Sleep(10);
+			generatePacket((byte)(byte)MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
 		}
 
 		public void setGuidedModeWP(Locationwp gotohere, bool setguidedmode = true)
