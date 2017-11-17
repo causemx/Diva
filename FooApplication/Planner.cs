@@ -124,10 +124,25 @@ namespace FooApplication
 		public enum flightmode
 		{
 			STABILIZE = 0,
+			ACRO = 1,
+			ALT_HOLD = 2,
 			AUTO = 3,
 			GUIDED = 4,
+			LOITER = 5,
 			RTL = 6,
-			LAND = 9
+			CIRCLE = 7,
+			POSITION = 8,
+			LAND = 9,
+			OF_LOITER = 10,
+			DRIFT = 11,
+			SPORT = 13,
+			FLIP = 14,
+			AUTOTUNE = 15,
+			POSHOLD = 16,
+			BRAKE = 17,
+			THROW = 18,
+			AVOID_ADSB = 19,
+			GUIDED_NOGPS = 20,
 		}
 
 		public enum Firmwares
@@ -243,16 +258,16 @@ namespace FooApplication
 			}
 		}
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            foreach (MavlinkInterface _port in comPorts)
-            {
-                _port.onDestroy();
-            }
-        }
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			base.OnFormClosing(e);
+			foreach (MavlinkInterface _port in comPorts)
+			{
+				_port.onDestroy();
+			}
+		}
 
-        private void AddDroneButton(int count, string sysid)
+		private void AddDroneButton(int count, string sysid)
 		{
 			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
 			droneButton.ImageScaling = ToolStripItemImageScaling.None;
@@ -2644,7 +2659,7 @@ namespace FooApplication
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 
-            ProgressInputDialog dialog = new ProgressInputDialog(this);
+			ProgressInputDialog dialog = new ProgressInputDialog(this);
 			dialog.confirm_click += delegate (object o, EventArgs ex)
 			{
 				var mav = new MavlinkInterface();
@@ -2664,15 +2679,7 @@ namespace FooApplication
 
 		private void BUT_Takeoff_Click(object sender, EventArgs e)
 		{
-			comPort.setMode(
-			comPort.MAV.sysid,
-			comPort.MAV.compid,
-			new MAVLink.mavlink_set_mode_t()
-			{
-				target_system = comPort.MAV.sysid,
-				base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-				custom_mode = (uint)4,
-			});
+			comPort.setMode("GUIDED");
 
 			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 		}
@@ -2681,7 +2688,7 @@ namespace FooApplication
 		{
 			if (!comPort.BaseStream.IsOpen)
 			{
-				log.Info("basestream have opened");
+				Console.WriteLine("basestream have opened");
 				return;
 			}
 
@@ -2694,7 +2701,7 @@ namespace FooApplication
 			}
 			catch
 			{
-				log.Info("unknown arm failed");
+				Console.WriteLine("unknown arm failed");
 			}
 		}
 
@@ -2786,39 +2793,20 @@ namespace FooApplication
 					if (_comport.BaseStream.IsOpen)
 					{
 
-						// switch mode to GUIDED
-						
-						
-						
 						while (_comport.MAV.mode != (uint)4)
 						{
 							Thread.Sleep(500);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
-
-							_comport.setMode(
-								_comport.MAV.sysid,
-								_comport.MAV.compid,
-								new MAVLink.mavlink_set_mode_t()
-								{
-									target_system = _comport.MAV.sysid,
-									base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-									custom_mode = (uint)4,
-								}
-							);
+							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
 						}
 
 						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
 
 						// do command - arm throttle
-						while (!_comport.MAV.armed)
+						while (_comPort.doARM(!_comPort.MAV.armed))
 						{
-							Thread.Sleep(1000);
-							_dialog.ReportProgress(-1, "do command: arm");
-							_comport.doARM(true);
-                            _dialog.ReportProgress(-1, "do command: takeoff");
-                            // do command - takeoff 10m
-                            _comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-                        }
+							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						}
 
 
 						_dialog.ReportProgress(-1, "status: takeoff");
@@ -2826,19 +2814,9 @@ namespace FooApplication
 
 						while (_comport.MAV.mode != (uint)3)
 						{
-							Thread.Sleep(500);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
 							// switch mode to AUTO
-							_comport.setMode(
-								_comport.MAV.sysid,
-								_comport.MAV.compid,
-								new MAVLink.mavlink_set_mode_t()
-								{
-									target_system = _comport.MAV.sysid,
-									base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-									custom_mode = (uint)3,
-								}
-							);
+							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
 						}
 
 						_dialog.ReportProgress(-1, "Mode has switching to AUTO");

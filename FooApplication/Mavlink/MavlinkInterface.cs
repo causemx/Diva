@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static FooApplication.Planner;
 using Timer = System.Timers.Timer;
 
 namespace FooApplication.Mavlink
@@ -264,8 +265,10 @@ namespace FooApplication.Mavlink
 							else
 							{
 
-								Console.WriteLine("base_mode:" + hb.base_mode);
-								Console.WriteLine("armd: " + (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED));
+								// Console.WriteLine("base_mode:" + hb.base_mode);
+								//Console.WriteLine("custom_mode:" + hb.custom_mode);
+								//Console.WriteLine("armd: " + (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED));
+
 								MAV.armed = (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED) ==
 								   (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED;
 
@@ -2052,63 +2055,38 @@ namespace FooApplication.Mavlink
 			if (modein == null || modein == "")
 				return false;
 
+
 			try
 			{
-				
-				var temp = new List<KeyValuePair<int, string>>()
+				flightmode _out;
+				foreach (string key in Enum.GetNames(typeof(flightmode)))
 				{
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_MANUAL << 16, "Manual"),
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_ACRO << 16, "Acro"),
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_STABILIZED << 16,
-						"Stabalized"),
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_RATTITUDE << 16,
-						"Rattitude"),
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_ALTCTL << 16,
-						"Altitude Control"),
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_POSCTL << 16,
-						"Position Control"),
-					new KeyValuePair<int, string>((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_OFFBOARD << 16,
-						"Offboard Control"),
-					new KeyValuePair<int, string>(
-						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
-						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_READY << 24, "Auto: Ready"),
-					new KeyValuePair<int, string>(
-						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
-						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_TAKEOFF << 24, "Auto: Takeoff"),
-					new KeyValuePair<int, string>(
-						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
-						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_LOITER << 24, "Loiter"),
-					new KeyValuePair<int, string>(
-						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
-						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_MISSION << 24, "Auto"),
-					new KeyValuePair<int, string>(
-						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
-						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_RTL << 24, "RTL"),
-					new KeyValuePair<int, string>(
-						((int) Utility.PX4_CUSTOM_MAIN_MODE.PX4_CUSTOM_MAIN_MODE_AUTO << 16) +
-						(int) Utility.PX4_CUSTOM_SUB_MODE_AUTO.PX4_CUSTOM_SUB_MODE_AUTO_LAND << 24, "Auto: Landing")
-				};
-
-				List<KeyValuePair<int, string>> modelist = temp;
-
-				foreach (KeyValuePair<int, string> pair in modelist)
-				{
-					if (pair.Value.ToLower() == modein.ToLower())
+					if (modein == key)
 					{
 						mode.base_mode = (byte)MAV_MODE_FLAG.CUSTOM_MODE_ENABLED;
-						mode.custom_mode = (uint)pair.Key;
+						if (Enum.TryParse(key, out _out))
+						{
+							uint value = (uint)_out;
+							mode.custom_mode = value;
+						}
+						else
+						{
+							throw new Exception();
+						}
+						
 					}
 				}
+					
 
 				if (mode.base_mode == 0)
 				{
-					log.Error("No Mode Changed " + modein);
+					Console.WriteLine("No Mode Changed " + modein);
 					return false;
 				}
 			}
 			catch
 			{
-				log.Error("Failed to find Mode");
+				Console.WriteLine("Failed to find Mode");
 				return false;
 			}
 
