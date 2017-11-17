@@ -2795,7 +2795,7 @@ namespace FooApplication
 
 						while (_comport.MAV.mode != (uint)4)
 						{
-							Thread.Sleep(500);
+							Thread.Sleep(3000);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
 							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
 						}
@@ -2803,10 +2803,14 @@ namespace FooApplication
 						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
 
 						// do command - arm throttle
-						while (_comPort.doARM(!_comPort.MAV.armed))
+                        /*
+						while (!_comPort.MAV.armed)
 						{
-							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-						}
+                            Thread.Sleep(500);
+                            _dialog.ReportProgress(-1, "arming throttle");
+                            _comport.doARM(!_comport.MAV.armed);
+                            _comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						}*/
 
 
 						_dialog.ReportProgress(-1, "status: takeoff");
@@ -2814,26 +2818,25 @@ namespace FooApplication
 
 						while (_comport.MAV.mode != (uint)3)
 						{
-							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+                            Thread.Sleep(3000);
+                            _dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
 							// switch mode to AUTO
 							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
 						}
 
 						_dialog.ReportProgress(-1, "Mode has switching to AUTO");
 
-						//Thread.Sleep(60000);
-
-						while (true)
+						
+                        
+						// while (_comport.MAV.landed)
+                        if (true)
 						{
-							if (_comport.MAV.landed)
-								break;
-						}
-					
-
+                            _dialog.ReportProgress(-1, "Next drone standby");
+                            drone_cursor = (drone_cursor + 1) % comPorts.Count;
+                            continue;
+                        }
 					}
-					
-					drone_cursor = (drone_cursor+1) % comPorts.Count;
-					_dialog.ReportProgress(-1, "Next drone standby");
+	
 				}
 			};
 
