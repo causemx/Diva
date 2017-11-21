@@ -1,4 +1,7 @@
-﻿namespace FooApplication
+﻿using System.Windows.Forms;
+using FooApplication.Controls;
+
+namespace FooApplication
 {
 	partial class Planner
 	{
@@ -29,21 +32,12 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.myMap = new FooApplication.Controls.MyGMap();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.label8 = new System.Windows.Forms.Label();
-			this.but_read_wp = new FooApplication.Controls.MyButton();
-			this.but_write_wp = new FooApplication.Controls.MyButton();
-			this.but_land = new FooApplication.Controls.MyButton();
-			this.but_takeoff = new FooApplication.Controls.MyButton();
-			this.but_disarm = new FooApplication.Controls.MyButton();
-			this.but_arm_throttle = new FooApplication.Controls.MyButton();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.TXT_DefaultAlt = new System.Windows.Forms.TextBox();
@@ -88,40 +82,10 @@
 			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
-			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// myMap
-			// 
-			this.myMap.BackColor = System.Drawing.Color.Transparent;
-			this.myMap.Bearing = 0F;
-			this.myMap.CanDragMap = true;
-			this.myMap.ContextMenuStrip = this.contextMenuStrip1;
-			this.myMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
-			this.myMap.GrayScaleMode = false;
-			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-			this.myMap.LevelsKeepInMemmory = 5;
-			this.myMap.Location = new System.Drawing.Point(0, 0);
-			this.myMap.MarkersEnabled = true;
-			this.myMap.MaxZoom = 2;
-			this.myMap.MinZoom = 2;
-			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-			this.myMap.Name = "myMap";
-			this.myMap.NegativeMode = false;
-			this.myMap.PolygonsEnabled = true;
-			this.myMap.RetryLoadTile = 0;
-			this.myMap.RoutesEnabled = true;
-			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-			this.myMap.ShowTileGridLines = false;
-			this.myMap.Size = new System.Drawing.Size(1008, 537);
-			this.myMap.TabIndex = 0;
-			this.myMap.Zoom = 0D;
-			this.myMap.Load += new System.EventHandler(this.myMap_Load);
 			// 
 			// contextMenuStrip1
 			// 
@@ -156,7 +120,6 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.panel2);
 			this.panel1.Controls.Add(this.TXT_Mode);
 			this.panel1.Controls.Add(this.label3);
 			this.panel1.Controls.Add(this.TXT_DefaultAlt);
@@ -171,97 +134,6 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
-			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.label8);
-			this.panel2.Controls.Add(this.but_read_wp);
-			this.panel2.Controls.Add(this.but_write_wp);
-			this.panel2.Controls.Add(this.but_land);
-			this.panel2.Controls.Add(this.but_takeoff);
-			this.panel2.Controls.Add(this.but_disarm);
-			this.panel2.Controls.Add(this.but_arm_throttle);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel2.Location = new System.Drawing.Point(761, 0);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(247, 109);
-			this.panel2.TabIndex = 14;
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label8.Location = new System.Drawing.Point(3, 5);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(68, 23);
-			this.label8.TabIndex = 19;
-			this.label8.Text = "Maunal";
-			// 
-			// but_read_wp
-			// 
-			this.but_read_wp.BorderThickness = 2F;
-			this.but_read_wp.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.but_read_wp.Location = new System.Drawing.Point(5, 68);
-			this.but_read_wp.Name = "but_read_wp";
-			this.but_read_wp.Size = new System.Drawing.Size(75, 23);
-			this.but_read_wp.TabIndex = 28;
-			this.but_read_wp.Text = "read_WPs";
-			this.but_read_wp.Click += new System.EventHandler(this.BUT_read_Click);
-			// 
-			// but_write_wp
-			// 
-			this.but_write_wp.BorderThickness = 2F;
-			this.but_write_wp.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.but_write_wp.Location = new System.Drawing.Point(4, 40);
-			this.but_write_wp.Name = "but_write_wp";
-			this.but_write_wp.Size = new System.Drawing.Size(75, 23);
-			this.but_write_wp.TabIndex = 27;
-			this.but_write_wp.Text = "write_WPs";
-			this.but_write_wp.Click += new System.EventHandler(this.BUT_write_Click);
-			// 
-			// but_land
-			// 
-			this.but_land.BorderThickness = 2F;
-			this.but_land.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.but_land.Location = new System.Drawing.Point(86, 68);
-			this.but_land.Name = "but_land";
-			this.but_land.Size = new System.Drawing.Size(75, 23);
-			this.but_land.TabIndex = 26;
-			this.but_land.Text = "land";
-			this.but_land.Click += new System.EventHandler(this.BUT_Land_Click);
-			// 
-			// but_takeoff
-			// 
-			this.but_takeoff.BorderThickness = 2F;
-			this.but_takeoff.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.but_takeoff.Location = new System.Drawing.Point(86, 40);
-			this.but_takeoff.Name = "but_takeoff";
-			this.but_takeoff.Size = new System.Drawing.Size(75, 23);
-			this.but_takeoff.TabIndex = 25;
-			this.but_takeoff.Text = "takeoff";
-			this.but_takeoff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
-			// 
-			// but_disarm
-			// 
-			this.but_disarm.BorderThickness = 2F;
-			this.but_disarm.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.but_disarm.Location = new System.Drawing.Point(166, 69);
-			this.but_disarm.Name = "but_disarm";
-			this.but_disarm.Size = new System.Drawing.Size(75, 23);
-			this.but_disarm.TabIndex = 24;
-			this.but_disarm.Text = "disarm";
-			this.but_disarm.Click += new System.EventHandler(this.BUT_Disarm_Click);
-			// 
-			// but_arm_throttle
-			// 
-			this.but_arm_throttle.BorderThickness = 2F;
-			this.but_arm_throttle.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.but_arm_throttle.Location = new System.Drawing.Point(166, 40);
-			this.but_arm_throttle.Name = "but_arm_throttle";
-			this.but_arm_throttle.Size = new System.Drawing.Size(75, 23);
-			this.but_arm_throttle.TabIndex = 23;
-			this.but_arm_throttle.Text = "arm";
-			this.but_arm_throttle.Click += new System.EventHandler(this.BUT_Arm_Click);
 			// 
 			// TXT_Mode
 			// 
@@ -337,14 +209,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -780,15 +652,12 @@
 			this.Controls.Add(this.Gauge_speed);
 			this.Controls.Add(this.Gauge_alt);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.myMap);
 			this.Name = "Planner";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Planner";
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
@@ -849,13 +718,5 @@
 		private System.Windows.Forms.ToolStripButton BUT_Configure;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.Panel panel2;
-		private Controls.MyButton but_arm_throttle;
-		private Controls.MyButton but_write_wp;
-		private Controls.MyButton but_land;
-		private Controls.MyButton but_takeoff;
-		private Controls.MyButton but_disarm;
-		private System.Windows.Forms.Label label8;
-		private Controls.MyButton but_read_wp;
 	}
 }

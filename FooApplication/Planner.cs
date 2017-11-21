@@ -2411,7 +2411,7 @@ namespace FooApplication
 
 					comPort.giveComport = false;
 
-					but_read_wp.Enabled = true;
+					// but_read_wp.Enabled = true;
 
 					writeKML();
 				});
