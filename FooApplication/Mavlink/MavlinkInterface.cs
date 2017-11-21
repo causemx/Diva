@@ -220,6 +220,8 @@ namespace FooApplication.Mavlink
 		{
 			MAVLink.MAVLinkMessage mavlinkMessage = readPacket();
 
+            if (mavlinkMessage.Length == 0) return;
+
 			lock (this)
 			{
 				if (DateTime.Now > lastupdate.AddMilliseconds(50) || updatenow) // 20 hz
@@ -2115,6 +2117,7 @@ namespace FooApplication.Mavlink
 
 		public void setMode(byte sysid, byte compid, mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
 		{
+            Console.WriteLine("setmode");
 			mode.base_mode |= (byte)base_mode;
 
 			generatePacket((byte)(byte)MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
