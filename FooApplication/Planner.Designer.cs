@@ -32,12 +32,13 @@ namespace FooApplication
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.TXT_DefaultAlt = new System.Windows.Forms.TextBox();
@@ -80,8 +81,16 @@ namespace FooApplication
 			this.BUT_Rotation = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
+			this.BUT_Takeoff = new FooApplication.Controls.MyButton();
+			this.BUT_Arm = new FooApplication.Controls.MyButton();
+			this.BUT_Disarm = new FooApplication.Controls.MyButton();
+			this.BUT_Land = new FooApplication.Controls.MyButton();
+			this.BUT_ReadWPs = new FooApplication.Controls.MyButton();
+			this.BUT_WriteWPs = new FooApplication.Controls.MyButton();
+			this.myMap = new FooApplication.Controls.MyGMap();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
 			this.toolStrip1.SuspendLayout();
 			this.toolStrip2.SuspendLayout();
@@ -120,6 +129,7 @@ namespace FooApplication
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.groupBox1);
 			this.panel1.Controls.Add(this.TXT_Mode);
 			this.panel1.Controls.Add(this.label3);
 			this.panel1.Controls.Add(this.TXT_DefaultAlt);
@@ -134,6 +144,23 @@ namespace FooApplication
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1008, 109);
 			this.panel1.TabIndex = 1;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.BUT_Takeoff);
+			this.groupBox1.Controls.Add(this.BUT_Arm);
+			this.groupBox1.Controls.Add(this.BUT_Disarm);
+			this.groupBox1.Controls.Add(this.BUT_Land);
+			this.groupBox1.Controls.Add(this.BUT_ReadWPs);
+			this.groupBox1.Controls.Add(this.BUT_WriteWPs);
+			this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.groupBox1.Location = new System.Drawing.Point(752, 6);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(250, 100);
+			this.groupBox1.TabIndex = 19;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Manual";
 			// 
 			// TXT_Mode
 			// 
@@ -209,14 +236,14 @@ namespace FooApplication
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -635,6 +662,97 @@ namespace FooApplication
 			this.BUT_Configure.Text = "Configure";
 			this.BUT_Configure.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			// 
+			// BUT_Takeoff
+			// 
+			this.BUT_Takeoff.BorderThickness = 2F;
+			this.BUT_Takeoff.Location = new System.Drawing.Point(169, 52);
+			this.BUT_Takeoff.Name = "BUT_Takeoff";
+			this.BUT_Takeoff.Size = new System.Drawing.Size(75, 25);
+			this.BUT_Takeoff.TabIndex = 5;
+			this.BUT_Takeoff.Text = "TakeOff";
+			this.BUT_Takeoff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
+			// 
+			// BUT_Arm
+			// 
+			this.BUT_Arm.BorderThickness = 2F;
+			this.BUT_Arm.Location = new System.Drawing.Point(169, 21);
+			this.BUT_Arm.Name = "BUT_Arm";
+			this.BUT_Arm.Size = new System.Drawing.Size(75, 25);
+			this.BUT_Arm.TabIndex = 4;
+			this.BUT_Arm.Text = "Arm";
+			this.BUT_Arm.Click += new System.EventHandler(this.BUT_Arm_Click);
+			// 
+			// BUT_Disarm
+			// 
+			this.BUT_Disarm.BorderThickness = 2F;
+			this.BUT_Disarm.Location = new System.Drawing.Point(87, 52);
+			this.BUT_Disarm.Name = "BUT_Disarm";
+			this.BUT_Disarm.Size = new System.Drawing.Size(75, 25);
+			this.BUT_Disarm.TabIndex = 3;
+			this.BUT_Disarm.Text = "Disarm";
+			this.BUT_Disarm.Click += new System.EventHandler(this.BUT_Disarm_Click);
+			// 
+			// BUT_Land
+			// 
+			this.BUT_Land.BorderThickness = 2F;
+			this.BUT_Land.Location = new System.Drawing.Point(87, 21);
+			this.BUT_Land.Name = "BUT_Land";
+			this.BUT_Land.Size = new System.Drawing.Size(75, 25);
+			this.BUT_Land.TabIndex = 2;
+			this.BUT_Land.Text = "Land";
+			this.BUT_Land.Click += new System.EventHandler(this.BUT_Land_Click);
+			// 
+			// BUT_ReadWPs
+			// 
+			this.BUT_ReadWPs.BorderThickness = 2F;
+			this.BUT_ReadWPs.Location = new System.Drawing.Point(6, 52);
+			this.BUT_ReadWPs.Name = "BUT_ReadWPs";
+			this.BUT_ReadWPs.Size = new System.Drawing.Size(75, 25);
+			this.BUT_ReadWPs.TabIndex = 1;
+			this.BUT_ReadWPs.Text = "ReadWPs";
+			this.BUT_ReadWPs.Click += new System.EventHandler(this.BUT_read_Click);
+			// 
+			// BUT_WriteWPs
+			// 
+			this.BUT_WriteWPs.BorderThickness = 2F;
+			this.BUT_WriteWPs.Location = new System.Drawing.Point(6, 21);
+			this.BUT_WriteWPs.Name = "BUT_WriteWPs";
+			this.BUT_WriteWPs.Size = new System.Drawing.Size(75, 25);
+			this.BUT_WriteWPs.TabIndex = 0;
+			this.BUT_WriteWPs.Tag = "";
+			this.BUT_WriteWPs.Text = "WriteWPs";
+			this.BUT_WriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
+			// 
+			// myMap
+			// 
+			this.myMap.Bearing = 0F;
+			this.myMap.CanDragMap = true;
+			this.myMap.ContextMenuStrip = this.contextMenuStrip1;
+			this.myMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
+			this.myMap.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.myMap.GrayScaleMode = false;
+			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+			this.myMap.LevelsKeepInMemmory = 5;
+			this.myMap.Location = new System.Drawing.Point(0, 0);
+			this.myMap.MarkersEnabled = true;
+			this.myMap.MaxZoom = 2;
+			this.myMap.MinZoom = 2;
+			this.myMap.MouseWheelZoomEnabled = true;
+			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+			this.myMap.Name = "myMap";
+			this.myMap.NegativeMode = false;
+			this.myMap.PolygonsEnabled = true;
+			this.myMap.RetryLoadTile = 0;
+			this.myMap.RoutesEnabled = true;
+			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+			this.myMap.ShowTileGridLines = false;
+			this.myMap.Size = new System.Drawing.Size(1008, 537);
+			this.myMap.TabIndex = 14;
+			this.myMap.Zoom = 0D;
+			this.myMap.Load += new System.EventHandler(this.myMap_Load);
+			// 
 			// Planner
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -652,12 +770,14 @@ namespace FooApplication
 			this.Controls.Add(this.Gauge_speed);
 			this.Controls.Add(this.Gauge_alt);
 			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.myMap);
 			this.Name = "Planner";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Planner";
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
@@ -670,7 +790,6 @@ namespace FooApplication
 
 		#endregion
 
-		private Controls.MyGMap myMap;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.DataGridView Commands;
 		private System.Windows.Forms.TextBox TXT_homealt;
@@ -718,5 +837,13 @@ namespace FooApplication
 		private System.Windows.Forms.ToolStripButton BUT_Configure;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private GroupBox groupBox1;
+		private MyButton BUT_Takeoff;
+		private MyButton BUT_Arm;
+		private MyButton BUT_Disarm;
+		private MyButton BUT_Land;
+		private MyButton BUT_ReadWPs;
+		private MyButton BUT_WriteWPs;
+		private MyGMap myMap;
 	}
 }

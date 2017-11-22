@@ -500,8 +500,7 @@ namespace FooApplication
 
 		private void myMap_Load(object sender, EventArgs e)
 		{
-			myMap.MapProvider = BingSatelliteMapProvider.Instance;
-			myMap.Position = new PointLatLng(24.773518, 121.0443385);
+			myMap.MapProvider = GMapProviders.GoogleSatelliteMap;
 			myMap.MinZoom = 0;
 			myMap.MaxZoom = 24;
 			myMap.Zoom = 15;
@@ -2411,7 +2410,7 @@ namespace FooApplication
 
 					comPort.giveComport = false;
 
-					// but_read_wp.Enabled = true;
+					BUT_ReadWPs.Enabled = true;
 
 					writeKML();
 				});
@@ -2803,14 +2802,14 @@ namespace FooApplication
 						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
 
 						// do command - arm throttle
-                        /*
+						
 						while (!_comPort.MAV.armed)
 						{
-                            Thread.Sleep(500);
-                            _dialog.ReportProgress(-1, "arming throttle");
-                            _comport.doARM(!_comport.MAV.armed);
-                            _comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-						}*/
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "arming throttle");
+							_comport.doARM(true);
+							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						}
 
 
 						_dialog.ReportProgress(-1, "status: takeoff");
@@ -2818,8 +2817,8 @@ namespace FooApplication
 
 						while (_comport.MAV.mode != (uint)3)
 						{
-                            Thread.Sleep(3000);
-                            _dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+							Thread.Sleep(3000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
 							// switch mode to AUTO
 							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
 						}
@@ -2827,14 +2826,16 @@ namespace FooApplication
 						_dialog.ReportProgress(-1, "Mode has switching to AUTO");
 
 						
-                        
-						// while (_comport.MAV.landed)
-                        if (true)
+						
+						while (!_comport.MAV.landed)
 						{
-                            _dialog.ReportProgress(-1, "Next drone standby");
-                            drone_cursor = (drone_cursor + 1) % comPorts.Count;
-                            continue;
-                        }
+							Console.WriteLine(_comport.MAV.landed);
+							Thread.Sleep(1000);
+							continue;
+						}
+
+						_dialog.ReportProgress(-1, "Next drone standby");
+						drone_cursor = (drone_cursor + 1) % comPorts.Count;
 					}
 	
 				}
