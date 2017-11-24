@@ -1,64 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FooApplication.Controls
 {
 	public partial class ProgressDialog : Form
 	{
-		private BackgroundWorker worker;
+		private readonly BackgroundWorker _worker;
 		public event CancelEventHandler Cancelled;
 		public event RunWorkerCompletedEventHandler Completed;
 		public event ProgressChangedEventHandler ProgressChanged;
 		public event DoWorkEventHandler DoWork;
 
-		public bool isActive { get; set; }
+		public bool IsActive { get; set; }
 
-		public bool IsCancelled
-		{
-			get { return worker.CancellationPending; }
-		}
+		public bool IsCancelled => _worker.CancellationPending;
 
 		public ProgressDialog()
 		{
 			InitializeComponent();
 
-			worker = new BackgroundWorker();
-			worker.ProgressChanged += Worker_ProgressChanged;
-			worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-			worker.DoWork += worker_DoWork;
-			worker.WorkerSupportsCancellation = true;
-			worker.WorkerReportsProgress = true;
-			this.Cancelled += dialog_Cancelled;
+			_worker = new BackgroundWorker();
+			_worker.ProgressChanged += Worker_ProgressChanged;
+			_worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+			_worker.DoWork += Worker_DoWork;
+			_worker.WorkerSupportsCancellation = true;
+			_worker.WorkerReportsProgress = true;
+			Cancelled += dialog_Cancelled;
 		}
 
 		
 		public void Run()
 		{
-			if (worker.IsBusy)
+			if (_worker.IsBusy)
 			{
-				Console.WriteLine("worker is busy...");
-				worker.CancelAsync();
+				Console.WriteLine("Worker is busy...");
+				_worker.CancelAsync();
 				
 			}
 
-			worker.RunWorkerAsync();
-			ShowDialog();
+			_worker.RunWorkerAsync();
 		}
 
 		public void Run(object argument)
 		{
-			worker.RunWorkerAsync(argument);
-			ShowDialog();
+			_worker.RunWorkerAsync(argument);
 		}
 
-		void worker_DoWork(object sender, DoWorkEventArgs e)
+		private void Worker_DoWork(object sender, DoWorkEventArgs e)
 		{
 			
 			if (DoWork != null)
@@ -74,46 +63,36 @@ namespace FooApplication.Controls
 
 		private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
-			if (Completed != null)
-			{
-				Completed(this, e);
-			}
-
+			Completed?.Invoke(this, e);
 
 			Close();
 		}
 
 		private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
-			if (ProgressChanged != null)
-			{
-				ProgressChanged(this, e);
-			}
+			ProgressChanged?.Invoke(this, e);
 		}
 
 		public void ReportProgress(int percentProgress, object userState)
 		{
-			worker.ReportProgress(percentProgress, userState);
+			_worker.ReportProgress(percentProgress, userState);
 		}
 
 		public void ReportProgress(int percentProgress)
 		{
-			worker.ReportProgress(percentProgress);
+			_worker.ReportProgress(percentProgress);
 		}
 
 		public string Message
 		{
-			get { return lbl_message.Text; }
-			set { lbl_message.Text = value; }
+			get => LBL_Message.Text;
+			set => LBL_Message.Text = value;
 		}
 
 		public int Progress
 		{
-			get { return progressBar.Value; }
-			set
-			{
-				progressBar.Value = value;
-			}
+			get => MyProgressBar.Value;
+			set => MyProgressBar.Value = value;
 		}
 
 		private void but_nagtive_Click(object sender, EventArgs e)
@@ -131,9 +110,9 @@ namespace FooApplication.Controls
 			}*/
 		}
 
-		void dialog_Cancelled(object sender, CancelEventArgs e)
+		private void dialog_Cancelled(object sender, CancelEventArgs e)
 		{
-			worker.CancelAsync();
+			_worker.CancelAsync();
 			Close();
 			DoDispose();
 			/*
@@ -150,7 +129,7 @@ namespace FooApplication.Controls
 			DoDispose();
 		}
 
-		private bool disposed = false;
+		private bool _disposed = false;
 
 		public void DoDispose()
 		{
@@ -166,20 +145,23 @@ namespace FooApplication.Controls
 		protected virtual void DoDispose(bool disposing)
 		{
 			// Check to see if Dispose has already been called. 
-			if (!this.disposed)
+			if (_disposed) return;
+			// If disposing equals true, dispose all managed 
+			// and unmanaged resources. 
+			if (disposing)
 			{
-				// If disposing equals true, dispose all managed 
-				// and unmanaged resources. 
-				if (disposing)
-				{
-					// Dispose managed resources.
-					worker.Dispose();
-					this.Dispose();
-				}
-				// Note disposing has been done.
-				disposed = true;
-				isActive = false;
+				// Dispose managed resources.
+				_worker.Dispose();
+				Dispose();
 			}
+			// Note disposing has been done.
+			_disposed = true;
+			IsActive = false;
+		}
+
+		protected virtual void OnCancelled(CancelEventArgs e)
+		{
+			Cancelled?.Invoke(this, e);
 		}
 	}
 }

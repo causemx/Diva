@@ -154,11 +154,11 @@
     <Compile Include="Controls\ProgressInputDialog.Designer.cs">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ProgressPanel.cs">
+    <Compile Include="Controls\RotationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ProgressPanel.Designer.cs">
-      <DependentUpon>ProgressPanel.cs</DependentUpon>
+    <Compile Include="Controls\RotationControl.Designer.cs">
+      <DependentUpon>RotationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
@@ -189,8 +189,8 @@
     <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressPanel.resx">
-      <DependentUpon>ProgressPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\RotationControl.resx">
+      <DependentUpon>RotationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>

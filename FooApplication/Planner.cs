@@ -2779,13 +2779,14 @@ namespace FooApplication
 		private void BUT_Rotation_Click(object sender, EventArgs e)
 		{
 			ProgressDialog _dialog = new ProgressDialog();
-			_dialog.isActive = true;
+			_dialog.IsActive = true;
+			_dialog.Show();
 
 			
 
 			_dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
 			{
-				while (_dialog.isActive)
+				while (_dialog.IsActive)
 				{
 					// Console.WriteLine("current selected drone: " + drone_cursor+1);
 					MavlinkInterface _comport = comPorts[drone_cursor];
