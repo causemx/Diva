@@ -1029,8 +1029,6 @@ namespace FooApplication
 
 		public void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
 		{
-			
-			log.Info("We are connecting to " + portname + " " + baud);
 			// Setup comport.basestream
 			switch (portname)
 			{
@@ -1082,7 +1080,10 @@ namespace FooApplication
 				DateTime connecttime = DateTime.Now;
 
 				// do the connect
+			
 				comPort.open();
+			
+				
 
 				if (!comPort.BaseStream.IsOpen)
 				{
@@ -1128,6 +1129,7 @@ namespace FooApplication
 					log.Warn(ex2);
 				}
 				MessageBox.Show("Can not establish a connection\n\n" + ex.Message);
+				throw new Exception();
 				return;
 			}
 		}
@@ -2658,18 +2660,29 @@ namespace FooApplication
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 
-			ProgressInputDialog dialog = new ProgressInputDialog(this);
+			ProgressInputDialog dialog = new ProgressInputDialog(this)
+			{
+				Text = "Connection",
+			};
 			dialog.confirm_click += delegate (object o, EventArgs ex)
 			{
 				var mav = new MavlinkInterface();
-				doConnect(mav, dialog.port_name, dialog.port, dialog.baudrate);
-				mav.onCreate();
-				comPorts.Add(mav);
-				// TODO: move guidemodez to initialize
-				mav.MAV.GuidedMode.z = 10;
-				AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
-				AddRouteOverlay(comPorts.Count);
-				this.comPort = mav;
+				try
+				{
+					doConnect(mav, dialog.port_name, dialog.port, dialog.baudrate);
+					mav.onCreate();
+					comPorts.Add(mav);
+					// TODO: move guidemodez to initialize
+					mav.MAV.GuidedMode.z = 10;
+					AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
+					AddRouteOverlay(comPorts.Count);
+					this.comPort = mav;
+				}
+				catch (Exception Exp)
+				{
+					log.Debug(Exp);
+				}
+				
 				dialog.Dispose();
 			};
 			dialog.Show();
@@ -2789,10 +2802,9 @@ namespace FooApplication
 				while (_dialog.IsActive)
 				{
 					// Console.WriteLine("current selected drone: " + drone_cursor+1);
-					MavlinkInterface _comport = comPorts[drone_cursor];
-					if (_comport.BaseStream.IsOpen)
+					using (MavlinkInterface _comport = comPorts[drone_cursor])
 					{
-
+						if (!_comport.BaseStream.IsOpen) continue;
 						while (_comport.MAV.mode != (uint)4)
 						{
 							Thread.Sleep(3000);
@@ -2834,11 +2846,10 @@ namespace FooApplication
 							Thread.Sleep(1000);
 							continue;
 						}
-
-						_dialog.ReportProgress(-1, "Next drone standby");
-						drone_cursor = (drone_cursor + 1) % comPorts.Count;
 					}
-	
+
+					_dialog.ReportProgress(-1, "Next drone standby");
+					drone_cursor = (drone_cursor + 1) % comPorts.Count;
 				}
 			};
 

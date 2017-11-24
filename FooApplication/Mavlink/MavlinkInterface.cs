@@ -633,6 +633,8 @@ namespace FooApplication.Mavlink
 
 				getVersion();
 
+				
+
 				/**
 				if (getparams)
 				{
@@ -658,7 +660,6 @@ namespace FooApplication.Mavlink
 				}
 				catch {	}
 				giveComport = false;
-				log.Error(e);
 				throw;
 			}
 			//frmProgressReporter.Close();

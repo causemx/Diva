@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FooApplication.Comms
@@ -105,6 +106,7 @@ namespace FooApplication.Comms
 			catch { }
 
 			client = new UdpClient(int.Parse(Port));
+			client.Client.ReceiveTimeout = 5000;
 
 			/**
 			while (true)
@@ -130,11 +132,11 @@ namespace FooApplication.Comms
 
 			// if (BytesToRead == 0)
 			// 	return; 
-			
+
 			try
 			{
 				client.Receive(ref RemoteIpEndPoint);
-				log.InfoFormat("UDPSerial connecting to {0} : {1}", RemoteIpEndPoint.Address, RemoteIpEndPoint.Port);
+				Console.WriteLine("UDPSerial connecting to {0} : {1}", RemoteIpEndPoint.Address, RemoteIpEndPoint.Port);
 				_isopen = true;
 				
 			}
@@ -144,10 +146,12 @@ namespace FooApplication.Comms
 				{
 					client.Close();
 				}
-				log.Info(ex.ToString());
 				throw new Exception("The socket/UDPSerial is closed " + ex);
 			}
 		}
+
+
+
 
 		void VerifyConnected()
 		{
