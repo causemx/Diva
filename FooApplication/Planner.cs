@@ -2090,7 +2090,17 @@ namespace FooApplication
 				}
 			}
 
-			saveWPs();
+			ProgressDialog _dialog = new ProgressDialog();
+			_dialog.IsActive = true;
+			_dialog.Show();
+
+			_dialog.DoWork += delegate(object dialog, DoWorkEventArgs dwe)
+			{
+				saveWPs();
+			};
+
+			_dialog.Run();
+			
 			
 
 			myMap.Focus();
@@ -2278,14 +2288,18 @@ namespace FooApplication
 
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
 					{
+						MessageBox.Show("Upload failed, please reduce the number of wp's");
 						Console.WriteLine("Upload failed, please reduce the number of wp's");
 						return;
 					}
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
 					{
-						
-							Console.WriteLine("Upload failed, mission was rejected byt the Mav,\n " +
-								"item had a bad option wp# " + a + " " +
+
+						MessageBox.Show("Upload failed, mission was rejected byt the Mav,\n " +
+						                "item had a bad option wp# " + a + " " +
+						                ans);
+						Console.WriteLine("Upload failed, mission was rejected byt the Mav,\n " +
+							"item had a bad option wp# " + a + " " +
 							ans);
 						return;
 					}
@@ -2303,6 +2317,9 @@ namespace FooApplication
 					}
 					if (ans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 					{
+
+						MessageBox.Show("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
+						                " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						Console.WriteLine("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
 										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						return;
@@ -2722,16 +2739,7 @@ namespace FooApplication
 			if (comPort.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
-
-				comPort.setMode(
-					comPort.MAV.sysid,
-					comPort.MAV.compid,
-					new MAVLink.mavlink_set_mode_t()
-					{
-						target_system = comPort.MAV.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)3,
-					});
+				comPort.setMode(comPort.MAV.sysid, comPort.MAV.compid, "AUTO");
 			}
 		}
 
@@ -2767,24 +2775,9 @@ namespace FooApplication
 
 		private void BUT_Disarm_Click(object sender, EventArgs e)
 		{
-			if (!comPort.BaseStream.IsOpen)
-			{
-				log.Info("basestream have opened");
-				return;
-			}
 
-			// arm the MAV
-			try
-			{
-				bool ans = comPort.doARM(false);
-				if (ans == false)
-					log.Info("arm failed");
-			}
-			catch
-			{
-				log.Info("unknown arm failed");
-			}
 		}
+
 
 		// cusor point to current drone.
 		private int drone_cursor = 0;

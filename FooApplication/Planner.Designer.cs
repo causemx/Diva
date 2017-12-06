@@ -41,7 +41,7 @@ namespace FooApplication
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.BUT_Takeoff = new FooApplication.Controls.MyButton();
 			this.BUT_Arm = new FooApplication.Controls.MyButton();
-			this.BUT_Disarm = new FooApplication.Controls.MyButton();
+			this.BUT_Auto = new FooApplication.Controls.MyButton();
 			this.BUT_Land = new FooApplication.Controls.MyButton();
 			this.BUT_ReadWPs = new FooApplication.Controls.MyButton();
 			this.BUT_WriteWPs = new FooApplication.Controls.MyButton();
@@ -150,7 +150,7 @@ namespace FooApplication
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.BUT_Takeoff);
 			this.groupBox1.Controls.Add(this.BUT_Arm);
-			this.groupBox1.Controls.Add(this.BUT_Disarm);
+			this.groupBox1.Controls.Add(this.BUT_Auto);
 			this.groupBox1.Controls.Add(this.BUT_Land);
 			this.groupBox1.Controls.Add(this.BUT_ReadWPs);
 			this.groupBox1.Controls.Add(this.BUT_WriteWPs);
@@ -182,15 +182,15 @@ namespace FooApplication
 			this.BUT_Arm.Text = "Arm";
 			this.BUT_Arm.Click += new System.EventHandler(this.BUT_Arm_Click);
 			// 
-			// BUT_Disarm
+			// BUT_Auto
 			// 
-			this.BUT_Disarm.BorderThickness = 2F;
-			this.BUT_Disarm.Location = new System.Drawing.Point(87, 52);
-			this.BUT_Disarm.Name = "BUT_Disarm";
-			this.BUT_Disarm.Size = new System.Drawing.Size(75, 25);
-			this.BUT_Disarm.TabIndex = 3;
-			this.BUT_Disarm.Text = "Disarm";
-			this.BUT_Disarm.Click += new System.EventHandler(this.BUT_Disarm_Click);
+			this.BUT_Auto.BorderThickness = 2F;
+			this.BUT_Auto.Location = new System.Drawing.Point(87, 52);
+			this.BUT_Auto.Name = "BUT_Auto";
+			this.BUT_Auto.Size = new System.Drawing.Size(75, 25);
+			this.BUT_Auto.TabIndex = 3;
+			this.BUT_Auto.Text = "Auto";
+			this.BUT_Auto.Click += new System.EventHandler(this.BUT_Auto_Click);
 			// 
 			// BUT_Land
 			// 
@@ -674,7 +674,7 @@ namespace FooApplication
 			this.toolStrip2.Location = new System.Drawing.Point(417, 0);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
-			this.toolStrip2.Size = new System.Drawing.Size(228, 58);
+			this.toolStrip2.Size = new System.Drawing.Size(197, 58);
 			this.toolStrip2.TabIndex = 13;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
@@ -840,7 +840,7 @@ namespace FooApplication
 		private GroupBox groupBox1;
 		private MyButton BUT_Takeoff;
 		private MyButton BUT_Arm;
-		private MyButton BUT_Disarm;
+		private MyButton BUT_Auto;
 		private MyButton BUT_Land;
 		private MyButton BUT_ReadWPs;
 		private MyButton BUT_WriteWPs;
