@@ -64,8 +64,8 @@ namespace FooApplication.Controls
 		private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
 			Completed?.Invoke(this, e);
-
-			Close();
+			// Please implement close method in outsider if you wanted.
+			// Close();
 		}
 
 		private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -95,31 +95,11 @@ namespace FooApplication.Controls
 			set => MyProgressBar.Value = value;
 		}
 
-		private void but_nagtive_Click(object sender, EventArgs e)
-		{
-			Close();
-			/*
-			if (MessageBox.Show("Are you sure you want to cancel?", "Cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-			{
-				but_nagtive.Enabled = false;
-				this.Message = "Cancelling...";
-				if (Cancelled != null)
-				{
-					Cancelled(this, new CancelEventArgs(true));
-				}
-			}*/
-		}
 
 		private void dialog_Cancelled(object sender, CancelEventArgs e)
 		{
 			_worker.CancelAsync();
-			Close();
-			DoDispose();
-			/*
-			if (Cancelled != null)
-			{
-				Cancelled(this, e);
-			}*/
+			Close();	
 		}
 
 

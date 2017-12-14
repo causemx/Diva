@@ -67,6 +67,16 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -129,6 +139,12 @@
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
+    <Compile Include="Controls\Configuration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Configuration.Designer.cs">
+      <DependentUpon>Configuration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyButton.cs">
       <SubType>Component</SubType>
@@ -171,6 +187,9 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <EmbeddedResource Include="Controls\Configuration.resx">
+      <DependentUpon>Configuration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,6 +233,7 @@
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
     <Content Include="mavcmd.xml" />
+    <Content Include="MetroFramework.txt" />
     <None Include="Resources\if_warning_32.png" />
     <None Include="Resources\if_settings_32.png" />
     <None Include="Resources\if_rotation_32.png" />

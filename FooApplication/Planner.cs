@@ -500,7 +500,10 @@ namespace FooApplication
 
 		private void myMap_Load(object sender, EventArgs e)
 		{
-			myMap.MapProvider = GMapProviders.GoogleSatelliteMap;
+			// myMap.MapProvider = GMapProviders.GoogleSatelliteMap;
+			myMap.MapProvider = GoogleSatelliteMapProvider.Instance;
+			GMaps.Instance.Mode = AccessMode.ServerOnly;
+
 			myMap.MinZoom = 0;
 			myMap.MaxZoom = 24;
 			myMap.Zoom = 15;
@@ -2090,16 +2093,21 @@ namespace FooApplication
 				}
 			}
 
-			ProgressDialog _dialog = new ProgressDialog();
-			_dialog.IsActive = true;
-			_dialog.Show();
+			ProgressDialog _saveWPsDialog = new ProgressDialog();
+			_saveWPsDialog.IsActive = true;
+			_saveWPsDialog.Show();
 
-			_dialog.DoWork += delegate(object dialog, DoWorkEventArgs dwe)
+			_saveWPsDialog.DoWork += delegate(object dialog, DoWorkEventArgs dwe)
 			{
 				saveWPs();
 			};
 
-			_dialog.Run();
+			_saveWPsDialog.Completed += delegate(object sender1, RunWorkerCompletedEventArgs e1)
+			{
+				_saveWPsDialog.Close();
+			};
+
+			_saveWPsDialog.Run();
 			
 			
 
@@ -2772,18 +2780,11 @@ namespace FooApplication
 			TXT_homelng.Text = MouseDownStart.Lng.ToString();
 		}
 
-
-		private void BUT_Disarm_Click(object sender, EventArgs e)
-		{
-
-		}
-
-
-		// cusor point to current drone.
-		private int drone_cursor = 0;
 		
 		private void BUT_Rotation_Click(object sender, EventArgs e)
 		{
+
+			int _cursor = 0;
 			ProgressDialog _dialog = new ProgressDialog();
 			_dialog.IsActive = true;
 			_dialog.Show();
@@ -2794,65 +2795,62 @@ namespace FooApplication
 			{
 				while (_dialog.IsActive)
 				{
-					// Console.WriteLine("current selected drone: " + drone_cursor+1);
-					using (MavlinkInterface _comport = comPorts[drone_cursor])
+
+					// TODO think about mavlinkinterface dispose issue.
+
+					MavlinkInterface _comport = comPorts[_cursor];
+					
+					if (!_comport.BaseStream.IsOpen) continue;
+					while (_comport.MAV.mode != (uint) 4)
 					{
-						if (!_comport.BaseStream.IsOpen) continue;
-						while (_comport.MAV.mode != (uint)4)
-						{
-							Thread.Sleep(3000);
-							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
-							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
-						}
+						Thread.Sleep(3000);
+						_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
+						_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
+					}
 
-						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
+					_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
 
-						// do command - arm throttle
-						
-						while (!_comPort.MAV.armed)
-						{
-							Thread.Sleep(1000);
-							_dialog.ReportProgress(-1, "arming throttle");
-							_comport.doARM(true);
-							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-						}
+					// do command - arm throttle
+
+					while (!_comPort.MAV.armed)
+					{
+						Thread.Sleep(1000);
+						_dialog.ReportProgress(-1, "arming throttle");
+						_comport.doARM(true);
+						_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+					}
 
 
-						_dialog.ReportProgress(-1, "status: takeoff");
+					_dialog.ReportProgress(-1, "status: takeoff");
 
 
-						while (_comport.MAV.mode != (uint)3)
-						{
-							Thread.Sleep(3000);
-							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
-							// switch mode to AUTO
-							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
-						}
+					while (_comport.MAV.mode != (uint) 3)
+					{
+						Thread.Sleep(3000);
+						_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+						// switch mode to AUTO
+						_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
+					}
 
-						_dialog.ReportProgress(-1, "Mode has switching to AUTO");
+					_dialog.ReportProgress(-1, "Mode has switching to AUTO");
 
-						
-						
-						while (!_comport.MAV.landed)
-						{
-							Console.WriteLine(_comport.MAV.landed);
-							Thread.Sleep(1000);
-							continue;
-						}
+
+					while (!_comport.MAV.landed)
+					{
+						Thread.Sleep(2000);
 					}
 
 					_dialog.ReportProgress(-1, "Next drone standby");
-					drone_cursor = (drone_cursor + 1) % comPorts.Count;
-				}
+					_cursor = (_cursor+1) % comPorts.Count;
+
+					
+
+					Console.WriteLine("MAVs pointed to: " + _cursor);
+				} 
 			};
 
 			_dialog.ProgressChanged += delegate (object dialog, ProgressChangedEventArgs pce) {
 				_dialog.Message = pce.UserState + ".";
-			};
-
-			_dialog.Completed += delegate (object dialog, RunWorkerCompletedEventArgs rce) {
-				// TODO: use heartbeat sys_status from 3->4->3 to terminate
-				
 			};
 
 			_dialog.Run();
@@ -2879,7 +2877,6 @@ namespace FooApplication
 		{
 			
 			ToolStripButton tsb = (ToolStripButton)sender;
-			// Console.WriteLine("click_index: "+tsb.Tag);
 			SelectToolStripButton(tsb);
 			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
 		}

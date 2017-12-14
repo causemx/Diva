@@ -674,7 +674,7 @@ namespace FooApplication
 			this.toolStrip2.Location = new System.Drawing.Point(417, 0);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
-			this.toolStrip2.Size = new System.Drawing.Size(197, 58);
+			this.toolStrip2.Size = new System.Drawing.Size(228, 58);
 			this.toolStrip2.TabIndex = 13;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
