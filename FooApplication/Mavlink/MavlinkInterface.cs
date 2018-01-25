@@ -155,6 +155,7 @@ namespace FooApplication.Mavlink
 		private DateTime heartbeatSend = DateTime.Now;
 		private DateTime lastupdate = DateTime.Now;
 		private DateTime lastdata = DateTime.MinValue;
+		private DateTime lastparamset = DateTime.MinValue;
 
 		public MavlinkInterface()
 		{
@@ -220,7 +221,7 @@ namespace FooApplication.Mavlink
 		{
 			MAVLink.MAVLinkMessage mavlinkMessage = readPacket();
 
-            if (mavlinkMessage.Length == 0) return;
+			if (mavlinkMessage.Length == 0) return;
 
 			lock (this)
 			{
@@ -1405,6 +1406,8 @@ namespace FooApplication.Mavlink
 		/// <param name="buffer">packet</param>
 		private void getInfoFromStream(ref MAVLinkMessage buffer, byte sysid, byte compid)
 		{
+			
+
 			if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
 			{
 				// clear old
@@ -1427,6 +1430,9 @@ namespace FooApplication.Mavlink
 					wp.target_system = sysid;
 					wp.target_component = compid;
 				}
+
+
+				Console.WriteLine("mission_item: " + wp.current);
 
 				if (wp.current == 2)
 				{
@@ -1475,6 +1481,8 @@ namespace FooApplication.Mavlink
 					rallypt.target_system = sysid;
 					rallypt.target_component = compid;
 				}
+
+				Console.WriteLine("rallypt: " + rallypt.idx);
 
 				MAVlist[rallypt.target_system, rallypt.target_component].rallypoints[rallypt.idx] = rallypt;
 
@@ -2118,13 +2126,163 @@ namespace FooApplication.Mavlink
 
 		public void setMode(byte sysid, byte compid, mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
 		{
-            Console.WriteLine("setmode");
+			Console.WriteLine("mode switching");
 			mode.base_mode |= (byte)base_mode;
 
 			generatePacket((byte)(byte)MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
 			Thread.Sleep(10);
 			generatePacket((byte)(byte)MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);
 		}
+
+		/// <summary>
+		/// set param on apm, used for param rename
+		/// </summary>
+		/// <param name="paramname"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public bool setParam(string[] paramnames, double value)
+		{
+			foreach (string paramname in paramnames)
+			{
+				if (setParam(paramname, value))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public bool setParam(string paramname, double value, bool force = false)
+		{
+			return setParam((byte)sysidcurrent, (byte)compidcurrent, paramname, value, force);
+		}
+
+		/// <summary>
+		/// Set parameter on apm
+		/// </summary>
+		/// <param name="paramname">name as a string</param>
+		/// <param name="value"></param>
+		public bool setParam(byte sysid, byte compid, string paramname, double value, bool force = false)
+		{
+			if (!MAVlist[sysid, compid].param.ContainsKey(paramname))
+			{
+				log.Warn("Trying to set Param that doesnt exist " + paramname + "=" + value);
+				return false;
+			}
+
+			if (MAVlist[sysid, compid].param[paramname].Value == value && !force)
+			{
+				log.Warn("setParam " + paramname + " not modified as same");
+				return true;
+			}
+
+			giveComport = true;
+
+			// param type is set here, however it is always sent over the air as a float 100int = 100f.
+			var req = new mavlink_param_set_t
+			{
+				target_system = sysid,
+				target_component = compid,
+				param_type = (byte)MAVlist[sysid, compid].param_types[paramname]
+			};
+
+			byte[] temp = Encoding.ASCII.GetBytes(paramname);
+
+			Array.Resize(ref temp, 16);
+			req.param_id = temp;
+			if (MAVlist[sysid, compid].apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+			{
+				req.param_value = new MAVLinkParam(paramname, value, (MAV_PARAM_TYPE.REAL32)).float_value;
+			}
+			else
+			{
+				req.param_value = new MAVLinkParam(paramname, value, (MAV_PARAM_TYPE)MAVlist[sysid, compid].param_types[paramname]).float_value;
+			}
+
+			int currentparamcount = MAVlist[sysid, compid].param.Count;
+
+			generatePacket((byte)MAVLINK_MSG_ID.PARAM_SET, req, sysid, compid);
+
+			log.InfoFormat("setParam '{0}' = '{1}' sysid {2} compid {3}", paramname, value, sysid,
+				compid);
+
+			DateTime start = DateTime.Now;
+			int retrys = 3;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("setParam Retry " + retrys);
+						generatePacket((byte)MAVLINK_MSG_ID.PARAM_SET, req, sysid, compid);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - setParam " + paramname);
+				}
+
+				MAVLinkMessage buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.PARAM_VALUE)
+					{
+						mavlink_param_value_t par = buffer.ToStructure<mavlink_param_value_t>();
+
+						string st = ASCIIEncoding.ASCII.GetString(par.param_id);
+
+						int pos = st.IndexOf('\0');
+
+						if (pos != -1)
+						{
+							st = st.Substring(0, pos);
+						}
+
+						if (st != paramname)
+						{
+							log.InfoFormat("MAVLINK bad param response - {0} vs {1}", paramname, st);
+							continue;
+						}
+
+						if (MAVlist[sysid, compid].apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+						{
+							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
+							MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
+						}
+						else
+						{
+							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
+							MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
+						}
+
+						log.Info("setParam gotback " + st + " : " + MAVlist[sysid, compid].param[st]);
+
+						lastparamset = DateTime.Now;
+
+						giveComport = false;
+						//System.Threading.Thread.Sleep(100);//(int)(8.5 * 5)); // 8.5ms per byte
+
+						// check if enabeling this param has added subparams, queue on gui thread
+						if (currentparamcount < par.param_count)
+						{
+							/*
+							MainV2.instance.BeginInvoke((Action) delegate
+							{
+								Loading.ShowLoading(String.Format(Strings.ParamRefreshRequired, currentparamcount,
+									par.param_count));
+							});
+							*/
+						}
+
+						return true;
+					}
+				}
+			}
+		}
+
 
 		public void setGuidedModeWP(Locationwp gotohere, bool setguidedmode = true)
 		{

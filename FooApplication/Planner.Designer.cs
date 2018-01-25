@@ -87,6 +87,8 @@ namespace FooApplication
 			this.BUT_Rotation = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.BUT_Deplex = new System.Windows.Forms.ToolStripButton();
 			this.myMap = new FooApplication.Controls.MyGMap();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -670,22 +672,24 @@ namespace FooApplication
             this.toolStripSeparator2,
             this.BUT_Rotation,
             this.toolStripSeparator3,
-            this.BUT_Configure});
-			this.toolStrip2.Location = new System.Drawing.Point(417, 0);
+            this.BUT_Configure,
+            this.toolStripSeparator4,
+            this.BUT_Deplex});
+			this.toolStrip2.Location = new System.Drawing.Point(382, 9);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
-			this.toolStrip2.Size = new System.Drawing.Size(228, 58);
+			this.toolStrip2.Size = new System.Drawing.Size(301, 58);
 			this.toolStrip2.TabIndex = 13;
 			this.toolStrip2.Text = "toolStrip2";
 			// 
 			// BUT_Connect
 			// 
-			this.BUT_Connect.Font = new System.Drawing.Font("Arial", 9F);
+			this.BUT_Connect.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BUT_Connect.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
 			this.BUT_Connect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.BUT_Connect.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BUT_Connect.Name = "BUT_Connect";
-			this.BUT_Connect.Size = new System.Drawing.Size(57, 51);
+			this.BUT_Connect.Size = new System.Drawing.Size(58, 51);
 			this.BUT_Connect.Text = "Connect";
 			this.BUT_Connect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.BUT_Connect.Click += new System.EventHandler(this.BUT_Connect_Click);
@@ -697,12 +701,12 @@ namespace FooApplication
 			// 
 			// BUT_Rotation
 			// 
-			this.BUT_Rotation.Font = new System.Drawing.Font("Arial", 9F);
+			this.BUT_Rotation.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BUT_Rotation.Image = global::FooApplication.Properties.Resources.if_rotation_32;
 			this.BUT_Rotation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.BUT_Rotation.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BUT_Rotation.Name = "BUT_Rotation";
-			this.BUT_Rotation.Size = new System.Drawing.Size(57, 51);
+			this.BUT_Rotation.Size = new System.Drawing.Size(60, 51);
 			this.BUT_Rotation.Text = "Rotation";
 			this.BUT_Rotation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.BUT_Rotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
@@ -714,14 +718,33 @@ namespace FooApplication
 			// 
 			// BUT_Configure
 			// 
-			this.BUT_Configure.Font = new System.Drawing.Font("Arial", 9F);
+			this.BUT_Configure.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BUT_Configure.Image = global::FooApplication.Properties.Resources.if_settings_32;
 			this.BUT_Configure.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.BUT_Configure.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.BUT_Configure.Name = "BUT_Configure";
-			this.BUT_Configure.Size = new System.Drawing.Size(65, 51);
+			this.BUT_Configure.Size = new System.Drawing.Size(68, 51);
 			this.BUT_Configure.Text = "Configure";
 			this.BUT_Configure.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Configure.Click += new System.EventHandler(this.BUT_Configure_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 54);
+			// 
+			// BUT_Deplex
+			// 
+			this.BUT_Deplex.AutoSize = false;
+			this.BUT_Deplex.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BUT_Deplex.Image = global::FooApplication.Properties.Resources.if_code_fork_1608638;
+			this.BUT_Deplex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Deplex.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Deplex.Name = "BUT_Deplex";
+			this.BUT_Deplex.Size = new System.Drawing.Size(60, 51);
+			this.BUT_Deplex.Text = "Deplex";
+			this.BUT_Deplex.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Deplex.Click += new System.EventHandler(this.BUT_Deplex_Click);
 			// 
 			// myMap
 			// 
@@ -845,5 +868,7 @@ namespace FooApplication
 		private MyButton BUT_ReadWPs;
 		private MyButton BUT_WriteWPs;
 		private MyGMap myMap;
+		private ToolStripButton BUT_Deplex;
+		private ToolStripSeparator toolStripSeparator4;
 	}
 }

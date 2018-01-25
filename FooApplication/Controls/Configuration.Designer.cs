@@ -28,203 +28,121 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-			this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
-			this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
-			this.metroButton2 = new MetroFramework.Controls.MetroButton();
-			this.metroButton1 = new MetroFramework.Controls.MetroButton();
-			this.metroTextBox4 = new MetroFramework.Controls.MetroTextBox();
-			this.metroTextBox3 = new MetroFramework.Controls.MetroTextBox();
-			this.metroTextBox2 = new MetroFramework.Controls.MetroTextBox();
-			this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
-			this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-			this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-			this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
-			this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-			this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
-			this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
-			this.metroTabControl1.SuspendLayout();
-			this.metroTabPage1.SuspendLayout();
-			this.metroTabPage2.SuspendLayout();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.SidePanel = new System.Windows.Forms.Panel();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.controlTuning1 = new FooApplication.Controls.ControlTuning();
+			this.controlVersion1 = new FooApplication.Controls.ControlVersion();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// metroTabControl1
+			// panel1
 			// 
-			this.metroTabControl1.Controls.Add(this.metroTabPage1);
-			this.metroTabControl1.Controls.Add(this.metroTabPage2);
-			this.metroTabControl1.Location = new System.Drawing.Point(23, 63);
-			this.metroTabControl1.Name = "metroTabControl1";
-			this.metroTabControl1.SelectedIndex = 0;
-			this.metroTabControl1.Size = new System.Drawing.Size(756, 446);
-			this.metroTabControl1.TabIndex = 0;
+			this.panel1.BackColor = System.Drawing.Color.Silver;
+			this.panel1.Controls.Add(this.SidePanel);
+			this.panel1.Controls.Add(this.button2);
+			this.panel1.Controls.Add(this.button1);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.panel1.Location = new System.Drawing.Point(0, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(200, 562);
+			this.panel1.TabIndex = 0;
 			// 
-			// metroTabPage1
+			// SidePanel
 			// 
-			this.metroTabPage1.Controls.Add(this.metroLabel6);
-			this.metroTabPage1.Controls.Add(this.metroButton2);
-			this.metroTabPage1.Controls.Add(this.metroButton1);
-			this.metroTabPage1.Controls.Add(this.metroTextBox4);
-			this.metroTabPage1.Controls.Add(this.metroTextBox3);
-			this.metroTabPage1.Controls.Add(this.metroTextBox2);
-			this.metroTabPage1.Controls.Add(this.metroLabel4);
-			this.metroTabPage1.Controls.Add(this.metroLabel3);
-			this.metroTabPage1.Controls.Add(this.metroLabel2);
-			this.metroTabPage1.Controls.Add(this.metroTextBox1);
-			this.metroTabPage1.Controls.Add(this.metroLabel1);
-			this.metroTabPage1.HorizontalScrollbarBarColor = true;
-			this.metroTabPage1.Location = new System.Drawing.Point(4, 36);
-			this.metroTabPage1.Name = "metroTabPage1";
-			this.metroTabPage1.Size = new System.Drawing.Size(748, 406);
-			this.metroTabPage1.TabIndex = 0;
-			this.metroTabPage1.Text = "WPs_Config";
-			this.metroTabPage1.VerticalScrollbarBarColor = true;
+			this.SidePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.SidePanel.Location = new System.Drawing.Point(5, 5);
+			this.SidePanel.Name = "SidePanel";
+			this.SidePanel.Size = new System.Drawing.Size(10, 50);
+			this.SidePanel.TabIndex = 2;
 			// 
-			// metroLabel6
+			// button2
 			// 
-			this.metroLabel6.AutoSize = true;
-			this.metroLabel6.Location = new System.Drawing.Point(51, 20);
-			this.metroLabel6.Name = "metroLabel6";
-			this.metroLabel6.Size = new System.Drawing.Size(191, 19);
-			this.metroLabel6.TabIndex = 14;
-			this.metroLabel6.Text = "Waypoints configuration (cm/s)";
+			this.button2.BackColor = System.Drawing.Color.Silver;
+			this.button2.FlatAppearance.BorderSize = 0;
+			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button2.Image = global::FooApplication.Properties.Resources.if_pear_2003196;
+			this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button2.Location = new System.Drawing.Point(4, 61);
+			this.button2.Name = "button2";
+			this.button2.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+			this.button2.Size = new System.Drawing.Size(191, 50);
+			this.button2.TabIndex = 3;
+			this.button2.Text = " About";
+			this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.button2.UseVisualStyleBackColor = false;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
-			// metroButton2
+			// button1
 			// 
-			this.metroButton2.Location = new System.Drawing.Point(543, 298);
-			this.metroButton2.Name = "metroButton2";
-			this.metroButton2.Size = new System.Drawing.Size(146, 23);
-			this.metroButton2.TabIndex = 13;
-			this.metroButton2.Text = "default parameters";
+			this.button1.BackColor = System.Drawing.Color.Silver;
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button1.Image = global::FooApplication.Properties.Resources.if_apple_2003193;
+			this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button1.Location = new System.Drawing.Point(4, 5);
+			this.button1.Name = "button1";
+			this.button1.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+			this.button1.Size = new System.Drawing.Size(191, 50);
+			this.button1.TabIndex = 2;
+			this.button1.Text = " Tuning";
+			this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.button1.UseVisualStyleBackColor = false;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
-			// metroButton1
+			// panel2
 			// 
-			this.metroButton1.Location = new System.Drawing.Point(373, 298);
-			this.metroButton1.Name = "metroButton1";
-			this.metroButton1.Size = new System.Drawing.Size(146, 23);
-			this.metroButton1.TabIndex = 12;
-			this.metroButton1.Text = "write parameters";
+			this.panel2.BackColor = System.Drawing.Color.Brown;
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel2.Location = new System.Drawing.Point(200, 0);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(743, 10);
+			this.panel2.TabIndex = 1;
 			// 
-			// metroTextBox4
+			// controlTuning1
 			// 
-			this.metroTextBox4.Location = new System.Drawing.Point(156, 153);
-			this.metroTextBox4.Name = "metroTextBox4";
-			this.metroTextBox4.Size = new System.Drawing.Size(107, 23);
-			this.metroTextBox4.TabIndex = 10;
-			this.metroTextBox4.Text = "150";
+			this.controlTuning1.Location = new System.Drawing.Point(200, 5);
+			this.controlTuning1.Name = "controlTuning1";
+			this.controlTuning1.Size = new System.Drawing.Size(743, 557);
+			this.controlTuning1.TabIndex = 2;
 			// 
-			// metroTextBox3
+			// controlVersion1
 			// 
-			this.metroTextBox3.Location = new System.Drawing.Point(156, 122);
-			this.metroTextBox3.Name = "metroTextBox3";
-			this.metroTextBox3.Size = new System.Drawing.Size(107, 23);
-			this.metroTextBox3.TabIndex = 9;
-			this.metroTextBox3.Text = "250";
-			// 
-			// metroTextBox2
-			// 
-			this.metroTextBox2.Location = new System.Drawing.Point(156, 91);
-			this.metroTextBox2.Name = "metroTextBox2";
-			this.metroTextBox2.Size = new System.Drawing.Size(107, 23);
-			this.metroTextBox2.TabIndex = 8;
-			this.metroTextBox2.Text = "200";
-			// 
-			// metroLabel4
-			// 
-			this.metroLabel4.AutoSize = true;
-			this.metroLabel4.Location = new System.Drawing.Point(51, 154);
-			this.metroLabel4.Name = "metroLabel4";
-			this.metroLabel4.Size = new System.Drawing.Size(83, 19);
-			this.metroLabel4.TabIndex = 6;
-			this.metroLabel4.Text = "Speed Down";
-			// 
-			// metroLabel3
-			// 
-			this.metroLabel3.AutoSize = true;
-			this.metroLabel3.Location = new System.Drawing.Point(51, 124);
-			this.metroLabel3.Name = "metroLabel3";
-			this.metroLabel3.Size = new System.Drawing.Size(67, 19);
-			this.metroLabel3.TabIndex = 5;
-			this.metroLabel3.Text = "Speed Up";
-			// 
-			// metroLabel2
-			// 
-			this.metroLabel2.AutoSize = true;
-			this.metroLabel2.Location = new System.Drawing.Point(51, 94);
-			this.metroLabel2.Name = "metroLabel2";
-			this.metroLabel2.Size = new System.Drawing.Size(47, 19);
-			this.metroLabel2.TabIndex = 4;
-			this.metroLabel2.Text = "Radius";
-			// 
-			// metroTextBox1
-			// 
-			this.metroTextBox1.Location = new System.Drawing.Point(156, 60);
-			this.metroTextBox1.Name = "metroTextBox1";
-			this.metroTextBox1.Size = new System.Drawing.Size(107, 23);
-			this.metroTextBox1.TabIndex = 3;
-			this.metroTextBox1.Text = "500";
-			// 
-			// metroLabel1
-			// 
-			this.metroLabel1.AutoSize = true;
-			this.metroLabel1.Location = new System.Drawing.Point(51, 64);
-			this.metroLabel1.Name = "metroLabel1";
-			this.metroLabel1.Size = new System.Drawing.Size(46, 19);
-			this.metroLabel1.TabIndex = 2;
-			this.metroLabel1.Text = "Speed";
-			// 
-			// metroTabPage2
-			// 
-			this.metroTabPage2.Controls.Add(this.metroLabel5);
-			this.metroTabPage2.HorizontalScrollbarBarColor = true;
-			this.metroTabPage2.Location = new System.Drawing.Point(4, 36);
-			this.metroTabPage2.Name = "metroTabPage2";
-			this.metroTabPage2.Size = new System.Drawing.Size(748, 406);
-			this.metroTabPage2.TabIndex = 1;
-			this.metroTabPage2.Text = "SYS_Info";
-			this.metroTabPage2.VerticalScrollbarBarColor = true;
-			// 
-			// metroLabel5
-			// 
-			this.metroLabel5.AutoSize = true;
-			this.metroLabel5.Location = new System.Drawing.Point(48, 45);
-			this.metroLabel5.Name = "metroLabel5";
-			this.metroLabel5.Size = new System.Drawing.Size(71, 19);
-			this.metroLabel5.TabIndex = 2;
-			this.metroLabel5.Text = "version 1.0";
+			this.controlVersion1.Location = new System.Drawing.Point(200, 5);
+			this.controlVersion1.Name = "controlVersion1";
+			this.controlVersion1.Size = new System.Drawing.Size(743, 557);
+			this.controlVersion1.TabIndex = 3;
 			// 
 			// Configuration
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(802, 547);
-			this.Controls.Add(this.metroTabControl1);
+			this.ClientSize = new System.Drawing.Size(943, 562);
+			this.Controls.Add(this.controlVersion1);
+			this.Controls.Add(this.controlTuning1);
+			this.Controls.Add(this.panel2);
+			this.Controls.Add(this.panel1);
 			this.Name = "Configuration";
 			this.Text = "Configuration";
-			this.metroTabControl1.ResumeLayout(false);
-			this.metroTabPage1.ResumeLayout(false);
-			this.metroTabPage1.PerformLayout();
-			this.metroTabPage2.ResumeLayout(false);
-			this.metroTabPage2.PerformLayout();
+			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private MetroFramework.Controls.MetroTabControl metroTabControl1;
-		private MetroFramework.Controls.MetroTabPage metroTabPage1;
-		private MetroFramework.Controls.MetroTabPage metroTabPage2;
-		private MetroFramework.Controls.MetroButton metroButton2;
-		private MetroFramework.Controls.MetroButton metroButton1;
-		private MetroFramework.Controls.MetroTextBox metroTextBox4;
-		private MetroFramework.Controls.MetroTextBox metroTextBox3;
-		private MetroFramework.Controls.MetroTextBox metroTextBox2;
-		private MetroFramework.Controls.MetroLabel metroLabel4;
-		private MetroFramework.Controls.MetroLabel metroLabel3;
-		private MetroFramework.Controls.MetroLabel metroLabel2;
-		private MetroFramework.Controls.MetroTextBox metroTextBox1;
-		private MetroFramework.Controls.MetroLabel metroLabel1;
-		private MetroFramework.Controls.MetroLabel metroLabel6;
-		private MetroFramework.Controls.MetroLabel metroLabel5;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Panel SidePanel;
+		private ControlTuning controlTuning1;
+		private ControlVersion controlVersion1;
 	}
 }

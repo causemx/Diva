@@ -199,6 +199,55 @@ namespace FooApplication.Utilities
 
 
 	[Serializable]
+	public class GMapMarkerEllipse : GMapMarker
+	{
+		public Pen Pen = new Pen(Brushes.Black, 2);
+
+		public Color Color
+		{
+			get { return Pen.Color; }
+			set
+			{
+				if (!initcolor.HasValue) initcolor = value;
+				Pen.Color = value;
+			}
+		}
+
+		Color? initcolor = null;
+
+		public GMapMarker InnerMarker;
+
+		public int wprad = 0;
+
+		public void ResetColor()
+		{
+			if (initcolor.HasValue)
+				Color = initcolor.Value;
+			else
+				Color = Color.White;
+		}
+
+		public GMapMarkerEllipse(PointLatLng p)
+			: base(p)
+		{
+			Pen.DashStyle = DashStyle.Dash;
+
+			// do not forget set Size of the marker
+			// if so, you shall have no event on it ;}
+			Size = new System.Drawing.Size(50, 50);
+			Offset = new System.Drawing.Point(-Size.Width / 2, -Size.Height / 2 - 20);
+		}
+
+		public override void OnRender(Graphics g)
+		{
+			base.OnRender(g);
+			g.DrawEllipse(Pen, new RectangleF(new PointF(-125.0F, -125.0F),	new SizeF(250.0F, 250.0F)));
+
+		}
+	}
+
+
+	[Serializable]
 	public class GMapMarkerWP : GMarkerGoogle
 	{
 		string wpno = "";
@@ -247,6 +296,10 @@ namespace FooApplication.Utilities
 				g.DrawImageUnscaled(fontBitmaps[wpno], midw, midh);
 		}
 	}
+
+
+
+
 
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker

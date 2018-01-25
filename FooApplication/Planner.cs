@@ -52,7 +52,7 @@ namespace FooApplication
 
 		public bool autopan { get; set; }
 
-		static MavlinkInterface _comPort = new MavlinkInterface();
+		public static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private static readonly double MY_LAT = 24.773518;
@@ -68,6 +68,8 @@ namespace FooApplication
 		private GMapOverlay kmlPolygonsOverlay;
 		private GMapOverlay rallypointOverlay;
 		private GMapOverlay commonsOverlay;
+		private GMapOverlay geofenceOverlay;
+
 
 		private GMapMarkerRect currentRectMarker;
 		private GMapMarkerRallyPt currentRallyPt;
@@ -202,6 +204,9 @@ namespace FooApplication
 
 			drawnPolygonsOverlay = new GMapOverlay("drawnpolygons");
 			myMap.Overlays.Add(drawnPolygonsOverlay);
+
+			geofenceOverlay = new GMapOverlay("geofence");
+			myMap.Overlays.Add(geofenceOverlay);
 
 			myMap.Overlays.Add(poiOverlay);
 
@@ -2797,56 +2802,60 @@ namespace FooApplication
 				{
 
 					// TODO think about mavlinkinterface dispose issue.
-
-					MavlinkInterface _comport = comPorts[_cursor];
 					
-					if (!_comport.BaseStream.IsOpen) continue;
-					while (_comport.MAV.mode != (uint) 4)
+					var _comport = comPorts[_cursor];
+
+					try
 					{
-						Thread.Sleep(3000);
-						_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
-						_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
+						if (!_comport.BaseStream.IsOpen) continue;
+						while (_comport.MAV.mode != (uint) 4)
+						{
+							Thread.Sleep(3000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
+							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
+						}
+
+						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
+
+						// do command - arm throttle
+
+						while (!_comPort.MAV.armed)
+						{
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "arming throttle");
+							_comport.doARM(true);
+							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						}
+
+
+						_dialog.ReportProgress(-1, "status: takeoff");
+
+
+						while (_comport.MAV.mode != (uint) 3)
+						{
+							Thread.Sleep(3000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+							// switch mode to AUTO
+							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
+						}
+
+						_dialog.ReportProgress(-1, "Mode has switching to AUTO");
+
+
+						while (!_comport.MAV.landed)
+						{
+							Thread.Sleep(3000);
+						}
+
+						_dialog.ReportProgress(-1, "Next drone standby");
+						_cursor = (_cursor + 1) % comPorts.Count;
+
 					}
-
-					_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
-
-					// do command - arm throttle
-
-					while (!_comPort.MAV.armed)
+					catch (Exception ex)
 					{
-						Thread.Sleep(1000);
-						_dialog.ReportProgress(-1, "arming throttle");
-						_comport.doARM(true);
-						_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						Console.WriteLine(ex.ToString());
 					}
-
-
-					_dialog.ReportProgress(-1, "status: takeoff");
-
-
-					while (_comport.MAV.mode != (uint) 3)
-					{
-						Thread.Sleep(3000);
-						_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
-						// switch mode to AUTO
-						_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
-					}
-
-					_dialog.ReportProgress(-1, "Mode has switching to AUTO");
-
-
-					while (!_comport.MAV.landed)
-					{
-						Thread.Sleep(2000);
-					}
-
-					_dialog.ReportProgress(-1, "Next drone standby");
-					_cursor = (_cursor+1) % comPorts.Count;
-
-					
-
-					Console.WriteLine("MAVs pointed to: " + _cursor);
-				} 
+				}
 			};
 
 			_dialog.ProgressChanged += delegate (object dialog, ProgressChangedEventArgs pce) {
@@ -2974,6 +2983,7 @@ namespace FooApplication
 						mapupdate = DateTime.Now;
 					}
 				}
+
 			}
 			catch (Exception ex)
 			{
@@ -2981,6 +2991,26 @@ namespace FooApplication
 			}
 		}
 
-		
+
+		private Demux demultiplexer = new Demux();
+		private bool isDeplexClicked = false;
+		private void BUT_Deplex_Click(object sender, EventArgs e)
+		{
+			isDeplexClicked = !isDeplexClicked;
+			if (isDeplexClicked)
+			{
+				demultiplexer.Active();
+			}
+			else
+			{
+				demultiplexer.Deactive();
+			}
+		}
+
+		private void BUT_Configure_Click(object sender, EventArgs e)
+		{
+			Configuration cg = new Configuration();
+			cg.Show();
+		}
 	}
 }
