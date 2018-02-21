@@ -94,7 +94,7 @@ namespace FooApplication
 		private bool quickadd = false;
 		private bool sethome = false;
 		private int selectedrow = 0;
-
+		private bool isTaggable = false;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<Locationwp>> history = new List<List<Locationwp>>();
@@ -102,6 +102,9 @@ namespace FooApplication
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
+
+		
+		public List<Locationwp> tags = new List<Locationwp>();
 
 
 		// Thread setup
@@ -1315,6 +1318,36 @@ namespace FooApplication
 			setfromMap(lat, lng, alt);
 		}
 
+
+		public void AddTagToMap(double lat, double lng, int alt)
+		{
+			/**
+			if (sethome)
+			{
+				sethome = false;
+				callMeDrag("H", lat, lng, alt);
+				return;
+			}*/
+
+			// check home point setup.
+			if (IsHomeEmpty())
+			{
+				MessageBox.Show("Please set home first");
+				return;
+			}
+			else
+			{
+				sethome = true;
+			}
+
+			// TODO: creating a WP
+			
+
+
+			setfromTags(lat, lng, alt);
+		}
+
+
 		public void AddWPToMap(double lat, double lng, int alt)
 		{
 			/**
@@ -1424,6 +1457,116 @@ namespace FooApplication
 			catch (Exception ex)
 			{
 				throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
+			}
+		}
+
+
+		public void setfromTags(double lat, double lng, int alt, double p1 = 0)
+		{
+			if (selectedrow > Commands.RowCount)
+			{
+				MessageBox.Show("Invalid coord, How did you do this?");
+				return;
+			}
+
+			/**
+			 * 
+			 * 
+			try
+			{
+				
+				// get current command list
+				var currentlist = GetCommandList();
+				// add history
+				history_tags.Add(tags);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("A invalid entry has been detected\n" + ex.Message);
+			}
+
+			// remove more than 20 revisions
+			if (history_tags.Count > 20)
+			{
+				history_tags.RemoveRange(0, history_tags.Count - 20);
+			}*/
+
+			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
+			if (quickadd)
+				return;
+
+			// this is to share the current mission with the data tab
+			pointlist = new List<PointLatLngAlt>();
+
+			fullpointlist.Clear();
+
+			try
+			{
+				if (objectsOverlay != null) // hasnt been created yet
+				{
+					objectsOverlay.Markers.Clear();
+				}
+
+				// process and add home to the list
+				string home;
+				if (TXT_homealt.Text != "" && TXT_homelat.Text != "" && TXT_homelng.Text != "")
+				{
+					home = string.Format("{0},{1},{2}\r\n", TXT_homelng.Text, TXT_homelat.Text, TXT_DefaultAlt.Text);
+					if (objectsOverlay != null) // during startup
+					{
+						pointlist.Add(new PointLatLngAlt(double.Parse(TXT_homelat.Text), double.Parse(TXT_homelng.Text),
+							double.Parse(TXT_homealt.Text), "H"));
+						fullpointlist.Add(pointlist[pointlist.Count - 1]);
+						addpolygonmarker("H", double.Parse(TXT_homelng.Text), double.Parse(TXT_homelat.Text), 0, null);
+					}
+				}
+				else
+				{
+					home = "";
+					pointlist.Add(null);
+					fullpointlist.Add(pointlist[pointlist.Count - 1]);
+				}
+
+				double homealt = 0;
+				try
+				{
+					if (!String.IsNullOrEmpty(TXT_homealt.Text))
+						homealt = (int)double.Parse(TXT_homealt.Text);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.ToString());
+				}
+
+				long temp = Stopwatch.GetTimestamp();
+
+
+				string lookat = "";
+				for (int a = 0; a < tags.Count - 0; a++)
+				{
+
+					pointlist.Add(new PointLatLngAlt(
+						tags[a].lat, 
+						tags[a].lng,
+						tags[a].alt + homealt,
+						(a + 1).ToString()));
+					fullpointlist.Add(pointlist[pointlist.Count - 1]);
+					addpolygonmarker(
+						(a + 1).ToString(), 
+						tags[a].lat, 
+						tags[a].lng,
+						tags[a].alt + homealt, 
+						null);
+
+				}
+
+
+				RegenerateWPRoute(fullpointlist);
+
+			}
+			catch (Exception ex)
+			{
+				log.Info(ex.ToString());
 			}
 		}
 
@@ -2442,7 +2585,7 @@ namespace FooApplication
 
 					comPort.giveComport = false;
 
-					BUT_ReadWPs.Enabled = true;
+					// BUT_ReadWPs.Enabled = true;
 
 					writeKML();
 				});
@@ -2684,6 +2827,16 @@ namespace FooApplication
 			
 			addpolygonmarker("Guided Mode", gotohere.lng,
 								  gotohere.lat, (int)gotohere.alt, Color.Blue, commonsOverlay);
+
+
+			// add waypoint into commands
+			if (isTaggable)
+			{
+				tags.Add(gotohere);
+			}
+
+			AddTagToMap(MouseDownStart.Lat, MouseDownStart.Lng, 0);
+
 		}
 
 
@@ -3011,6 +3164,12 @@ namespace FooApplication
 		{
 			Configuration cg = new Configuration();
 			cg.Show();
+		}
+
+		private void BUT_Tagging_Click(object sender, EventArgs e)
+		{
+			Console.WriteLine("Taggable");
+			isTaggable = true;
 		}
 	}
 }

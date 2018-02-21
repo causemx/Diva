@@ -103,6 +103,16 @@ namespace FooApplication.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap if_camera_1055100 {
+            get {
+                object obj = ResourceManager.GetObject("if_camera_1055100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap if_code_fork_1608638 {
             get {
                 object obj = ResourceManager.GetObject("if_code_fork_1608638", resourceCulture);
@@ -176,6 +186,16 @@ namespace FooApplication.Properties {
         internal static System.Drawing.Bitmap if_pear_2003196 {
             get {
                 object obj = ResourceManager.GetObject("if_pear_2003196", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap if_price_tag_2639892 {
+            get {
+                object obj = ResourceManager.GetObject("if_price_tag_2639892", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

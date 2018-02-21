@@ -32,19 +32,19 @@ namespace FooApplication
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ClearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearAllMissionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.BUT_Takeoff = new FooApplication.Controls.MyButton();
-			this.BUT_Arm = new FooApplication.Controls.MyButton();
-			this.BUT_Auto = new FooApplication.Controls.MyButton();
-			this.BUT_Land = new FooApplication.Controls.MyButton();
-			this.BUT_ReadWPs = new FooApplication.Controls.MyButton();
-			this.BUT_WriteWPs = new FooApplication.Controls.MyButton();
+			this.button6 = new System.Windows.Forms.Button();
+			this.button5 = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.TXT_Mode = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.TXT_DefaultAlt = new System.Windows.Forms.TextBox();
@@ -74,22 +74,25 @@ namespace FooApplication
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.ts_lbl_gps = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.ts_lbl_battery = new System.Windows.Forms.ToolStripLabel();
 			this.TS_drones = new System.Windows.Forms.ToolStrip();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-			this.BUT_Connect = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.BUT_Rotation = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.BUT_Deplex = new System.Windows.Forms.ToolStripButton();
 			this.myMap = new FooApplication.Controls.MyGMap();
+			this.BUT_Connect = new System.Windows.Forms.ToolStripButton();
+			this.BUT_Rotation = new System.Windows.Forms.ToolStripButton();
+			this.BUT_Configure = new System.Windows.Forms.ToolStripButton();
+			this.BUT_Tagging = new System.Windows.Forms.ToolStripButton();
+			this.BUT_Deplex = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+			this.BUT_Addwp = new System.Windows.Forms.Button();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -150,145 +153,169 @@ namespace FooApplication
 			// groupBox1
 			// 
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Controls.Add(this.BUT_Takeoff);
-			this.groupBox1.Controls.Add(this.BUT_Arm);
-			this.groupBox1.Controls.Add(this.BUT_Auto);
-			this.groupBox1.Controls.Add(this.BUT_Land);
-			this.groupBox1.Controls.Add(this.BUT_ReadWPs);
-			this.groupBox1.Controls.Add(this.BUT_WriteWPs);
+			this.groupBox1.Controls.Add(this.BUT_Addwp);
+			this.groupBox1.Controls.Add(this.button6);
+			this.groupBox1.Controls.Add(this.button5);
+			this.groupBox1.Controls.Add(this.button4);
+			this.groupBox1.Controls.Add(this.button3);
+			this.groupBox1.Controls.Add(this.button2);
+			this.groupBox1.Controls.Add(this.button1);
 			this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.groupBox1.Location = new System.Drawing.Point(752, 6);
+			this.groupBox1.Location = new System.Drawing.Point(658, 6);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(250, 100);
+			this.groupBox1.Size = new System.Drawing.Size(344, 100);
 			this.groupBox1.TabIndex = 19;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Manual";
 			// 
-			// BUT_Takeoff
+			// button6
 			// 
-			this.BUT_Takeoff.BorderThickness = 2F;
-			this.BUT_Takeoff.Location = new System.Drawing.Point(169, 52);
-			this.BUT_Takeoff.Name = "BUT_Takeoff";
-			this.BUT_Takeoff.Size = new System.Drawing.Size(75, 25);
-			this.BUT_Takeoff.TabIndex = 5;
-			this.BUT_Takeoff.Text = "TakeOff";
-			this.BUT_Takeoff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
+			this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button6.ForeColor = System.Drawing.Color.White;
+			this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button6.Location = new System.Drawing.Point(89, 55);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(79, 39);
+			this.button6.TabIndex = 5;
+			this.button6.Text = "ReadWPs";
+			this.button6.UseVisualStyleBackColor = false;
+			this.button6.Click += new System.EventHandler(this.BUT_read_Click);
 			// 
-			// BUT_Arm
+			// button5
 			// 
-			this.BUT_Arm.BorderThickness = 2F;
-			this.BUT_Arm.Location = new System.Drawing.Point(169, 21);
-			this.BUT_Arm.Name = "BUT_Arm";
-			this.BUT_Arm.Size = new System.Drawing.Size(75, 25);
-			this.BUT_Arm.TabIndex = 4;
-			this.BUT_Arm.Text = "Arm";
-			this.BUT_Arm.Click += new System.EventHandler(this.BUT_Arm_Click);
+			this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button5.ForeColor = System.Drawing.Color.White;
+			this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button5.Location = new System.Drawing.Point(89, 12);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(79, 39);
+			this.button5.TabIndex = 4;
+			this.button5.Text = "WriteWPs";
+			this.button5.UseVisualStyleBackColor = false;
+			this.button5.Click += new System.EventHandler(this.BUT_write_Click);
 			// 
-			// BUT_Auto
+			// button4
 			// 
-			this.BUT_Auto.BorderThickness = 2F;
-			this.BUT_Auto.Location = new System.Drawing.Point(87, 52);
-			this.BUT_Auto.Name = "BUT_Auto";
-			this.BUT_Auto.Size = new System.Drawing.Size(75, 25);
-			this.BUT_Auto.TabIndex = 3;
-			this.BUT_Auto.Text = "Auto";
-			this.BUT_Auto.Click += new System.EventHandler(this.BUT_Auto_Click);
+			this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button4.ForeColor = System.Drawing.Color.White;
+			this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button4.Location = new System.Drawing.Point(174, 55);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(79, 39);
+			this.button4.TabIndex = 3;
+			this.button4.Text = "AUTO";
+			this.button4.UseVisualStyleBackColor = false;
+			this.button4.Click += new System.EventHandler(this.BUT_Auto_Click);
 			// 
-			// BUT_Land
+			// button3
 			// 
-			this.BUT_Land.BorderThickness = 2F;
-			this.BUT_Land.Location = new System.Drawing.Point(87, 21);
-			this.BUT_Land.Name = "BUT_Land";
-			this.BUT_Land.Size = new System.Drawing.Size(75, 25);
-			this.BUT_Land.TabIndex = 2;
-			this.BUT_Land.Text = "Land";
-			this.BUT_Land.Click += new System.EventHandler(this.BUT_Land_Click);
+			this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button3.ForeColor = System.Drawing.Color.White;
+			this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button3.Location = new System.Drawing.Point(174, 12);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(79, 39);
+			this.button3.TabIndex = 2;
+			this.button3.Text = "TakeOFF";
+			this.button3.UseVisualStyleBackColor = false;
+			this.button3.Click += new System.EventHandler(this.BUT_Takeoff_Click);
 			// 
-			// BUT_ReadWPs
+			// button2
 			// 
-			this.BUT_ReadWPs.BorderThickness = 2F;
-			this.BUT_ReadWPs.Location = new System.Drawing.Point(6, 52);
-			this.BUT_ReadWPs.Name = "BUT_ReadWPs";
-			this.BUT_ReadWPs.Size = new System.Drawing.Size(75, 25);
-			this.BUT_ReadWPs.TabIndex = 1;
-			this.BUT_ReadWPs.Text = "ReadWPs";
-			this.BUT_ReadWPs.Click += new System.EventHandler(this.BUT_read_Click);
+			this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button2.ForeColor = System.Drawing.Color.White;
+			this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button2.Location = new System.Drawing.Point(259, 55);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(79, 39);
+			this.button2.TabIndex = 1;
+			this.button2.Text = "Land";
+			this.button2.UseVisualStyleBackColor = false;
+			this.button2.Click += new System.EventHandler(this.BUT_Land_Click);
 			// 
-			// BUT_WriteWPs
+			// button1
 			// 
-			this.BUT_WriteWPs.BorderThickness = 2F;
-			this.BUT_WriteWPs.Location = new System.Drawing.Point(6, 21);
-			this.BUT_WriteWPs.Name = "BUT_WriteWPs";
-			this.BUT_WriteWPs.Size = new System.Drawing.Size(75, 25);
-			this.BUT_WriteWPs.TabIndex = 0;
-			this.BUT_WriteWPs.Tag = "";
-			this.BUT_WriteWPs.Text = "WriteWPs";
-			this.BUT_WriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
+			this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.ForeColor = System.Drawing.Color.White;
+			this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button1.Location = new System.Drawing.Point(259, 12);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(79, 39);
+			this.button1.TabIndex = 0;
+			this.button1.Text = "Arm";
+			this.button1.UseVisualStyleBackColor = false;
+			this.button1.Click += new System.EventHandler(this.BUT_Arm_Click);
 			// 
 			// TXT_Mode
 			// 
-			this.TXT_Mode.Location = new System.Drawing.Point(646, 5);
+			this.TXT_Mode.Location = new System.Drawing.Point(530, 3);
 			this.TXT_Mode.Name = "TXT_Mode";
-			this.TXT_Mode.Size = new System.Drawing.Size(100, 22);
+			this.TXT_Mode.Size = new System.Drawing.Size(80, 22);
 			this.TXT_Mode.TabIndex = 18;
 			this.TXT_Mode.Text = "NULL";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(585, 4);
+			this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(477, 5);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(55, 23);
+			this.label3.Size = new System.Drawing.Size(47, 19);
 			this.label3.TabIndex = 17;
 			this.label3.Text = "Mode";
 			// 
 			// TXT_DefaultAlt
 			// 
-			this.TXT_DefaultAlt.Location = new System.Drawing.Point(470, 5);
+			this.TXT_DefaultAlt.Location = new System.Drawing.Point(391, 3);
 			this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
-			this.TXT_DefaultAlt.Size = new System.Drawing.Size(100, 22);
+			this.TXT_DefaultAlt.Size = new System.Drawing.Size(80, 22);
 			this.TXT_DefaultAlt.TabIndex = 12;
 			this.TXT_DefaultAlt.Text = "10";
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(392, 4);
+			this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.Location = new System.Drawing.Point(321, 5);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(71, 23);
+			this.label2.Size = new System.Drawing.Size(64, 19);
 			this.label2.TabIndex = 11;
 			this.label2.Text = "Altitude";
 			// 
 			// TXT_homealt
 			// 
-			this.TXT_homealt.Location = new System.Drawing.Point(275, 4);
+			this.TXT_homealt.Location = new System.Drawing.Point(235, 3);
 			this.TXT_homealt.Name = "TXT_homealt";
-			this.TXT_homealt.Size = new System.Drawing.Size(100, 22);
+			this.TXT_homealt.Size = new System.Drawing.Size(80, 22);
 			this.TXT_homealt.TabIndex = 10;
 			// 
 			// TXT_homelng
 			// 
-			this.TXT_homelng.Location = new System.Drawing.Point(169, 3);
+			this.TXT_homelng.Location = new System.Drawing.Point(149, 3);
 			this.TXT_homelng.Name = "TXT_homelng";
-			this.TXT_homelng.Size = new System.Drawing.Size(100, 22);
+			this.TXT_homelng.Size = new System.Drawing.Size(80, 22);
 			this.TXT_homelng.TabIndex = 9;
 			// 
 			// TXT_homelat
 			// 
 			this.TXT_homelat.Location = new System.Drawing.Point(63, 3);
 			this.TXT_homelat.Name = "TXT_homelat";
-			this.TXT_homelat.Size = new System.Drawing.Size(100, 22);
+			this.TXT_homelat.Size = new System.Drawing.Size(80, 22);
 			this.TXT_homelat.TabIndex = 8;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(3, 3);
+			this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.Location = new System.Drawing.Point(3, 5);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(56, 23);
+			this.label1.Size = new System.Drawing.Size(51, 19);
 			this.label1.TabIndex = 7;
 			this.label1.Text = "Home";
 			// 
@@ -299,14 +326,14 @@ namespace FooApplication
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.Commands.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle14.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.Commands.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
 			this.Commands.ColumnHeadersHeight = 30;
 			this.Commands.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Command,
@@ -326,7 +353,7 @@ namespace FooApplication
 			this.Commands.Name = "Commands";
 			this.Commands.RowHeadersWidth = 50;
 			this.Commands.RowTemplate.Height = 24;
-			this.Commands.Size = new System.Drawing.Size(745, 80);
+			this.Commands.Size = new System.Drawing.Size(652, 80);
 			this.Commands.TabIndex = 6;
 			this.Commands.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.Commands.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -602,20 +629,11 @@ namespace FooApplication
             this.toolStripSeparator1,
             this.toolStripButton2,
             this.ts_lbl_battery});
-			this.toolStrip1.Location = new System.Drawing.Point(874, 0);
+			this.toolStrip1.Location = new System.Drawing.Point(879, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(125, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(120, 25);
 			this.toolStrip1.TabIndex = 10;
 			this.toolStrip1.Text = "toolStrip1";
-			// 
-			// toolStripButton1
-			// 
-			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = global::FooApplication.Properties.Resources.if_50_111142;
-			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton1.Text = "toolStripButton1";
 			// 
 			// ts_lbl_gps
 			// 
@@ -628,20 +646,11 @@ namespace FooApplication
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = global::FooApplication.Properties.Resources.if_battery_reduce_energy_charge_2203543;
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton2.Text = "toolStripButton2";
-			// 
 			// ts_lbl_battery
 			// 
 			this.ts_lbl_battery.Name = "ts_lbl_battery";
-			this.ts_lbl_battery.Size = new System.Drawing.Size(26, 22);
-			this.ts_lbl_battery.Text = "0%";
+			this.ts_lbl_battery.Size = new System.Drawing.Size(21, 22);
+			this.ts_lbl_battery.Text = "0v";
 			// 
 			// TS_drones
 			// 
@@ -674,77 +683,30 @@ namespace FooApplication
             this.toolStripSeparator3,
             this.BUT_Configure,
             this.toolStripSeparator4,
+            this.BUT_Tagging,
+            this.toolStripSeparator5,
             this.BUT_Deplex});
 			this.toolStrip2.Location = new System.Drawing.Point(382, 9);
 			this.toolStrip2.Name = "toolStrip2";
 			this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
-			this.toolStrip2.Size = new System.Drawing.Size(301, 58);
+			this.toolStrip2.Size = new System.Drawing.Size(330, 58);
 			this.toolStrip2.TabIndex = 13;
 			this.toolStrip2.Text = "toolStrip2";
-			// 
-			// BUT_Connect
-			// 
-			this.BUT_Connect.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BUT_Connect.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
-			this.BUT_Connect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.BUT_Connect.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BUT_Connect.Name = "BUT_Connect";
-			this.BUT_Connect.Size = new System.Drawing.Size(58, 51);
-			this.BUT_Connect.Text = "Connect";
-			this.BUT_Connect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BUT_Connect.Click += new System.EventHandler(this.BUT_Connect_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 54);
 			// 
-			// BUT_Rotation
-			// 
-			this.BUT_Rotation.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BUT_Rotation.Image = global::FooApplication.Properties.Resources.if_rotation_32;
-			this.BUT_Rotation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.BUT_Rotation.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BUT_Rotation.Name = "BUT_Rotation";
-			this.BUT_Rotation.Size = new System.Drawing.Size(60, 51);
-			this.BUT_Rotation.Text = "Rotation";
-			this.BUT_Rotation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BUT_Rotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
-			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 54);
 			// 
-			// BUT_Configure
-			// 
-			this.BUT_Configure.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BUT_Configure.Image = global::FooApplication.Properties.Resources.if_settings_32;
-			this.BUT_Configure.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.BUT_Configure.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BUT_Configure.Name = "BUT_Configure";
-			this.BUT_Configure.Size = new System.Drawing.Size(68, 51);
-			this.BUT_Configure.Text = "Configure";
-			this.BUT_Configure.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BUT_Configure.Click += new System.EventHandler(this.BUT_Configure_Click);
-			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
 			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 54);
-			// 
-			// BUT_Deplex
-			// 
-			this.BUT_Deplex.AutoSize = false;
-			this.BUT_Deplex.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BUT_Deplex.Image = global::FooApplication.Properties.Resources.if_code_fork_1608638;
-			this.BUT_Deplex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.BUT_Deplex.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BUT_Deplex.Name = "BUT_Deplex";
-			this.BUT_Deplex.Size = new System.Drawing.Size(60, 51);
-			this.BUT_Deplex.Text = "Deplex";
-			this.BUT_Deplex.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BUT_Deplex.Click += new System.EventHandler(this.BUT_Deplex_Click);
 			// 
 			// myMap
 			// 
@@ -775,6 +737,109 @@ namespace FooApplication
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
+			// 
+			// BUT_Connect
+			// 
+			this.BUT_Connect.AutoSize = false;
+			this.BUT_Connect.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BUT_Connect.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
+			this.BUT_Connect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Connect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Connect.Name = "BUT_Connect";
+			this.BUT_Connect.Size = new System.Drawing.Size(60, 51);
+			this.BUT_Connect.Text = "Connect";
+			this.BUT_Connect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Connect.Click += new System.EventHandler(this.BUT_Connect_Click);
+			// 
+			// BUT_Rotation
+			// 
+			this.BUT_Rotation.AutoSize = false;
+			this.BUT_Rotation.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BUT_Rotation.Image = global::FooApplication.Properties.Resources.if_rotation_32;
+			this.BUT_Rotation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Rotation.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Rotation.Name = "BUT_Rotation";
+			this.BUT_Rotation.Size = new System.Drawing.Size(60, 51);
+			this.BUT_Rotation.Text = "Rotation";
+			this.BUT_Rotation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Rotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
+			// 
+			// BUT_Configure
+			// 
+			this.BUT_Configure.AutoSize = false;
+			this.BUT_Configure.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BUT_Configure.Image = global::FooApplication.Properties.Resources.if_settings_32;
+			this.BUT_Configure.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Configure.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Configure.Name = "BUT_Configure";
+			this.BUT_Configure.Size = new System.Drawing.Size(60, 51);
+			this.BUT_Configure.Text = "Configure";
+			this.BUT_Configure.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Configure.Click += new System.EventHandler(this.BUT_Configure_Click);
+			// 
+			// BUT_Tagging
+			// 
+			this.BUT_Tagging.AutoSize = false;
+			this.BUT_Tagging.Font = new System.Drawing.Font("Tahoma", 9F);
+			this.BUT_Tagging.Image = global::FooApplication.Properties.Resources.if_price_tag_2639892;
+			this.BUT_Tagging.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Tagging.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Tagging.Name = "BUT_Tagging";
+			this.BUT_Tagging.Size = new System.Drawing.Size(60, 51);
+			this.BUT_Tagging.Text = "Tagging";
+			this.BUT_Tagging.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Tagging.Click += new System.EventHandler(this.BUT_Tagging_Click);
+			// 
+			// BUT_Deplex
+			// 
+			this.BUT_Deplex.AutoSize = false;
+			this.BUT_Deplex.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BUT_Deplex.Image = global::FooApplication.Properties.Resources.if_code_fork_1608638;
+			this.BUT_Deplex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.BUT_Deplex.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BUT_Deplex.Name = "BUT_Deplex";
+			this.BUT_Deplex.Size = new System.Drawing.Size(60, 51);
+			this.BUT_Deplex.Text = "Deplex";
+			this.BUT_Deplex.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BUT_Deplex.Click += new System.EventHandler(this.BUT_Deplex_Click);
+			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton1.Image = global::FooApplication.Properties.Resources.if_50_111142;
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton1.Text = "toolStripButton1";
+			// 
+			// toolStripButton2
+			// 
+			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton2.Image = global::FooApplication.Properties.Resources.if_battery_reduce_energy_charge_2203543;
+			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton2.Name = "toolStripButton2";
+			this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton2.Text = "toolStripButton2";
+			// 
+			// BUT_Addwp
+			// 
+			this.BUT_Addwp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+			this.BUT_Addwp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BUT_Addwp.ForeColor = System.Drawing.Color.White;
+			this.BUT_Addwp.Image = global::FooApplication.Properties.Resources.if_camera_1055100;
+			this.BUT_Addwp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.BUT_Addwp.Location = new System.Drawing.Point(4, 52);
+			this.BUT_Addwp.Name = "BUT_Addwp";
+			this.BUT_Addwp.Size = new System.Drawing.Size(79, 39);
+			this.BUT_Addwp.TabIndex = 6;
+			this.BUT_Addwp.Text = "Add";
+			this.BUT_Addwp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.BUT_Addwp.UseVisualStyleBackColor = false;
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 54);
 			// 
 			// Planner
 			// 
@@ -861,14 +926,17 @@ namespace FooApplication
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private GroupBox groupBox1;
-		private MyButton BUT_Takeoff;
-		private MyButton BUT_Arm;
-		private MyButton BUT_Auto;
-		private MyButton BUT_Land;
-		private MyButton BUT_ReadWPs;
-		private MyButton BUT_WriteWPs;
 		private MyGMap myMap;
 		private ToolStripButton BUT_Deplex;
 		private ToolStripSeparator toolStripSeparator4;
+		private Button button1;
+		private Button BUT_Addwp;
+		private Button button6;
+		private Button button5;
+		private Button button4;
+		private Button button3;
+		private Button button2;
+		private ToolStripButton BUT_Tagging;
+		private ToolStripSeparator toolStripSeparator5;
 	}
 }

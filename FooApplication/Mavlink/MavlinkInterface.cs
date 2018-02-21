@@ -292,6 +292,79 @@ namespace FooApplication.Mavlink
 						}
 					}
 
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.MISSION_CURRENT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var wpcur = mavlinkMessage.ToStructure<MAVLink.mavlink_mission_current_t>();
+
+							int wpno = 0;
+							int lastautowp = 0;
+
+							int oldwp = (int)wpno;
+
+							wpno = wpcur.seq;
+
+							if (MAV.mode == 4 && wpno != 0)
+							{
+								lastautowp = (int)wpno;
+							}
+
+							Console.WriteLine("wpno: " + wpno);
+							Console.WriteLine("lastautowp: " + lastautowp);
+
+							/**
+							if (mode.ToLower() == "auto" && wpno != 0)
+							{
+								lastautowp = (int)wpno;
+							}
+
+							if (oldwp != wpno && MainV2.speechEnable && MainV2.comPort.MAV.cs == this &&
+								Settings.Instance.GetBoolean("speechwaypointenabled"))
+							{
+								MainV2.speechEngine.SpeakAsync(Common.speechConversion("" + Settings.Instance["speechwaypoint"]));
+							}**/
+
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.WAYPOINT_CURRENT);
+						}
+					}
+
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.MISSION_CURRENT))
+					{
+						if (mavlinkMessage != null)
+						{
+							var wpcur = mavlinkMessage.ToStructure<MAVLink.mavlink_mission_current_t>();
+
+							int wpno = 0;
+							int lastautowp = 0;
+
+							int oldwp = (int)wpno;
+
+							wpno = wpcur.seq;
+
+							if (MAV.mode == 4 && wpno != 0)
+							{
+								lastautowp = (int)wpno;
+							}
+
+							/**
+							if (mode.ToLower() == "auto" && wpno != 0)
+							{
+								lastautowp = (int)wpno;
+							}
+
+							if (oldwp != wpno && MainV2.speechEnable && MainV2.comPort.MAV.cs == this &&
+								Settings.Instance.GetBoolean("speechwaypointenabled"))
+							{
+								MainV2.speechEngine.SpeakAsync(Common.speechConversion("" + Settings.Instance["speechwaypoint"]));
+							}**/
+
+							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.WAYPOINT_CURRENT);
+						}
+					}
+
+
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GLOBAL_POSITION_INT))
 					{
 						if (mavlinkMessage != null)
