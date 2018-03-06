@@ -310,8 +310,6 @@ namespace FooApplication.Mavlink
 								lastautowp = (int)wpno;
 							}
 
-							Console.WriteLine("wpno: " + wpno);
-							Console.WriteLine("lastautowp: " + lastautowp);
 
 							/**
 							if (mode.ToLower() == "auto" && wpno != 0)
