@@ -3057,7 +3057,8 @@ namespace FooApplication
 
 				AddWPToMap(comPort.MAV.current_lat, comPort.MAV.current_lng, 10);
 
-				await Task.Delay(TimeSpan.FromSeconds(10), _tokenSource.Token);
+				// set the time span
+				await Task.Delay(TimeSpan.FromSeconds(5), _tokenSource.Token);
 			}
 		}
 
