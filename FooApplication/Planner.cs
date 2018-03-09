@@ -1565,7 +1565,7 @@ namespace FooApplication
 			{
 				if (objectsOverlay != null) // hasnt been created yet
 				{
-					//objectsOverlay.Markers.Clear();
+					objectsOverlay.Markers.Clear();
 				}
 
 				// process and add home to the list
@@ -1803,6 +1803,10 @@ namespace FooApplication
 
 				//RegeneratePolygon();
 
+				//fullpointlist.ForEach(i => Console.WriteLine("{0}\t", i));
+
+				find_angle(fullpointlist);
+
 				RegenerateWPRoute(fullpointlist);
 
 				if (fullpointlist.Count > 0)
@@ -1838,6 +1842,28 @@ namespace FooApplication
 			}
 		}
 
+
+		private double find_angle(List<PointLatLngAlt> points)
+		{
+			log.Info("find_angle");
+
+			for (int i = 1; i < points.Count-1; i++)
+			{
+				PointLatLng p1 = new PointLatLng(points[i-1].Lat, points[i-1].Lng);
+				PointLatLng p2 = new PointLatLng(points[i].Lat, points[i].Lng);
+				PointLatLng p3 = new PointLatLng(points[i+1].Lat, points[i+1].Lng);
+
+				double p12 = Math.Sqrt(Math.Pow(p1.Lat - p2.Lat, 2) + Math.Pow(p1.Lng - p2.Lng, 2));
+				double p23 = Math.Sqrt(Math.Pow(p2.Lat - p3.Lat, 2) + Math.Pow(p2.Lng - p3.Lng, 2));
+				double p13 = Math.Sqrt(Math.Pow(p1.Lat - p3.Lat, 2) + Math.Pow(p1.Lng - p3.Lng, 2));
+
+				double angle = Math.Acos((Math.Pow(p12,2) + Math.Pow(p13,2) - Math.Pow(p23,2)) / (2*p12*p13));
+
+				log.Debug("angle: " + angle);
+			}
+
+			return 0;
+		}
 
 		private void RegenerateWPRoute(List<PointLatLngAlt> fullpointlist)
 		{
@@ -2050,7 +2076,6 @@ namespace FooApplication
 
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
-		
 
 			// check home
 			Locationwp home = new Locationwp();
@@ -2312,7 +2337,7 @@ namespace FooApplication
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
 					{
 						MessageBox.Show("Upload failed, please reduce the number of wp's");
-						Console.WriteLine("Upload failed, please reduce the number of wp's");
+						log.Error("Upload failed, please reduce the number of wp's");
 						return;
 					}
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
@@ -2321,7 +2346,7 @@ namespace FooApplication
 						MessageBox.Show("Upload failed, mission was rejected byt the Mav,\n " +
 						                "item had a bad option wp# " + a + " " +
 						                ans);
-						Console.WriteLine("Upload failed, mission was rejected byt the Mav,\n " +
+						log.Error("Upload failed, mission was rejected byt the Mav,\n " +
 							"item had a bad option wp# " + a + " " +
 							ans);
 						return;

@@ -868,7 +868,6 @@ namespace FooApplication.Mavlink
 			MAV.compid = message.compid;
 			MAV.recvpacketcount = message.seq;
 
-			Console.WriteLine("mav_sysid: " + MAV.sysid);
 		}
 
 		bool logreadmode = false;
@@ -961,8 +960,7 @@ namespace FooApplication.Mavlink
 								// reset for next line
 								buildplaintxtline = "";
 							}
-
-							Console.WriteLine((char)buffer[0]);
+						
 							buildplaintxtline += (char)buffer[0];
 						}
 						_bytesReceivedSubj.OnNext(1);
@@ -1503,8 +1501,6 @@ namespace FooApplication.Mavlink
 				}
 
 
-				Console.WriteLine("mission_item: " + wp.current);
-
 				if (wp.current == 2)
 				{
 					// guide mode wp
@@ -1553,7 +1549,6 @@ namespace FooApplication.Mavlink
 					rallypt.target_component = compid;
 				}
 
-				Console.WriteLine("rallypt: " + rallypt.idx);
 
 				MAVlist[rallypt.target_system, rallypt.target_component].rallypoints[rallypt.idx] = rallypt;
 
