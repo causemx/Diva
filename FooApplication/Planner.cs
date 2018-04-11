@@ -2767,20 +2767,21 @@ namespace FooApplication
 		{
 			if (!comPort.BaseStream.IsOpen)
 			{
-				Console.WriteLine("basestream have opened");
+				log.Error("basestream have opened");
 				return;
 			}
 
 			// arm the MAV
 			try
 			{
-				bool ans = comPort.doARM(true);
+				log.InfoFormat("mav armed: {0}", comPort.MAV.armed);
+				bool ans = comPort.doARM(!comPort.MAV.armed);
 				if (ans == false)
-					Console.WriteLine("arm failed");
+					log.Error("arm failed");
 			}
 			catch
 			{
-				Console.WriteLine("unknown arm failed");
+				log.Error("unknown arm failed");
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using FooApplication.Comms;
+using FooApplication.Controls;
 using FooApplication.Utilities;
 using log4net;
 using System;
@@ -146,6 +147,8 @@ namespace FooApplication.Mavlink
 		private int _bps1 = 0;
 		private int _bps2 = 0;
 		private bool useLocation = false;
+		private ProgressDialogV2 frmProgressReporter;
+
 
 		// threading
 		private bool threadRunnable = false;
@@ -532,9 +535,7 @@ namespace FooApplication.Mavlink
 
 		public void open()
 		{
-			MAVlist.Clear();
-			openBg(false);
-			log.Info("connection establish");
+			Open(false);
 		}
 
 		public void close()
@@ -549,9 +550,58 @@ namespace FooApplication.Mavlink
 			}
 		}
 
-		public void openBg(bool getparams)
+		public void Open(bool getparams, bool skipconnectedcheck = false)
 		{
-			// frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MavlinkConnecting);
+			if (BaseStream.IsOpen && !skipconnectedcheck)
+			{
+				return;
+			}
+
+			MAVlist.Clear();
+
+			frmProgressReporter = new ProgressDialogV2
+			{
+				StartPosition = FormStartPosition.CenterScreen,
+				Text = "Connection",
+			};
+
+			if (getparams)
+			{
+				frmProgressReporter.DoWork += FrmProgressReporterDoWorkAndParams;
+			}
+			else
+			{
+				frmProgressReporter.DoWork += FrmProgressReporterDoWorkNOParams;
+			}
+			frmProgressReporter.UpdateProgressAndStatus(-1, "??");
+			// ThemeManager.ApplyThemeTo(frmProgressReporter);
+
+			frmProgressReporter.RunBackgroundOperationAsync();
+
+			frmProgressReporter.Dispose();
+
+			/**
+			if (ParamListChanged != null)
+			{
+				ParamListChanged(this, null);
+			}*/
+
+
+		}
+
+		void FrmProgressReporterDoWorkAndParams(object sender, ProgressWorkerEventArgs e, object passdata = null)
+		{
+			OpenBg(sender, true, e);
+		}
+
+		void FrmProgressReporterDoWorkNOParams(object sender, ProgressWorkerEventArgs e, object passdata = null)
+		{
+			OpenBg(sender, false, e);
+		}
+
+		public void OpenBg(object PRsender, bool getparams, ProgressWorkerEventArgs progressWorkerEventArgs)
+		{
+			frmProgressReporter.UpdateProgressAndStatus(-1, "??");
 
 			giveComport = true;
 
@@ -574,8 +624,12 @@ namespace FooApplication.Mavlink
 
 					if (BaseStream is UdpSerial)
 					{
-						// TODO: Read/Write prarmeters future	
-						((UdpSerial)BaseStream).CancelConnect = true;
+						progressWorkerEventArgs.CancelRequestChanged += (o, e) =>
+						{
+							((UdpSerial)BaseStream).CancelConnect = true;
+							((ProgressWorkerEventArgs)o)
+								.CancelAcknowledged = true;
+						};
 					
 					}
 
@@ -604,7 +658,7 @@ namespace FooApplication.Mavlink
 				countDown.Elapsed += (sender, e) =>
 				{
 					int secondsRemaining = (deadline - e.SignalTime).Seconds;
-					// frmProgressReporter.UpdateProgressAndStatus(-1, string.Format(Strings.Trying, secondsRemaining));
+					frmProgressReporter.UpdateProgressAndStatus(-1, string.Format("??", secondsRemaining));
 					if (secondsRemaining > 0) countDown.Start();
 				};
 				countDown.Start();
@@ -617,6 +671,16 @@ namespace FooApplication.Mavlink
 				while (true)
 				{
 
+					if (progressWorkerEventArgs.CancelRequested)
+					{
+						progressWorkerEventArgs.CancelAcknowledged = true;
+						countDown.Stop();
+						if (BaseStream.IsOpen)
+							BaseStream.Close();
+						giveComport = false;
+						return;
+					}
+
 					log.Info(DateTime.Now.Millisecond + " Start connect loop ");
 
 					if (DateTime.Now > deadline)
@@ -628,10 +692,12 @@ namespace FooApplication.Mavlink
 
 						if (hbseen)
 						{
+							progressWorkerEventArgs.ErrorMessage = Strings.Only1Hb;
 							throw new Exception(Strings.Only1HbD);
 						}
 						else
 						{
+							progressWorkerEventArgs.ErrorMessage = Strings.Only1Hb;
 							throw new Exception("Can not establish a connection\n");
 						}
 					}
@@ -705,24 +771,21 @@ namespace FooApplication.Mavlink
 
 				getVersion();
 
-				
-
-				/**
 				if (getparams)
 				{
 					frmProgressReporter.UpdateProgressAndStatus(0,
-						"Getting Params.. (sysid " + MAV.sysid + " compid " + MAV.compid + ") ");
-
+					   "Getting Params.. (sysid " + MAV.sysid + " compid " + MAV.compid + ") ");
 					getParamListBG();
 				}
 
+				
 				if (frmProgressReporter.doWorkArgs.CancelAcknowledged == true)
 				{
 					giveComport = false;
 					if (BaseStream.IsOpen)
 						BaseStream.Close();
 					return;
-				} */
+				}
 			}
 			catch (Exception e)
 			{
@@ -732,14 +795,255 @@ namespace FooApplication.Mavlink
 				}
 				catch {	}
 				giveComport = false;
+				if (string.IsNullOrEmpty(progressWorkerEventArgs.ErrorMessage))
+					progressWorkerEventArgs.ErrorMessage = Strings.ConnectFailed;
+				log.Error(e);
 				throw;
 			}
 			//frmProgressReporter.Close();
 			giveComport = false;
-			// frmProgressReporter.UpdateProgressAndStatus(100, Strings.Done);
+			frmProgressReporter.UpdateProgressAndStatus(100, "done");
 			log.Info("Done open " + MAV.sysid + " " + MAV.compid);
 			MAV.packetslost = 0;
 			MAV.synclost = 0;
+		}
+
+		/// <summary>
+		/// Get param list from apm
+		/// </summary>
+		/// <returns></returns>
+		private Dictionary<string, double> getParamListBG()
+		{
+			giveComport = true;
+			List<int> indexsreceived = new List<int>();
+
+			// create new list so if canceled we use the old list
+			MAVLinkParamList newparamlist = new MAVLinkParamList();
+
+			int param_total = 1;
+
+			mavlink_param_request_list_t req = new mavlink_param_request_list_t();
+			req.target_system = MAV.sysid;
+			req.target_component = MAV.compid;
+
+			generatePacket((byte)MAVLINK_MSG_ID.PARAM_REQUEST_LIST, req);
+
+			DateTime start = DateTime.Now;
+			DateTime restart = DateTime.Now;
+
+			DateTime lastmessage = DateTime.MinValue;
+
+			//hires.Stopwatch stopwatch = new hires.Stopwatch();
+			int packets = 0;
+			int retry = 0;
+			bool onebyone = false;
+			DateTime lastonebyone = DateTime.MinValue;
+
+			do
+			{
+				/*
+				if (frmProgressReporter.doWorkArgs.CancelRequested)
+				{
+					frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
+					giveComport = false;
+					frmProgressReporter.doWorkArgs.ErrorMessage = "User Canceled";
+					return MAV.param;
+				}*/
+
+				// 4 seconds between valid packets
+				if (!(start.AddMilliseconds(4000) > DateTime.Now) && !logreadmode)
+				{
+					if (retry < 6)
+					{
+						retry++;
+						generatePacket((byte)MAVLINK_MSG_ID.PARAM_REQUEST_LIST, req);
+						start = DateTime.Now;
+						continue;
+					}
+
+					onebyone = true;
+
+					if (lastonebyone.AddMilliseconds(600) < DateTime.Now)
+					{
+						log.Info("Get param 1 by 1 - got " + indexsreceived.Count + " of " + param_total);
+
+						int queued = 0;
+						// try getting individual params
+						for (short i = 0; i <= (param_total - 1); i++)
+						{
+							if (!indexsreceived.Contains(i))
+							{
+								/*
+								if (frmProgressReporter.doWorkArgs.CancelRequested)
+								{
+									frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
+									giveComport = false;
+									frmProgressReporter.doWorkArgs.ErrorMessage = "User Canceled";
+									return MAV.param;
+								}*/
+
+								// prevent dropping out of this get params loop
+								try
+								{
+									queued++;
+
+									mavlink_param_request_read_t req2 = new mavlink_param_request_read_t();
+									req2.target_system = MAV.sysid;
+									req2.target_component = MAV.compid;
+									req2.param_index = i;
+									req2.param_id = new byte[] { 0x0 };
+
+									Array.Resize(ref req2.param_id, 16);
+
+									generatePacket((byte)MAVLINK_MSG_ID.PARAM_REQUEST_READ, req2);
+
+									if (queued >= 10)
+									{
+										lastonebyone = DateTime.Now;
+										break;
+									}
+								}
+								catch (Exception excp)
+								{
+									log.Info("GetParam Failed index: " + i + " " + excp);
+									throw excp;
+								}
+							}
+						}
+					}
+				}
+
+				//Console.WriteLine(DateTime.Now.Millisecond + " gp0 ");
+
+				MAVLinkMessage buffer = readPacket();
+				//Console.WriteLine(DateTime.Now.Millisecond + " gp1 ");
+				if (buffer.Length > 5)
+				{
+					packets++;
+					// stopwatch.Start();
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.PARAM_VALUE && buffer.sysid == req.target_system && buffer.compid == req.target_component)
+					{
+						restart = DateTime.Now;
+						// if we are doing one by one dont update start time
+						if (!onebyone)
+							start = DateTime.Now;
+
+						mavlink_param_value_t par = buffer.ToStructure<mavlink_param_value_t>();
+
+						// set new target
+						param_total = (par.param_count);
+						newparamlist.TotalReported = param_total;
+
+						string paramID = ASCIIEncoding.ASCII.GetString(par.param_id);
+
+						int pos = paramID.IndexOf('\0');
+						if (pos != -1)
+						{
+							paramID = paramID.Substring(0, pos);
+						}
+
+						// check if we already have it
+						if (indexsreceived.Contains(par.param_index))
+						{
+							log.Info("Already got " + (par.param_index) + " '" + paramID + "'");
+							// this.frmProgressReporter.UpdateProgressAndStatus((indexsreceived.Count * 100) / param_total,
+							//	"Already Got param " + paramID);
+							continue;
+						}
+
+						//Console.WriteLine(DateTime.Now.Millisecond + " gp2 ");
+
+						/**
+						if (!MainV2.MONO)
+							log.Info(DateTime.Now.Millisecond + " got param " + (par.param_index) + " of " +
+									 (par.param_count) + " name: " + paramID);*/
+
+						//Console.WriteLine(DateTime.Now.Millisecond + " gp2a ");
+
+						if (MAV.apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+						{
+							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
+							newparamlist[paramID] = new MAVLinkParam(paramID, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
+						}
+						else
+						{
+							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
+							newparamlist[paramID] = new MAVLinkParam(paramID, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
+						}
+
+						//Console.WriteLine(DateTime.Now.Millisecond + " gp2b ");
+
+						// exclude index of 65535
+						if (par.param_index != 65535)
+							indexsreceived.Add(par.param_index);
+
+						MAV.param_types[paramID] = (MAV_PARAM_TYPE)par.param_type;
+
+						//Console.WriteLine(DateTime.Now.Millisecond + " gp3 ");
+
+						// this.frmProgressReporter.UpdateProgressAndStatus((indexsreceived.Count * 100) / param_total,
+						// 	Strings.Gotparam + paramID);
+
+						// we hit the last param - lets escape eq total = 176 index = 0-175
+						if (par.param_index == (param_total - 1))
+							start = DateTime.MinValue;
+					}
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.STATUSTEXT)
+					{
+						var msg = buffer.ToStructure<mavlink_statustext_t>();
+
+						string logdata = Encoding.ASCII.GetString(msg.text);
+
+						int ind = logdata.IndexOf('\0');
+						if (ind != -1)
+							logdata = logdata.Substring(0, ind);
+
+						if (logdata.ToLower().Contains("copter") || logdata.ToLower().Contains("rover") ||
+							logdata.ToLower().Contains("plane"))
+						{
+							MAV.VersionString = logdata;
+						}
+						else if (logdata.ToLower().Contains("nuttx"))
+						{
+							MAV.SoftwareVersions = logdata;
+						}
+						else if (logdata.ToLower().Contains("px4v2"))
+						{
+							MAV.SerialString = logdata;
+						}
+						else if (logdata.ToLower().Contains("frame"))
+						{
+							MAV.FrameString = logdata;
+						}
+					}
+					//stopwatch.Stop();
+					// Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+					// Console.WriteLine(DateTime.Now.Millisecond + " gp4 " + BaseStream.BytesToRead);
+				}
+				if (logreadmode && logplaybackfile.BaseStream.Position >= logplaybackfile.BaseStream.Length)
+				{
+					break;
+				}
+				if (!logreadmode && !BaseStream.IsOpen)
+				{
+					var exp = new Exception("Not Connected");
+					// frmProgressReporter.doWorkArgs.ErrorMessage = exp.Message;
+					throw exp;
+				}
+			} while (indexsreceived.Count < param_total);
+
+			if (indexsreceived.Count != param_total)
+			{
+				var exp = new Exception("Missing Params " + indexsreceived.Count + " vs " + param_total);
+				// frmProgressReporter.doWorkArgs.ErrorMessage = exp.Message;
+				throw exp;
+			}
+			giveComport = false;
+
+			MAV.param.Clear();
+			MAV.param.TotalReported = param_total;
+			MAV.param.AddRange(newparamlist);
+			return MAV.param;
 		}
 
 		public List<PointLatLngAlt> getRallyPoints()
@@ -2005,9 +2309,8 @@ namespace FooApplication.Mavlink
 
 			log.InfoFormat("doCommand cmd {0} {1} {2} {3} {4} {5} {6} {7}", actionid.ToString(), p1, p2, p3, p4, p5, p6,
 				p7);
-			
-			generatePacket((byte)MAVLINK_MSG_ID.COMMAND_LONG, req, sysid, compid);
 
+			generatePacket((byte)MAVLINK_MSG_ID.COMMAND_LONG, req, sysid, compid);
 
 			if (!requireack)
 			{
@@ -2059,8 +2362,12 @@ namespace FooApplication.Mavlink
 				return true;
 			}
 
+			DateTime fromNow = DateTime.Now;
+			log.WarnFormat("datefromnow: {0}", DateTime.Now);
 			while (true)
 			{
+				
+
 				if (DateTime.Now > GUI.AddMilliseconds(100))
 				{
 					GUI = DateTime.Now;
@@ -2096,7 +2403,6 @@ namespace FooApplication.Mavlink
 						}
 
 						log.InfoFormat("doCommand cmd resp {0} - {1}", (MAV_CMD)ack.command, (MAV_RESULT)ack.result);
-						Console.WriteLine(ack.ToString());
 
 						if (ack.result == (byte)MAV_RESULT.ACCEPTED)
 						{
@@ -2110,6 +2416,8 @@ namespace FooApplication.Mavlink
 						}
 					}
 				}
+
+				log.WarnFormat("duration: {0}", (DateTime.Now - fromNow));
 			}
 		}
 
