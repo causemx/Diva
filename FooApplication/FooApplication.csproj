@@ -129,11 +129,17 @@
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
-    <Compile Include="Controls\Configuration.cs">
+    <Compile Include="Controls\Configure.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\Configuration.Designer.cs">
-      <DependentUpon>Configuration.cs</DependentUpon>
+    <Compile Include="Controls\Configure.Designer.cs">
+      <DependentUpon>Configure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfigureTab1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigureTab1.Designer.cs">
+      <DependentUpon>ConfigureTab1.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ControlTuning.cs">
       <SubType>UserControl</SubType>
@@ -153,6 +159,9 @@
     </Compile>
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MyGroupBox.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MyListView.cs">
       <SubType>Form</SubType>
@@ -197,8 +206,11 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
-    <EmbeddedResource Include="Controls\Configuration.resx">
-      <DependentUpon>Configuration.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Configure.resx">
+      <DependentUpon>Configure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigureTab1.resx">
+      <DependentUpon>ConfigureTab1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlTuning.resx">
       <DependentUpon>ControlTuning.cs</DependentUpon>
@@ -236,6 +248,7 @@
     </Compile>
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

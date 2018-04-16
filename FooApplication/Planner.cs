@@ -3047,8 +3047,7 @@ namespace FooApplication
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-			Configuration cg = new Configuration();
-			cg.Show();
+		
 		}
 
 		private bool isTagging = false;
