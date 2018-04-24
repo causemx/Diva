@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FooApplication", "FooApplication\FooApplication.csproj", "{87526DB5-208B-4E1E-B5AC-9A463DBFDDC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diva", "FooApplication\Diva.csproj", "{87526DB5-208B-4E1E-B5AC-9A463DBFDDC9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6F701732-2517-46EA-9D37-3B37D0C38B95} = {6F701732-2517-46EA-9D37-3B37D0C38B95}
 		{E06DEF77-F933-42FB-AFD7-DB2D0D8D6A98} = {E06DEF77-F933-42FB-AFD7-DB2D0D8D6A98}
@@ -65,5 +65,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D0C39D9D-BED0-418B-9A5E-713176CAF40C} = {FED99769-BD8A-44AC-8B1B-1D8BD16E0028}
 		{E06DEF77-F933-42FB-AFD7-DB2D0D8D6A98} = {FED99769-BD8A-44AC-8B1B-1D8BD16E0028}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFBD1594-D5F0-426E-85D6-EBC7FA96E31C}
 	EndGlobalSection
 EndGlobal
