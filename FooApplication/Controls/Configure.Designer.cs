@@ -33,10 +33,8 @@
 			this.btn_planner = new System.Windows.Forms.Button();
 			this.btn_tuning = new System.Windows.Forms.Button();
 			this.btn_geofence = new System.Windows.Forms.Button();
-			this.geofence_panel = new System.Windows.Forms.Panel();
-			this.configureTab11 = new FooApplication.Controls.ConfigureTab1();
+			this.configTuning1 = new FooApplication.Controls.ConfigTuning();
 			this.side_panel.SuspendLayout();
-			this.geofence_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// side_panel
@@ -92,34 +90,24 @@
 			this.btn_geofence.UseVisualStyleBackColor = true;
 			this.btn_geofence.Click += new System.EventHandler(this.btn_geofence_Click);
 			// 
-			// geofence_panel
+			// configTuning1
 			// 
-			this.geofence_panel.Controls.Add(this.configureTab11);
-			this.geofence_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.geofence_panel.Location = new System.Drawing.Point(277, 0);
-			this.geofence_panel.Name = "geofence_panel";
-			this.geofence_panel.Size = new System.Drawing.Size(708, 603);
-			this.geofence_panel.TabIndex = 1;
-			// 
-			// configureTab11
-			// 
-			this.configureTab11.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configureTab11.Location = new System.Drawing.Point(0, 0);
-			this.configureTab11.Name = "configureTab11";
-			this.configureTab11.Size = new System.Drawing.Size(708, 603);
-			this.configureTab11.TabIndex = 0;
+			this.configTuning1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.configTuning1.Location = new System.Drawing.Point(277, 0);
+			this.configTuning1.Name = "configTuning1";
+			this.configTuning1.Size = new System.Drawing.Size(708, 603);
+			this.configTuning1.TabIndex = 1;
 			// 
 			// Configure
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(985, 603);
-			this.Controls.Add(this.geofence_panel);
+			this.Controls.Add(this.configTuning1);
 			this.Controls.Add(this.side_panel);
 			this.Name = "Configure";
 			this.Text = "Configure";
 			this.side_panel.ResumeLayout(false);
-			this.geofence_panel.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -131,7 +119,6 @@
 		private System.Windows.Forms.Button btn_geofence;
 		private System.Windows.Forms.Button btn_planner;
 		private System.Windows.Forms.Button btn_help;
-		private System.Windows.Forms.Panel geofence_panel;
-		private ConfigureTab1 configureTab11;
+		private ConfigTuning configTuning1;
 	}
 }

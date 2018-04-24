@@ -22,11 +22,11 @@ namespace FooApplication.Controls
 		public MyGroupBox()
 		{
 			this.DoubleBuffered = true;
-			this.TitleBackColor = Color.LightGray;
+			this.TitleBackColor = Color.Gray;
 			this.TitleForeColor = Color.White;
 			this.TitleFont = new Font(this.Font.FontFamily, Font.Size + 8, FontStyle.Bold);
 			this.BackColor = Color.Transparent;
-			this.Radious = 10;
+			this.Radious = 5;
 			this.TitleHatchStyle = HatchStyle.Percent60;
 			this.TitlePadding = 5;
 		}

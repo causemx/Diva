@@ -34,7 +34,7 @@ namespace FooApplication
 
 		public static List<MavlinkInterface> comPorts = new List<MavlinkInterface>();
 
-		public MavlinkInterface comPort
+		public static MavlinkInterface comPort
 		{
 			get
 			{
@@ -45,9 +45,11 @@ namespace FooApplication
 				if (_comPort == value)
 					return;
 				_comPort = value;
-				_comPort.MavChanged -= comPort_MavChanged;
-				_comPort.MavChanged += comPort_MavChanged;
-				comPort_MavChanged(null, null);
+
+				// the behavior is used by mission planner 
+				// _comPort.MavChanged -= comPort_MavChanged;
+				// _comPort.MavChanged += comPort_MavChanged;
+				// comPort_MavChanged(null, null);
 			}
 		}
 
@@ -2743,7 +2745,7 @@ namespace FooApplication
 					mav.MAV.GuidedMode.z = 10;
 					AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
 					AddRouteOverlay(comPorts.Count);
-					this.comPort = mav;
+					comPort = mav;
 				}
 				catch (Exception Exp)
 				{
@@ -2925,7 +2927,7 @@ namespace FooApplication
 			
 			ToolStripButton tsb = (ToolStripButton)sender;
 			SelectToolStripButton(tsb);
-			this.comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
+			comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
 		}
 
 		private void SelectToolStripButton(ToolStripButton selected_button)

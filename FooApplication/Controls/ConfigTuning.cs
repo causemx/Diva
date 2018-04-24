@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FooApplication.Controls
 {
-	public partial class ConfigureTab1 : UserControl
+	public partial class ConfigTuning : UserControl
 	{
-		public ConfigureTab1()
+		public ConfigTuning()
 		{
 			InitializeComponent();
 		}
