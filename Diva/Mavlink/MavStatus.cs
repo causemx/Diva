@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FooApplication.Mavlink
+namespace Diva.Mavlink
 {
 	public class MavStatus : MAVLink, IDisposable
 	{

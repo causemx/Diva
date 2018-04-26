@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace FooApplication.Controls
+namespace Diva.Controls
 {
 	public class MyButton : Control
 	{

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace FooApplication
+namespace Diva
 {
 	static class Program
 	{

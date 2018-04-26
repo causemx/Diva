@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FooApplication.Controls
+namespace Diva.Controls
 {
 	public partial class ProgressDialogV2 : Form
 	{

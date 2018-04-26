@@ -1,4 +1,4 @@
-﻿namespace FooApplication.Controls
+﻿namespace Diva.Controls
 {
 	partial class ProgressDialogV2
 	{
@@ -65,7 +65,7 @@
 			// 
 			// img_warning
 			// 
-			this.img_warning.Image = global::FooApplication.Properties.Resources.if_warning_32;
+			this.img_warning.Image = global::Diva.Properties.Resources.if_warning_32;
 			this.img_warning.Location = new System.Drawing.Point(63, 117);
 			this.img_warning.Name = "img_warning";
 			this.img_warning.Size = new System.Drawing.Size(32, 32);

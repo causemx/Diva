@@ -1,4 +1,4 @@
-﻿using FooApplication.Properties;
+﻿using Diva.Properties;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FooApplication.Utilities
+namespace Diva.Utilities
 {
 	public static class Utility
 	{

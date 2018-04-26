@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using FooApplication.Controls;
+using Diva.Controls;
 
-namespace FooApplication
+namespace Diva
 {
 	partial class Planner
 	{
@@ -81,7 +81,7 @@ namespace FooApplication
             this.BUT_Tagging = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.BUT_Deplex = new System.Windows.Forms.ToolStripButton();
-            this.myMap = new FooApplication.Controls.MyGMap();
+            this.myMap = new Diva.Controls.MyGMap();
             this.Command = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Param1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Param2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -176,7 +176,7 @@ namespace FooApplication
             this.BUT_Addwp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BUT_Addwp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BUT_Addwp.ForeColor = System.Drawing.Color.White;
-            this.BUT_Addwp.Image = global::FooApplication.Properties.Resources.if_camera_1055100;
+            this.BUT_Addwp.Image = global::Diva.Properties.Resources.if_camera_1055100;
             this.BUT_Addwp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BUT_Addwp.Location = new System.Drawing.Point(5, 65);
             this.BUT_Addwp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -579,7 +579,7 @@ namespace FooApplication
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::FooApplication.Properties.Resources.if_50_111142;
+            this.toolStripButton1.Image = global::Diva.Properties.Resources.if_50_111142;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
@@ -599,7 +599,7 @@ namespace FooApplication
             // toolStripButton2
             // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::FooApplication.Properties.Resources.if_battery_reduce_energy_charge_2203543;
+            this.toolStripButton2.Image = global::Diva.Properties.Resources.if_battery_reduce_energy_charge_2203543;
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(24, 24);
@@ -658,7 +658,7 @@ namespace FooApplication
             // 
             this.BUT_Connect.AutoSize = false;
             this.BUT_Connect.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BUT_Connect.Image = global::FooApplication.Properties.Resources.if_paper_plane_32;
+            this.BUT_Connect.Image = global::Diva.Properties.Resources.if_paper_plane_32;
             this.BUT_Connect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BUT_Connect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BUT_Connect.Name = "BUT_Connect";
@@ -676,7 +676,7 @@ namespace FooApplication
             // 
             this.BUT_Rotation.AutoSize = false;
             this.BUT_Rotation.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BUT_Rotation.Image = global::FooApplication.Properties.Resources.if_rotation_32;
+            this.BUT_Rotation.Image = global::Diva.Properties.Resources.if_rotation_32;
             this.BUT_Rotation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BUT_Rotation.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BUT_Rotation.Name = "BUT_Rotation";
@@ -694,7 +694,7 @@ namespace FooApplication
             // 
             this.BUT_Configure.AutoSize = false;
             this.BUT_Configure.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BUT_Configure.Image = global::FooApplication.Properties.Resources.if_settings_32;
+            this.BUT_Configure.Image = global::Diva.Properties.Resources.if_settings_32;
             this.BUT_Configure.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BUT_Configure.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BUT_Configure.Name = "BUT_Configure";
@@ -712,7 +712,7 @@ namespace FooApplication
             // 
             this.BUT_Tagging.AutoSize = false;
             this.BUT_Tagging.Font = new System.Drawing.Font("Tahoma", 9F);
-            this.BUT_Tagging.Image = global::FooApplication.Properties.Resources.if_price_tag_2639892;
+            this.BUT_Tagging.Image = global::Diva.Properties.Resources.if_price_tag_2639892;
             this.BUT_Tagging.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BUT_Tagging.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BUT_Tagging.Name = "BUT_Tagging";
@@ -730,7 +730,7 @@ namespace FooApplication
             // 
             this.BUT_Deplex.AutoSize = false;
             this.BUT_Deplex.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BUT_Deplex.Image = global::FooApplication.Properties.Resources.if_code_fork_1608638;
+            this.BUT_Deplex.Image = global::Diva.Properties.Resources.if_code_fork_1608638;
             this.BUT_Deplex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BUT_Deplex.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BUT_Deplex.Name = "BUT_Deplex";

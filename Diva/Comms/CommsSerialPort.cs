@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FooApplication.Comms
+namespace Diva.Comms
 {
 	public class SerialPort : System.IO.Ports.SerialPort, ICommsSerial
 	{

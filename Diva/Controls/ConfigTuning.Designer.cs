@@ -1,4 +1,4 @@
-﻿namespace FooApplication.Controls
+﻿namespace Diva.Controls
 {
 	partial class ConfigTuning
 	{
@@ -28,17 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.myGroupBox1 = new FooApplication.Controls.MyGroupBox();
+			this.myGroupBox1 = new Diva.Controls.MyGroupBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
-			this.myNumericUpDown5 = new FooApplication.Controls.Components.MyNumericUpDown();
-			this.myNumericUpDown4 = new FooApplication.Controls.Components.MyNumericUpDown();
-			this.myNumericUpDown3 = new FooApplication.Controls.Components.MyNumericUpDown();
-			this.myNumericUpDown2 = new FooApplication.Controls.Components.MyNumericUpDown();
-			this.myNumericUpDown1 = new FooApplication.Controls.Components.MyNumericUpDown();
+			this.myNumericUpDown5 = new Diva.Controls.Components.MyNumericUpDown();
+			this.myNumericUpDown4 = new Diva.Controls.Components.MyNumericUpDown();
+			this.myNumericUpDown3 = new Diva.Controls.Components.MyNumericUpDown();
+			this.myNumericUpDown2 = new Diva.Controls.Components.MyNumericUpDown();
+			this.myNumericUpDown1 = new Diva.Controls.Components.MyNumericUpDown();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.myGroupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.myNumericUpDown5)).BeginInit();

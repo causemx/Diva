@@ -1,8 +1,8 @@
-﻿using FooApplication.Comms;
-using FooApplication.Controls;
-using FooApplication.Mavlink;
-using FooApplication.Properties;
-using FooApplication.Utilities;
+﻿using Diva.Comms;
+using Diva.Controls;
+using Diva.Mavlink;
+using Diva.Properties;
+using Diva.Utilities;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
@@ -27,7 +27,7 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace FooApplication
+namespace Diva
 {
 	public partial class Planner : Form
 	{

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FooApplication.Controls
+namespace Diva.Controls
 {
 	public class InputBox
 	{

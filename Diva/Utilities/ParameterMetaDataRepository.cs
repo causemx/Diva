@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FooApplication.Utilities
+namespace Diva.Utilities
 {
 	public static class ParameterMetaDataRepository
 	{
