@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FooApplication
+namespace Diva
 {
 	public class Strings
 	{

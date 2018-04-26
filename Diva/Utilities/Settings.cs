@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace FooApplication.Utilities
+namespace Diva.Utilities
 {
 	/// <summary>
 	/// This class loads and saves some handy app level settings so UI state is preserved across sessions.

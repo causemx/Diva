@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FooApplication.Controls.Components
+namespace Diva.Controls.Components
 {
 	public class MyCheckBox : CheckBox
 	{

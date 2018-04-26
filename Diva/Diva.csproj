@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{87526DB5-208B-4E1E-B5AC-9A463DBFDDC9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>FooApplication</RootNamespace>
-    <AssemblyName>FooApplication</AssemblyName>
+    <RootNamespace>Diva</RootNamespace>
+    <AssemblyName>Diva</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>FooApplication.Program</StartupObject>
+    <StartupObject>Diva.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>if_seo3_65_417793.ico</ApplicationIcon>

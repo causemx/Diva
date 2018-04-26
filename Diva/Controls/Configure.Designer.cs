@@ -1,4 +1,4 @@
-﻿namespace FooApplication.Controls
+﻿namespace Diva.Controls
 {
 	partial class Configure
 	{
@@ -33,7 +33,7 @@
 			this.btn_planner = new System.Windows.Forms.Button();
 			this.btn_tuning = new System.Windows.Forms.Button();
 			this.btn_geofence = new System.Windows.Forms.Button();
-			this.configTuning1 = new FooApplication.Controls.ConfigTuning();
+			this.configTuning1 = new Diva.Controls.ConfigTuning();
 			this.side_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 

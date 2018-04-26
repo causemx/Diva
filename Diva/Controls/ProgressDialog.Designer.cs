@@ -1,4 +1,4 @@
-﻿namespace FooApplication.Controls
+﻿namespace Diva.Controls
 {
 	partial class ProgressDialog
 	{
@@ -55,7 +55,7 @@
 			// 
 			// Icon
 			// 
-			this.Icon.Image = global::FooApplication.Properties.Resources.if_warning_32;
+			this.Icon.Image = global::Diva.Properties.Resources.if_warning_32;
 			this.Icon.Location = new System.Drawing.Point(16, 5);
 			this.Icon.Name = "Icon";
 			this.Icon.Size = new System.Drawing.Size(51, 39);

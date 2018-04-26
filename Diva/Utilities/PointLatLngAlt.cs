@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FooApplication.Utilities
+namespace Diva.Utilities
 {
 	public class PointLatLngAlt : IComparable
 	{

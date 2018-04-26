@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace FooApplication.Controls
+namespace Diva.Controls
 {
 	public partial class ProgressDialog : Form
 	{

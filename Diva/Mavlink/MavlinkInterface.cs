@@ -1,6 +1,6 @@
-﻿using FooApplication.Comms;
-using FooApplication.Controls;
-using FooApplication.Utilities;
+﻿using Diva.Comms;
+using Diva.Controls;
+using Diva.Utilities;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static FooApplication.Planner;
+using static Diva.Planner;
 using Timer = System.Timers.Timer;
 
-namespace FooApplication.Mavlink
+namespace Diva.Mavlink
 {
 	public class MavlinkInterface : MAVLink, IDisposable
 	{

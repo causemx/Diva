@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FooApplication.Mavlink
+namespace Diva.Mavlink
 {
 	public class MavList : IEnumerable<MavStatus>, IDisposable
 	{

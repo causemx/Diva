@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace FooApplication.Utilities
+namespace Diva.Utilities
 {
 	public static class ParameterMetaDataRepositoryAPM
 	{

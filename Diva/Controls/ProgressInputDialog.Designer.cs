@@ -1,4 +1,4 @@
-﻿namespace FooApplication.Controls
+﻿namespace Diva.Controls
 {
 	partial class ProgressInputDialog
 	{
