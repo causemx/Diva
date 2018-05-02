@@ -55,6 +55,17 @@ namespace Diva
             this.TXT_homelat = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Commands = new System.Windows.Forms.DataGridView();
+            this.Command = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Param1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Param2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Param3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Param4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Lon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Alt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Gauge_alt = new System.Windows.Forms.AGauge();
             this.Gauge_speed = new System.Windows.Forms.AGauge();
             this.label4 = new System.Windows.Forms.Label();
@@ -82,17 +93,7 @@ namespace Diva
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.BUT_Deplex = new System.Windows.Forms.ToolStripButton();
             this.myMap = new Diva.Controls.MyGMap();
-            this.Command = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Param1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Param2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Param3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Param4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Lat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Lon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Alt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button7 = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -146,7 +147,7 @@ namespace Diva
             this.panel1.Controls.Add(this.Commands);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 535);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1344, 136);
             this.panel1.TabIndex = 1;
@@ -154,6 +155,7 @@ namespace Diva
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.BUT_Addwp);
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.button5);
@@ -163,9 +165,9 @@ namespace Diva
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.groupBox1.Location = new System.Drawing.Point(877, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(459, 125);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
@@ -178,8 +180,8 @@ namespace Diva
             this.BUT_Addwp.ForeColor = System.Drawing.Color.White;
             this.BUT_Addwp.Image = global::Diva.Properties.Resources.if_camera_1055100;
             this.BUT_Addwp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BUT_Addwp.Location = new System.Drawing.Point(5, 65);
-            this.BUT_Addwp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BUT_Addwp.Location = new System.Drawing.Point(6, 68);
+            this.BUT_Addwp.Margin = new System.Windows.Forms.Padding(4);
             this.BUT_Addwp.Name = "BUT_Addwp";
             this.BUT_Addwp.Size = new System.Drawing.Size(105, 49);
             this.BUT_Addwp.TabIndex = 6;
@@ -194,7 +196,7 @@ namespace Diva
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button6.Location = new System.Drawing.Point(119, 69);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(105, 49);
             this.button6.TabIndex = 5;
@@ -209,7 +211,7 @@ namespace Diva
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button5.Location = new System.Drawing.Point(119, 15);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(105, 49);
             this.button5.TabIndex = 4;
@@ -224,7 +226,7 @@ namespace Diva
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.Location = new System.Drawing.Point(232, 69);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(105, 49);
             this.button4.TabIndex = 3;
@@ -239,7 +241,7 @@ namespace Diva
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.Location = new System.Drawing.Point(232, 15);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(105, 49);
             this.button3.TabIndex = 2;
@@ -254,7 +256,7 @@ namespace Diva
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.Location = new System.Drawing.Point(345, 69);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(105, 49);
             this.button2.TabIndex = 1;
@@ -269,7 +271,7 @@ namespace Diva
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.Location = new System.Drawing.Point(345, 15);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(105, 49);
             this.button1.TabIndex = 0;
@@ -280,7 +282,7 @@ namespace Diva
             // TXT_Mode
             // 
             this.TXT_Mode.Location = new System.Drawing.Point(707, 4);
-            this.TXT_Mode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_Mode.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_Mode.Name = "TXT_Mode";
             this.TXT_Mode.Size = new System.Drawing.Size(105, 25);
             this.TXT_Mode.TabIndex = 18;
@@ -300,7 +302,7 @@ namespace Diva
             // TXT_DefaultAlt
             // 
             this.TXT_DefaultAlt.Location = new System.Drawing.Point(521, 4);
-            this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
             this.TXT_DefaultAlt.Size = new System.Drawing.Size(105, 25);
             this.TXT_DefaultAlt.TabIndex = 12;
@@ -320,7 +322,7 @@ namespace Diva
             // TXT_homealt
             // 
             this.TXT_homealt.Location = new System.Drawing.Point(313, 4);
-            this.TXT_homealt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_homealt.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_homealt.Name = "TXT_homealt";
             this.TXT_homealt.Size = new System.Drawing.Size(105, 25);
             this.TXT_homealt.TabIndex = 10;
@@ -328,7 +330,7 @@ namespace Diva
             // TXT_homelng
             // 
             this.TXT_homelng.Location = new System.Drawing.Point(199, 4);
-            this.TXT_homelng.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_homelng.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_homelng.Name = "TXT_homelng";
             this.TXT_homelng.Size = new System.Drawing.Size(105, 25);
             this.TXT_homelng.TabIndex = 9;
@@ -336,7 +338,7 @@ namespace Diva
             // TXT_homelat
             // 
             this.TXT_homelat.Location = new System.Drawing.Point(84, 4);
-            this.TXT_homelat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_homelat.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_homelat.Name = "TXT_homelat";
             this.TXT_homelat.Size = new System.Drawing.Size(105, 25);
             this.TXT_homelat.TabIndex = 8;
@@ -383,7 +385,7 @@ namespace Diva
             this.Commands.EnableHeadersVisualStyles = false;
             this.Commands.GridColor = System.Drawing.Color.White;
             this.Commands.Location = new System.Drawing.Point(0, 36);
-            this.Commands.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Commands.Margin = new System.Windows.Forms.Padding(4);
             this.Commands.Name = "Commands";
             this.Commands.RowHeadersWidth = 50;
             this.Commands.RowTemplate.Height = 24;
@@ -393,6 +395,108 @@ namespace Diva
             this.Commands.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
             this.Commands.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Commands_RowsAdded);
             this.Commands.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.Commands_RowValidating);
+            // 
+            // Command
+            // 
+            this.Command.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Command.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.Command.HeaderText = "Command";
+            this.Command.MinimumWidth = 60;
+            this.Command.Name = "Command";
+            this.Command.ToolTipText = "APM Command";
+            this.Command.Width = 71;
+            // 
+            // Param1
+            // 
+            this.Param1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Param1.HeaderText = "Param1";
+            this.Param1.MinimumWidth = 50;
+            this.Param1.Name = "Param1";
+            this.Param1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Param1.Width = 56;
+            // 
+            // Param2
+            // 
+            this.Param2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Param2.HeaderText = "Param2";
+            this.Param2.MinimumWidth = 50;
+            this.Param2.Name = "Param2";
+            this.Param2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Param2.Width = 56;
+            // 
+            // Param3
+            // 
+            this.Param3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Param3.HeaderText = "Param3";
+            this.Param3.MinimumWidth = 50;
+            this.Param3.Name = "Param3";
+            this.Param3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Param3.Width = 56;
+            // 
+            // Param4
+            // 
+            this.Param4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Param4.HeaderText = "Param4";
+            this.Param4.MinimumWidth = 50;
+            this.Param4.Name = "Param4";
+            this.Param4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Param4.Width = 56;
+            // 
+            // Lat
+            // 
+            this.Lat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Lat.HeaderText = "Latitude";
+            this.Lat.MinimumWidth = 60;
+            this.Lat.Name = "Lat";
+            this.Lat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Lat.Width = 60;
+            // 
+            // Lon
+            // 
+            this.Lon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Lon.HeaderText = "Longitude";
+            this.Lon.MinimumWidth = 60;
+            this.Lon.Name = "Lon";
+            this.Lon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Lon.Width = 71;
+            // 
+            // Alt
+            // 
+            this.Alt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Alt.HeaderText = "Altitude";
+            this.Alt.MinimumWidth = 60;
+            this.Alt.Name = "Alt";
+            this.Alt.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Alt.Width = 60;
+            // 
+            // Column5
+            // 
+            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Column5.HeaderText = "Angle";
+            this.Column5.MinimumWidth = 60;
+            this.Column5.Name = "Column5";
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column5.Width = 60;
+            // 
+            // Delete
+            // 
+            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Delete.HeaderText = "Delete";
+            this.Delete.MinimumWidth = 50;
+            this.Delete.Name = "Delete";
+            this.Delete.Text = "X";
+            this.Delete.ToolTipText = "Delete the row";
+            this.Delete.Width = 50;
+            // 
+            // TagData
+            // 
+            this.TagData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.TagData.HeaderText = "TagData";
+            this.TagData.MinimumWidth = 50;
+            this.TagData.Name = "TagData";
+            this.TagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TagData.Visible = false;
+            this.TagData.Width = 61;
             // 
             // Gauge_alt
             // 
@@ -406,7 +510,7 @@ namespace Diva
             this.Gauge_alt.Center = new System.Drawing.Point(100, 100);
             this.Gauge_alt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gauge_alt.Location = new System.Drawing.Point(0, 48);
-            this.Gauge_alt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Gauge_alt.Margin = new System.Windows.Forms.Padding(4);
             this.Gauge_alt.MaxValue = 100F;
             this.Gauge_alt.MinValue = 0F;
             this.Gauge_alt.Name = "Gauge_alt";
@@ -452,7 +556,7 @@ namespace Diva
             this.Gauge_speed.Center = new System.Drawing.Point(100, 100);
             this.Gauge_speed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Gauge_speed.Location = new System.Drawing.Point(0, 278);
-            this.Gauge_speed.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Gauge_speed.Margin = new System.Windows.Forms.Padding(4);
             this.Gauge_speed.MaxValue = 30F;
             this.Gauge_speed.MinValue = 0F;
             this.Gauge_speed.Name = "Gauge_speed";
@@ -751,7 +855,7 @@ namespace Diva
             this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.myMap.LevelsKeepInMemmory = 5;
             this.myMap.Location = new System.Drawing.Point(0, 0);
-            this.myMap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.myMap.Margin = new System.Windows.Forms.Padding(4);
             this.myMap.MarkersEnabled = true;
             this.myMap.MaxZoom = 2;
             this.myMap.MinZoom = 2;
@@ -770,107 +874,20 @@ namespace Diva
             this.myMap.Zoom = 0D;
             this.myMap.Load += new System.EventHandler(this.myMap_Load);
             // 
-            // Command
+            // button7
             // 
-            this.Command.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Command.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.Command.HeaderText = "Command";
-            this.Command.MinimumWidth = 60;
-            this.Command.Name = "Command";
-            this.Command.ToolTipText = "APM Command";
-            this.Command.Width = 71;
-            // 
-            // Param1
-            // 
-            this.Param1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Param1.HeaderText = "Param1";
-            this.Param1.MinimumWidth = 50;
-            this.Param1.Name = "Param1";
-            this.Param1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Param1.Width = 56;
-            // 
-            // Param2
-            // 
-            this.Param2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Param2.HeaderText = "Param2";
-            this.Param2.MinimumWidth = 50;
-            this.Param2.Name = "Param2";
-            this.Param2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Param2.Width = 56;
-            // 
-            // Param3
-            // 
-            this.Param3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Param3.HeaderText = "Param3";
-            this.Param3.MinimumWidth = 50;
-            this.Param3.Name = "Param3";
-            this.Param3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Param3.Width = 56;
-            // 
-            // Param4
-            // 
-            this.Param4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Param4.HeaderText = "Param4";
-            this.Param4.MinimumWidth = 50;
-            this.Param4.Name = "Param4";
-            this.Param4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Param4.Width = 56;
-            // 
-            // Lat
-            // 
-            this.Lat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Lat.HeaderText = "Latitude";
-            this.Lat.MinimumWidth = 60;
-            this.Lat.Name = "Lat";
-            this.Lat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Lat.Width = 60;
-            // 
-            // Lon
-            // 
-            this.Lon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Lon.HeaderText = "Longitude";
-            this.Lon.MinimumWidth = 60;
-            this.Lon.Name = "Lon";
-            this.Lon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Lon.Width = 71;
-            // 
-            // Alt
-            // 
-            this.Alt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Alt.HeaderText = "Altitude";
-            this.Alt.MinimumWidth = 60;
-            this.Alt.Name = "Alt";
-            this.Alt.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Alt.Width = 60;
-            // 
-            // Column5
-            // 
-            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Column5.HeaderText = "Angle";
-            this.Column5.MinimumWidth = 60;
-            this.Column5.Name = "Column5";
-            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column5.Width = 60;
-            // 
-            // Delete
-            // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Delete.HeaderText = "Delete";
-            this.Delete.MinimumWidth = 50;
-            this.Delete.Name = "Delete";
-            this.Delete.Text = "X";
-            this.Delete.ToolTipText = "Delete the row";
-            this.Delete.Width = 50;
-            // 
-            // TagData
-            // 
-            this.TagData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.TagData.HeaderText = "TagData";
-            this.TagData.MinimumWidth = 50;
-            this.TagData.Name = "TagData";
-            this.TagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TagData.Visible = false;
-            this.TagData.Width = 61;
+            this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button7.ForeColor = System.Drawing.Color.White;
+            this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button7.Location = new System.Drawing.Point(6, 15);
+            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(105, 49);
+            this.button7.TabIndex = 7;
+            this.button7.Text = "Video";
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.VideoDemo_Click);
             // 
             // Planner
             // 
@@ -890,7 +907,7 @@ namespace Diva
             this.Controls.Add(this.Gauge_alt);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.myMap);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Planner";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Planner";
@@ -970,5 +987,6 @@ namespace Diva
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewButtonColumn Delete;
         private DataGridViewTextBoxColumn TagData;
+        private Button button7;
     }
 }

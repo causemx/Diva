@@ -3089,5 +3089,17 @@ namespace Diva
 			}
 		}
 
-	}
+        private void VideoDemo_Click(object sender, EventArgs e)
+        {
+            string uri = Microsoft.VisualBasic.Interaction.InputBox("Specify video stream URI.");
+            if (uri != null && uri.Length > 0)
+            {
+                Form form = new Form();
+                VideoPlayer player = new VideoPlayer(uri);
+                form.Controls.Add(player);
+                player.Start();
+                form.Show();
+            }
+        }
+    }
 }
