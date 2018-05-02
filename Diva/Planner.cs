@@ -455,17 +455,7 @@ namespace Diva
 			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
 
 			// do lang stuff here
-			
-			string file = Utilities.Settings.GetRunningDirectory() + "mavcmd.xml";
-		
-
-			if (!File.Exists(file))
-			{
-				MessageBox.Show("Missing mavcmd.xml file");
-				return cmd;
-			}
-			
-
+            using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
 			using (XmlReader reader = XmlReader.Create(file))
 			{
 				reader.Read();
