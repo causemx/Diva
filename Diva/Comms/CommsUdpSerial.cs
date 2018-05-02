@@ -127,11 +127,11 @@ namespace Diva.Comms
 					break;
 
 					
-			}**/
+			}
 
 
-			// if (BytesToRead == 0)
-			// 	return; 
+			if (BytesToRead == 0)
+				return; **/
 
 			try
 			{

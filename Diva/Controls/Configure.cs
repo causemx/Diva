@@ -15,11 +15,30 @@ namespace Diva.Controls
 		public Configure()
 		{
 			InitializeComponent();
+			configGeoFence1.Enabled = true;
+			configGeoFence1.Visible = true;
+			configTuning1.Enabled = false;
+			configTuning1.Visible = false;
 		}
 
-		private void btn_geofence_Click(object sender, EventArgs e)
+		private void BtnGeoFence_Click(object sender, EventArgs e)
 		{
-			
+			configGeoFence1.Enabled = true;
+			configGeoFence1.Visible = true;
+			configTuning1.Enabled = false;
+			configTuning1.Visible = false;
+
+			configGeoFence1.Activate();
+		}
+
+		private void BtnTuning_Click(object sender, EventArgs e)
+		{
+			configGeoFence1.Enabled = false;
+			configGeoFence1.Visible = false;
+			configTuning1.Enabled = true;
+			configTuning1.Visible = true;
+
+			configTuning1.Activate();
 		}
 	}
 }

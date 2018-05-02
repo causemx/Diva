@@ -3049,7 +3049,8 @@ namespace Diva
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-		
+			Configure config = new Configure();
+			config.Show();
 		}
 
 		private bool isTagging = false;
