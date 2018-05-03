@@ -1245,7 +1245,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\mavcmd.xml" />
-    <None Include="mavcmd.xml" />
     <None Include="Resources\if_price_tag_2639892.png" />
     <None Include="Resources\if_camera_1055100.png" />
     <None Include="Resources\if_pear_2003196.png" />
