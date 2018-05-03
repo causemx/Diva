@@ -153,6 +153,12 @@
     <Compile Include="Controls\Components\MyNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ConfigGeoFence.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigGeoFence.Designer.cs">
+      <DependentUpon>ConfigGeoFence.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Configure.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,7 @@
     <Compile Include="Controls\ConfigTuning.Designer.cs">
       <DependentUpon>ConfigTuning.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyButton.cs">
       <SubType>Component</SubType>
@@ -221,6 +228,9 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <EmbeddedResource Include="Controls\ConfigGeoFence.resx">
+      <DependentUpon>ConfigGeoFence.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="VideoPlayer.cs" />
     <EmbeddedResource Include="Controls\ConfigTuning.resx">
       <DependentUpon>ConfigTuning.cs</DependentUpon>

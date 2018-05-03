@@ -29,74 +29,84 @@
 		private void InitializeComponent()
 		{
 			this.side_panel = new System.Windows.Forms.Panel();
-			this.btn_help = new System.Windows.Forms.Button();
-			this.btn_planner = new System.Windows.Forms.Button();
-			this.btn_tuning = new System.Windows.Forms.Button();
-			this.btn_geofence = new System.Windows.Forms.Button();
+			this.BtnHelp = new System.Windows.Forms.Button();
+			this.BtnPlanner = new System.Windows.Forms.Button();
+			this.BtnTuning = new System.Windows.Forms.Button();
+			this.BtnGeoFence = new System.Windows.Forms.Button();
+			this.configGeoFence1 = new Diva.Controls.ConfigGeoFence();
 			this.configTuning1 = new Diva.Controls.ConfigTuning();
 			this.side_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// side_panel
 			// 
-			this.side_panel.Controls.Add(this.btn_help);
-			this.side_panel.Controls.Add(this.btn_planner);
-			this.side_panel.Controls.Add(this.btn_tuning);
-			this.side_panel.Controls.Add(this.btn_geofence);
+			this.side_panel.Controls.Add(this.BtnHelp);
+			this.side_panel.Controls.Add(this.BtnPlanner);
+			this.side_panel.Controls.Add(this.BtnTuning);
+			this.side_panel.Controls.Add(this.BtnGeoFence);
 			this.side_panel.Dock = System.Windows.Forms.DockStyle.Left;
 			this.side_panel.Location = new System.Drawing.Point(0, 0);
 			this.side_panel.Name = "side_panel";
-			this.side_panel.Size = new System.Drawing.Size(277, 603);
+			this.side_panel.Size = new System.Drawing.Size(222, 603);
 			this.side_panel.TabIndex = 0;
 			// 
-			// btn_help
+			// BtnHelp
 			// 
-			this.btn_help.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btn_help.Location = new System.Drawing.Point(0, 270);
-			this.btn_help.Name = "btn_help";
-			this.btn_help.Size = new System.Drawing.Size(277, 90);
-			this.btn_help.TabIndex = 3;
-			this.btn_help.Text = "help";
-			this.btn_help.UseVisualStyleBackColor = true;
+			this.BtnHelp.Dock = System.Windows.Forms.DockStyle.Top;
+			this.BtnHelp.Location = new System.Drawing.Point(0, 270);
+			this.BtnHelp.Name = "BtnHelp";
+			this.BtnHelp.Size = new System.Drawing.Size(222, 90);
+			this.BtnHelp.TabIndex = 3;
+			this.BtnHelp.Text = "help";
+			this.BtnHelp.UseVisualStyleBackColor = true;
 			// 
-			// btn_planner
+			// BtnPlanner
 			// 
-			this.btn_planner.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btn_planner.Location = new System.Drawing.Point(0, 180);
-			this.btn_planner.Name = "btn_planner";
-			this.btn_planner.Size = new System.Drawing.Size(277, 90);
-			this.btn_planner.TabIndex = 2;
-			this.btn_planner.Text = "planner";
-			this.btn_planner.UseVisualStyleBackColor = true;
+			this.BtnPlanner.Dock = System.Windows.Forms.DockStyle.Top;
+			this.BtnPlanner.Location = new System.Drawing.Point(0, 180);
+			this.BtnPlanner.Name = "BtnPlanner";
+			this.BtnPlanner.Size = new System.Drawing.Size(222, 90);
+			this.BtnPlanner.TabIndex = 2;
+			this.BtnPlanner.Text = "planner";
+			this.BtnPlanner.UseVisualStyleBackColor = true;
 			// 
-			// btn_tuning
+			// BtnTuning
 			// 
-			this.btn_tuning.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btn_tuning.Location = new System.Drawing.Point(0, 90);
-			this.btn_tuning.Name = "btn_tuning";
-			this.btn_tuning.Size = new System.Drawing.Size(277, 90);
-			this.btn_tuning.TabIndex = 1;
-			this.btn_tuning.Text = "tuning";
-			this.btn_tuning.UseVisualStyleBackColor = true;
+			this.BtnTuning.Dock = System.Windows.Forms.DockStyle.Top;
+			this.BtnTuning.Location = new System.Drawing.Point(0, 90);
+			this.BtnTuning.Name = "BtnTuning";
+			this.BtnTuning.Size = new System.Drawing.Size(222, 90);
+			this.BtnTuning.TabIndex = 1;
+			this.BtnTuning.Text = "tuning";
+			this.BtnTuning.UseVisualStyleBackColor = true;
+			this.BtnTuning.Click += new System.EventHandler(this.BtnTuning_Click);
 			// 
-			// btn_geofence
+			// BtnGeoFence
 			// 
-			this.btn_geofence.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btn_geofence.Location = new System.Drawing.Point(0, 0);
-			this.btn_geofence.Name = "btn_geofence";
-			this.btn_geofence.Size = new System.Drawing.Size(277, 90);
-			this.btn_geofence.TabIndex = 0;
-			this.btn_geofence.Text = "geofence";
-			this.btn_geofence.UseVisualStyleBackColor = true;
-			this.btn_geofence.Click += new System.EventHandler(this.btn_geofence_Click);
+			this.BtnGeoFence.Dock = System.Windows.Forms.DockStyle.Top;
+			this.BtnGeoFence.Location = new System.Drawing.Point(0, 0);
+			this.BtnGeoFence.Name = "BtnGeoFence";
+			this.BtnGeoFence.Size = new System.Drawing.Size(222, 90);
+			this.BtnGeoFence.TabIndex = 0;
+			this.BtnGeoFence.Text = "geofence";
+			this.BtnGeoFence.UseVisualStyleBackColor = true;
+			this.BtnGeoFence.Click += new System.EventHandler(this.BtnGeoFence_Click);
+			// 
+			// configGeoFence1
+			// 
+			this.configGeoFence1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.configGeoFence1.Location = new System.Drawing.Point(222, 0);
+			this.configGeoFence1.Name = "configGeoFence1";
+			this.configGeoFence1.Size = new System.Drawing.Size(763, 603);
+			this.configGeoFence1.TabIndex = 1;
 			// 
 			// configTuning1
 			// 
 			this.configTuning1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configTuning1.Location = new System.Drawing.Point(277, 0);
+			this.configTuning1.Location = new System.Drawing.Point(222, 0);
 			this.configTuning1.Name = "configTuning1";
-			this.configTuning1.Size = new System.Drawing.Size(708, 603);
-			this.configTuning1.TabIndex = 1;
+			this.configTuning1.Size = new System.Drawing.Size(763, 603);
+			this.configTuning1.TabIndex = 2;
 			// 
 			// Configure
 			// 
@@ -104,6 +114,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(985, 603);
 			this.Controls.Add(this.configTuning1);
+			this.Controls.Add(this.configGeoFence1);
 			this.Controls.Add(this.side_panel);
 			this.Name = "Configure";
 			this.Text = "Configure";
@@ -115,10 +126,11 @@
 		#endregion
 
 		private System.Windows.Forms.Panel side_panel;
-		private System.Windows.Forms.Button btn_tuning;
-		private System.Windows.Forms.Button btn_geofence;
-		private System.Windows.Forms.Button btn_planner;
-		private System.Windows.Forms.Button btn_help;
+		private System.Windows.Forms.Button BtnTuning;
+		private System.Windows.Forms.Button BtnGeoFence;
+		private System.Windows.Forms.Button BtnPlanner;
+		private System.Windows.Forms.Button BtnHelp;
+		private ConfigGeoFence configGeoFence1;
 		private ConfigTuning configTuning1;
 	}
 }

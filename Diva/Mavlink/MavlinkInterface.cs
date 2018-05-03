@@ -86,6 +86,7 @@ namespace Diva.Mavlink
 			set { MAVlist[sysidcurrent, compidcurrent] = value; }
 		}
 
+		public event EventHandler ParamListChanged;
 		public event EventHandler MavChanged;
 
 		int _sysidcurrent = 0;
@@ -535,7 +536,7 @@ namespace Diva.Mavlink
 
 		public void open()
 		{
-			Open(false);
+			Open(true);
 		}
 
 		public void close()
@@ -601,7 +602,7 @@ namespace Diva.Mavlink
 
 		public void OpenBg(object PRsender, bool getparams, ProgressWorkerEventArgs progressWorkerEventArgs)
 		{
-			frmProgressReporter.UpdateProgressAndStatus(-1, "??");
+			frmProgressReporter.UpdateProgressAndStatus(-1, "mavlink connecting");
 
 			giveComport = true;
 
@@ -658,7 +659,7 @@ namespace Diva.Mavlink
 				countDown.Elapsed += (sender, e) =>
 				{
 					int secondsRemaining = (deadline - e.SignalTime).Seconds;
-					frmProgressReporter.UpdateProgressAndStatus(-1, string.Format("??", secondsRemaining));
+					frmProgressReporter.UpdateProgressAndStatus(-1, string.Format("trying", secondsRemaining));
 					if (secondsRemaining > 0) countDown.Start();
 				};
 				countDown.Start();
@@ -808,6 +809,176 @@ namespace Diva.Mavlink
 			MAV.synclost = 0;
 		}
 
+
+		public void getParamList()
+		{
+			log.InfoFormat("getParamList {0} {1}", sysidcurrent, compidcurrent);
+
+			frmProgressReporter = new ProgressDialogV2
+			{
+				StartPosition = FormStartPosition.CenterScreen,
+				Text = "Getting Params" + " " + sysidcurrent
+			};
+
+			frmProgressReporter.DoWork += FrmProgressReporterGetParams;
+			frmProgressReporter.UpdateProgressAndStatus(-1, "Get params SD");
+			// ThemeManager.ApplyThemeTo(frmProgressReporter);
+
+			frmProgressReporter.RunBackgroundOperationAsync();
+
+			frmProgressReporter.Dispose();
+
+			if (ParamListChanged != null)
+			{
+				ParamListChanged(this, null);
+			}
+		}
+
+		void FrmProgressReporterGetParams(object sender, ProgressWorkerEventArgs e, object passdata = null)
+		{
+			getParamListBG();
+		}
+
+
+		private int _parampoll = 0;
+
+		public void getParamPoll()
+		{
+			// check if we have all
+			if (MAV.param.TotalReceived >= MAV.param.TotalReported)
+			{
+				return;
+			}
+
+			// if we are connected as primary to a vechile where we dont have all the params, poll for them
+			short i = (short)(_parampoll % MAV.param.TotalReported);
+
+			GetParam("", i, false);
+
+			_parampoll++;
+		}
+
+		public float GetParam(string name)
+		{
+			return GetParam(name, -1);
+		}
+
+		public float GetParam(short index)
+		{
+			return GetParam("", index);
+		}
+
+		public float GetParam(string name = "", short index = -1, bool requireresponce = true)
+		{
+			return GetParam(MAV.sysid, MAV.compid, name, index, requireresponce);
+		}
+
+		/// <summary>
+		/// Get param by either index or name
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public float GetParam(byte sysid, byte compid, string name = "", short index = -1, bool requireresponce = true)
+		{
+			if (name == "" && index == -1)
+				return 0;
+
+			log.Info("GetParam name: '" + name + "' or index: " + index + " " + sysid + ":" + compid);
+
+			MAVLinkMessage buffer;
+
+			mavlink_param_request_read_t req = new mavlink_param_request_read_t();
+			req.target_system = sysid;
+			req.target_component = compid;
+			req.param_index = index;
+			req.param_id = new byte[] { 0x0 };
+			if (index == -1)
+			{
+				req.param_id = ASCIIEncoding.ASCII.GetBytes(name);
+			}
+
+			Array.Resize(ref req.param_id, 16);
+
+			generatePacket((byte)MAVLINK_MSG_ID.PARAM_REQUEST_READ, req, sysid, compid);
+
+			if (!requireresponce)
+			{
+				return 0f;
+			}
+
+			giveComport = true;
+
+			DateTime start = DateTime.Now;
+			int retrys = 3;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("GetParam Retry " + retrys);
+						generatePacket((byte)MAVLINK_MSG_ID.PARAM_REQUEST_READ, req, sysid, compid);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - GetParam");
+				}
+
+				buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.PARAM_VALUE && buffer.sysid == req.target_system && buffer.compid == req.target_component)
+					{
+						giveComport = false;
+
+						mavlink_param_value_t par = buffer.ToStructure<mavlink_param_value_t>();
+
+						string st = ASCIIEncoding.ASCII.GetString(par.param_id);
+
+						int pos = st.IndexOf('\0');
+
+						if (pos != -1)
+						{
+							st = st.Substring(0, pos);
+						}
+
+						// not the correct id
+						if (!(par.param_index == index || st == name))
+						{
+							log.ErrorFormat("Wrong Answer {0} - {1} - {2}    --- '{3}' vs '{4}'", par.param_index,
+								ASCIIEncoding.ASCII.GetString(par.param_id), par.param_value,
+								ASCIIEncoding.ASCII.GetString(req.param_id).TrimEnd(), st);
+							continue;
+						}
+
+						// update table
+						if (MAVlist[sysid, compid].apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+						{
+							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
+							MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
+						}
+						else
+						{
+							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
+							MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
+						}
+
+						MAVlist[sysid, compid].param_types[st] = (MAV_PARAM_TYPE)par.param_type;
+
+						log.Info(DateTime.Now.Millisecond + " got param " + (par.param_index) + " of " +
+								 (par.param_count) + " name: " + st);
+
+						return par.param_value;
+					}
+				}
+			}
+		}
+
+
 		/// <summary>
 		/// Get param list from apm
 		/// </summary>
@@ -841,14 +1012,14 @@ namespace Diva.Mavlink
 
 			do
 			{
-				/*
+				
 				if (frmProgressReporter.doWorkArgs.CancelRequested)
 				{
 					frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
 					giveComport = false;
 					frmProgressReporter.doWorkArgs.ErrorMessage = "User Canceled";
 					return MAV.param;
-				}*/
+				}
 
 				// 4 seconds between valid packets
 				if (!(start.AddMilliseconds(4000) > DateTime.Now) && !logreadmode)
@@ -873,14 +1044,14 @@ namespace Diva.Mavlink
 						{
 							if (!indexsreceived.Contains(i))
 							{
-								/*
+								
 								if (frmProgressReporter.doWorkArgs.CancelRequested)
 								{
 									frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
 									giveComport = false;
 									frmProgressReporter.doWorkArgs.ErrorMessage = "User Canceled";
 									return MAV.param;
-								}*/
+								}
 
 								// prevent dropping out of this get params loop
 								try
@@ -981,8 +1152,8 @@ namespace Diva.Mavlink
 
 						//Console.WriteLine(DateTime.Now.Millisecond + " gp3 ");
 
-						// this.frmProgressReporter.UpdateProgressAndStatus((indexsreceived.Count * 100) / param_total,
-						// 	Strings.Gotparam + paramID);
+						this.frmProgressReporter.UpdateProgressAndStatus((indexsreceived.Count * 100) / param_total,
+						"get param" + paramID);
 
 						// we hit the last param - lets escape eq total = 176 index = 0-175
 						if (par.param_index == (param_total - 1))
