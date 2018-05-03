@@ -302,44 +302,44 @@ namespace Diva
 			myMap.Overlays.Add(routesOverlay);
 		}
 
-		protected override void OnLoad(EventArgs e)
-		{
-			base.OnLoad(e);
-			mainThread = new Thread(MainLoop)
-			{
-				IsBackground = true,
-				Name = "Main Serial reader",
-				Priority = ThreadPriority.AboveNormal
-			};
-			mainThread.Start();
-			timer1.Start();
-		}
+        private void Planner_Load(object sender, EventArgs e)
+        {
+            mainThread = new Thread(MainLoop)
+            {
+                IsBackground = true,
+                Name = "Main Serial reader",
+                Priority = ThreadPriority.AboveNormal
+            };
+            mainThread.Start();
+            timer1.Start();
+        }
 
-		protected override void OnClosed(EventArgs e)
-		{
-			base.OnClosed(e);
-			serialThread = false;
-			if (mainThread != null)
-				mainThread.Join();
+        private void Planner_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (mainThread != null)
+            {
+                serialThread = false;
+                e.Cancel = true;
+            }
+        }
 
-			foreach (MavlinkInterface mav in comPorts)
-			{
-				mav.onDestroy();
-			}
+        private void Planner_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            foreach (MavlinkInterface mav in comPorts)
+            {
+                mav.onDestroy();
+            }
+            timer1.Stop();
+        }
 
-			timer1.Stop();
-		}
-
-
-		private void MainLoop()
+        private void MainLoop()
 		{
 			if (serialThread == true)
 				return;
 
 			serialThread = true;
 
-
-			while (serialThread)
+            while (serialThread)
 			{
 				Thread.Sleep(20);
 				if (comPort.BaseStream.IsOpen)
@@ -370,10 +370,10 @@ namespace Diva
 						updateMapPosition(currentloc);
 					}
 				}
-
 			}
 
-
+            mainThread = null;
+            Invoke((MethodInvoker)(() => Close()));
 		}
 
 		DateTime lastmapposchange = DateTime.MinValue;
