@@ -911,6 +911,9 @@ namespace Diva
             this.Name = "Planner";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Planner";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Planner_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Planner_FormClosed);
+            this.Load += new System.EventHandler(this.Planner_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
