@@ -37,7 +37,7 @@ namespace Diva
             this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
             this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
             this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelDroneInfo = new System.Windows.Forms.Panel();
             this.gboxManualButtons = new System.Windows.Forms.GroupBox();
             this.btnAddwp = new System.Windows.Forms.Button();
             this.buttonVideo = new System.Windows.Forms.Button();
@@ -94,12 +94,17 @@ namespace Diva
             this.tsSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnDeplex = new System.Windows.Forms.ToolStripButton();
             this.myMap = new Diva.Controls.MyGMap();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.cmMap.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelDroneInfo.SuspendLayout();
             this.gboxManualButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
             this.tsDroneStatus.SuspendLayout();
             this.tsMainFunctions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmMap
@@ -133,28 +138,25 @@ namespace Diva
             this.miClearAllMissions.Text = "Clear All Missions";
             this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
             // 
-            // panel1
+            // panelDroneInfo
             // 
-            this.panel1.Controls.Add(this.gboxManualButtons);
-            this.panel1.Controls.Add(this.tboxDroneMode);
-            this.panel1.Controls.Add(this.lblMode);
-            this.panel1.Controls.Add(this.tboxAltitudeValue);
-            this.panel1.Controls.Add(this.lblAltitude);
-            this.panel1.Controls.Add(this.tboxHomeAltitude);
-            this.panel1.Controls.Add(this.tboxHomeLongitude);
-            this.panel1.Controls.Add(this.tboxHomeLatitude);
-            this.panel1.Controls.Add(this.lblHome);
-            this.panel1.Controls.Add(this.dgvWayPoints);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 617);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1344, 136);
-            this.panel1.TabIndex = 1;
+            this.panelDroneInfo.Controls.Add(this.tboxDroneMode);
+            this.panelDroneInfo.Controls.Add(this.lblMode);
+            this.panelDroneInfo.Controls.Add(this.tboxAltitudeValue);
+            this.panelDroneInfo.Controls.Add(this.lblAltitude);
+            this.panelDroneInfo.Controls.Add(this.tboxHomeAltitude);
+            this.panelDroneInfo.Controls.Add(this.tboxHomeLongitude);
+            this.panelDroneInfo.Controls.Add(this.tboxHomeLatitude);
+            this.panelDroneInfo.Controls.Add(this.lblHome);
+            this.panelDroneInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelDroneInfo.Location = new System.Drawing.Point(0, 0);
+            this.panelDroneInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.panelDroneInfo.Name = "panelDroneInfo";
+            this.panelDroneInfo.Size = new System.Drawing.Size(885, 32);
+            this.panelDroneInfo.TabIndex = 1;
             // 
             // gboxManualButtons
             // 
-            this.gboxManualButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.gboxManualButtons.Controls.Add(this.btnAddwp);
             this.gboxManualButtons.Controls.Add(this.buttonVideo);
             this.gboxManualButtons.Controls.Add(this.btnReadWPs);
@@ -163,12 +165,13 @@ namespace Diva
             this.gboxManualButtons.Controls.Add(this.btnTakeOff);
             this.gboxManualButtons.Controls.Add(this.btnLand);
             this.gboxManualButtons.Controls.Add(this.btnArm);
+            this.gboxManualButtons.Dock = System.Windows.Forms.DockStyle.Right;
             this.gboxManualButtons.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.gboxManualButtons.Location = new System.Drawing.Point(877, 8);
+            this.gboxManualButtons.Location = new System.Drawing.Point(885, 0);
             this.gboxManualButtons.Margin = new System.Windows.Forms.Padding(4);
             this.gboxManualButtons.Name = "gboxManualButtons";
             this.gboxManualButtons.Padding = new System.Windows.Forms.Padding(4);
-            this.gboxManualButtons.Size = new System.Drawing.Size(459, 125);
+            this.gboxManualButtons.Size = new System.Drawing.Size(459, 120);
             this.gboxManualButtons.TabIndex = 19;
             this.gboxManualButtons.TabStop = false;
             this.gboxManualButtons.Text = "Manual";
@@ -394,14 +397,15 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
+            this.dgvWayPoints.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvWayPoints.EnableHeadersVisualStyles = false;
             this.dgvWayPoints.GridColor = System.Drawing.Color.White;
-            this.dgvWayPoints.Location = new System.Drawing.Point(0, 45);
+            this.dgvWayPoints.Location = new System.Drawing.Point(0, 32);
             this.dgvWayPoints.Margin = new System.Windows.Forms.Padding(5);
             this.dgvWayPoints.Name = "dgvWayPoints";
             this.dgvWayPoints.RowHeadersWidth = 50;
             this.dgvWayPoints.RowTemplate.Height = 24;
-            this.dgvWayPoints.Size = new System.Drawing.Size(1159, 125);
+            this.dgvWayPoints.Size = new System.Drawing.Size(885, 88);
             this.dgvWayPoints.TabIndex = 6;
             this.dgvWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
             this.dgvWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -521,7 +525,7 @@ namespace Diva
             this.gaugeAltitude.BaseArcWidth = 2;
             this.gaugeAltitude.Center = new System.Drawing.Point(100, 100);
             this.gaugeAltitude.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gaugeAltitude.Location = new System.Drawing.Point(0, 89);
+            this.gaugeAltitude.Location = new System.Drawing.Point(0, 111);
             this.gaugeAltitude.Margin = new System.Windows.Forms.Padding(5);
             this.gaugeAltitude.MaxValue = 100F;
             this.gaugeAltitude.MinValue = 0F;
@@ -567,7 +571,7 @@ namespace Diva
             this.gaugeSpeed.BaseArcWidth = 2;
             this.gaugeSpeed.Center = new System.Drawing.Point(100, 100);
             this.gaugeSpeed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gaugeSpeed.Location = new System.Drawing.Point(0, 319);
+            this.gaugeSpeed.Location = new System.Drawing.Point(0, 341);
             this.gaugeSpeed.Margin = new System.Windows.Forms.Padding(5);
             this.gaugeSpeed.MaxValue = 30F;
             this.gaugeSpeed.MinValue = 0F;
@@ -607,7 +611,7 @@ namespace Diva
             this.lblGaugeAltitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblGaugeAltitude.AutoSize = true;
             this.lblGaugeAltitude.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGaugeAltitude.Location = new System.Drawing.Point(90, 97);
+            this.lblGaugeAltitude.Location = new System.Drawing.Point(90, 119);
             this.lblGaugeAltitude.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblGaugeAltitude.Name = "lblGaugeAltitude";
             this.lblGaugeAltitude.Size = new System.Drawing.Size(82, 24);
@@ -619,7 +623,7 @@ namespace Diva
             this.labelGaugeSpeed.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelGaugeSpeed.AutoSize = true;
             this.labelGaugeSpeed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelGaugeSpeed.Location = new System.Drawing.Point(90, 317);
+            this.labelGaugeSpeed.Location = new System.Drawing.Point(90, 339);
             this.labelGaugeSpeed.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelGaugeSpeed.Name = "labelGaugeSpeed";
             this.labelGaugeSpeed.Size = new System.Drawing.Size(69, 24);
@@ -630,7 +634,7 @@ namespace Diva
             // 
             this.lblGagueAltitudeValue.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblGagueAltitudeValue.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGagueAltitudeValue.Location = new System.Drawing.Point(85, 273);
+            this.lblGagueAltitudeValue.Location = new System.Drawing.Point(85, 295);
             this.lblGagueAltitudeValue.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblGagueAltitudeValue.Name = "lblGagueAltitudeValue";
             this.lblGagueAltitudeValue.Size = new System.Drawing.Size(67, 25);
@@ -642,7 +646,7 @@ namespace Diva
             // 
             this.lblGagueSpeedValue.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblGagueSpeedValue.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGagueSpeedValue.Location = new System.Drawing.Point(79, 502);
+            this.lblGagueSpeedValue.Location = new System.Drawing.Point(79, 524);
             this.lblGagueSpeedValue.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblGagueSpeedValue.Name = "lblGagueSpeedValue";
             this.lblGagueSpeedValue.Size = new System.Drawing.Size(67, 25);
@@ -655,7 +659,7 @@ namespace Diva
             this.lblGaugeAltitudeUnit.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblGaugeAltitudeUnit.AutoSize = true;
             this.lblGaugeAltitudeUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGaugeAltitudeUnit.Location = new System.Drawing.Point(160, 273);
+            this.lblGaugeAltitudeUnit.Location = new System.Drawing.Point(160, 295);
             this.lblGaugeAltitudeUnit.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblGaugeAltitudeUnit.Name = "lblGaugeAltitudeUnit";
             this.lblGaugeAltitudeUnit.Size = new System.Drawing.Size(27, 24);
@@ -667,7 +671,7 @@ namespace Diva
             this.lblGagueSpeedUnit.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblGagueSpeedUnit.AutoSize = true;
             this.lblGagueSpeedUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGagueSpeedUnit.Location = new System.Drawing.Point(148, 503);
+            this.lblGagueSpeedUnit.Location = new System.Drawing.Point(148, 525);
             this.lblGagueSpeedUnit.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblGagueSpeedUnit.Name = "lblGagueSpeedUnit";
             this.lblGagueSpeedUnit.Size = new System.Drawing.Size(38, 24);
@@ -737,7 +741,7 @@ namespace Diva
             this.tsDroneList.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDroneList.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.tsDroneList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.tsDroneList.Location = new System.Drawing.Point(1257, 237);
+            this.tsDroneList.Location = new System.Drawing.Point(1257, 259);
             this.tsDroneList.Name = "tsDroneList";
             this.tsDroneList.Padding = new System.Windows.Forms.Padding(1);
             this.tsDroneList.Size = new System.Drawing.Size(75, 235);
@@ -883,29 +887,50 @@ namespace Diva
             this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.myMap.ShowTileGridLines = false;
-            this.myMap.Size = new System.Drawing.Size(1344, 753);
+            this.myMap.Size = new System.Drawing.Size(1344, 629);
             this.myMap.TabIndex = 14;
             this.myMap.Zoom = 0D;
             this.myMap.Load += new System.EventHandler(this.myMap_Load);
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer.Name = "splitContainer";
+            this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.lblGaugeAltitude);
+            this.splitContainer.Panel1.Controls.Add(this.lblGagueAltitudeValue);
+            this.splitContainer.Panel1.Controls.Add(this.lblGaugeAltitudeUnit);
+            this.splitContainer.Panel1.Controls.Add(this.gaugeAltitude);
+            this.splitContainer.Panel1.Controls.Add(this.labelGaugeSpeed);
+            this.splitContainer.Panel1.Controls.Add(this.lblGagueSpeedValue);
+            this.splitContainer.Panel1.Controls.Add(this.lblGagueSpeedUnit);
+            this.splitContainer.Panel1.Controls.Add(this.gaugeSpeed);
+            this.splitContainer.Panel1.Controls.Add(this.tsDroneList);
+            this.splitContainer.Panel1.Controls.Add(this.tsDroneStatus);
+            this.splitContainer.Panel1.Controls.Add(this.tsMainFunctions);
+            this.splitContainer.Panel1.Controls.Add(this.myMap);
+            this.splitContainer.Panel1MinSize = 240;
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
+            this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
+            this.splitContainer.Panel2.Controls.Add(this.gboxManualButtons);
+            this.splitContainer.Panel2MinSize = 120;
+            this.splitContainer.Size = new System.Drawing.Size(1344, 753);
+            this.splitContainer.SplitterDistance = 629;
+            this.splitContainer.TabIndex = 15;
             // 
             // Planner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1344, 753);
-            this.Controls.Add(this.tsMainFunctions);
-            this.Controls.Add(this.tsDroneList);
-            this.Controls.Add(this.tsDroneStatus);
-            this.Controls.Add(this.lblGagueSpeedUnit);
-            this.Controls.Add(this.lblGaugeAltitudeUnit);
-            this.Controls.Add(this.lblGagueSpeedValue);
-            this.Controls.Add(this.lblGagueAltitudeValue);
-            this.Controls.Add(this.labelGaugeSpeed);
-            this.Controls.Add(this.lblGaugeAltitude);
-            this.Controls.Add(this.gaugeSpeed);
-            this.Controls.Add(this.gaugeAltitude);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.myMap);
+            this.Controls.Add(this.splitContainer);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "Planner";
@@ -915,22 +940,26 @@ namespace Diva
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Planner_FormClosed);
             this.Load += new System.EventHandler(this.Planner_Load);
             this.cmMap.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelDroneInfo.ResumeLayout(false);
+            this.panelDroneInfo.PerformLayout();
             this.gboxManualButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).EndInit();
             this.tsDroneStatus.ResumeLayout(false);
             this.tsDroneStatus.PerformLayout();
             this.tsMainFunctions.ResumeLayout(false);
             this.tsMainFunctions.PerformLayout();
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel1.PerformLayout();
+            this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel panelDroneInfo;
 		private System.Windows.Forms.DataGridView dgvWayPoints;
 		private System.Windows.Forms.TextBox tboxHomeAltitude;
 		private System.Windows.Forms.TextBox tboxHomeLongitude;
@@ -991,5 +1020,6 @@ namespace Diva
         private DataGridViewTextBoxColumn colAngle;
         private DataGridViewButtonColumn colDelete;
         private DataGridViewTextBoxColumn colTagData;
+        private SplitContainer splitContainer;
     }
 }
