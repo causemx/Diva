@@ -229,5 +229,42 @@ namespace Diva.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   查詢類似 &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///
+        ///&lt;!-- TAGS ARE CASE SENSATIVE --&gt;
+        ///&lt;CMD&gt;
+        ///  &lt;AC2&gt;
+        ///    &lt;WAYPOINT&gt;
+        ///      &lt;P1&gt;Delay&lt;/P1&gt;
+        ///      &lt;P2&gt;&lt;/P2&gt;
+        ///      &lt;P3&gt;&lt;/P3&gt;
+        ///      &lt;P4&gt;&lt;/P4&gt;
+        ///      &lt;X&gt;Lat&lt;/X&gt;
+        ///      &lt;Y&gt;Long&lt;/Y&gt;
+        ///      &lt;Z&gt;Alt&lt;/Z&gt;
+        ///    &lt;/WAYPOINT&gt;
+        ///    &lt;SPLINE_WAYPOINT&gt;
+        ///      &lt;P1&gt;Delay&lt;/P1&gt;
+        ///      &lt;P2&gt;&lt;/P2&gt;
+        ///      &lt;P3&gt;&lt;/P3&gt;
+        ///      &lt;P4&gt;&lt;/P4&gt;
+        ///      &lt;X&gt;Lat&lt;/X&gt;
+        ///      &lt;Y&gt;Long&lt;/Y&gt;
+        ///      &lt;Z&gt;Alt&lt;/Z&gt;
+        ///    &lt;/SPLINE_WAYPOINT&gt;
+        ///    &lt;LOITER_TURNS&gt;
+        ///      &lt;P1&gt;Turns&lt;/P1&gt;
+        ///      &lt;P2&gt;&lt;/P2&gt;
+        ///      &lt;P3&gt;Radius&lt;/P3&gt;
+        ///      &lt;P4&gt;&lt;/P4&gt;
+        ///   [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string mavcmd {
+            get {
+                return ResourceManager.GetString("mavcmd", resourceCulture);
+            }
+        }
     }
 }
