@@ -2744,7 +2744,7 @@ namespace Diva
 				
 				dialog.Dispose();
 			};
-			dialog.Show();
+			dialog.ShowDialog();
 
 		}
 

@@ -147,7 +147,7 @@ namespace Diva
             this.panel1.Controls.Add(this.Commands);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 535);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1344, 136);
             this.panel1.TabIndex = 1;
@@ -165,9 +165,9 @@ namespace Diva
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.groupBox1.Location = new System.Drawing.Point(877, 8);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(459, 125);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
@@ -181,7 +181,7 @@ namespace Diva
             this.BUT_Addwp.Image = global::Diva.Properties.Resources.if_camera_1055100;
             this.BUT_Addwp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BUT_Addwp.Location = new System.Drawing.Point(5, 69);
-            this.BUT_Addwp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BUT_Addwp.Margin = new System.Windows.Forms.Padding(4);
             this.BUT_Addwp.Name = "BUT_Addwp";
             this.BUT_Addwp.Size = new System.Drawing.Size(105, 49);
             this.BUT_Addwp.TabIndex = 6;
@@ -196,7 +196,7 @@ namespace Diva
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.Location = new System.Drawing.Point(8, 15);
-            this.button7.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.button7.Margin = new System.Windows.Forms.Padding(5);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(105, 49);
             this.button7.TabIndex = 7;
@@ -211,7 +211,7 @@ namespace Diva
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button6.Location = new System.Drawing.Point(119, 69);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(105, 49);
             this.button6.TabIndex = 5;
@@ -226,7 +226,7 @@ namespace Diva
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button5.Location = new System.Drawing.Point(119, 15);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(105, 49);
             this.button5.TabIndex = 4;
@@ -241,7 +241,7 @@ namespace Diva
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.Location = new System.Drawing.Point(232, 69);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(105, 49);
             this.button4.TabIndex = 3;
@@ -256,7 +256,7 @@ namespace Diva
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.Location = new System.Drawing.Point(232, 15);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(105, 49);
             this.button3.TabIndex = 2;
@@ -271,7 +271,7 @@ namespace Diva
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.Location = new System.Drawing.Point(345, 69);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(105, 49);
             this.button2.TabIndex = 1;
@@ -286,7 +286,7 @@ namespace Diva
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.Location = new System.Drawing.Point(345, 15);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(105, 49);
             this.button1.TabIndex = 0;
@@ -297,7 +297,7 @@ namespace Diva
             // TXT_Mode
             // 
             this.TXT_Mode.Location = new System.Drawing.Point(707, 4);
-            this.TXT_Mode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_Mode.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_Mode.Name = "TXT_Mode";
             this.TXT_Mode.Size = new System.Drawing.Size(105, 25);
             this.TXT_Mode.TabIndex = 18;
@@ -317,7 +317,7 @@ namespace Diva
             // TXT_DefaultAlt
             // 
             this.TXT_DefaultAlt.Location = new System.Drawing.Point(521, 4);
-            this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_DefaultAlt.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_DefaultAlt.Name = "TXT_DefaultAlt";
             this.TXT_DefaultAlt.Size = new System.Drawing.Size(105, 25);
             this.TXT_DefaultAlt.TabIndex = 12;
@@ -337,7 +337,7 @@ namespace Diva
             // TXT_homealt
             // 
             this.TXT_homealt.Location = new System.Drawing.Point(313, 4);
-            this.TXT_homealt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_homealt.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_homealt.Name = "TXT_homealt";
             this.TXT_homealt.Size = new System.Drawing.Size(105, 25);
             this.TXT_homealt.TabIndex = 10;
@@ -345,7 +345,7 @@ namespace Diva
             // TXT_homelng
             // 
             this.TXT_homelng.Location = new System.Drawing.Point(199, 4);
-            this.TXT_homelng.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_homelng.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_homelng.Name = "TXT_homelng";
             this.TXT_homelng.Size = new System.Drawing.Size(105, 25);
             this.TXT_homelng.TabIndex = 9;
@@ -353,7 +353,7 @@ namespace Diva
             // TXT_homelat
             // 
             this.TXT_homelat.Location = new System.Drawing.Point(84, 4);
-            this.TXT_homelat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TXT_homelat.Margin = new System.Windows.Forms.Padding(4);
             this.TXT_homelat.Name = "TXT_homelat";
             this.TXT_homelat.Size = new System.Drawing.Size(105, 25);
             this.TXT_homelat.TabIndex = 8;
@@ -400,7 +400,7 @@ namespace Diva
             this.Commands.EnableHeadersVisualStyles = false;
             this.Commands.GridColor = System.Drawing.Color.White;
             this.Commands.Location = new System.Drawing.Point(0, 45);
-            this.Commands.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Commands.Margin = new System.Windows.Forms.Padding(5);
             this.Commands.Name = "Commands";
             this.Commands.RowHeadersWidth = 50;
             this.Commands.RowTemplate.Height = 24;
@@ -524,8 +524,8 @@ namespace Diva
             this.Gauge_alt.BaseArcWidth = 2;
             this.Gauge_alt.Center = new System.Drawing.Point(100, 100);
             this.Gauge_alt.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gauge_alt.Location = new System.Drawing.Point(0, 60);
-            this.Gauge_alt.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Gauge_alt.Location = new System.Drawing.Point(0, 48);
+            this.Gauge_alt.Margin = new System.Windows.Forms.Padding(5);
             this.Gauge_alt.MaxValue = 100F;
             this.Gauge_alt.MinValue = 0F;
             this.Gauge_alt.Name = "Gauge_alt";
@@ -554,7 +554,7 @@ namespace Diva
             this.Gauge_alt.ScaleNumbersRotation = 0;
             this.Gauge_alt.ScaleNumbersStartScaleLine = 0;
             this.Gauge_alt.ScaleNumbersStepScaleLines = 1;
-            this.Gauge_alt.Size = new System.Drawing.Size(361, 288);
+            this.Gauge_alt.Size = new System.Drawing.Size(271, 230);
             this.Gauge_alt.TabIndex = 2;
             this.Gauge_alt.Text = "aGauge1";
             this.Gauge_alt.Value = 0F;
@@ -570,8 +570,8 @@ namespace Diva
             this.Gauge_speed.BaseArcWidth = 2;
             this.Gauge_speed.Center = new System.Drawing.Point(100, 100);
             this.Gauge_speed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gauge_speed.Location = new System.Drawing.Point(0, 348);
-            this.Gauge_speed.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Gauge_speed.Location = new System.Drawing.Point(0, 278);
+            this.Gauge_speed.Margin = new System.Windows.Forms.Padding(5);
             this.Gauge_speed.MaxValue = 30F;
             this.Gauge_speed.MinValue = 0F;
             this.Gauge_speed.Name = "Gauge_speed";
@@ -600,7 +600,7 @@ namespace Diva
             this.Gauge_speed.ScaleNumbersRotation = 0;
             this.Gauge_speed.ScaleNumbersStartScaleLine = 0;
             this.Gauge_speed.ScaleNumbersStepScaleLines = 1;
-            this.Gauge_speed.Size = new System.Drawing.Size(361, 288);
+            this.Gauge_speed.Size = new System.Drawing.Size(271, 230);
             this.Gauge_speed.TabIndex = 3;
             this.Gauge_speed.Text = "aGauge1";
             this.Gauge_speed.Value = 0F;
@@ -610,7 +610,7 @@ namespace Diva
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(121, 80);
+            this.label4.Location = new System.Drawing.Point(90, 56);
             this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 24);
@@ -622,7 +622,7 @@ namespace Diva
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(127, 362);
+            this.label5.Location = new System.Drawing.Point(90, 276);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 24);
@@ -633,10 +633,10 @@ namespace Diva
             // 
             this.lbl_alt.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbl_alt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_alt.Location = new System.Drawing.Point(113, 290);
+            this.lbl_alt.Location = new System.Drawing.Point(85, 232);
             this.lbl_alt.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbl_alt.Name = "lbl_alt";
-            this.lbl_alt.Size = new System.Drawing.Size(89, 31);
+            this.lbl_alt.Size = new System.Drawing.Size(67, 25);
             this.lbl_alt.TabIndex = 6;
             this.lbl_alt.Text = "00";
             this.lbl_alt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -645,10 +645,10 @@ namespace Diva
             // 
             this.lbl_speed.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbl_speed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_speed.Location = new System.Drawing.Point(105, 576);
+            this.lbl_speed.Location = new System.Drawing.Point(79, 461);
             this.lbl_speed.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbl_speed.Name = "lbl_speed";
-            this.lbl_speed.Size = new System.Drawing.Size(89, 31);
+            this.lbl_speed.Size = new System.Drawing.Size(67, 25);
             this.lbl_speed.TabIndex = 7;
             this.lbl_speed.Text = "00";
             this.lbl_speed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -658,7 +658,7 @@ namespace Diva
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(213, 290);
+            this.label6.Location = new System.Drawing.Point(160, 232);
             this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(27, 24);
@@ -670,7 +670,7 @@ namespace Diva
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(197, 578);
+            this.label7.Location = new System.Drawing.Point(148, 462);
             this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(38, 24);
@@ -870,7 +870,7 @@ namespace Diva
             this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.myMap.LevelsKeepInMemmory = 5;
             this.myMap.Location = new System.Drawing.Point(0, 0);
-            this.myMap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.myMap.Margin = new System.Windows.Forms.Padding(4);
             this.myMap.MarkersEnabled = true;
             this.myMap.MaxZoom = 2;
             this.myMap.MinZoom = 2;
@@ -907,7 +907,7 @@ namespace Diva
             this.Controls.Add(this.Gauge_alt);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.myMap);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Planner";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Planner";
