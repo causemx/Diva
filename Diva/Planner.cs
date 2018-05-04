@@ -230,17 +230,17 @@ namespace Diva
 			// RegeneratePolygon();
 			updateCMDParams();
 
-			foreach (DataGridViewColumn commandsColumn in Commands.Columns)
+			foreach (DataGridViewColumn commandsColumn in dgvWayPoints.Columns)
 			{
 				if (commandsColumn is DataGridViewTextBoxColumn)
 					commandsColumn.CellTemplate.Value = "0";
 			}
 
-			Commands.Columns[Delete.Index].CellTemplate.Value = "X";
+			dgvWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
 
 			//setup push toolstripbutton
-			BUT_Tagging.CheckOnClick = true;
-			BUT_Tagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
+			tsbtnTagging.CheckOnClick = true;
+			tsbtnTagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
 
 
 			// setup geofence
@@ -292,7 +292,7 @@ namespace Diva
 			droneButton.Click += BUT_Drone_Click;
 			droneButton.MouseUp += DroneButton_MouseUp;
 			droneButton.MouseDown += DroneButton_MouseDown;
-			TS_drones.Items.Add(droneButton);
+			tsDroneList.Items.Add(droneButton);
 		}
 
 		private void AddRouteOverlay(int count)
@@ -311,7 +311,7 @@ namespace Diva
                 Priority = ThreadPriority.AboveNormal
             };
             mainThread.Start();
-            timer1.Start();
+            timerMapItemUpdate.Start();
         }
 
         private void Planner_FormClosing(object sender, FormClosingEventArgs e)
@@ -329,7 +329,7 @@ namespace Diva
             {
                 mav.onDestroy();
             }
-            timer1.Stop();
+            timerMapItemUpdate.Stop();
         }
 
         private void MainLoop()
@@ -351,15 +351,15 @@ namespace Diva
 						{
 							if ((uint)mode == comPort.MAV.mode)
 							{
-								TXT_Mode.Text = Enum.GetName(typeof(flightmode), mode);
+								tboxDroneMode.Text = Enum.GetName(typeof(flightmode), mode);
 							}
 						}
 
-						ts_lbl_battery.Text = comPort.MAV.battery_voltage.ToString("F2") + "%";
-						Gauge_alt.Value = comPort.MAV.alt;
-						lbl_alt.Text = (comPort.MAV.altasl).ToString();
-						Gauge_speed.Value = comPort.MAV.groundspeed;
-						lbl_speed.Text = (comPort.MAV.groundspeed).ToString();
+						tslblBattery.Text = comPort.MAV.battery_voltage.ToString("F2") + "%";
+						gaugeAltitude.Value = comPort.MAV.alt;
+						lblGagueAltitudeValue.Text = (comPort.MAV.altasl).ToString();
+						gaugeSpeed.Value = comPort.MAV.groundspeed;
+						lblGagueSpeedValue.Text = (comPort.MAV.groundspeed).ToString();
 
 					});
 
@@ -406,21 +406,21 @@ namespace Diva
 			this.BeginInvoke((MethodInvoker)delegate
 			{
 				// thread for updateing row numbers
-				for (int a = 0; a < Commands.Rows.Count - 0; a++)
+				for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
 				{
 					try
 					{
-						if (Commands.Rows[a].HeaderCell.Value == null)
+						if (dgvWayPoints.Rows[a].HeaderCell.Value == null)
 						{
 							//Commands.Rows[a].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-							Commands.Rows[a].HeaderCell.Value = (a + 1).ToString();
+							dgvWayPoints.Rows[a].HeaderCell.Value = (a + 1).ToString();
 						}
 						// skip rows with the correct number
-						string rowno = Commands.Rows[a].HeaderCell.Value.ToString();
+						string rowno = dgvWayPoints.Rows[a].HeaderCell.Value.ToString();
 						if (!rowno.Equals((a + 1).ToString()))
 						{
 							// this code is where the delay is when deleting.
-							Commands.Rows[a].HeaderCell.Value = (a + 1).ToString();
+							dgvWayPoints.Rows[a].HeaderCell.Value = (a + 1).ToString();
 						}
 					}
 					catch (Exception)
@@ -444,7 +444,7 @@ namespace Diva
 
 			cmds.Add("UNKNOWN");
 
-			Command.DataSource = cmds;
+            colCommand.DataSource = cmds;
 		}
 
 	
@@ -581,7 +581,7 @@ namespace Diva
 				}
 				if (int.TryParse(item.Tag.ToString(), out answer))
 				{
-					Commands.CurrentCell = Commands[0, answer - 1];
+					dgvWayPoints.CurrentCell = dgvWayPoints[0, answer - 1];
 				}
 			}
 			catch (Exception ex)
@@ -967,8 +967,8 @@ namespace Diva
 					{
 						try
 						{
-							Commands.CurrentCell = Commands[0, answer - 1];
-							item.ToolTipText = "Alt: " + Commands[Alt.Index, answer - 1].Value;
+							dgvWayPoints.CurrentCell = dgvWayPoints[0, answer - 1];
+							item.ToolTipText = "Alt: " + dgvWayPoints[colAltitude.Index, answer - 1].Value;
 							item.ToolTipMode = MarkerTooltipMode.OnMouseOver; 
 						}
 						catch (Exception ex)
@@ -1256,12 +1256,12 @@ namespace Diva
 			{
 				if (e.RowIndex < 0)
 					return;
-				if (e.ColumnIndex == Delete.Index && (e.RowIndex + 0) < Commands.RowCount) // delete
+				if (e.ColumnIndex == colDelete.Index && (e.RowIndex + 0) < dgvWayPoints.RowCount) // delete
 				{
 					quickadd = true;
 					// mono fix
-					Commands.CurrentCell = null;
-					Commands.Rows.RemoveAt(e.RowIndex);
+					dgvWayPoints.CurrentCell = null;
+					dgvWayPoints.Rows.RemoveAt(e.RowIndex);
 					quickadd = false;
 					writeKML();
 				}			
@@ -1291,16 +1291,16 @@ namespace Diva
 			if (pointno == "H")
 			{
 				// auto update home alt
-				TXT_homealt.Text = "0";
-				TXT_homelat.Text = lat.ToString();
-				TXT_homelng.Text = lng.ToString();
+				tboxHomeAltitude.Text = "0";
+				tboxHomeLatitude.Text = lat.ToString();
+				tboxHomeLongitude.Text = lng.ToString();
 				return;
 			}
 
 			try
 			{
 				selectedrow = int.Parse(pointno) - 1;
-				Commands.CurrentCell = Commands[1, selectedrow];
+				dgvWayPoints.CurrentCell = dgvWayPoints[1, selectedrow];
 				// depending on the dragged item, selectedrow can be reset 
 				selectedrow = int.Parse(pointno) - 1;
 			}
@@ -1337,10 +1337,10 @@ namespace Diva
 			}
 
 			// creating a WP
-			selectedrow = Commands.Rows.Add();
+			selectedrow = dgvWayPoints.Rows.Add();
 
 			
-			Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
+			dgvWayPoints.Rows[selectedrow].Cells[colCommand.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
 			ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
 			
 
@@ -1349,7 +1349,7 @@ namespace Diva
 
 		private bool IsHomeEmpty()
 		{
-			if (TXT_homealt.Text != "" && TXT_homelat.Text != "" && TXT_homelng.Text != "")
+			if (tboxHomeAltitude.Text != "" && tboxHomeLatitude.Text != "" && tboxHomeLongitude.Text != "")
 				return false;
 			else
 				return true;
@@ -1361,10 +1361,10 @@ namespace Diva
 			{
 				if (cmdParamNames.ContainsKey(command))
 					for (int i = 1; i <= 7; i++)
-						Commands.Columns[i].HeaderText = cmdParamNames[command][i - 1];
+						dgvWayPoints.Columns[i].HeaderText = cmdParamNames[command][i - 1];
 				else
 					for (int i = 1; i <= 7; i++)
-						Commands.Columns[i].HeaderText = "setme";
+						dgvWayPoints.Columns[i].HeaderText = "setme";
 			}
 			catch (Exception ex)
 			{
@@ -1376,7 +1376,7 @@ namespace Diva
 		{
 			List<Locationwp> commands = new List<Locationwp>();
 
-			for (int a = 0; a < Commands.Rows.Count - 0; a++)
+			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
 			{
 				var temp = DataViewtoLocationwp(a);
 
@@ -1391,16 +1391,16 @@ namespace Diva
 			try
 			{
 				Locationwp temp = new Locationwp();
-				if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
+				if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 				{
-					temp.id = (ushort)Commands.Rows[a].Cells[Command.Index].Tag;
+					temp.id = (ushort)dgvWayPoints.Rows[a].Cells[colCommand.Index].Tag;
 				}
 				else
 				{
 					temp.id =
 						(ushort)
 								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									Commands.Rows[a].Cells[Command.Index].Value.ToString(),
+									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
 									false);
 				}
 
@@ -1408,16 +1408,16 @@ namespace Diva
 	
 				temp.alt =
 					(float)
-						(double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()));
+						(double.Parse(dgvWayPoints.Rows[a].Cells[colAltitude.Index].Value.ToString()));
 			
-				temp.lat = (double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()));
-				temp.lng = (double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()));
-				temp.p1 = float.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString());
-				temp.p2 = (float)(double.Parse(Commands.Rows[a].Cells[Param2.Index].Value.ToString()));
-				temp.p3 = (float)(double.Parse(Commands.Rows[a].Cells[Param3.Index].Value.ToString()));
-				temp.p4 = (float)(double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString()));
+				temp.lat = (double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString()));
+				temp.lng = (double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString()));
+				temp.p1 = float.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString());
+				temp.p2 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString()));
+				temp.p3 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam3.Index].Value.ToString()));
+				temp.p4 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam4.Index].Value.ToString()));
 
-				temp.Tag = Commands.Rows[a].Cells[TagData.Index].Value;
+				temp.Tag = dgvWayPoints.Rows[a].Cells[colTagData.Index].Value;
 
 				return temp;
 			}
@@ -1432,7 +1432,7 @@ namespace Diva
 
 		public void setfromMap(double lat, double lng, int alt, double p1 = 0)
 		{
-			if (selectedrow > Commands.RowCount)
+			if (selectedrow > dgvWayPoints.RowCount)
 			{
 				MessageBox.Show("Invalid coord, How did you do this?");
 				return;
@@ -1457,26 +1457,26 @@ namespace Diva
 			}
 
 			DataGridViewTextBoxCell cell;
-			if (Commands.Columns[Lat.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
+			if (dgvWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
 			{
-				cell = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lat.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
-			if (Commands.Columns[Lon.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
+			if (dgvWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
 			{
-				cell = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lng.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
 			if (alt != -1 && alt != -2 &&
-				Commands.Columns[Alt.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
+				dgvWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
 			{
-				cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
 
 				{
 					double result;
-					bool pass = double.TryParse(TXT_homealt.Text, out result);
+					bool pass = double.TryParse(tboxHomeAltitude.Text, out result);
 
 					if (pass == false)
 					{
@@ -1485,10 +1485,10 @@ namespace Diva
 						string homealt = "10";
 						if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
 							return;
-						TXT_homealt.Text = homealt;
+						tboxHomeAltitude.Text = homealt;
 					}
 					int results1;
-					if (!int.TryParse(TXT_DefaultAlt.Text, out results1))
+					if (!int.TryParse(tboxAltitudeValue.Text, out results1))
 					{
 						MessageBox.Show("Your default alt is not valid");
 						return;
@@ -1499,11 +1499,11 @@ namespace Diva
 						string defalt = "10";
 						if (DialogResult.Cancel == InputBox.Show("Default Alt", "Default Altitude", ref defalt))
 							return;
-						TXT_DefaultAlt.Text = defalt;
+						tboxAltitudeValue.Text = defalt;
 					}
 				}
 
-				cell.Value = TXT_DefaultAlt.Text;
+				cell.Value = tboxAltitudeValue.Text;
 
 				float ans;
 				if (float.TryParse(cell.Value.ToString(), out ans))
@@ -1530,15 +1530,15 @@ namespace Diva
 			// convertFromGeographic(lat, lng);
 
 			// Add more for other params
-			if (Commands.Columns[Param1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
+			if (dgvWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
 			{
-				cell = Commands.Rows[selectedrow].Cells[Param1.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
 				cell.Value = p1;
 				cell.DataGridView.EndEdit();
 			}
 
 			writeKML();
-			Commands.EndEdit();
+			dgvWayPoints.EndEdit();
 		}
 
 
@@ -1562,15 +1562,15 @@ namespace Diva
 
 				// process and add home to the list
 				string home;
-				if (TXT_homealt.Text != "" && TXT_homelat.Text != "" && TXT_homelng.Text != "")
+				if (tboxHomeAltitude.Text != "" && tboxHomeLatitude.Text != "" && tboxHomeLongitude.Text != "")
 				{
-					home = string.Format("{0},{1},{2}\r\n", TXT_homelng.Text, TXT_homelat.Text, TXT_DefaultAlt.Text);
+					home = string.Format("{0},{1},{2}\r\n", tboxHomeLongitude.Text, tboxHomeLatitude.Text, tboxAltitudeValue.Text);
 					if (objectsOverlay != null) // during startup
 					{
-						pointlist.Add(new PointLatLngAlt(double.Parse(TXT_homelat.Text), double.Parse(TXT_homelng.Text),
-							double.Parse(TXT_homealt.Text), "H"));
+						pointlist.Add(new PointLatLngAlt(double.Parse(tboxHomeLatitude.Text), double.Parse(tboxHomeLongitude.Text),
+							double.Parse(tboxHomeAltitude.Text), "H"));
 						fullpointlist.Add(pointlist[pointlist.Count - 1]);
-						addpolygonmarker("H", double.Parse(TXT_homelng.Text), double.Parse(TXT_homelat.Text), 0, null);
+						addpolygonmarker("H", double.Parse(tboxHomeLongitude.Text), double.Parse(tboxHomeLatitude.Text), 0, null);
 					}
 				}
 				else
@@ -1590,8 +1590,8 @@ namespace Diva
 				double homealt = 0;
 				try
 				{
-					if (!String.IsNullOrEmpty(TXT_homealt.Text))
-						homealt = (int)double.Parse(TXT_homealt.Text);
+					if (!String.IsNullOrEmpty(tboxHomeAltitude.Text))
+						homealt = (int)double.Parse(tboxHomeAltitude.Text);
 				}
 				catch (Exception ex)
 				{
@@ -1605,17 +1605,17 @@ namespace Diva
 				long temp = Stopwatch.GetTimestamp();
 
 				string lookat = "";
-				for (int a = 0; a < Commands.Rows.Count - 0; a++)
+				for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
 				{
 					try
 					{
-						if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
+						if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 							continue;
 
 						ushort command =
 							(ushort)
 									Enum.Parse(typeof(MAVLink.MAV_CMD),
-										Commands.Rows[a].Cells[Command.Index].Value.ToString(), false);
+										dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
 						if (command < (ushort)MAVLink.MAV_CMD.LAST &&
 							command != (ushort)MAVLink.MAV_CMD.TAKEOFF && // doesnt have a position
 							command != (ushort)MAVLink.MAV_CMD.VTOL_TAKEOFF && // doesnt have a position
@@ -1624,9 +1624,9 @@ namespace Diva
 							command != (ushort)MAVLink.MAV_CMD.GUIDED_ENABLE
 							|| command == (ushort)MAVLink.MAV_CMD.DO_SET_ROI)
 						{
-							string cell2 = Commands.Rows[a].Cells[Alt.Index].Value.ToString(); // alt
-							string cell3 = Commands.Rows[a].Cells[Lat.Index].Value.ToString(); // lat
-							string cell4 = Commands.Rows[a].Cells[Lon.Index].Value.ToString(); // lng
+							string cell2 = dgvWayPoints.Rows[a].Cells[colAltitude.Index].Value.ToString(); // alt
+							string cell3 = dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString(); // lat
+							string cell4 = dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString(); // lng
 
 							// land can be 0,0 or a lat,lng
 							if (command == (ushort)MAVLink.MAV_CMD.LAND && cell3 == "0" && cell4 == "0")
@@ -1694,14 +1694,14 @@ namespace Diva
 									double.Parse(cell2), null);
 							}
 
-							avglong += double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString());
-							avglat += double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString());
+							avglong += double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString());
+							avglat += double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString());
 							usable++;
 
-							maxlong = Math.Max(double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()), maxlong);
-							maxlat = Math.Max(double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()), maxlat);
-							minlong = Math.Min(double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()), minlong);
-							minlat = Math.Min(double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()), minlat);
+							maxlong = Math.Max(double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString()), maxlong);
+							maxlat = Math.Max(double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString()), maxlat);
+							minlong = Math.Min(double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString()), minlong);
+							minlat = Math.Min(double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString()), minlat);
 
 							Debug.WriteLine(temp - Stopwatch.GetTimestamp());
 						}
@@ -1709,8 +1709,8 @@ namespace Diva
 						{
 							pointlist.Add(null);
 
-							int wpno = int.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString());
-							int repeat = int.Parse(Commands.Rows[a].Cells[Param2.Index].Value.ToString());
+							int wpno = int.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString());
+							int repeat = int.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString());
 
 							List<PointLatLngAlt> list = new List<PointLatLngAlt>();
 
@@ -1778,8 +1778,8 @@ namespace Diva
 				}
 				else if (home.Length > 5 && usable == 0)
 				{
-					lookat = "<LookAt>     <longitude>" + TXT_homelng.Text.ToString(new CultureInfo("en-US")) +
-							 "</longitude>     <latitude>" + TXT_homelat.Text.ToString(new CultureInfo("en-US")) +
+					lookat = "<LookAt>     <longitude>" + tboxHomeLongitude.Text.ToString(new CultureInfo("en-US")) +
+							 "</longitude>     <latitude>" + tboxHomeLatitude.Text.ToString(new CultureInfo("en-US")) +
 							 "</latitude> <range>4000</range> </LookAt>";
 
 					RectLatLng? rect = myMap.GetRectOfAllMarkers("objects");
@@ -1961,12 +1961,12 @@ namespace Diva
 			try
 			{
 				selectedrow = e.RowIndex;
-				string option = Commands[Command.Index, selectedrow].EditedFormattedValue.ToString();
+				string option = dgvWayPoints[colCommand.Index, selectedrow].EditedFormattedValue.ToString();
 				string cmd;
 				try
 				{
-					if (Commands[Command.Index, selectedrow].Value != null)
-						cmd = Commands[Command.Index, selectedrow].Value.ToString();
+					if (dgvWayPoints[colCommand.Index, selectedrow].Value != null)
+						cmd = dgvWayPoints[colCommand.Index, selectedrow].Value.ToString();
 					else
 						cmd = option;
 				}
@@ -1991,9 +1991,9 @@ namespace Diva
 
 		private void Commands_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
-			for (int i = 0; i < Commands.ColumnCount; i++)
+			for (int i = 0; i < dgvWayPoints.ColumnCount; i++)
 			{
-				DataGridViewCell tcell = Commands.Rows[e.RowIndex].Cells[i];
+				DataGridViewCell tcell = dgvWayPoints.Rows[e.RowIndex].Cells[i];
 				if (tcell.GetType() == typeof(DataGridViewTextBoxCell))
 				{
 					if (tcell.Value == null)
@@ -2001,12 +2001,12 @@ namespace Diva
 				}
 			}
 
-			DataGridViewComboBoxCell cell = Commands.Rows[e.RowIndex].Cells[Command.Index] as DataGridViewComboBoxCell;
+			DataGridViewComboBoxCell cell = dgvWayPoints.Rows[e.RowIndex].Cells[colCommand.Index] as DataGridViewComboBoxCell;
 			if (cell.Value == null)
 			{
 				cell.Value = "WAYPOINT";
 				cell.DropDownWidth = 200;
-				Commands.Rows[e.RowIndex].Cells[Delete.Index].Value = "X";
+				dgvWayPoints.Rows[e.RowIndex].Cells[colDelete.Index].Value = "X";
 				if (!quickadd)
 				{
 					Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0)); // do header labels
@@ -2020,17 +2020,17 @@ namespace Diva
 
 			try
 			{
-				Commands.CurrentCell = Commands.Rows[e.RowIndex].Cells[0];
+				dgvWayPoints.CurrentCell = dgvWayPoints.Rows[e.RowIndex].Cells[0];
 
-				if (Commands.Rows.Count > 1)
+				if (dgvWayPoints.Rows.Count > 1)
 				{
-					if (Commands.Rows[e.RowIndex - 1].Cells[Command.Index].Value.ToString() == "WAYPOINT")
+					if (dgvWayPoints.Rows[e.RowIndex - 1].Cells[colCommand.Index].Value.ToString() == "WAYPOINT")
 					{
-						Commands.Rows[e.RowIndex].Selected = true; // highlight row
+						dgvWayPoints.Rows[e.RowIndex].Selected = true; // highlight row
 					}
 					else
 					{
-						Commands.CurrentCell = Commands[1, e.RowIndex - 1];
+						dgvWayPoints.CurrentCell = dgvWayPoints[1, e.RowIndex - 1];
 						//Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex-1));
 					}
 				}
@@ -2046,13 +2046,13 @@ namespace Diva
 			selectedrow = e.RowIndex;
 			Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0));
 			// do header labels - encure we dont 0 out valid colums
-			int cols = Commands.Columns.Count;
+			int cols = dgvWayPoints.Columns.Count;
 			for (int a = 1; a < cols; a++)
 			{
 				DataGridViewTextBoxCell cell;
-				cell = Commands.Rows[selectedrow].Cells[a] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedrow].Cells[a] as DataGridViewTextBoxCell;
 
-				if (Commands.Columns[a].HeaderText.Equals("") && cell != null && cell.Value == null)
+				if (dgvWayPoints.Columns[a].HeaderText.Equals("") && cell != null && cell.Value == null)
 				{
 					cell.Value = "0";
 				}
@@ -2074,9 +2074,9 @@ namespace Diva
 			try
 			{
 				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TXT_homelat.Text));
-				home.lng = (double.Parse(TXT_homelng.Text));
-				home.alt = (float.Parse(TXT_homealt.Text)); // use saved home
+				home.lat = (double.Parse(tboxHomeLatitude.Text));
+				home.lng = (double.Parse(tboxHomeLongitude.Text));
+				home.alt = (float.Parse(tboxHomeAltitude.Text)); // use saved home
 			}
 			catch
 			{
@@ -2085,14 +2085,14 @@ namespace Diva
 			}
 
 			// check for invalid grid data
-			for (int a = 0; a < Commands.Rows.Count - 0; a++)
+			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
 			{
-				for (int b = 0; b < Commands.ColumnCount - 0; b++)
+				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
 				{
 					double answer;
 					if (b >= 1 && b <= 7)
 					{
-						if (!double.TryParse(Commands[b, a].Value.ToString(), out answer))
+						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
 						{
 							MessageBox.Show("There are errors in your mission");
 							return;
@@ -2102,16 +2102,16 @@ namespace Diva
 					// if (TXT_altwarn.Text == "")
 					// 	TXT_altwarn.Text = (0).ToString();
 
-					if (Commands.Rows[a].Cells[Command.Index].Value.ToString().Contains("UNKNOWN"))
+					if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 						continue;
 
 					ushort cmd =
 						(ushort)
 								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									Commands.Rows[a].Cells[Command.Index].Value.ToString(), false);
+									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
 
 					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
-						double.Parse(Commands[Alt.Index, a].Value.ToString()) < WARN_ALT)
+						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
 					{
 						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
 							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
@@ -2166,9 +2166,9 @@ namespace Diva
 				try
 				{
 					home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-					home.lat = (double.Parse(TXT_homelat.Text));
-					home.lng = (double.Parse(TXT_homelng.Text));
-					home.alt = (float.Parse(TXT_homealt.Text)); // use saved home
+					home.lat = (double.Parse(tboxHomeLatitude.Text));
+					home.lng = (double.Parse(tboxHomeLongitude.Text));
+					home.alt = (float.Parse(tboxHomeAltitude.Text)); // use saved home
 				}
 				catch
 				{
@@ -2177,10 +2177,10 @@ namespace Diva
 
 				// log
 				log.Info("wps values " + comPort.MAV.wps.Values.Count);
-				log.Info("cmd rows " + (Commands.Rows.Count + 1)); // + home
+				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
 
 				// check for changes / future mod to send just changed wp's
-				if (comPort.MAV.wps.Values.Count == (Commands.Rows.Count + 1))
+				if (comPort.MAV.wps.Values.Count == (dgvWayPoints.Rows.Count + 1))
 				{
 					Hashtable wpstoupload = new Hashtable();
 
@@ -2224,7 +2224,7 @@ namespace Diva
 				// set wp total
 				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set total wps ");
 
-				ushort totalwpcountforupload = (ushort)(Commands.Rows.Count + 1);
+				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
 
 				if (comPort.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
 				{
@@ -2489,10 +2489,10 @@ namespace Diva
 
 
 			// mono fix
-			Commands.CurrentCell = null;
+			dgvWayPoints.CurrentCell = null;
 
-			while (Commands.Rows.Count > 0 && !append)
-				Commands.Rows.Clear();
+			while (dgvWayPoints.Rows.Count > 0 && !append)
+				dgvWayPoints.Rows.Clear();
 
 			if (cmds.Count == 0)
 			{
@@ -2500,10 +2500,10 @@ namespace Diva
 				return;
 			}
 
-			Commands.SuspendLayout();
-			Commands.Enabled = false;
+			dgvWayPoints.SuspendLayout();
+			dgvWayPoints.Enabled = false;
 
-			int i = Commands.Rows.Count - 1;
+			int i = dgvWayPoints.Rows.Count - 1;
 			foreach (Locationwp temp in cmds)
 			{
 				i++;
@@ -2514,15 +2514,15 @@ namespace Diva
 					break;
 				if (i == 0 && append) // we dont want to add home again.
 					continue;
-				if (i + 1 >= Commands.Rows.Count)
+				if (i + 1 >= dgvWayPoints.Rows.Count)
 				{
-					selectedrow = Commands.Rows.Add();
+					selectedrow = dgvWayPoints.Rows.Add();
 				}
 				//if (i == 0 && temp.alt == 0) // skip 0 home
 				//  continue;
 				DataGridViewTextBoxCell cell;
 				DataGridViewComboBoxCell cellcmd;
-				cellcmd = Commands.Rows[i].Cells[Command.Index] as DataGridViewComboBoxCell;
+				cellcmd = dgvWayPoints.Rows[i].Cells[colCommand.Index] as DataGridViewComboBoxCell;
 				cellcmd.Value = "UNKNOWN";
 				cellcmd.Tag = temp.id;
 
@@ -2536,28 +2536,28 @@ namespace Diva
 					}
 				}
 
-				cell = Commands.Rows[i].Cells[Alt.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.alt;
-				cell = Commands.Rows[i].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.lat;
-				cell = Commands.Rows[i].Cells[Lon.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.lng;
 
-				cell = Commands.Rows[i].Cells[Param1.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colParam1.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.p1;
-				cell = Commands.Rows[i].Cells[Param2.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colParam2.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.p2;
-				cell = Commands.Rows[i].Cells[Param3.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colParam3.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.p3;
-				cell = Commands.Rows[i].Cells[Param4.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[i].Cells[colParam4.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.p4;
 
 				// convert to utm
 				// convertFromGeographic(temp.lat, temp.lng);
 			}
 
-			Commands.Enabled = true;
-			Commands.ResumeLayout();
+			dgvWayPoints.Enabled = true;
+			dgvWayPoints.ResumeLayout();
 
 			// We don't have parameter panel.
 			// setWPParams();
@@ -2565,21 +2565,21 @@ namespace Diva
 			try
 			{
 				DataGridViewTextBoxCell cellhome;
-				cellhome = Commands.Rows[0].Cells[Lat.Index] as DataGridViewTextBoxCell;
+				cellhome = dgvWayPoints.Rows[0].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				if (cellhome.Value != null)
 				{
-					if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
+					if (cellhome.Value.ToString() != tboxHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
 						DialogResult dr = MessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
 							MessageBoxButtons.YesNo);
 
 						if (dr == DialogResult.Yes)
 						{
-							TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-							cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
-							TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-							cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
-							TXT_homealt.Text =
+							tboxHomeLatitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = dgvWayPoints.Rows[0].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
+							tboxHomeLongitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = dgvWayPoints.Rows[0].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
+							tboxHomeAltitude.Text =
 								(double.Parse(cellhome.Value.ToString())).ToString();
 						}
 					}
@@ -2591,10 +2591,10 @@ namespace Diva
 
 			} // if there is no valid home
 
-			if (Commands.RowCount > 0)
+			if (dgvWayPoints.RowCount > 0)
 			{
 				log.Info("remove home from list");
-				Commands.Rows.Remove(Commands.Rows[0]); // remove home row
+				dgvWayPoints.Rows.Remove(dgvWayPoints.Rows[0]); // remove home row
 			}
 
 			quickadd = false;
@@ -2654,9 +2654,9 @@ namespace Diva
 			quickadd = true;
 
 			// mono fix
-			Commands.CurrentCell = null;
+			dgvWayPoints.CurrentCell = null;
 
-			Commands.Rows.Clear();
+			dgvWayPoints.Rows.Clear();
 
 			selectedrow = 0;
 			quickadd = false;
@@ -2794,7 +2794,7 @@ namespace Diva
 		/// <param name="e"></param>
 		public void BUT_read_Click(object sender, EventArgs e)
 		{
-			if (Commands.Rows.Count > 0)
+			if (dgvWayPoints.Rows.Count > 0)
 			{
 				
 				if (MessageBox.Show("This will clear your existing planned mission, Continue?", "Confirm",
@@ -2810,9 +2810,9 @@ namespace Diva
 
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			TXT_homealt.Text = "0";
-			TXT_homelat.Text = MouseDownStart.Lat.ToString();
-			TXT_homelng.Text = MouseDownStart.Lng.ToString();
+			tboxHomeAltitude.Text = "0";
+			tboxHomeLatitude.Text = MouseDownStart.Lat.ToString();
+			tboxHomeLongitude.Text = MouseDownStart.Lng.ToString();
 		}
 
 		
@@ -2922,7 +2922,7 @@ namespace Diva
 
 		private void SelectToolStripButton(ToolStripButton selected_button)
 		{
-			foreach (ToolStripButton _tsbutton in TS_drones.Items)
+			foreach (ToolStripButton _tsbutton in tsDroneList.Items)
 			{
 				_tsbutton.Checked = (_tsbutton == selected_button);
 			}
@@ -2947,11 +2947,11 @@ namespace Diva
 					comPorts.RemoveAt(index - 1);
 					myMap.Overlays.Remove(routesOverlays[index - 1]);
 					routesOverlays.RemoveAt(index - 1);
-					TS_drones.Items.RemoveAt(index - 1);
+					tsDroneList.Items.RemoveAt(index - 1);
 
 					// refresh button index
 					int current_tag = 1;
-					foreach (ToolStripButton but in TS_drones.Items)
+					foreach (ToolStripButton but in tsDroneList.Items)
 					{
 						if (current_tag <= comPorts.Count)
 						{
@@ -2973,56 +2973,49 @@ namespace Diva
 			droneSelectTime = DateTime.Now;
 		}
 
-		/// <summary>
-		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void timer1_Tick(object sender, EventArgs e)
-		{
-			
-			try
-			{
-				
-				if (isMouseDown || currentRectMarker != null)
-					return;
+        /// <summary>
+        /// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerMapItemUpdate_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (isMouseDown || currentRectMarker != null)
+                    return;
+                for (int i = 0; i < comPorts.Count; i++)
+                {
+                    MavlinkInterface _port = comPorts[i];
+                    routesOverlays[i].Markers.Clear();
 
-				for (int i = 0; i < comPorts.Count; i++)
-				{
-					MavlinkInterface _port = comPorts[i];
-					routesOverlays[i].Markers.Clear();
+                    if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
+                        continue;
 
-					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
-						continue;
-						
+                    var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
+                        _port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
 
-					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
-						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
+                    routesOverlays[i].Markers.Add(marker);
+                }
 
-					routesOverlays[i].Markers.Add(marker);
+                //autopan
+                if (autopan)
+                {
+                    if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+                    {
+                        PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+                        updateMapPosition(currentloc);
+                        mapupdate = DateTime.Now;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
 
-				}
-
-				//autopan
-				if (autopan)
-				{
-					if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
-					{
-						PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
-						updateMapPosition(currentloc);
-						mapupdate = DateTime.Now;
-					}
-				}
-
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
-		}
-
-
-		private Demux demultiplexer = new Demux();
+        private Demux demultiplexer = new Demux();
 		private bool isDeplexClicked = false;
 		private void BUT_Deplex_Click(object sender, EventArgs e)
 		{
