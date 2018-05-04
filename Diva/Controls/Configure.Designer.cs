@@ -35,6 +35,7 @@
 			this.BtnGeoFence = new System.Windows.Forms.Button();
 			this.configGeoFence1 = new Diva.Controls.ConfigGeoFence();
 			this.configTuning1 = new Diva.Controls.ConfigTuning();
+			this.myGroupBoxPlus1 = new Diva.Controls.MyGroupBoxPlus();
 			this.side_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -108,11 +109,19 @@
 			this.configTuning1.Size = new System.Drawing.Size(763, 603);
 			this.configTuning1.TabIndex = 2;
 			// 
+			// myGroupBoxPlus1
+			// 
+			this.myGroupBoxPlus1.Location = new System.Drawing.Point(238, 10);
+			this.myGroupBoxPlus1.Name = "myGroupBoxPlus1";
+			this.myGroupBoxPlus1.Size = new System.Drawing.Size(409, 350);
+			this.myGroupBoxPlus1.TabIndex = 3;
+			// 
 			// Configure
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(985, 603);
+			this.Controls.Add(this.myGroupBoxPlus1);
 			this.Controls.Add(this.configTuning1);
 			this.Controls.Add(this.configGeoFence1);
 			this.Controls.Add(this.side_panel);
@@ -132,5 +141,6 @@
 		private System.Windows.Forms.Button BtnHelp;
 		private ConfigGeoFence configGeoFence1;
 		private ConfigTuning configTuning1;
+		private MyGroupBoxPlus myGroupBoxPlus1;
 	}
 }

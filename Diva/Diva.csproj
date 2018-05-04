@@ -156,6 +156,12 @@
     <Compile Include="Controls\ConfigTuning.Designer.cs">
       <DependentUpon>ConfigTuning.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ConfigVehicle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigVehicle.Designer.cs">
+      <DependentUpon>ConfigVehicle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyButton.cs">
@@ -166,6 +172,12 @@
     </Compile>
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MyGroupBoxPlus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MyGroupBoxPlus.Designer.cs">
+      <DependentUpon>MyGroupBoxPlus.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MyListView.cs">
       <SubType>Form</SubType>
@@ -222,8 +234,14 @@
     <EmbeddedResource Include="Controls\Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigVehicle.resx">
+      <DependentUpon>ConfigVehicle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MyGroupBoxPlus.resx">
+      <DependentUpon>MyGroupBoxPlus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyListView.resx">
       <DependentUpon>MyListView.cs</DependentUpon>

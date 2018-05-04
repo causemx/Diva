@@ -221,7 +221,7 @@ namespace Diva.Controls
 			// this progress update pertains to the cancellation cleanup
 			if (doWorkArgs.CancelRequested && !doWorkArgs.CancelAcknowledged)
 				return;
-
+			if (InvokeRequired) { Invoke((MethodInvoker)(()=>UpdateProgressAndStatus(progress, status))); return; }
 			int pgv = -1;
 
 			lock (objlock)
