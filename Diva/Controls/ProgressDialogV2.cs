@@ -180,7 +180,6 @@ namespace Diva.Controls
 					this.Invoke((MethodInvoker)delegate
 					{
 						this.Text = "Error";
-						this.lbl_progress_message.Left = 65;
 						this.lbl_progress_message.Text = errMessage;
 						this.img_warning.Visible = true;
 						this.progressBar.Visible = false;
@@ -221,6 +220,12 @@ namespace Diva.Controls
 			// this progress update pertains to the cancellation cleanup
 			if (doWorkArgs.CancelRequested && !doWorkArgs.CancelAcknowledged)
 				return;
+
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)(() => UpdateProgressAndStatus(progress, status)));
+                return;
+            }
 
 			int pgv = -1;
 
