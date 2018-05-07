@@ -32,21 +32,12 @@ namespace Diva
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
             this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
             this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
             this.panelDroneInfo = new System.Windows.Forms.Panel();
-            this.gboxManualButtons = new System.Windows.Forms.GroupBox();
-            this.btnAddwp = new System.Windows.Forms.Button();
-            this.buttonVideo = new System.Windows.Forms.Button();
-            this.btnReadWPs = new System.Windows.Forms.Button();
-            this.btnWriteWPs = new System.Windows.Forms.Button();
-            this.btnAuto = new System.Windows.Forms.Button();
-            this.btnTakeOff = new System.Windows.Forms.Button();
-            this.btnLand = new System.Windows.Forms.Button();
-            this.btnArm = new System.Windows.Forms.Button();
             this.tboxDroneMode = new System.Windows.Forms.TextBox();
             this.lblMode = new System.Windows.Forms.Label();
             this.tboxAltitudeValue = new System.Windows.Forms.TextBox();
@@ -55,6 +46,15 @@ namespace Diva
             this.tboxHomeLongitude = new System.Windows.Forms.TextBox();
             this.tboxHomeLatitude = new System.Windows.Forms.TextBox();
             this.lblHome = new System.Windows.Forms.Label();
+            this.gboxManualButtons = new System.Windows.Forms.GroupBox();
+            this.btnAddwp = new System.Windows.Forms.Button();
+            this.btnVideo = new System.Windows.Forms.Button();
+            this.btnReadWPs = new System.Windows.Forms.Button();
+            this.btnWriteWPs = new System.Windows.Forms.Button();
+            this.btnAuto = new System.Windows.Forms.Button();
+            this.btnTakeOff = new System.Windows.Forms.Button();
+            this.btnLand = new System.Windows.Forms.Button();
+            this.btnArm = new System.Windows.Forms.Button();
             this.dgvWayPoints = new System.Windows.Forms.DataGridView();
             this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,10 +76,10 @@ namespace Diva
             this.lblGaugeAltitudeUnit = new System.Windows.Forms.Label();
             this.lblGagueSpeedUnit = new System.Windows.Forms.Label();
             this.tsDroneStatus = new System.Windows.Forms.ToolStrip();
-            this.tsbGPSSignalIcon = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnGPSSignalIcon = new System.Windows.Forms.ToolStripButton();
             this.tslblGPS = new System.Windows.Forms.ToolStripLabel();
             this.tsSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbBatteryHealthIcon = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnBatteryHealthIcon = new System.Windows.Forms.ToolStripButton();
             this.tslblBattery = new System.Windows.Forms.ToolStripLabel();
             this.tsDroneList = new System.Windows.Forms.ToolStrip();
             this.timerMapItemUpdate = new System.Windows.Forms.Timer(this.components);
@@ -115,26 +115,26 @@ namespace Diva
             this.miSetHomeHere,
             this.miClearAllMissions});
             this.cmMap.Name = "contextMenuStrip1";
-            this.cmMap.Size = new System.Drawing.Size(202, 76);
+            this.cmMap.Size = new System.Drawing.Size(211, 104);
             // 
             // miClearMission
             // 
             this.miClearMission.Name = "miClearMission";
-            this.miClearMission.Size = new System.Drawing.Size(201, 24);
+            this.miClearMission.Size = new System.Drawing.Size(210, 24);
             this.miClearMission.Text = "Takeoff to Here";
             this.miClearMission.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
             // 
             // miSetHomeHere
             // 
             this.miSetHomeHere.Name = "miSetHomeHere";
-            this.miSetHomeHere.Size = new System.Drawing.Size(201, 24);
+            this.miSetHomeHere.Size = new System.Drawing.Size(210, 24);
             this.miSetHomeHere.Text = "Set Home Here";
             this.miSetHomeHere.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
             // 
             // miClearAllMissions
             // 
             this.miClearAllMissions.Name = "miClearAllMissions";
-            this.miClearAllMissions.Size = new System.Drawing.Size(201, 24);
+            this.miClearAllMissions.Size = new System.Drawing.Size(210, 24);
             this.miClearAllMissions.Text = "Clear All Missions";
             this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
             // 
@@ -155,10 +155,85 @@ namespace Diva
             this.panelDroneInfo.Size = new System.Drawing.Size(885, 32);
             this.panelDroneInfo.TabIndex = 1;
             // 
+            // tboxDroneMode
+            // 
+            this.tboxDroneMode.Location = new System.Drawing.Point(707, 4);
+            this.tboxDroneMode.Margin = new System.Windows.Forms.Padding(4);
+            this.tboxDroneMode.Name = "tboxDroneMode";
+            this.tboxDroneMode.Size = new System.Drawing.Size(105, 25);
+            this.tboxDroneMode.TabIndex = 18;
+            this.tboxDroneMode.Text = "NULL";
+            // 
+            // lblMode
+            // 
+            this.lblMode.AutoSize = true;
+            this.lblMode.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMode.Location = new System.Drawing.Point(636, 6);
+            this.lblMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMode.Name = "lblMode";
+            this.lblMode.Size = new System.Drawing.Size(58, 24);
+            this.lblMode.TabIndex = 17;
+            this.lblMode.Text = "Mode";
+            // 
+            // tboxAltitudeValue
+            // 
+            this.tboxAltitudeValue.Location = new System.Drawing.Point(521, 4);
+            this.tboxAltitudeValue.Margin = new System.Windows.Forms.Padding(4);
+            this.tboxAltitudeValue.Name = "tboxAltitudeValue";
+            this.tboxAltitudeValue.Size = new System.Drawing.Size(105, 25);
+            this.tboxAltitudeValue.TabIndex = 12;
+            this.tboxAltitudeValue.Text = "10";
+            // 
+            // lblAltitude
+            // 
+            this.lblAltitude.AutoSize = true;
+            this.lblAltitude.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAltitude.Location = new System.Drawing.Point(428, 6);
+            this.lblAltitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAltitude.Name = "lblAltitude";
+            this.lblAltitude.Size = new System.Drawing.Size(79, 24);
+            this.lblAltitude.TabIndex = 11;
+            this.lblAltitude.Text = "Altitude";
+            // 
+            // tboxHomeAltitude
+            // 
+            this.tboxHomeAltitude.Location = new System.Drawing.Point(313, 4);
+            this.tboxHomeAltitude.Margin = new System.Windows.Forms.Padding(4);
+            this.tboxHomeAltitude.Name = "tboxHomeAltitude";
+            this.tboxHomeAltitude.Size = new System.Drawing.Size(105, 25);
+            this.tboxHomeAltitude.TabIndex = 10;
+            // 
+            // tboxHomeLongitude
+            // 
+            this.tboxHomeLongitude.Location = new System.Drawing.Point(199, 4);
+            this.tboxHomeLongitude.Margin = new System.Windows.Forms.Padding(4);
+            this.tboxHomeLongitude.Name = "tboxHomeLongitude";
+            this.tboxHomeLongitude.Size = new System.Drawing.Size(105, 25);
+            this.tboxHomeLongitude.TabIndex = 9;
+            // 
+            // tboxHomeLatitude
+            // 
+            this.tboxHomeLatitude.Location = new System.Drawing.Point(84, 4);
+            this.tboxHomeLatitude.Margin = new System.Windows.Forms.Padding(4);
+            this.tboxHomeLatitude.Name = "tboxHomeLatitude";
+            this.tboxHomeLatitude.Size = new System.Drawing.Size(105, 25);
+            this.tboxHomeLatitude.TabIndex = 8;
+            // 
+            // lblHome
+            // 
+            this.lblHome.AutoSize = true;
+            this.lblHome.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHome.Location = new System.Drawing.Point(4, 6);
+            this.lblHome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHome.Name = "lblHome";
+            this.lblHome.Size = new System.Drawing.Size(63, 24);
+            this.lblHome.TabIndex = 7;
+            this.lblHome.Text = "Home";
+            // 
             // gboxManualButtons
             // 
             this.gboxManualButtons.Controls.Add(this.btnAddwp);
-            this.gboxManualButtons.Controls.Add(this.buttonVideo);
+            this.gboxManualButtons.Controls.Add(this.btnVideo);
             this.gboxManualButtons.Controls.Add(this.btnReadWPs);
             this.gboxManualButtons.Controls.Add(this.btnWriteWPs);
             this.gboxManualButtons.Controls.Add(this.btnAuto);
@@ -192,20 +267,20 @@ namespace Diva
             this.btnAddwp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddwp.UseVisualStyleBackColor = false;
             // 
-            // buttonVideo
+            // btnVideo
             // 
-            this.buttonVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.buttonVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonVideo.ForeColor = System.Drawing.Color.White;
-            this.buttonVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonVideo.Location = new System.Drawing.Point(8, 15);
-            this.buttonVideo.Margin = new System.Windows.Forms.Padding(5);
-            this.buttonVideo.Name = "buttonVideo";
-            this.buttonVideo.Size = new System.Drawing.Size(105, 49);
-            this.buttonVideo.TabIndex = 7;
-            this.buttonVideo.Text = "Video";
-            this.buttonVideo.UseVisualStyleBackColor = false;
-            this.buttonVideo.Click += new System.EventHandler(this.VideoDemo_Click);
+            this.btnVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVideo.ForeColor = System.Drawing.Color.White;
+            this.btnVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnVideo.Location = new System.Drawing.Point(8, 15);
+            this.btnVideo.Margin = new System.Windows.Forms.Padding(5);
+            this.btnVideo.Name = "btnVideo";
+            this.btnVideo.Size = new System.Drawing.Size(105, 49);
+            this.btnVideo.TabIndex = 7;
+            this.btnVideo.Text = "Video";
+            this.btnVideo.UseVisualStyleBackColor = false;
+            this.btnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
             // 
             // btnReadWPs
             // 
@@ -297,93 +372,18 @@ namespace Diva
             this.btnArm.UseVisualStyleBackColor = false;
             this.btnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
             // 
-            // tboxDroneMode
-            // 
-            this.tboxDroneMode.Location = new System.Drawing.Point(707, 4);
-            this.tboxDroneMode.Margin = new System.Windows.Forms.Padding(4);
-            this.tboxDroneMode.Name = "tboxDroneMode";
-            this.tboxDroneMode.Size = new System.Drawing.Size(105, 25);
-            this.tboxDroneMode.TabIndex = 18;
-            this.tboxDroneMode.Text = "NULL";
-            // 
-            // lblMode
-            // 
-            this.lblMode.AutoSize = true;
-            this.lblMode.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMode.Location = new System.Drawing.Point(636, 6);
-            this.lblMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblMode.Name = "lblMode";
-            this.lblMode.Size = new System.Drawing.Size(58, 24);
-            this.lblMode.TabIndex = 17;
-            this.lblMode.Text = "Mode";
-            // 
-            // tboxAltitudeValue
-            // 
-            this.tboxAltitudeValue.Location = new System.Drawing.Point(521, 4);
-            this.tboxAltitudeValue.Margin = new System.Windows.Forms.Padding(4);
-            this.tboxAltitudeValue.Name = "tboxAltitudeValue";
-            this.tboxAltitudeValue.Size = new System.Drawing.Size(105, 25);
-            this.tboxAltitudeValue.TabIndex = 12;
-            this.tboxAltitudeValue.Text = "10";
-            // 
-            // lblAltitude
-            // 
-            this.lblAltitude.AutoSize = true;
-            this.lblAltitude.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAltitude.Location = new System.Drawing.Point(428, 6);
-            this.lblAltitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblAltitude.Name = "lblAltitude";
-            this.lblAltitude.Size = new System.Drawing.Size(79, 24);
-            this.lblAltitude.TabIndex = 11;
-            this.lblAltitude.Text = "Altitude";
-            // 
-            // tboxHomeAltitude
-            // 
-            this.tboxHomeAltitude.Location = new System.Drawing.Point(313, 4);
-            this.tboxHomeAltitude.Margin = new System.Windows.Forms.Padding(4);
-            this.tboxHomeAltitude.Name = "tboxHomeAltitude";
-            this.tboxHomeAltitude.Size = new System.Drawing.Size(105, 25);
-            this.tboxHomeAltitude.TabIndex = 10;
-            // 
-            // tboxHomeLongitude
-            // 
-            this.tboxHomeLongitude.Location = new System.Drawing.Point(199, 4);
-            this.tboxHomeLongitude.Margin = new System.Windows.Forms.Padding(4);
-            this.tboxHomeLongitude.Name = "tboxHomeLongitude";
-            this.tboxHomeLongitude.Size = new System.Drawing.Size(105, 25);
-            this.tboxHomeLongitude.TabIndex = 9;
-            // 
-            // tboxHomeLatitude
-            // 
-            this.tboxHomeLatitude.Location = new System.Drawing.Point(84, 4);
-            this.tboxHomeLatitude.Margin = new System.Windows.Forms.Padding(4);
-            this.tboxHomeLatitude.Name = "tboxHomeLatitude";
-            this.tboxHomeLatitude.Size = new System.Drawing.Size(105, 25);
-            this.tboxHomeLatitude.TabIndex = 8;
-            // 
-            // lblHome
-            // 
-            this.lblHome.AutoSize = true;
-            this.lblHome.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHome.Location = new System.Drawing.Point(4, 6);
-            this.lblHome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblHome.Name = "lblHome";
-            this.lblHome.Size = new System.Drawing.Size(63, 24);
-            this.lblHome.TabIndex = 7;
-            this.lblHome.Text = "Home";
-            // 
             // dgvWayPoints
             // 
             this.dgvWayPoints.AllowUserToAddRows = false;
             this.dgvWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("PMingLiU", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvWayPoints.ColumnHeadersHeight = 30;
             this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -685,10 +685,10 @@ namespace Diva
             this.tsDroneStatus.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsDroneStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.tsDroneStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbGPSSignalIcon,
+            this.tsbtnGPSSignalIcon,
             this.tslblGPS,
             this.tsSeparator1,
-            this.tsbBatteryHealthIcon,
+            this.tsbtnBatteryHealthIcon,
             this.tslblBattery});
             this.tsDroneStatus.Location = new System.Drawing.Point(1194, 0);
             this.tsDroneStatus.Name = "tsDroneStatus";
@@ -696,15 +696,15 @@ namespace Diva
             this.tsDroneStatus.TabIndex = 10;
             this.tsDroneStatus.Text = "Drone Status";
             // 
-            // tsbGPSSignalIcon
+            // tsbtnGPSSignalIcon
             // 
-            this.tsbGPSSignalIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbGPSSignalIcon.Image = global::Diva.Properties.Resources.if_50_111142;
-            this.tsbGPSSignalIcon.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbGPSSignalIcon.Name = "tsbGPSSignalIcon";
-            this.tsbGPSSignalIcon.Size = new System.Drawing.Size(24, 24);
-            this.tsbGPSSignalIcon.Text = "GPS";
-            this.tsbGPSSignalIcon.ToolTipText = "GPS Signal Strength";
+            this.tsbtnGPSSignalIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnGPSSignalIcon.Image = global::Diva.Properties.Resources.if_50_111142;
+            this.tsbtnGPSSignalIcon.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnGPSSignalIcon.Name = "tsbtnGPSSignalIcon";
+            this.tsbtnGPSSignalIcon.Size = new System.Drawing.Size(24, 24);
+            this.tsbtnGPSSignalIcon.Text = "GPS";
+            this.tsbtnGPSSignalIcon.ToolTipText = "GPS Signal Strength";
             // 
             // tslblGPS
             // 
@@ -717,15 +717,15 @@ namespace Diva
             this.tsSeparator1.Name = "tsSeparator1";
             this.tsSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
-            // tsbBatteryHealthIcon
+            // tsbtnBatteryHealthIcon
             // 
-            this.tsbBatteryHealthIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbBatteryHealthIcon.Image = global::Diva.Properties.Resources.if_battery_reduce_energy_charge_2203543;
-            this.tsbBatteryHealthIcon.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbBatteryHealthIcon.Name = "tsbBatteryHealthIcon";
-            this.tsbBatteryHealthIcon.Size = new System.Drawing.Size(24, 24);
-            this.tsbBatteryHealthIcon.Text = "Battery";
-            this.tsbBatteryHealthIcon.ToolTipText = "Battery Health";
+            this.tsbtnBatteryHealthIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnBatteryHealthIcon.Image = global::Diva.Properties.Resources.if_battery_reduce_energy_charge_2203543;
+            this.tsbtnBatteryHealthIcon.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnBatteryHealthIcon.Name = "tsbtnBatteryHealthIcon";
+            this.tsbtnBatteryHealthIcon.Size = new System.Drawing.Size(24, 24);
+            this.tsbtnBatteryHealthIcon.Text = "Battery";
+            this.tsbtnBatteryHealthIcon.ToolTipText = "Battery Health";
             // 
             // tslblBattery
             // 
@@ -913,14 +913,14 @@ namespace Diva
             this.splitContainer.Panel1.Controls.Add(this.tsDroneStatus);
             this.splitContainer.Panel1.Controls.Add(this.tsMainFunctions);
             this.splitContainer.Panel1.Controls.Add(this.myMap);
-            this.splitContainer.Panel1MinSize = 240;
+            this.splitContainer.Panel1MinSize = 320;
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
             this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
             this.splitContainer.Panel2.Controls.Add(this.gboxManualButtons);
-            this.splitContainer.Panel2MinSize = 120;
+            this.splitContainer.Panel2MinSize = 110;
             this.splitContainer.Size = new System.Drawing.Size(1344, 753);
             this.splitContainer.SplitterDistance = 629;
             this.splitContainer.TabIndex = 15;
@@ -982,10 +982,10 @@ namespace Diva
 		private System.Windows.Forms.Label lblGagueSpeedUnit;
 		private System.Windows.Forms.ToolStripMenuItem miClearAllMissions;
 		private System.Windows.Forms.ToolStrip tsDroneStatus;
-		private System.Windows.Forms.ToolStripButton tsbGPSSignalIcon;
+		private System.Windows.Forms.ToolStripButton tsbtnGPSSignalIcon;
 		private System.Windows.Forms.ToolStripLabel tslblGPS;
 		private System.Windows.Forms.ToolStripSeparator tsSeparator1;
-		private System.Windows.Forms.ToolStripButton tsbBatteryHealthIcon;
+		private System.Windows.Forms.ToolStripButton tsbtnBatteryHealthIcon;
 		private System.Windows.Forms.ToolStripLabel tslblBattery;
 		private System.Windows.Forms.ToolStrip tsDroneList;
 		private System.Windows.Forms.Timer timerMapItemUpdate;
@@ -1008,7 +1008,7 @@ namespace Diva
 		private Button btnLand;
 		private ToolStripButton tsbtnTagging;
 		private ToolStripSeparator tsSeparator5;
-        private Button buttonVideo;
+        private Button btnVideo;
         private DataGridViewComboBoxColumn colCommand;
         private DataGridViewTextBoxColumn colParam1;
         private DataGridViewTextBoxColumn colParam2;
