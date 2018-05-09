@@ -17,8 +17,8 @@ namespace Diva
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new SplashForm());
 			Application.Run(new Planner());
-			
 		}
 	}
 }
