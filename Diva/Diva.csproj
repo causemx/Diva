@@ -188,12 +188,6 @@
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MyGroupBoxPlus.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\MyGroupBoxPlus.Designer.cs">
-      <DependentUpon>MyGroupBoxPlus.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\MyListView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,9 +249,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MyGroupBoxPlus.resx">
-      <DependentUpon>MyGroupBoxPlus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyListView.resx">
       <DependentUpon>MyListView.cs</DependentUpon>
@@ -1262,6 +1253,7 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\if_SVG_LINE_TECHNOLOGY-05_2897338.png" />
     <None Include="Resources\mavcmd.xml" />
     <None Include="Resources\if_price_tag_2639892.png" />
     <None Include="Resources\if_camera_1055100.png" />

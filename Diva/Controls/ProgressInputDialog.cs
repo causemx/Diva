@@ -12,7 +12,7 @@ namespace Diva.Controls
 {
 	public partial class ProgressInputDialog : Form
 	{
-		public event EventHandler confirm_click;
+		public event EventHandler DoConfirm_Click;
 
 		public string port_name
 		{
@@ -29,19 +29,17 @@ namespace Diva.Controls
 			get { return cb_baud.Text; }
 		}
 
-		Planner mPlanner;
 
-		public ProgressInputDialog(Planner parent)
+		public ProgressInputDialog()
 		{
 			InitializeComponent();
-			this.mPlanner = parent;
 		}
 
 		private void but_confirm_click(object sender, EventArgs e)
 		{
-			if (confirm_click != null)
+			if (DoConfirm_Click != null)
 			{
-				confirm_click(this, e);
+				DoConfirm_Click(this, e);
 			}
 		}
 

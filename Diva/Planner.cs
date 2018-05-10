@@ -2719,11 +2719,11 @@ namespace Diva
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 
-			ProgressInputDialog dialog = new ProgressInputDialog(this)
+			ProgressInputDialog dialog = new ProgressInputDialog()
 			{
 				Text = "Connection",
 			};
-			dialog.confirm_click += delegate (object o, EventArgs ex)
+			dialog.DoConfirm_Click += delegate (object o, EventArgs ex)
 			{
 				var mav = new MavlinkInterface();
 				try

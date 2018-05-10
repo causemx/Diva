@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Aircraft>
+    <Vehicle>
+        <name>Copter1</name>
+        <port_name>udp</port_name>
+        <port>15000</port>
+        <baudrate>115200</baudrate>
+        <vedio_addr>rstp://local:8080/</vedio_addr>
+    </Vehicle>
+
+    <Vehicle>
+        <name>Copter2</name>
+        <port_name>com1</port_name>
+        <port>10000</port>
+        <baudrate>97600</baudrate>
+        <vedio_addr>rstp://local:8080/</vedio_addr>
+    </Vehicle>
+</Aircraft>
