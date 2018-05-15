@@ -32,7 +32,7 @@ namespace Diva.Controls
 			InitializeComponent();
 			string file = Settings.GetRunningDirectory() + "aircraft.xml";
 			LoadXML(file);
-			FillTable();
+			//FillTable();
 
 		}
 

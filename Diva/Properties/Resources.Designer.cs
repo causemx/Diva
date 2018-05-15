@@ -63,6 +63,46 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap capacity_battery {
+            get {
+                object obj = ResourceManager.GetObject("capacity_battery", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap capacity_flytime {
+            get {
+                object obj = ResourceManager.GetObject("capacity_flytime", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap capacity_signal {
+            get {
+                object obj = ResourceManager.GetObject("capacity_signal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_drone_6axis {
+            get {
+                object obj = ResourceManager.GetObject("icon_drone_6axis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap if_50_111142 {
             get {
                 object obj = ResourceManager.GetObject("if_50_111142", resourceCulture);
@@ -196,6 +236,16 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap if_price_tag_2639892 {
             get {
                 object obj = ResourceManager.GetObject("if_price_tag_2639892", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap if_Psyduck_3151565 {
+            get {
+                object obj = ResourceManager.GetObject("if_Psyduck_3151565", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

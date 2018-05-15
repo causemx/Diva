@@ -35,7 +35,6 @@
 			this.BtnGeoFence = new System.Windows.Forms.Button();
 			this.configGeoFence1 = new Diva.Controls.ConfigGeoFence();
 			this.configTuning1 = new Diva.Controls.ConfigTuning();
-			this.configVehicle1 = new Diva.Controls.ConfigVehicle();
 			this.side_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -108,21 +107,13 @@
 			this.configTuning1.Name = "configTuning1";
 			this.configTuning1.Size = new System.Drawing.Size(763, 603);
 			this.configTuning1.TabIndex = 2;
-			// 
-			// configVehicle1
-			// 
-			this.configVehicle1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configVehicle1.Location = new System.Drawing.Point(222, 0);
-			this.configVehicle1.Name = "configVehicle1";
-			this.configVehicle1.Size = new System.Drawing.Size(763, 603);
-			this.configVehicle1.TabIndex = 3;
+		
 			// 
 			// Configure
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(985, 603);
-			this.Controls.Add(this.configVehicle1);
 			this.Controls.Add(this.configTuning1);
 			this.Controls.Add(this.configGeoFence1);
 			this.Controls.Add(this.side_panel);
@@ -142,6 +133,5 @@
 		private System.Windows.Forms.Button BtnHelp;
 		private ConfigGeoFence configGeoFence1;
 		private ConfigTuning configTuning1;
-		private ConfigVehicle configVehicle1;
 	}
 }

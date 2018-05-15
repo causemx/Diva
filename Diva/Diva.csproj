@@ -188,12 +188,6 @@
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MyListView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\MyListView.Designer.cs">
-      <DependentUpon>MyListView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +205,12 @@
     </Compile>
     <Compile Include="Controls\ProgressInputDialog.Designer.cs">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Vehicle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Vehicle.Designer.cs">
+      <DependentUpon>Vehicle.cs</DependentUpon>
     </Compile>
     <Compile Include="Cooper\Rotation.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
@@ -250,9 +250,6 @@
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MyListView.resx">
-      <DependentUpon>MyListView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Vehicle.resx">
+      <DependentUpon>Vehicle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>
@@ -1253,6 +1253,11 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\if_Psyduck_3151565.png" />
+    <None Include="Resources\capacity-signal.png" />
+    <None Include="Resources\capacity-flytime.png" />
+    <None Include="Resources\capacity-battery.png" />
+    <None Include="Resources\icon-drone-6axis.png" />
     <None Include="Resources\if_SVG_LINE_TECHNOLOGY-05_2897338.png" />
     <None Include="Resources\mavcmd.xml" />
     <None Include="Resources\if_price_tag_2639892.png" />
