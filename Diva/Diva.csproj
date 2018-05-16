@@ -189,6 +189,7 @@
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Cooper\Rotation.cs" />
+    <Compile Include="DataManager.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />

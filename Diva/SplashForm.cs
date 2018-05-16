@@ -16,5 +16,13 @@ namespace Diva
         {
             InitializeComponent();
         }
+
+        private void SplashForm_Load(object sender, EventArgs e)
+        {
+           if (DataManager.Ready)
+            {
+
+            }
+        }
     }
 }
