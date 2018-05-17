@@ -206,6 +206,9 @@
     <Compile Include="Controls\ProgressInputDialog.Designer.cs">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Vehicle.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1253,6 +1256,35 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon-debug.png" />
+    <None Include="Resources\size_height_edit-32.png" />
+    <None Include="Resources\news-32.png" />
+    <None Include="Resources\home-32.png" />
+    <None Include="Resources\size_height_settings-64.png" />
+    <None Include="Resources\news-64.png" />
+    <None Include="Resources\home-64.png" />
+    <None Include="Resources\icon-arm.png" />
+    <None Include="Resources\icon-writewps-active.png" />
+    <None Include="Resources\icon-writewps.png" />
+    <None Include="Resources\icon-takeoff-active.png" />
+    <None Include="Resources\icon-takeoff.png" />
+    <None Include="Resources\icon-readwps-active.png" />
+    <None Include="Resources\icon-readwps.png" />
+    <None Include="Resources\icon-land-active.png" />
+    <None Include="Resources\icon-land.png" />
+    <None Include="Resources\icon-auto-active.png" />
+    <None Include="Resources\icon-auto.png" />
+    <None Include="Resources\icon-arm-active.png" />
+    <None Include="Resources\icon-add-active.png" />
+    <None Include="Resources\icon-add.png" />
+    <None Include="Resources\icon-tagging-active.png" />
+    <None Include="Resources\icon-tagging.png" />
+    <None Include="Resources\icon-rotation-active.png" />
+    <None Include="Resources\icon-rotation.png" />
+    <None Include="Resources\icon-connect-active.png" />
+    <None Include="Resources\icon-connect.png" />
+    <None Include="Resources\icon-configure-active.png" />
+    <None Include="Resources\icon-configure.png" />
     <None Include="Resources\if_Psyduck_3151565.png" />
     <None Include="Resources\capacity-signal.png" />
     <None Include="Resources\capacity-flytime.png" />

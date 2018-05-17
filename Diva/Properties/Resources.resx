@@ -175,19 +175,88 @@
   <data name="mavcmd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mavcmd.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;big5</value>
   </data>
-  <data name="capacity_battery" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\capacity-battery.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="capacity_flytime" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\capacity-flytime.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="capacity_signal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\capacity-signal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon_drone_6axis" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-drone-6axis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="if_Psyduck_3151565" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\if_Psyduck_3151565.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_connect_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-connect-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_configure" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-configure.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_configure_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-configure-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-connect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_rotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-rotation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_rotation_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-rotation-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_tagging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-tagging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_tagging_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-tagging-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_add_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-add-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_arm_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-arm-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_auto_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-auto-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_land" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-land.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_land_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-land-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_readwps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-readwps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_readwps_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-readwps-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_takeoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-takeoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_takeoff_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-takeoff-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_writewps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-writewps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_writewps_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-writewps-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_arm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-arm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="home_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\home-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="news_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\news-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="size_height_edit_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\size_height_edit-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-debug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

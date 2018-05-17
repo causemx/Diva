@@ -239,9 +239,12 @@ namespace Diva
 			dgvWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
 
 			//setup push toolstripbutton
-			tsbtnTagging.CheckOnClick = true;
-			tsbtnTagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
+			TSBtnTagging.CheckOnClick = true;
+			TSBtnTagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
 
+			//setup toolstrip
+			TSMainPanel.Renderer = new MySR();
+			TSDroneList.Renderer = new MySR();
 
 			// setup geofence
 			/*
@@ -282,17 +285,18 @@ namespace Diva
 
 		private void AddDroneButton(int count, string sysid)
 		{
-			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.if_airplane_32));
+			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.icon_debug));
 			droneButton.ImageScaling = ToolStripItemImageScaling.None;
 			droneButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 			droneButton.TextImageRelation = TextImageRelation.ImageAboveText;
 			droneButton.Enabled = true;
-			droneButton.Text = sysid;
+			droneButton.Text = "SysID: " + sysid;
+			droneButton.ForeColor = Color.White;
 			droneButton.Tag = count;
 			droneButton.Click += BUT_Drone_Click;
 			droneButton.MouseUp += DroneButton_MouseUp;
 			droneButton.MouseDown += DroneButton_MouseDown;
-			tsDroneList.Items.Add(droneButton);
+			TSDroneList.Items.Add(droneButton);
 		}
 
 		private void AddRouteOverlay(int count)
@@ -302,44 +306,44 @@ namespace Diva
 			myMap.Overlays.Add(routesOverlay);
 		}
 
-        private void Planner_Load(object sender, EventArgs e)
-        {
-            mainThread = new Thread(MainLoop)
-            {
-                IsBackground = true,
-                Name = "Main Serial reader",
-                Priority = ThreadPriority.AboveNormal
-            };
-            mainThread.Start();
-            timerMapItemUpdate.Start();
-        }
+		private void Planner_Load(object sender, EventArgs e)
+		{
+			mainThread = new Thread(MainLoop)
+			{
+				IsBackground = true,
+				Name = "Main Serial reader",
+				Priority = ThreadPriority.AboveNormal
+			};
+			mainThread.Start();
+			timerMapItemUpdate.Start();
+		}
 
-        private void Planner_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (mainThread != null)
-            {
-                serialThread = false;
-                e.Cancel = true;
-            }
-        }
+		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (mainThread != null)
+			{
+				serialThread = false;
+				e.Cancel = true;
+			}
+		}
 
-        private void Planner_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            foreach (MavlinkInterface mav in comPorts)
-            {
-                mav.onDestroy();
-            }
-            timerMapItemUpdate.Stop();
-        }
+		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			foreach (MavlinkInterface mav in comPorts)
+			{
+				mav.onDestroy();
+			}
+			timerMapItemUpdate.Stop();
+		}
 
-        private void MainLoop()
+		private void MainLoop()
 		{
 			if (serialThread == true)
 				return;
 
 			serialThread = true;
 
-            while (serialThread)
+			while (serialThread)
 			{
 				Thread.Sleep(20);
 				if (comPort.BaseStream.IsOpen)
@@ -372,8 +376,8 @@ namespace Diva
 				}
 			}
 
-            mainThread = null;
-            Invoke((MethodInvoker)(() => Close()));
+			mainThread = null;
+			Invoke((MethodInvoker)(() => Close()));
 		}
 
 		DateTime lastmapposchange = DateTime.MinValue;
@@ -444,7 +448,7 @@ namespace Diva
 
 			cmds.Add("UNKNOWN");
 
-            colCommand.DataSource = cmds;
+			colCommand.DataSource = cmds;
 		}
 
 	
@@ -455,7 +459,7 @@ namespace Diva
 			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
 
 			// do lang stuff here
-            using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
+			using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
 			using (XmlReader reader = XmlReader.Create(file))
 			{
 				reader.Read();
@@ -2336,8 +2340,8 @@ namespace Diva
 					{
 
 						MessageBox.Show("Upload failed, mission was rejected byt the Mav,\n " +
-						                "item had a bad option wp# " + a + " " +
-						                ans);
+										"item had a bad option wp# " + a + " " +
+										ans);
 						log.Error("Upload failed, mission was rejected byt the Mav,\n " +
 							"item had a bad option wp# " + a + " " +
 							ans);
@@ -2359,7 +2363,7 @@ namespace Diva
 					{
 
 						MessageBox.Show("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
-						                " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
+										" " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						Console.WriteLine("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
 										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						return;
@@ -2922,7 +2926,7 @@ namespace Diva
 
 		private void SelectToolStripButton(ToolStripButton selected_button)
 		{
-			foreach (ToolStripButton _tsbutton in tsDroneList.Items)
+			foreach (ToolStripButton _tsbutton in TSDroneList.Items)
 			{
 				_tsbutton.Checked = (_tsbutton == selected_button);
 			}
@@ -2947,11 +2951,11 @@ namespace Diva
 					comPorts.RemoveAt(index - 1);
 					myMap.Overlays.Remove(routesOverlays[index - 1]);
 					routesOverlays.RemoveAt(index - 1);
-					tsDroneList.Items.RemoveAt(index - 1);
+					TSDroneList.Items.RemoveAt(index - 1);
 
 					// refresh button index
 					int current_tag = 1;
-					foreach (ToolStripButton but in tsDroneList.Items)
+					foreach (ToolStripButton but in TSDroneList.Items)
 					{
 						if (current_tag <= comPorts.Count)
 						{
@@ -2973,49 +2977,49 @@ namespace Diva
 			droneSelectTime = DateTime.Now;
 		}
 
-        /// <summary>
-        /// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timerMapItemUpdate_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                if (isMouseDown || currentRectMarker != null)
-                    return;
-                for (int i = 0; i < comPorts.Count; i++)
-                {
-                    MavlinkInterface _port = comPorts[i];
-                    routesOverlays[i].Markers.Clear();
+		/// <summary>
+		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void timerMapItemUpdate_Tick(object sender, EventArgs e)
+		{
+			try
+			{
+				if (isMouseDown || currentRectMarker != null)
+					return;
+				for (int i = 0; i < comPorts.Count; i++)
+				{
+					MavlinkInterface _port = comPorts[i];
+					routesOverlays[i].Markers.Clear();
 
-                    if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
-                        continue;
+					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
+						continue;
 
-                    var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
-                        _port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
+					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
+						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
 
-                    routesOverlays[i].Markers.Add(marker);
-                }
+					routesOverlays[i].Markers.Add(marker);
+				}
 
-                //autopan
-                if (autopan)
-                {
-                    if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
-                    {
-                        PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
-                        updateMapPosition(currentloc);
-                        mapupdate = DateTime.Now;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-        }
+				//autopan
+				if (autopan)
+				{
+					if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+					{
+						PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+						updateMapPosition(currentloc);
+						mapupdate = DateTime.Now;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+		}
 
-        private Demux demultiplexer = new Demux();
+		private Demux demultiplexer = new Demux();
 		private bool isDeplexClicked = false;
 		private void BUT_Deplex_Click(object sender, EventArgs e)
 		{
@@ -3073,17 +3077,93 @@ namespace Diva
 			}
 		}
 
-        private void VideoDemo_Click(object sender, EventArgs e)
-        {
-            string uri = Microsoft.VisualBasic.Interaction.InputBox("Specify video stream URI.");
-            if (uri != null && uri.Length > 0)
-            {
-                Form form = new Form();
-                VideoPlayer player = new VideoPlayer(uri);
-                form.Controls.Add(player);
-                player.Start();
-                form.Show();
-            }
-        }
-    }
+		private void VideoDemo_Click(object sender, EventArgs e)
+		{
+			string uri = Microsoft.VisualBasic.Interaction.InputBox("Specify video stream URI.");
+			if (uri != null && uri.Length > 0)
+			{
+				Form form = new Form();
+				VideoPlayer player = new VideoPlayer(uri);
+				form.Controls.Add(player);
+				player.Start();
+				form.Show();
+			}
+		}
+
+		private void BUT_Mouse_Hover(object sender, EventArgs e)
+		{
+			if (((Button)sender).Name.Equals("BtnArm"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm_active));
+			else if (((Button)sender).Name.Equals("BtnLand"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land_active));
+			else if (((Button)sender).Name.Equals("BtnTakeOff"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_takeoff_active));
+			else if (((Button)sender).Name.Equals("BtnAuto"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_auto_active));
+			else if (((Button)sender).Name.Equals("BtnWriteWPs"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps_active));
+			else if (((Button)sender).Name.Equals("BtnReadWPs"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps_active));
+			else if (((Button)sender).Name.Equals("BtnVedio"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add_active));
+		}
+
+		private void BUT_Mouse_Leave(object sender, EventArgs e)
+		{
+			if (((Button)sender).Name.Equals("BtnArm"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm));
+			else if (((Button)sender).Name.Equals("BtnLand"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land));
+			else if (((Button)sender).Name.Equals("BtnTakeOff"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_takeoff));
+			else if (((Button)sender).Name.Equals("BtnAuto"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_auto));
+			else if (((Button)sender).Name.Equals("BtnWriteWPs"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps));
+			else if (((Button)sender).Name.Equals("BtnReadWPs"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps));
+			else if (((Button)sender).Name.Equals("BtnVedio"))
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add));
+		}
+
+		private void TSBUT_Mouse_Hover(object sender, EventArgs e)
+		{
+			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect_active));
+
+			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation_active));
+
+			if (((ToolStripButton)sender).Name.Equals("TSBtnConfigure"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_configure_active));
+
+			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging_active));
+		}
+
+		private void TSBUT_Mouse_Leave(object sender, EventArgs e)
+		{
+			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect));
+
+			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation));
+
+			if (((ToolStripButton)sender).Name.Equals("TSBtnConfigure"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_configure));
+
+			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging));
+		}
+
+		public class MySR : ToolStripSystemRenderer
+		{
+			public MySR() { }
+
+			protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+			{
+				//base.OnRenderToolStripBorder(e);
+			}
+		}
+	}
 }
