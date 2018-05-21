@@ -57,6 +57,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SplashForm_FormClosing);
             this.Load += new System.EventHandler(this.SplashForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

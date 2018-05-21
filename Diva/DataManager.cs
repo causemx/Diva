@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,8 +13,7 @@ namespace Diva
 {
     class DataManager
     {
-        private static readonly DataManager instance = new DataManager();
-        public static DataManager Instance { get { return instance;  } }
+        private static readonly Lazy<DataManager> lazy = new Lazy<DataManager>(() => new DataManager());
         private static Configuration config;
 
         internal struct Options
@@ -24,16 +24,16 @@ namespace Diva
             {
                 return JsonConvert.SerializeObject(this).Replace("\"", "");
             }
-            public void FromUnquotedJson(string jstr)
+            public static Options FromUnquotedJson(string jstr)
             {
-                this = JsonConvert.DeserializeObject<Options>(new System.Text.RegularExpressions.Regex("([\\w\\.]+)")
-                .Replace(jstr, "\"$1\""));
+                return JsonConvert.DeserializeObject<Options>(new System.Text.RegularExpressions.Regex("([\\w\\.]+)")
+                        .Replace(jstr, "\"$1\""));
             }
         };
-        bool ready = false;
-        public static bool Ready { get { return instance.ready; } }
-        private Dictionary<string, object> typeLists = new Dictionary<string, object>();
-        Options options;
+        private bool ready = false;
+        public static bool Ready { get { return lazy.Value.ready || Load(); } }
+        private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
+        private Options options;
 
         private DataManager()
         {
@@ -46,40 +46,33 @@ namespace Diva
             {
                 Console.WriteLine("Error opening config file: " + e.Message);
             }
-            ready = (config != null) && Load();
         }
 
-        public List<T> GetTypeList<T>()
+        public static List<T> GetTypeList<T>()
         {
-            return typeLists[typeof(T).AssemblyQualifiedName] as List<T>;
+            return lazy.Value.typeLists.GetOrAdd(typeof(T).AssemblyQualifiedName, (k) => new List<T>()) as List<T>;
         }
 
-        public void UpdateList<T>(List<T> list)
+        public static void UpdateList<T>(List<T> list)
         {
-            typeLists[typeof(T).AssemblyQualifiedName] = list;
+            lazy.Value.typeLists[typeof(T).AssemblyQualifiedName] = list;
         }
 
-        public void AddItem<T>(T item)
+        public static void AddItem<T>(T item)
         {
-            List<T> list = typeLists[typeof(T).AssemblyQualifiedName] as List<T>;
-            if (list == null)
-                list = new List<T>();
-            list.Add(item);
+            GetTypeList<T>().Add(item);
         }
 
-        public void RemoveItem<T>(T item)
+        public static bool RemoveItem<T>(T item)
         {
-            List<T> list = typeLists[typeof(T).AssemblyQualifiedName] as List<T>;
-            if (list != null)
-            {
-                list.Remove(item);
-            }
+            return GetTypeList<T>().Remove(item);
         }
 
-        public bool Load()
+        public static bool Load()
         {
+            if (config == null) return false;
             if (config.AppSettings.Settings["divaOptions"] != null)
-                options.FromUnquotedJson(config.AppSettings.Settings["divaOptions"].Value);
+                lazy.Value.options = Options.FromUnquotedJson(config.AppSettings.Settings["divaOptions"].Value);
 
             var asms = AppDomain.CurrentDomain.GetAssemblies();
             var settings = from k in config.AppSettings.Settings.AllKeys
@@ -105,38 +98,41 @@ namespace Diva
                             && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
                     var list = deserializeMethod.Invoke(null, new object[] { config.AppSettings.Settings["dv" + s].Value });
                     var updateListMethod = typeof(DataManager).GetMethod("UpdateList").MakeGenericMethod(t);
-                    updateListMethod.Invoke(this, new object[] { list });
+                    updateListMethod.Invoke(lazy.Value, new object[] { list });
                 }
                 else
                     Console.WriteLine($"Unable to resolve type '{s}'.");
             }
-            return true;
+            return lazy.Value.ready = true;
         }
 
-        public void New()
+        public static void Reset()
         {
             /*foreach (var kv in typeLists)
             {
-                var typeList = Activator.CreateInstance(typeof(List<>)
-                    .MakeGenericType(new Type[] { Type.GetType(kv.Key) }));
-                var list = Convert.ChangeType(kv.Value, typeOfList);
-                list.GetType().GetMethod("Clear").Invoke(list, null);
+                var list = kv.Value as IDisposable;
+                if (list != null)
+                    list.Dispose();
             }*/
-            typeLists.Clear();
+            lazy.Value.typeLists.Clear();
         }
 
         private static void writeSetting(string key, string value)
         {
+            if (key == "divaOptions" && lazy.Value.options.salt != 0)
+            {
+
+            }
             if (config.AppSettings.Settings[key] == null)
                 config.AppSettings.Settings.Add(key, value);
             else
                 config.AppSettings.Settings[key].Value = value;
         }
 
-        public void Save()
+        public static void Save()
         {
-            writeSetting("divaOptions", options.ToUnquotedJson());
-            foreach (var kv in typeLists)
+            writeSetting("divaOptions", lazy.Value.options.ToUnquotedJson());
+            foreach (var kv in lazy.Value.typeLists)
             {
                 writeSetting("dv" + Type.GetType(kv.Key).FullName,
                     JsonConvert.SerializeObject(kv.Value));
