@@ -70,10 +70,10 @@ namespace Diva
             public bool Authenticate(string password)
             {
                 bool ret = false;
-                if (!AccountManager.AuthenticationLocked())
+                if (!AuthenticationLocked())
                 {
                     ret = Hash.SequenceEqual(generateHash(password));
-                    if (!ret) AccountManager.AuthenticationFailed();
+                    if (!ret) AuthenticationFailed();
                 }
                 return ret;
             }
@@ -170,15 +170,15 @@ namespace Diva
         public static bool VerifyAccount(string name, string password)
         {
             Account acc = GetAccount(name);
-            return acc != null && acc.Authenticate(password);
+            if (acc == null || !acc.Authenticate(password)) return false;
+            timer.Change(0, Timeout.Infinite);
+            return true;
         }
 
         public static bool Login(string name, string password)
         {
-            Account acc = GetAccount(name);
-            bool ret = acc != null && acc.Authenticate(password);
-            if (ret) lazy.Value.current = acc;
-            return ret;
+            if (!VerifyAccount(name, password)) return false;
+            return (lazy.Value.current = GetAccount(name)) != null;
         }
 
         public static bool Logout()

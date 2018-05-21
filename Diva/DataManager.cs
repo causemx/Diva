@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
@@ -14,6 +15,55 @@ namespace Diva
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     class UnquoteJson : Attribute { }
 
+    class DataCryptor
+    {
+        private static int AES_KEYSIZE = 128;
+        private static int ITERATIONS = 256;
+        private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
+        private static Aes aes = null;
+        private static Rfc2898DeriveBytes key;
+        public static UInt64 Salt { set {
+                key = new Rfc2898DeriveBytes(cryptKey, BitConverter.GetBytes(value), ITERATIONS);
+                if (aes != null) aes.Dispose();
+                aes = new AesManaged();
+                aes.KeySize = AES_KEYSIZE;
+                aes.Key = key.GetBytes(aes.KeySize / 8);
+                aes.IV = key.GetBytes(aes.BlockSize / 8);
+            } }
+
+        private static byte[] cryptor(byte[] src, ICryptoTransform transform)
+        {
+            byte[] res = null;
+            using (MemoryStream ms = new MemoryStream())
+            using (CryptoStream cs = new CryptoStream(ms, transform, CryptoStreamMode.Write))
+            {
+                cs.Write(src, 0, src.Length);
+                cs.Close();
+                res = ms.ToArray();
+            }
+            return res;
+        }
+        public static byte[] Encrypt(byte[] clear)
+        {
+            return cryptor(clear, aes.CreateEncryptor());
+        }
+
+        public static byte[] Decrypt(byte[] crypt)
+        {
+            return cryptor(crypt, aes.CreateDecryptor());
+        }
+
+        public string Encrypt(string clearText)
+        {
+            return Convert.ToBase64String(Encrypt(Encoding.UTF8.GetBytes(clearText)));
+        }
+
+        public string Decrypt(string cryptText)
+        {
+            return Encoding.UTF8.GetString(Decrypt(Convert.FromBase64String(cryptText)));
+        }
+    }
+
     class DataManager
     {
         private static readonly Lazy<DataManager> lazy = new Lazy<DataManager>(() => new DataManager());
@@ -23,16 +73,7 @@ namespace Diva
         internal struct Options
         {
             public string version;
-            public int salt;
-            public string ToUnquotedJson()
-            {
-                return JsonConvert.SerializeObject(this).Replace("\"", "");
-            }
-            public static Options FromUnquotedJson(string jstr)
-            {
-                return JsonConvert.DeserializeObject<Options>(new System.Text.RegularExpressions.Regex("([\\w\\._\\+\\-\\!%=/]+)")
-                        .Replace(jstr, "\"$1\""));
-            }
+            public UInt64 salt;
         };
         private bool ready = false;
         public static bool Ready { get { return lazy.Value.ready || Load(); } }
@@ -72,16 +113,18 @@ namespace Diva
             return GetTypeList<T>().Remove(item);
         }
 
-        private static T deserialize<T>(string jstr)
+        private static string requoteJson(string jstr)
         {
-            return JsonConvert.DeserializeObject<T>(new System.Text.RegularExpressions.
-                Regex("([\\w\\._\\+\\-\\!%=/]+)").Replace(jstr, "\"$1\""));
+            return new System.Text.RegularExpressions.
+                Regex("([\\w\\._\\+\\-\\!%=/]+)").Replace(jstr, "\"$1\"");
         }
+
         public static bool Load()
         {
             if (config == null) return false;
             if (config.AppSettings.Settings["divaOptions"] != null)
-                lazy.Value.options = deserialize<Options>(config.AppSettings.Settings["divaOptions"].Value);
+                lazy.Value.options = JsonConvert.DeserializeObject<Options>(
+                    requoteJson(config.AppSettings.Settings["divaOptions"].Value));
 
             var asms = AppDomain.CurrentDomain.GetAssemblies();
             var settings = from k in config.AppSettings.Settings.AllKeys
@@ -106,9 +149,7 @@ namespace Diva
                             && m.GetParameters().Length == 1
                             && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
                     string jstr = config.AppSettings.Settings["dv" + s].Value;
-                    if (t.GetCustomAttribute<UnquoteJson>() != null)
-                        jstr = new System.Text.RegularExpressions.
-                            Regex("([\\w\\._\\+\\-\\!%=/]+)").Replace(jstr, "\"$1\"");
+                    if (t.GetCustomAttribute<UnquoteJson>() != null) jstr = requoteJson(jstr);
                     var list = deserializeMethod.Invoke(null, new object[] {  jstr });
                     var updateListMethod = typeof(DataManager).GetMethod("UpdateList").MakeGenericMethod(t);
                     updateListMethod.Invoke(lazy.Value, new object[] { list });
@@ -153,7 +194,14 @@ namespace Diva
             writeSetting("divaOptions", lazy.Value.options);
             foreach (var kv in lazy.Value.typeLists)
             {
-                writeSetting("dv" + Type.GetType(kv.Key).FullName, kv.Value);
+                int count = (int)typeof(List<>).MakeGenericType(
+                    Type.GetType(kv.Key)).GetProperty("Count").
+                        GetGetMethod().Invoke(kv.Value, null);
+                string keyName = "dv" + Type.GetType(kv.Key).FullName;
+                if (count > 0)
+                    writeSetting(keyName, kv.Value);
+                else if (config.AppSettings.Settings[keyName] != null)
+                    config.AppSettings.Settings.Remove(keyName);
             }
             config.Save();
         }
