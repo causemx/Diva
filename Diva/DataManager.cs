@@ -11,11 +11,15 @@ using Newtonsoft.Json;
 
 namespace Diva
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    class UnquoteJson : Attribute { }
+
     class DataManager
     {
         private static readonly Lazy<DataManager> lazy = new Lazy<DataManager>(() => new DataManager());
         private static Configuration config;
 
+        [UnquoteJson]
         internal struct Options
         {
             public string version;
@@ -26,7 +30,7 @@ namespace Diva
             }
             public static Options FromUnquotedJson(string jstr)
             {
-                return JsonConvert.DeserializeObject<Options>(new System.Text.RegularExpressions.Regex("([\\w\\.]+)")
+                return JsonConvert.DeserializeObject<Options>(new System.Text.RegularExpressions.Regex("([\\w\\._\\+\\-\\!%=/]+)")
                         .Replace(jstr, "\"$1\""));
             }
         };
@@ -68,11 +72,16 @@ namespace Diva
             return GetTypeList<T>().Remove(item);
         }
 
+        private static T deserialize<T>(string jstr)
+        {
+            return JsonConvert.DeserializeObject<T>(new System.Text.RegularExpressions.
+                Regex("([\\w\\._\\+\\-\\!%=/]+)").Replace(jstr, "\"$1\""));
+        }
         public static bool Load()
         {
             if (config == null) return false;
             if (config.AppSettings.Settings["divaOptions"] != null)
-                lazy.Value.options = Options.FromUnquotedJson(config.AppSettings.Settings["divaOptions"].Value);
+                lazy.Value.options = deserialize<Options>(config.AppSettings.Settings["divaOptions"].Value);
 
             var asms = AppDomain.CurrentDomain.GetAssemblies();
             var settings = from k in config.AppSettings.Settings.AllKeys
@@ -96,7 +105,11 @@ namespace Diva
                             && m.IsGenericMethodDefinition
                             && m.GetParameters().Length == 1
                             && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
-                    var list = deserializeMethod.Invoke(null, new object[] { config.AppSettings.Settings["dv" + s].Value });
+                    string jstr = config.AppSettings.Settings["dv" + s].Value;
+                    if (t.GetCustomAttribute<UnquoteJson>() != null)
+                        jstr = new System.Text.RegularExpressions.
+                            Regex("([\\w\\._\\+\\-\\!%=/]+)").Replace(jstr, "\"$1\"");
+                    var list = deserializeMethod.Invoke(null, new object[] {  jstr });
                     var updateListMethod = typeof(DataManager).GetMethod("UpdateList").MakeGenericMethod(t);
                     updateListMethod.Invoke(lazy.Value, new object[] { list });
                 }
@@ -117,25 +130,30 @@ namespace Diva
             lazy.Value.typeLists.Clear();
         }
 
-        private static void writeSetting(string key, string value)
+        private static void writeSetting(string key, object obj)
         {
             if (key == "divaOptions" && lazy.Value.options.salt != 0)
             {
 
             }
+            string json = JsonConvert.SerializeObject(obj);
+            Type type = obj.GetType();
+            if (type.IsGenericType)
+                type = type.GetGenericArguments()[0];
+            if (type.GetCustomAttribute<UnquoteJson>() != null)
+                json = json.Replace("\"", "");
             if (config.AppSettings.Settings[key] == null)
-                config.AppSettings.Settings.Add(key, value);
+                config.AppSettings.Settings.Add(key, json);
             else
-                config.AppSettings.Settings[key].Value = value;
+                config.AppSettings.Settings[key].Value = json;
         }
 
         public static void Save()
         {
-            writeSetting("divaOptions", lazy.Value.options.ToUnquotedJson());
+            writeSetting("divaOptions", lazy.Value.options);
             foreach (var kv in lazy.Value.typeLists)
             {
-                writeSetting("dv" + Type.GetType(kv.Key).FullName,
-                    JsonConvert.SerializeObject(kv.Value));
+                writeSetting("dv" + Type.GetType(kv.Key).FullName, kv.Value);
             }
             config.Save();
         }

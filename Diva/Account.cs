@@ -16,6 +16,7 @@ namespace Diva
             Administrator
         }
 
+        [UnquoteJson]
         class Account
         {
             private const int SaltSize = 16;
@@ -113,7 +114,9 @@ namespace Diva
 
         public static bool CreateAccount(string name, string password)
         {
-            bool ret = !accounts.Exists(a => a.Name == name);
+            bool ret = name.Length > 0 && !accounts.Exists(a => a.Name == name)
+                && new System.Text.RegularExpressions.Regex(
+                    "[A-Za-z][A-Za-z0-9_]*").Match(name).Length != name.Length;
             if (ret) accounts.Add(new Account(name, password));
             return ret;
         }
