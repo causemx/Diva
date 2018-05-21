@@ -32,7 +32,8 @@ namespace Diva
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,10 +68,10 @@ namespace Diva
 			this.lblGaugeAltitudeUnit = new System.Windows.Forms.Label();
 			this.lblGagueSpeedUnit = new System.Windows.Forms.Label();
 			this.TSDroneStatus = new System.Windows.Forms.ToolStrip();
-			this.tsbGPSSignalIcon = new System.Windows.Forms.ToolStripButton();
-			this.tslblGPS = new System.Windows.Forms.ToolStripLabel();
-			this.tsbBatteryHealthIcon = new System.Windows.Forms.ToolStripButton();
-			this.tslblBattery = new System.Windows.Forms.ToolStripLabel();
+			this.TSBtnGPSCount = new System.Windows.Forms.ToolStripButton();
+			this.TSTxtSatCount = new System.Windows.Forms.ToolStripLabel();
+			this.TSBtnBatteryHealth = new System.Windows.Forms.ToolStripButton();
+			this.TSTxtBatteryHealth = new System.Windows.Forms.ToolStripLabel();
 			this.TSDroneList = new System.Windows.Forms.ToolStrip();
 			this.timerMapItemUpdate = new System.Windows.Forms.Timer(this.components);
 			this.TSMainPanel = new System.Windows.Forms.ToolStrip();
@@ -79,13 +80,15 @@ namespace Diva
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.BtnArm = new System.Windows.Forms.Button();
-			this.BtnVideo = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
+			this.BtnVideo = new System.Windows.Forms.Button();
 			this.BtnAuto = new System.Windows.Forms.Button();
+			this.BtnArm = new System.Windows.Forms.Button();
 			this.BtnReadWPs = new System.Windows.Forms.Button();
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
+			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
+			this.BtnRTL = new System.Windows.Forms.Button();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
@@ -251,14 +254,14 @@ namespace Diva
 			// 
 			this.dgvWayPoints.AllowUserToAddRows = false;
 			this.dgvWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle9.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvWayPoints.ColumnHeadersHeight = 30;
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -555,52 +558,63 @@ namespace Diva
 			// TSDroneStatus
 			// 
 			this.TSDroneStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.TSDroneStatus.AutoSize = false;
 			this.TSDroneStatus.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.TSDroneStatus.Dock = System.Windows.Forms.DockStyle.None;
 			this.TSDroneStatus.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.TSDroneStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.TSDroneStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbGPSSignalIcon,
-            this.tslblGPS,
-            this.tsbBatteryHealthIcon,
-            this.tslblBattery});
-			this.TSDroneStatus.Location = new System.Drawing.Point(883, 0);
+            this.TSBtnGPSCount,
+            this.TSTxtSatCount,
+            this.TSBtnBatteryHealth,
+            this.TSTxtBatteryHealth});
+			this.TSDroneStatus.Location = new System.Drawing.Point(805, 0);
 			this.TSDroneStatus.Name = "TSDroneStatus";
-			this.TSDroneStatus.Size = new System.Drawing.Size(116, 27);
+			this.TSDroneStatus.Size = new System.Drawing.Size(194, 50);
 			this.TSDroneStatus.TabIndex = 10;
 			this.TSDroneStatus.Text = "Drone Status";
 			// 
-			// tsbGPSSignalIcon
+			// TSBtnGPSCount
 			// 
-			this.tsbGPSSignalIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbGPSSignalIcon.Image = global::Diva.Properties.Resources.if_50_111142;
-			this.tsbGPSSignalIcon.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsbGPSSignalIcon.Name = "tsbGPSSignalIcon";
-			this.tsbGPSSignalIcon.Size = new System.Drawing.Size(24, 24);
-			this.tsbGPSSignalIcon.Text = "GPS";
-			this.tsbGPSSignalIcon.ToolTipText = "GPS Signal Strength";
+			this.TSBtnGPSCount.AutoSize = false;
+			this.TSBtnGPSCount.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnGPSCount.Image = global::Diva.Properties.Resources.icon_signal_100;
+			this.TSBtnGPSCount.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.TSBtnGPSCount.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.TSBtnGPSCount.Name = "TSBtnGPSCount";
+			this.TSBtnGPSCount.Size = new System.Drawing.Size(40, 47);
+			this.TSBtnGPSCount.Text = "GPS";
+			this.TSBtnGPSCount.ToolTipText = "Satellite count";
 			// 
-			// tslblGPS
+			// TSTxtSatCount
 			// 
-			this.tslblGPS.Name = "tslblGPS";
-			this.tslblGPS.Size = new System.Drawing.Size(44, 24);
-			this.tslblGPS.Text = "strong";
+			this.TSTxtSatCount.AutoSize = false;
+			this.TSTxtSatCount.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TSTxtSatCount.ForeColor = System.Drawing.Color.White;
+			this.TSTxtSatCount.Name = "TSTxtSatCount";
+			this.TSTxtSatCount.Size = new System.Drawing.Size(50, 47);
+			this.TSTxtSatCount.Text = "0";
 			// 
-			// tsbBatteryHealthIcon
+			// TSBtnBatteryHealth
 			// 
-			this.tsbBatteryHealthIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsbBatteryHealthIcon.Image = global::Diva.Properties.Resources.if_battery_reduce_energy_charge_2203543;
-			this.tsbBatteryHealthIcon.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsbBatteryHealthIcon.Name = "tsbBatteryHealthIcon";
-			this.tsbBatteryHealthIcon.Size = new System.Drawing.Size(24, 24);
-			this.tsbBatteryHealthIcon.Text = "Battery";
-			this.tsbBatteryHealthIcon.ToolTipText = "Battery Health";
+			this.TSBtnBatteryHealth.AutoSize = false;
+			this.TSBtnBatteryHealth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnBatteryHealth.Image = global::Diva.Properties.Resources.icon_battery_100;
+			this.TSBtnBatteryHealth.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.TSBtnBatteryHealth.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.TSBtnBatteryHealth.Name = "TSBtnBatteryHealth";
+			this.TSBtnBatteryHealth.Size = new System.Drawing.Size(40, 47);
+			this.TSBtnBatteryHealth.Text = "Battery";
+			this.TSBtnBatteryHealth.ToolTipText = "Battery Health";
 			// 
-			// tslblBattery
+			// TSTxtBatteryHealth
 			// 
-			this.tslblBattery.Name = "tslblBattery";
-			this.tslblBattery.Size = new System.Drawing.Size(21, 24);
-			this.tslblBattery.Text = "0v";
+			this.TSTxtBatteryHealth.AutoSize = false;
+			this.TSTxtBatteryHealth.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TSTxtBatteryHealth.ForeColor = System.Drawing.Color.White;
+			this.TSTxtBatteryHealth.Name = "TSTxtBatteryHealth";
+			this.TSTxtBatteryHealth.Size = new System.Drawing.Size(50, 47);
+			this.TSTxtBatteryHealth.Text = "110 Vol";
 			// 
 			// TSDroneList
 			// 
@@ -718,6 +732,7 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
+			this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
 			this.splitContainer.Panel1.Controls.Add(this.BtnLand);
 			this.splitContainer.Panel1.Controls.Add(this.BtnVideo);
 			this.splitContainer.Panel1.Controls.Add(this.BtnAuto);
@@ -749,46 +764,12 @@ namespace Diva
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
 			// 
-			// BtnArm
-			// 
-			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnArm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnArm.ForeColor = System.Drawing.Color.White;
-			this.BtnArm.Image = global::Diva.Properties.Resources.icon_arm;
-			this.BtnArm.Location = new System.Drawing.Point(909, 293);
-			this.BtnArm.Name = "BtnArm";
-			this.BtnArm.Size = new System.Drawing.Size(90, 87);
-			this.BtnArm.TabIndex = 0;
-			this.BtnArm.Text = "ARM";
-			this.BtnArm.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BtnArm.UseVisualStyleBackColor = false;
-			this.BtnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
-			this.BtnArm.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
-			this.BtnArm.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
-			// 
-			// BtnVideo
-			// 
-			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnVideo.ForeColor = System.Drawing.Color.White;
-			this.BtnVideo.Image = global::Diva.Properties.Resources.icon_add;
-			this.BtnVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnVideo.Location = new System.Drawing.Point(620, 386);
-			this.BtnVideo.Margin = new System.Windows.Forms.Padding(4);
-			this.BtnVideo.Name = "BtnVideo";
-			this.BtnVideo.Size = new System.Drawing.Size(90, 87);
-			this.BtnVideo.TabIndex = 7;
-			this.BtnVideo.Text = "VEDIO";
-			this.BtnVideo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BtnVideo.UseVisualStyleBackColor = false;
-			this.BtnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
-			this.BtnVideo.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
-			this.BtnVideo.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
-			// 
 			// BtnLand
 			// 
 			this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnLand.FlatAppearance.BorderSize = 0;
 			this.BtnLand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnLand.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnLand.ForeColor = System.Drawing.Color.White;
 			this.BtnLand.Image = global::Diva.Properties.Resources.icon_land;
 			this.BtnLand.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -803,10 +784,33 @@ namespace Diva
 			this.BtnLand.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnLand.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
 			// 
+			// BtnVideo
+			// 
+			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnVideo.FlatAppearance.BorderSize = 0;
+			this.BtnVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnVideo.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnVideo.ForeColor = System.Drawing.Color.White;
+			this.BtnVideo.Image = global::Diva.Properties.Resources.icon_add;
+			this.BtnVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.BtnVideo.Location = new System.Drawing.Point(620, 386);
+			this.BtnVideo.Margin = new System.Windows.Forms.Padding(4);
+			this.BtnVideo.Name = "BtnVideo";
+			this.BtnVideo.Size = new System.Drawing.Size(90, 87);
+			this.BtnVideo.TabIndex = 7;
+			this.BtnVideo.Text = "VIDEO";
+			this.BtnVideo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BtnVideo.UseVisualStyleBackColor = false;
+			this.BtnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
+			this.BtnVideo.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
+			this.BtnVideo.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
+			// 
 			// BtnAuto
 			// 
 			this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnAuto.FlatAppearance.BorderSize = 0;
 			this.BtnAuto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnAuto.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnAuto.ForeColor = System.Drawing.Color.White;
 			this.BtnAuto.Image = global::Diva.Properties.Resources.icon_auto;
 			this.BtnAuto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -821,10 +825,31 @@ namespace Diva
 			this.BtnAuto.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnAuto.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
 			// 
+			// BtnArm
+			// 
+			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnArm.FlatAppearance.BorderSize = 0;
+			this.BtnArm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnArm.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnArm.ForeColor = System.Drawing.Color.White;
+			this.BtnArm.Image = global::Diva.Properties.Resources.icon_arm;
+			this.BtnArm.Location = new System.Drawing.Point(909, 293);
+			this.BtnArm.Name = "BtnArm";
+			this.BtnArm.Size = new System.Drawing.Size(90, 87);
+			this.BtnArm.TabIndex = 0;
+			this.BtnArm.Text = "ARM";
+			this.BtnArm.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BtnArm.UseVisualStyleBackColor = false;
+			this.BtnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
+			this.BtnArm.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
+			this.BtnArm.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
+			// 
 			// BtnReadWPs
 			// 
 			this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnReadWPs.FlatAppearance.BorderSize = 0;
 			this.BtnReadWPs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnReadWPs.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnReadWPs.Image = global::Diva.Properties.Resources.icon_readwps;
 			this.BtnReadWPs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -842,7 +867,9 @@ namespace Diva
 			// BtnTakeOff
 			// 
 			this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnTakeOff.FlatAppearance.BorderSize = 0;
 			this.BtnTakeOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnTakeOff.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
 			this.BtnTakeOff.Image = global::Diva.Properties.Resources.icon_takeoff;
 			this.BtnTakeOff.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -860,7 +887,9 @@ namespace Diva
 			// BtnWriteWPs
 			// 
 			this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnWriteWPs.FlatAppearance.BorderSize = 0;
 			this.BtnWriteWPs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnWriteWPs.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnWriteWPs.Image = global::Diva.Properties.Resources.icon_writewps;
 			this.BtnWriteWPs.Location = new System.Drawing.Point(717, 293);
@@ -873,6 +902,35 @@ namespace Diva
 			this.BtnWriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
 			this.BtnWriteWPs.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnWriteWPs.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
+			// 
+			// ImgListBatteryHealth
+			// 
+			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
+			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
+			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
+			// 
+			// BtnRTL
+			// 
+			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnRTL.FlatAppearance.BorderSize = 0;
+			this.BtnRTL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnRTL.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnRTL.ForeColor = System.Drawing.Color.White;
+			this.BtnRTL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.BtnRTL.Location = new System.Drawing.Point(620, 291);
+			this.BtnRTL.Margin = new System.Windows.Forms.Padding(4);
+			this.BtnRTL.Name = "BtnRTL";
+			this.BtnRTL.Size = new System.Drawing.Size(90, 87);
+			this.BtnRTL.TabIndex = 15;
+			this.BtnRTL.Text = "RTL";
+			this.BtnRTL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BtnRTL.UseVisualStyleBackColor = false;
+			this.BtnRTL.Click += new System.EventHandler(this.BUT_RTL_Click);
 			// 
 			// myMap
 			// 
@@ -957,10 +1015,10 @@ namespace Diva
 		private System.Windows.Forms.Label lblGagueSpeedUnit;
 		private System.Windows.Forms.ToolStripMenuItem miClearAllMissions;
 		private System.Windows.Forms.ToolStrip TSDroneStatus;
-		private System.Windows.Forms.ToolStripButton tsbGPSSignalIcon;
-		private System.Windows.Forms.ToolStripLabel tslblGPS;
-		private System.Windows.Forms.ToolStripButton tsbBatteryHealthIcon;
-		private System.Windows.Forms.ToolStripLabel tslblBattery;
+		private System.Windows.Forms.ToolStripButton TSBtnGPSCount;
+		private System.Windows.Forms.ToolStripLabel TSTxtSatCount;
+		private System.Windows.Forms.ToolStripButton TSBtnBatteryHealth;
+		private System.Windows.Forms.ToolStripLabel TSTxtBatteryHealth;
 		private System.Windows.Forms.ToolStrip TSDroneList;
 		private System.Windows.Forms.Timer timerMapItemUpdate;
 		private System.Windows.Forms.ToolStrip TSMainPanel;
@@ -991,5 +1049,7 @@ namespace Diva
 		private Button BtnHomeLand;
 		private Button BtnAltitude;
 		private Button BtnAirMode;
+		private ImageList ImgListBatteryHealth;
+		private Button BtnRTL;
 	}
 }

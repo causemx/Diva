@@ -259,4 +259,13 @@
   <data name="icon_debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-debug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_battery_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-battery-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_signal_100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-signal-100.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_live" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-live.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

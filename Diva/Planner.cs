@@ -245,6 +245,7 @@ namespace Diva
 			//setup toolstrip
 			TSMainPanel.Renderer = new MySR();
 			TSDroneList.Renderer = new MySR();
+			TSDroneStatus.Renderer = new MySR();
 
 			// setup geofence
 			/*
@@ -359,7 +360,8 @@ namespace Diva
 							}
 						}
 
-						tslblBattery.Text = comPort.MAV.battery_voltage.ToString("F2") + "%";
+						TSTxtBatteryHealth.Text = comPort.MAV.battery_voltage.ToString("F2");
+						TSTxtSatCount.Text = (comPort.MAV.satcount).ToString();
 						gaugeAltitude.Value = comPort.MAV.alt;
 						lblGagueAltitudeValue.Text = (comPort.MAV.altasl).ToString();
 						gaugeSpeed.Value = comPort.MAV.groundspeed;
@@ -2791,6 +2793,14 @@ namespace Diva
 		}
 
 
+		private void BUT_RTL_Click(object sender, EventArgs e)
+		{
+			if (comPort.BaseStream.IsOpen)
+			{
+				comPort.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
+			}
+		}
+
 		/// <summary>
 		/// Reads the EEPROM from a com port
 		/// </summary>
@@ -3082,7 +3092,8 @@ namespace Diva
 			string uri = Microsoft.VisualBasic.Interaction.InputBox("Specify video stream URI.");
 			if (uri != null && uri.Length > 0)
 			{
-				Form form = new Form();
+				// Form form = new Form();
+				MyVideoForm form = new MyVideoForm();
 				VideoPlayer player = new VideoPlayer(uri);
 				form.Controls.Add(player);
 				player.Start();

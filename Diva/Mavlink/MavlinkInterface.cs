@@ -436,6 +436,8 @@ namespace Diva.Mavlink
 
 							MAV.groundspeed = groundspeed;
 							MAV.groundcourse = groundcourse;
+							MAV.satcount = satcount;
+							
 							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
 					}

@@ -116,6 +116,8 @@ namespace Diva.Mavlink
 			set { _climbrate = value; }
 		}
 
+		public float satcount { get; set; }
+
 		public DateTime datetime { get; set; }
 
 		DateTime lastalt = DateTime.MinValue;

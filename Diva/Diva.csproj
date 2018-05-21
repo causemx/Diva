@@ -188,6 +188,12 @@
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MyVideoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\MyVideoForm.Designer.cs">
+      <DependentUpon>MyVideoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProgressDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MyVideoForm.resx">
+      <DependentUpon>MyVideoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialog.resx">
       <DependentUpon>ProgressDialog.cs</DependentUpon>
@@ -1256,6 +1265,10 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon-live.png" />
+    <None Include="Resources\icon_home_64.png" />
+    <None Include="Resources\icon-battery-100.png" />
+    <None Include="Resources\icon-signal-100.png" />
     <None Include="Resources\icon-debug.png" />
     <None Include="Resources\size_height_edit-32.png" />
     <None Include="Resources\news-32.png" />
