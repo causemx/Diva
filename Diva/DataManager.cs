@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Diva
 {
@@ -66,22 +67,18 @@ namespace Diva
 
     class DataManager
     {
+        private const string VERSION_STRING = "1.0.0.0";
         private static readonly Lazy<DataManager> lazy = new Lazy<DataManager>(() => new DataManager());
         private static Configuration config;
 
-        [UnquoteJson]
-        internal struct Options
-        {
-            public string version;
-            public UInt64 salt;
-        };
         private bool ready = false;
         public static bool Ready { get { return lazy.Value.ready || Load(); } }
         private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
-        private Options options;
+        private dynamic options;
 
         private DataManager()
         {
+            options = new System.Dynamic.ExpandoObject();
             options.version = "0.0.0.0";
             options.salt = 0;
             try
@@ -113,6 +110,28 @@ namespace Diva
             return GetTypeList<T>().Remove(item);
         }
 
+        public static object GetOption(string name)
+        {
+            var dic = lazy.Value.options as IDictionary<string, object>;
+            return dic.ContainsKey(name) ? dic[name] : null;
+        }
+
+        public static void SetOption(string name, object value)
+        {
+            var dic = lazy.Value.options as IDictionary<string, object>;
+            if (dic.ContainsKey(name))
+                dic[name] = value;
+            else
+                dic.Add(name, value);
+        }
+
+        public static void DeleteOption(string name)
+        {
+            var dic = lazy.Value.options as IDictionary<string, object>;
+            if (dic.ContainsKey(name))
+                dic.Remove(name);
+        }
+
         private static string requoteJson(string jstr)
         {
             return new System.Text.RegularExpressions.
@@ -123,8 +142,16 @@ namespace Diva
         {
             if (config == null) return false;
             if (config.AppSettings.Settings["divaOptions"] != null)
-                lazy.Value.options = JsonConvert.DeserializeObject<Options>(
-                    requoteJson(config.AppSettings.Settings["divaOptions"].Value));
+            {
+                lazy.Value.options = JsonConvert.DeserializeObject<System.Dynamic.ExpandoObject>(requoteJson(
+                    config.AppSettings.Settings["divaOptions"].Value));
+            }
+            else
+            {
+                lazy.Value.options = new System.Dynamic.ExpandoObject();
+                lazy.Value.options.Version = VERSION_STRING;
+                lazy.Value.options.Salt = 0;
+            }
 
             var asms = AppDomain.CurrentDomain.GetAssemblies();
             var settings = from k in config.AppSettings.Settings.AllKeys
@@ -173,15 +200,17 @@ namespace Diva
 
         private static void writeSetting(string key, object obj)
         {
-            if (key == "divaOptions" && lazy.Value.options.salt != 0)
-            {
-
-            }
+            bool encrypt = key != "divaOptions" && lazy.Value.options.Salt != "0";
             string json = JsonConvert.SerializeObject(obj);
-            Type type = obj.GetType();
-            if (type.IsGenericType)
-                type = type.GetGenericArguments()[0];
-            if (type.GetCustomAttribute<UnquoteJson>() != null)
+            bool unquote = key == "divaOptions";
+            if (!unquote)
+            {
+                Type type = obj.GetType();
+                if (type.IsGenericType)
+                    type = type.GetGenericArguments()[0];
+                unquote = type.GetCustomAttribute<UnquoteJson>() != null;
+            }
+            if (unquote)
                 json = json.Replace("\"", "");
             if (config.AppSettings.Settings[key] == null)
                 config.AppSettings.Settings.Add(key, json);

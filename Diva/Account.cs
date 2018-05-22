@@ -79,11 +79,14 @@ namespace Diva
             }
         }
 
-        private const int TOO_MANY_TRIES = 15;
-        private const int AUTH_TRY_PERIOD = 60 * 1000;
+        private const int MAX_RETRIES = 15;
+        private const int RETRY_TIMEOUT = 60 * 1000;
+        private const int RETRY_LOCK_TIMEOUT = 30 * RETRY_TIMEOUT;
+        private const string UNLOCKTIME_FORMAT = "yyyy/MM/dd/HH/mm/ss";
         private static readonly Lazy<AccountManager> lazy = new Lazy<AccountManager>(() => new AccountManager());
         private static Timer timer;
-        private static int authCount;
+        private static int retryCount;
+        public static DateTime RetryUnlockTime { get; private set; }
         private static List<Account> accounts { get { return lazy.Value.accountList; } }
         private List<Account> accountList;
         private Account current;
@@ -91,7 +94,17 @@ namespace Diva
         private AccountManager()
         {
             accountList = DataManager.GetTypeList<Account>();
-            timer = new Timer((o) => { authCount = 0; }, null, 0, Timeout.Infinite);
+            string unlockTimeStr = (string)DataManager.GetOption("Unlock");
+            if (unlockTimeStr == null)
+            {
+                RetryUnlockTime = DateTime.Now;
+                DataManager.SetOption("Unlock",
+                    RetryUnlockTime.ToString(UNLOCKTIME_FORMAT));
+            }
+            else
+                RetryUnlockTime = DateTime.ParseExact(unlockTimeStr,
+                                    UNLOCKTIME_FORMAT, null);
+            timer = new Timer((o) => { retryCount = 0; }, null, 0, Timeout.Infinite);
         }
 
         private static Account GetAccount(string name)
@@ -153,18 +166,20 @@ namespace Diva
 
         private static bool AuthenticationLocked()
         {
-            return authCount >= TOO_MANY_TRIES;
+            return retryCount >= MAX_RETRIES;
         }
 
         private static void AuthenticationFailed()
         {
-            if (++authCount >= TOO_MANY_TRIES)
+            if (++retryCount >= MAX_RETRIES)
             {
-                timer.Change(AUTH_TRY_PERIOD * 30, Timeout.Infinite);
+                timer.Change(RETRY_LOCK_TIMEOUT, Timeout.Infinite);
+                RetryUnlockTime = DateTime.Now + TimeSpan.FromMilliseconds(RETRY_LOCK_TIMEOUT);
+                DataManager.SetOption("Unlock", RetryUnlockTime);
                 throw new TimeoutException("Too many tries, try again later.");
             }
             else
-                timer.Change(AUTH_TRY_PERIOD, Timeout.Infinite);
+                timer.Change(RETRY_TIMEOUT, Timeout.Infinite);
         }
 
         public static bool VerifyAccount(string name, string password)

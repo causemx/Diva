@@ -48,6 +48,7 @@ namespace Diva
                 Console.WriteLine("Current account:" + getAccountNames() + ".");
                 DataManager.Save();
                 Console.WriteLine("Config data saved.");
+                Console.WriteLine("Unlock: " + AccountManager.RetryUnlockTime);
                 testAccount("aaa", "123456");
                 testAccount("aaa", "a123456");
                 timer = new Timer();
