@@ -74,7 +74,9 @@ namespace Diva
         private bool ready = false;
         public static bool Ready { get { return lazy.Value.ready || Load(); } }
         private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
+        private static ConcurrentDictionary<string, object> lists { get { return lazy.Value.typeLists; } }
         private dynamic options;
+        private static dynamic divaOptions { get { return lazy.Value.options; } }
 
         private DataManager()
         {
@@ -92,12 +94,12 @@ namespace Diva
 
         public static List<T> GetTypeList<T>()
         {
-            return lazy.Value.typeLists.GetOrAdd(typeof(T).AssemblyQualifiedName, (k) => new List<T>()) as List<T>;
+            return lists.GetOrAdd(typeof(T).AssemblyQualifiedName, (k) => new List<T>()) as List<T>;
         }
 
         public static void UpdateList<T>(List<T> list)
         {
-            lazy.Value.typeLists[typeof(T).AssemblyQualifiedName] = list;
+            lists[typeof(T).AssemblyQualifiedName] = list;
         }
 
         public static void AddItem<T>(T item)
@@ -112,13 +114,13 @@ namespace Diva
 
         public static object GetOption(string name)
         {
-            var dic = lazy.Value.options as IDictionary<string, object>;
+            var dic = divaOptions as IDictionary<string, object>;
             return dic.ContainsKey(name) ? dic[name] : null;
         }
 
         public static void SetOption(string name, object value)
         {
-            var dic = lazy.Value.options as IDictionary<string, object>;
+            var dic = divaOptions as IDictionary<string, object>;
             if (dic.ContainsKey(name))
                 dic[name] = value;
             else
@@ -127,7 +129,7 @@ namespace Diva
 
         public static void DeleteOption(string name)
         {
-            var dic = lazy.Value.options as IDictionary<string, object>;
+            var dic = divaOptions as IDictionary<string, object>;
             if (dic.ContainsKey(name))
                 dic.Remove(name);
         }
@@ -149,8 +151,8 @@ namespace Diva
             else
             {
                 lazy.Value.options = new System.Dynamic.ExpandoObject();
-                lazy.Value.options.Version = VERSION_STRING;
-                lazy.Value.options.Salt = 0;
+                divaOptions.Version = VERSION_STRING;
+                divaOptions.options.Salt = 0;
             }
 
             var asms = AppDomain.CurrentDomain.GetAssemblies();
@@ -220,8 +222,8 @@ namespace Diva
 
         public static void Save()
         {
-            writeSetting("divaOptions", lazy.Value.options);
-            foreach (var kv in lazy.Value.typeLists)
+            writeSetting("divaOptions", divaOptions);
+            foreach (var kv in lists)
             {
                 int count = (int)typeof(List<>).MakeGenericType(
                     Type.GetType(kv.Key)).GetProperty("Count").

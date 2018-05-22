@@ -41,8 +41,8 @@ namespace Diva
                         (AccountManager.VerifyAccount(n, p) ? "Succeeded." : "Failed."));
                 };
                 Console.WriteLine("Current account:" + getAccountNames() + ".");
-                testAccount("aaa", "123456");
                 testAccount("aaa", "a123456");
+                testAccount("aaa", "123456");
                 bool b = AccountManager.CreateAccount("aaa", "a123456");
                 Console.WriteLine("Create account aaa " + (b ? "succeded." : "failed"));
                 Console.WriteLine("Current account:" + getAccountNames() + ".");

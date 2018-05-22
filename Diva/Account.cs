@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Diva
 {
-   class AccountManager
+    class AccountManager
     {
         public enum Privilege
         {
@@ -67,44 +67,58 @@ namespace Diva
 
             public void SetType(Privilege type) { Type = type; }
 
-            public bool Authenticate(string password)
+            public static bool Authenticate(Account acc, string password)
             {
                 bool ret = false;
                 if (!AuthenticationLocked())
                 {
-                    ret = Hash.SequenceEqual(generateHash(password));
-                    if (!ret) AuthenticationFailed();
+                    ret = acc != null && acc.Hash.SequenceEqual(
+                                            acc.generateHash(password));
+                    if (ret)
+                        authenticationSuceeded();
+                    else
+                        authenticationFailed();
                 }
                 return ret;
+            }
+
+            public void UpdateLockInfo()
+            {
+                if (Name != LOCK_ACCOUNT_NAME)
+                    throw new InvalidOperationException("Setting lock account with invalid name.");
+                Salt = BitConverter.GetBytes(retryCount);
+                Hash = BitConverter.GetBytes(RetryUnlockTime.Ticks);
             }
         }
 
         private const int MAX_RETRIES = 15;
         private const int RETRY_TIMEOUT = 60 * 1000;
         private const int RETRY_LOCK_TIMEOUT = 30 * RETRY_TIMEOUT;
-        private const string UNLOCKTIME_FORMAT = "yyyy/MM/dd/HH/mm/ss";
+        private const string LOCK_ACCOUNT_NAME = "_lock";
         private static readonly Lazy<AccountManager> lazy = new Lazy<AccountManager>(() => new AccountManager());
-        private static Timer timer;
+        private Timer timer;
+        private static Timer retryTimer { get { return lazy.Value.timer; } }
         private static int retryCount;
         public static DateTime RetryUnlockTime { get; private set; }
-        private static List<Account> accounts { get { return lazy.Value.accountList; } }
-        private List<Account> accountList;
+        private static List<Account> accounts { get { return DataManager.GetTypeList<Account>(); } }
         private Account current;
 
         private AccountManager()
         {
-            accountList = DataManager.GetTypeList<Account>();
-            string unlockTimeStr = (string)DataManager.GetOption("Unlock");
-            if (unlockTimeStr == null)
+            timer = new Timer((o) => {
+                retryCount = 0;
+                DeleteAccount(LOCK_ACCOUNT_NAME);
+            }, null, 0, Timeout.Infinite);
+            Account _lock = GetAccount(LOCK_ACCOUNT_NAME);
+            if (_lock != null)
             {
-                RetryUnlockTime = DateTime.Now;
-                DataManager.SetOption("Unlock",
-                    RetryUnlockTime.ToString(UNLOCKTIME_FORMAT));
+                retryCount = BitConverter.ToInt32(_lock.Salt, 0);
+                Int64 ticks = BitConverter.ToInt64(_lock.Hash, 0);
+                RetryUnlockTime = new DateTime(ticks);
+                int due = (RetryUnlockTime - DateTime.Now).Milliseconds;
+                if (due > 0)
+                    timer.Change(due, Timeout.Infinite);
             }
-            else
-                RetryUnlockTime = DateTime.ParseExact(unlockTimeStr,
-                                    UNLOCKTIME_FORMAT, null);
-            timer = new Timer((o) => { retryCount = 0; }, null, 0, Timeout.Infinite);
         }
 
         private static Account GetAccount(string name)
@@ -129,7 +143,7 @@ namespace Diva
         {
             bool ret = name.Length > 0 && !accounts.Exists(a => a.Name == name)
                 && new System.Text.RegularExpressions.Regex(
-                    "[A-Za-z][A-Za-z0-9_]*").Match(name).Length != name.Length;
+                    "[A-Za-z][A-Za-z0-9_]*").Match(name).Length == name.Length;
             if (ret) accounts.Add(new Account(name, password));
             return ret;
         }
@@ -143,6 +157,8 @@ namespace Diva
                 accounts.Remove(acc);
                 ret = true;
             }
+            if (accounts.Count == 1 && accounts[0].Name == LOCK_ACCOUNT_NAME)
+                accounts.Clear();
             return ret;
         }
 
@@ -157,37 +173,45 @@ namespace Diva
         public static bool ChangePassword(string name, string oldPassword, string newPassword)
         {
             Account acc = GetAccount(name);
-            bool ret = acc != null && acc.Authenticate(oldPassword);
+            bool ret = Account.Authenticate(acc, oldPassword);
             if (ret) acc.SetPassword(newPassword);
             return ret;
         }
 
         public static string GetLoginAccount() { return lazy.Value.current.Name; }
 
-        private static bool AuthenticationLocked()
+        public static bool AuthenticationLocked()
         {
             return retryCount >= MAX_RETRIES;
         }
 
-        private static void AuthenticationFailed()
+        private static void authenticationSuceeded()
+        {
+            retryTimer.Change(0, Timeout.Infinite);
+        }
+
+        public static void authenticationFailed()
         {
             if (++retryCount >= MAX_RETRIES)
             {
-                timer.Change(RETRY_LOCK_TIMEOUT, Timeout.Infinite);
+                retryTimer.Change(RETRY_LOCK_TIMEOUT, Timeout.Infinite);
                 RetryUnlockTime = DateTime.Now + TimeSpan.FromMilliseconds(RETRY_LOCK_TIMEOUT);
-                DataManager.SetOption("Unlock", RetryUnlockTime);
-                throw new TimeoutException("Too many tries, try again later.");
             }
             else
-                timer.Change(RETRY_TIMEOUT, Timeout.Infinite);
+            {
+                retryTimer.Change(RETRY_TIMEOUT, Timeout.Infinite);
+                RetryUnlockTime = DateTime.Now + TimeSpan.FromMilliseconds(RETRY_TIMEOUT);
+            }
+            Account _lock = GetAccount(LOCK_ACCOUNT_NAME);
+            if (_lock == null)
+                accounts.Add(_lock = new Account(LOCK_ACCOUNT_NAME, null, null, Privilege.None));
+            _lock.UpdateLockInfo();
+            if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
         }
 
         public static bool VerifyAccount(string name, string password)
         {
-            Account acc = GetAccount(name);
-            if (acc == null || !acc.Authenticate(password)) return false;
-            timer.Change(0, Timeout.Infinite);
-            return true;
+            return Account.Authenticate(GetAccount(name), password);
         }
 
         public static bool Login(string name, string password)
