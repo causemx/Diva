@@ -268,4 +268,46 @@
   <data name="icon_live" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-live.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_flytime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-flytime.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_down_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-down-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_left_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-left-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_right_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-right-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rocker_up_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rocker-up-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoomin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoomin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoomin_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoomin-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoomout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoomout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoomout_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoomout-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="if_Psyduck_3186864" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_Psyduck_3186864.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

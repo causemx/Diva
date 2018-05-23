@@ -53,6 +53,8 @@ namespace Diva
 			}
 		}
 
+		public DroneInfoPanel CurrentDroneInfo = null;
+
 		public bool autopan { get; set; }
 
 		public static MavlinkInterface _comPort = new MavlinkInterface();
@@ -244,8 +246,6 @@ namespace Diva
 
 			//setup toolstrip
 			TSMainPanel.Renderer = new MySR();
-			TSDroneList.Renderer = new MySR();
-			TSDroneStatus.Renderer = new MySR();
 
 			// setup geofence
 			/*
@@ -283,22 +283,7 @@ namespace Diva
 				_port.onDestroy();
 			}
 		}
-
-		private void AddDroneButton(int count, string sysid)
-		{
-			ToolStripButton droneButton = new ToolStripButton(new Bitmap(Resources.icon_debug));
-			droneButton.ImageScaling = ToolStripItemImageScaling.None;
-			droneButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-			droneButton.TextImageRelation = TextImageRelation.ImageAboveText;
-			droneButton.Enabled = true;
-			droneButton.Text = "SysID: " + sysid;
-			droneButton.ForeColor = Color.White;
-			droneButton.Tag = count;
-			droneButton.Click += BUT_Drone_Click;
-			droneButton.MouseUp += DroneButton_MouseUp;
-			droneButton.MouseDown += DroneButton_MouseDown;
-			TSDroneList.Items.Add(droneButton);
-		}
+		
 
 		private void AddRouteOverlay(int count)
 		{
@@ -360,12 +345,8 @@ namespace Diva
 							}
 						}
 
-						TSTxtBatteryHealth.Text = comPort.MAV.battery_voltage.ToString("F2");
-						TSTxtSatCount.Text = (comPort.MAV.satcount).ToString();
-						gaugeAltitude.Value = comPort.MAV.alt;
-						lblGagueAltitudeValue.Text = (comPort.MAV.altasl).ToString();
-						gaugeSpeed.Value = comPort.MAV.groundspeed;
-						lblGagueSpeedValue.Text = (comPort.MAV.groundspeed).ToString();
+						
+						CurrentDroneInfo.UpdateTelemetryData(comPort.MAV.battery_voltage, comPort.MAV.satcount);
 
 					});
 
@@ -2737,9 +2718,25 @@ namespace Diva
 					doConnect(mav, dialog.port_name, dialog.port, dialog.baudrate);
 					mav.onCreate();
 					comPorts.Add(mav);
+
+					switch (mav.sysidcurrent)
+					{
+						case 1:
+							DroneInfo1.DoEnable(true);
+							CurrentDroneInfo = DroneInfo1;
+							break;
+						case 2:
+							DroneInfo2.DoEnable(true);
+							CurrentDroneInfo = DroneInfo2;
+							break;
+						case 3:
+							DroneInfo3.DoEnable(true);
+							CurrentDroneInfo = DroneInfo2;
+							break;
+				}
+
 					// TODO: move guidemodez to initialize
 					mav.MAV.GuidedMode.z = 10;
-					AddDroneButton(comPorts.Count, (mav.MAV.sysid).ToString());
 					AddRouteOverlay(comPorts.Count);
 					comPort = mav;
 				}
@@ -2926,66 +2923,6 @@ namespace Diva
 			}
 		}
 
-		private void BUT_Drone_Click(object sender, EventArgs e)
-		{
-			
-			ToolStripButton tsb = (ToolStripButton)sender;
-			SelectToolStripButton(tsb);
-			comPort = comPorts[Convert.ToInt32(tsb.Tag)-1];
-		}
-
-		private void SelectToolStripButton(ToolStripButton selected_button)
-		{
-			foreach (ToolStripButton _tsbutton in TSDroneList.Items)
-			{
-				_tsbutton.Checked = (_tsbutton == selected_button);
-			}
-		}
-
-		// drone button long click 
-		// when drone button triggered long click, mav will disconnect
-		private DateTime droneSelectTime = DateTime.Now;
-
-		private void DroneButton_MouseUp(object sender, EventArgs e)
-		{
-			try
-			{
-				ToolStripButton drone_button = (ToolStripButton)sender;
-				int index = Convert.ToInt32(drone_button.Tag);
-				if (droneSelectTime.AddMilliseconds(1000) < DateTime.Now)
-				{
-					// release the mav
-					// remove the drone button
-					comPorts[index - 1].onDestroy();
-					comPorts[index - 1].close();
-					comPorts.RemoveAt(index - 1);
-					myMap.Overlays.Remove(routesOverlays[index - 1]);
-					routesOverlays.RemoveAt(index - 1);
-					TSDroneList.Items.RemoveAt(index - 1);
-
-					// refresh button index
-					int current_tag = 1;
-					foreach (ToolStripButton but in TSDroneList.Items)
-					{
-						if (current_tag <= comPorts.Count)
-						{
-							but.Tag = current_tag;
-							current_tag++;
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
-		
-		}
-
-		private void DroneButton_MouseDown(object sender, EventArgs e)
-		{
-			droneSelectTime = DateTime.Now;
-		}
 
 		/// <summary>
 		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
@@ -3104,7 +3041,7 @@ namespace Diva
 		private void BUT_Mouse_Hover(object sender, EventArgs e)
 		{
 			if (((Button)sender).Name.Equals("BtnArm"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm_active));
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect_active));
 			else if (((Button)sender).Name.Equals("BtnLand"))
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land_active));
 			else if (((Button)sender).Name.Equals("BtnTakeOff"))
@@ -3115,14 +3052,14 @@ namespace Diva
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps_active));
 			else if (((Button)sender).Name.Equals("BtnReadWPs"))
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps_active));
-			else if (((Button)sender).Name.Equals("BtnVedio"))
+			else if (((Button)sender).Name.Equals("BtnVideo"))
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add_active));
 		}
 
 		private void BUT_Mouse_Leave(object sender, EventArgs e)
 		{
 			if (((Button)sender).Name.Equals("BtnArm"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm));
+				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect));
 			else if (((Button)sender).Name.Equals("BtnLand"))
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land));
 			else if (((Button)sender).Name.Equals("BtnTakeOff"))
@@ -3133,14 +3070,14 @@ namespace Diva
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps));
 			else if (((Button)sender).Name.Equals("BtnReadWPs"))
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps));
-			else if (((Button)sender).Name.Equals("BtnVedio"))
+			else if (((Button)sender).Name.Equals("BtnVideo"))
 				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add));
 		}
 
 		private void TSBUT_Mouse_Hover(object sender, EventArgs e)
 		{
 			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect_active));
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm_active));
 
 			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
 				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation_active));
@@ -3155,7 +3092,7 @@ namespace Diva
 		private void TSBUT_Mouse_Leave(object sender, EventArgs e)
 		{
 			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect));
+				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm));
 
 			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
 				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation));
@@ -3165,6 +3102,20 @@ namespace Diva
 
 			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
 				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging));
+		}
+
+		private void DroneInfo_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var comport = comPorts[Convert.ToInt32(((DroneInfoPanel)sender).Tag)];
+				CurrentDroneInfo = (DroneInfoPanel)sender;
+			}
+			catch (Exception exception)
+			{
+				log.Debug(exception.ToString());
+				return;
+			}
 		}
 
 		public class MySR : ToolStripSystemRenderer

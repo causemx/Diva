@@ -177,6 +177,12 @@
     <Compile Include="Controls\ConfigVehicle.Designer.cs">
       <DependentUpon>ConfigVehicle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DroneInfoPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DroneInfoPanel.Designer.cs">
+      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyButton.cs">
@@ -215,12 +221,6 @@
     <Compile Include="Controls\TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Vehicle.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Vehicle.Designer.cs">
-      <DependentUpon>Vehicle.cs</DependentUpon>
-    </Compile>
     <Compile Include="Cooper\Rotation.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
@@ -256,6 +256,9 @@
     <EmbeddedResource Include="Controls\ConfigVehicle.resx">
       <DependentUpon>ConfigVehicle.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
+      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,9 +273,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Vehicle.resx">
-      <DependentUpon>Vehicle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>

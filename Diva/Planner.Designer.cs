@@ -59,20 +59,6 @@ namespace Diva
 			this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.colTagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gaugeAltitude = new System.Windows.Forms.AGauge();
-			this.gaugeSpeed = new System.Windows.Forms.AGauge();
-			this.lblGaugeAltitude = new System.Windows.Forms.Label();
-			this.labelGaugeSpeed = new System.Windows.Forms.Label();
-			this.lblGagueAltitudeValue = new System.Windows.Forms.Label();
-			this.lblGagueSpeedValue = new System.Windows.Forms.Label();
-			this.lblGaugeAltitudeUnit = new System.Windows.Forms.Label();
-			this.lblGagueSpeedUnit = new System.Windows.Forms.Label();
-			this.TSDroneStatus = new System.Windows.Forms.ToolStrip();
-			this.TSBtnGPSCount = new System.Windows.Forms.ToolStripButton();
-			this.TSTxtSatCount = new System.Windows.Forms.ToolStripLabel();
-			this.TSBtnBatteryHealth = new System.Windows.Forms.ToolStripButton();
-			this.TSTxtBatteryHealth = new System.Windows.Forms.ToolStripLabel();
-			this.TSDroneList = new System.Windows.Forms.ToolStrip();
 			this.timerMapItemUpdate = new System.Windows.Forms.Timer(this.components);
 			this.TSMainPanel = new System.Windows.Forms.ToolStrip();
 			this.TSBtnConnect = new System.Windows.Forms.ToolStripButton();
@@ -80,6 +66,7 @@ namespace Diva
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.BtnRTL = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
 			this.BtnVideo = new System.Windows.Forms.Button();
 			this.BtnAuto = new System.Windows.Forms.Button();
@@ -88,12 +75,13 @@ namespace Diva
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
-			this.BtnRTL = new System.Windows.Forms.Button();
+			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
-			this.TSDroneStatus.SuspendLayout();
 			this.TSMainPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -146,7 +134,7 @@ namespace Diva
 			this.panelDroneInfo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelDroneInfo.Location = new System.Drawing.Point(0, 0);
 			this.panelDroneInfo.Name = "panelDroneInfo";
-			this.panelDroneInfo.Size = new System.Drawing.Size(1008, 51);
+			this.panelDroneInfo.Size = new System.Drawing.Size(948, 51);
 			this.panelDroneInfo.TabIndex = 1;
 			// 
 			// BtnAirMode
@@ -275,14 +263,15 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
+			this.dgvWayPoints.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvWayPoints.EnableHeadersVisualStyles = false;
 			this.dgvWayPoints.GridColor = System.Drawing.Color.White;
-			this.dgvWayPoints.Location = new System.Drawing.Point(0, 48);
+			this.dgvWayPoints.Location = new System.Drawing.Point(0, 51);
 			this.dgvWayPoints.Margin = new System.Windows.Forms.Padding(4);
 			this.dgvWayPoints.Name = "dgvWayPoints";
 			this.dgvWayPoints.RowHeadersWidth = 50;
 			this.dgvWayPoints.RowTemplate.Height = 24;
-			this.dgvWayPoints.Size = new System.Drawing.Size(1008, 79);
+			this.dgvWayPoints.Size = new System.Drawing.Size(948, 69);
 			this.dgvWayPoints.TabIndex = 6;
 			this.dgvWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.dgvWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -391,247 +380,6 @@ namespace Diva
 			this.colTagData.Visible = false;
 			this.colTagData.Width = 50;
 			// 
-			// gaugeAltitude
-			// 
-			this.gaugeAltitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.gaugeAltitude.BackColor = System.Drawing.SystemColors.Menu;
-			this.gaugeAltitude.BaseArcColor = System.Drawing.Color.Gray;
-			this.gaugeAltitude.BaseArcRadius = 50;
-			this.gaugeAltitude.BaseArcStart = 135;
-			this.gaugeAltitude.BaseArcSweep = 270;
-			this.gaugeAltitude.BaseArcWidth = 2;
-			this.gaugeAltitude.Center = new System.Drawing.Point(100, 100);
-			this.gaugeAltitude.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.gaugeAltitude.Location = new System.Drawing.Point(0, 78);
-			this.gaugeAltitude.Margin = new System.Windows.Forms.Padding(4);
-			this.gaugeAltitude.MaxValue = 100F;
-			this.gaugeAltitude.MinValue = 0F;
-			this.gaugeAltitude.Name = "gaugeAltitude";
-			this.gaugeAltitude.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray;
-			this.gaugeAltitude.NeedleColor2 = System.Drawing.Color.DimGray;
-			this.gaugeAltitude.NeedleRadius = 30;
-			this.gaugeAltitude.NeedleType = System.Windows.Forms.NeedleType.Advance;
-			this.gaugeAltitude.NeedleWidth = 2;
-			this.gaugeAltitude.ScaleLinesInterColor = System.Drawing.Color.Black;
-			this.gaugeAltitude.ScaleLinesInterInnerRadius = 45;
-			this.gaugeAltitude.ScaleLinesInterOuterRadius = 50;
-			this.gaugeAltitude.ScaleLinesInterWidth = 1;
-			this.gaugeAltitude.ScaleLinesMajorColor = System.Drawing.Color.Black;
-			this.gaugeAltitude.ScaleLinesMajorInnerRadius = 40;
-			this.gaugeAltitude.ScaleLinesMajorOuterRadius = 50;
-			this.gaugeAltitude.ScaleLinesMajorStepValue = 10F;
-			this.gaugeAltitude.ScaleLinesMajorWidth = 2;
-			this.gaugeAltitude.ScaleLinesMinorColor = System.Drawing.Color.Gray;
-			this.gaugeAltitude.ScaleLinesMinorInnerRadius = 45;
-			this.gaugeAltitude.ScaleLinesMinorOuterRadius = 50;
-			this.gaugeAltitude.ScaleLinesMinorTicks = 9;
-			this.gaugeAltitude.ScaleLinesMinorWidth = 1;
-			this.gaugeAltitude.ScaleNumbersColor = System.Drawing.Color.Black;
-			this.gaugeAltitude.ScaleNumbersFormat = null;
-			this.gaugeAltitude.ScaleNumbersRadius = 60;
-			this.gaugeAltitude.ScaleNumbersRotation = 0;
-			this.gaugeAltitude.ScaleNumbersStartScaleLine = 0;
-			this.gaugeAltitude.ScaleNumbersStepScaleLines = 1;
-			this.gaugeAltitude.Size = new System.Drawing.Size(203, 184);
-			this.gaugeAltitude.TabIndex = 2;
-			this.gaugeAltitude.Text = "aGauge1";
-			this.gaugeAltitude.Value = 0F;
-			// 
-			// gaugeSpeed
-			// 
-			this.gaugeSpeed.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.gaugeSpeed.BackColor = System.Drawing.SystemColors.Menu;
-			this.gaugeSpeed.BaseArcColor = System.Drawing.Color.Gray;
-			this.gaugeSpeed.BaseArcRadius = 50;
-			this.gaugeSpeed.BaseArcStart = 135;
-			this.gaugeSpeed.BaseArcSweep = 270;
-			this.gaugeSpeed.BaseArcWidth = 2;
-			this.gaugeSpeed.Center = new System.Drawing.Point(100, 100);
-			this.gaugeSpeed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.gaugeSpeed.Location = new System.Drawing.Point(0, 262);
-			this.gaugeSpeed.Margin = new System.Windows.Forms.Padding(4);
-			this.gaugeSpeed.MaxValue = 30F;
-			this.gaugeSpeed.MinValue = 0F;
-			this.gaugeSpeed.Name = "gaugeSpeed";
-			this.gaugeSpeed.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Gray;
-			this.gaugeSpeed.NeedleColor2 = System.Drawing.Color.DimGray;
-			this.gaugeSpeed.NeedleRadius = 30;
-			this.gaugeSpeed.NeedleType = System.Windows.Forms.NeedleType.Advance;
-			this.gaugeSpeed.NeedleWidth = 2;
-			this.gaugeSpeed.ScaleLinesInterColor = System.Drawing.Color.Black;
-			this.gaugeSpeed.ScaleLinesInterInnerRadius = 45;
-			this.gaugeSpeed.ScaleLinesInterOuterRadius = 50;
-			this.gaugeSpeed.ScaleLinesInterWidth = 1;
-			this.gaugeSpeed.ScaleLinesMajorColor = System.Drawing.Color.Black;
-			this.gaugeSpeed.ScaleLinesMajorInnerRadius = 40;
-			this.gaugeSpeed.ScaleLinesMajorOuterRadius = 50;
-			this.gaugeSpeed.ScaleLinesMajorStepValue = 5F;
-			this.gaugeSpeed.ScaleLinesMajorWidth = 2;
-			this.gaugeSpeed.ScaleLinesMinorColor = System.Drawing.Color.Gray;
-			this.gaugeSpeed.ScaleLinesMinorInnerRadius = 45;
-			this.gaugeSpeed.ScaleLinesMinorOuterRadius = 50;
-			this.gaugeSpeed.ScaleLinesMinorTicks = 9;
-			this.gaugeSpeed.ScaleLinesMinorWidth = 1;
-			this.gaugeSpeed.ScaleNumbersColor = System.Drawing.Color.Black;
-			this.gaugeSpeed.ScaleNumbersFormat = null;
-			this.gaugeSpeed.ScaleNumbersRadius = 60;
-			this.gaugeSpeed.ScaleNumbersRotation = 0;
-			this.gaugeSpeed.ScaleNumbersStartScaleLine = 0;
-			this.gaugeSpeed.ScaleNumbersStepScaleLines = 1;
-			this.gaugeSpeed.Size = new System.Drawing.Size(203, 184);
-			this.gaugeSpeed.TabIndex = 3;
-			this.gaugeSpeed.Text = "aGauge1";
-			this.gaugeSpeed.Value = 0F;
-			// 
-			// lblGaugeAltitude
-			// 
-			this.lblGaugeAltitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.lblGaugeAltitude.AutoSize = true;
-			this.lblGaugeAltitude.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblGaugeAltitude.Location = new System.Drawing.Point(68, 84);
-			this.lblGaugeAltitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblGaugeAltitude.Name = "lblGaugeAltitude";
-			this.lblGaugeAltitude.Size = new System.Drawing.Size(67, 19);
-			this.lblGaugeAltitude.TabIndex = 4;
-			this.lblGaugeAltitude.Text = "Altitude";
-			// 
-			// labelGaugeSpeed
-			// 
-			this.labelGaugeSpeed.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelGaugeSpeed.AutoSize = true;
-			this.labelGaugeSpeed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelGaugeSpeed.Location = new System.Drawing.Point(68, 260);
-			this.labelGaugeSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.labelGaugeSpeed.Name = "labelGaugeSpeed";
-			this.labelGaugeSpeed.Size = new System.Drawing.Size(58, 19);
-			this.labelGaugeSpeed.TabIndex = 5;
-			this.labelGaugeSpeed.Text = "Speed";
-			// 
-			// lblGagueAltitudeValue
-			// 
-			this.lblGagueAltitudeValue.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.lblGagueAltitudeValue.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblGagueAltitudeValue.Location = new System.Drawing.Point(64, 225);
-			this.lblGagueAltitudeValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblGagueAltitudeValue.Name = "lblGagueAltitudeValue";
-			this.lblGagueAltitudeValue.Size = new System.Drawing.Size(50, 20);
-			this.lblGagueAltitudeValue.TabIndex = 6;
-			this.lblGagueAltitudeValue.Text = "00";
-			this.lblGagueAltitudeValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// lblGagueSpeedValue
-			// 
-			this.lblGagueSpeedValue.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.lblGagueSpeedValue.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblGagueSpeedValue.Location = new System.Drawing.Point(59, 408);
-			this.lblGagueSpeedValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblGagueSpeedValue.Name = "lblGagueSpeedValue";
-			this.lblGagueSpeedValue.Size = new System.Drawing.Size(50, 20);
-			this.lblGagueSpeedValue.TabIndex = 7;
-			this.lblGagueSpeedValue.Text = "00";
-			this.lblGagueSpeedValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// lblGaugeAltitudeUnit
-			// 
-			this.lblGaugeAltitudeUnit.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.lblGaugeAltitudeUnit.AutoSize = true;
-			this.lblGaugeAltitudeUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblGaugeAltitudeUnit.Location = new System.Drawing.Point(120, 225);
-			this.lblGaugeAltitudeUnit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblGaugeAltitudeUnit.Name = "lblGaugeAltitudeUnit";
-			this.lblGaugeAltitudeUnit.Size = new System.Drawing.Size(23, 19);
-			this.lblGaugeAltitudeUnit.TabIndex = 8;
-			this.lblGaugeAltitudeUnit.Text = "m";
-			// 
-			// lblGagueSpeedUnit
-			// 
-			this.lblGagueSpeedUnit.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.lblGagueSpeedUnit.AutoSize = true;
-			this.lblGagueSpeedUnit.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblGagueSpeedUnit.Location = new System.Drawing.Point(111, 409);
-			this.lblGagueSpeedUnit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblGagueSpeedUnit.Name = "lblGagueSpeedUnit";
-			this.lblGagueSpeedUnit.Size = new System.Drawing.Size(32, 19);
-			this.lblGagueSpeedUnit.TabIndex = 9;
-			this.lblGagueSpeedUnit.Text = "ms";
-			// 
-			// TSDroneStatus
-			// 
-			this.TSDroneStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.TSDroneStatus.AutoSize = false;
-			this.TSDroneStatus.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.TSDroneStatus.Dock = System.Windows.Forms.DockStyle.None;
-			this.TSDroneStatus.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.TSDroneStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.TSDroneStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSBtnGPSCount,
-            this.TSTxtSatCount,
-            this.TSBtnBatteryHealth,
-            this.TSTxtBatteryHealth});
-			this.TSDroneStatus.Location = new System.Drawing.Point(805, 0);
-			this.TSDroneStatus.Name = "TSDroneStatus";
-			this.TSDroneStatus.Size = new System.Drawing.Size(194, 50);
-			this.TSDroneStatus.TabIndex = 10;
-			this.TSDroneStatus.Text = "Drone Status";
-			// 
-			// TSBtnGPSCount
-			// 
-			this.TSBtnGPSCount.AutoSize = false;
-			this.TSBtnGPSCount.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnGPSCount.Image = global::Diva.Properties.Resources.icon_signal_100;
-			this.TSBtnGPSCount.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.TSBtnGPSCount.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.TSBtnGPSCount.Name = "TSBtnGPSCount";
-			this.TSBtnGPSCount.Size = new System.Drawing.Size(40, 47);
-			this.TSBtnGPSCount.Text = "GPS";
-			this.TSBtnGPSCount.ToolTipText = "Satellite count";
-			// 
-			// TSTxtSatCount
-			// 
-			this.TSTxtSatCount.AutoSize = false;
-			this.TSTxtSatCount.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TSTxtSatCount.ForeColor = System.Drawing.Color.White;
-			this.TSTxtSatCount.Name = "TSTxtSatCount";
-			this.TSTxtSatCount.Size = new System.Drawing.Size(50, 47);
-			this.TSTxtSatCount.Text = "0";
-			// 
-			// TSBtnBatteryHealth
-			// 
-			this.TSBtnBatteryHealth.AutoSize = false;
-			this.TSBtnBatteryHealth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnBatteryHealth.Image = global::Diva.Properties.Resources.icon_battery_100;
-			this.TSBtnBatteryHealth.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-			this.TSBtnBatteryHealth.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.TSBtnBatteryHealth.Name = "TSBtnBatteryHealth";
-			this.TSBtnBatteryHealth.Size = new System.Drawing.Size(40, 47);
-			this.TSBtnBatteryHealth.Text = "Battery";
-			this.TSBtnBatteryHealth.ToolTipText = "Battery Health";
-			// 
-			// TSTxtBatteryHealth
-			// 
-			this.TSTxtBatteryHealth.AutoSize = false;
-			this.TSTxtBatteryHealth.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TSTxtBatteryHealth.ForeColor = System.Drawing.Color.White;
-			this.TSTxtBatteryHealth.Name = "TSTxtBatteryHealth";
-			this.TSTxtBatteryHealth.Size = new System.Drawing.Size(50, 47);
-			this.TSTxtBatteryHealth.Text = "110 Vol";
-			// 
-			// TSDroneList
-			// 
-			this.TSDroneList.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.TSDroneList.AutoSize = false;
-			this.TSDroneList.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.TSDroneList.Dock = System.Windows.Forms.DockStyle.None;
-			this.TSDroneList.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.TSDroneList.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.TSDroneList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-			this.TSDroneList.Location = new System.Drawing.Point(943, 91);
-			this.TSDroneList.Name = "TSDroneList";
-			this.TSDroneList.Padding = new System.Windows.Forms.Padding(1);
-			this.TSDroneList.Size = new System.Drawing.Size(56, 188);
-			this.TSDroneList.TabIndex = 12;
-			this.TSDroneList.Text = "Drone List";
-			// 
 			// timerMapItemUpdate
 			// 
 			this.timerMapItemUpdate.Interval = 1200;
@@ -639,7 +387,6 @@ namespace Diva
 			// 
 			// TSMainPanel
 			// 
-			this.TSMainPanel.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.TSMainPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.TSMainPanel.Dock = System.Windows.Forms.DockStyle.None;
 			this.TSMainPanel.GripMargin = new System.Windows.Forms.Padding(0);
@@ -650,7 +397,7 @@ namespace Diva
             this.TSBtnRotation,
             this.TSBtnConfigure,
             this.TSBtnTagging});
-			this.TSMainPanel.Location = new System.Drawing.Point(363, 0);
+			this.TSMainPanel.Location = new System.Drawing.Point(9, 9);
 			this.TSMainPanel.Name = "TSMainPanel";
 			this.TSMainPanel.Padding = new System.Windows.Forms.Padding(0);
 			this.TSMainPanel.Size = new System.Drawing.Size(306, 79);
@@ -662,7 +409,7 @@ namespace Diva
 			this.TSBtnConnect.AutoSize = false;
 			this.TSBtnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnConnect.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TSBtnConnect.Image = global::Diva.Properties.Resources.icon_connect;
+			this.TSBtnConnect.Image = global::Diva.Properties.Resources.icon_arm;
 			this.TSBtnConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.TSBtnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
@@ -732,24 +479,17 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
+			this.splitContainer.Panel1.Controls.Add(this.DroneInfo3);
+			this.splitContainer.Panel1.Controls.Add(this.DroneInfo2);
+			this.splitContainer.Panel1.Controls.Add(this.DroneInfo1);
 			this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
 			this.splitContainer.Panel1.Controls.Add(this.BtnLand);
 			this.splitContainer.Panel1.Controls.Add(this.BtnVideo);
 			this.splitContainer.Panel1.Controls.Add(this.BtnAuto);
 			this.splitContainer.Panel1.Controls.Add(this.BtnArm);
 			this.splitContainer.Panel1.Controls.Add(this.BtnReadWPs);
-			this.splitContainer.Panel1.Controls.Add(this.lblGaugeAltitude);
-			this.splitContainer.Panel1.Controls.Add(this.lblGagueAltitudeValue);
-			this.splitContainer.Panel1.Controls.Add(this.lblGaugeAltitudeUnit);
-			this.splitContainer.Panel1.Controls.Add(this.gaugeAltitude);
 			this.splitContainer.Panel1.Controls.Add(this.BtnTakeOff);
-			this.splitContainer.Panel1.Controls.Add(this.labelGaugeSpeed);
 			this.splitContainer.Panel1.Controls.Add(this.BtnWriteWPs);
-			this.splitContainer.Panel1.Controls.Add(this.lblGagueSpeedValue);
-			this.splitContainer.Panel1.Controls.Add(this.lblGagueSpeedUnit);
-			this.splitContainer.Panel1.Controls.Add(this.gaugeSpeed);
-			this.splitContainer.Panel1.Controls.Add(this.TSDroneList);
-			this.splitContainer.Panel1.Controls.Add(this.TSDroneStatus);
 			this.splitContainer.Panel1.Controls.Add(this.TSMainPanel);
 			this.splitContainer.Panel1.Controls.Add(this.myMap);
 			this.splitContainer.Panel1MinSize = 240;
@@ -759,13 +499,33 @@ namespace Diva
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
 			this.splitContainer.Panel2MinSize = 120;
-			this.splitContainer.Size = new System.Drawing.Size(1008, 610);
-			this.splitContainer.SplitterDistance = 480;
+			this.splitContainer.Size = new System.Drawing.Size(948, 610);
+			this.splitContainer.SplitterDistance = 487;
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
 			// 
+			// BtnRTL
+			// 
+			this.BtnRTL.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnRTL.FlatAppearance.BorderSize = 0;
+			this.BtnRTL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnRTL.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnRTL.ForeColor = System.Drawing.Color.White;
+			this.BtnRTL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.BtnRTL.Location = new System.Drawing.Point(9, 384);
+			this.BtnRTL.Margin = new System.Windows.Forms.Padding(4);
+			this.BtnRTL.Name = "BtnRTL";
+			this.BtnRTL.Size = new System.Drawing.Size(90, 87);
+			this.BtnRTL.TabIndex = 15;
+			this.BtnRTL.Text = "RTL";
+			this.BtnRTL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.BtnRTL.UseVisualStyleBackColor = false;
+			this.BtnRTL.Click += new System.EventHandler(this.BUT_RTL_Click);
+			// 
 			// BtnLand
 			// 
+			this.BtnLand.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnLand.FlatAppearance.BorderSize = 0;
 			this.BtnLand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -773,7 +533,7 @@ namespace Diva
 			this.BtnLand.ForeColor = System.Drawing.Color.White;
 			this.BtnLand.Image = global::Diva.Properties.Resources.icon_land;
 			this.BtnLand.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnLand.Location = new System.Drawing.Point(909, 386);
+			this.BtnLand.Location = new System.Drawing.Point(9, 198);
 			this.BtnLand.Name = "BtnLand";
 			this.BtnLand.Size = new System.Drawing.Size(90, 87);
 			this.BtnLand.TabIndex = 1;
@@ -786,6 +546,7 @@ namespace Diva
 			// 
 			// BtnVideo
 			// 
+			this.BtnVideo.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnVideo.FlatAppearance.BorderSize = 0;
 			this.BtnVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -793,7 +554,7 @@ namespace Diva
 			this.BtnVideo.ForeColor = System.Drawing.Color.White;
 			this.BtnVideo.Image = global::Diva.Properties.Resources.icon_add;
 			this.BtnVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnVideo.Location = new System.Drawing.Point(620, 386);
+			this.BtnVideo.Location = new System.Drawing.Point(105, 384);
 			this.BtnVideo.Margin = new System.Windows.Forms.Padding(4);
 			this.BtnVideo.Name = "BtnVideo";
 			this.BtnVideo.Size = new System.Drawing.Size(90, 87);
@@ -807,6 +568,7 @@ namespace Diva
 			// 
 			// BtnAuto
 			// 
+			this.BtnAuto.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnAuto.FlatAppearance.BorderSize = 0;
 			this.BtnAuto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -814,7 +576,7 @@ namespace Diva
 			this.BtnAuto.ForeColor = System.Drawing.Color.White;
 			this.BtnAuto.Image = global::Diva.Properties.Resources.icon_auto;
 			this.BtnAuto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnAuto.Location = new System.Drawing.Point(813, 386);
+			this.BtnAuto.Location = new System.Drawing.Point(105, 198);
 			this.BtnAuto.Name = "BtnAuto";
 			this.BtnAuto.Size = new System.Drawing.Size(90, 87);
 			this.BtnAuto.TabIndex = 3;
@@ -827,13 +589,14 @@ namespace Diva
 			// 
 			// BtnArm
 			// 
+			this.BtnArm.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnArm.FlatAppearance.BorderSize = 0;
 			this.BtnArm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnArm.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnArm.ForeColor = System.Drawing.Color.White;
-			this.BtnArm.Image = global::Diva.Properties.Resources.icon_arm;
-			this.BtnArm.Location = new System.Drawing.Point(909, 293);
+			this.BtnArm.Image = global::Diva.Properties.Resources.icon_connect;
+			this.BtnArm.Location = new System.Drawing.Point(9, 105);
 			this.BtnArm.Name = "BtnArm";
 			this.BtnArm.Size = new System.Drawing.Size(90, 87);
 			this.BtnArm.TabIndex = 0;
@@ -846,6 +609,7 @@ namespace Diva
 			// 
 			// BtnReadWPs
 			// 
+			this.BtnReadWPs.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnReadWPs.FlatAppearance.BorderSize = 0;
 			this.BtnReadWPs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -853,7 +617,7 @@ namespace Diva
 			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnReadWPs.Image = global::Diva.Properties.Resources.icon_readwps;
 			this.BtnReadWPs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnReadWPs.Location = new System.Drawing.Point(717, 386);
+			this.BtnReadWPs.Location = new System.Drawing.Point(105, 291);
 			this.BtnReadWPs.Name = "BtnReadWPs";
 			this.BtnReadWPs.Size = new System.Drawing.Size(90, 87);
 			this.BtnReadWPs.TabIndex = 5;
@@ -866,6 +630,7 @@ namespace Diva
 			// 
 			// BtnTakeOff
 			// 
+			this.BtnTakeOff.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnTakeOff.FlatAppearance.BorderSize = 0;
 			this.BtnTakeOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -873,7 +638,7 @@ namespace Diva
 			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
 			this.BtnTakeOff.Image = global::Diva.Properties.Resources.icon_takeoff;
 			this.BtnTakeOff.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnTakeOff.Location = new System.Drawing.Point(813, 293);
+			this.BtnTakeOff.Location = new System.Drawing.Point(105, 105);
 			this.BtnTakeOff.Name = "BtnTakeOff";
 			this.BtnTakeOff.Size = new System.Drawing.Size(90, 87);
 			this.BtnTakeOff.TabIndex = 2;
@@ -886,13 +651,14 @@ namespace Diva
 			// 
 			// BtnWriteWPs
 			// 
+			this.BtnWriteWPs.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnWriteWPs.FlatAppearance.BorderSize = 0;
 			this.BtnWriteWPs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnWriteWPs.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnWriteWPs.Image = global::Diva.Properties.Resources.icon_writewps;
-			this.BtnWriteWPs.Location = new System.Drawing.Point(717, 293);
+			this.BtnWriteWPs.Location = new System.Drawing.Point(9, 291);
 			this.BtnWriteWPs.Name = "BtnWriteWPs";
 			this.BtnWriteWPs.Size = new System.Drawing.Size(90, 87);
 			this.BtnWriteWPs.TabIndex = 4;
@@ -914,23 +680,38 @@ namespace Diva
 			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
 			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
 			// 
-			// BtnRTL
+			// DroneInfo3
 			// 
-			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnRTL.FlatAppearance.BorderSize = 0;
-			this.BtnRTL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnRTL.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BtnRTL.ForeColor = System.Drawing.Color.White;
-			this.BtnRTL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnRTL.Location = new System.Drawing.Point(620, 291);
-			this.BtnRTL.Margin = new System.Windows.Forms.Padding(4);
-			this.BtnRTL.Name = "BtnRTL";
-			this.BtnRTL.Size = new System.Drawing.Size(90, 87);
-			this.BtnRTL.TabIndex = 15;
-			this.BtnRTL.Text = "RTL";
-			this.BtnRTL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.BtnRTL.UseVisualStyleBackColor = false;
-			this.BtnRTL.Click += new System.EventHandler(this.BUT_RTL_Click);
+			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.DroneInfo3.Enabled = false;
+			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
+			this.DroneInfo3.Name = "DroneInfo3";
+			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo3.TabIndex = 18;
+			this.DroneInfo3.Tag = "2";
+			// 
+			// DroneInfo2
+			// 
+			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo2.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.DroneInfo2.Enabled = false;
+			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
+			this.DroneInfo2.Name = "DroneInfo2";
+			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo2.TabIndex = 17;
+			this.DroneInfo2.Tag = "1";
+			// 
+			// DroneInfo1
+			// 
+			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.DroneInfo1.Enabled = false;
+			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
+			this.DroneInfo1.Name = "DroneInfo1";
+			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo1.TabIndex = 16;
+			this.DroneInfo1.Tag = "0";
 			// 
 			// myMap
 			// 
@@ -958,7 +739,7 @@ namespace Diva
 			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
 			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
 			this.myMap.ShowTileGridLines = false;
-			this.myMap.Size = new System.Drawing.Size(1008, 480);
+			this.myMap.Size = new System.Drawing.Size(948, 487);
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
@@ -967,7 +748,7 @@ namespace Diva
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1008, 610);
+			this.ClientSize = new System.Drawing.Size(948, 610);
 			this.Controls.Add(this.splitContainer);
 			this.MinimumSize = new System.Drawing.Size(964, 648);
 			this.Name = "Planner";
@@ -980,8 +761,6 @@ namespace Diva
 			this.panelDroneInfo.ResumeLayout(false);
 			this.panelDroneInfo.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).EndInit();
-			this.TSDroneStatus.ResumeLayout(false);
-			this.TSDroneStatus.PerformLayout();
 			this.TSMainPanel.ResumeLayout(false);
 			this.TSMainPanel.PerformLayout();
 			this.splitContainer.Panel1.ResumeLayout(false);
@@ -1005,21 +784,7 @@ namespace Diva
 		private System.Windows.Forms.ContextMenuStrip cmMap;
 		private System.Windows.Forms.ToolStripMenuItem miClearMission;
 		private System.Windows.Forms.ToolStripMenuItem miSetHomeHere;
-		private System.Windows.Forms.AGauge gaugeAltitude;
-		private System.Windows.Forms.AGauge gaugeSpeed;
-		private System.Windows.Forms.Label lblGaugeAltitude;
-		private System.Windows.Forms.Label labelGaugeSpeed;
-		private System.Windows.Forms.Label lblGagueAltitudeValue;
-		private System.Windows.Forms.Label lblGagueSpeedValue;
-		private System.Windows.Forms.Label lblGaugeAltitudeUnit;
-		private System.Windows.Forms.Label lblGagueSpeedUnit;
 		private System.Windows.Forms.ToolStripMenuItem miClearAllMissions;
-		private System.Windows.Forms.ToolStrip TSDroneStatus;
-		private System.Windows.Forms.ToolStripButton TSBtnGPSCount;
-		private System.Windows.Forms.ToolStripLabel TSTxtSatCount;
-		private System.Windows.Forms.ToolStripButton TSBtnBatteryHealth;
-		private System.Windows.Forms.ToolStripLabel TSTxtBatteryHealth;
-		private System.Windows.Forms.ToolStrip TSDroneList;
 		private System.Windows.Forms.Timer timerMapItemUpdate;
 		private System.Windows.Forms.ToolStrip TSMainPanel;
 		private System.Windows.Forms.ToolStripButton TSBtnConnect;
@@ -1051,5 +816,8 @@ namespace Diva
 		private Button BtnAirMode;
 		private ImageList ImgListBatteryHealth;
 		private Button BtnRTL;
+		private DroneInfoPanel DroneInfo1;
+		private DroneInfoPanel DroneInfo2;
+		private DroneInfoPanel DroneInfo3;
 	}
 }

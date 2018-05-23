@@ -24,9 +24,9 @@ namespace Diva.Controls
 			this.DoubleBuffered = true;
 			this.TitleBackColor = Color.Gray;
 			this.TitleForeColor = Color.White;
-			this.TitleFont = new Font(this.Font.FontFamily, Font.Size + 8, FontStyle.Bold);
+			this.TitleFont = new Font(this.Font.FontFamily, Font.Size, FontStyle.Bold);
 			this.BackColor = Color.Transparent;
-			this.Radious = 5;
+			this.Radious = 1;
 			this.TitleHatchStyle = HatchStyle.Percent60;
 			this.TitlePadding = 5;
 		}
@@ -51,6 +51,7 @@ namespace Diva.Controls
 					e.Graphics.FillPath(brush, path);
 				using (var pen = new Pen(TitleBackColor, 1))
 					e.Graphics.DrawPath(pen, path);
+				
 				TextRenderer.DrawText(e.Graphics, Text, TitleFont, new Point(TitlePadding, TitlePadding), TitleForeColor);
 				e.Graphics.SetClip(clip);
 				using (var pen = new Pen(TitleBackColor, 1))
