@@ -28,14 +28,14 @@ namespace Diva
             public byte[] Hash { get; private set; }
             public Privilege Type { get; private set; }
 
-            private static byte[] generateSalt()
+            private static byte[] GenerateSalt()
             {
                 byte[] salt = new byte[SaltSize];
                 new RNGCryptoServiceProvider().GetBytes(salt);
                 return salt;
             }
 
-            private byte[] generateHash(string password)
+            private byte[] GenerateHash(string password)
             {
                 return new Rfc2898DeriveBytes(password, Salt, HashIterations).GetBytes(HashSize);
             }
@@ -44,8 +44,8 @@ namespace Diva
             {
                 Name = name;
                 Type = type;
-                Salt = generateSalt();
-                Hash = generateHash(password);
+                Salt = GenerateSalt();
+                Hash = GenerateHash(password);
             }
 
             [Newtonsoft.Json.JsonConstructor]
@@ -61,8 +61,8 @@ namespace Diva
 
             public void SetPassword(string password)
             {
-                Salt = generateSalt();
-                Hash = generateHash(password);
+                Salt = GenerateSalt();
+                Hash = GenerateHash(password);
             }
 
             public void SetType(Privilege type) { Type = type; }
@@ -73,11 +73,11 @@ namespace Diva
                 if (!AuthenticationLocked())
                 {
                     ret = acc != null && acc.Hash.SequenceEqual(
-                                            acc.generateHash(password));
+                                            acc.GenerateHash(password));
                     if (ret)
-                        authenticationSuceeded();
+                        AuthenticationSuceeded();
                     else
-                        authenticationFailed();
+                        AuthenticationFailed();
                 }
                 return ret;
             }
@@ -97,10 +97,10 @@ namespace Diva
         private const string LOCK_ACCOUNT_NAME = "_lock";
         private static readonly Lazy<AccountManager> lazy = new Lazy<AccountManager>(() => new AccountManager());
         private Timer timer;
-        private static Timer retryTimer { get { return lazy.Value.timer; } }
+        private static Timer RetryTimer { get { return lazy.Value.timer; } }
         private static int retryCount;
         public static DateTime RetryUnlockTime { get; private set; }
-        private static List<Account> accounts { get { return lazy.Value.accountList; } }
+        private static List<Account> Accounts { get { return lazy.Value.accountList; } }
         private List<Account> accountList;
         private Account current;
 
@@ -134,26 +134,23 @@ namespace Diva
         {
             try
             {
-                return accounts.Single(a => a.Name == name);
+                return Accounts.Single(a => a.Name == name);
             }
-            catch (Exception e)
-            {
-                ;
-            }
+            catch  { }
             return null;
         }
 
         public static IEnumerable<string> GetAccounts()
         {
-            return from acc in accounts select acc.Name;
+            return from acc in Accounts select acc.Name;
         }
 
         public static bool CreateAccount(string name, string password)
         {
-            bool ret = name.Length > 0 && !accounts.Exists(a => a.Name == name)
+            bool ret = name.Length > 0 && !Accounts.Exists(a => a.Name == name)
                 && new System.Text.RegularExpressions.Regex(
                     "[A-Za-z][A-Za-z0-9_]*").Match(name).Length == name.Length;
-            if (ret) accounts.Add(new Account(name, password));
+            if (ret) Accounts.Add(new Account(name, password));
             return ret;
         }
 
@@ -163,18 +160,18 @@ namespace Diva
             Account acc = GetAccount(name);
             if (acc != null && acc != lazy.Value.current)
             {
-                accounts.Remove(acc);
+                Accounts.Remove(acc);
                 ret = true;
             }
-            if (accounts.Count == 1 && accounts[0].Name == LOCK_ACCOUNT_NAME)
-                accounts.Clear();
+            if (Accounts.Count == 1 && Accounts[0].Name == LOCK_ACCOUNT_NAME)
+                Accounts.Clear();
             return ret;
         }
 
         public static bool RenameAccount(string oldName, string newName)
         {
             Account acc = GetAccount(oldName);
-            bool ret = acc != null && !accounts.Exists(a => a.Name == newName);
+            bool ret = acc != null && !Accounts.Exists(a => a.Name == newName);
             if (ret) acc.Rename(newName);
             return ret;
         }
@@ -194,26 +191,26 @@ namespace Diva
             return retryCount >= MAX_RETRIES;
         }
 
-        private static void authenticationSuceeded()
+        private static void AuthenticationSuceeded()
         {
-            retryTimer.Change(0, Timeout.Infinite);
+            RetryTimer.Change(0, Timeout.Infinite);
         }
 
-        public static void authenticationFailed()
+        public static void AuthenticationFailed()
         {
             if (++retryCount >= MAX_RETRIES)
             {
-                retryTimer.Change(RETRY_LOCK_TIMEOUT, Timeout.Infinite);
+                RetryTimer.Change(RETRY_LOCK_TIMEOUT, Timeout.Infinite);
                 RetryUnlockTime = DateTime.Now + TimeSpan.FromMilliseconds(RETRY_LOCK_TIMEOUT);
             }
             else
             {
-                retryTimer.Change(RETRY_TIMEOUT, Timeout.Infinite);
+                RetryTimer.Change(RETRY_TIMEOUT, Timeout.Infinite);
                 RetryUnlockTime = DateTime.Now + TimeSpan.FromMilliseconds(RETRY_TIMEOUT);
             }
             Account _lock = GetAccount(LOCK_ACCOUNT_NAME);
             if (_lock == null)
-                accounts.Add(_lock = new Account(LOCK_ACCOUNT_NAME, null, null, Privilege.None));
+                Accounts.Add(_lock = new Account(LOCK_ACCOUNT_NAME, null, null, Privilege.None));
             _lock.UpdateLockInfo();
             if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
         }
@@ -238,7 +235,7 @@ namespace Diva
 
         public static bool IsAuthenticated()
         {
-            return accounts.Count == 0 || lazy.Value.current != null;
+            return Accounts.Count == 0 || lazy.Value.current != null;
         }
     }
 }

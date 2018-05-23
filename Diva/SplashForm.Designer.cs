@@ -58,6 +58,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SplashForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SplashForm_FormClosed);
             this.Load += new System.EventHandler(this.SplashForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
