@@ -26,7 +26,7 @@ namespace Diva
 
         private void SplashForm_Load(object sender, EventArgs e)
         {
-           if (DataManager.Ready)
+           if (ConfigData.Ready)
             {
                 Func<string> getAccountNames = () =>
                 {
@@ -46,7 +46,7 @@ namespace Diva
                 bool b = AccountManager.CreateAccount("aaa", "a123456");
                 Console.WriteLine("Create account aaa " + (b ? "succeded." : "failed"));
                 Console.WriteLine("Current account:" + getAccountNames() + ".");
-                DataManager.Save();
+                ConfigData.Save();
                 Console.WriteLine("Config data saved.");
                 Console.WriteLine("Unlock: " + AccountManager.RetryUnlockTime);
                 testAccount("aaa", "123456");

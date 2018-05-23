@@ -16,73 +16,81 @@ namespace Diva
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     class UnquoteJson : Attribute { }
 
-    class DataCryptor
+    class ConfigData
     {
-        private static int AES_KEYSIZE = 128;
-        private static int ITERATIONS = 256;
-        private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
-        private static Aes aes = null;
-        private static Rfc2898DeriveBytes key;
-        public static UInt64 Salt { set {
-                key = new Rfc2898DeriveBytes(cryptKey, BitConverter.GetBytes(value), ITERATIONS);
-                if (aes != null) aes.Dispose();
-                aes = new AesManaged();
-                aes.KeySize = AES_KEYSIZE;
-                aes.Key = key.GetBytes(aes.KeySize / 8);
-                aes.IV = key.GetBytes(aes.BlockSize / 8);
-            } }
-
-        private static byte[] cryptor(byte[] src, ICryptoTransform transform)
+        class DataCryptor
         {
-            byte[] res = null;
-            using (MemoryStream ms = new MemoryStream())
-            using (CryptoStream cs = new CryptoStream(ms, transform, CryptoStreamMode.Write))
+            private static int AES_KEYSIZE = 128;
+            private static int ITERATIONS = 256;
+            private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
+            private static Aes aes = null;
+            private static Rfc2898DeriveBytes key;
+            public static UInt64 Salt { set {
+                    key = new Rfc2898DeriveBytes(cryptKey, BitConverter.GetBytes(value), ITERATIONS);
+                    if (aes != null) aes.Dispose();
+                    aes = new AesManaged();
+                    aes.KeySize = AES_KEYSIZE;
+                    aes.Key = key.GetBytes(aes.KeySize / 8);
+                    aes.IV = key.GetBytes(aes.BlockSize / 8);
+                } }
+
+            private static byte[] cryptor(byte[] src, ICryptoTransform transform)
             {
-                cs.Write(src, 0, src.Length);
-                cs.Close();
-                res = ms.ToArray();
+                byte[] res = null;
+                using (MemoryStream ms = new MemoryStream())
+                using (CryptoStream cs = new CryptoStream(ms, transform, CryptoStreamMode.Write))
+                {
+                    cs.Write(src, 0, src.Length);
+                    cs.Close();
+                    res = ms.ToArray();
+                }
+                return res;
             }
-            return res;
-        }
-        public static byte[] Encrypt(byte[] clear)
-        {
-            return cryptor(clear, aes.CreateEncryptor());
+            public static byte[] Encrypt(byte[] clear)
+            {
+                return cryptor(clear, aes.CreateEncryptor());
+            }
+
+            public static byte[] Decrypt(byte[] crypt)
+            {
+                return cryptor(crypt, aes.CreateDecryptor());
+            }
+
+            public static string Encrypt(string clearText)
+            {
+                return Convert.ToBase64String(Encrypt(Encoding.UTF8.GetBytes(clearText)));
+            }
+
+            public static string Decrypt(string cryptText)
+            {
+                return Encoding.UTF8.GetString(Decrypt(Convert.FromBase64String(cryptText)));
+            }
         }
 
-        public static byte[] Decrypt(byte[] crypt)
-        {
-            return cryptor(crypt, aes.CreateDecryptor());
-        }
-
-        public static string Encrypt(string clearText)
-        {
-            return Convert.ToBase64String(Encrypt(Encoding.UTF8.GetBytes(clearText)));
-        }
-
-        public static string Decrypt(string cryptText)
-        {
-            return Encoding.UTF8.GetString(Decrypt(Convert.FromBase64String(cryptText)));
-        }
-    }
-
-    class DataManager
-    {
-        private const string VERSION_STRING = "1.0.0.0";
-        private static readonly Lazy<DataManager> lazy = new Lazy<DataManager>(() => new DataManager());
+        private static readonly Lazy<ConfigData> lazy = new Lazy<ConfigData>(() => new ConfigData());
         private static Configuration config;
 
         private bool ready = false;
         public static bool Ready { get { return lazy.Value.ready || Load(); } }
         private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
         private static ConcurrentDictionary<string, object> lists { get { return lazy.Value.typeLists; } }
-        private dynamic options;
-        private static dynamic divaOptions { get { return lazy.Value.options; } }
+        private ConcurrentDictionary<string, string> options;
+        private static ConcurrentDictionary<string, string> divaOptions { get { return lazy.Value.options; } }
 
-        private DataManager()
+        private static ConcurrentDictionary<string, string> getInitOptions()
         {
-            options = new System.Dynamic.ExpandoObject();
-            options.version = "0.0.0.0";
-            options.salt = 0;
+            const string VERSION_STRING = "1.0.0.0";
+            const string NO_ENCRYPT_SALT = "0";
+
+            ConcurrentDictionary<string, string> opt = new ConcurrentDictionary<string, string>();
+            opt["Version"] = VERSION_STRING;
+            opt["Salt"] = NO_ENCRYPT_SALT;
+            return opt;
+        }
+
+        private ConfigData()
+        {
+            options = getInitOptions();
             try
             {
                 config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -112,19 +120,14 @@ namespace Diva
             return GetTypeList<T>().Remove(item);
         }
 
-        public static object GetOption(string name)
+        public static string GetOption(string name)
         {
-            var dic = divaOptions as IDictionary<string, object>;
-            return dic.ContainsKey(name) ? dic[name] : null;
+            return divaOptions.ContainsKey(name) ? divaOptions[name] : "";
         }
 
-        public static void SetOption(string name, object value)
+        public static void SetOption(string name, string value)
         {
-            var dic = divaOptions as IDictionary<string, object>;
-            if (dic.ContainsKey(name))
-                dic[name] = value;
-            else
-                dic.Add(name, value);
+            divaOptions[name] = value;
         }
 
         public static void DeleteOption(string name)
@@ -145,18 +148,29 @@ namespace Diva
             if (config == null) return false;
             if (config.AppSettings.Settings["divaOptions"] != null)
             {
-                lazy.Value.options = JsonConvert.DeserializeObject<System.Dynamic.ExpandoObject>(requoteJson(
+                lazy.Value.options = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(requoteJson(
                     config.AppSettings.Settings["divaOptions"].Value));
             }
             else
             {
-                lazy.Value.options = new System.Dynamic.ExpandoObject();
-                divaOptions.Version = VERSION_STRING;
-                divaOptions.Salt = "0";
+                lazy.Value.options = getInitOptions();
             }
-            bool decrypt = divaOptions.Salt != "0";
+            string[] args = Environment.GetCommandLineArgs();
+            foreach (string arg in args)
+            {
+                if (arg.StartsWith("--dv", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    try
+                    {
+                        int splitter = arg.IndexOf('=');
+                        divaOptions[arg.Substring(4, splitter - 4)] = arg.Substring(splitter + 1);
+                    }
+                    catch { }
+                }
+            }
+            bool decrypt = divaOptions["Salt"] != "0";
             if (decrypt)
-                DataCryptor.Salt = UInt64.Parse(divaOptions.Salt) +
+                DataCryptor.Salt = UInt64.Parse(divaOptions["Salt"]) +
                             Convert.ToUInt64(config.AppSettings.Settings["divaOptions"].Value.Length);
             var asms = AppDomain.CurrentDomain.GetAssemblies();
             var settings = from k in config.AppSettings.Settings.AllKeys
@@ -185,7 +199,7 @@ namespace Diva
                             && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
                     if (t.GetCustomAttribute<UnquoteJson>() != null) jstr = requoteJson(jstr);
                     var list = deserializeMethod.Invoke(null, new object[] {  jstr });
-                    var updateListMethod = typeof(DataManager).GetMethod("UpdateList").MakeGenericMethod(t);
+                    var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
                     updateListMethod.Invoke(lazy.Value, new object[] { list });
                 }
                 else
@@ -238,7 +252,7 @@ namespace Diva
                     byte[] buffer = new byte[sizeof(UInt64)];
                     rng.GetBytes(buffer);
                     salt = BitConverter.ToUInt64(buffer, 0);
-                    divaOptions.Salt = salt.ToString();
+                    divaOptions["Salt"] = salt.ToString();
                 }
                 salt += Convert.ToUInt64(writeSetting("divaOptions", divaOptions, false));
                 DataCryptor.Salt = salt;

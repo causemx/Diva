@@ -100,7 +100,8 @@ namespace Diva
         private static Timer retryTimer { get { return lazy.Value.timer; } }
         private static int retryCount;
         public static DateTime RetryUnlockTime { get; private set; }
-        private static List<Account> accounts { get { return DataManager.GetTypeList<Account>(); } }
+        private static List<Account> accounts { get { return lazy.Value.accountList; } }
+        private List<Account> accountList;
         private Account current;
 
         private AccountManager()
@@ -109,7 +110,13 @@ namespace Diva
                 retryCount = 0;
                 DeleteAccount(LOCK_ACCOUNT_NAME);
             }, null, 0, Timeout.Infinite);
-            Account _lock = GetAccount(LOCK_ACCOUNT_NAME);
+            accountList = ConfigData.GetTypeList<Account>();
+            Account _lock = null;
+            try
+            {
+                _lock = accountList.Single(a => a.Name == LOCK_ACCOUNT_NAME);
+            }
+            catch { };
             if (_lock != null)
             {
                 retryCount = BitConverter.ToInt32(_lock.Salt, 0);
@@ -118,6 +125,8 @@ namespace Diva
                 int due = (RetryUnlockTime - DateTime.Now).Milliseconds;
                 if (due > 0)
                     timer.Change(due, Timeout.Infinite);
+                else
+                    accountList.Remove(_lock);
             }
         }
 
@@ -225,6 +234,11 @@ namespace Diva
             bool ret = lazy.Value.current != null;
             if (ret) lazy.Value.current = null;
             return ret;
+        }
+
+        public static bool IsAuthenticated()
+        {
+            return accounts.Count == 0 || lazy.Value.current != null;
         }
     }
 }
