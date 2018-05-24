@@ -118,7 +118,9 @@ namespace Diva
         {
             timer = new Timer((o) => {
                 retryCount = 0;
-                DeleteAccount(LOCK_ACCOUNT_NAME);
+                // it's not a good practice, but modifying account list during config save causes error
+                // maybe that should be done by copying whole list
+                ConfigData.DoAction(() => DeleteAccount(LOCK_ACCOUNT_NAME));
             }, null, 0, Timeout.Infinite);
             accountList = ConfigData.GetTypeList<Account>();
             Account _lock = null;

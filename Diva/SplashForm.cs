@@ -60,11 +60,12 @@ namespace Diva
         {
            if (ConfigData.Ready)
             {
+                TestConfig();
                 timer = new Timer();
                 timer.Tick += (o, ex) => {
                     timer.Stop();
                     FormClosing -= SplashForm_FormClosing;
-                    Close();
+                    //Close();
                 };
                 timer.Interval = 5000;
                 timer.Start();

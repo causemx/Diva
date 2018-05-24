@@ -267,5 +267,8 @@ namespace Diva
                 config.Save();
             }
         }
+
+        // actions modifying list content should be avoided be performed during load/save
+        public static void DoAction(Action action) { lock (config) { action(); } }
     }
 }
