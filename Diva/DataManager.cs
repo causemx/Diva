@@ -74,7 +74,7 @@ namespace Diva
         private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
         private static ConcurrentDictionary<string, object> Lists { get { return lazy.Value.typeLists; } }
         private ConcurrentDictionary<string, string> options;
-        private static ConcurrentDictionary<string, string> DivaOptions { get { return lazy.Value.options; } }
+        public static ConcurrentDictionary<string, string> Options { get { return lazy.Value.options; } }
 
         private static ConcurrentDictionary<string, string> GetInitOptions()
         {
@@ -108,31 +108,22 @@ namespace Diva
         public static void UpdateList<T>(List<T> list)
         {
             Lists[typeof(T).AssemblyQualifiedName] = list;
-        }
-
-        public static void AddItem<T>(T item)
-        {
-            GetTypeList<T>().Add(item);
-        }
-
-        public static bool RemoveItem<T>(T item)
-        {
-            return GetTypeList<T>().Remove(item);
+            Save();
         }
 
         public static string GetOption(string name)
         {
-            return DivaOptions.ContainsKey(name) ? DivaOptions[name] : "";
+            return Options.ContainsKey(name) ? Options[name] : "";
         }
 
         public static void SetOption(string name, string value)
         {
-            DivaOptions[name] = value;
+            Options[name] = value;
         }
 
         public static void DeleteOption(string name)
         {
-            var dic = DivaOptions as IDictionary<string, object>;
+            var dic = Options as IDictionary<string, object>;
             if (dic.ContainsKey(name))
                 dic.Remove(name);
         }
@@ -146,64 +137,65 @@ namespace Diva
         public static bool Load()
         {
             if (config == null) return false;
-            if (config.AppSettings.Settings["divaOptions"] != null)
+            lock (config)
             {
-                lazy.Value.options = JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>(RequoteJson(
-                    config.AppSettings.Settings["divaOptions"].Value));
-            }
-            else
-            {
-                lazy.Value.options = GetInitOptions();
-            }
-            string[] args = Environment.GetCommandLineArgs();
-            foreach (string arg in args)
-            {
-                if (arg.StartsWith("--dv", StringComparison.InvariantCultureIgnoreCase))
+                lazy.Value.options = config.AppSettings.Settings["divaOptions"] == null ?
+                        GetInitOptions() :
+                        JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>
+                            (RequoteJson(config.AppSettings.Settings["divaOptions"].Value));
+                string[] args = Environment.GetCommandLineArgs();
+                foreach (string arg in args)
                 {
-                    try
+                    if (arg.StartsWith("--dv", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        int splitter = arg.IndexOf('=');
-                        DivaOptions[arg.Substring(4, splitter - 4)] = arg.Substring(splitter + 1);
+                        try
+                        {
+                            int splitter = arg.IndexOf('=');
+                            Options[arg.Substring(4, splitter - 4)] = arg.Substring(splitter + 1);
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
-            }
-            bool decrypt = DivaOptions["Salt"] != "0";
-            if (decrypt)
-                DataCryptor.Salt = UInt64.Parse(DivaOptions["Salt"]) +
-                            Convert.ToUInt64(config.AppSettings.Settings["divaOptions"].Value.Length);
-            var asms = AppDomain.CurrentDomain.GetAssemblies();
-            var settings = from k in config.AppSettings.Settings.AllKeys
-                            where k.StartsWith("dv") select k.Substring(2);
-            foreach (var s in settings)
-            {
-                Type t = Type.GetType(s);
-                foreach (var a in asms)
+                bool decrypt = Options["Salt"] != "0";
+                if (decrypt)
+                    DataCryptor.Salt = UInt64.Parse(Options["Salt"]) +
+                                Convert.ToUInt64(config.AppSettings.Settings["divaOptions"].Value.Length);
+                var asms = AppDomain.CurrentDomain.GetAssemblies();
+                var settings = from k in config.AppSettings.Settings.AllKeys
+                               where k.StartsWith("dv")
+                               select k.Substring(2);
+                foreach (var s in settings)
                 {
-                    Console.WriteLine(a.GetName().FullName);
-                    t = a.GetTypes().FirstOrDefault(tt => tt.FullName == s);
+                    string tname = (s.IndexOf(".") < 0) ? "Diva." + s : s;
+                    Type t = Type.GetType(tname);
+                    if (t == null)
+                        foreach (var a in asms)
+                        {
+                            Console.WriteLine(a.GetName().FullName);
+                            t = a.GetTypes().FirstOrDefault(tt => tt.FullName == tname);
+                            if (t != null)
+                                break;
+                        }
                     if (t != null)
-                        break;
+                    {
+                        string jstr = config.AppSettings.Settings["dv" + s].Value;
+                        if (decrypt)
+                            jstr = DataCryptor.Decrypt(jstr);
+                        var typeOfList = typeof(List<>).MakeGenericType(t);
+                        var deserializeMethod = typeof(JsonConvert).GetMethods()
+                            .Single(m => m.Name == "DeserializeObject"
+                                && m.IsStatic
+                                && m.IsGenericMethodDefinition
+                                && m.GetParameters().Length == 1
+                                && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
+                        if (t.GetCustomAttribute<UnquoteJson>() != null) jstr = RequoteJson(jstr);
+                        var list = deserializeMethod.Invoke(null, new object[] { jstr });
+                        var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
+                        updateListMethod.Invoke(lazy.Value, new object[] { list });
+                    }
+                    else
+                        Console.WriteLine($"Unable to resolve type '{s}'.");
                 }
-                if (t != null)
-                {
-                    string jstr = config.AppSettings.Settings["dv" + s].Value;
-                    if (decrypt)
-                        jstr = DataCryptor.Decrypt(jstr);
-                    var typeOfList = typeof(List<>).MakeGenericType(t);
-                    var deserializeMethod = typeof(JsonConvert).GetMethods()
-                        .Single(m => m.Name == "DeserializeObject"
-                            && m.IsStatic
-                            && m.IsGenericMethodDefinition
-                            && m.GetParameters().Length == 1
-                            && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
-                    if (t.GetCustomAttribute<UnquoteJson>() != null) jstr = RequoteJson(jstr);
-                    var list = deserializeMethod.Invoke(null, new object[] {  jstr });
-                    var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
-                    updateListMethod.Invoke(lazy.Value, new object[] { list });
-                }
-                else
-                    Console.WriteLine($"Unable to resolve type '{s}'.");
             }
             return lazy.Value.ready = true;
         }
@@ -243,32 +235,37 @@ namespace Diva
 
         public static void Save()
         {
-            bool encrypt = AccountManager.GetAccounts().Count() > 0;
-            if (encrypt)
+            lock (config)
             {
-                UInt64 salt;
-                using (var rng = RNGCryptoServiceProvider.Create())
+                bool encrypt = AccountManager.GetAccounts().Count() > 0;
+                if (encrypt)
                 {
-                    byte[] buffer = new byte[sizeof(UInt64)];
-                    rng.GetBytes(buffer);
-                    salt = BitConverter.ToUInt64(buffer, 0);
-                    DivaOptions["Salt"] = salt.ToString();
+                    UInt64 salt;
+                    using (var rng = RNGCryptoServiceProvider.Create())
+                    {
+                        byte[] buffer = new byte[sizeof(UInt64)];
+                        rng.GetBytes(buffer);
+                        salt = BitConverter.ToUInt64(buffer, 0);
+                        Options["Salt"] = salt.ToString();
+                    }
+                    salt += Convert.ToUInt64(WriteSetting("divaOptions", Options, false));
+                    DataCryptor.Salt = salt;
                 }
-                salt += Convert.ToUInt64(WriteSetting("divaOptions", DivaOptions, false));
-                DataCryptor.Salt = salt;
+                foreach (var kv in Lists)
+                {
+                    int count = (int)typeof(List<>).MakeGenericType(
+                        Type.GetType(kv.Key)).GetProperty("Count").
+                            GetGetMethod().Invoke(kv.Value, null);
+                    string tname = Type.GetType(kv.Key).FullName;
+                    string keyName = "dv" + (tname.StartsWith("Diva.") &&
+                        tname.IndexOf(".", 5) < 0 ? tname.Substring(5) : tname);
+                    if (count > 0)
+                        WriteSetting(keyName, kv.Value, encrypt);
+                    else if (config.AppSettings.Settings[keyName] != null)
+                        config.AppSettings.Settings.Remove(keyName);
+                }
+                config.Save();
             }
-            foreach (var kv in Lists)
-            {
-                int count = (int)typeof(List<>).MakeGenericType(
-                    Type.GetType(kv.Key)).GetProperty("Count").
-                        GetGetMethod().Invoke(kv.Value, null);
-                string keyName = "dv" + Type.GetType(kv.Key).FullName;
-                if (count > 0)
-                    WriteSetting(keyName, kv.Value, encrypt);
-                else if (config.AppSettings.Settings[keyName] != null)
-                    config.AppSettings.Settings.Remove(keyName);
-            }
-            config.Save();
         }
     }
 }

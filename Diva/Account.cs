@@ -70,7 +70,7 @@ namespace Diva
             public static bool Authenticate(Account acc, string password)
             {
                 bool ret = false;
-                if (!AuthenticationLocked())
+                if (!AuthenticationLocked)
                 {
                     ret = acc != null && acc.Hash.SequenceEqual(
                                             acc.GenerateHash(password));
@@ -103,6 +103,16 @@ namespace Diva
         private static List<Account> Accounts { get { return lazy.Value.accountList; } }
         private List<Account> accountList;
         private Account current;
+
+        public static bool IsAuthenticated
+        {
+            get { return Accounts.Count == 0 || lazy.Value.current != null; }
+        }
+
+        public static bool AuthenticationLocked
+        {
+            get { return retryCount >= MAX_RETRIES; }
+        }
 
         private AccountManager()
         {
@@ -150,7 +160,11 @@ namespace Diva
             bool ret = name.Length > 0 && !Accounts.Exists(a => a.Name == name)
                 && new System.Text.RegularExpressions.Regex(
                     "[A-Za-z][A-Za-z0-9_]*").Match(name).Length == name.Length;
-            if (ret) Accounts.Add(new Account(name, password));
+            if (ret)
+            {
+                Accounts.Add(new Account(name, password));
+                ConfigData.Save();
+            }
             return ret;
         }
 
@@ -184,11 +198,11 @@ namespace Diva
             return ret;
         }
 
-        public static string GetLoginAccount() { return lazy.Value.current.Name; }
-
-        public static bool AuthenticationLocked()
+        public static string GetLoginAccount()
         {
-            return retryCount >= MAX_RETRIES;
+            if (lazy.Value.current != null)
+                return lazy.Value.current.Name;
+            return "";
         }
 
         private static void AuthenticationSuceeded()
@@ -212,6 +226,7 @@ namespace Diva
             if (_lock == null)
                 Accounts.Add(_lock = new Account(LOCK_ACCOUNT_NAME, null, null, Privilege.None));
             _lock.UpdateLockInfo();
+            ConfigData.Save();
             if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
         }
 
@@ -231,11 +246,6 @@ namespace Diva
             bool ret = lazy.Value.current != null;
             if (ret) lazy.Value.current = null;
             return ret;
-        }
-
-        public static bool IsAuthenticated()
-        {
-            return Accounts.Count == 0 || lazy.Value.current != null;
         }
     }
 }
