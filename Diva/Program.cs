@@ -18,16 +18,8 @@ namespace Diva
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SplashForm());
-            if (AccountManager.IsAuthenticated)
-            {
-                if (AccountManager.GetLoginAccount() == "")
-                {
-                    bool alert = true;
-                    Boolean.TryParse(ConfigData.GetOption("NoAccountAlert"), out alert);
-                    ;
-                }
+            if (SplashForm.InitOk)
                 Application.Run(new Planner());
-            }
         }
 	}
 }

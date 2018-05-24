@@ -157,14 +157,21 @@ namespace Diva
             return from acc in Accounts select acc.Name;
         }
 
+        public static bool ValidAccountName(string name)
+        {
+            return new System.Text.RegularExpressions.Regex(
+                    "[A-Za-z][A-Za-z0-9_]*").Match(name).Length == name.Length;
+        }
+
         public static bool CreateAccount(string name, string password)
         {
             bool ret = name.Length > 0 && !Accounts.Exists(a => a.Name == name)
-                && new System.Text.RegularExpressions.Regex(
-                    "[A-Za-z][A-Za-z0-9_]*").Match(name).Length == name.Length;
+                && ValidAccountName(name);
             if (ret)
             {
                 Accounts.Add(new Account(name, password));
+                if (ConfigData.GetOption("") == "true")
+                    ConfigData.DeleteOption("");
                 ConfigData.Save();
             }
             return ret;
@@ -229,7 +236,7 @@ namespace Diva
                 Accounts.Add(_lock = new Account(LOCK_ACCOUNT_NAME, null, null, Privilege.None));
             _lock.UpdateLockInfo();
             ConfigData.Save();
-            if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
+            //if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
         }
 
         public static bool VerifyAccount(string name, string password)
