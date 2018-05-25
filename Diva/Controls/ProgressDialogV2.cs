@@ -221,11 +221,13 @@ namespace Diva.Controls
 			if (doWorkArgs.CancelRequested && !doWorkArgs.CancelAcknowledged)
 				return;
 
+
             if (InvokeRequired)
             {
                 Invoke((MethodInvoker)(() => UpdateProgressAndStatus(progress, status)));
                 return;
             }
+
 
 			int pgv = -1;
 

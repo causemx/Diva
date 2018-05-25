@@ -107,6 +107,7 @@
 			this.configTuning1.Name = "configTuning1";
 			this.configTuning1.Size = new System.Drawing.Size(763, 603);
 			this.configTuning1.TabIndex = 2;
+		
 			// 
 			// Configure
 			// 

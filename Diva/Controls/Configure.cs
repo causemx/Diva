@@ -15,8 +15,8 @@ namespace Diva.Controls
 		public Configure()
 		{
 			InitializeComponent();
-			configGeoFence1.Enabled = true;
-			configGeoFence1.Visible = true;
+			configGeoFence1.Enabled = false;
+			configGeoFence1.Visible = false;
 			configTuning1.Enabled = false;
 			configTuning1.Visible = false;
 		}
