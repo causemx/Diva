@@ -21,7 +21,7 @@ namespace Diva
         class DataCryptor
         {
             private static int AES_KEYSIZE = 128;
-            private static int ITERATIONS = 256;
+            private static int ITERATIONS = 1024;
             private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
             private static Aes aes = null;
             private static Rfc2898DeriveBytes key;
