@@ -21,8 +21,27 @@ namespace Diva.Controls
 			configTuning1.Visible = false;
 		}
 
+		private void MenuButton_Click(object sender, EventArgs e)
+		{
+			SidePanel.Height = ((Button)sender).Height;
+			SidePanel.Top = ((Button)sender).Top;
+
+			switch (((Button)sender).Name)
+			{
+				case "BtnVehicle":
+					break;
+				case "BtnGeoFence":
+					break;
+				case "BtnTuning":
+					break;
+				case "BtnAbout":
+					break;
+			}
+		}
+
 		private void BtnGeoFence_Click(object sender, EventArgs e)
 		{
+	
 			configGeoFence1.Enabled = true;
 			configGeoFence1.Visible = true;
 			configTuning1.Enabled = false;
@@ -39,6 +58,12 @@ namespace Diva.Controls
 			configTuning1.Visible = true;
 
 			configTuning1.Activate();
+		}
+
+		private void BtnVehicle_Click(object sender, EventArgs e)
+		{
+			SidePanel.Height = BtnVehicle.Height;
+			SidePanel.Top = BtnVehicle.Top;
 		}
 	}
 }
