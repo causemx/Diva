@@ -55,10 +55,11 @@
             // lblProgress
             // 
             this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblProgress.Font = new System.Drawing.Font("PMingLiU", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lblProgress.ForeColor = System.Drawing.Color.White;
-            this.lblProgress.Location = new System.Drawing.Point(148, 336);
+            this.lblProgress.Location = new System.Drawing.Point(148, 320);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(320, 15);
+            this.lblProgress.Size = new System.Drawing.Size(320, 28);
             this.lblProgress.TabIndex = 0;
             this.lblProgress.Text = "Loading...";
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.BottomRight;
