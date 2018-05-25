@@ -26,11 +26,19 @@ namespace Diva
             private static Aes aes = null;
             private static Rfc2898DeriveBytes key;
             public static UInt64 Salt { set {
-                    key = new Rfc2898DeriveBytes(cryptKey, BitConverter.GetBytes(value), ITERATIONS);
-                    if (aes != null) aes.Dispose();
-                    aes = new AesManaged { KeySize = AES_KEYSIZE };
-                    aes.Key = key.GetBytes(aes.KeySize / 8);
-                    aes.IV = key.GetBytes(aes.BlockSize / 8);
+                    if (value == 0)
+                    {
+                        key = null;
+                        if (aes != null) aes.Dispose();
+                        aes = null;
+                    } else
+                    {
+                        key = new Rfc2898DeriveBytes(cryptKey, BitConverter.GetBytes(value), ITERATIONS);
+                        if (aes != null) aes.Dispose();
+                        aes = new AesManaged { KeySize = AES_KEYSIZE };
+                        aes.Key = key.GetBytes(aes.KeySize / 8);
+                        aes.IV = key.GetBytes(aes.BlockSize / 8);
+                    }
                 } }
 
             private static byte[] Cryptor(byte[] src, ICryptoTransform transform)
@@ -209,12 +217,13 @@ namespace Diva
                     Console.WriteLine("Error loading configuration: " + e.ToString());
                     if (System.Windows.Forms.MessageBox.Show("Configuration file may be corrupted, start with new configuration?", "Loading error", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                         return lazy.Value.ready = false;
-                    Reset();
+                    Reset(false);
                 }
+            DataCryptor.Salt = 0;
             return lazy.Value.ready = true;
         }
 
-        public static void Reset()
+        public static void Reset(bool writeback = true)
         {
             lazy.Value.options = GetInitOptions();
             /*foreach (var kv in typeLists)
@@ -224,6 +233,7 @@ namespace Diva
                     list.Dispose();
             }*/
             lazy.Value.typeLists.Clear();
+            if (writeback) Save();
         }
 
         private static int WriteSetting(string key, object obj, bool encrypt)
@@ -285,6 +295,7 @@ namespace Diva
                     }
                     catch { }
                 config.Save();
+                if (encrypt) DataCryptor.Salt = 0;
             }
         }
 
