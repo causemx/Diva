@@ -130,7 +130,10 @@ namespace Diva
         {
             var dic = Options as IDictionary<string, object>;
             if (dic.ContainsKey(name))
+            {
                 dic.Remove(name);
+                Save();
+            }
         }
 
         private static string RequoteJson(string jstr)

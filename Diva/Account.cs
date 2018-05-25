@@ -170,9 +170,10 @@ namespace Diva
             if (ret)
             {
                 Accounts.Add(new Account(name, password));
-                if (ConfigData.GetOption("") == "true")
-                    ConfigData.DeleteOption("");
-                ConfigData.Save();
+                if (ConfigData.GetOption(ConfigData.NO_ACCOUNT_ALERT) == "true")
+                    ConfigData.DeleteOption(ConfigData.NO_ACCOUNT_ALERT); // auto saved
+                else
+                    ConfigData.Save();
             }
             return ret;
         }
@@ -180,6 +181,7 @@ namespace Diva
         public static bool DeleteAccount(string name)
         {
             bool ret = false;
+            int n = Accounts.Count;
             Account acc = GetAccount(name);
             if (acc != null && acc != lazy.Value.current)
             {
@@ -188,6 +190,8 @@ namespace Diva
             }
             if (Accounts.Count == 1 && Accounts[0].Name == LOCK_ACCOUNT_NAME)
                 Accounts.Clear();
+            if (n != Accounts.Count)
+                ConfigData.Save();
             return ret;
         }
 
