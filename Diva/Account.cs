@@ -114,6 +114,11 @@ namespace Diva
             get { return retryCount >= MAX_RETRIES; }
         }
 
+        public static string AccountTypeName
+        {
+            get { return typeof(Account).Name; }
+        }
+
         private AccountManager()
         {
             timer = new Timer((o) => {

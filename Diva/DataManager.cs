@@ -174,8 +174,12 @@ namespace Diva
                     }
                     bool decrypt = Options["Salt"] != "0";
                     if (decrypt)
+                    {
+                        if (!config.AppSettings.Settings.AllKeys.Contains(AccountManager.AccountTypeName))
+                            throw new InvalidDataException("No account data found.");
                         DataCryptor.Salt = UInt64.Parse(Options["Salt"]) +
                                     Convert.ToUInt64(config.AppSettings.Settings["divaOptions"].Value.Length);
+                    }
                     var asms = AppDomain.CurrentDomain.GetAssemblies();
                     var settings = from k in config.AppSettings.Settings.AllKeys
                                    where k.StartsWith("dv")
