@@ -22,7 +22,7 @@ namespace Diva.Controls
 		public MyGroupBox()
 		{
 			this.DoubleBuffered = true;
-			this.TitleBackColor = Color.Gray;
+			this.TitleBackColor = Color.DarkGray;
 			this.TitleForeColor = Color.White;
 			this.TitleFont = new Font(this.Font.FontFamily, Font.Size, FontStyle.Bold);
 			this.BackColor = Color.Transparent;
@@ -51,8 +51,9 @@ namespace Diva.Controls
 					e.Graphics.FillPath(brush, path);
 				using (var pen = new Pen(TitleBackColor, 1))
 					e.Graphics.DrawPath(pen, path);
-				
-				TextRenderer.DrawText(e.Graphics, Text, TitleFont, new Point(TitlePadding, TitlePadding), TitleForeColor);
+
+
+				TextRenderer.DrawText(e.Graphics, Text, TitleFont, new Point(rect.Width/2 - rect.Width/4, TitlePadding), TitleForeColor);
 				e.Graphics.SetClip(clip);
 				using (var pen = new Pen(TitleBackColor, 1))
 					e.Graphics.DrawPath(pen, path);

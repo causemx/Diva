@@ -218,6 +218,12 @@
     <Compile Include="Controls\ProgressInputDialog.Designer.cs">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TelemetryDataPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TelemetryDataPanel.Designer.cs">
+      <DependentUpon>TelemetryDataPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -273,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TelemetryDataPanel.resx">
+      <DependentUpon>TelemetryDataPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>

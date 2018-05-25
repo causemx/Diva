@@ -164,7 +164,8 @@ namespace Diva
 		}
 
 
-		private List<ToolStripButton> droneButtons = new List<ToolStripButton>();
+		private List<DroneInfoPanel> DroneInfos = new List<DroneInfoPanel>();
+
 
 		public Planner()
 		{
@@ -246,6 +247,12 @@ namespace Diva
 
 			//setup toolstrip
 			TSMainPanel.Renderer = new MySR();
+
+			//Collect DroneInfoPanels
+			DroneInfos = new List<DroneInfoPanel>();
+			DroneInfos.Add(DroneInfo1);
+			DroneInfos.Add(DroneInfo2);
+			DroneInfos.Add(DroneInfo3);
 
 			// setup geofence
 			/*
@@ -345,9 +352,8 @@ namespace Diva
 							}
 						}
 
-						
 						CurrentDroneInfo.UpdateTelemetryData(comPort.MAV.battery_voltage, comPort.MAV.satcount);
-
+						CollectionTelemetryData.UpdateTelemetryData(comPort.MAV.altasl, comPort.MAV.groundspeed, comPort.MAV.verticalspeed);
 					});
 
 					PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
@@ -2722,15 +2728,15 @@ namespace Diva
 					switch (mav.sysidcurrent)
 					{
 						case 1:
-							DroneInfo1.DoEnable(true);
+							DroneInfo1.Activate();
 							CurrentDroneInfo = DroneInfo1;
 							break;
 						case 2:
-							DroneInfo2.DoEnable(true);
+							DroneInfo2.Activate();
 							CurrentDroneInfo = DroneInfo2;
 							break;
 						case 3:
-							DroneInfo3.DoEnable(true);
+							DroneInfo3.Activate();
 							CurrentDroneInfo = DroneInfo2;
 							break;
 				}
@@ -3104,12 +3110,22 @@ namespace Diva
 				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging));
 		}
 
-		private void DroneInfo_Click(object sender, EventArgs e)
+		
+
+		private void DroneInfo1_DoubleClick(object sender, EventArgs e)
 		{
 			try
 			{
 				var comport = comPorts[Convert.ToInt32(((DroneInfoPanel)sender).Tag)];
 				CurrentDroneInfo = (DroneInfoPanel)sender;
+				CurrentDroneInfo.Activate();
+
+				foreach (DroneInfoPanel droneInfo in DroneInfos)
+				{
+					if (droneInfo.Tag != CurrentDroneInfo.Tag)
+						droneInfo.Deactivate();
+				}
+				
 			}
 			catch (Exception exception)
 			{
@@ -3117,6 +3133,7 @@ namespace Diva
 				return;
 			}
 		}
+
 
 		public class MySR : ToolStripSystemRenderer
 		{
@@ -3127,5 +3144,6 @@ namespace Diva
 				//base.OnRenderToolStripBorder(e);
 			}
 		}
+
 	}
 }

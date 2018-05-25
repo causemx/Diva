@@ -47,23 +47,21 @@
 			this.side_panel.Dock = System.Windows.Forms.DockStyle.Left;
 			this.side_panel.Location = new System.Drawing.Point(0, 0);
 			this.side_panel.Name = "side_panel";
-			this.side_panel.Size = new System.Drawing.Size(222, 603);
+			this.side_panel.Size = new System.Drawing.Size(292, 603);
 			this.side_panel.TabIndex = 0;
 			// 
 			// BtnHelp
 			// 
-			this.BtnHelp.Dock = System.Windows.Forms.DockStyle.Top;
-			this.BtnHelp.Location = new System.Drawing.Point(0, 270);
+			this.BtnHelp.Location = new System.Drawing.Point(3, 388);
 			this.BtnHelp.Name = "BtnHelp";
-			this.BtnHelp.Size = new System.Drawing.Size(222, 90);
+			this.BtnHelp.Size = new System.Drawing.Size(289, 90);
 			this.BtnHelp.TabIndex = 3;
 			this.BtnHelp.Text = "help";
 			this.BtnHelp.UseVisualStyleBackColor = true;
 			// 
 			// BtnPlanner
 			// 
-			this.BtnPlanner.Dock = System.Windows.Forms.DockStyle.Top;
-			this.BtnPlanner.Location = new System.Drawing.Point(0, 180);
+			this.BtnPlanner.Location = new System.Drawing.Point(3, 301);
 			this.BtnPlanner.Name = "BtnPlanner";
 			this.BtnPlanner.Size = new System.Drawing.Size(222, 90);
 			this.BtnPlanner.TabIndex = 2;
@@ -72,8 +70,7 @@
 			// 
 			// BtnTuning
 			// 
-			this.BtnTuning.Dock = System.Windows.Forms.DockStyle.Top;
-			this.BtnTuning.Location = new System.Drawing.Point(0, 90);
+			this.BtnTuning.Location = new System.Drawing.Point(3, 214);
 			this.BtnTuning.Name = "BtnTuning";
 			this.BtnTuning.Size = new System.Drawing.Size(222, 90);
 			this.BtnTuning.TabIndex = 1;
@@ -83,8 +80,7 @@
 			// 
 			// BtnGeoFence
 			// 
-			this.BtnGeoFence.Dock = System.Windows.Forms.DockStyle.Top;
-			this.BtnGeoFence.Location = new System.Drawing.Point(0, 0);
+			this.BtnGeoFence.Location = new System.Drawing.Point(29, 12);
 			this.BtnGeoFence.Name = "BtnGeoFence";
 			this.BtnGeoFence.Size = new System.Drawing.Size(222, 90);
 			this.BtnGeoFence.TabIndex = 0;
@@ -95,19 +91,18 @@
 			// configGeoFence1
 			// 
 			this.configGeoFence1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configGeoFence1.Location = new System.Drawing.Point(222, 0);
+			this.configGeoFence1.Location = new System.Drawing.Point(292, 0);
 			this.configGeoFence1.Name = "configGeoFence1";
-			this.configGeoFence1.Size = new System.Drawing.Size(763, 603);
+			this.configGeoFence1.Size = new System.Drawing.Size(693, 603);
 			this.configGeoFence1.TabIndex = 1;
 			// 
 			// configTuning1
 			// 
 			this.configTuning1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configTuning1.Location = new System.Drawing.Point(222, 0);
+			this.configTuning1.Location = new System.Drawing.Point(292, 0);
 			this.configTuning1.Name = "configTuning1";
-			this.configTuning1.Size = new System.Drawing.Size(763, 603);
+			this.configTuning1.Size = new System.Drawing.Size(693, 603);
 			this.configTuning1.TabIndex = 2;
-		
 			// 
 			// Configure
 			// 

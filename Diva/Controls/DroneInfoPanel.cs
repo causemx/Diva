@@ -11,17 +11,26 @@ using Diva.Mavlink;
 
 namespace Diva.Controls
 {
-	public partial class DroneInfoPanel : UserControl
+	public partial class DroneInfoPanel : UserControl, IActivate, IDeactivate
 	{
+		
 		public DroneInfoPanel()
 		{
 			InitializeComponent();
 		}
 
-		public void DoEnable(bool enable)
+		public void Activate()
 		{
-			this.Enabled = enable;
+			this.BackColor = Color.FromArgb(67,78,84);
+			this.Enabled = true;
 		}
+
+		public void Deactivate()
+		{
+			this.BackColor = Color.FromArgb(128,128,128);
+			this.Enabled = false;
+		}
+
 
 		public void UpdateTelemetryData(double battry_voltage, float satellite_count)
 		{
