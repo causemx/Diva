@@ -93,6 +93,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_airplane_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_airplane_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_arm {
             get {
                 object obj = ResourceManager.GetObject("icon_arm", resourceCulture);
@@ -203,6 +213,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_edit_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_edit_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_emoticon_48 {
             get {
                 object obj = ResourceManager.GetObject("icon_emoticon_48", resourceCulture);
@@ -216,6 +236,16 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_flytime {
             get {
                 object obj = ResourceManager.GetObject("icon_flytime", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_house_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_house_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

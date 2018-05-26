@@ -32,21 +32,27 @@ namespace Diva
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
 			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelDroneInfo = new System.Windows.Forms.Panel();
-			this.BtnAirMode = new System.Windows.Forms.Button();
+			this.TxtHomeLongitude = new System.Windows.Forms.Label();
+			this.TxtHomeLatitude = new System.Windows.Forms.Label();
+			this.TxtHomeAltitude = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.TxtDroneMode = new System.Windows.Forms.Label();
+			this.button1 = new System.Windows.Forms.Button();
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
-			this.tboxDroneMode = new System.Windows.Forms.TextBox();
-			this.tboxAltitudeValue = new System.Windows.Forms.TextBox();
-			this.tboxHomeAltitude = new System.Windows.Forms.TextBox();
-			this.tboxHomeLongitude = new System.Windows.Forms.TextBox();
-			this.tboxHomeLatitude = new System.Windows.Forms.TextBox();
+			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
 			this.dgvWayPoints = new System.Windows.Forms.DataGridView();
 			this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -124,133 +130,183 @@ namespace Diva
 			// panelDroneInfo
 			// 
 			this.panelDroneInfo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.panelDroneInfo.Controls.Add(this.BtnAirMode);
+			this.panelDroneInfo.Controls.Add(this.TxtHomeLongitude);
+			this.panelDroneInfo.Controls.Add(this.TxtHomeLatitude);
+			this.panelDroneInfo.Controls.Add(this.TxtHomeAltitude);
+			this.panelDroneInfo.Controls.Add(this.label3);
+			this.panelDroneInfo.Controls.Add(this.label2);
+			this.panelDroneInfo.Controls.Add(this.label1);
+			this.panelDroneInfo.Controls.Add(this.TxtDroneMode);
+			this.panelDroneInfo.Controls.Add(this.button1);
 			this.panelDroneInfo.Controls.Add(this.BtnAltitude);
 			this.panelDroneInfo.Controls.Add(this.BtnHomeLand);
-			this.panelDroneInfo.Controls.Add(this.tboxDroneMode);
-			this.panelDroneInfo.Controls.Add(this.tboxAltitudeValue);
-			this.panelDroneInfo.Controls.Add(this.tboxHomeAltitude);
-			this.panelDroneInfo.Controls.Add(this.tboxHomeLongitude);
-			this.panelDroneInfo.Controls.Add(this.tboxHomeLatitude);
+			this.panelDroneInfo.Controls.Add(this.TxtAltitudeValue);
 			this.panelDroneInfo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelDroneInfo.Location = new System.Drawing.Point(0, 0);
 			this.panelDroneInfo.Name = "panelDroneInfo";
 			this.panelDroneInfo.Size = new System.Drawing.Size(948, 51);
 			this.panelDroneInfo.TabIndex = 1;
 			// 
-			// BtnAirMode
+			// TxtHomeLongitude
 			// 
-			this.BtnAirMode.AutoSize = true;
-			this.BtnAirMode.BackColor = System.Drawing.Color.White;
-			this.BtnAirMode.Enabled = false;
-			this.BtnAirMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnAirMode.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BtnAirMode.Image = global::Diva.Properties.Resources.news_32;
-			this.BtnAirMode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.BtnAirMode.Location = new System.Drawing.Point(667, 5);
-			this.BtnAirMode.Name = "BtnAirMode";
-			this.BtnAirMode.Size = new System.Drawing.Size(117, 40);
-			this.BtnAirMode.TabIndex = 20;
-			this.BtnAirMode.Text = "SetMode";
-			this.BtnAirMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.BtnAirMode.UseVisualStyleBackColor = false;
+			this.TxtHomeLongitude.AutoSize = true;
+			this.TxtHomeLongitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeLongitude.ForeColor = System.Drawing.Color.White;
+			this.TxtHomeLongitude.Location = new System.Drawing.Point(379, 18);
+			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
+			this.TxtHomeLongitude.Size = new System.Drawing.Size(43, 15);
+			this.TxtHomeLongitude.TabIndex = 29;
+			this.TxtHomeLongitude.Text = "00.00";
+			// 
+			// TxtHomeLatitude
+			// 
+			this.TxtHomeLatitude.AutoSize = true;
+			this.TxtHomeLatitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeLatitude.ForeColor = System.Drawing.Color.White;
+			this.TxtHomeLatitude.Location = new System.Drawing.Point(280, 18);
+			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
+			this.TxtHomeLatitude.Size = new System.Drawing.Size(43, 15);
+			this.TxtHomeLatitude.TabIndex = 28;
+			this.TxtHomeLatitude.Text = "00.00";
+			// 
+			// TxtHomeAltitude
+			// 
+			this.TxtHomeAltitude.AutoSize = true;
+			this.TxtHomeAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeAltitude.ForeColor = System.Drawing.Color.White;
+			this.TxtHomeAltitude.Location = new System.Drawing.Point(178, 18);
+			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
+			this.TxtHomeAltitude.Size = new System.Drawing.Size(43, 15);
+			this.TxtHomeAltitude.TabIndex = 27;
+			this.TxtHomeAltitude.Text = "00.00";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.ForeColor = System.Drawing.Color.White;
+			this.label3.Location = new System.Drawing.Point(347, 18);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(27, 15);
+			this.label3.TabIndex = 26;
+			this.label3.Text = "alt:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.ForeColor = System.Drawing.Color.White;
+			this.label2.Location = new System.Drawing.Point(245, 18);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(30, 15);
+			this.label2.TabIndex = 25;
+			this.label2.Text = "lng:";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.White;
+			this.label1.Location = new System.Drawing.Point(146, 18);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(27, 15);
+			this.label1.TabIndex = 24;
+			this.label1.Text = "lat:";
+			// 
+			// TxtDroneMode
+			// 
+			this.TxtDroneMode.AutoSize = true;
+			this.TxtDroneMode.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtDroneMode.ForeColor = System.Drawing.Color.White;
+			this.TxtDroneMode.Location = new System.Drawing.Point(864, 18);
+			this.TxtDroneMode.Name = "TxtDroneMode";
+			this.TxtDroneMode.Size = new System.Drawing.Size(32, 15);
+			this.TxtDroneMode.TabIndex = 23;
+			this.TxtDroneMode.Text = "N/A";
+			// 
+			// button1
+			// 
+			this.button1.AutoSize = true;
+			this.button1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button1.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.button1.ForeColor = System.Drawing.Color.White;
+			this.button1.Image = global::Diva.Properties.Resources.icon_airplane_32;
+			this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button1.Location = new System.Drawing.Point(728, 1);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(130, 51);
+			this.button1.TabIndex = 22;
+			this.button1.Text = "Drone Mode";
+			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.button1.UseVisualStyleBackColor = false;
 			// 
 			// BtnAltitude
 			// 
 			this.BtnAltitude.AutoSize = true;
-			this.BtnAltitude.BackColor = System.Drawing.Color.White;
-			this.BtnAltitude.Enabled = false;
+			this.BtnAltitude.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnAltitude.FlatAppearance.BorderSize = 0;
 			this.BtnAltitude.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BtnAltitude.Image = global::Diva.Properties.Resources.size_height_edit_32;
-			this.BtnAltitude.Location = new System.Drawing.Point(434, 5);
+			this.BtnAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnAltitude.ForeColor = System.Drawing.Color.White;
+			this.BtnAltitude.Image = global::Diva.Properties.Resources.icon_edit_32;
+			this.BtnAltitude.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.BtnAltitude.Location = new System.Drawing.Point(472, 1);
 			this.BtnAltitude.Name = "BtnAltitude";
-			this.BtnAltitude.Size = new System.Drawing.Size(117, 40);
-			this.BtnAltitude.TabIndex = 19;
-			this.BtnAltitude.Text = "SetAltitude";
-			this.BtnAltitude.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.BtnAltitude.Size = new System.Drawing.Size(130, 51);
+			this.BtnAltitude.TabIndex = 21;
+			this.BtnAltitude.Text = "Write alt.";
+			this.BtnAltitude.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.BtnAltitude.UseVisualStyleBackColor = false;
 			// 
 			// BtnHomeLand
 			// 
 			this.BtnHomeLand.AutoSize = true;
-			this.BtnHomeLand.BackColor = System.Drawing.Color.White;
-			this.BtnHomeLand.Enabled = false;
+			this.BtnHomeLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnHomeLand.FlatAppearance.BorderSize = 0;
 			this.BtnHomeLand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnHomeLand.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BtnHomeLand.Image = global::Diva.Properties.Resources.home_32;
-			this.BtnHomeLand.Location = new System.Drawing.Point(5, 5);
+			this.BtnHomeLand.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnHomeLand.ForeColor = System.Drawing.Color.White;
+			this.BtnHomeLand.Image = global::Diva.Properties.Resources.icon_house_32;
+			this.BtnHomeLand.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.BtnHomeLand.Location = new System.Drawing.Point(0, 0);
 			this.BtnHomeLand.Name = "BtnHomeLand";
-			this.BtnHomeLand.Size = new System.Drawing.Size(114, 40);
+			this.BtnHomeLand.Size = new System.Drawing.Size(130, 51);
 			this.BtnHomeLand.TabIndex = 16;
-			this.BtnHomeLand.Text = "HomeLand";
-			this.BtnHomeLand.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.BtnHomeLand.Text = "Homeland";
+			this.BtnHomeLand.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.BtnHomeLand.UseVisualStyleBackColor = false;
 			// 
-			// tboxDroneMode
+			// TxtAltitudeValue
 			// 
-			this.tboxDroneMode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tboxDroneMode.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tboxDroneMode.Location = new System.Drawing.Point(790, 5);
-			this.tboxDroneMode.Multiline = true;
-			this.tboxDroneMode.Name = "tboxDroneMode";
-			this.tboxDroneMode.Size = new System.Drawing.Size(80, 40);
-			this.tboxDroneMode.TabIndex = 18;
-			this.tboxDroneMode.Text = "Suspend";
-			// 
-			// tboxAltitudeValue
-			// 
-			this.tboxAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tboxAltitudeValue.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tboxAltitudeValue.Location = new System.Drawing.Point(557, 5);
-			this.tboxAltitudeValue.Multiline = true;
-			this.tboxAltitudeValue.Name = "tboxAltitudeValue";
-			this.tboxAltitudeValue.Size = new System.Drawing.Size(80, 40);
-			this.tboxAltitudeValue.TabIndex = 12;
-			this.tboxAltitudeValue.Text = "100";
-			// 
-			// tboxHomeAltitude
-			// 
-			this.tboxHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tboxHomeAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tboxHomeAltitude.Location = new System.Drawing.Point(297, 5);
-			this.tboxHomeAltitude.Multiline = true;
-			this.tboxHomeAltitude.Name = "tboxHomeAltitude";
-			this.tboxHomeAltitude.Size = new System.Drawing.Size(80, 40);
-			this.tboxHomeAltitude.TabIndex = 10;
-			// 
-			// tboxHomeLongitude
-			// 
-			this.tboxHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tboxHomeLongitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tboxHomeLongitude.Location = new System.Drawing.Point(211, 5);
-			this.tboxHomeLongitude.Multiline = true;
-			this.tboxHomeLongitude.Name = "tboxHomeLongitude";
-			this.tboxHomeLongitude.Size = new System.Drawing.Size(80, 40);
-			this.tboxHomeLongitude.TabIndex = 9;
-			// 
-			// tboxHomeLatitude
-			// 
-			this.tboxHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tboxHomeLatitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tboxHomeLatitude.Location = new System.Drawing.Point(125, 5);
-			this.tboxHomeLatitude.Multiline = true;
-			this.tboxHomeLatitude.Name = "tboxHomeLatitude";
-			this.tboxHomeLatitude.Size = new System.Drawing.Size(80, 40);
-			this.tboxHomeLatitude.TabIndex = 8;
+			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtAltitudeValue.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtAltitudeValue.Location = new System.Drawing.Point(608, 6);
+			this.TxtAltitudeValue.Multiline = true;
+			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
+			this.TxtAltitudeValue.Size = new System.Drawing.Size(62, 41);
+			this.TxtAltitudeValue.TabIndex = 12;
+			this.TxtAltitudeValue.Text = "100";
+			this.TxtAltitudeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// dgvWayPoints
 			// 
 			this.dgvWayPoints.AllowUserToAddRows = false;
 			this.dgvWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			this.dgvWayPoints.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+			this.dgvWayPoints.BackgroundColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.dgvWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.dgvWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+			this.dgvWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvWayPoints.ColumnHeadersHeight = 30;
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -264,13 +320,35 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvWayPoints.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvWayPoints.EnableHeadersVisualStyles = false;
-			this.dgvWayPoints.GridColor = System.Drawing.Color.White;
+			this.dgvWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
 			this.dgvWayPoints.Location = new System.Drawing.Point(0, 51);
 			this.dgvWayPoints.Margin = new System.Windows.Forms.Padding(4);
 			this.dgvWayPoints.Name = "dgvWayPoints";
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvWayPoints.RowHeadersWidth = 50;
+			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvWayPoints.RowTemplate.Height = 24;
 			this.dgvWayPoints.Size = new System.Drawing.Size(948, 80);
 			this.dgvWayPoints.TabIndex = 6;
@@ -287,7 +365,7 @@ namespace Diva
 			this.colCommand.MinimumWidth = 60;
 			this.colCommand.Name = "colCommand";
 			this.colCommand.ToolTipText = "APM Command";
-			this.colCommand.Width = 60;
+			this.colCommand.Width = 71;
 			// 
 			// colParam1
 			// 
@@ -296,7 +374,7 @@ namespace Diva
 			this.colParam1.MinimumWidth = 50;
 			this.colParam1.Name = "colParam1";
 			this.colParam1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.colParam1.Width = 50;
+			this.colParam1.Width = 57;
 			// 
 			// colParam2
 			// 
@@ -305,7 +383,7 @@ namespace Diva
 			this.colParam2.MinimumWidth = 50;
 			this.colParam2.Name = "colParam2";
 			this.colParam2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.colParam2.Width = 50;
+			this.colParam2.Width = 58;
 			// 
 			// colParam3
 			// 
@@ -314,7 +392,7 @@ namespace Diva
 			this.colParam3.MinimumWidth = 50;
 			this.colParam3.Name = "colParam3";
 			this.colParam3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.colParam3.Width = 50;
+			this.colParam3.Width = 58;
 			// 
 			// colParam4
 			// 
@@ -323,7 +401,7 @@ namespace Diva
 			this.colParam4.MinimumWidth = 50;
 			this.colParam4.Name = "colParam4";
 			this.colParam4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.colParam4.Width = 50;
+			this.colParam4.Width = 58;
 			// 
 			// colLatitude
 			// 
@@ -341,7 +419,7 @@ namespace Diva
 			this.colLongitude.MinimumWidth = 60;
 			this.colLongitude.Name = "colLongitude";
 			this.colLongitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.colLongitude.Width = 60;
+			this.colLongitude.Width = 69;
 			// 
 			// colAltitude
 			// 
@@ -787,11 +865,7 @@ namespace Diva
 
 		private System.Windows.Forms.Panel panelDroneInfo;
 		private System.Windows.Forms.DataGridView dgvWayPoints;
-		private System.Windows.Forms.TextBox tboxHomeAltitude;
-		private System.Windows.Forms.TextBox tboxHomeLongitude;
-		private System.Windows.Forms.TextBox tboxHomeLatitude;
-		private System.Windows.Forms.TextBox tboxAltitudeValue;
-		private System.Windows.Forms.TextBox tboxDroneMode;
+		private System.Windows.Forms.TextBox TxtAltitudeValue;
 		private System.Windows.Forms.ContextMenuStrip cmMap;
 		private System.Windows.Forms.ToolStripMenuItem miClearMission;
 		private System.Windows.Forms.ToolStripMenuItem miSetHomeHere;
@@ -823,13 +897,20 @@ namespace Diva
         private DataGridViewTextBoxColumn colTagData;
         private SplitContainer splitContainer;
 		private Button BtnHomeLand;
-		private Button BtnAltitude;
-		private Button BtnAirMode;
 		private ImageList ImgListBatteryHealth;
 		private Button BtnRTL;
 		private DroneInfoPanel DroneInfo1;
 		private DroneInfoPanel DroneInfo2;
 		private DroneInfoPanel DroneInfo3;
 		private TelemetryDataPanel CollectionTelemetryData;
+		private Button BtnAltitude;
+		private Button button1;
+		private Label TxtDroneMode;
+		private Label label3;
+		private Label label2;
+		private Label label1;
+		private Label TxtHomeLongitude;
+		private Label TxtHomeLatitude;
+		private Label TxtHomeAltitude;
 	}
 }

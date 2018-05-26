@@ -2535,6 +2535,9 @@ namespace Diva.Mavlink
 				return true;
 			}
 
+			return true;
+
+			/**
 			DateTime fromNow = DateTime.Now;
 			log.WarnFormat("datefromnow: {0}", DateTime.Now);
 			while (true)
@@ -2591,7 +2594,7 @@ namespace Diva.Mavlink
 				}
 
 				log.WarnFormat("duration: {0}", (DateTime.Now - fromNow));
-			}
+			}**/
 		}
 
 		public void SendAck()

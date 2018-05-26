@@ -348,7 +348,7 @@ namespace Diva
 						{
 							if ((uint)mode == comPort.MAV.mode)
 							{
-								tboxDroneMode.Text = Enum.GetName(typeof(flightmode), mode);
+								TxtDroneMode.Text = Enum.GetName(typeof(flightmode), mode);
 							}
 						}
 
@@ -1129,7 +1129,6 @@ namespace Diva
 				}
 				MessageBox.Show("Can not establish a connection\n\n" + ex.Message);
 				throw new Exception();
-				return;
 			}
 		}
 
@@ -1284,9 +1283,9 @@ namespace Diva
 			if (pointno == "H")
 			{
 				// auto update home alt
-				tboxHomeAltitude.Text = "0";
-				tboxHomeLatitude.Text = lat.ToString();
-				tboxHomeLongitude.Text = lng.ToString();
+				TxtHomeAltitude.Text = "0";
+				TxtHomeLatitude.Text = lat.ToString();
+				TxtHomeLongitude.Text = lng.ToString();
 				return;
 			}
 
@@ -1342,7 +1341,7 @@ namespace Diva
 
 		private bool IsHomeEmpty()
 		{
-			if (tboxHomeAltitude.Text != "" && tboxHomeLatitude.Text != "" && tboxHomeLongitude.Text != "")
+			if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
 				return false;
 			else
 				return true;
@@ -1469,7 +1468,7 @@ namespace Diva
 
 				{
 					double result;
-					bool pass = double.TryParse(tboxHomeAltitude.Text, out result);
+					bool pass = double.TryParse(TxtHomeAltitude.Text, out result);
 
 					if (pass == false)
 					{
@@ -1478,10 +1477,10 @@ namespace Diva
 						string homealt = "10";
 						if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
 							return;
-						tboxHomeAltitude.Text = homealt;
+						TxtHomeAltitude.Text = homealt;
 					}
 					int results1;
-					if (!int.TryParse(tboxAltitudeValue.Text, out results1))
+					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
 					{
 						MessageBox.Show("Your default alt is not valid");
 						return;
@@ -1492,11 +1491,11 @@ namespace Diva
 						string defalt = "10";
 						if (DialogResult.Cancel == InputBox.Show("Default Alt", "Default Altitude", ref defalt))
 							return;
-						tboxAltitudeValue.Text = defalt;
+						TxtAltitudeValue.Text = defalt;
 					}
 				}
 
-				cell.Value = tboxAltitudeValue.Text;
+				cell.Value = TxtAltitudeValue.Text;
 
 				float ans;
 				if (float.TryParse(cell.Value.ToString(), out ans))
@@ -1555,15 +1554,15 @@ namespace Diva
 
 				// process and add home to the list
 				string home;
-				if (tboxHomeAltitude.Text != "" && tboxHomeLatitude.Text != "" && tboxHomeLongitude.Text != "")
+				if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
 				{
-					home = string.Format("{0},{1},{2}\r\n", tboxHomeLongitude.Text, tboxHomeLatitude.Text, tboxAltitudeValue.Text);
+					home = string.Format("{0},{1},{2}\r\n", TxtHomeLongitude.Text, TxtHomeLatitude.Text, TxtAltitudeValue.Text);
 					if (objectsOverlay != null) // during startup
 					{
-						pointlist.Add(new PointLatLngAlt(double.Parse(tboxHomeLatitude.Text), double.Parse(tboxHomeLongitude.Text),
-							double.Parse(tboxHomeAltitude.Text), "H"));
+						pointlist.Add(new PointLatLngAlt(double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
+							double.Parse(TxtHomeAltitude.Text), "H"));
 						fullpointlist.Add(pointlist[pointlist.Count - 1]);
-						addpolygonmarker("H", double.Parse(tboxHomeLongitude.Text), double.Parse(tboxHomeLatitude.Text), 0, null);
+						addpolygonmarker("H", double.Parse(TxtHomeLongitude.Text), double.Parse(TxtHomeLatitude.Text), 0, null);
 					}
 				}
 				else
@@ -1583,8 +1582,8 @@ namespace Diva
 				double homealt = 0;
 				try
 				{
-					if (!String.IsNullOrEmpty(tboxHomeAltitude.Text))
-						homealt = (int)double.Parse(tboxHomeAltitude.Text);
+					if (!String.IsNullOrEmpty(TxtHomeAltitude.Text))
+						homealt = (int)double.Parse(TxtHomeAltitude.Text);
 				}
 				catch (Exception ex)
 				{
@@ -1771,8 +1770,8 @@ namespace Diva
 				}
 				else if (home.Length > 5 && usable == 0)
 				{
-					lookat = "<LookAt>     <longitude>" + tboxHomeLongitude.Text.ToString(new CultureInfo("en-US")) +
-							 "</longitude>     <latitude>" + tboxHomeLatitude.Text.ToString(new CultureInfo("en-US")) +
+					lookat = "<LookAt>     <longitude>" + TxtHomeLongitude.Text.ToString(new CultureInfo("en-US")) +
+							 "</longitude>     <latitude>" + TxtHomeLatitude.Text.ToString(new CultureInfo("en-US")) +
 							 "</latitude> <range>4000</range> </LookAt>";
 
 					RectLatLng? rect = myMap.GetRectOfAllMarkers("objects");
@@ -2067,9 +2066,9 @@ namespace Diva
 			try
 			{
 				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(tboxHomeLatitude.Text));
-				home.lng = (double.Parse(tboxHomeLongitude.Text));
-				home.alt = (float.Parse(tboxHomeAltitude.Text)); // use saved home
+				home.lat = (double.Parse(TxtHomeLatitude.Text));
+				home.lng = (double.Parse(TxtHomeLongitude.Text));
+				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
 			}
 			catch
 			{
@@ -2159,9 +2158,9 @@ namespace Diva
 				try
 				{
 					home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-					home.lat = (double.Parse(tboxHomeLatitude.Text));
-					home.lng = (double.Parse(tboxHomeLongitude.Text));
-					home.alt = (float.Parse(tboxHomeAltitude.Text)); // use saved home
+					home.lat = (double.Parse(TxtHomeLatitude.Text));
+					home.lng = (double.Parse(TxtHomeLongitude.Text));
+					home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
 				}
 				catch
 				{
@@ -2561,18 +2560,18 @@ namespace Diva
 				cellhome = dgvWayPoints.Rows[0].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				if (cellhome.Value != null)
 				{
-					if (cellhome.Value.ToString() != tboxHomeLatitude.Text && cellhome.Value.ToString() != "0")
+					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
 						DialogResult dr = MessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
 							MessageBoxButtons.YesNo);
 
 						if (dr == DialogResult.Yes)
 						{
-							tboxHomeLatitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							TxtHomeLatitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
 							cellhome = dgvWayPoints.Rows[0].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
-							tboxHomeLongitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+							TxtHomeLongitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
 							cellhome = dgvWayPoints.Rows[0].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
-							tboxHomeAltitude.Text =
+							TxtHomeAltitude.Text =
 								(double.Parse(cellhome.Value.ToString())).ToString();
 						}
 					}
@@ -2827,9 +2826,9 @@ namespace Diva
 
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			tboxHomeAltitude.Text = "0";
-			tboxHomeLatitude.Text = MouseDownStart.Lat.ToString();
-			tboxHomeLongitude.Text = MouseDownStart.Lng.ToString();
+			TxtHomeAltitude.Text = "0";
+			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString();
+			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
 		}
 
 		
@@ -2857,7 +2856,7 @@ namespace Diva
 						if (!_comport.BaseStream.IsOpen) continue;
 						while (_comport.MAV.mode != (uint) 4)
 						{
-							Thread.Sleep(3000);
+							Thread.Sleep(1000);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
 							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
 						}
@@ -2880,7 +2879,7 @@ namespace Diva
 
 						while (_comport.MAV.mode != (uint) 3)
 						{
-							Thread.Sleep(3000);
+							Thread.Sleep(1000);
 							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
 							// switch mode to AUTO
 							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
@@ -2891,7 +2890,7 @@ namespace Diva
 
 						while (!_comport.MAV.landed)
 						{
-							Thread.Sleep(3000);
+							Thread.Sleep(1000);
 						}
 
 						_dialog.ReportProgress(-1, "Next drone standby");
