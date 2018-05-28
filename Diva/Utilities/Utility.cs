@@ -247,9 +247,11 @@ namespace Diva.Utilities
 	}
 
 
+	
 	[Serializable]
 	public class GMapMarkerWP : GMarkerGoogle
 	{
+		
 		string wpno = "";
 		public bool selected = false;
 		SizeF txtsize = SizeF.Empty;
@@ -257,7 +259,7 @@ namespace Diva.Utilities
 		static Font font;
 
 		public GMapMarkerWP(PointLatLng p, string wpno)
-			: base(p, GMarkerGoogleType.green)
+			: base(p, new Bitmap(Resources.point_blue))
 		{
 			this.wpno = wpno;
 			if (font == null)
@@ -266,6 +268,7 @@ namespace Diva.Utilities
 			if (!fontBitmaps.ContainsKey(wpno))
 			{
 				Bitmap temp = new Bitmap(100, 40, PixelFormat.Format32bppArgb);
+				
 				using (Graphics g = Graphics.FromImage(temp))
 				{
 					txtsize = g.MeasureString(wpno, font);
@@ -304,7 +307,7 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
-		private readonly Bitmap icon = Resources.if_drone_xxx_48;
+		private readonly Bitmap icon = Resources.icon_drone_4axis;
 
 		float heading = 0;
 		float cog = -1;
@@ -399,11 +402,12 @@ namespace Diva.Utilities
 	{
 		public float? Bearing;
 
-		static readonly System.Drawing.Size SizeSt = new System.Drawing.Size(Resources.if_location_32.Width,
-			Resources.if_location_32.Height);
+		// TODO(causemx): add location icon here.
+		static readonly System.Drawing.Size SizeSt = new System.Drawing.Size(Resources.icon_live.Width,
+			Resources.icon_live.Height);
 
 		//static Bitmap localcache1 = Resources.shadow50;
-		static Bitmap localcache2 = Resources.if_location_32;
+		static Bitmap localcache2 = Resources.icon_live;
 
 		public int Alt { get; set; }
 

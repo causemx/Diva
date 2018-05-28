@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.PBDroneView = new System.Windows.Forms.PictureBox();
 			this.TxtDroneName = new System.Windows.Forms.Label();
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -38,22 +38,22 @@
 			this.TxtSatelliteCount = new System.Windows.Forms.Label();
 			this.TxtSystemID = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// pictureBox1
+			// PBDroneView
 			// 
-			this.pictureBox1.BackColor = System.Drawing.Color.White;
-			this.pictureBox1.Image = global::Diva.Properties.Resources.if_Psyduck_3151565;
-			this.pictureBox1.Location = new System.Drawing.Point(5, 6);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(64, 64);
-			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
+			this.PBDroneView.BackColor = System.Drawing.Color.White;
+			this.PBDroneView.Image = global::Diva.Properties.Resources.if_Psyduck_3151565;
+			this.PBDroneView.Location = new System.Drawing.Point(5, 6);
+			this.PBDroneView.Name = "PBDroneView";
+			this.PBDroneView.Size = new System.Drawing.Size(64, 64);
+			this.PBDroneView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.PBDroneView.TabIndex = 0;
+			this.PBDroneView.TabStop = false;
 			// 
 			// TxtDroneName
 			// 
@@ -166,10 +166,10 @@
 			this.Controls.Add(this.pictureBox3);
 			this.Controls.Add(this.pictureBox2);
 			this.Controls.Add(this.TxtDroneName);
-			this.Controls.Add(this.pictureBox1);
+			this.Controls.Add(this.PBDroneView);
 			this.Name = "DroneInfoPanel";
 			this.Size = new System.Drawing.Size(341, 78);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -180,7 +180,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.PictureBox PBDroneView;
 		private System.Windows.Forms.Label TxtDroneName;
 		private System.Windows.Forms.PictureBox pictureBox2;
 		private System.Windows.Forms.PictureBox pictureBox3;

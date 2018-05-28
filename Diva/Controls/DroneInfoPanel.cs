@@ -13,7 +13,33 @@ namespace Diva.Controls
 {
 	public partial class DroneInfoPanel : UserControl, IActivate, IDeactivate
 	{
-		
+
+		private bool isActive = false;
+
+		public bool IsActivate
+		{
+			get
+			{
+				return this.isActive;
+			}
+			set
+			{
+				this.isActive = value;
+				if (isActive)
+				{
+					Activate();
+				}
+				else
+				{
+					Deactivate();
+				}
+				if (this.Parent != null)
+				{
+					Parent.Invalidate(this.Bounds, true);
+				}
+			}
+		}
+
 		public DroneInfoPanel()
 		{
 			InitializeComponent();
@@ -22,18 +48,19 @@ namespace Diva.Controls
 		public void Activate()
 		{
 			this.BackColor = Color.FromArgb(67,78,84);
-			this.Enabled = true;
+			PBDroneView.Image = Properties.Resources.if_Psyduck_3151565;
 		}
 
 		public void Deactivate()
 		{
 			this.BackColor = Color.FromArgb(128,128,128);
-			this.Enabled = false;
+			PBDroneView.Image = Properties.Resources.if_Psyduck_3186864;
 		}
 
 
-		public void UpdateTelemetryData(double battry_voltage, float satellite_count)
+		public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
 		{
+			TxtSystemID.Text = sysid.ToString();
 			TxtAssumeTime.Text = "1hr";
 			TxtBatteryHealth.Text = battry_voltage.ToString("F2");
 			TxtSatelliteCount.Text = satellite_count.ToString();

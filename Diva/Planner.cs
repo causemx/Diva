@@ -352,7 +352,7 @@ namespace Diva
 							}
 						}
 
-						CurrentDroneInfo.UpdateTelemetryData(comPort.MAV.battery_voltage, comPort.MAV.satcount);
+						CurrentDroneInfo.UpdateTelemetryData(comPort.MAV.sysid, comPort.MAV.battery_voltage, comPort.MAV.satcount);
 						CollectionTelemetryData.UpdateTelemetryData(comPort.MAV.altasl, comPort.MAV.groundspeed, comPort.MAV.verticalspeed);
 					});
 
@@ -1842,8 +1842,7 @@ namespace Diva
 				double p13 = Math.Sqrt(Math.Pow(p1.Lat - p3.Lat, 2) + Math.Pow(p1.Lng - p3.Lng, 2));
 
 				double angle = Math.Acos((Math.Pow(p12,2) + Math.Pow(p13,2) - Math.Pow(p23,2)) / (2*p12*p13));
-
-				log.Debug("angle: " + angle);
+				
 			}
 
 			return 0;
@@ -2736,7 +2735,7 @@ namespace Diva
 							break;
 						case 3:
 							DroneInfo3.Activate();
-							CurrentDroneInfo = DroneInfo2;
+							CurrentDroneInfo = DroneInfo3;
 							break;
 				}
 
@@ -2912,6 +2911,91 @@ namespace Diva
 
 		}
 
+
+		private void BUT_Rotation2_Click(object sender, EventArgs e)
+		{
+
+			int _cursor = 0;
+			ProgressDialog _dialog = new ProgressDialog();
+			_dialog.IsActive = true;
+			_dialog.Show();
+
+
+
+			_dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
+			{
+				while (_dialog.IsActive)
+				{
+
+					// TODO think about mavlinkinterface dispose issue.
+
+					var _comport = comPorts[_cursor];
+
+					try
+					{
+						if (!_comport.BaseStream.IsOpen) continue;
+						while (_comport.MAV.mode != (uint)4)
+						{
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
+							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "GUIDED");
+						}
+
+						_dialog.ReportProgress(-1, "Mode has switching to GUIDED");
+
+						// do command - arm throttle
+
+						while (!_comPort.MAV.armed)
+						{
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "arming throttle");
+							_comport.doARM(true);
+							_comport.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+						}
+
+
+						_dialog.ReportProgress(-1, "status: takeoff");
+
+
+						while (_comport.MAV.mode != (uint)3)
+						{
+							Thread.Sleep(1000);
+							_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+							// switch mode to AUTO
+							_comport.setMode(_comport.MAV.sysid, _comport.MAV.compid, "AUTO");
+						}
+
+						_dialog.ReportProgress(-1, "Mode has switching to AUTO");
+
+
+						
+						_cursor = (_cursor + 1) % comPorts.Count;
+						if (_cursor == 0)
+						{
+							break;
+						}
+						else
+						{
+							_dialog.ReportProgress(-1, "Next drone standby");
+						}
+						
+
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.ToString());
+					}
+				}
+			};
+
+			_dialog.ProgressChanged += delegate (object dialog, ProgressChangedEventArgs pce) {
+				_dialog.Message = pce.UserState + ".";
+			};
+
+			_dialog.Run();
+
+		}
+
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
 			if (comPort.BaseStream.IsOpen)
@@ -2949,7 +3033,7 @@ namespace Diva
 						continue;
 
 					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
-						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, 1);
+						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, _port.MAV.sysid);
 
 					routesOverlays[i].Markers.Add(marker);
 				}
@@ -3109,22 +3193,26 @@ namespace Diva
 				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging));
 		}
 
-		
 
-		private void DroneInfo1_DoubleClick(object sender, EventArgs e)
+		private void DroneInfo_DoubleClick(object sender, EventArgs e)
 		{
 			try
 			{
-				var comport = comPorts[Convert.ToInt32(((DroneInfoPanel)sender).Tag)];
+				
+				var mav = comPorts[Convert.ToInt32(((DroneInfoPanel)sender).Tag)];
+				if (!mav.BaseStream.IsOpen) throw new Exception("drone not connected");
+
 				CurrentDroneInfo = (DroneInfoPanel)sender;
 				CurrentDroneInfo.Activate();
+
+				comPort = mav;
 
 				foreach (DroneInfoPanel droneInfo in DroneInfos)
 				{
 					if (droneInfo.Tag != CurrentDroneInfo.Tag)
 						droneInfo.Deactivate();
 				}
-				
+
 			}
 			catch (Exception exception)
 			{
@@ -3132,7 +3220,6 @@ namespace Diva
 				return;
 			}
 		}
-
 
 		public class MySR : ToolStripSystemRenderer
 		{
@@ -3144,5 +3231,6 @@ namespace Diva
 			}
 		}
 
+	
 	}
 }

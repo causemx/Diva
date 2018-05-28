@@ -72,10 +72,6 @@ namespace Diva
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
-			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.BtnRTL = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
 			this.BtnVideo = new System.Windows.Forms.Button();
@@ -84,8 +80,12 @@ namespace Diva
 			this.BtnReadWPs = new System.Windows.Forms.Button();
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
-			this.myMap = new Diva.Controls.MyGMap();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
+			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
+			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
+			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
@@ -236,7 +236,7 @@ namespace Diva
 			this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.button1.Location = new System.Drawing.Point(728, 1);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(130, 51);
+			this.button1.Size = new System.Drawing.Size(130, 49);
 			this.button1.TabIndex = 22;
 			this.button1.Text = "Drone Mode";
 			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -254,7 +254,7 @@ namespace Diva
 			this.BtnAltitude.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.BtnAltitude.Location = new System.Drawing.Point(472, 1);
 			this.BtnAltitude.Name = "BtnAltitude";
-			this.BtnAltitude.Size = new System.Drawing.Size(130, 51);
+			this.BtnAltitude.Size = new System.Drawing.Size(130, 49);
 			this.BtnAltitude.TabIndex = 21;
 			this.BtnAltitude.Text = "Write alt.";
 			this.BtnAltitude.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -272,7 +272,7 @@ namespace Diva
 			this.BtnHomeLand.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.BtnHomeLand.Location = new System.Drawing.Point(0, 0);
 			this.BtnHomeLand.Name = "BtnHomeLand";
-			this.BtnHomeLand.Size = new System.Drawing.Size(130, 51);
+			this.BtnHomeLand.Size = new System.Drawing.Size(130, 49);
 			this.BtnHomeLand.TabIndex = 16;
 			this.BtnHomeLand.Text = "Homeland";
 			this.BtnHomeLand.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -457,7 +457,7 @@ namespace Diva
 			this.colTagData.Name = "colTagData";
 			this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.colTagData.Visible = false;
-			this.colTagData.Width = 50;
+			this.colTagData.Width = 61;
 			// 
 			// timerMapItemUpdate
 			// 
@@ -583,48 +583,6 @@ namespace Diva
 			this.splitContainer.SplitterDistance = 528;
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
-			// 
-			// CollectionTelemetryData
-			// 
-			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
-			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
-			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
-			this.CollectionTelemetryData.TabIndex = 19;
-			// 
-			// DroneInfo3
-			// 
-			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo3.BackColor = System.Drawing.Color.Gray;
-			this.DroneInfo3.Enabled = false;
-			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
-			this.DroneInfo3.Name = "DroneInfo3";
-			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo3.TabIndex = 18;
-			this.DroneInfo3.Tag = "2";
-			// 
-			// DroneInfo2
-			// 
-			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo2.BackColor = System.Drawing.Color.Gray;
-			this.DroneInfo2.Enabled = false;
-			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
-			this.DroneInfo2.Name = "DroneInfo2";
-			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo2.TabIndex = 17;
-			this.DroneInfo2.Tag = "1";
-			// 
-			// DroneInfo1
-			// 
-			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo1.BackColor = System.Drawing.Color.Gray;
-			this.DroneInfo1.Enabled = false;
-			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
-			this.DroneInfo1.Name = "DroneInfo1";
-			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo1.TabIndex = 16;
-			this.DroneInfo1.Tag = "0";
 			// 
 			// BtnRTL
 			// 
@@ -791,6 +749,62 @@ namespace Diva
 			this.BtnWriteWPs.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnWriteWPs.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
 			// 
+			// ImgListBatteryHealth
+			// 
+			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
+			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
+			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
+			// 
+			// CollectionTelemetryData
+			// 
+			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
+			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
+			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
+			this.CollectionTelemetryData.TabIndex = 19;
+			// 
+			// DroneInfo3
+			// 
+			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo3.IsActivate = false;
+			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
+			this.DroneInfo3.Name = "DroneInfo3";
+			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo3.TabIndex = 18;
+			this.DroneInfo3.Tag = "2";
+			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo2
+			// 
+			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo2.IsActivate = false;
+			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
+			this.DroneInfo2.Name = "DroneInfo2";
+			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo2.TabIndex = 17;
+			this.DroneInfo2.Tag = "1";
+			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo1
+			// 
+			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo1.IsActivate = false;
+			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
+			this.DroneInfo1.Name = "DroneInfo1";
+			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo1.TabIndex = 16;
+			this.DroneInfo1.Tag = "0";
+			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
 			// myMap
 			// 
 			this.myMap.BackColor = System.Drawing.SystemColors.Control;
@@ -821,17 +835,6 @@ namespace Diva
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
-			// 
-			// ImgListBatteryHealth
-			// 
-			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
-			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
-			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
 			// 
 			// Planner
 			// 
