@@ -32,10 +32,10 @@ namespace Diva
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +72,10 @@ namespace Diva
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
+			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.BtnRTL = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
 			this.BtnVideo = new System.Windows.Forms.Button();
@@ -80,12 +84,8 @@ namespace Diva
 			this.BtnReadWPs = new System.Windows.Forms.Button();
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
-			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
-			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
-			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.myMap = new Diva.Controls.MyGMap();
+			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
@@ -287,7 +287,7 @@ namespace Diva
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			this.TxtAltitudeValue.Size = new System.Drawing.Size(62, 41);
 			this.TxtAltitudeValue.TabIndex = 12;
-			this.TxtAltitudeValue.Text = "100";
+			this.TxtAltitudeValue.Text = "30";
 			this.TxtAltitudeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// dgvWayPoints
@@ -299,14 +299,14 @@ namespace Diva
 			this.dgvWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dgvWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
 			this.dgvWayPoints.ColumnHeadersHeight = 30;
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -320,35 +320,35 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvWayPoints.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvWayPoints.EnableHeadersVisualStyles = false;
 			this.dgvWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
 			this.dgvWayPoints.Location = new System.Drawing.Point(0, 51);
 			this.dgvWayPoints.Margin = new System.Windows.Forms.Padding(4);
 			this.dgvWayPoints.Name = "dgvWayPoints";
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.dgvWayPoints.RowHeadersWidth = 50;
-			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle8;
 			this.dgvWayPoints.RowTemplate.Height = 24;
 			this.dgvWayPoints.Size = new System.Drawing.Size(948, 80);
 			this.dgvWayPoints.TabIndex = 6;
@@ -457,7 +457,7 @@ namespace Diva
 			this.colTagData.Name = "colTagData";
 			this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.colTagData.Visible = false;
-			this.colTagData.Width = 61;
+			this.colTagData.Width = 63;
 			// 
 			// timerMapItemUpdate
 			// 
@@ -512,7 +512,7 @@ namespace Diva
 			this.TSBtnRotation.Size = new System.Drawing.Size(76, 76);
 			this.TSBtnRotation.Text = "Rotation";
 			this.TSBtnRotation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-			this.TSBtnRotation.Click += new System.EventHandler(this.BUT_Rotation_Click);
+			this.TSBtnRotation.Click += new System.EventHandler(this.BUT_Rotation2_Click);
 			this.TSBtnRotation.MouseLeave += new System.EventHandler(this.TSBUT_Mouse_Leave);
 			this.TSBtnRotation.MouseHover += new System.EventHandler(this.TSBUT_Mouse_Hover);
 			// 
@@ -583,6 +583,51 @@ namespace Diva
 			this.splitContainer.SplitterDistance = 528;
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
+			// 
+			// CollectionTelemetryData
+			// 
+			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
+			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
+			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
+			this.CollectionTelemetryData.TabIndex = 19;
+			// 
+			// DroneInfo3
+			// 
+			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo3.IsActivate = false;
+			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
+			this.DroneInfo3.Name = "DroneInfo3";
+			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo3.TabIndex = 18;
+			this.DroneInfo3.Tag = "2";
+			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo2
+			// 
+			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo2.IsActivate = false;
+			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
+			this.DroneInfo2.Name = "DroneInfo2";
+			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo2.TabIndex = 17;
+			this.DroneInfo2.Tag = "1";
+			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo1
+			// 
+			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo1.IsActivate = false;
+			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
+			this.DroneInfo1.Name = "DroneInfo1";
+			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo1.TabIndex = 16;
+			this.DroneInfo1.Tag = "0";
+			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
 			// 
 			// BtnRTL
 			// 
@@ -749,62 +794,6 @@ namespace Diva
 			this.BtnWriteWPs.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnWriteWPs.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
 			// 
-			// ImgListBatteryHealth
-			// 
-			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
-			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
-			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
-			// 
-			// CollectionTelemetryData
-			// 
-			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
-			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
-			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
-			this.CollectionTelemetryData.TabIndex = 19;
-			// 
-			// DroneInfo3
-			// 
-			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo3.IsActivate = false;
-			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
-			this.DroneInfo3.Name = "DroneInfo3";
-			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo3.TabIndex = 18;
-			this.DroneInfo3.Tag = "2";
-			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo2
-			// 
-			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo2.IsActivate = false;
-			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
-			this.DroneInfo2.Name = "DroneInfo2";
-			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo2.TabIndex = 17;
-			this.DroneInfo2.Tag = "1";
-			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo1
-			// 
-			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo1.IsActivate = false;
-			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
-			this.DroneInfo1.Name = "DroneInfo1";
-			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo1.TabIndex = 16;
-			this.DroneInfo1.Tag = "0";
-			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
 			// myMap
 			// 
 			this.myMap.BackColor = System.Drawing.SystemColors.Control;
@@ -835,6 +824,17 @@ namespace Diva
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
+			// 
+			// ImgListBatteryHealth
+			// 
+			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
+			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
+			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
 			// 
 			// Planner
 			// 
