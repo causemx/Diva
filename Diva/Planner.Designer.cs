@@ -32,19 +32,16 @@ namespace Diva
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
 			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelDroneInfo = new System.Windows.Forms.Panel();
-			this.TxtHomeLongitude = new System.Windows.Forms.Label();
-			this.TxtHomeLatitude = new System.Windows.Forms.Label();
-			this.TxtHomeAltitude = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -86,6 +83,9 @@ namespace Diva
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
+			this.TxtHomeAltitude = new System.Windows.Forms.TextBox();
+			this.TxtHomeLatitude = new System.Windows.Forms.TextBox();
+			this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
@@ -147,39 +147,6 @@ namespace Diva
 			this.panelDroneInfo.Size = new System.Drawing.Size(948, 51);
 			this.panelDroneInfo.TabIndex = 1;
 			// 
-			// TxtHomeLongitude
-			// 
-			this.TxtHomeLongitude.AutoSize = true;
-			this.TxtHomeLongitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtHomeLongitude.ForeColor = System.Drawing.Color.White;
-			this.TxtHomeLongitude.Location = new System.Drawing.Point(379, 18);
-			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
-			this.TxtHomeLongitude.Size = new System.Drawing.Size(43, 15);
-			this.TxtHomeLongitude.TabIndex = 29;
-			this.TxtHomeLongitude.Text = "00.00";
-			// 
-			// TxtHomeLatitude
-			// 
-			this.TxtHomeLatitude.AutoSize = true;
-			this.TxtHomeLatitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtHomeLatitude.ForeColor = System.Drawing.Color.White;
-			this.TxtHomeLatitude.Location = new System.Drawing.Point(280, 18);
-			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
-			this.TxtHomeLatitude.Size = new System.Drawing.Size(43, 15);
-			this.TxtHomeLatitude.TabIndex = 28;
-			this.TxtHomeLatitude.Text = "00.00";
-			// 
-			// TxtHomeAltitude
-			// 
-			this.TxtHomeAltitude.AutoSize = true;
-			this.TxtHomeAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtHomeAltitude.ForeColor = System.Drawing.Color.White;
-			this.TxtHomeAltitude.Location = new System.Drawing.Point(178, 18);
-			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
-			this.TxtHomeAltitude.Size = new System.Drawing.Size(43, 15);
-			this.TxtHomeAltitude.TabIndex = 27;
-			this.TxtHomeAltitude.Text = "00.00";
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -187,9 +154,9 @@ namespace Diva
 			this.label3.ForeColor = System.Drawing.Color.White;
 			this.label3.Location = new System.Drawing.Point(347, 18);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(27, 15);
+			this.label3.Size = new System.Drawing.Size(30, 15);
 			this.label3.TabIndex = 26;
-			this.label3.Text = "alt:";
+			this.label3.Text = "lng:";
 			// 
 			// label2
 			// 
@@ -198,9 +165,9 @@ namespace Diva
 			this.label2.ForeColor = System.Drawing.Color.White;
 			this.label2.Location = new System.Drawing.Point(245, 18);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(30, 15);
+			this.label2.Size = new System.Drawing.Size(27, 15);
 			this.label2.TabIndex = 25;
-			this.label2.Text = "lng:";
+			this.label2.Text = "lat:";
 			// 
 			// label1
 			// 
@@ -211,7 +178,7 @@ namespace Diva
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(27, 15);
 			this.label1.TabIndex = 24;
-			this.label1.Text = "lat:";
+			this.label1.Text = "alt:";
 			// 
 			// TxtDroneMode
 			// 
@@ -299,14 +266,14 @@ namespace Diva
 			this.dgvWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dgvWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaption;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.dgvWayPoints.ColumnHeadersHeight = 30;
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -320,35 +287,35 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvWayPoints.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvWayPoints.EnableHeadersVisualStyles = false;
 			this.dgvWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
 			this.dgvWayPoints.Location = new System.Drawing.Point(0, 51);
 			this.dgvWayPoints.Margin = new System.Windows.Forms.Padding(4);
 			this.dgvWayPoints.Name = "dgvWayPoints";
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle7.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.dgvWayPoints.RowHeadersWidth = 50;
-			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle8.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.InfoText;
-			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvWayPoints.RowTemplate.Height = 24;
 			this.dgvWayPoints.Size = new System.Drawing.Size(948, 80);
 			this.dgvWayPoints.TabIndex = 6;
@@ -836,6 +803,42 @@ namespace Diva
 			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
 			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
 			// 
+			// TxtHomeAltitude
+			// 
+			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtHomeAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeAltitude.Location = new System.Drawing.Point(177, 6);
+			this.TxtHomeAltitude.Multiline = true;
+			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
+			this.TxtHomeAltitude.Size = new System.Drawing.Size(62, 41);
+			this.TxtHomeAltitude.TabIndex = 30;
+			this.TxtHomeAltitude.Text = "30";
+			this.TxtHomeAltitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// TxtHomeLatitude
+			// 
+			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtHomeLatitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeLatitude.Location = new System.Drawing.Point(279, 6);
+			this.TxtHomeLatitude.Multiline = true;
+			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
+			this.TxtHomeLatitude.Size = new System.Drawing.Size(62, 41);
+			this.TxtHomeLatitude.TabIndex = 31;
+			this.TxtHomeLatitude.Text = "30";
+			this.TxtHomeLatitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// TxtHomeLongitude
+			// 
+			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtHomeLongitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeLongitude.Location = new System.Drawing.Point(383, 6);
+			this.TxtHomeLongitude.Multiline = true;
+			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
+			this.TxtHomeLongitude.Size = new System.Drawing.Size(62, 41);
+			this.TxtHomeLongitude.TabIndex = 32;
+			this.TxtHomeLongitude.Text = "30";
+			this.TxtHomeLongitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
 			// Planner
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -912,8 +915,8 @@ namespace Diva
 		private Label label3;
 		private Label label2;
 		private Label label1;
-		private Label TxtHomeLongitude;
-		private Label TxtHomeLatitude;
-		private Label TxtHomeAltitude;
+		private TextBox TxtHomeAltitude;
+		private TextBox TxtHomeLatitude;
+		private TextBox TxtHomeLongitude;
 	}
 }

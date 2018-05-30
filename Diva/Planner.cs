@@ -2222,7 +2222,15 @@ namespace Diva
 					totalwpcountforupload--;
 				}
 
-				comPort.setWPTotal(totalwpcountforupload); // + home
+				try
+				{
+					comPort.setWPTotal(totalwpcountforupload);
+				}
+				catch (TimeoutException e)
+				{
+					MessageBox.Show("timeout on read, please try again.");
+				}
+				 // + home
 
 				// set home location - overwritten/ignored depending on firmware.
 				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set home");
@@ -2826,15 +2834,15 @@ namespace Diva
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TxtHomeAltitude.Text = "0";
-			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString("F2");
-			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString("F2");
+			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString();
+			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
 		}
 
 
 
 		private void BUT_Rotation2_Click(object sender, EventArgs e)
 		{
-
+			
 			int _cursor = 0;
 			ProgressDialog _dialog = new ProgressDialog();
 			_dialog.IsActive = true;
@@ -2871,21 +2879,21 @@ namespace Diva
 					{
 						mav1.doARM(true);
 						mav1.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(500);
+						Thread.Sleep(100);
 					}
 
 					while (!mav2.MAV.armed)
 					{
 						mav2.doARM(true);
 						mav2.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(500);
+						Thread.Sleep(100);
 					}
 
 					while (!mav3.MAV.armed)
 					{
 						mav3.doARM(true);
 						mav3.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(500);
+						Thread.Sleep(100);
 					}
 
 					_dialog.ReportProgress(-1, "status: takeoff");
@@ -2894,11 +2902,23 @@ namespace Diva
 						
 					_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
 					// switch mode to AUTO
-					mav1.setMode(mav1.MAV.sysid, mav1.MAV.compid, "AUTO");
-					Thread.Sleep(500);
-					mav2.setMode(mav2.MAV.sysid, mav2.MAV.compid, "AUTO");
-					Thread.Sleep(500);
-					mav3.setMode(mav2.MAV.sysid, mav2.MAV.compid, "AUTO");
+					while (mav1.MAV.mode != (uint)3)
+					{
+						mav1.setMode(mav1.MAV.sysid, mav1.MAV.compid, "AUTO");
+						Thread.Sleep(100);
+					}
+
+					while (mav2.MAV.mode != (uint)3)
+					{
+						mav2.setMode(mav2.MAV.sysid, mav2.MAV.compid, "AUTO");
+						Thread.Sleep(100);
+					}
+
+					while (mav3.MAV.mode != (uint)3)
+					{
+						mav3.setMode(mav3.MAV.sysid, mav3.MAV.compid, "AUTO");
+						Thread.Sleep(100);
+					}
 				}
 				catch (Exception ex)
 				{
