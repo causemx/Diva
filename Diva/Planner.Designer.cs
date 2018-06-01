@@ -42,6 +42,9 @@ namespace Diva
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
 			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelDroneInfo = new System.Windows.Forms.Panel();
+			this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
+			this.TxtHomeLatitude = new System.Windows.Forms.TextBox();
+			this.TxtHomeAltitude = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -69,10 +72,6 @@ namespace Diva
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
-			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.BtnRTL = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
 			this.BtnVideo = new System.Windows.Forms.Button();
@@ -81,11 +80,12 @@ namespace Diva
 			this.BtnReadWPs = new System.Windows.Forms.Button();
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
-			this.myMap = new Diva.Controls.MyGMap();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
-			this.TxtHomeAltitude = new System.Windows.Forms.TextBox();
-			this.TxtHomeLatitude = new System.Windows.Forms.TextBox();
-			this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
+			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
+			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
+			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
@@ -146,6 +146,42 @@ namespace Diva
 			this.panelDroneInfo.Name = "panelDroneInfo";
 			this.panelDroneInfo.Size = new System.Drawing.Size(948, 51);
 			this.panelDroneInfo.TabIndex = 1;
+			// 
+			// TxtHomeLongitude
+			// 
+			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtHomeLongitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeLongitude.Location = new System.Drawing.Point(383, 6);
+			this.TxtHomeLongitude.Multiline = true;
+			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
+			this.TxtHomeLongitude.Size = new System.Drawing.Size(62, 41);
+			this.TxtHomeLongitude.TabIndex = 32;
+			this.TxtHomeLongitude.Text = "30";
+			this.TxtHomeLongitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// TxtHomeLatitude
+			// 
+			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtHomeLatitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeLatitude.Location = new System.Drawing.Point(279, 6);
+			this.TxtHomeLatitude.Multiline = true;
+			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
+			this.TxtHomeLatitude.Size = new System.Drawing.Size(62, 41);
+			this.TxtHomeLatitude.TabIndex = 31;
+			this.TxtHomeLatitude.Text = "30";
+			this.TxtHomeLatitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// TxtHomeAltitude
+			// 
+			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.TxtHomeAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtHomeAltitude.Location = new System.Drawing.Point(177, 6);
+			this.TxtHomeAltitude.Multiline = true;
+			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
+			this.TxtHomeAltitude.Size = new System.Drawing.Size(62, 41);
+			this.TxtHomeAltitude.TabIndex = 30;
+			this.TxtHomeAltitude.Text = "30";
+			this.TxtHomeAltitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// label3
 			// 
@@ -424,7 +460,7 @@ namespace Diva
 			this.colTagData.Name = "colTagData";
 			this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.colTagData.Visible = false;
-			this.colTagData.Width = 63;
+			this.colTagData.Width = 61;
 			// 
 			// timerMapItemUpdate
 			// 
@@ -550,51 +586,6 @@ namespace Diva
 			this.splitContainer.SplitterDistance = 528;
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
-			// 
-			// CollectionTelemetryData
-			// 
-			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
-			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
-			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
-			this.CollectionTelemetryData.TabIndex = 19;
-			// 
-			// DroneInfo3
-			// 
-			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo3.IsActivate = false;
-			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
-			this.DroneInfo3.Name = "DroneInfo3";
-			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo3.TabIndex = 18;
-			this.DroneInfo3.Tag = "2";
-			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo2
-			// 
-			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo2.IsActivate = false;
-			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
-			this.DroneInfo2.Name = "DroneInfo2";
-			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo2.TabIndex = 17;
-			this.DroneInfo2.Tag = "1";
-			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo1
-			// 
-			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo1.IsActivate = false;
-			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
-			this.DroneInfo1.Name = "DroneInfo1";
-			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo1.TabIndex = 16;
-			this.DroneInfo1.Tag = "0";
-			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
 			// 
 			// BtnRTL
 			// 
@@ -761,6 +752,65 @@ namespace Diva
 			this.BtnWriteWPs.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnWriteWPs.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
 			// 
+			// ImgListBatteryHealth
+			// 
+			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
+			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
+			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
+			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
+			// 
+			// CollectionTelemetryData
+			// 
+			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
+			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
+			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
+			this.CollectionTelemetryData.TabIndex = 19;
+			// 
+			// DroneInfo3
+			// 
+			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo3.DroneName = "APM-3";
+			this.DroneInfo3.IsActivate = false;
+			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
+			this.DroneInfo3.Name = "DroneInfo3";
+			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo3.TabIndex = 18;
+			this.DroneInfo3.Tag = "2";
+			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo2
+			// 
+			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo2.DroneName = "APM-2";
+			this.DroneInfo2.IsActivate = false;
+			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
+			this.DroneInfo2.Name = "DroneInfo2";
+			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo2.TabIndex = 17;
+			this.DroneInfo2.Tag = "1";
+			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo1
+			// 
+			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo1.DroneName = "APM-1";
+			this.DroneInfo1.IsActivate = false;
+			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
+			this.DroneInfo1.Name = "DroneInfo1";
+			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo1.TabIndex = 16;
+			this.DroneInfo1.Tag = "0";
+			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
 			// myMap
 			// 
 			this.myMap.BackColor = System.Drawing.SystemColors.Control;
@@ -791,53 +841,6 @@ namespace Diva
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 0D;
 			this.myMap.Load += new System.EventHandler(this.myMap_Load);
-			// 
-			// ImgListBatteryHealth
-			// 
-			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
-			this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
-			this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
-			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
-			// 
-			// TxtHomeAltitude
-			// 
-			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TxtHomeAltitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtHomeAltitude.Location = new System.Drawing.Point(177, 6);
-			this.TxtHomeAltitude.Multiline = true;
-			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
-			this.TxtHomeAltitude.Size = new System.Drawing.Size(62, 41);
-			this.TxtHomeAltitude.TabIndex = 30;
-			this.TxtHomeAltitude.Text = "30";
-			this.TxtHomeAltitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// TxtHomeLatitude
-			// 
-			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TxtHomeLatitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtHomeLatitude.Location = new System.Drawing.Point(279, 6);
-			this.TxtHomeLatitude.Multiline = true;
-			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
-			this.TxtHomeLatitude.Size = new System.Drawing.Size(62, 41);
-			this.TxtHomeLatitude.TabIndex = 31;
-			this.TxtHomeLatitude.Text = "30";
-			this.TxtHomeLatitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// TxtHomeLongitude
-			// 
-			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TxtHomeLongitude.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtHomeLongitude.Location = new System.Drawing.Point(383, 6);
-			this.TxtHomeLongitude.Multiline = true;
-			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
-			this.TxtHomeLongitude.Size = new System.Drawing.Size(62, 41);
-			this.TxtHomeLongitude.TabIndex = 32;
-			this.TxtHomeLongitude.Text = "30";
-			this.TxtHomeLongitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// Planner
 			// 

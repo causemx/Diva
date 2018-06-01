@@ -171,11 +171,11 @@
     <Compile Include="Controls\ConfigTuning.Designer.cs">
       <DependentUpon>ConfigTuning.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConfigVehicle.cs">
+    <Compile Include="Controls\ConfigVehicle2.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigVehicle.Designer.cs">
-      <DependentUpon>ConfigVehicle.cs</DependentUpon>
+    <Compile Include="Controls\ConfigVehicle2.Designer.cs">
+      <DependentUpon>ConfigVehicle2.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DroneInfoPanel.cs">
       <SubType>UserControl</SubType>
@@ -259,8 +259,8 @@
     <EmbeddedResource Include="Controls\Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ConfigVehicle.resx">
-      <DependentUpon>ConfigVehicle.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ConfigVehicle2.resx">
+      <DependentUpon>ConfigVehicle2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>

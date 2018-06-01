@@ -29,13 +29,12 @@
 		private void InitializeComponent()
 		{
 			this.side_panel = new System.Windows.Forms.Panel();
+			this.SidePanel = new System.Windows.Forms.Panel();
 			this.BtnVehicle = new System.Windows.Forms.Button();
 			this.BtnAbout = new System.Windows.Forms.Button();
 			this.BtnTuning = new System.Windows.Forms.Button();
 			this.BtnGeoFence = new System.Windows.Forms.Button();
-			this.configGeoFence1 = new Diva.Controls.ConfigGeoFence();
-			this.configTuning1 = new Diva.Controls.ConfigTuning();
-			this.SidePanel = new System.Windows.Forms.Panel();
+			this.configVehicle21 = new Diva.Controls.ConfigVehicle2();
 			this.side_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -52,6 +51,14 @@
 			this.side_panel.Name = "side_panel";
 			this.side_panel.Size = new System.Drawing.Size(250, 603);
 			this.side_panel.TabIndex = 0;
+			// 
+			// SidePanel
+			// 
+			this.SidePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(8)))), ((int)(((byte)(55)))));
+			this.SidePanel.Location = new System.Drawing.Point(0, 30);
+			this.SidePanel.Name = "SidePanel";
+			this.SidePanel.Size = new System.Drawing.Size(12, 80);
+			this.SidePanel.TabIndex = 5;
 			// 
 			// BtnVehicle
 			// 
@@ -121,37 +128,22 @@
 			this.BtnGeoFence.UseVisualStyleBackColor = true;
 			this.BtnGeoFence.Click += new System.EventHandler(this.MenuButton_Click);
 			// 
-			// configGeoFence1
+			// configVehicle21
 			// 
-			this.configGeoFence1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configGeoFence1.Location = new System.Drawing.Point(250, 0);
-			this.configGeoFence1.Name = "configGeoFence1";
-			this.configGeoFence1.Size = new System.Drawing.Size(735, 603);
-			this.configGeoFence1.TabIndex = 1;
-			// 
-			// configTuning1
-			// 
-			this.configTuning1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.configTuning1.Location = new System.Drawing.Point(250, 0);
-			this.configTuning1.Name = "configTuning1";
-			this.configTuning1.Size = new System.Drawing.Size(735, 603);
-			this.configTuning1.TabIndex = 2;
-			// 
-			// SidePanel
-			// 
-			this.SidePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(8)))), ((int)(((byte)(55)))));
-			this.SidePanel.Location = new System.Drawing.Point(0, 30);
-			this.SidePanel.Name = "SidePanel";
-			this.SidePanel.Size = new System.Drawing.Size(12, 80);
-			this.SidePanel.TabIndex = 5;
+			this.configVehicle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this.configVehicle21.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.configVehicle21.Location = new System.Drawing.Point(250, 0);
+			this.configVehicle21.Name = "configVehicle21";
+			this.configVehicle21.Size = new System.Drawing.Size(735, 603);
+			this.configVehicle21.TabIndex = 1;
 			// 
 			// Configure
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
 			this.ClientSize = new System.Drawing.Size(985, 603);
-			this.Controls.Add(this.configTuning1);
-			this.Controls.Add(this.configGeoFence1);
+			this.Controls.Add(this.configVehicle21);
 			this.Controls.Add(this.side_panel);
 			this.Name = "Configure";
 			this.Text = "Configure";
@@ -166,9 +158,8 @@
 		private System.Windows.Forms.Button BtnTuning;
 		private System.Windows.Forms.Button BtnGeoFence;
 		private System.Windows.Forms.Button BtnAbout;
-		private ConfigGeoFence configGeoFence1;
-		private ConfigTuning configTuning1;
 		private System.Windows.Forms.Button BtnVehicle;
 		private System.Windows.Forms.Panel SidePanel;
+		private ConfigVehicle2 configVehicle21;
 	}
 }

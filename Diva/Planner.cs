@@ -2879,21 +2879,21 @@ namespace Diva
 					{
 						mav1.doARM(true);
 						mav1.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(100);
+						Thread.Sleep(500);
 					}
 
 					while (!mav2.MAV.armed)
 					{
 						mav2.doARM(true);
 						mav2.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(100);
+						Thread.Sleep(500);
 					}
 
 					while (!mav3.MAV.armed)
 					{
 						mav3.doARM(true);
 						mav3.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(100);
+						Thread.Sleep(500);
 					}
 
 					_dialog.ReportProgress(-1, "status: takeoff");
@@ -2905,19 +2905,19 @@ namespace Diva
 					while (mav1.MAV.mode != (uint)3)
 					{
 						mav1.setMode(mav1.MAV.sysid, mav1.MAV.compid, "AUTO");
-						Thread.Sleep(100);
+						Thread.Sleep(500);
 					}
 
 					while (mav2.MAV.mode != (uint)3)
 					{
 						mav2.setMode(mav2.MAV.sysid, mav2.MAV.compid, "AUTO");
-						Thread.Sleep(100);
+						Thread.Sleep(500);
 					}
 
 					while (mav3.MAV.mode != (uint)3)
 					{
 						mav3.setMode(mav3.MAV.sysid, mav3.MAV.compid, "AUTO");
-						Thread.Sleep(100);
+						Thread.Sleep(500);
 					}
 				}
 				catch (Exception ex)

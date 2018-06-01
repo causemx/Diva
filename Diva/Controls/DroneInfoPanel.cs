@@ -40,6 +40,20 @@ namespace Diva.Controls
 			}
 		}
 
+		private string droneName = "";
+		public string DroneName
+		{
+			get
+			{
+				return droneName;
+			}
+			set
+			{
+				this.droneName = value;
+				TxtDroneName.Text = droneName;
+			}
+		}
+
 		public DroneInfoPanel()
 		{
 			InitializeComponent();
