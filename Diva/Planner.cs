@@ -1026,7 +1026,7 @@ namespace Diva
 		
 
 
-		public void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
+		public static void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
 		{
 			// Setup comport.basestream
 			switch (portname)
@@ -2717,7 +2717,11 @@ namespace Diva
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
+			ConnectionForm cform = new ConnectionForm();
+			cform.Show();
 
+
+			/**
 			ProgressInputDialog dialog = new ProgressInputDialog()
 			{
 				Text = "Connection",
@@ -2727,7 +2731,7 @@ namespace Diva
 				var mav = new MavlinkInterface();
 				try
 				{
-					doConnect(mav, dialog.port_name, dialog.port, dialog.baudrate);
+					doConnect(mav, dialog.port_name, dialog.port_number, dialog.baudrate);
 					mav.onCreate();
 					comPorts.Add(mav);
 
@@ -2759,7 +2763,7 @@ namespace Diva
 				
 				dialog.Dispose();
 			};
-			dialog.ShowDialog();
+			dialog.ShowDialog();**/
 
 		}
 

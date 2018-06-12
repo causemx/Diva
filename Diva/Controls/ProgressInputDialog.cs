@@ -16,17 +16,22 @@ namespace Diva.Controls
 
 		public string port_name
 		{
-			get { return txt_target.Text; }
+			get { return DTxtPortName.Text; }
 		}
 
-		public string port
+		public string port_number
 		{
-			get { return txt_port.Text; }
+			get { return DTxtPortNumber.Text; }
 		}
 
 		public string baudrate
 		{
-			get { return cb_baud.Text; }
+			get { return DCbBaudrate.Text; }
+		}
+
+		public string streaming
+		{
+			get { return DTxtStreaming.Text; }
 		}
 
 

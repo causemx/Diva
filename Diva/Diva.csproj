@@ -143,6 +143,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
+    <Compile Include="Comms\ConnectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comms\ConnectionForm.Designer.cs">
+      <DependentUpon>ConnectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Comms\ICommsSerial.cs" />
     <Compile Include="Controls\Components\MyCheckBox.cs">
       <SubType>Component</SubType>
@@ -171,17 +177,17 @@
     <Compile Include="Controls\ConfigTuning.Designer.cs">
       <DependentUpon>ConfigTuning.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConfigVehicle2.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ConfigVehicle2.Designer.cs">
-      <DependentUpon>ConfigVehicle2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DroneInfoPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DroneInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DroneInput.Designer.cs">
+      <DependentUpon>DroneInput.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
@@ -249,6 +255,9 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <EmbeddedResource Include="Comms\ConnectionForm.resx">
+      <DependentUpon>ConnectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigGeoFence.resx">
       <DependentUpon>ConfigGeoFence.cs</DependentUpon>
     </EmbeddedResource>
@@ -259,11 +268,11 @@
     <EmbeddedResource Include="Controls\Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ConfigVehicle2.resx">
-      <DependentUpon>ConfigVehicle2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DroneInput.resx">
+      <DependentUpon>DroneInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
@@ -1274,6 +1283,7 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon-debug.png" />
     <None Include="Resources\point-blue.png" />
     <None Include="Resources\icon-drone-4axis.png" />
     <None Include="Resources\icon-drone-4axis-32.png" />
@@ -1286,7 +1296,6 @@
     <None Include="Resources\icon_home_64.png" />
     <None Include="Resources\icon-battery-100.png" />
     <None Include="Resources\icon-signal-100.png" />
-    <None Include="Resources\icon-debug.png" />
     <None Include="Resources\size_height_edit-32.png" />
     <None Include="Resources\news-32.png" />
     <None Include="Resources\home-32.png" />

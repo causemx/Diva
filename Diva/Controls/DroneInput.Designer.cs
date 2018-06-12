@@ -37,13 +37,13 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.PBDronePhoto1 = new System.Windows.Forms.PictureBox();
+			this.PBDronePhoto = new System.Windows.Forms.PictureBox();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.BtnEdit1 = new System.Windows.Forms.Button();
-			this.TxtDroneName = new System.Windows.Forms.Label();
 			this.BtnRemove = new System.Windows.Forms.Button();
+			this.BtnEdit = new System.Windows.Forms.Button();
+			this.TxtName = new System.Windows.Forms.Label();
 			this.panel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PBDronePhoto1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PBDronePhoto)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -59,7 +59,7 @@
 			this.panel2.Controls.Add(this.label4);
 			this.panel2.Controls.Add(this.label3);
 			this.panel2.Controls.Add(this.label2);
-			this.panel2.Controls.Add(this.PBDronePhoto1);
+			this.panel2.Controls.Add(this.PBDronePhoto);
 			this.panel2.Location = new System.Drawing.Point(2, 51);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(460, 151);
@@ -155,52 +155,27 @@
 			this.label2.TabIndex = 1;
 			this.label2.Text = "Port name";
 			// 
-			// PBDronePhoto1
+			// PBDronePhoto
 			// 
-			this.PBDronePhoto1.BackColor = System.Drawing.Color.White;
-			this.PBDronePhoto1.Image = global::Diva.Properties.Resources.if_Psyduck_3151565;
-			this.PBDronePhoto1.Location = new System.Drawing.Point(21, 14);
-			this.PBDronePhoto1.Name = "PBDronePhoto1";
-			this.PBDronePhoto1.Size = new System.Drawing.Size(78, 78);
-			this.PBDronePhoto1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.PBDronePhoto1.TabIndex = 0;
-			this.PBDronePhoto1.TabStop = false;
+			this.PBDronePhoto.BackColor = System.Drawing.Color.White;
+			this.PBDronePhoto.Image = global::Diva.Properties.Resources.if_Psyduck_3151565;
+			this.PBDronePhoto.Location = new System.Drawing.Point(21, 14);
+			this.PBDronePhoto.Name = "PBDronePhoto";
+			this.PBDronePhoto.Size = new System.Drawing.Size(78, 78);
+			this.PBDronePhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.PBDronePhoto.TabIndex = 0;
+			this.PBDronePhoto.TabStop = false;
 			// 
 			// panel1
 			// 
 			this.panel1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.panel1.Controls.Add(this.BtnRemove);
-			this.panel1.Controls.Add(this.BtnEdit1);
-			this.panel1.Controls.Add(this.TxtDroneName);
+			this.panel1.Controls.Add(this.BtnEdit);
+			this.panel1.Controls.Add(this.TxtName);
 			this.panel1.Location = new System.Drawing.Point(2, 2);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(460, 47);
 			this.panel1.TabIndex = 2;
-			// 
-			// BtnEdit1
-			// 
-			this.BtnEdit1.BackColor = System.Drawing.Color.Gray;
-			this.BtnEdit1.FlatAppearance.BorderSize = 0;
-			this.BtnEdit1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnEdit1.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BtnEdit1.ForeColor = System.Drawing.Color.White;
-			this.BtnEdit1.Location = new System.Drawing.Point(297, 12);
-			this.BtnEdit1.Name = "BtnEdit1";
-			this.BtnEdit1.Size = new System.Drawing.Size(75, 23);
-			this.BtnEdit1.TabIndex = 1;
-			this.BtnEdit1.Text = "Edit";
-			this.BtnEdit1.UseVisualStyleBackColor = false;
-			// 
-			// TxtDroneName
-			// 
-			this.TxtDroneName.AutoSize = true;
-			this.TxtDroneName.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtDroneName.ForeColor = System.Drawing.Color.White;
-			this.TxtDroneName.Location = new System.Drawing.Point(19, 16);
-			this.TxtDroneName.Name = "TxtDroneName";
-			this.TxtDroneName.Size = new System.Drawing.Size(45, 15);
-			this.TxtDroneName.TabIndex = 0;
-			this.TxtDroneName.Text = "APM-1";
 			// 
 			// BtnRemove
 			// 
@@ -215,6 +190,33 @@
 			this.BtnRemove.TabIndex = 2;
 			this.BtnRemove.Text = "Remove";
 			this.BtnRemove.UseVisualStyleBackColor = false;
+			this.BtnRemove.Click += new System.EventHandler(this.BtnRemove_Click);
+			// 
+			// BtnEdit
+			// 
+			this.BtnEdit.BackColor = System.Drawing.Color.Gray;
+			this.BtnEdit.FlatAppearance.BorderSize = 0;
+			this.BtnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnEdit.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.BtnEdit.ForeColor = System.Drawing.Color.White;
+			this.BtnEdit.Location = new System.Drawing.Point(297, 12);
+			this.BtnEdit.Name = "BtnEdit";
+			this.BtnEdit.Size = new System.Drawing.Size(75, 23);
+			this.BtnEdit.TabIndex = 1;
+			this.BtnEdit.Text = "Edit";
+			this.BtnEdit.UseVisualStyleBackColor = false;
+			this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
+			// 
+			// TxtName
+			// 
+			this.TxtName.AutoSize = true;
+			this.TxtName.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtName.ForeColor = System.Drawing.Color.White;
+			this.TxtName.Location = new System.Drawing.Point(19, 16);
+			this.TxtName.Name = "TxtName";
+			this.TxtName.Size = new System.Drawing.Size(45, 15);
+			this.TxtName.TabIndex = 0;
+			this.TxtName.Text = "APM-1";
 			// 
 			// DroneInput
 			// 
@@ -226,7 +228,7 @@
 			this.Size = new System.Drawing.Size(465, 205);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PBDronePhoto1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PBDronePhoto)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
@@ -244,10 +246,10 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.PictureBox PBDronePhoto1;
+		private System.Windows.Forms.PictureBox PBDronePhoto;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button BtnEdit1;
-		private System.Windows.Forms.Label TxtDroneName;
+		private System.Windows.Forms.Button BtnEdit;
+		private System.Windows.Forms.Label TxtName;
 		private System.Windows.Forms.Button BtnRemove;
 	}
 }
