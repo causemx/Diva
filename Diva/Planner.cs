@@ -2714,12 +2714,73 @@ namespace Diva
 
 		}
 
+		public void BUT_Batch_Connect_Click(object sender, EventArgs e)
+		{
+			
+			string portname1 = ConnectionForm.aircrafts["APM1"].port_name;
+			string portnumber1 = ConnectionForm.aircrafts["APM1"].port_number;
+			string baudrate1 = ConnectionForm.aircrafts["APM1"].baudrate;
+
+			string portname2 = ConnectionForm.aircrafts["APM2"].port_name;
+			string portnumber2 = ConnectionForm.aircrafts["APM2"].port_number;
+			string baudrate2 = ConnectionForm.aircrafts["APM2"].baudrate;
+
+			string portname3 = ConnectionForm.aircrafts["APM3"].port_name;
+			string portnumber3 = ConnectionForm.aircrafts["APM3"].port_number;
+			string baudrate3 = ConnectionForm.aircrafts["APM3"].baudrate;
+
+			try
+			{
+				var mav = new MavlinkInterface();
+				doConnect(mav, portname1, portnumber1, baudrate1);
+				mav.onCreate();
+				comPorts.Add(mav);
+				AddRouteOverlay(comPorts.Count);
+				mav.MAV.GuidedMode.z = 10;
+				DroneInfo1.Activate();
+				CurrentDroneInfo = DroneInfo1;
+				comPort = mav;
+
+				Thread.Sleep(3000);
+
+				var mav2 = new MavlinkInterface();
+				doConnect(mav2, portname2, portnumber2, baudrate2);
+				mav2.onCreate();
+				comPorts.Add(mav2);
+				AddRouteOverlay(comPorts.Count);
+				mav2.MAV.GuidedMode.z = 10;
+				DroneInfo2.Activate();
+				CurrentDroneInfo = DroneInfo2;
+				comPort = mav2;
+
+				Thread.Sleep(3000);
+
+				var mav3 = new MavlinkInterface();
+				doConnect(mav3, portname3, portnumber3, baudrate3);
+				mav3.onCreate();
+				comPorts.Add(mav3);
+				DroneInfo3.Activate();
+				CurrentDroneInfo = DroneInfo3;
+				AddRouteOverlay(comPorts.Count);
+				mav3.MAV.GuidedMode.z = 10;
+				comPort = mav3;
+			}
+			catch (Exception exception)
+			{
+				log.Debug(exception);
+			}
+			
+
+
+		}
+		
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
 			ConnectionForm cform = new ConnectionForm();
+			cform.ButtonSaveClick += new EventHandler(BUT_Batch_Connect_Click);
 			cform.Show();
-
+			
 
 			/**
 			ProgressInputDialog dialog = new ProgressInputDialog()

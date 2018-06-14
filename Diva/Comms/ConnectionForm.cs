@@ -1,4 +1,5 @@
 ﻿using Diva.Controls;
+using Diva.Mavlink;
 using Diva.Utilities;
 using log4net;
 using System;
@@ -24,7 +25,8 @@ namespace Diva.Comms
 		public static readonly string AIRCRAFT_FILE_NAME = "aircraft.xml";
 
 		public List<DroneInput> droneInputs = new List<DroneInput>();
-		public Dictionary<string, aircraftinfo> aircrafts = new Dictionary<string, aircraftinfo>();
+		public static Dictionary<string, aircraftinfo> aircrafts = new Dictionary<string, aircraftinfo>();
+		public event EventHandler ButtonSaveClick;
 
 
 		private int drone_index = 0;
@@ -45,8 +47,8 @@ namespace Diva.Comms
 				DroneInput droneInput = new DroneInput();
 				droneInput.Name = aircrafts[key].name;
 				droneInput.PortName = aircrafts[key].port_name;
-				droneInput.PortNumber = (aircrafts[key].port_number).ToString();
-				droneInput.Baudrate = (aircrafts[key].baudrate).ToString();
+				droneInput.PortNumber = aircrafts[key].port_number;
+				droneInput.Baudrate = aircrafts[key].baudrate;
 				droneInput.Streaming = aircrafts[key].streaming;
 
 				droneInput.Location = new Point(10, drone_index * 200);
@@ -69,8 +71,8 @@ namespace Diva.Comms
 		{
 			public string name;
 			public string port_name;
-			public int port_number;
-			public int baudrate;
+			public string port_number;
+			public string baudrate;
 			public string streaming;
 		}
 
@@ -82,16 +84,20 @@ namespace Diva.Comms
 				{
 					name = _input.Name,
 					port_name = _input.PortName,
-					port_number = int.Parse(_input.PortNumber),
-					baudrate = int.Parse(_input.Baudrate),
+					port_number = _input.PortNumber,
+					baudrate = _input.Baudrate,
 					streaming = _input.Streaming,
 				};
+
+				
 
 				aircrafts[aircraft.name] = aircraft;
 			}
 
 			SaveXML(AIRCRAFT_FILE_NAME);
 
+			if (ButtonSaveClick != null)
+				ButtonSaveClick(this, e);
 			
 		}
 
@@ -119,7 +125,7 @@ namespace Diva.Comms
 					{
 						xmlwriter.WriteElementString("name", aircrafts[key].name);
 						xmlwriter.WriteElementString("port_name", aircrafts[key].port_name);
-						xmlwriter.WriteElementString("port", (aircrafts[key].port_number).ToString());
+						xmlwriter.WriteElementString("port_number", (aircrafts[key].port_number).ToString());
 						xmlwriter.WriteElementString("baudrate", (aircrafts[key].baudrate).ToString());
 						xmlwriter.WriteElementString("streaming", aircrafts[key].streaming);
 					}
@@ -168,10 +174,10 @@ namespace Diva.Comms
 													aircraft.port_name = xmlreader.ReadString();
 													break;
 												case "port_number":
-													aircraft.port_number = int.Parse(xmlreader.ReadString());
+													aircraft.port_number = xmlreader.ReadString();
 													break;
 												case "baudrate":
-													aircraft.baudrate = int.Parse(xmlreader.ReadString());
+													aircraft.baudrate = xmlreader.ReadString();
 													break;
 												case "streaming":
 													aircraft.streaming = xmlreader.ReadString();
