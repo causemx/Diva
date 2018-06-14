@@ -176,8 +176,7 @@ namespace Diva
             Text += " - " + username;
 
             // control size may not be the same as designer (dpi setting?)
-            splitContainer.Panel2MinSize = gboxManualButtons.Height;
-			
+            			
 			quickadd = false;
 
 			// setup map events
