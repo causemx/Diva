@@ -114,9 +114,9 @@ namespace Diva
             get { return retryCount >= MAX_RETRIES; }
         }
 
-        public static string AccountTypeName
+        public static string AccountConfigEntryName
         {
-            get { return typeof(Account).Name; }
+            get { return "dv" + typeof(Account).FullName.Substring(5); }
         }
 
         private AccountManager()
