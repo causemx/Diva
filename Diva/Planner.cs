@@ -171,12 +171,12 @@ namespace Diva
 		{
 			InitializeComponent();
 
-            string username = AccountManager.GetLoginAccount();
-            if (username == "") username = "(Anonymous)";
-            Text += " - " + username;
+			string username = AccountManager.GetLoginAccount();
+			if (username == "") username = "(Anonymous)";
+			Text += " - " + username;
 
-            // control size may not be the same as designer (dpi setting?)
-            			
+			// control size may not be the same as designer (dpi setting?)
+						
 			quickadd = false;
 
 			// setup map events
