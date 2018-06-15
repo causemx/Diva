@@ -280,6 +280,7 @@ namespace Diva.Mavlink
 		/// </summary>
 		public DateTime lastvalidpacket { get; set; }
 
+
 		/// <summary>
 		/// used to calc packets per second on any single message type - used for stream rate comparaison
 		/// </summary>

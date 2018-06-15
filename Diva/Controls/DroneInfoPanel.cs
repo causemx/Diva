@@ -61,13 +61,13 @@ namespace Diva.Controls
 
 		public void Activate()
 		{
-			this.BackColor = Color.FromArgb(67,78,84);
+			this.BackColor = Color.FromArgb(67, 78, 84);
 			PBDroneView.Image = Properties.Resources.if_Psyduck_3151565;
 		}
 
 		public void Deactivate()
 		{
-			this.BackColor = Color.FromArgb(128,128,128);
+			this.BackColor = Color.FromArgb(128, 128, 128);
 			PBDroneView.Image = Properties.Resources.if_Psyduck_3186864;
 		}
 
@@ -75,9 +75,39 @@ namespace Diva.Controls
 		public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
 		{
 			TxtSystemID.Text = sysid.ToString();
-			TxtAssumeTime.Text = "1hr";
 			TxtBatteryHealth.Text = battry_voltage.ToString("F2");
 			TxtSatelliteCount.Text = satellite_count.ToString();
+		}
+
+		public void UpdateAssumeTime(double missionDistance)
+		{
+			// get the waypoint speed, default unit is mile/second
+			TxtAssumeTime.Text = (missionDistance / GetParam("WPNAV_SPEED")*60).ToString("f2") + "min";
+			Planner.log.Debug(missionDistance / (GetParam("WPNAV_SPEED")*60));
+		} 
+
+		public int GetParam(string paramname)
+		{
+			int _scale = 1;
+			MAVLink.MAVLinkParamList paramlist = Planner.comPort.MAV.param;
+			try
+			{
+				if (paramlist.ContainsKey(paramname))
+				{
+					int value = (int)((float)paramlist[paramname] / _scale);
+					return value;
+				}
+				else
+				{
+					throw new Exception("can not retrive parameters");
+				}
+			}
+			catch (Exception e)
+			{
+				Planner.log.Debug(e.ToString());
+				return 0;
+			}
+			
 		}
 	}
 }

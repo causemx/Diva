@@ -103,9 +103,9 @@
 			this.TxtAssumeTime.ForeColor = System.Drawing.Color.White;
 			this.TxtAssumeTime.Location = new System.Drawing.Point(112, 53);
 			this.TxtAssumeTime.Name = "TxtAssumeTime";
-			this.TxtAssumeTime.Size = new System.Drawing.Size(40, 15);
+			this.TxtAssumeTime.Size = new System.Drawing.Size(22, 15);
 			this.TxtAssumeTime.TabIndex = 5;
-			this.TxtAssumeTime.Text = "00 hr";
+			this.TxtAssumeTime.Text = "ub";
 			// 
 			// TxtBatteryHealth
 			// 

@@ -31,7 +31,7 @@ namespace Diva
 {
 	public partial class Planner : Form
 	{
-
+		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		public static List<MavlinkInterface> comPorts = new List<MavlinkInterface>();
 
 		public static MavlinkInterface comPort
@@ -59,7 +59,7 @@ namespace Diva
 
 		public static MavlinkInterface _comPort = new MavlinkInterface();
 
-		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+		
 		private static readonly double MY_LAT = 24.773518;
 		private static readonly double MY_LNG = 121.0443385;
 		private static readonly double WARN_ALT = 2D;
@@ -1820,7 +1820,10 @@ namespace Diva
 							continue;
 
 						dist += myMap.MapProvider.Projection.GetDistance(fullpointlist[a - 1], fullpointlist[a]);
+						CurrentDroneInfo.UpdateAssumeTime(dist);
 					}
+
+					log.Info("Total distance: " + FormatDistance(dist + homedist, false));
 
 				}
 
@@ -1829,6 +1832,41 @@ namespace Diva
 			catch (Exception ex)
 			{
 				log.Info(ex.ToString());
+			}
+		}
+
+
+		/// <summary>
+		/// Format distance according to prefer distance unit
+		/// </summary>
+		/// <param name="distInKM">distance in kilometers</param>
+		/// <param name="toMeterOrFeet">convert distance to meter or feet if true, covert to km or miles if false</param>
+		/// <returns>formatted distance with unit</returns>
+		private string FormatDistance(double distInKM, bool toMeterOrFeet)
+		{
+			string sunits = Utilities.Settings.Instance["distunits"];
+			Utility.distances units = Utility.distances.Meters;
+
+			if (sunits != null)
+				try
+				{
+					units = (Utility.distances)Enum.Parse(typeof(Utility.distances), sunits);
+				}
+				catch (Exception)
+				{
+				}
+
+			switch (units)
+			{
+				case Utility.distances.Feet:
+					return toMeterOrFeet
+						? string.Format((distInKM * 3280.8399).ToString("0.00 ft"))
+						: string.Format((distInKM * 0.621371).ToString("0.0000 miles"));
+				case Utility.distances.Meters:
+				default:
+					return toMeterOrFeet
+						? string.Format((distInKM * 1000).ToString("0.00 m"))
+						: string.Format(distInKM.ToString("0.0000 km"));
 			}
 		}
 
@@ -2722,18 +2760,13 @@ namespace Diva
 
 		public void BUT_Batch_Connect_Click(object sender, EventArgs e)
 		{
-			
+			if (connectionDialog is null)
+				return;
+
 			string portname1 = ConnectionForm.aircrafts["APM1"].port_name;
 			string portnumber1 = ConnectionForm.aircrafts["APM1"].port_number;
 			string baudrate1 = ConnectionForm.aircrafts["APM1"].baudrate;
 
-			string portname2 = ConnectionForm.aircrafts["APM2"].port_name;
-			string portnumber2 = ConnectionForm.aircrafts["APM2"].port_number;
-			string baudrate2 = ConnectionForm.aircrafts["APM2"].baudrate;
-
-			string portname3 = ConnectionForm.aircrafts["APM3"].port_name;
-			string portnumber3 = ConnectionForm.aircrafts["APM3"].port_number;
-			string baudrate3 = ConnectionForm.aircrafts["APM3"].baudrate;
 
 			try
 			{
@@ -2746,46 +2779,24 @@ namespace Diva
 				DroneInfo1.Activate();
 				CurrentDroneInfo = DroneInfo1;
 				comPort = mav;
-
-				Thread.Sleep(3000);
-
-				var mav2 = new MavlinkInterface();
-				doConnect(mav2, portname2, portnumber2, baudrate2);
-				mav2.onCreate();
-				comPorts.Add(mav2);
-				AddRouteOverlay(comPorts.Count);
-				mav2.MAV.GuidedMode.z = 10;
-				DroneInfo2.Activate();
-				CurrentDroneInfo = DroneInfo2;
-				comPort = mav2;
-
-				Thread.Sleep(3000);
-
-				var mav3 = new MavlinkInterface();
-				doConnect(mav3, portname3, portnumber3, baudrate3);
-				mav3.onCreate();
-				comPorts.Add(mav3);
-				DroneInfo3.Activate();
-				CurrentDroneInfo = DroneInfo3;
-				AddRouteOverlay(comPorts.Count);
-				mav3.MAV.GuidedMode.z = 10;
-				comPort = mav3;
 			}
 			catch (Exception exception)
 			{
 				log.Debug(exception);
 			}
-			
 
+			connectionDialog.Dispose();
 
 		}
-		
+
+
+		public ConnectionForm connectionDialog = null;
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-			ConnectionForm cform = new ConnectionForm();
-			cform.ButtonSaveClick += new EventHandler(BUT_Batch_Connect_Click);
-			cform.Show();
+			connectionDialog = new ConnectionForm();
+			connectionDialog.ButtonSaveClick += new EventHandler(BUT_Batch_Connect_Click);
+			connectionDialog.Show();
 			
 
 			/**

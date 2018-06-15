@@ -40,6 +40,12 @@ namespace Diva.Utilities
 			PX4_CUSTOM_SUB_MODE_AUTO_RTGS
 		}
 
+		public enum distances
+		{
+			Meters,
+			Feet
+		}
+
 		public static double ConvertToDouble(object input)
 		{
 			if (input.GetType() == typeof(float))
