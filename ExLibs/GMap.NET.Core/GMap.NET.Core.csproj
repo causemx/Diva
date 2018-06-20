@@ -177,6 +177,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.XML" />
@@ -217,6 +218,7 @@
     <Compile Include="GMap.NET.MapProviders\Czech\CzechTuristMapProvider.cs" />
     <Compile Include="GMap.NET.MapProviders\Czech\CzechTuristWinterMapProvider.cs" />
     <Compile Include="GMap.NET.MapProviders\Etc\CloudMadeMapProvider.cs" />
+    <Compile Include="GMap.NET.MapProviders\Etc\ImageMapProvider.cs" />
     <Compile Include="GMap.NET.MapProviders\Etc\SwedenMapProvider.cs" />
     <Compile Include="GMap.NET.MapProviders\Etc\WikiMapiaMapProvider.cs" />
     <Compile Include="GMap.NET.MapProviders\CzechOld\CzechHistoryMapProvider.cs" />
