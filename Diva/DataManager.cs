@@ -139,6 +139,11 @@ namespace Diva
             }
         }
 
+        public static void SetCommandLineOption(string name, string value)
+        {
+            CLOptions[name] = value;
+        }
+
         public static void DeleteOption(string name)
         {
             string value;
