@@ -18,6 +18,7 @@ namespace Diva
 
     class ConfigData
     {
+        #region Data Encryption Utility Class
         class DataCryptor
         {
             private static int AES_KEYSIZE = 128;
@@ -73,16 +74,18 @@ namespace Diva
                 return Encoding.UTF8.GetString(Decrypt(Convert.FromBase64String(cryptText)));
             }
         }
+        #endregion
 
         private static readonly Lazy<ConfigData> lazy = new Lazy<ConfigData>(() => new ConfigData());
         private static Configuration config;
 
         private bool ready = false;
-        public static bool Ready { get { return lazy.Value.ready || Load(); } }
+        public static bool Ready => lazy.Value.ready || Load();
         private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
-        private static ConcurrentDictionary<string, object> Lists { get { return lazy.Value.typeLists; } }
-        private ConcurrentDictionary<string, string> options;
-        public static ConcurrentDictionary<string, string> Options { get { return lazy.Value.options; } }
+        private static ConcurrentDictionary<string, object> Lists => lazy.Value.typeLists;
+        private ConcurrentDictionary<string, string> options, clopts;
+        public static ConcurrentDictionary<string, string> Options => lazy.Value.options;
+        public static ConcurrentDictionary<string, string> CLOptions => lazy.Value.clopts;
 
         public const string NO_ACCOUNT_ALERT = "NoAccountAlert";
         private static ConcurrentDictionary<string, string> GetInitOptions()
@@ -109,10 +112,9 @@ namespace Diva
             }
         }
 
-        public static List<T> GetTypeList<T>()
-        {
-            return Lists.GetOrAdd(typeof(T).AssemblyQualifiedName, (k) => new List<T>()) as List<T>;
-        }
+        public static List<T> GetTypeList<T>() =>
+            Lists.GetOrAdd(typeof(T).AssemblyQualifiedName,
+                (k) => new List<T>()) as List<T>;
 
         public static void UpdateList<T>(List<T> list)
         {
@@ -122,11 +124,14 @@ namespace Diva
 
         public static string GetOption(string name)
         {
-            return Options.ContainsKey(name) ? Options[name] : "";
+            return CLOptions.ContainsKey(name) ? CLOptions[name] :
+                    Options.ContainsKey(name) ? Options[name] : "";
         }
 
         public static void SetOption(string name, string value)
         {
+            string output;
+            CLOptions.TryRemove(name, out output);
             if (GetOption(name) != value)
             {
                 Options[name] = value;
@@ -136,12 +141,10 @@ namespace Diva
 
         public static void DeleteOption(string name)
         {
-            var dic = Options as IDictionary<string, object>;
-            if (dic.ContainsKey(name))
-            {
-                dic.Remove(name);
+            string value;
+            CLOptions.TryRemove(name, out value);
+            if (Options.TryRemove(name, out value))
                 Save();
-            }
         }
 
         private static string RequoteJson(string jstr)
