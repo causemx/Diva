@@ -3252,6 +3252,123 @@ namespace Diva
 			}
 		}
 
-	
+		internal string wpfilename;
+
+		/// <summary>
+		/// Saves a waypoint writer file
+		/// </summary>
+		private void savewaypoints()
+		{
+			using (SaveFileDialog fd = new SaveFileDialog())
+			{
+				fd.Filter = "Mission|*.waypoints;*.txt|Mission JSON|*.mission";
+				fd.DefaultExt = ".waypoints";
+				fd.FileName = wpfilename;
+				DialogResult result = fd.ShowDialog();
+				string file = fd.FileName;
+				if (file != "")
+				{
+					try
+					{
+						if (file.EndsWith(".mission"))
+						{
+							var list = GetCommandList();
+							Locationwp home = new Locationwp();
+							try
+							{
+								home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+								home.lat = (double.Parse(TxtHomeLatitude.Text));
+								home.lng = (double.Parse(TxtHomeLongitude.Text));
+								home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+							}
+							catch { }
+
+							list.Insert(0, home);
+
+							// var format = MissionFile.ConvertFromLocationwps(list, (byte)(altmode)CMB_altmode.SelectedValue);
+							var format = MissionFile.ConvertFromLocationwps(list);
+
+							MissionFile.WriteFile(file, format);
+							return;
+						}
+
+						StreamWriter sw = new StreamWriter(file);
+						sw.WriteLine("QGC WPL 110");
+						try
+						{
+							sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
+										 double.Parse(TxtHomeLatitude.Text).ToString("0.000000", new CultureInfo("en-US")) +
+										 "\t" +
+										 double.Parse(TxtHomeLongitude.Text).ToString("0.000000", new CultureInfo("en-US")) +
+										 "\t" +
+										 double.Parse(TxtHomeAltitude.Text).ToString("0.000000", new CultureInfo("en-US")) +
+										 "\t1");
+						}
+						catch (Exception ex)
+						{
+							log.Error(ex);
+							sw.WriteLine("0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1");
+						}
+						for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+						{
+							ushort mode = 0;
+
+							if (dgvWayPoints.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
+							{
+								mode = (ushort)dgvWayPoints.Rows[a].Cells[colCommand.Index].Tag;
+							}
+							else
+							{
+								mode =
+								(ushort)
+									(MAVLink.MAV_CMD)
+										Enum.Parse(typeof(MAVLink.MAV_CMD), dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString());
+							}
+
+							sw.Write((a + 1)); // seq
+							sw.Write("\t" + 0); // current
+							sw.Write("\t" + "Relative"); //frame 
+							sw.Write("\t" + mode);
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam3.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam4.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 (double.Parse(dgvWayPoints.Rows[a].Cells[colAltitude.Index].Value.ToString())).ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" + 1);
+							sw.WriteLine("");
+						}
+						sw.Close();
+
+						// lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+						MessageBox.Show("Mission Saved");
+					}
+					catch (Exception)
+					{
+						MessageBox.Show(Strings.ERROR);
+					}
+				}
+			}
+		}
+
+		private void BtnSaveMission_Click(object sender, EventArgs e)
+		{
+			savewaypoints();
+			writeKML();
+		}
 	}
 }
