@@ -72,10 +72,6 @@ namespace Diva
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
-			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.BtnRTL = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
 			this.BtnVideo = new System.Windows.Forms.Button();
@@ -84,10 +80,14 @@ namespace Diva
 			this.BtnReadWPs = new System.Windows.Forms.Button();
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
-			this.myMap = new Diva.Controls.MyGMap();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
 			this.BtnSaveMission = new System.Windows.Forms.ToolStripButton();
 			this.BtnReadMission = new System.Windows.Forms.ToolStripButton();
+			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
+			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
+			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
+			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap.SuspendLayout();
 			this.panelDroneInfo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
@@ -462,7 +462,7 @@ namespace Diva
 			this.colTagData.Name = "colTagData";
 			this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.colTagData.Visible = false;
-			this.colTagData.Width = 63;
+			this.colTagData.Width = 61;
 			// 
 			// timerMapItemUpdate
 			// 
@@ -590,54 +590,6 @@ namespace Diva
 			this.splitContainer.SplitterDistance = 528;
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
-			// 
-			// CollectionTelemetryData
-			// 
-			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
-			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
-			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
-			this.CollectionTelemetryData.TabIndex = 19;
-			// 
-			// DroneInfo3
-			// 
-			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo3.DroneName = "APM-3";
-			this.DroneInfo3.IsActivate = false;
-			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
-			this.DroneInfo3.Name = "DroneInfo3";
-			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo3.TabIndex = 18;
-			this.DroneInfo3.Tag = "2";
-			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo2
-			// 
-			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo2.DroneName = "APM-2";
-			this.DroneInfo2.IsActivate = false;
-			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
-			this.DroneInfo2.Name = "DroneInfo2";
-			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo2.TabIndex = 17;
-			this.DroneInfo2.Tag = "1";
-			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo1
-			// 
-			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo1.DroneName = "APM-1";
-			this.DroneInfo1.IsActivate = false;
-			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
-			this.DroneInfo1.Name = "DroneInfo1";
-			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
-			this.DroneInfo1.TabIndex = 16;
-			this.DroneInfo1.Tag = "0";
-			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
 			// 
 			// BtnRTL
 			// 
@@ -804,37 +756,6 @@ namespace Diva
 			this.BtnWriteWPs.MouseLeave += new System.EventHandler(this.BUT_Mouse_Leave);
 			this.BtnWriteWPs.MouseHover += new System.EventHandler(this.BUT_Mouse_Hover);
 			// 
-			// myMap
-			// 
-			this.myMap.BackColor = System.Drawing.SystemColors.Control;
-			this.myMap.Bearing = 0F;
-			this.myMap.CanDragMap = true;
-			this.myMap.ContextMenuStrip = this.cmMap;
-			this.myMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
-			this.myMap.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.myMap.GrayScaleMode = false;
-			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-			this.myMap.LevelsKeepInMemmory = 5;
-			this.myMap.Location = new System.Drawing.Point(0, 0);
-			this.myMap.MarkersEnabled = true;
-			this.myMap.MaxZoom = 2;
-			this.myMap.MinZoom = 2;
-			this.myMap.MouseWheelZoomEnabled = true;
-			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-			this.myMap.Name = "myMap";
-			this.myMap.NegativeMode = false;
-			this.myMap.PolygonsEnabled = true;
-			this.myMap.RetryLoadTile = 0;
-			this.myMap.RoutesEnabled = true;
-			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-			this.myMap.ShowTileGridLines = false;
-			this.myMap.Size = new System.Drawing.Size(948, 528);
-			this.myMap.TabIndex = 14;
-			this.myMap.Zoom = 0D;
-			this.myMap.Load += new System.EventHandler(this.myMap_Load);
-			// 
 			// ImgListBatteryHealth
 			// 
 			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
@@ -870,6 +791,86 @@ namespace Diva
 			this.BtnReadMission.Name = "BtnReadMission";
 			this.BtnReadMission.Size = new System.Drawing.Size(76, 76);
 			this.BtnReadMission.Text = "R";
+			this.BtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
+			// 
+			// CollectionTelemetryData
+			// 
+			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
+			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
+			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
+			this.CollectionTelemetryData.TabIndex = 19;
+			// 
+			// DroneInfo3
+			// 
+			this.DroneInfo3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo3.DroneName = "APM-3";
+			this.DroneInfo3.IsActivate = false;
+			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
+			this.DroneInfo3.Name = "DroneInfo3";
+			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo3.TabIndex = 18;
+			this.DroneInfo3.Tag = "2";
+			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo2
+			// 
+			this.DroneInfo2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo2.DroneName = "APM-2";
+			this.DroneInfo2.IsActivate = false;
+			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
+			this.DroneInfo2.Name = "DroneInfo2";
+			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo2.TabIndex = 17;
+			this.DroneInfo2.Tag = "1";
+			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// DroneInfo1
+			// 
+			this.DroneInfo1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.DroneInfo1.DroneName = "APM-1";
+			this.DroneInfo1.IsActivate = false;
+			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
+			this.DroneInfo1.Name = "DroneInfo1";
+			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
+			this.DroneInfo1.TabIndex = 16;
+			this.DroneInfo1.Tag = "0";
+			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
+			// 
+			// myMap
+			// 
+			this.myMap.BackColor = System.Drawing.SystemColors.Control;
+			this.myMap.Bearing = 0F;
+			this.myMap.CanDragMap = true;
+			this.myMap.ContextMenuStrip = this.cmMap;
+			this.myMap.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
+			this.myMap.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.myMap.GrayScaleMode = false;
+			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+			this.myMap.LevelsKeepInMemmory = 5;
+			this.myMap.Location = new System.Drawing.Point(0, 0);
+			this.myMap.MarkersEnabled = true;
+			this.myMap.MaxZoom = 2;
+			this.myMap.MinZoom = 2;
+			this.myMap.MouseWheelZoomEnabled = true;
+			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+			this.myMap.Name = "myMap";
+			this.myMap.NegativeMode = false;
+			this.myMap.PolygonsEnabled = true;
+			this.myMap.RetryLoadTile = 0;
+			this.myMap.RoutesEnabled = true;
+			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+			this.myMap.ShowTileGridLines = false;
+			this.myMap.Size = new System.Drawing.Size(948, 528);
+			this.myMap.TabIndex = 14;
+			this.myMap.Zoom = 0D;
+			this.myMap.Load += new System.EventHandler(this.myMap_Load);
 			// 
 			// Planner
 			// 
