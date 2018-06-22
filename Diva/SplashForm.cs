@@ -30,6 +30,7 @@ namespace Diva
             if (timer != null) timer.Dispose();
         }
 
+        #region debug config tests
         private void TestConfig()
         {
             string getAccountNames()
@@ -56,6 +57,7 @@ namespace Diva
             testAccount("aaa", "123456");
             testAccount("aaa", "a123456");
         }
+        #endregion
 
         private bool LoginCheck()
         {
@@ -114,14 +116,18 @@ namespace Diva
 
         private void btnNewAccount_Click(object sender, EventArgs e)
         {
-            if (tBoxPassword.Text != tBoxConfirm.Text)
+            Tuple<Func<bool>, string> gen(Func<bool> c, string s) => Tuple.Create<Func<bool>, string>(c, s); 
+            List<Tuple<Func<bool>, string>> checks = new List<Tuple<Func<bool>, string>>()
             {
-                lblNewAccountMessage.Text = "Confirm password mismatch.";
-                return;
-            }
-            if (!AccountManager.ValidAccountName(tBoxUsername.Text))
+                gen(() => AccountManager.AccountExist(tBoxUsername.Text), "Account already exists."),
+                gen(() => !AccountManager.IsValidAccountName(tBoxUsername.Text), "Invalid account name."),
+                gen(() => !AccountManager.IsValidPassword(tBoxPassword.Text), "Invalid password."),
+                gen(() => tBoxPassword.Text != tBoxConfirm.Text, "Confirm password mismatch."),
+            };
+            var failed = checks.FirstOrDefault(c => c.Item1());
+            if (failed != null)
             {
-                lblNewAccountMessage.Text = "Invalid account name.";
+                lblNewAccountMessage.Text = failed.Item2;
                 return;
             }
             bool result = AccountManager.CreateAccount(tBoxUsername.Text, tBoxPassword.Text);
@@ -157,7 +163,7 @@ namespace Diva
 
         private void CheckLoginLock()
         {
-            if (AccountManager.AuthenticationLocked)
+            if (AccountManager.IsAuthenticationLocked)
             {
                 btnLogin.Enabled = false;
                 if (timer != null) timer.Dispose();
@@ -178,7 +184,7 @@ namespace Diva
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (!AccountManager.ValidAccountName(tBoxLoginUser.Text))
+            if (!AccountManager.IsValidAccountName(tBoxLoginUser.Text))
             {
                 lblLoginMessage.Text = "Invalid account name.";
                 return;

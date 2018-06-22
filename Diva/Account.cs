@@ -155,6 +155,12 @@ namespace Diva
         public static IEnumerable<string> GetAccounts()
             => from acc in Accounts select acc.Name;
 
+        public static bool AccountExist(string name)
+            => GetAccount(name) != null;
+
+        public static bool VerifyAccount(string name, string password)
+            => GetAccount(name).Authenticate(password);
+
         public static bool IsValidAccountName(string name)
         {
             return new System.Text.RegularExpressions.Regex(
@@ -247,9 +253,6 @@ namespace Diva
             ConfigData.Save();
             //if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
         }
-
-        public static bool VerifyAccount(string name, string password)
-            => GetAccount(name).Authenticate(password);
 
         public static bool Login(string name, string password)
         {
