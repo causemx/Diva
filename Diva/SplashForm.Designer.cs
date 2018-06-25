@@ -60,9 +60,9 @@
             this.lblProgress.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.lblProgress.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProgress.ForeColor = System.Drawing.Color.White;
-            this.lblProgress.Location = new System.Drawing.Point(148, 320);
+            this.lblProgress.Location = new System.Drawing.Point(60, 320);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(320, 35);
+            this.lblProgress.Size = new System.Drawing.Size(420, 35);
             this.lblProgress.TabIndex = 0;
             this.lblProgress.Text = "Loading...";
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.BottomRight;

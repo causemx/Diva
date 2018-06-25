@@ -210,16 +210,23 @@ namespace Diva
         {
             Account acc = GetAccount(oldName);
             bool ret = acc != null && !Accounts.Exists(a => a.Name == newName);
-            if (ret) acc.Rename(newName);
+            if (ret)
+            {
+                acc.Rename(newName);
+                ConfigData.Save();
+            }
             return ret;
         }
 
-        public static bool ChangePassword(string name, string oldPassword, string newPassword)
+        public static bool ChangePassword(string name, string newPassword)
         {
             Account acc = GetAccount(name);
-            bool ret = Account.Authenticate(acc, oldPassword);
-            if (ret) acc.SetPassword(newPassword);
-            return ret;
+            if (acc != null)
+            {
+                acc.SetPassword(newPassword);
+                ConfigData.Save();
+            }
+            return acc != null;
         }
 
         public static string GetLoginAccount()

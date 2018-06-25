@@ -36,16 +36,17 @@
             this.BtnTuning = new System.Windows.Forms.Button();
             this.BtnGeoFence = new System.Windows.Forms.Button();
             this.PanelAccountConfig = new System.Windows.Forms.Panel();
-            this.CBoxAccounts = new System.Windows.Forms.ComboBox();
-            this.BtnCreateAccount = new System.Windows.Forms.Button();
-            this.PanelExistingAccountControls = new System.Windows.Forms.Panel();
-            this.BtnDeleteAccount = new System.Windows.Forms.Button();
-            this.BtnChangePassword = new System.Windows.Forms.Button();
-            this.LabelPassword = new System.Windows.Forms.Label();
-            this.LabelNewPassword = new System.Windows.Forms.Label();
-            this.TBoxPassword = new System.Windows.Forms.TextBox();
-            this.TBoxConfirmPassword = new System.Windows.Forms.TextBox();
+            this.LabelLoginAccount = new System.Windows.Forms.Label();
             this.LabelConfirmPassword = new System.Windows.Forms.Label();
+            this.TBoxConfirmPassword = new System.Windows.Forms.TextBox();
+            this.TBoxPassword = new System.Windows.Forms.TextBox();
+            this.PanelExistingAccountControls = new System.Windows.Forms.Panel();
+            this.LabelNewPassword = new System.Windows.Forms.Label();
+            this.BtnChangePassword = new System.Windows.Forms.Button();
+            this.BtnDeleteAccount = new System.Windows.Forms.Button();
+            this.BtnCreateAccount = new System.Windows.Forms.Button();
+            this.CBoxAccounts = new System.Windows.Forms.ComboBox();
+            this.LabelPassword = new System.Windows.Forms.Label();
             this.SidePanel.SuspendLayout();
             this.PanelAccountConfig.SuspendLayout();
             this.PanelExistingAccountControls.SuspendLayout();
@@ -170,6 +171,7 @@
             // 
             this.PanelAccountConfig.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.PanelAccountConfig.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelAccountConfig.Controls.Add(this.LabelLoginAccount);
             this.PanelAccountConfig.Controls.Add(this.LabelConfirmPassword);
             this.PanelAccountConfig.Controls.Add(this.TBoxConfirmPassword);
             this.PanelAccountConfig.Controls.Add(this.TBoxPassword);
@@ -185,31 +187,45 @@
             this.PanelAccountConfig.TabIndex = 1;
             this.PanelAccountConfig.Visible = false;
             // 
-            // CBoxAccounts
+            // LabelLoginAccount
             // 
-            this.CBoxAccounts.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.CBoxAccounts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
-            this.CBoxAccounts.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CBoxAccounts.ForeColor = System.Drawing.Color.White;
-            this.CBoxAccounts.FormattingEnabled = true;
-            this.CBoxAccounts.Location = new System.Drawing.Point(60, 60);
-            this.CBoxAccounts.Name = "CBoxAccounts";
-            this.CBoxAccounts.Size = new System.Drawing.Size(240, 600);
-            this.CBoxAccounts.TabIndex = 0;
-            this.CBoxAccounts.SelectedIndexChanged += new System.EventHandler(this.cBoxAccounts_SelectedIndexChanged);
-            this.CBoxAccounts.TextUpdate += new System.EventHandler(this.cBoxAccounts_TextUpdate);
+            this.LabelLoginAccount.AutoSize = true;
+            this.LabelLoginAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelLoginAccount.Location = new System.Drawing.Point(60, 40);
+            this.LabelLoginAccount.Name = "LabelLoginAccount";
+            this.LabelLoginAccount.Size = new System.Drawing.Size(206, 23);
+            this.LabelLoginAccount.TabIndex = 7;
+            this.LabelLoginAccount.Text = "Current login account: ";
             // 
-            // BtnCreateAccount
+            // LabelConfirmPassword
             // 
-            this.BtnCreateAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnCreateAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCreateAccount.Location = new System.Drawing.Point(400, 60);
-            this.BtnCreateAccount.Name = "BtnCreateAccount";
-            this.BtnCreateAccount.Size = new System.Drawing.Size(120, 40);
-            this.BtnCreateAccount.TabIndex = 1;
-            this.BtnCreateAccount.Text = "Create";
-            this.BtnCreateAccount.UseVisualStyleBackColor = true;
-            this.BtnCreateAccount.Click += new System.EventHandler(this.BtnCreateAccount_Click);
+            this.LabelConfirmPassword.AutoSize = true;
+            this.LabelConfirmPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelConfirmPassword.Location = new System.Drawing.Point(600, 150);
+            this.LabelConfirmPassword.Name = "LabelConfirmPassword";
+            this.LabelConfirmPassword.Size = new System.Drawing.Size(153, 20);
+            this.LabelConfirmPassword.TabIndex = 6;
+            this.LabelConfirmPassword.Text = "Confirm Password:";
+            // 
+            // TBoxConfirmPassword
+            // 
+            this.TBoxConfirmPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBoxConfirmPassword.Location = new System.Drawing.Point(600, 180);
+            this.TBoxConfirmPassword.Name = "TBoxConfirmPassword";
+            this.TBoxConfirmPassword.Size = new System.Drawing.Size(140, 27);
+            this.TBoxConfirmPassword.TabIndex = 5;
+            this.TBoxConfirmPassword.UseSystemPasswordChar = true;
+            this.TBoxConfirmPassword.TextChanged += new System.EventHandler(this.PasswordInputUpdate);
+            // 
+            // TBoxPassword
+            // 
+            this.TBoxPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBoxPassword.Location = new System.Drawing.Point(400, 180);
+            this.TBoxPassword.Name = "TBoxPassword";
+            this.TBoxPassword.Size = new System.Drawing.Size(140, 27);
+            this.TBoxPassword.TabIndex = 4;
+            this.TBoxPassword.UseSystemPasswordChar = true;
+            this.TBoxPassword.TextChanged += new System.EventHandler(this.PasswordInputUpdate);
             // 
             // PanelExistingAccountControls
             // 
@@ -217,22 +233,21 @@
             this.PanelExistingAccountControls.Controls.Add(this.BtnChangePassword);
             this.PanelExistingAccountControls.Controls.Add(this.BtnDeleteAccount);
             this.PanelExistingAccountControls.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PanelExistingAccountControls.Location = new System.Drawing.Point(380, 40);
+            this.PanelExistingAccountControls.Location = new System.Drawing.Point(380, 70);
             this.PanelExistingAccountControls.Name = "PanelExistingAccountControls";
             this.PanelExistingAccountControls.Size = new System.Drawing.Size(400, 110);
             this.PanelExistingAccountControls.TabIndex = 2;
+            this.PanelExistingAccountControls.Visible = false;
             // 
-            // BtnDeleteAccount
+            // LabelNewPassword
             // 
-            this.BtnDeleteAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDeleteAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnDeleteAccount.Location = new System.Drawing.Point(20, 20);
-            this.BtnDeleteAccount.Name = "BtnDeleteAccount";
-            this.BtnDeleteAccount.Size = new System.Drawing.Size(120, 40);
-            this.BtnDeleteAccount.TabIndex = 2;
-            this.BtnDeleteAccount.Text = "Delete";
-            this.BtnDeleteAccount.UseVisualStyleBackColor = true;
-            this.BtnDeleteAccount.Click += new System.EventHandler(this.BtnDeleteAccount_Click);
+            this.LabelNewPassword.AutoSize = true;
+            this.LabelNewPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelNewPassword.Location = new System.Drawing.Point(20, 80);
+            this.LabelNewPassword.Name = "LabelNewPassword";
+            this.LabelNewPassword.Size = new System.Drawing.Size(124, 20);
+            this.LabelNewPassword.TabIndex = 4;
+            this.LabelNewPassword.Text = "New Password:";
             // 
             // BtnChangePassword
             // 
@@ -246,53 +261,53 @@
             this.BtnChangePassword.UseVisualStyleBackColor = true;
             this.BtnChangePassword.Click += new System.EventHandler(this.BtnChangePassword_Click);
             // 
+            // BtnDeleteAccount
+            // 
+            this.BtnDeleteAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnDeleteAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnDeleteAccount.Location = new System.Drawing.Point(20, 20);
+            this.BtnDeleteAccount.Name = "BtnDeleteAccount";
+            this.BtnDeleteAccount.Size = new System.Drawing.Size(120, 40);
+            this.BtnDeleteAccount.TabIndex = 2;
+            this.BtnDeleteAccount.Text = "Delete";
+            this.BtnDeleteAccount.UseVisualStyleBackColor = true;
+            this.BtnDeleteAccount.Click += new System.EventHandler(this.BtnDeleteAccount_Click);
+            // 
+            // BtnCreateAccount
+            // 
+            this.BtnCreateAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCreateAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCreateAccount.Location = new System.Drawing.Point(400, 90);
+            this.BtnCreateAccount.Name = "BtnCreateAccount";
+            this.BtnCreateAccount.Size = new System.Drawing.Size(120, 40);
+            this.BtnCreateAccount.TabIndex = 1;
+            this.BtnCreateAccount.Text = "Create";
+            this.BtnCreateAccount.UseVisualStyleBackColor = true;
+            this.BtnCreateAccount.Click += new System.EventHandler(this.BtnCreateAccount_Click);
+            // 
+            // CBoxAccounts
+            // 
+            this.CBoxAccounts.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.CBoxAccounts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+            this.CBoxAccounts.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBoxAccounts.ForeColor = System.Drawing.Color.White;
+            this.CBoxAccounts.FormattingEnabled = true;
+            this.CBoxAccounts.Location = new System.Drawing.Point(60, 90);
+            this.CBoxAccounts.Name = "CBoxAccounts";
+            this.CBoxAccounts.Size = new System.Drawing.Size(240, 600);
+            this.CBoxAccounts.TabIndex = 0;
+            this.CBoxAccounts.SelectedIndexChanged += new System.EventHandler(this.CBoxAccounts_SelectedIndexChanged);
+            this.CBoxAccounts.TextUpdate += new System.EventHandler(this.CBoxAccounts_TextUpdate);
+            // 
             // LabelPassword
             // 
             this.LabelPassword.AutoSize = true;
             this.LabelPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelPassword.Location = new System.Drawing.Point(400, 120);
+            this.LabelPassword.Location = new System.Drawing.Point(400, 150);
             this.LabelPassword.Name = "LabelPassword";
             this.LabelPassword.Size = new System.Drawing.Size(81, 20);
             this.LabelPassword.TabIndex = 3;
             this.LabelPassword.Text = "Password";
-            // 
-            // LabelNewPassword
-            // 
-            this.LabelNewPassword.AutoSize = true;
-            this.LabelNewPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelNewPassword.Location = new System.Drawing.Point(20, 80);
-            this.LabelNewPassword.Name = "LabelNewPassword";
-            this.LabelNewPassword.Size = new System.Drawing.Size(124, 20);
-            this.LabelNewPassword.TabIndex = 4;
-            this.LabelNewPassword.Text = "New Password:";
-            // 
-            // TBoxPassword
-            // 
-            this.TBoxPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBoxPassword.Location = new System.Drawing.Point(400, 150);
-            this.TBoxPassword.Name = "TBoxPassword";
-            this.TBoxPassword.Size = new System.Drawing.Size(140, 27);
-            this.TBoxPassword.TabIndex = 4;
-            this.TBoxPassword.UseSystemPasswordChar = true;
-            // 
-            // TBoxConfirmPassword
-            // 
-            this.TBoxConfirmPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBoxConfirmPassword.Location = new System.Drawing.Point(600, 150);
-            this.TBoxConfirmPassword.Name = "TBoxConfirmPassword";
-            this.TBoxConfirmPassword.Size = new System.Drawing.Size(140, 27);
-            this.TBoxConfirmPassword.TabIndex = 5;
-            this.TBoxConfirmPassword.UseSystemPasswordChar = true;
-            // 
-            // LabelConfirmPassword
-            // 
-            this.LabelConfirmPassword.AutoSize = true;
-            this.LabelConfirmPassword.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelConfirmPassword.Location = new System.Drawing.Point(600, 120);
-            this.LabelConfirmPassword.Name = "LabelConfirmPassword";
-            this.LabelConfirmPassword.Size = new System.Drawing.Size(153, 20);
-            this.LabelConfirmPassword.TabIndex = 6;
-            this.LabelConfirmPassword.Text = "Confirm Password:";
             // 
             // Configure
             // 
@@ -334,5 +349,6 @@
         private System.Windows.Forms.TextBox TBoxPassword;
         private System.Windows.Forms.TextBox TBoxConfirmPassword;
         private System.Windows.Forms.Label LabelConfirmPassword;
+        private System.Windows.Forms.Label LabelLoginAccount;
     }
 }

@@ -102,6 +102,7 @@ namespace Diva
 
         private ConfigData()
         {
+            clopts = new ConcurrentDictionary<string, string>();
             options = GetInitOptions();
             try
             {
