@@ -15,10 +15,14 @@ namespace Diva.Controls
 		int lasty = 0;
 		public MyGMap() : base()
 		{
+            MapScaleInfoEnabled = false;
+            DisableFocusOnMouseEnter = true;
+            //RoutesEnabled = true; // set by designer
+            ForceDoubleBuffer = false;
 
-		}
+        }
 
-		protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
 		{
 			var start = DateTime.Now;
 
