@@ -22,6 +22,17 @@ namespace Diva.Controls
 
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            MapProvider = GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+
+            MinZoom = 0;
+            MaxZoom = 24;
+            Zoom = 15;
+            base.OnLoad(e);
+        }
+
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
 		{
 			var start = DateTime.Now;

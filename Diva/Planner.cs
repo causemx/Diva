@@ -511,18 +511,6 @@ namespace Diva
 			return cmd;
 		}
 
-		private void myMap_Load(object sender, EventArgs e)
-		{
-			// myMap.MapProvider = GMapProviders.GoogleSatelliteMap;
-			myMap.MapProvider = GoogleSatelliteMapProvider.Instance;
-			GMaps.Instance.Mode = AccessMode.ServerOnly;
-
-			myMap.MinZoom = 0;
-			myMap.MaxZoom = 24;
-			myMap.Zoom = 15;
-		}
-
-
 		void comPort_MavChanged(object sender, EventArgs e)
 		{
 
