@@ -43,7 +43,7 @@ namespace Diva.Controls
 
         protected override void OnLoad(EventArgs e)
         {
-            SetMapProvider();
+            ResetMapProvider();
 
             MinZoom = 0;
             MaxZoom = 24;
@@ -52,7 +52,7 @@ namespace Diva.Controls
             base.OnLoad(e);
         }
 
-        public void SetMapProvider()
+        public void ResetMapProvider()
         {
             if (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == "true") try
             {

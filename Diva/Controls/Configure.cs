@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Diva.Controls
 {
@@ -227,7 +228,8 @@ namespace Diva.Controls
             MapConfigDirty = true;
         }
 
-        private void MapConfigChanged(object sender, EventArgs e) => MapConfigDirty = true;
+        private void MapConfigChanged(object sender, EventArgs e)
+            => MapConfigDirty = true;
 
         private void BtnMapConfigReset_Click(object sender, EventArgs e)
         {
@@ -239,9 +241,40 @@ namespace Diva.Controls
         {
             MapConfigDirty = false;
             ConfigData.SetOption(ConfigData.OptionName.MapCacheLocation, TBoxMapCacheLocation.Text);
+            double lat = Planner.MY_LAT, lng = Planner.MY_LNG, zoom = Planner.MY_ZOOM;
+            double.TryParse(TBoxIPLatitude.Text, out lat);
+            double.TryParse(TBoxIPLongitude.Text, out lng);
+            double.TryParse(TBoxInitialZoom.Text, out zoom);
             ConfigData.SetOption(ConfigData.OptionName.MapInitialLocation,
-                $"{TBoxIPLatitude.Text}|{TBoxIPLongitude.Text}|{TBoxInitialZoom.Text}");
+                $"{lat},{lng},{zoom}");
             ConfigData.SetOption(ConfigData.OptionName.ImageMapSource, TBoxIndoorMapLocation.Text);
+            bool imagemap = RBtnIndoorMap.Checked;
+            ConfigData.SetOption(ConfigData.OptionName.UseImageMap, imagemap.ToString());
+            if (imagemap || gmap.MapProvider != GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance)
+                gmap.ResetMapProvider();
+        }
+
+        private void BtnBrowseMapLocation_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new CommonOpenFileDialog())
+            {
+                dlg.EnsurePathExists = true;
+                dlg.IsFolderPicker = true;
+                dlg.InitialDirectory = TBoxMapCacheLocation.Text;
+                if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+                    TBoxMapCacheLocation.Text = dlg.FileName;
+            }
+        }
+
+        private void BtnBrowseIndoorMap_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.CheckFileExists = true;
+                var result = dlg.ShowDialog();
+                if (result == DialogResult.OK)
+                    TBoxIndoorMapLocation.Text = dlg.FileName;
+            }
         }
         #endregion
     }

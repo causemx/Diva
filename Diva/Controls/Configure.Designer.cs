@@ -435,6 +435,7 @@
             this.BtnBrowseIndoorMap.TabIndex = 10;
             this.BtnBrowseIndoorMap.Text = "Browse";
             this.BtnBrowseIndoorMap.UseVisualStyleBackColor = true;
+            this.BtnBrowseIndoorMap.Click += new System.EventHandler(this.BtnBrowseIndoorMap_Click);
             // 
             // RBtnIndoorMap
             // 
@@ -569,6 +570,7 @@
             this.BtnBrowseMapLocation.TabIndex = 10;
             this.BtnBrowseMapLocation.Text = "Browse";
             this.BtnBrowseMapLocation.UseVisualStyleBackColor = true;
+            this.BtnBrowseMapLocation.Click += new System.EventHandler(this.BtnBrowseMapLocation_Click);
             // 
             // RBtnGlobalMap
             // 

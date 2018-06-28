@@ -297,7 +297,7 @@ namespace Diva
                 string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
                 if (loc != "")
                 {
-                    string[] locs = loc.Split('|');
+                    string[] locs = loc.Split(',');
                     if (locs.Length > 1)
                     {
                         double.TryParse(locs[0], out lat);
