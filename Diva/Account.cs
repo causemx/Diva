@@ -179,8 +179,8 @@ namespace Diva
             try
             {
                 Accounts.Add(new Account(name, password));
-                if (ConfigData.GetOption(ConfigData.NO_ACCOUNT_ALERT) == "true")
-                    ConfigData.DeleteOption(ConfigData.NO_ACCOUNT_ALERT); // auto saved
+                if (ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert) == "true")
+                    ConfigData.DeleteOption(ConfigData.OptionName.SkipNoAccountAlert); // auto saved
                 else
                     ConfigData.Save();
                 ret = true;

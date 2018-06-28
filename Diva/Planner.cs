@@ -60,10 +60,11 @@ namespace Diva
 		public static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		private static readonly double MY_LAT = 24.773518;
-		private static readonly double MY_LNG = 121.0443385;
+		public const double MY_LAT = 24.773518;
+		public const double MY_LNG = 121.0443385;
+        public const double MY_ZOOM = 20;
 		private static readonly double WARN_ALT = 2D;
-		private GMapOverlay top;
+		//private GMapOverlay top;
 		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
         private Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
         private static readonly string[] overlayNames = {
@@ -232,7 +233,7 @@ namespace Diva
                 myMap.Overlays.Add(overlays[s] = new GMapOverlay(s))
             );
 
-			top = new GMapOverlay("top");
+			//top = new GMapOverlay("top");
 			// myMap.Overlays.Add(top);
 
 			overlays["objects"].Markers.Clear();
@@ -243,9 +244,9 @@ namespace Diva
 
 			// map center
 			center = new GMarkerGoogle(myMap.Position, GMarkerGoogleType.none);
-			top.Markers.Add(center);
+			//top.Markers.Add(center);
 
-			myMap.Zoom = 3;
+			//myMap.Zoom = 3;
 
 			// RegeneratePolygon();
 			updateCMDParams();
@@ -284,32 +285,50 @@ namespace Diva
 			drawnPolygon.Stroke = new Pen(Color.Red, 2);
 			drawnPolygon.Fill = Brushes.Transparent;
 
-			//set home
-			try
-			{
-				
-				myMap.Position = new PointLatLng(MY_LAT, MY_LNG);
-				myMap.Zoom = 20;
-				
-			}
-			catch (Exception ex)
+            //set home
+            double lng = MY_LNG, lat = MY_LAT, zoom = MY_ZOOM;
+            if (myMap.MapProvider is ImageMapProvider)
+            {
+                lng = 0;
+                lat = 0;
+                zoom = (myMap.MapProvider as ImageMapProvider).OriginalZoom;
+            } else try
+            {
+                string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
+                if (loc != "")
+                {
+                    string[] locs = loc.Split('|');
+                    if (locs.Length > 1)
+                    {
+                        double.TryParse(locs[0], out lat);
+                        double.TryParse(locs[1], out lng);
+                        if (locs.Length > 2)
+                            double.TryParse(locs[2], out zoom);
+                    }
+                }
+            }
+            catch (Exception ex)
 			{
 				log.Error(ex);
 			}
-		}
+            myMap.Position = new PointLatLng(lat, lng);
+            myMap.Zoom = zoom;
+            TxtHomeLatitude.Text = lat.ToString();
+            TxtHomeLongitude.Text = lng.ToString();
+        }
 
 
-		protected override void OnFormClosing(FormClosingEventArgs e)
+        /*protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			base.OnFormClosing(e);
 			foreach (MavlinkInterface _port in comPorts)
 			{
 				_port.onDestroy();
 			}
-		}
-		
+		}*/
 
-		private void AddRouteOverlay(int count)
+
+        private void AddRouteOverlay(int count)
 		{
 			GMapOverlay routesOverlay = new GMapOverlay(string.Format("route_{0}", count));
 			routesOverlays.Add(routesOverlay);
@@ -339,10 +358,7 @@ namespace Diva
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			foreach (MavlinkInterface mav in comPorts)
-			{
-				mav.onDestroy();
-			}
+            comPorts.ForEach(p => p.onDestroy());
 			timerMapItemUpdate.Stop();
 		}
 
@@ -517,7 +533,8 @@ namespace Diva
 			// TODO: Change mav when calling.
 		}
 
-		private void MainMap_OnCurrentPositionChanged(PointLatLng point)
+        #region GMap event handlers - move to MyGMap.cs when possible
+        private void MainMap_OnCurrentPositionChanged(PointLatLng point)
 		{
 			if (point.Lat > 90)
 			{
@@ -538,7 +555,7 @@ namespace Diva
 			center.Position = point;
 		}
 
-		void groupmarkeradd(GMapMarker marker)
+        void groupmarkeradd(GMapMarker marker)
 		{
 			System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
 			groupmarkers.Add(int.Parse(marker.Tag.ToString()));
@@ -1027,11 +1044,12 @@ namespace Diva
 				}
 			}
 		}
+        #endregion
 
-		
 
 
-		public static void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
+
+        public static void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
 		{
 			// Setup comport.basestream
 			switch (portname)
@@ -1346,10 +1364,14 @@ namespace Diva
 
 		private bool IsHomeEmpty()
 		{
-			if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
+            /*if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
 				return false;
 			else
-				return true;
+				return true;*/
+            double holder;
+            return !double.TryParse(TxtHomeAltitude.Text, out holder) ||
+                    !double.TryParse(TxtHomeLatitude.Text, out holder) ||
+                    !double.TryParse(TxtHomeLongitude.Text, out holder);
 		}
 
 		private void ChangeColumnHeader(string command)
@@ -3081,8 +3103,8 @@ namespace Diva
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-			Configure config = new Configure();
-			config.Show();
+			Configure config = new Configure(myMap);
+			config.ShowDialog();
 		}
 
 		private bool isTagging = false;

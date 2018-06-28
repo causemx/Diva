@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NDesk.Options;
 
 namespace Diva
 {
@@ -76,6 +77,17 @@ namespace Diva
         }
         #endregion
 
+        public class OptionName
+        {
+            public const string SkipNoAccountAlert = "NoAccountAlert";
+            public const string MapCacheLocation = "MapCacheLocation";
+            public const string MapInitialLocation = "MapInitialLocation";
+            public const string ImageMapSource = "ImageMapSource";
+            public const string UseImageMap = "UseImageMap";
+            public const string Salt = "Salt";
+            public const string Version = "Version";
+        }
+
         private static readonly Lazy<ConfigData> lazy = new Lazy<ConfigData>(() => new ConfigData());
         private static Configuration config;
 
@@ -83,11 +95,10 @@ namespace Diva
         public static bool Ready => lazy.Value.ready || Load();
         private ConcurrentDictionary<string, object> typeLists = new ConcurrentDictionary<string, object>();
         private static ConcurrentDictionary<string, object> Lists => lazy.Value.typeLists;
-        private ConcurrentDictionary<string, string> options, clopts;
-        public static ConcurrentDictionary<string, string> Options => lazy.Value.options;
-        public static ConcurrentDictionary<string, string> CLOptions => lazy.Value.clopts;
 
-        public const string NO_ACCOUNT_ALERT = "NoAccountAlert";
+        #region Config options
+        private ConcurrentDictionary<string, string> options;
+        public static ConcurrentDictionary<string, string> Options => lazy.Value.options;
         private static ConcurrentDictionary<string, string> GetInitOptions()
         {
             const string VERSION_STRING = "1.0.0.0";
@@ -95,10 +106,35 @@ namespace Diva
 
             return new ConcurrentDictionary<string, string>
             {
-                ["Version"] = VERSION_STRING,
-                ["Salt"] = NO_ENCRYPT_SALT
+                [OptionName.Version] = VERSION_STRING,
+                [OptionName.Salt] = NO_ENCRYPT_SALT
             };
         }
+        #endregion
+
+        #region Command line options
+        private ConcurrentDictionary<string, string> clopts;
+        public static ConcurrentDictionary<string, string> CLOptions => lazy.Value.clopts;
+        public static void ParseCommandLine(string[] args)
+        {
+            try
+            {
+                void setOpt(string o, string v, string defval = null) => CLOptions[o] = defval ?? v;
+                new OptionSet()
+                {
+                    { "a|NoAccountAlert", v => setOpt(OptionName.SkipNoAccountAlert, v, "true") },
+                    { "c|MapCacheLocation=", v => setOpt(OptionName.MapCacheLocation, v) },
+                    { "i|ImageMapSource=", v => setOpt(OptionName.ImageMapSource, v) },
+                    { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
+                    { "s|Salt=", v => setOpt(OptionName.Salt, v) },
+                    { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }
+                }.Parse(args);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        #endregion
 
         private ConfigData()
         {
@@ -132,9 +168,9 @@ namespace Diva
         public static void SetOption(string name, string value)
         {
             string output;
-            CLOptions.TryRemove(name, out output);
             if (GetOption(name) != value)
             {
+                CLOptions.TryRemove(name, out output);
                 Options[name] = value;
                 Save();
             }
@@ -167,7 +203,7 @@ namespace Diva
                     lazy.Value.options = config.AppSettings.Settings["divaOptions"] == null ?
                             GetInitOptions() :
                             JsonConvert.DeserializeObject<ConcurrentDictionary<string, string>>
-                                (RequoteJson(config.AppSettings.Settings["divaOptions"].Value));
+                                (config.AppSettings.Settings["divaOptions"].Value);
                     string[] args = Environment.GetCommandLineArgs();
                     foreach (string arg in args)
                     {
@@ -181,12 +217,12 @@ namespace Diva
                             catch { }
                         }
                     }
-                    bool decrypt = Options["Salt"] != "0";
+                    bool decrypt = GetOption(OptionName.Salt) != "0";
                     if (decrypt)
                     {
                         if (!config.AppSettings.Settings.AllKeys.Contains(AccountManager.AccountConfigEntryName))
                             throw new InvalidDataException("No account data found.");
-                        DataCryptor.Salt = UInt64.Parse(Options["Salt"]) +
+                        DataCryptor.Salt = UInt64.Parse(Options[OptionName.Salt]) +
                                     Convert.ToUInt64(config.AppSettings.Settings["divaOptions"].Value.Length);
                     }
                     var asms = AppDomain.CurrentDomain.GetAssemblies();
@@ -217,7 +253,6 @@ namespace Diva
                                     && m.IsGenericMethodDefinition
                                     && m.GetParameters().Length == 1
                                     && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
-                            if (t.GetCustomAttribute<UnquoteJson>() != null) jstr = RequoteJson(jstr);
                             var list = deserializeMethod.Invoke(null, new object[] { jstr });
                             var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
                             updateListMethod.Invoke(lazy.Value, new object[] { list });
@@ -252,16 +287,12 @@ namespace Diva
         private static int WriteSetting(string key, object obj, bool encrypt)
         {
             string jstr = JsonConvert.SerializeObject(obj);
-            bool unquote = key == "divaOptions";
-            if (!unquote)
+            if (key != "divaOptions")
             {
                 Type type = obj.GetType();
                 if (type.IsGenericType)
                     type = type.GetGenericArguments()[0];
-                unquote = type.GetCustomAttribute<UnquoteJson>() != null;
             }
-            if (unquote)
-                jstr = jstr.Replace("\"", "");
             if (encrypt)
                 jstr = DataCryptor.Encrypt(jstr);
             if (config.AppSettings.Settings[key] == null)
@@ -284,13 +315,13 @@ namespace Diva
                         byte[] buffer = new byte[sizeof(UInt64)];
                         rng.GetBytes(buffer);
                         salt = BitConverter.ToUInt64(buffer, 0);
-                        Options["Salt"] = salt.ToString();
+                        Options[OptionName.Salt] = salt.ToString();
                     }
                     salt += Convert.ToUInt64(WriteSetting("divaOptions", Options, false));
                     DataCryptor.Salt = salt;
                 } else
                 {
-                    Options["Salt"] = "0";
+                    Options[OptionName.Salt] = "0";
                     WriteSetting("divaOptions", Options, false);
                 }
                 foreach (var kv in Lists) try

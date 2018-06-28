@@ -12,16 +12,32 @@ namespace Diva.Controls
 {
 	public partial class Configure : Form
 	{
+        private Dictionary<Button, Panel> pages;
+        private MyGMap gmap;
         private bool disableSelectionUpate;
         private string loginAccount = AccountManager.GetLoginAccount();
 
-		public Configure()
+		public Configure(MyGMap map)
         {
             InitializeComponent();
 
-            LabelLoginAccount.Text += loginAccount == "" ? "(Anonymous)" : loginAccount;
+            gmap = map;
+            pages = new Dictionary<Button, Panel>()
+            {
+                { BtnMap, PanelMapControls },
+                { BtnAccount, PanelAccountConfig }
+            };
+            UpdateTabPages();
 
-            LoadAccount();
+            InitMapPage();
+            MapConfigDirty = false;
+            InitAccountPage();
+        }
+
+        private void UpdateTabPages()
+        {
+            foreach (var p in pages)
+                p.Value.Visible = IndicatorPanel.Top == p.Key.Top;
         }
 
         private void MenuButton_Click(object sender, EventArgs e)
@@ -33,9 +49,9 @@ namespace Diva.Controls
 
 			IndicatorPanel.Height = btn.Height;
 			IndicatorPanel.Top = btn.Top;
-            PanelAccountConfig.Visible = false;
+            UpdateTabPages();
 
-			switch (((Button)sender).Name)
+            /*switch (((Button)sender).Name)
 			{
 				case "BtnVehicle":
 					break;
@@ -43,15 +59,47 @@ namespace Diva.Controls
 					break;
 				case "BtnTuning":
 					break;
+                case "BtnMap":
+                    break;
                 case "BtnAccount":
-                    PanelAccountConfig.Visible = true;
                     break;
                 case "BtnAbout":
 					break;
-			}
-		}
+			}*/
+        }
+
+        public static void SetEnabled(Control c, bool enabled)
+        {
+            c.Enabled = enabled;
+            if (c is Button)
+            {
+                c.BackColor = enabled ? SystemColors.InactiveCaptionText : Color.Gray;
+            } else if (c is Label)
+            {
+                c.Enabled = true;
+                c.ForeColor = enabled ? Color.White : Color.Gray;
+            }
+        }
 
         #region Account Configuration
+        private void InitAccountPage()
+        {
+            if (loginAccount == "")
+            {
+                if (ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert) == "true")
+                {
+                    BtnAccount.Visible = false;
+                    BtnAbout.Top = BtnAccount.Top;
+                }
+                else
+                    LabelLoginAccount.Text += "(Anonymous)";
+            }
+            else
+                LabelLoginAccount.Text += loginAccount;
+
+            LoadAccount();
+        }
+
         private void LoadAccount()
         {
             string acc = CBoxAccounts.Text;
@@ -77,13 +125,10 @@ namespace Diva.Controls
             PanelExistingAccountControls.Visible = accoutExist;
             if (accoutExist)
             {
-                BtnDeleteAccount.Enabled = CBoxAccounts.Text != AccountManager.GetLoginAccount();
-                BtnChangePassword.Enabled = passwordConfirmed;
+                SetEnabled(BtnDeleteAccount, CBoxAccounts.Text != AccountManager.GetLoginAccount());
+                SetEnabled(BtnChangePassword, passwordConfirmed);
             } else
-                BtnCreateAccount.Enabled = passwordConfirmed;
-            BtnCreateAccount.BackColor = BtnCreateAccount.Enabled ? SystemColors.InactiveCaptionText : Color.Gray;
-            BtnDeleteAccount.BackColor = BtnDeleteAccount.Enabled ? SystemColors.InactiveCaptionText : Color.Gray;
-            BtnChangePassword.BackColor = BtnChangePassword.Enabled ? SystemColors.InactiveCaptionText : Color.Gray;
+                SetEnabled(BtnCreateAccount, passwordConfirmed);
         }
 
         private void PasswordInputUpdate(object o, EventArgs e) => UpdateAccountPanelControls();
@@ -131,6 +176,72 @@ namespace Diva.Controls
             AccountManager.ChangePassword(CBoxAccounts.Text, TBoxPassword.Text);
             TBoxPassword.Text = TBoxConfirmPassword.Text = "";
             UpdateAccountPanelControls();
+        }
+        #endregion
+
+        #region Map Configuration
+        private bool mapConfigDirty;
+        private bool MapConfigDirty { get => mapConfigDirty;
+            set
+            {
+                mapConfigDirty = value;
+                SetEnabled(BtnMapConfigApply, value);
+                SetEnabled(BtnMapConfigReset, value);
+            }
+        }
+        private void InitMapPage()
+        {
+            TBoxMapCacheLocation.Text = gmap.CacheLocation;
+
+            double lng = Planner.MY_LNG, lat = Planner.MY_LAT, zoom = Planner.MY_ZOOM;
+
+            string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
+            if (loc != "")
+            {
+                string[] locs = loc.Split('|');
+                if (locs.Length > 1)
+                {
+                    double.TryParse(locs[0], out lat);
+                    double.TryParse(locs[1], out lng);
+                    if (locs.Length > 2)
+                        double.TryParse(locs[2], out zoom);
+                }
+            }
+            TBoxIPLatitude.Text = lat.ToString();
+            TBoxIPLongitude.Text = lng.ToString();
+            TBoxInitialZoom.Text = zoom.ToString();
+            (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == "true" ?
+                RBtnIndoorMap : RBtnGlobalMap).Checked = true;
+        }
+
+        private void MapControl_RadioCheckedChanged(object sender, EventArgs e)
+        {
+            void updateControls(Control container, bool enabled)
+            {
+                foreach (Control c in container.Controls)
+                    SetEnabled(c, enabled);
+            }
+            if (!(sender as RadioButton).Checked) return;
+            updateControls(PanelGlobalMapControls, RBtnGlobalMap.Checked);
+            updateControls(PanelIndoorMapControls, RBtnIndoorMap.Checked);
+            MapConfigDirty = true;
+        }
+
+        private void MapConfigChanged(object sender, EventArgs e) => MapConfigDirty = true;
+
+        private void BtnMapConfigReset_Click(object sender, EventArgs e)
+        {
+            InitMapPage();
+            MapConfigDirty = false;
+        }
+
+        private void BtnMapConfigApply_Click(object sender, EventArgs e)
+        {
+            MapConfigDirty = false;
+            ConfigData.SetOption(ConfigData.OptionName.MapCacheLocation, TBoxMapCacheLocation.Text);
+            ConfigData.SetOption(ConfigData.OptionName.MapInitialLocation,
+                $"{TBoxIPLatitude.Text}|{TBoxIPLongitude.Text}|{TBoxInitialZoom.Text}");
+            ConfigData.SetOption(ConfigData.OptionName.ImageMapSource, TBoxIndoorMapLocation.Text);
         }
         #endregion
     }

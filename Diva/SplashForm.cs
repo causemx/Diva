@@ -66,7 +66,7 @@ namespace Diva
                 if (AccountManager.GetAccounts().Count() == 0)
                 {
                     bool noAlert = false;
-                    Boolean.TryParse(ConfigData.GetOption(ConfigData.NO_ACCOUNT_ALERT), out noAlert);
+                    Boolean.TryParse(ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert), out noAlert);
                     if (noAlert) return true;
                     panelNewAccount.Visible = true;
                     lblProgress.Text = "Create account to protect your data.";
@@ -142,7 +142,7 @@ namespace Diva
         private void btnSkip_Click(object sender, EventArgs e)
         {
             if (cBoxDontNotify.Checked)
-                ConfigData.SetOption(ConfigData.NO_ACCOUNT_ALERT, true.ToString());
+                ConfigData.SetOption(ConfigData.OptionName.SkipNoAccountAlert, true.ToString());
             ActiveClose(true);
         }
 
