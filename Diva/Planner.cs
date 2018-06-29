@@ -1841,7 +1841,9 @@ namespace Diva
 							continue;
 
 						dist += myMap.MapProvider.Projection.GetDistance(fullpointlist[a - 1], fullpointlist[a]);
-						CurrentDroneInfo.UpdateAssumeTime(dist);
+
+
+						CurrentDroneInfo.UpdateAssumeTime(dist + homedist);
 					}
 
 					log.Info("Total distance: " + FormatDistance(dist + homedist, false));
