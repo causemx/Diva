@@ -3,6 +3,7 @@ namespace GMap.NET
 {
    using System;
    using System.IO;
+   using System.Drawing;
 
    /// <summary>
    /// image abstraction proxy
@@ -29,12 +30,45 @@ namespace GMap.NET
 
          return pi;
       }
-   }
 
-   /// <summary>
-   /// image abstraction
-   /// </summary>
-   public abstract class PureImage : IDisposable
+        public PureImage GenerateDebugTile(string text, int x, int y, int z,
+    Font font = null, Color? fg = null, Color? bg = null)
+        {
+            font = font ?? SystemFonts.DefaultFont;
+            font = new Font(font.FontFamily, 24);
+            var fb = new SolidBrush(fg ?? SystemColors.WindowText);
+            PureImage ret = null;
+            using (Image image = new Bitmap(256, 256))
+            using (var g = Graphics.FromImage(image))
+            {
+                g.FillRectangle(SystemBrushes.ActiveBorder, 0, 0, 256, 256);
+                g.FillRectangle(new SolidBrush(bg ?? SystemColors.WindowFrame), 4, 4, 252, 252);
+                g.DrawString(text, font, fb, 12, 12);
+                var size = g.MeasureString(text, font);
+                g.DrawString($"Tile ({x}, {y})\nZoom Level={z}",
+                    new Font(font.FontFamily, 12), fb, 12, 36 + size.Height);
+                ret = FromImage(image);
+            }
+            return ret;
+        }
+
+        public PureImage FromImage(Image image)
+        {
+            PureImage ret = null;
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Position = 0;
+                ret = FromStream(ms);
+            }
+            return ret;
+        }
+    }
+
+    /// <summary>
+    /// image abstraction
+    /// </summary>
+    public abstract class PureImage : IDisposable
    {
       public MemoryStream Data;
 

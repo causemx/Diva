@@ -870,7 +870,6 @@ namespace Diva
 			this.myMap.Size = new System.Drawing.Size(948, 528);
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 0D;
-			this.myMap.Load += new System.EventHandler(this.myMap_Load);
 			// 
 			// Planner
 			// 

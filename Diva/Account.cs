@@ -12,6 +12,7 @@ namespace Diva
         public enum Privilege
         {
             None,
+            Guest,
             Operator,
             Administrator
         }
@@ -36,9 +37,8 @@ namespace Diva
             }
 
             private byte[] GenerateHash(string password)
-            {
-                return new Rfc2898DeriveBytes(password, Salt, HashIterations).GetBytes(HashSize);
-            }
+                => new Rfc2898DeriveBytes(password, Salt, HashIterations)
+                    .GetBytes(HashSize);
 
             public Account(string name, string password, Privilege type = Privilege.Administrator)
             {
@@ -67,20 +67,23 @@ namespace Diva
 
             public void SetType(Privilege type) { Type = type; }
 
-            public static bool Authenticate(Account acc, string password)
+            public bool Authenticate(string password)
             {
-                bool ret = false;
-                if (!AuthenticationLocked)
+                bool ret = !IsAuthenticationLocked;
+                if (ret)
                 {
-                    ret = acc != null && acc.Hash.SequenceEqual(
-                                            acc.GenerateHash(password));
+                    ret = Hash.SequenceEqual(GenerateHash(password));
                     if (ret)
                         AuthenticationSuceeded();
                     else
                         AuthenticationFailed();
                 }
                 return ret;
+
             }
+
+            public static bool Authenticate(Account acc, string password)
+                => acc != null && acc.Authenticate(password);
 
             public void UpdateLockInfo()
             {
@@ -91,33 +94,25 @@ namespace Diva
             }
         }
 
+        #region AccountManager Members and Properties
         private const int MAX_RETRIES = 15;
         private const int RETRY_TIMEOUT = 60 * 1000;
         private const int RETRY_LOCK_TIMEOUT = 30 * RETRY_TIMEOUT;
         private const string LOCK_ACCOUNT_NAME = "_lock";
         private static readonly Lazy<AccountManager> lazy = new Lazy<AccountManager>(() => new AccountManager());
         private Timer timer;
-        private static Timer RetryTimer { get { return lazy.Value.timer; } }
+        private static Timer RetryTimer => lazy.Value.timer;
         private static int retryCount;
         public static DateTime RetryUnlockTime { get; private set; }
-        private static List<Account> Accounts { get { return lazy.Value.accountList; } }
+        private static List<Account> Accounts => lazy.Value.accountList;
         private List<Account> accountList;
         private Account current;
-
         public static bool IsAuthenticated
-        {
-            get { return Accounts.Count == 0 || lazy.Value.current != null; }
-        }
-
-        public static bool AuthenticationLocked
-        {
-            get { return retryCount >= MAX_RETRIES; }
-        }
-
+            => Accounts.Count == 0 || lazy.Value.current != null;
+        public static bool IsAuthenticationLocked => retryCount >= MAX_RETRIES;
         public static string AccountConfigEntryName
-        {
-            get { return "dv" + typeof(Account).FullName.Substring(5); }
-        }
+            => "dv" + typeof(Account).FullName.Substring(5);
+        #endregion
 
         private AccountManager()
         {
@@ -158,28 +153,39 @@ namespace Diva
         }
 
         public static IEnumerable<string> GetAccounts()
-        {
-            return from acc in Accounts select acc.Name;
-        }
+            => from acc in Accounts select acc.Name;
 
-        public static bool ValidAccountName(string name)
+        public static bool AccountExist(string name)
+            => GetAccount(name) != null;
+
+        public static bool VerifyAccount(string name, string password)
+            => GetAccount(name).Authenticate(password);
+
+        public static bool IsValidAccountName(string name)
         {
             return new System.Text.RegularExpressions.Regex(
                     "[A-Za-z][A-Za-z0-9_]*").Match(name).Length == name.Length;
         }
 
+        public static bool IsValidPassword(string password)
+        {
+            return true;
+        }
+
         public static bool CreateAccount(string name, string password)
         {
-            bool ret = name.Length > 0 && !Accounts.Exists(a => a.Name == name)
-                && ValidAccountName(name);
-            if (ret)
+            // assume already checked
+            bool ret = false;
+            try
             {
                 Accounts.Add(new Account(name, password));
-                if (ConfigData.GetOption(ConfigData.NO_ACCOUNT_ALERT) == "true")
-                    ConfigData.DeleteOption(ConfigData.NO_ACCOUNT_ALERT); // auto saved
+                if (ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert) == "true")
+                    ConfigData.DeleteOption(ConfigData.OptionName.SkipNoAccountAlert); // auto saved
                 else
                     ConfigData.Save();
-            }
+                ret = true;
+            } catch
+            { }
             return ret;
         }
 
@@ -204,16 +210,23 @@ namespace Diva
         {
             Account acc = GetAccount(oldName);
             bool ret = acc != null && !Accounts.Exists(a => a.Name == newName);
-            if (ret) acc.Rename(newName);
+            if (ret)
+            {
+                acc.Rename(newName);
+                ConfigData.Save();
+            }
             return ret;
         }
 
-        public static bool ChangePassword(string name, string oldPassword, string newPassword)
+        public static bool ChangePassword(string name, string newPassword)
         {
             Account acc = GetAccount(name);
-            bool ret = Account.Authenticate(acc, oldPassword);
-            if (ret) acc.SetPassword(newPassword);
-            return ret;
+            if (acc != null)
+            {
+                acc.SetPassword(newPassword);
+                ConfigData.Save();
+            }
+            return acc != null;
         }
 
         public static string GetLoginAccount()
@@ -246,11 +259,6 @@ namespace Diva
             _lock.UpdateLockInfo();
             ConfigData.Save();
             //if (retryCount >= MAX_RETRIES) throw new TimeoutException("Too many tries, try again later.");
-        }
-
-        public static bool VerifyAccount(string name, string password)
-        {
-            return Account.Authenticate(GetAccount(name), password);
         }
 
         public static bool Login(string name, string password)
