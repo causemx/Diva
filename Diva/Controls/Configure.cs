@@ -194,7 +194,7 @@ namespace Diva.Controls
         {
             TBoxMapCacheLocation.Text = gmap.CacheLocation;
 
-            double lng = Planner.MY_LNG, lat = Planner.MY_LAT, zoom = Planner.MY_ZOOM;
+            double lng = Planner.DEFAULT_LONGITUDE, lat = Planner.DEFAULT_LATITUDE, zoom = Planner.DEFAULT_ZOOM;
 
             string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
             if (loc != "")
@@ -241,7 +241,7 @@ namespace Diva.Controls
         {
             MapConfigDirty = false;
             ConfigData.SetOption(ConfigData.OptionName.MapCacheLocation, TBoxMapCacheLocation.Text);
-            double lat = Planner.MY_LAT, lng = Planner.MY_LNG, zoom = Planner.MY_ZOOM;
+            double lat = Planner.DEFAULT_LATITUDE, lng = Planner.DEFAULT_LONGITUDE, zoom = Planner.DEFAULT_ZOOM;
             double.TryParse(TBoxIPLatitude.Text, out lat);
             double.TryParse(TBoxIPLongitude.Text, out lng);
             double.TryParse(TBoxInitialZoom.Text, out zoom);

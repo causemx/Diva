@@ -33,8 +33,12 @@ namespace Diva
 	{
 
 		public static List<MavlinkInterface> comPorts = new List<MavlinkInterface>();
+        public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        public const double DEFAULT_LATITUDE = 24.773518;
+        public const double DEFAULT_LONGITUDE = 121.0443385;
+        public const double DEFAULT_ZOOM = 20;
 
-		public static MavlinkInterface comPort
+        public static MavlinkInterface comPort
 		{
 			get
 			{
@@ -59,10 +63,6 @@ namespace Diva
 
 		public static MavlinkInterface _comPort = new MavlinkInterface();
 
-		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		public const double MY_LAT = 24.773518;
-		public const double MY_LNG = 121.0443385;
-        public const double MY_ZOOM = 20;
 		private static readonly double WARN_ALT = 2D;
 		//private GMapOverlay top;
 		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
@@ -286,7 +286,7 @@ namespace Diva
 			drawnPolygon.Fill = Brushes.Transparent;
 
             //set home
-            double lng = MY_LNG, lat = MY_LAT, zoom = MY_ZOOM;
+            double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
             if (myMap.MapProvider is ImageMapProvider)
             {
                 lng = 0;
