@@ -175,6 +175,12 @@
     <Compile Include="Controls\DroneInput.Designer.cs">
       <DependentUpon>DroneInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FileBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\FileBrowser.Designer.cs">
+      <DependentUpon>FileBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyButton.cs">
@@ -185,6 +191,12 @@
     </Compile>
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MyListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MyListView.Designer.cs">
+      <DependentUpon>MyListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MyVideoForm.cs">
       <SubType>Form</SubType>
@@ -266,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInput.resx">
       <DependentUpon>DroneInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FileBrowser.resx">
+      <DependentUpon>FileBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
