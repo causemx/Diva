@@ -3520,44 +3520,56 @@ namespace Diva
 		}
 
 
+		public void Mission_Click(object sender, EventArgs e)
+		{
+			MyListView _myListView = (MyListView)sender;
+			log.Info("focus file: " + _myListView.FocusFile);
+
+			string file = _myListView.FocusFile;
+
+			if (File.Exists(file))
+			{
+
+				string line = "";
+				using (var fs = File.OpenText(file))
+				{
+					line = fs.ReadLine();
+				}
+
+				if (line.StartsWith("{"))
+				{
+					var format = MissionFile.ReadFile(file);
+
+					var cmds = MissionFile.ConvertToLocationwps(format);
+
+					processToScreen(cmds);
+
+					writeKML();
+
+					myMap.ZoomAndCenterMarkers("objects");
+				}
+				else
+				{
+					wpfilename = file;
+					readQGC110wpfile(file);
+				}
+				//lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+				mFileBrowser.Dispose();
+				MessageBox.Show("Loaded " + Path.GetFileName(file));
+			}
+
+		}
+
+		FileBrowser mFileBrowser = null;
+
 		private void BtnReadMission_Click(object sender, EventArgs e)
 		{
-			using (OpenFileDialog fd = new OpenFileDialog())
-			{
-				fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
-				DialogResult result = fd.ShowDialog();
-				string file = fd.FileName;
 
-				if (File.Exists(file))
-				{
-					
-					string line = "";
-					using (var fs = File.OpenText(file))
-					{
-						line = fs.ReadLine();
-					}
-
-					if (line.StartsWith("{"))
-					{
-						var format = MissionFile.ReadFile(file);
-
-						var cmds = MissionFile.ConvertToLocationwps(format);
-
-						processToScreen(cmds);
-
-						writeKML();
-
-						myMap.ZoomAndCenterMarkers("objects");
-					}
-					else
-					{
-						wpfilename = file;
-						readQGC110wpfile(file);
-					}
-					//lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
-					MessageBox.Show("Loaded " + Path.GetFileName(file));
-				}
-			}
+			mFileBrowser = new FileBrowser();
+			mFileBrowser.MissionClick += new EventHandler(Mission_Click);
+			mFileBrowser.Show();
+			
 		}
+
 	}
 }
