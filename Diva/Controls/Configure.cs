@@ -28,17 +28,17 @@ namespace Diva.Controls
                 { BtnMap, PanelMapControls },
                 { BtnAccount, PanelAccountConfig }
             };
-            UpdateTabPages();
+            UpdateTabPages(BtnAbout);
 
             InitMapPage();
             MapConfigDirty = false;
             InitAccountPage();
         }
 
-        private void UpdateTabPages()
+        private void UpdateTabPages(Button b)
         {
             foreach (var p in pages)
-                p.Value.Visible = IndicatorPanel.Top == p.Key.Top;
+                p.Value.Visible = b == p.Key;
         }
 
         private void MenuButton_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace Diva.Controls
 
 			IndicatorPanel.Height = btn.Height;
 			IndicatorPanel.Top = btn.Top;
-            UpdateTabPages();
+            UpdateTabPages(btn);
 
             /*switch (((Button)sender).Name)
 			{
