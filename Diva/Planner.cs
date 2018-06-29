@@ -1841,7 +1841,10 @@ namespace Diva
 							continue;
 
 						dist += myMap.MapProvider.Projection.GetDistance(fullpointlist[a - 1], fullpointlist[a]);
+						CurrentDroneInfo.UpdateAssumeTime(dist);
 					}
+
+					log.Info("Total distance: " + FormatDistance(dist + homedist, false));
 
 				}
 
@@ -1850,6 +1853,41 @@ namespace Diva
 			catch (Exception ex)
 			{
 				log.Info(ex.ToString());
+			}
+		}
+
+
+		/// <summary>
+		/// Format distance according to prefer distance unit
+		/// </summary>
+		/// <param name="distInKM">distance in kilometers</param>
+		/// <param name="toMeterOrFeet">convert distance to meter or feet if true, covert to km or miles if false</param>
+		/// <returns>formatted distance with unit</returns>
+		private string FormatDistance(double distInKM, bool toMeterOrFeet)
+		{
+			string sunits = Utilities.Settings.Instance["distunits"];
+			Utility.distances units = Utility.distances.Meters;
+
+			if (sunits != null)
+				try
+				{
+					units = (Utility.distances)Enum.Parse(typeof(Utility.distances), sunits);
+				}
+				catch (Exception)
+				{
+				}
+
+			switch (units)
+			{
+				case Utility.distances.Feet:
+					return toMeterOrFeet
+						? string.Format((distInKM * 3280.8399).ToString("0.00 ft"))
+						: string.Format((distInKM * 0.621371).ToString("0.0000 miles"));
+				case Utility.distances.Meters:
+				default:
+					return toMeterOrFeet
+						? string.Format((distInKM * 1000).ToString("0.00 m"))
+						: string.Format(distInKM.ToString("0.0000 km"));
 			}
 		}
 
@@ -2741,20 +2779,79 @@ namespace Diva
 
 		}
 
+		public int AddCommand(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+			double z, object tag = null)
+		{
+			selectedrow = dgvWayPoints.Rows.Add();
+
+			FillCommand(this.selectedrow, cmd, p1, p2, p3, p4, x, y, z, tag);
+
+			writeKML();
+
+			return selectedrow;
+		}
+
+		public void InsertCommand(int rowIndex, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+			double z, object tag = null)
+		{
+			if (dgvWayPoints.Rows.Count <= rowIndex)
+			{
+				AddCommand(cmd, p1, p2, p3, p4, x, y, z, tag);
+				return;
+			}
+
+			dgvWayPoints.Rows.Insert(rowIndex);
+
+			this.selectedrow = rowIndex;
+
+			FillCommand(this.selectedrow, cmd, p1, p2, p3, p4, x, y, z, tag);
+
+			writeKML();
+		}
+
+		private void FillCommand(int rowIndex, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
+			double y, double z, object tag = null)
+		{
+			dgvWayPoints.Rows[rowIndex].Cells[colCommand.Index].Value = cmd.ToString();
+			dgvWayPoints.Rows[rowIndex].Cells[colTagData.Index].Tag = tag;
+			dgvWayPoints.Rows[rowIndex].Cells[colTagData.Index].Value = tag;
+
+			ChangeColumnHeader(cmd.ToString());
+
+			if (cmd == MAVLink.MAV_CMD.WAYPOINT)
+			{
+				// add delay if supplied
+				dgvWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
+
+				setfromMap(y, x, (int)z, Math.Round(p1, 1));
+			}
+			else if (cmd == MAVLink.MAV_CMD.LOITER_UNLIM)
+			{
+				setfromMap(y, x, (int)z);
+			}
+			else
+			{
+				dgvWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
+				dgvWayPoints.Rows[rowIndex].Cells[colParam2.Index].Value = p2;
+				dgvWayPoints.Rows[rowIndex].Cells[colParam3.Index].Value = p3;
+				dgvWayPoints.Rows[rowIndex].Cells[colParam4.Index].Value = p4;
+				dgvWayPoints.Rows[rowIndex].Cells[colLatitude.Index].Value = y;
+				dgvWayPoints.Rows[rowIndex].Cells[colLongitude.Index].Value = x;
+				dgvWayPoints.Rows[rowIndex].Cells[colAltitude.Index].Value = z;
+			}
+		}
+
+
+
 		public void BUT_Batch_Connect_Click(object sender, EventArgs e)
 		{
-			
+			if (connectionDialog is null)
+				return;
+
 			string portname1 = ConnectionForm.aircrafts["APM1"].port_name;
 			string portnumber1 = ConnectionForm.aircrafts["APM1"].port_number;
 			string baudrate1 = ConnectionForm.aircrafts["APM1"].baudrate;
 
-			string portname2 = ConnectionForm.aircrafts["APM2"].port_name;
-			string portnumber2 = ConnectionForm.aircrafts["APM2"].port_number;
-			string baudrate2 = ConnectionForm.aircrafts["APM2"].baudrate;
-
-			string portname3 = ConnectionForm.aircrafts["APM3"].port_name;
-			string portnumber3 = ConnectionForm.aircrafts["APM3"].port_number;
-			string baudrate3 = ConnectionForm.aircrafts["APM3"].baudrate;
 
 			try
 			{
@@ -2767,46 +2864,24 @@ namespace Diva
 				DroneInfo1.Activate();
 				CurrentDroneInfo = DroneInfo1;
 				comPort = mav;
-
-				Thread.Sleep(3000);
-
-				var mav2 = new MavlinkInterface();
-				doConnect(mav2, portname2, portnumber2, baudrate2);
-				mav2.onCreate();
-				comPorts.Add(mav2);
-				AddRouteOverlay(comPorts.Count);
-				mav2.MAV.GuidedMode.z = 10;
-				DroneInfo2.Activate();
-				CurrentDroneInfo = DroneInfo2;
-				comPort = mav2;
-
-				Thread.Sleep(3000);
-
-				var mav3 = new MavlinkInterface();
-				doConnect(mav3, portname3, portnumber3, baudrate3);
-				mav3.onCreate();
-				comPorts.Add(mav3);
-				DroneInfo3.Activate();
-				CurrentDroneInfo = DroneInfo3;
-				AddRouteOverlay(comPorts.Count);
-				mav3.MAV.GuidedMode.z = 10;
-				comPort = mav3;
 			}
 			catch (Exception exception)
 			{
 				log.Debug(exception);
 			}
-			
 
+			connectionDialog.Dispose();
 
 		}
-		
+
+
+		public ConnectionForm connectionDialog = null;
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-			ConnectionForm cform = new ConnectionForm();
-			cform.ButtonSaveClick += new EventHandler(BUT_Batch_Connect_Click);
-			cform.Show();
+			connectionDialog = new ConnectionForm();
+			connectionDialog.ButtonSaveClick += new EventHandler(BUT_Batch_Connect_Click);
+			connectionDialog.Show();
 			
 
 			/**
@@ -3262,6 +3337,248 @@ namespace Diva
 			}
 		}
 
-	
+		internal string wpfilename;
+
+		/// <summary>
+		/// Saves a waypoint writer file
+		/// </summary>
+		private void savewaypoints()
+		{
+			using (SaveFileDialog fd = new SaveFileDialog())
+			{
+				fd.Filter = "Mission|*.waypoints;*.txt|Mission JSON|*.mission";
+				fd.DefaultExt = ".waypoints";
+				fd.FileName = wpfilename;
+				DialogResult result = fd.ShowDialog();
+				string file = fd.FileName;
+				if (file != "")
+				{
+					try
+					{
+						if (file.EndsWith(".mission"))
+						{
+							var list = GetCommandList();
+							Locationwp home = new Locationwp();
+							try
+							{
+								home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+								home.lat = (double.Parse(TxtHomeLatitude.Text));
+								home.lng = (double.Parse(TxtHomeLongitude.Text));
+								home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+							}
+							catch { }
+
+							list.Insert(0, home);
+
+							// var format = MissionFile.ConvertFromLocationwps(list, (byte)(altmode)CMB_altmode.SelectedValue);
+							var format = MissionFile.ConvertFromLocationwps(list);
+
+							MissionFile.WriteFile(file, format);
+							return;
+						}
+
+						StreamWriter sw = new StreamWriter(file);
+						sw.WriteLine("QGC WPL 110");
+						try
+						{
+							sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
+										 double.Parse(TxtHomeLatitude.Text).ToString("0.000000", new CultureInfo("en-US")) +
+										 "\t" +
+										 double.Parse(TxtHomeLongitude.Text).ToString("0.000000", new CultureInfo("en-US")) +
+										 "\t" +
+										 double.Parse(TxtHomeAltitude.Text).ToString("0.000000", new CultureInfo("en-US")) +
+										 "\t1");
+						}
+						catch (Exception ex)
+						{
+							log.Error(ex);
+							sw.WriteLine("0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1");
+						}
+						for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+						{
+							ushort mode = 0;
+
+							if (dgvWayPoints.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
+							{
+								mode = (ushort)dgvWayPoints.Rows[a].Cells[colCommand.Index].Tag;
+							}
+							else
+							{
+								mode =
+								(ushort)
+									(MAVLink.MAV_CMD)
+										Enum.Parse(typeof(MAVLink.MAV_CMD), dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString());
+							}
+
+							sw.Write((a + 1)); // seq
+							sw.Write("\t" + 0); // current
+							sw.Write("\t" + "Relative"); //frame 
+							sw.Write("\t" + mode);
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam3.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colParam4.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString())
+										 .ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" +
+									 (double.Parse(dgvWayPoints.Rows[a].Cells[colAltitude.Index].Value.ToString())).ToString("0.000000", new CultureInfo("en-US")));
+							sw.Write("\t" + 1);
+							sw.WriteLine("");
+						}
+						sw.Close();
+
+						// lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+						MessageBox.Show("Mission Saved");
+					}
+					catch (Exception)
+					{
+						MessageBox.Show(Strings.ERROR);
+					}
+				}
+			}
+		}
+
+		private void BtnSaveMission_Click(object sender, EventArgs e)
+		{
+			savewaypoints();
+			writeKML();
+		}
+
+		public void readQGC110wpfile(string file, bool append = false)
+		{
+			int wp_count = 0;
+			bool error = false;
+			List<Locationwp> cmds = new List<Locationwp>();
+
+			try
+			{
+				StreamReader sr = new StreamReader(file); //"defines.h"
+				string header = sr.ReadLine();
+				if (header == null || !header.Contains("QGC WPL"))
+				{
+					MessageBox.Show("Invalid Waypoint file");
+					return;
+				}
+
+				while (!error && !sr.EndOfStream)
+				{
+					string line = sr.ReadLine();
+					// waypoints
+
+					if (line.StartsWith("#"))
+						continue;
+
+					string[] items = line.Split(new[] { '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+					if (items.Length <= 9)
+						continue;
+
+					try
+					{
+						Locationwp temp = new Locationwp();
+						if (items[2] == "3")
+						{
+							// abs MAV_FRAME_GLOBAL_RELATIVE_ALT=3
+							temp.options = 1;
+						}
+						else if (items[2] == "10")
+						{
+							temp.options = 8;
+						}
+						else
+						{
+							temp.options = 0;
+						}
+						temp.id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), items[3], false);
+						temp.p1 = float.Parse(items[4], new CultureInfo("en-US"));
+
+						if (temp.id == 99)
+							temp.id = 0;
+
+						temp.alt = (float)(double.Parse(items[10], new CultureInfo("en-US")));
+						temp.lat = (double.Parse(items[8], new CultureInfo("en-US")));
+						temp.lng = (double.Parse(items[9], new CultureInfo("en-US")));
+
+						temp.p2 = (float)(double.Parse(items[5], new CultureInfo("en-US")));
+						temp.p3 = (float)(double.Parse(items[6], new CultureInfo("en-US")));
+						temp.p4 = (float)(double.Parse(items[7], new CultureInfo("en-US")));
+
+						cmds.Add(temp);
+
+						wp_count++;
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+						MessageBox.Show("Line invalid\n" + line);
+					}
+				}
+
+				sr.Close();
+
+				processToScreen(cmds, append);
+
+				writeKML();
+
+				myMap.ZoomAndCenterMarkers("objects");
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Can't open file! " + ex);
+			}
+		}
+
+
+		private void BtnReadMission_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog fd = new OpenFileDialog())
+			{
+				fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
+				DialogResult result = fd.ShowDialog();
+				string file = fd.FileName;
+
+				if (File.Exists(file))
+				{
+					
+					string line = "";
+					using (var fs = File.OpenText(file))
+					{
+						line = fs.ReadLine();
+					}
+
+					if (line.StartsWith("{"))
+					{
+						var format = MissionFile.ReadFile(file);
+
+						var cmds = MissionFile.ConvertToLocationwps(format);
+
+						processToScreen(cmds);
+
+						writeKML();
+
+						myMap.ZoomAndCenterMarkers("objects");
+					}
+					else
+					{
+						wpfilename = file;
+						readQGC110wpfile(file);
+					}
+					//lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+					MessageBox.Show("Loaded " + Path.GetFileName(file));
+				}
+			}
+		}
 	}
 }
