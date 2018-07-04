@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
+using System.Drawing;
 
 namespace Diva.Controls
 {
@@ -45,10 +46,6 @@ namespace Diva.Controls
         {
             ResetMapProvider();
 
-            MinZoom = 0;
-            MaxZoom = 24;
-            Zoom = 15;
-
             base.OnLoad(e);
         }
 
@@ -60,6 +57,12 @@ namespace Diva.Controls
                 if (p != null)
                 {
                     MapProvider = p;
+                    MaxZoom = p.MaxZoom ?? MaxZoom;
+                    MinZoom = p.MinZoom;
+                    if (Zoom > MaxZoom) Zoom = MaxZoom;
+                    if (Zoom < MinZoom) Zoom = MinZoom;
+                    if (p.Area != null)
+                        Position = ((RectLatLng)p.Area).LocationMiddle;
                     return;
                 }
                 ConfigData.SetOption(ConfigData.OptionName.UseImageMap, false.ToString());
@@ -67,6 +70,9 @@ namespace Diva.Controls
             catch { }
             MapProvider = GoogleSatelliteMapProvider.Instance;
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            MinZoom = 0;
+            MaxZoom = 24;
+            Zoom = 15;
 
             try
             {
@@ -127,5 +133,13 @@ namespace Diva.Controls
 
 		}
 
-	}
+        protected override void OnPaintOverlays(Graphics g)
+        {
+            Font f = SystemFonts.SmallCaptionFont;
+            base.OnPaintOverlays(g);
+            g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
+                f, Brushes.Blue, 20, Height - 20);
+        }
+
+    }
 }

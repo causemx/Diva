@@ -10,6 +10,7 @@ namespace GMap.NET.MapProviders
         Guid id = Guid.NewGuid();
         string name;
         public int OriginalZoom { get; private set; }
+        public PointLatLng Center { get; private set; }
         int tile_left;
         int tile_top;
         int tiles_width;
@@ -24,19 +25,24 @@ namespace GMap.NET.MapProviders
                 @"^([^_]+)_(\d+)_(\d+)_(\d+)\.([jJ][pP][gG]|[pP][nN][gG]|[bB][mM][pP])$")
                 .Match(fn);
             if (match.Success) try
-                {
-                    name = match.Groups[1].ToString();
-                    tile_left = int.Parse(match.Groups[2].ToString());
-                    tile_top = int.Parse(match.Groups[3].ToString());
-                    OriginalZoom = int.Parse(match.Groups[4].ToString());
-                    image = Image.FromFile(filename);
-                    tiles_width = (image.Width - 1) / 256 + 1;
-                    tiles_height = (image.Height - 1) / 256 + 1;
-                    int shrink = (int)Math.Log(Math.Min(tiles_width, tiles_height), 2);
-                    MaxZoom = OriginalZoom + 8;
-                    MinZoom = OriginalZoom - shrink;
-                }
-                catch { }
+            {
+                name = match.Groups[1].ToString();
+                tile_left = int.Parse(match.Groups[2].ToString());
+                tile_top = int.Parse(match.Groups[3].ToString());
+                OriginalZoom = int.Parse(match.Groups[4].ToString());
+                image = Image.FromFile(filename);
+                tiles_width = (image.Width - 1) / 256 + 1;
+                tiles_height = (image.Height - 1) / 256 + 1;
+                int shrink = (int)Math.Log(Math.Min(tiles_width, tiles_height), 2);
+                MaxZoom = OriginalZoom + 8;
+                MinZoom = OriginalZoom - shrink;
+                var lt = Projection.FromPixelToLatLng(Projection.FromTileXYToPixel(
+                    new GPoint(tile_left, tile_top)), OriginalZoom);
+                var rb = Projection.FromPixelToLatLng(Projection.FromTileXYToPixel(
+                    new GPoint(tile_left + tiles_width, tile_top + tiles_height)), OriginalZoom);
+                Area = RectLatLng.FromLTRB(lt.Lng, lt.Lat, rb.Lng, rb.Lat);
+            }
+            catch { }
         }
 
         #region GMapProvider Members
