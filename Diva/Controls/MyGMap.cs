@@ -54,7 +54,7 @@ namespace Diva.Controls
 
         public void ResetMapProvider()
         {
-            if (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == "true") try
+            if (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == true.ToString()) try
             {
                 var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
                 if (p != null)
@@ -62,7 +62,7 @@ namespace Diva.Controls
                     MapProvider = p;
                     return;
                 }
-                ConfigData.SetOption(ConfigData.OptionName.UseImageMap, "false");
+                ConfigData.SetOption(ConfigData.OptionName.UseImageMap, false.ToString());
             }
             catch { }
             MapProvider = GoogleSatelliteMapProvider.Instance;

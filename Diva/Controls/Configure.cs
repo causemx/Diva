@@ -211,8 +211,8 @@ namespace Diva.Controls
             TBoxIPLatitude.Text = lat.ToString();
             TBoxIPLongitude.Text = lng.ToString();
             TBoxInitialZoom.Text = zoom.ToString();
-            (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == "true" ?
-                RBtnIndoorMap : RBtnGlobalMap).Checked = true;
+            (ConfigData.GetOption(ConfigData.OptionName.UseImageMap)
+                == true.ToString() ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
         }
 
         private void MapControl_RadioCheckedChanged(object sender, EventArgs e)
