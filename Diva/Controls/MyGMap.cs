@@ -14,6 +14,7 @@ namespace Diva.Controls
 	public class MyGMap : GMapControl
 	{
 		public bool inOnPaint = false;
+        public bool DebugMapLocation = true;
 		string otherthread = "";
 		int lastx = 0;
 		int lasty = 0;
@@ -137,8 +138,11 @@ namespace Diva.Controls
         {
             Font f = SystemFonts.SmallCaptionFont;
             base.OnPaintOverlays(g);
-            g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
-                f, Brushes.Blue, 20, Height - 20);
+            if (DebugMapLocation)
+            {
+                g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
+                    f, Brushes.Blue, 20, Height - 20);
+            }
         }
 
     }
