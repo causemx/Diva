@@ -71,6 +71,8 @@ namespace Diva
 			this.TSBtnRotation = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnConfigure = new System.Windows.Forms.ToolStripButton();
 			this.TSBtnTagging = new System.Windows.Forms.ToolStripButton();
+			this.BtnSaveMission = new System.Windows.Forms.ToolStripButton();
+			this.BtnReadMission = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.BtnRTL = new System.Windows.Forms.Button();
 			this.BtnLand = new System.Windows.Forms.Button();
@@ -81,8 +83,6 @@ namespace Diva
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
-			this.BtnSaveMission = new System.Windows.Forms.ToolStripButton();
-			this.BtnReadMission = new System.Windows.Forms.ToolStripButton();
 			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
 			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
 			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
@@ -486,7 +486,7 @@ namespace Diva
 			this.TSMainPanel.Location = new System.Drawing.Point(9, 9);
 			this.TSMainPanel.Name = "TSMainPanel";
 			this.TSMainPanel.Padding = new System.Windows.Forms.Padding(0);
-			this.TSMainPanel.Size = new System.Drawing.Size(489, 79);
+			this.TSMainPanel.Size = new System.Drawing.Size(458, 79);
 			this.TSMainPanel.TabIndex = 13;
 			this.TSMainPanel.Text = "toolStrip2";
 			// 
@@ -554,6 +554,32 @@ namespace Diva
 			this.TSBtnTagging.Click += new System.EventHandler(this.BUT_Tagging_Click);
 			this.TSBtnTagging.MouseLeave += new System.EventHandler(this.TSBUT_Mouse_Leave);
 			this.TSBtnTagging.MouseHover += new System.EventHandler(this.TSBUT_Mouse_Hover);
+			// 
+			// BtnSaveMission
+			// 
+			this.BtnSaveMission.AutoSize = false;
+			this.BtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.BtnSaveMission.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.BtnSaveMission.ForeColor = System.Drawing.Color.White;
+			this.BtnSaveMission.Image = ((System.Drawing.Image)(resources.GetObject("BtnSaveMission.Image")));
+			this.BtnSaveMission.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnSaveMission.Name = "BtnSaveMission";
+			this.BtnSaveMission.Size = new System.Drawing.Size(76, 76);
+			this.BtnSaveMission.Text = "W";
+			this.BtnSaveMission.Click += new System.EventHandler(this.BtnSaveMission_Click);
+			// 
+			// BtnReadMission
+			// 
+			this.BtnReadMission.AutoSize = false;
+			this.BtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.BtnReadMission.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.BtnReadMission.ForeColor = System.Drawing.Color.White;
+			this.BtnReadMission.Image = ((System.Drawing.Image)(resources.GetObject("BtnReadMission.Image")));
+			this.BtnReadMission.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.BtnReadMission.Name = "BtnReadMission";
+			this.BtnReadMission.Size = new System.Drawing.Size(76, 76);
+			this.BtnReadMission.Text = "R";
+			this.BtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
 			// 
 			// splitContainer
 			// 
@@ -767,32 +793,6 @@ namespace Diva
 			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
 			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
 			// 
-			// BtnSaveMission
-			// 
-			this.BtnSaveMission.AutoSize = false;
-			this.BtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.BtnSaveMission.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.BtnSaveMission.ForeColor = System.Drawing.Color.White;
-			this.BtnSaveMission.Image = ((System.Drawing.Image)(resources.GetObject("BtnSaveMission.Image")));
-			this.BtnSaveMission.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnSaveMission.Name = "BtnSaveMission";
-			this.BtnSaveMission.Size = new System.Drawing.Size(76, 76);
-			this.BtnSaveMission.Text = "W";
-			this.BtnSaveMission.Click += new System.EventHandler(this.BtnSaveMission_Click);
-			// 
-			// BtnReadMission
-			// 
-			this.BtnReadMission.AutoSize = false;
-			this.BtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.BtnReadMission.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-			this.BtnReadMission.ForeColor = System.Drawing.Color.White;
-			this.BtnReadMission.Image = ((System.Drawing.Image)(resources.GetObject("BtnReadMission.Image")));
-			this.BtnReadMission.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.BtnReadMission.Name = "BtnReadMission";
-			this.BtnReadMission.Size = new System.Drawing.Size(76, 76);
-			this.BtnReadMission.Text = "R";
-			this.BtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
-			// 
 			// CollectionTelemetryData
 			// 
 			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -855,8 +855,8 @@ namespace Diva
 			this.myMap.LevelsKeepInMemmory = 5;
 			this.myMap.Location = new System.Drawing.Point(0, 0);
 			this.myMap.MarkersEnabled = true;
-			this.myMap.MaxZoom = 2;
-			this.myMap.MinZoom = 2;
+			this.myMap.MaxZoom = 24;
+			this.myMap.MinZoom = 0;
 			this.myMap.MouseWheelZoomEnabled = true;
 			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
 			this.myMap.Name = "myMap";
@@ -869,7 +869,7 @@ namespace Diva
 			this.myMap.ShowTileGridLines = false;
 			this.myMap.Size = new System.Drawing.Size(948, 528);
 			this.myMap.TabIndex = 14;
-			this.myMap.Zoom = 0D;
+			this.myMap.Zoom = 15D;
 			// 
 			// Planner
 			// 

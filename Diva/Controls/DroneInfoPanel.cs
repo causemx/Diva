@@ -82,8 +82,9 @@ namespace Diva.Controls
 		public void UpdateAssumeTime(double missionDistance)
 		{
 			// get the waypoint speed, default unit is mile/second
-			TxtAssumeTime.Text = (missionDistance / GetParam("WPNAV_SPEED")*60).ToString("f2") + "min";
-			Planner.log.Debug(missionDistance / (GetParam("WPNAV_SPEED")*60));
+			// TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
+			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
+			Planner.log.Info("distance double: " + missionDistance);
 		} 
 
 		public int GetParam(string paramname)

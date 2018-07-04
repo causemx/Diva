@@ -101,7 +101,7 @@
 			this.TxtAssumeTime.AutoSize = true;
 			this.TxtAssumeTime.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TxtAssumeTime.ForeColor = System.Drawing.Color.White;
-			this.TxtAssumeTime.Location = new System.Drawing.Point(112, 53);
+			this.TxtAssumeTime.Location = new System.Drawing.Point(111, 53);
 			this.TxtAssumeTime.Name = "TxtAssumeTime";
 			this.TxtAssumeTime.Size = new System.Drawing.Size(22, 15);
 			this.TxtAssumeTime.TabIndex = 5;
