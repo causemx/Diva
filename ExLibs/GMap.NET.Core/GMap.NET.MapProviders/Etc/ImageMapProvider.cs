@@ -34,7 +34,7 @@ namespace GMap.NET.MapProviders
                 tiles_width = (image.Width - 1) / 256 + 1;
                 tiles_height = (image.Height - 1) / 256 + 1;
                 int shrink = (int)Math.Log(Math.Min(tiles_width, tiles_height), 2);
-                MaxZoom = OriginalZoom + 8;
+                MaxZoom = OriginalZoom + 4;
                 MinZoom = OriginalZoom - shrink;
                 var lt = Projection.FromPixelToLatLng(Projection.FromTileXYToPixel(
                     new GPoint(tile_left, tile_top)), OriginalZoom);
@@ -59,7 +59,6 @@ namespace GMap.NET.MapProviders
         public override PureImage GetTileImage(GPoint pos, int zoom)
         {
             int x = (int)pos.X, y = (int)pos.Y;
-
             if (zoom < MinZoom || zoom > MaxZoom)
                 return TileImageProxy.GenerateDebugTile("Out of bound", x, y, zoom);
 
@@ -80,7 +79,6 @@ namespace GMap.NET.MapProviders
             if (l < 0 || t < 0 || l + w > tiles_width * 256 || t + h > tiles_height * 256)
                 return TileImageProxy.GenerateDebugTile("Out of bound", x, y, zoom);
 
-            //return imageProxy.GenerateDebugTile($"l={l},t={t}\nw={w},h={h}", x, y, zoom);
             if (image == null)
                 return TileImageProxy.GenerateDebugTile("Error loading image", x, y, zoom);
 

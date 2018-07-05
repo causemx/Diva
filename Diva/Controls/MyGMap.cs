@@ -14,7 +14,8 @@ namespace Diva.Controls
 	public class MyGMap : GMapControl
 	{
 		public bool inOnPaint = false;
-        public bool DebugMapLocation = true;
+        public bool DebugMapLocation { get; set; }
+        public bool IndoorMode { get; private set; }
 		string otherthread = "";
 		int lastx = 0;
 		int lasty = 0;
@@ -24,10 +25,11 @@ namespace Diva.Controls
             DisableFocusOnMouseEnter = true;
             //RoutesEnabled = true; // set by designer
             ForceDoubleBuffer = false;
+            DebugMapLocation = true;
 
             OnSelectionChange += (s, z) =>
             {
-                if (MapProvider == GoogleSatelliteMapProvider.Instance && !s.IsEmpty)
+                if (!IndoorMode && !s.IsEmpty)
                 {
                     for (int i = 0; i < MapProvider.MaxZoom; i++)
                     {
@@ -52,18 +54,23 @@ namespace Diva.Controls
 
         public void ResetMapProvider()
         {
+            IndoorMode = false;
             if (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == true.ToString()) try
             {
                 var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
                 if (p != null)
                 {
                     MapProvider = p;
+                    IndoorMode = true;
                     MaxZoom = p.MaxZoom ?? MaxZoom;
                     MinZoom = p.MinZoom;
                     if (Zoom > MaxZoom) Zoom = MaxZoom;
                     if (Zoom < MinZoom) Zoom = MinZoom;
                     if (p.Area != null)
                         Position = ((RectLatLng)p.Area).LocationMiddle;
+                    GMaps.Instance.Mode = AccessMode.ServerOnly;
+                    /*if (DebugMapLocation)
+                        ShowTileGridLines = true;*/
                     return;
                 }
                 ConfigData.SetOption(ConfigData.OptionName.UseImageMap, false.ToString());
@@ -138,7 +145,7 @@ namespace Diva.Controls
         {
             Font f = SystemFonts.SmallCaptionFont;
             base.OnPaintOverlays(g);
-            if (DebugMapLocation)
+            if (DebugMapLocation && IndoorMode)
             {
                 g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
                     f, Brushes.Blue, 20, Height - 20);
