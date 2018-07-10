@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="CollectionTelemetryData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>892, 415</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CollectionTelemetryData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="CollectionTelemetryData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>512, 388</value>
+  </data>
+  <data name="DroneInfo3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>888, 281</value>
+  </data>
+  <data name="DroneInfo3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="DroneInfo3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>516, 124</value>
+  </data>
+  <data name="DroneInfo2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>888, 149</value>
+  </data>
+  <data name="DroneInfo2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="DroneInfo2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>516, 124</value>
+  </data>
+  <data name="DroneInfo1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>888, 15</value>
+  </data>
+  <data name="DroneInfo1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="DroneInfo1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>516, 124</value>
+  </data>
+  <data name="BtnRTL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 631</value>
+  </data>
+  <data name="BtnRTL.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="BtnRTL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnLand.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 337</value>
+  </data>
+  <data name="BtnLand.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnLand.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnVideo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 631</value>
+  </data>
+  <data name="BtnVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="BtnVideo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnAuto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 337</value>
+  </data>
+  <data name="BtnAuto.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnAuto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 190</value>
+  </data>
+  <data name="BtnArm.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnArm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnReadWPs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 484</value>
+  </data>
+  <data name="BtnReadWPs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnReadWPs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 190</value>
+  </data>
+  <data name="BtnTakeOff.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnTakeOff.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnWriteWPs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 484</value>
+  </data>
+  <data name="BtnWriteWPs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnWriteWPs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 138</value>
+  </data>
+  <data name="BtnSaveMission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="BtnReadMission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 14</value>
+  </data>
+  <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 24</value>
+  </data>
+  <data name="miClearMission.Text" xml:space="preserve">
+    <value>起飛至此處</value>
+  </data>
+  <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 24</value>
+  </data>
+  <data name="miSetHomeHere.Text" xml:space="preserve">
+    <value>將Home設在此</value>
+  </data>
+  <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 24</value>
+  </data>
+  <data name="miClearAllMissions.Text" xml:space="preserve">
+    <value>清除任務點</value>
+  </data>
+  <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 76</value>
+  </data>
+  <data name="myMap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="myMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1422, 817</value>
+  </data>
+  <data name="colCommand.HeaderText" xml:space="preserve">
+    <value>命令</value>
+  </data>
+  <data name="colCommand.ToolTipText" xml:space="preserve">
+    <value>APM命令</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="colCommand.Width" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colParam1.HeaderText" xml:space="preserve">
+    <value>參數1</value>
+  </data>
+  <data name="colParam1.Width" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="colParam2.HeaderText" xml:space="preserve">
+    <value>參數2</value>
+  </data>
+  <data name="colParam2.Width" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="colParam3.HeaderText" xml:space="preserve">
+    <value>參數3</value>
+  </data>
+  <data name="colParam3.Width" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="colParam4.HeaderText" xml:space="preserve">
+    <value>參數4</value>
+  </data>
+  <data name="colParam4.Width" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="colLatitude.HeaderText" xml:space="preserve">
+    <value>緯度</value>
+  </data>
+  <data name="colLatitude.Width" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colLongitude.HeaderText" xml:space="preserve">
+    <value>經度</value>
+  </data>
+  <data name="colLongitude.Width" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colAltitude.HeaderText" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="colAltitude.Width" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colAngle.HeaderText" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="colDelete.HeaderText" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="colDelete.ToolTipText" xml:space="preserve">
+    <value>刪除此列</value>
+  </data>
+  <data name="colDelete.Width" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="colTagData.HeaderText" xml:space="preserve">
+    <value>附加資料</value>
+  </data>
+  <data name="colTagData.Width" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
+  <data name="dgvWayPoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 81</value>
+  </data>
+  <data name="dgvWayPoints.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="dgvWayPoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1422, 122</value>
+  </data>
+  <data name="TxtHomeLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>575, 10</value>
+  </data>
+  <data name="TxtHomeLongitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="TxtHomeLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 64</value>
+  </data>
+  <data name="TxtHomeLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>418, 10</value>
+  </data>
+  <data name="TxtHomeLatitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="TxtHomeLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 64</value>
+  </data>
+  <data name="TxtHomeAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>266, 10</value>
+  </data>
+  <data name="TxtHomeAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="TxtHomeAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 64</value>
+  </data>
+  <data name="LabelLongitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>521, 28</value>
+  </data>
+  <data name="LabelLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 19</value>
+  </data>
+  <data name="LabelLongitude.Text" xml:space="preserve">
+    <value>經</value>
+  </data>
+  <data name="LabelLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 28</value>
+  </data>
+  <data name="LabelLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 19</value>
+  </data>
+  <data name="LabelLatitude.Text" xml:space="preserve">
+    <value>緯</value>
+  </data>
+  <data name="LabelAltitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>219, 28</value>
+  </data>
+  <data name="LabelAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 19</value>
+  </data>
+  <data name="LabelAltitude.Text" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="TxtDroneMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1296, 28</value>
+  </data>
+  <data name="BtnDroneMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1092, 1</value>
+  </data>
+  <data name="BtnDroneMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnDroneMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 77</value>
+  </data>
+  <data name="BtnAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>708, 1</value>
+  </data>
+  <data name="BtnAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 77</value>
+  </data>
+  <data name="BtnHomeLand.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="BtnHomeLand.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 77</value>
+  </data>
+  <data name="TxtAltitudeValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>912, 10</value>
+  </data>
+  <data name="TxtAltitudeValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 64</value>
+  </data>
+  <data name="panelDroneInfo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="panelDroneInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1422, 81</value>
+  </data>
+  <data name="splitContainer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1422, 1025</value>
+  </data>
+  <data name="splitContainer.SplitterDistance" type="System.Int32, mscorlib">
+    <value>817</value>
+  </data>
+  <data name="splitContainer.SplitterWidth" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="ImgListBatteryHealth.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAc
+        CwAAAk1TRnQBSQFMAgEBBgEAAYwBAQGMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
+        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
+        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
+        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
+        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
+        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
+        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
+        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
+        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
+        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
+        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
+        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
+        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
+        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
+        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
+        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
+        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
+        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
+        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
+        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
+        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
+        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
+        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
+        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
+        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
+        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/4IADf8B9AIADf8B9CIA
+        Af8N9AIAAf8N9CIAAv8KAAL0AgAC/woAAvQiAAH/AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/
+        AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/
+        AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/
+        AQAHugEZAgAC9AIAAf8BAAm6AfIC9CIAAv8KAAL0AgAC/woAAvQiAA3/AfQCAA3/AfQiAA30Af8CAA30
+        Af//ACMADf8B9AIADf8B9AIADf8B9AIADf8B9AIAAf8N9AIAAf8N9AIAAf8N9AIAAf8N9AIAAv8KAAL0
+        AgAC/woAAvQCAAL/CgAC9AIAAv8KAAL0AgAB/wsAAfQC/wEAAf8BAAFvAZMIAAH0Av8BAAH/AQADWQGa
+        BgAB9AL/AQAB/wEABboBuwQAAfQC/wEAAf8LAAH0Av8BAAH/AQABbwGTCAAB9AL/AQAB/wEAA1kBmgYA
+        AfQC/wEAAf8BAAW6AbsEAAH0Av8BAAH/CwAB9AL/AQAB/wEAAW8BkwgAAfQC/wEAAf8BAANZAZoGAAH0
+        Av8BAAH/AQAFugG7BAAB9AL/AQAB/wsAAfQC/wEAAf8BAAFvAZMIAAH0Av8BAAH/AQADWQGaBgAB9AL/
+        AQAB/wEABboBuwQAAfQC/wEAAf8LAAH0Av8BAAH/AQABbwGTCAAB9AL/AQAB/wEAA1kBmgYAAfQC/wEA
+        Af8BAAW6AbsEAAH0Av8BAAH/CwAC9AIAAf8BAAEWAZMIAAL0AgAB/wEAA3oBmgYAAvQCAAH/AQAFugEJ
+        BAAC9AIAAv8KAAL0AgAC/woAAvQCAAL/CgAC9AIAAv8KAAL0AgAN/wH0AgAN/wH0AgAN/wH0AgAN/wH0
+        AgAN9AH/AgAN9AH/AgAN9AH/AgAN9AH/gQABQgFNAT4HAAE+AwABKAMAAUADAAEgAwABAQEAAQEGAAEB
+        FgAD/wEABP8EAAT/BAABgAEBAYABAQQAAYABAQGAAQEEAAGfAfkBnwH5BAABoAEYAaAFAAGgARgBoAUA
+        AaABGAGgBQABoAEYAaAFAAGgARgBoAUAAaABGQGgAQEEAAGfAfkBnwH5BAABgAEBAYABAQQAAYABAQGA
+        AQEEAAT/BAAE/wQAEP8BgAEBAYABAQGAAQEBgAEBAYABAQGAAQEBgAEBAYABAQGfAfkBnwH5AZ8B+QGf
+        AfkBvwH4AacB+AGhAfgBoAF4Ab8B+AGnAfgBoQH4AaABeAG/AfgBpwH4AaEB+AGgAXgBvwH4AacB+AGh
+        AfgBoAF4Ab8B+AGnAfgBoQH4AaABeAG/AfkBpwH5AaEB+QGgAXkBnwH5AZ8B+QGfAfkBnwH5AYABAQGA
+        AQEBgAEBAYABAQGAAQEBgAEBAYABAQGAAQEQ/ws=
+</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>9, 19</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1422, 1025</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>1437, 998</value>
+  </data>
+</root>

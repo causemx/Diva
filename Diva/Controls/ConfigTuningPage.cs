@@ -13,7 +13,7 @@ using Diva.Controls.Components;
 namespace Diva.Controls
 {
 	
-	public partial class ConfigTuning : UserControl, IActivate
+	public partial class ConfigTuningPage : UserControl, IActivate
 	{
 
 		// from http://stackoverflow.com/questions/2512781/winforms-big-paragraph-tooltip/2512895#2512895
@@ -23,7 +23,7 @@ namespace Diva.Controls
 		private readonly Hashtable changes = new Hashtable();
 		internal bool startup = true;
 
-		public ConfigTuning()
+		public ConfigTuningPage()
 		{
 			InitializeComponent();
 		}

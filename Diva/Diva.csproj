@@ -145,23 +145,35 @@
     <Compile Include="Controls\Components\MyNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigGeoFence.cs">
+    <Compile Include="Controls\ConfigAccountPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigGeoFence.Designer.cs">
-      <DependentUpon>ConfigGeoFence.cs</DependentUpon>
+    <Compile Include="Controls\ConfigAccountPage.Designer.cs">
+      <DependentUpon>ConfigAccountPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Configure.cs">
+    <Compile Include="Controls\ConfigGeoFencePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigGeoFencePage.Designer.cs">
+      <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfigMapPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigMapPage.Designer.cs">
+      <DependentUpon>ConfigMapPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfigureForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\Configure.Designer.cs">
-      <DependentUpon>Configure.cs</DependentUpon>
+    <Compile Include="Controls\ConfigureForm.Designer.cs">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConfigTuning.cs">
+    <Compile Include="Controls\ConfigTuningPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigTuning.Designer.cs">
-      <DependentUpon>ConfigTuning.cs</DependentUpon>
+    <Compile Include="Controls\ConfigTuningPage.Designer.cs">
+      <DependentUpon>ConfigTuningPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DroneInfoPanel.cs">
       <SubType>UserControl</SubType>
@@ -175,11 +187,11 @@
     <Compile Include="Controls\DroneInput.Designer.cs">
       <DependentUpon>DroneInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FileBrowser.cs">
+    <Compile Include="Controls\FileBrowserForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\FileBrowser.Designer.cs">
-      <DependentUpon>FileBrowser.cs</DependentUpon>
+    <Compile Include="Controls\FileBrowserForm.Designer.cs">
+      <DependentUpon>FileBrowserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
@@ -244,10 +256,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SplashForm.cs">
+    <Compile Include="Controls\SplashForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SplashForm.Designer.cs">
+    <Compile Include="Controls\SplashForm.Designer.cs">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Strings.cs" />
@@ -263,15 +275,21 @@
     <EmbeddedResource Include="Comms\ConnectionForm.resx">
       <DependentUpon>ConnectionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ConfigGeoFence.resx">
-      <DependentUpon>ConfigGeoFence.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ConfigAccountPage.resx">
+      <DependentUpon>ConfigAccountPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigGeoFencePage.resx">
+      <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="VideoPlayer.cs" />
-    <EmbeddedResource Include="Controls\ConfigTuning.resx">
-      <DependentUpon>ConfigTuning.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ConfigMapPage.resx">
+      <DependentUpon>ConfigMapPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Configure.resx">
-      <DependentUpon>Configure.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ConfigTuningPage.resx">
+      <DependentUpon>ConfigTuningPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigureForm.resx">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
@@ -279,8 +297,8 @@
     <EmbeddedResource Include="Controls\DroneInput.resx">
       <DependentUpon>DroneInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\FileBrowser.resx">
-      <DependentUpon>FileBrowser.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\FileBrowserForm.resx">
+      <DependentUpon>FileBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyButton.resx">
       <DependentUpon>MyButton.cs</DependentUpon>
@@ -313,7 +331,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SplashForm.resx">
+    <EmbeddedResource Include="Controls\SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />

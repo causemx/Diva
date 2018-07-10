@@ -178,7 +178,7 @@ namespace Diva
 
 
 		private List<DroneInfoPanel> DroneInfos = new List<DroneInfoPanel>();
-
+        internal MyGMap GMapControl => myMap;
 
 		public Planner()
 		{
@@ -3180,8 +3180,8 @@ namespace Diva
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-			Configure config = new Configure(myMap);
-			config.ShowDialog();
+			ConfigureForm config = new ConfigureForm();
+			config.ShowDialog(this);
 		}
 
 		private bool isTagging = false;
@@ -3583,12 +3583,12 @@ namespace Diva
 
 		}
 
-		FileBrowser mFileBrowser = null;
+		FileBrowserForm mFileBrowser = null;
 
 		private void BtnReadMission_Click(object sender, EventArgs e)
 		{
 
-			mFileBrowser = new FileBrowser();
+			mFileBrowser = new FileBrowserForm();
 			mFileBrowser.MissionClick += new EventHandler(Mission_Click);
 			mFileBrowser.Show();
 			
