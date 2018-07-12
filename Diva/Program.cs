@@ -17,6 +17,21 @@ namespace Diva
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
             ConfigData.ParseCommandLine(args);
+            if (ConfigData.Ready)
+            {
+                string lang = ConfigData.GetOption(ConfigData.OptionName.Language);
+                if (lang != "")
+                {
+                    try
+                    {
+                        System.Globalization.CultureInfo.DefaultThreadCurrentUICulture =
+                            new System.Globalization.CultureInfo(lang);
+                    } catch (Exception e)
+                    {
+                        Console.WriteLine($"Failed to set UI language to {lang}:\n{e.Message}.");
+                    }
+                }
+            }
             Application.Run(new SplashForm());
             if (SplashForm.InitOk)
                 Application.Run(new Planner());

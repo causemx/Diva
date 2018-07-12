@@ -77,17 +77,6 @@ namespace Diva
         }
         #endregion
 
-        public class OptionName
-        {
-            public const string SkipNoAccountAlert = "NoAccountAlert";
-            public const string MapCacheLocation = "MapCacheLocation";
-            public const string MapInitialLocation = "MapInitialLocation";
-            public const string ImageMapSource = "ImageMapSource";
-            public const string UseImageMap = "UseImageMap";
-            public const string Salt = "Salt";
-            public const string Version = "Version";
-        }
-
         private static readonly Lazy<ConfigData> lazy = new Lazy<ConfigData>(() => new ConfigData());
         private static Configuration config;
 
@@ -97,6 +86,19 @@ namespace Diva
         private static ConcurrentDictionary<string, object> Lists => lazy.Value.typeLists;
 
         #region Config options
+        public class OptionName
+        {
+            public const string ForceAccountLogin = "ForceAccountLogin";
+            public const string ImageMapSource = "ImageMapSource";
+            public const string Language = "Language";
+            public const string MapCacheLocation = "MapCacheLocation";
+            public const string MapInitialLocation = "MapInitialLocation";
+            public const string Salt = "Salt";
+            public const string SkipNoAccountAlert = "NoAccountAlert";
+            public const string UseImageMap = "UseImageMap";
+            public const string Version = "Version";
+        }
+
         private ConcurrentDictionary<string, string> options;
         public static ConcurrentDictionary<string, string> Options => lazy.Value.options;
         private static ConcurrentDictionary<string, string> GetInitOptions()
@@ -120,12 +122,23 @@ namespace Diva
             try
             {
                 void setOpt(string o, string v, string defval = null) => CLOptions[o] = defval ?? v;
+                void setBoolean(string o, string v) => CLOptions[o] = (v == null).ToString();
                 new OptionSet()
                 {
-                    { "a|NoAccountAlert", v => setOpt(OptionName.SkipNoAccountAlert, v, "true") },
+                    { "a|NoAccountAlert", v => setBoolean(OptionName.SkipNoAccountAlert, v) },
                     { "c|MapCacheLocation=", v => setOpt(OptionName.MapCacheLocation, v) },
-                    { "i|ImageMapSource=", v => setOpt(OptionName.ImageMapSource, v) },
+                    { "f|ForceAccountLogin", v => setBoolean(OptionName.ForceAccountLogin, v) },
+                    { "i|ImageMapSource=", v => {
+                        if (v != null)
+                        {
+                            CLOptions[OptionName.UseImageMap] = true.ToString();
+                            if (v.Substring(1) != "i+")
+                                CLOptions[OptionName.ImageMapSource] = v;
+                        } else
+                            CLOptions[OptionName.UseImageMap] = false.ToString();
+                    }  },
                     { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
+                    { "lang|Language=", v => setOpt(OptionName.Language, v) },
                     { "s|Salt=", v => setOpt(OptionName.Salt, v) },
                     { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }
                 }.Parse(args);
@@ -189,6 +202,7 @@ namespace Diva
                 Save();
         }
 
+        #region Config Load/Store
         private static string RequoteJson(string jstr)
         {
             return new System.Text.RegularExpressions.
@@ -342,6 +356,7 @@ namespace Diva
                 if (encrypt) DataCryptor.Salt = 0;
             }
         }
+        #endregion
 
         // actions modifying list content should be avoided be performed during load/save
         public static void DoAction(Action action) { lock (config) { action(); } }

@@ -18,7 +18,7 @@ namespace Diva.Controls
         {
             InitializeComponent();
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime &&
-                ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert) == "true")
+                ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert) == true.ToString())
             {
                 BtnAccount.Visible = false;
                 BtnAbout.Top = BtnAccount.Top;
