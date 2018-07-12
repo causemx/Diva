@@ -178,6 +178,22 @@ namespace Diva
                     Options.ContainsKey(name) ? Options[name] : "";
         }
 
+        public static bool GetBoolOption(string name)
+        {
+            string opt = GetOption(name);
+            if (!bool.TryParse(opt, out var res))
+                res = false;
+            return res;
+        }
+
+        public static int GetIntOption(string name)
+        {
+            string opt = GetOption(name);
+            if (!int.TryParse(opt, out var res))
+                res = 0;
+            return res;
+        }
+
         public static void SetOption(string name, string value)
         {
             string output;
