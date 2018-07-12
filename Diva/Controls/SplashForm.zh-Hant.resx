@@ -241,4 +241,34 @@
   <data name="lblLoginUser.Text" xml:space="preserve">
     <value>使用者: </value>
   </data>
+  <data name="AccountAlreadyExistMessage" xml:space="preserve">
+    <value>帳號已存在</value>
+  </data>
+  <data name="AccountCreationFailedMessage" xml:space="preserve">
+    <value>帳號建立失敗，請再試試</value>
+  </data>
+  <data name="InvalidNameMessage" xml:space="preserve">
+    <value>帳號名稱不合法</value>
+  </data>
+  <data name="InvalidPasswordMessage" xml:space="preserve">
+    <value>密碼不合法</value>
+  </data>
+  <data name="lblProgress_CreateAccountNotification.Text" xml:space="preserve">
+    <value>請建立帳號以保護資料</value>
+  </data>
+  <data name="LoginFailedMessage" xml:space="preserve">
+    <value>登入失敗(帳號密碼錯誤)</value>
+  </data>
+  <data name="LoginNotification" xml:space="preserve">
+    <value>請輸入登入資料</value>
+  </data>
+  <data name="PasswordMismatchMessage" xml:space="preserve">
+    <value>密碼與確認密碼不相符</value>
+  </data>
+  <data name="SplashCountDownNotification" xml:space="preserve">
+    <value>已讀取設定，進入程式…</value>
+  </data>
+  <data name="TooManyTriesMessageFormat" xml:space="preserve">
+    <value>登入失敗過多，請 {0}秒後再試</value>
+  </data>
 </root>

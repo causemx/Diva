@@ -13,7 +13,8 @@ namespace Diva
     public partial class SplashForm : Form
     {
         public static bool InitOk { get; private set; } = false;
-        Timer timer = null;
+        private Timer timer = null;
+        private ComponentResourceManager FormResx = new ComponentResourceManager(typeof(SplashForm));
 
         public SplashForm()
         {
@@ -74,11 +75,11 @@ namespace Diva
                     } else if (ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
                         return true;
                     panelNewAccount.Visible = true;
-                    lblProgress.Text = "Create account to protect your data.";
+                    lblProgress.Text = FormResx.GetString("CreateAccountNotification");
                 } else
                 {
                     panelLogin.Visible = true;
-                    lblProgress.Text = "Please login to enter system.";
+                    lblProgress.Text = FormResx.GetString("LoginNotification");
                 }
                 return false;
             }
@@ -100,7 +101,7 @@ namespace Diva
                 if (LoginCheck())
                 {
                     if (timer != null) timer.Dispose();
-                    lblProgress.Text = "Config loaded, starting...";
+                    lblProgress.Text = FormResx.GetString("SplashCountDownNotification");
                     timer = new Timer();
                     timer.Tick += (o, ex) =>
                     {
@@ -121,13 +122,13 @@ namespace Diva
 
         private void btnNewAccount_Click(object sender, EventArgs e)
         {
-            Tuple<Func<bool>, string> gen(Func<bool> c, string s) => Tuple.Create<Func<bool>, string>(c, s); 
+            Tuple<Func<bool>, string> gen(Func<bool> c, string s) => Tuple.Create(c, s); 
             List<Tuple<Func<bool>, string>> checks = new List<Tuple<Func<bool>, string>>()
             {
-                gen(() => AccountManager.AccountExist(tBoxUsername.Text), "Account already exists."),
-                gen(() => !AccountManager.IsValidAccountName(tBoxUsername.Text), "Invalid account name."),
-                gen(() => !AccountManager.IsValidPassword(tBoxPassword.Text), "Invalid password."),
-                gen(() => tBoxPassword.Text != tBoxConfirm.Text, "Confirm password mismatch."),
+                gen(() => AccountManager.AccountExist(tBoxUsername.Text), FormResx.GetString("AccountAlreadyExistMessage")),
+                gen(() => !AccountManager.IsValidAccountName(tBoxUsername.Text), FormResx.GetString("InvalidNameMessage")),
+                gen(() => !AccountManager.IsValidPassword(tBoxPassword.Text), FormResx.GetString("InvalidPasswordMessage")),
+                gen(() => tBoxPassword.Text != tBoxConfirm.Text, FormResx.GetString("PasswordMismatchMessage")),
             };
             var failed = checks.FirstOrDefault(c => c.Item1());
             if (failed != null)
@@ -138,7 +139,7 @@ namespace Diva
             bool result = AccountManager.CreateAccount(tBoxUsername.Text, tBoxPassword.Text);
             if (!result || !AccountManager.Login(tBoxUsername.Text, tBoxPassword.Text))
             {
-                lblNewAccountMessage.Text = "Account creation failed. Try other name?";
+                lblNewAccountMessage.Text = FormResx.GetString("AccountCreationFailedMessage");
                 return;
             }
             ActiveClose(true);
@@ -161,8 +162,9 @@ namespace Diva
                 lblLoginMessage.Text = "";
             } else
             {
-                lblLoginMessage.Text = "Too many tries. Please login after " +
-                    ((int)remaining.TotalSeconds) + " seconds.";
+                lblLoginMessage.Text = String.Format(
+                    FormResx.GetString("TooManyTriesMessageFormat"),
+                    (int)remaining.TotalSeconds);
             }
         }
 
@@ -189,17 +191,12 @@ namespace Diva
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (!AccountManager.IsValidAccountName(tBoxLoginUser.Text))
-            {
-                lblLoginMessage.Text = "Invalid account name.";
-                return;
-            }
             if (AccountManager.Login(tBoxLoginUser.Text, tBoxLoginPassword.Text))
             {
                 ActiveClose(true);
                 return;
             }
-            lblLoginMessage.Text = "Login failed.";
+            lblLoginMessage.Text = FormResx.GetString("LoginFailedMessage");
             CheckLoginLock();
         }
 
