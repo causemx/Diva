@@ -55,7 +55,7 @@ namespace Diva.Controls
         public void ResetMapProvider()
         {
             IndoorMode = false;
-            if (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == true.ToString()) try
+            if (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)) try
             {
                 var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
                 if (p != null)
@@ -73,7 +73,7 @@ namespace Diva.Controls
                         ShowTileGridLines = true;*/
                     return;
                 }
-                ConfigData.SetOption(ConfigData.OptionName.UseImageMap, false.ToString());
+                ConfigData.SetBoolOption(ConfigData.OptionName.UseImageMap, false);
             }
             catch { }
             MapProvider = GoogleSatelliteMapProvider.Instance;

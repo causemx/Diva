@@ -78,8 +78,8 @@ namespace Diva.Controls
             TBoxIPLatitude.Text = lat.ToString();
             TBoxIPLongitude.Text = lng.ToString();
             TBoxInitialZoom.Text = zoom.ToString();
-            (ConfigData.GetOption(ConfigData.OptionName.UseImageMap)
-                == true.ToString() ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
+            (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)
+                ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
             mapConfigDirtyUpdate = true;
         }
 

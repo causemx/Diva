@@ -122,7 +122,7 @@ namespace Diva
             try
             {
                 void setOpt(string o, string v, string defval = null) => CLOptions[o] = defval ?? v;
-                void setBoolean(string o, string v) => CLOptions[o] = (v == null).ToString();
+                void setBoolean(string o, string v) => CLOptions[o] = (v != null).ToString();
                 new OptionSet()
                 {
                     { "a|NoAccountAlert", v => setBoolean(OptionName.SkipNoAccountAlert, v) },
