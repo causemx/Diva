@@ -315,6 +315,9 @@
     <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
       <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SplashForm.zh-Hant.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TelemetryDataPanel.resx">
       <DependentUpon>TelemetryDataPanel.cs</DependentUpon>
     </EmbeddedResource>

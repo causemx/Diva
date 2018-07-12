@@ -65,9 +65,14 @@ namespace Diva
             {
                 if (AccountManager.GetAccounts().Count() == 0)
                 {
-                    bool noAlert = false;
-                    Boolean.TryParse(ConfigData.GetOption(ConfigData.OptionName.SkipNoAccountAlert), out noAlert);
-                    if (noAlert) return true;
+                    if (ConfigData.GetBoolOption(ConfigData.OptionName.ForceAccountLogin))
+                    {
+                        cBoxDontNotify.Visible = false;
+                        btnSkip.Text = btnExit.Text;
+                        btnSkip.Click -= btnSkip_Click;
+                        btnSkip.Click += btnExit_Click;
+                    } else if (ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
+                        return true;
                     panelNewAccount.Visible = true;
                     lblProgress.Text = "Create account to protect your data.";
                 } else
@@ -142,7 +147,7 @@ namespace Diva
         private void btnSkip_Click(object sender, EventArgs e)
         {
             if (cBoxDontNotify.Checked)
-                ConfigData.SetOption(ConfigData.OptionName.SkipNoAccountAlert, true.ToString());
+                ConfigData.SetBoolOption(ConfigData.OptionName.SkipNoAccountAlert, true);
             ActiveClose(true);
         }
 
