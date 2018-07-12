@@ -196,11 +196,30 @@ namespace Diva
 
         public static void SetOption(string name, string value)
         {
-            string output;
             if (GetOption(name) != value)
             {
-                CLOptions.TryRemove(name, out output);
+                CLOptions.TryRemove(name, out var output);
                 Options[name] = value;
+                Save();
+            }
+        }
+
+        public static void SetIntOption(string name, int value)
+        {
+            if (GetIntOption(name) != value)
+            {
+                CLOptions.TryRemove(name, out var output);
+                Options[name] = value.ToString();
+                Save();
+            }
+        }
+
+        public static void SetBoolOption(string name, bool value)
+        {
+            if (GetBoolOption(name) != value)
+            {
+                CLOptions.TryRemove(name, out var output);
+                Options[name] = value.ToString();
                 Save();
             }
         }
@@ -212,8 +231,7 @@ namespace Diva
 
         public static void DeleteOption(string name)
         {
-            string value;
-            CLOptions.TryRemove(name, out value);
+            CLOptions.TryRemove(name, out var value);
             if (Options.TryRemove(name, out value))
                 Save();
         }
