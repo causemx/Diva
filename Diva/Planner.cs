@@ -179,14 +179,16 @@ namespace Diva
 
 		private List<DroneInfoPanel> DroneInfos = new List<DroneInfoPanel>();
         internal MyGMap GMapControl => myMap;
+        private ComponentResourceManager rm;
 
 		public Planner()
 		{
 			InitializeComponent();
 
+            rm = new ComponentResourceManager(typeof(Planner));
 			string username = AccountManager.GetLoginAccount();
-			if (username == "") username = "(Anonymous)";
-			Text += " - " + username;
+			if (username == "") username = rm.GetString("strAnonymousAccount");
+            Text = rm.GetString("$this.Text") + " - " + username;
 
 			// control size may not be the same as designer (dpi setting?)
 						

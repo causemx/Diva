@@ -327,6 +327,9 @@
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Planner.zh-Hant.resx">
+      <DependentUpon>Planner.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -117,115 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BtnRTL.Text" xml:space="preserve">
+    <value>回原點</value>
+  </data>
+  <data name="BtnLand.Text" xml:space="preserve">
+    <value>降落</value>
+  </data>
+  <data name="BtnVideo.Text" xml:space="preserve">
+    <value>影像</value>
+  </data>
+  <data name="BtnAuto.Text" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="BtnArm.Text" xml:space="preserve">
+    <value>發動</value>
+  </data>
+  <data name="BtnReadWPs.Text" xml:space="preserve">
+    <value>讀取任務</value>
+  </data>
+  <data name="BtnTakeOff.Text" xml:space="preserve">
+    <value>起飛</value>
+  </data>
+  <data name="BtnWriteWPs.Text" xml:space="preserve">
+    <value>輸入任務</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="CollectionTelemetryData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>892, 415</value>
+  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CollectionTelemetryData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+  <data name="TSBtnConnect.Text" xml:space="preserve">
+    <value>連線</value>
   </data>
-  <data name="CollectionTelemetryData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 388</value>
+  <data name="TSBtnRotation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="DroneInfo3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>888, 281</value>
+  <data name="TSBtnRotation.Text" xml:space="preserve">
+    <value>輪值</value>
   </data>
-  <data name="DroneInfo3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="DroneInfo3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>516, 124</value>
+  <data name="TSBtnConfigure.Text" xml:space="preserve">
+    <value>設定</value>
   </data>
-  <data name="DroneInfo2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>888, 149</value>
+  <data name="TSBtnTagging.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="DroneInfo2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="DroneInfo2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>516, 124</value>
-  </data>
-  <data name="DroneInfo1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>888, 15</value>
-  </data>
-  <data name="DroneInfo1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="DroneInfo1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>516, 124</value>
-  </data>
-  <data name="BtnRTL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 631</value>
-  </data>
-  <data name="BtnRTL.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="BtnRTL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnLand.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 337</value>
-  </data>
-  <data name="BtnLand.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnLand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 631</value>
-  </data>
-  <data name="BtnVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="BtnVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnAuto.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 337</value>
-  </data>
-  <data name="BtnAuto.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnAuto.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 190</value>
-  </data>
-  <data name="BtnArm.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnArm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnReadWPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 484</value>
-  </data>
-  <data name="BtnReadWPs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnReadWPs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 190</value>
-  </data>
-  <data name="BtnTakeOff.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnTakeOff.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
-  </data>
-  <data name="BtnWriteWPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 484</value>
-  </data>
-  <data name="BtnWriteWPs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnWriteWPs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 138</value>
+  <data name="TSBtnTagging.Text" xml:space="preserve">
+    <value>標記路線</value>
   </data>
   <data name="BtnSaveMission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -242,6 +181,9 @@
         TgDQASA1MVpwzwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="BtnSaveMission.ToolTipText" xml:space="preserve">
+    <value>儲存任務檔</value>
+  </data>
   <data name="BtnReadMission.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -257,35 +199,29 @@
         TgDQASA1MVpwzwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 14</value>
+  <data name="BtnReadMission.ToolTipText" xml:space="preserve">
+    <value>讀取任務檔</value>
   </data>
   <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 24</value>
+    <value>210, 24</value>
   </data>
   <data name="miClearMission.Text" xml:space="preserve">
-    <value>起飛至此處</value>
+    <value>起飛至此</value>
   </data>
   <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 24</value>
+    <value>210, 24</value>
   </data>
   <data name="miSetHomeHere.Text" xml:space="preserve">
-    <value>將Home設在此</value>
+    <value>設為原點</value>
   </data>
   <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 24</value>
+    <value>210, 24</value>
   </data>
   <data name="miClearAllMissions.Text" xml:space="preserve">
-    <value>清除任務點</value>
+    <value>清除所有任務</value>
   </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 76</value>
-  </data>
-  <data name="myMap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="myMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1422, 817</value>
+    <value>211, 104</value>
   </data>
   <data name="colCommand.HeaderText" xml:space="preserve">
     <value>命令</value>
@@ -301,25 +237,25 @@
     <value>參數1</value>
   </data>
   <data name="colParam1.Width" type="System.Int32, mscorlib">
-    <value>52</value>
+    <value>58</value>
   </data>
   <data name="colParam2.HeaderText" xml:space="preserve">
     <value>參數2</value>
   </data>
   <data name="colParam2.Width" type="System.Int32, mscorlib">
-    <value>52</value>
+    <value>58</value>
   </data>
   <data name="colParam3.HeaderText" xml:space="preserve">
     <value>參數3</value>
   </data>
   <data name="colParam3.Width" type="System.Int32, mscorlib">
-    <value>52</value>
+    <value>58</value>
   </data>
   <data name="colParam4.HeaderText" xml:space="preserve">
     <value>參數4</value>
   </data>
   <data name="colParam4.Width" type="System.Int32, mscorlib">
-    <value>52</value>
+    <value>58</value>
   </data>
   <data name="colLatitude.HeaderText" xml:space="preserve">
     <value>緯度</value>
@@ -340,13 +276,13 @@
     <value>60</value>
   </data>
   <data name="colAngle.HeaderText" xml:space="preserve">
-    <value>方向</value>
+    <value>角度</value>
   </data>
   <data name="colDelete.HeaderText" xml:space="preserve">
     <value>刪除</value>
   </data>
   <data name="colDelete.ToolTipText" xml:space="preserve">
-    <value>刪除此列</value>
+    <value>刪除整列</value>
   </data>
   <data name="colDelete.Width" type="System.Int32, mscorlib">
     <value>50</value>
@@ -355,137 +291,66 @@
     <value>附加資料</value>
   </data>
   <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>75</value>
+    <value>84</value>
   </data>
-  <data name="dgvWayPoints.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 81</value>
+  <data name="TxtHomeLongitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="dgvWayPoints.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+  <data name="TxtHomeLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="dgvWayPoints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1422, 122</value>
+  <data name="TxtHomeAltitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="TxtHomeLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>575, 10</value>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="TxtHomeLongitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 22</value>
   </data>
-  <data name="TxtHomeLongitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 64</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>經:</value>
   </data>
-  <data name="TxtHomeLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 10</value>
-  </data>
-  <data name="TxtHomeLatitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="TxtHomeLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 64</value>
-  </data>
-  <data name="TxtHomeAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>266, 10</value>
-  </data>
-  <data name="TxtHomeAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="TxtHomeAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 64</value>
-  </data>
-  <data name="LabelLongitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
-  </data>
-  <data name="LabelLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>521, 28</value>
-  </data>
-  <data name="LabelLongitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 19</value>
-  </data>
-  <data name="LabelLongitude.Text" xml:space="preserve">
-    <value>經</value>
+  <data name="LabelLatitude.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelLatitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="LabelLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 28</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LabelLatitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="LabelLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 19</value>
+    <value>31, 22</value>
   </data>
   <data name="LabelLatitude.Text" xml:space="preserve">
-    <value>緯</value>
+    <value>緯:</value>
+  </data>
+  <data name="LabelAltitude.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelAltitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="LabelAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>219, 28</value>
+  <data name="LabelAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="LabelAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 19</value>
+    <value>31, 22</value>
   </data>
   <data name="LabelAltitude.Text" xml:space="preserve">
-    <value>高</value>
+    <value>高:</value>
   </data>
-  <data name="TxtDroneMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1296, 28</value>
-  </data>
-  <data name="BtnDroneMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1092, 1</value>
-  </data>
-  <data name="BtnDroneMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnDroneMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 77</value>
-  </data>
-  <data name="BtnAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>708, 1</value>
-  </data>
-  <data name="BtnAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 77</value>
-  </data>
-  <data name="BtnHomeLand.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="BtnHomeLand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 77</value>
-  </data>
-  <data name="TxtAltitudeValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>912, 10</value>
-  </data>
-  <data name="TxtAltitudeValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 64</value>
-  </data>
-  <data name="panelDroneInfo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="panelDroneInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1422, 81</value>
-  </data>
-  <data name="splitContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1422, 1025</value>
-  </data>
-  <data name="splitContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>817</value>
-  </data>
-  <data name="splitContainer.SplitterWidth" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="TxtAltitudeValue.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
   <data name="ImgListBatteryHealth.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAc
-        CwAAAk1TRnQBSQFMAgEBBgEAAYwBAQGMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBgEAAYQBAQGEAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -534,20 +399,5 @@
         AfgBoAF4Ab8B+AGnAfgBoQH4AaABeAG/AfkBpwH5AaEB+QGgAXkBnwH5AZ8B+QGfAfkBnwH5AYABAQGA
         AQEBgAEBAYABAQGAAQEBgAEBAYABAQGAAQEQ/ws=
 </value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>9, 19</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1422, 1025</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>1437, 998</value>
   </data>
 </root>
