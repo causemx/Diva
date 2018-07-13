@@ -45,10 +45,10 @@
             // LabelLoginAccount
             // 
             this.LabelLoginAccount.AutoSize = true;
-            this.LabelLoginAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelLoginAccount.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelLoginAccount.Location = new System.Drawing.Point(60, 40);
             this.LabelLoginAccount.Name = "LabelLoginAccount";
-            this.LabelLoginAccount.Size = new System.Drawing.Size(206, 23);
+            this.LabelLoginAccount.Size = new System.Drawing.Size(183, 20);
             this.LabelLoginAccount.TabIndex = 15;
             this.LabelLoginAccount.Text = "Current login account: ";
             // 
@@ -107,7 +107,7 @@
             // BtnChangePassword
             // 
             this.BtnChangePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnChangePassword.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnChangePassword.Font = new System.Drawing.Font("Georgia", 10.2F);
             this.BtnChangePassword.Location = new System.Drawing.Point(160, 20);
             this.BtnChangePassword.Name = "BtnChangePassword";
             this.BtnChangePassword.Size = new System.Drawing.Size(200, 40);
@@ -119,7 +119,7 @@
             // BtnDeleteAccount
             // 
             this.BtnDeleteAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDeleteAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnDeleteAccount.Font = new System.Drawing.Font("Georgia", 10.2F);
             this.BtnDeleteAccount.Location = new System.Drawing.Point(20, 20);
             this.BtnDeleteAccount.Name = "BtnDeleteAccount";
             this.BtnDeleteAccount.Size = new System.Drawing.Size(120, 40);
@@ -131,7 +131,7 @@
             // BtnCreateAccount
             // 
             this.BtnCreateAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnCreateAccount.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCreateAccount.Font = new System.Drawing.Font("Georgia", 10.2F);
             this.BtnCreateAccount.Location = new System.Drawing.Point(400, 90);
             this.BtnCreateAccount.Name = "BtnCreateAccount";
             this.BtnCreateAccount.Size = new System.Drawing.Size(120, 40);
@@ -144,7 +144,7 @@
             // 
             this.CBoxAccounts.BackColor = System.Drawing.SystemColors.Window;
             this.CBoxAccounts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
-            this.CBoxAccounts.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBoxAccounts.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBoxAccounts.ForeColor = System.Drawing.SystemColors.WindowText;
             this.CBoxAccounts.FormattingEnabled = true;
             this.CBoxAccounts.Location = new System.Drawing.Point(60, 90);

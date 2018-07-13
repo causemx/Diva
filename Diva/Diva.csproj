@@ -291,6 +291,9 @@
     <EmbeddedResource Include="Controls\ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigureForm.zh-Hant.resx">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </EmbeddedResource>

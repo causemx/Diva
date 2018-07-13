@@ -117,4 +117,370 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SidePanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;BtnTuning.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="BtnGeoFence.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BtnVehicle.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.Name" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="IndicatorPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="IndicatorPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 38</value>
+  </data>
+  <data name="&gt;&gt;configAccountPage.Name" xml:space="preserve">
+    <value>configAccountPage</value>
+  </data>
+  <data name="BtnTuning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 100</value>
+  </data>
+  <data name="&gt;&gt;BtnGeoFence.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="BtnAbout.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnGeoFence.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 100</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 100</value>
+  </data>
+  <data name="BtnTuning.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="SidePanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>333, 754</value>
+  </data>
+  <data name="configAccountPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 0</value>
+  </data>
+  <data name="BtnGeoFence.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnVehicle.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 6, 7, 6</value>
+  </data>
+  <data name="&gt;&gt;configMapPage.Name" xml:space="preserve">
+    <value>configMapPage</value>
+  </data>
+  <data name="BtnTuning.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="BtnAccount.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 6, 7, 6</value>
+  </data>
+  <data name="BtnMap.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;configAccountPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 15</value>
+  </data>
+  <data name="&gt;&gt;BtnAbout.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="BtnGeoFence.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="SidePanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="BtnTuning.Text" xml:space="preserve">
+    <value>Tuning</value>
+  </data>
+  <data name="&gt;&gt;configMapPage.Type" xml:space="preserve">
+    <value>Diva.Controls.ConfigMapPage, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="BtnTuning.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 6, 7, 6</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1313, 754</value>
+  </data>
+  <data name="SidePanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BtnVehicle.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="BtnVehicle.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnMap.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnVehicle.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="configAccountPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>980, 754</value>
+  </data>
+  <data name="&gt;&gt;BtnVehicle.Name" xml:space="preserve">
+    <value>BtnVehicle</value>
+  </data>
+  <data name="BtnAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 100</value>
+  </data>
+  <data name="BtnVehicle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="BtnAbout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;BtnMap.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BtnGeoFence.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="configMapPage.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="BtnTuning.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;BtnAccount.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BtnAbout.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="&gt;&gt;BtnTuning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="configAccountPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="BtnVehicle.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 12pt</value>
+  </data>
+  <data name="BtnAbout.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;BtnVehicle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnMap.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 6, 7, 6</value>
+  </data>
+  <data name="BtnMap.Text" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="&gt;&gt;BtnTuning.Name" xml:space="preserve">
+    <value>BtnTuning</value>
+  </data>
+  <data name="&gt;&gt;configMapPage.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="BtnAccount.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnAccount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 100</value>
+  </data>
+  <data name="&gt;&gt;IndicatorPanel.Name" xml:space="preserve">
+    <value>IndicatorPanel</value>
+  </data>
+  <data name="configAccountPage.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="configMapPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;BtnVehicle.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="BtnAccount.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="configAccountPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="BtnAbout.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 6, 7, 6</value>
+  </data>
+  <data name="&gt;&gt;IndicatorPanel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="configAccountPage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;configMapPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;IndicatorPanel.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="&gt;&gt;BtnAbout.Name" xml:space="preserve">
+    <value>BtnAbout</value>
+  </data>
+  <data name="BtnAccount.Text" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="&gt;&gt;BtnAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnVehicle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 100</value>
+  </data>
+  <data name="BtnMap.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 12pt</value>
+  </data>
+  <data name="&gt;&gt;BtnAbout.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="BtnMap.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;BtnMap.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="BtnTuning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 238</value>
+  </data>
+  <data name="SidePanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="configMapPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>980, 754</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ConfigureForm</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="&gt;&gt;BtnMap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnTuning.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;IndicatorPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnAccount.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 12pt</value>
+  </data>
+  <data name="&gt;&gt;BtnGeoFence.Name" xml:space="preserve">
+    <value>BtnGeoFence</value>
+  </data>
+  <data name="BtnAccount.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;configAccountPage.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="configMapPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>333, 0</value>
+  </data>
+  <data name="BtnAccount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="BtnAccount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 438</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;BtnGeoFence.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;BtnAccount.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="BtnAbout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 538</value>
+  </data>
+  <data name="&gt;&gt;BtnGeoFence.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IndicatorPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;configAccountPage.Type" xml:space="preserve">
+    <value>Diva.Controls.ConfigAccountPage, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="BtnGeoFence.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 12pt</value>
+  </data>
+  <data name="BtnAbout.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 12pt</value>
+  </data>
+  <data name="BtnMap.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BtnVehicle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 38</value>
+  </data>
+  <data name="BtnGeoFence.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>7, 6, 7, 6</value>
+  </data>
+  <data name="BtnGeoFence.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 138</value>
+  </data>
+  <data name="BtnTuning.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnVehicle.Text" xml:space="preserve">
+    <value>Vehicle</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnAccount.Name" xml:space="preserve">
+    <value>BtnAccount</value>
+  </data>
+  <data name="&gt;&gt;BtnAccount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnTuning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 12pt</value>
+  </data>
+  <data name="&gt;&gt;BtnMap.Name" xml:space="preserve">
+    <value>BtnMap</value>
+  </data>
+  <data name="BtnGeoFence.Text" xml:space="preserve">
+    <value>Geofence</value>
+  </data>
+  <data name="IndicatorPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>16, 100</value>
+  </data>
+  <data name="BtnAbout.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="BtnMap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 338</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>zh-Hant</value>
+  </metadata>
 </root>

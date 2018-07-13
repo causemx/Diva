@@ -119,363 +119,150 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BtnMap.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+    <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
   <data name="BtnMap.Text" xml:space="preserve">
     <value>地圖</value>
   </data>
   <data name="BtnAccount.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+    <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
   <data name="BtnAccount.Text" xml:space="preserve">
     <value>帳號</value>
   </data>
-  <data name="IndicatorPanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
   <data name="BtnVehicle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+    <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
   <data name="BtnVehicle.Text" xml:space="preserve">
     <value>無人機</value>
   </data>
   <data name="BtnAbout.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+    <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
   <data name="BtnAbout.Text" xml:space="preserve">
     <value>關於</value>
   </data>
   <data name="BtnTuning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+    <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
   <data name="BtnTuning.Text" xml:space="preserve">
     <value>調整</value>
   </data>
   <data name="BtnGeoFence.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+    <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
   <data name="BtnGeoFence.Text" xml:space="preserve">
     <value>電子圍籬</value>
   </data>
-  <data name="SidePanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>設定</value>
   </data>
-  <data name="LabelLoginAccount.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelLoginAccount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 40</value>
-  </data>
-  <data name="LabelLoginAccount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 22</value>
-  </data>
-  <data name="LabelLoginAccount.Text" xml:space="preserve">
-    <value>目前登入帳號: </value>
-  </data>
-  <data name="LabelConfirmPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelConfirmPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>600, 150</value>
-  </data>
-  <data name="LabelConfirmPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 22</value>
-  </data>
-  <data name="LabelConfirmPassword.Text" xml:space="preserve">
-    <value>確認密碼:</value>
-  </data>
-  <data name="TBoxConfirmPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TBoxConfirmPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>600, 180</value>
-  </data>
-  <data name="TBoxConfirmPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 29</value>
-  </data>
-  <data name="TBoxPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TBoxPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 180</value>
-  </data>
-  <data name="TBoxPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 29</value>
-  </data>
-  <data name="LabelNewPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelNewPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 80</value>
-  </data>
-  <data name="LabelNewPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 22</value>
-  </data>
-  <data name="LabelNewPassword.Text" xml:space="preserve">
-    <value>新密碼:</value>
-  </data>
-  <data name="BtnChangePassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnChangePassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 20</value>
-  </data>
-  <data name="BtnChangePassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 40</value>
-  </data>
-  <data name="BtnChangePassword.Text" xml:space="preserve">
+  <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
     <value>變更密碼</value>
   </data>
-  <data name="BtnDeleteAccount.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
+    <value>建立</value>
   </data>
-  <data name="BtnDeleteAccount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 20</value>
+  <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
+    <value>刪除</value>
   </data>
-  <data name="BtnDeleteAccount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
+  <data name="ConfigAccountPage.CBoxAccount.Texts" xml:space="preserve">
+    <value />
   </data>
-  <data name="BtnDeleteAccount.Text" xml:space="preserve">
-    <value>刪除帳號</value>
+  <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
   </data>
-  <data name="PanelExistingAccountControls.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
+    <value>1.0</value>
   </data>
-  <data name="PanelExistingAccountControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>380, 70</value>
+  <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
+    <value>確認密碼:</value>
   </data>
-  <data name="PanelExistingAccountControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>400, 110</value>
+  <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
+    <value>目前登入帳號: </value>
   </data>
-  <data name="BtnCreateAccount.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
+    <value>新密碼:</value>
   </data>
-  <data name="BtnCreateAccount.Text" xml:space="preserve">
-    <value>建立帳號</value>
-  </data>
-  <data name="CBoxAccounts.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="CBoxAccounts.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 90</value>
-  </data>
-  <data name="CBoxAccounts.Size" type="System.Drawing.Size, System.Drawing">
-    <value>240, 600</value>
-  </data>
-  <data name="LabelPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>400, 150</value>
-  </data>
-  <data name="LabelPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 22</value>
-  </data>
-  <data name="LabelPassword.Text" xml:space="preserve">
+  <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
     <value>密碼:</value>
   </data>
-  <data name="PanelAccountConfig.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigAccountPage.TBoxConfirmPassword.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="BtnMapConfigReset.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigAccountPage.TBoxPassword.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="BtnMapConfigReset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>690, 420</value>
+  <data name="ConfigAccountPage.UIStrings.anonymousAccount" xml:space="preserve">
+    <value>(無)</value>
   </data>
-  <data name="BtnMapConfigReset.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
+  <data name="ConfigAccountPage.UIStrings.changePasswordMessage" xml:space="preserve">
+    <value>變更帳號{0}的密碼？</value>
   </data>
-  <data name="BtnMapConfigReset.Text" xml:space="preserve">
-    <value>取消</value>
+  <data name="ConfigAccountPage.UIStrings.confirmation" xml:space="preserve">
+    <value>請確認變更</value>
   </data>
-  <data name="BtnMapConfigApply.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigAccountPage.UIStrings.createAccountMessage" xml:space="preserve">
+    <value>建立帳號{0}？</value>
   </data>
-  <data name="BtnMapConfigApply.Location" type="System.Drawing.Point, System.Drawing">
-    <value>540, 420</value>
+  <data name="ConfigAccountPage.UIStrings.deleteAccountMessage" xml:space="preserve">
+    <value>刪除帳號{0}？</value>
   </data>
-  <data name="BtnMapConfigApply.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
+  <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
+    <value>瀏覽</value>
   </data>
-  <data name="BtnMapConfigApply.Text" xml:space="preserve">
+  <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
+    <value>瀏覽</value>
+  </data>
+  <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
     <value>套用</value>
   </data>
-  <data name="LabelImageMapLocation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
+    <value>回復</value>
   </data>
-  <data name="LabelImageMapLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 22</value>
+  <data name="ConfigMapPage.FontFamily" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
   </data>
-  <data name="LabelImageMapLocation.Text" xml:space="preserve">
-    <value>室內飛行圖檔:</value>
+  <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
+    <value>1.0</value>
   </data>
-  <data name="TBoxIndoorMapLocation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
+    <value>室內地圖圖檔路徑:</value>
   </data>
-  <data name="TBoxIndoorMapLocation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 30</value>
-  </data>
-  <data name="TBoxIndoorMapLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>640, 29</value>
-  </data>
-  <data name="BtnBrowseIndoorMap.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnBrowseIndoorMap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>660, 20</value>
-  </data>
-  <data name="BtnBrowseIndoorMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
-  </data>
-  <data name="BtnBrowseIndoorMap.Text" xml:space="preserve">
-    <value>瀏覽</value>
-  </data>
-  <data name="PanelIndoorMapControls.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="PanelIndoorMapControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 320</value>
-  </data>
-  <data name="PanelIndoorMapControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>800, 60</value>
-  </data>
-  <data name="RBtnIndoorMap.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="RBtnIndoorMap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 280</value>
-  </data>
-  <data name="RBtnIndoorMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 26</value>
-  </data>
-  <data name="LabelInitialPosition.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelInitialPosition.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 90</value>
-  </data>
-  <data name="LabelInitialPosition.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 22</value>
-  </data>
-  <data name="LabelInitialPosition.Text" xml:space="preserve">
+  <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
     <value>起始位置</value>
   </data>
-  <data name="LabelInitialPosition.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="TBoxInitialZoom.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TBoxInitialZoom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 130</value>
-  </data>
-  <data name="TBoxInitialZoom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 29</value>
-  </data>
-  <data name="LabelInitialZoom.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelInitialZoom.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 130</value>
-  </data>
-  <data name="LabelInitialZoom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>210, 32</value>
-  </data>
-  <data name="LabelInitialZoom.Text" xml:space="preserve">
+  <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
     <value>起始縮放階層:</value>
   </data>
-  <data name="LabelIPLongtitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelIPLongtitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>470, 90</value>
-  </data>
-  <data name="LabelIPLongtitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 32</value>
-  </data>
-  <data name="LabelIPLongtitude.Text" xml:space="preserve">
-    <value>經度:</value>
-  </data>
-  <data name="TBoxIPLongitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TBoxIPLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>630, 90</value>
-  </data>
-  <data name="TBoxIPLongitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 29</value>
-  </data>
-  <data name="LabelIPLatitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelIPLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 90</value>
-  </data>
-  <data name="LabelIPLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 32</value>
-  </data>
-  <data name="LabelIPLatitude.Text" xml:space="preserve">
+  <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
     <value>緯度:</value>
   </data>
-  <data name="TBoxIPLatitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
+    <value>經度:</value>
   </data>
-  <data name="TBoxIPLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 90</value>
+  <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
+    <value>離線地圖快取路徑(將存放於TileDBv5\en目錄下)</value>
   </data>
-  <data name="TBoxIPLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 29</value>
+  <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
+    <value>戶外地圖</value>
   </data>
-  <data name="LabelMapCacheLocation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
+    <value>室內地圖</value>
   </data>
-  <data name="LabelMapCacheLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 22</value>
+  <data name="ConfigMapPage.TBoxIndoorMapLocation.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="LabelMapCacheLocation.Text" xml:space="preserve">
-    <value>離線地圖快取路徑: (檔案存放於'TileDBv5\en'子目錄下)</value>
+  <data name="ConfigMapPage.TBoxInitialZoom.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="TBoxMapCacheLocation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigMapPage.TBoxIPLatitude.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="TBoxMapCacheLocation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 40</value>
+  <data name="ConfigMapPage.TBoxIPLongitude.Text" xml:space="preserve">
+    <value />
   </data>
-  <data name="TBoxMapCacheLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>640, 29</value>
-  </data>
-  <data name="BtnBrowseMapLocation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnBrowseMapLocation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>660, 30</value>
-  </data>
-  <data name="BtnBrowseMapLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 40</value>
-  </data>
-  <data name="BtnBrowseMapLocation.Text" xml:space="preserve">
-    <value>瀏覽</value>
-  </data>
-  <data name="PanelGlobalMapControls.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="PanelGlobalMapControls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 80</value>
-  </data>
-  <data name="PanelGlobalMapControls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>800, 160</value>
-  </data>
-  <data name="RBtnGlobalMap.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="RBtnGlobalMap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="RBtnGlobalMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 26</value>
-  </data>
-  <data name="PanelMapControls.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="ConfigMapPage.TBoxMapCacheLocation.Text" xml:space="preserve">
+    <value />
   </data>
 </root>
