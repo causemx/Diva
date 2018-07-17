@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using GMap.NET;
+using log4net;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -50,7 +51,11 @@ namespace Diva.Mavlink
 		public DateTime packetlosttimer = DateTime.MinValue;
 		public float synclost = 0;
 
-
+		// for flight recorder
+		public PointLatLng HomeLocation { get; set; }
+		public string SystemStartTime { get; set; }
+		public string SystemStopTime { get; set; }
+		
 		// all
 		public string VersionString { get; set; }
 		// px4+ only

@@ -132,6 +132,7 @@ namespace Diva
 
 
 		private bool useLocation = false;
+		private long recorder_id = 0;
 
 		public enum altmode
 		{
@@ -316,17 +317,36 @@ namespace Diva
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
 		}
-
-
-		/*protected override void OnFormClosing(FormClosingEventArgs e)
+	
+		protected override void OnActivated(EventArgs e)
 		{
-			base.OnFormClosing(e);
-			foreach (MavlinkInterface _port in comPorts)
-			{
-				_port.onDestroy();
-			}
-		}*/
+			base.OnActivated(e);
 
+			
+			FlightRecorder recorder = new FlightRecorder()
+			{
+				UserName = AccountManager.GetLoginAccount(),
+				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+				TotalDistance = 0.0d,
+				HomeLatitude = 0.0d,
+				HomeLongitude = 0.0d,
+				HomeAltitude = 0.0d,
+			};
+
+			DatabaseManager.InitialDatabase();
+			recorder_id = DatabaseManager.InsertValue(recorder);
+
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+
+			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
+			DatabaseManager.Dump(recorder_id);
+
+		}
 
 		private void AddRouteOverlay(int count)
 		{
@@ -1844,9 +1864,9 @@ namespace Diva
 
 
 						CurrentDroneInfo.UpdateAssumeTime(dist + homedist);
+						DatabaseManager.UpdateTotalDistance(recorder_id, dist);
 					}
-
-					log.Info("Total distance: " + FormatDistance(dist + homedist, false));
+					
 
 				}
 
@@ -2293,7 +2313,7 @@ namespace Diva
 				{
 					comPort.setWPTotal(totalwpcountforupload);
 				}
-				catch (TimeoutException e)
+				catch (TimeoutException)
 				{
 					MessageBox.Show("timeout on read, please try again.");
 				}
@@ -2866,6 +2886,8 @@ namespace Diva
 				DroneInfo1.Activate();
 				CurrentDroneInfo = DroneInfo1;
 				comPort = mav;
+
+
 			}
 			catch (Exception exception)
 			{
@@ -3005,6 +3027,8 @@ namespace Diva
 			TxtHomeAltitude.Text = "0";
 			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString();
 			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
+
+			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
 
@@ -3012,7 +3036,6 @@ namespace Diva
 		private void BUT_Rotation2_Click(object sender, EventArgs e)
 		{
 			
-			int _cursor = 0;
 			ProgressDialog _dialog = new ProgressDialog();
 			_dialog.IsActive = true;
 			_dialog.Show();
