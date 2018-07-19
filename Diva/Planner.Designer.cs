@@ -41,6 +41,15 @@ namespace Diva
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
 			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.geoFenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.GeoFenceuploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.GeoFencedownloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setReturnLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelDroneInfo = new System.Windows.Forms.Panel();
 			this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
 			this.TxtHomeLatitude = new System.Windows.Forms.TextBox();
@@ -83,6 +92,10 @@ namespace Diva
 			this.BtnTakeOff = new System.Windows.Forms.Button();
 			this.BtnWriteWPs = new System.Windows.Forms.Button();
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
+			this.addPolygonPointToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.savePolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
 			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
 			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
@@ -104,30 +117,104 @@ namespace Diva
 			this.cmMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miClearMission,
             this.miSetHomeHere,
-            this.miClearAllMissions});
+            this.miClearAllMissions,
+            this.toolStripSeparator1,
+            this.addPolygonPointToolStripMenuItem,
+            this.geoFenceToolStripMenuItem});
 			this.cmMap.Name = "contextMenuStrip1";
-			this.cmMap.Size = new System.Drawing.Size(174, 70);
+			this.cmMap.Size = new System.Drawing.Size(181, 142);
 			// 
 			// miClearMission
 			// 
 			this.miClearMission.Name = "miClearMission";
-			this.miClearMission.Size = new System.Drawing.Size(173, 22);
+			this.miClearMission.Size = new System.Drawing.Size(180, 22);
 			this.miClearMission.Text = "Takeoff to Here";
 			this.miClearMission.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
 			// 
 			// miSetHomeHere
 			// 
 			this.miSetHomeHere.Name = "miSetHomeHere";
-			this.miSetHomeHere.Size = new System.Drawing.Size(173, 22);
+			this.miSetHomeHere.Size = new System.Drawing.Size(180, 22);
 			this.miSetHomeHere.Text = "Set Home Here";
 			this.miSetHomeHere.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
 			// 
 			// miClearAllMissions
 			// 
 			this.miClearAllMissions.Name = "miClearAllMissions";
-			this.miClearAllMissions.Size = new System.Drawing.Size(173, 22);
+			this.miClearAllMissions.Size = new System.Drawing.Size(180, 22);
 			this.miClearAllMissions.Text = "Clear All Missions";
 			this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+			// 
+			// addPolygonPointToolStripMenuItem
+			// 
+			this.addPolygonPointToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPolygonPointToolStripMenuItem1,
+            this.clearPolygonToolStripMenuItem,
+            this.savePolygonToolStripMenuItem,
+            this.loadPolygonToolStripMenuItem});
+			this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
+			this.addPolygonPointToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.addPolygonPointToolStripMenuItem.Text = "Draw Polygon";
+			// 
+			// geoFenceToolStripMenuItem
+			// 
+			this.geoFenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.GeoFenceuploadToolStripMenuItem,
+            this.GeoFencedownloadToolStripMenuItem,
+            this.setReturnLocationToolStripMenuItem,
+            this.loadFromFileToolStripMenuItem,
+            this.saveToFileToolStripMenuItem,
+            this.clearToolStripMenuItem});
+			this.geoFenceToolStripMenuItem.Name = "geoFenceToolStripMenuItem";
+			this.geoFenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.geoFenceToolStripMenuItem.Text = "Geo-Fence";
+			// 
+			// GeoFenceuploadToolStripMenuItem
+			// 
+			this.GeoFenceuploadToolStripMenuItem.Name = "GeoFenceuploadToolStripMenuItem";
+			this.GeoFenceuploadToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.GeoFenceuploadToolStripMenuItem.Text = "Upload";
+			this.GeoFenceuploadToolStripMenuItem.Click += new System.EventHandler(this.GeoFenceuploadToolStripMenuItem_Click);
+			// 
+			// GeoFencedownloadToolStripMenuItem
+			// 
+			this.GeoFencedownloadToolStripMenuItem.Name = "GeoFencedownloadToolStripMenuItem";
+			this.GeoFencedownloadToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.GeoFencedownloadToolStripMenuItem.Text = "Download";
+			this.GeoFencedownloadToolStripMenuItem.Click += new System.EventHandler(this.GeoFencedownloadToolStripMenuItem_Click);
+			// 
+			// setReturnLocationToolStripMenuItem
+			// 
+			this.setReturnLocationToolStripMenuItem.Name = "setReturnLocationToolStripMenuItem";
+			this.setReturnLocationToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.setReturnLocationToolStripMenuItem.Text = "Set Return Location";
+			this.setReturnLocationToolStripMenuItem.Click += new System.EventHandler(this.setReturnLocationToolStripMenuItem_Click);
+			// 
+			// loadFromFileToolStripMenuItem
+			// 
+			this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
+			this.loadFromFileToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.loadFromFileToolStripMenuItem.Text = "Load From File";
+			this.loadFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileToolStripMenuItem_Click);
+			// 
+			// saveToFileToolStripMenuItem
+			// 
+			this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
+			this.saveToFileToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.saveToFileToolStripMenuItem.Text = "Save To File";
+			this.saveToFileToolStripMenuItem.Click += new System.EventHandler(this.saveToFileToolStripMenuItem_Click);
+			// 
+			// clearToolStripMenuItem
+			// 
+			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+			this.clearToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+			this.clearToolStripMenuItem.Text = "Clear";
+			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
 			// 
 			// panelDroneInfo
 			// 
@@ -146,7 +233,7 @@ namespace Diva
 			this.panelDroneInfo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelDroneInfo.Location = new System.Drawing.Point(0, 0);
 			this.panelDroneInfo.Name = "panelDroneInfo";
-			this.panelDroneInfo.Size = new System.Drawing.Size(948, 51);
+			this.panelDroneInfo.Size = new System.Drawing.Size(1904, 51);
 			this.panelDroneInfo.TabIndex = 1;
 			// 
 			// TxtHomeLongitude
@@ -355,7 +442,7 @@ namespace Diva
 			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
 			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvWayPoints.RowTemplate.Height = 24;
-			this.dgvWayPoints.Size = new System.Drawing.Size(948, 80);
+			this.dgvWayPoints.Size = new System.Drawing.Size(1904, 161);
 			this.dgvWayPoints.TabIndex = 6;
 			this.dgvWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.dgvWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -612,8 +699,8 @@ namespace Diva
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
 			this.splitContainer.Panel2MinSize = 120;
-			this.splitContainer.Size = new System.Drawing.Size(948, 662);
-			this.splitContainer.SplitterDistance = 528;
+			this.splitContainer.Size = new System.Drawing.Size(1904, 1062);
+			this.splitContainer.SplitterDistance = 847;
 			this.splitContainer.SplitterWidth = 3;
 			this.splitContainer.TabIndex = 15;
 			// 
@@ -626,7 +713,7 @@ namespace Diva
 			this.BtnRTL.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnRTL.ForeColor = System.Drawing.Color.White;
 			this.BtnRTL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnRTL.Location = new System.Drawing.Point(9, 405);
+			this.BtnRTL.Location = new System.Drawing.Point(9, 564);
 			this.BtnRTL.Margin = new System.Windows.Forms.Padding(4);
 			this.BtnRTL.Name = "BtnRTL";
 			this.BtnRTL.Size = new System.Drawing.Size(90, 87);
@@ -646,7 +733,7 @@ namespace Diva
 			this.BtnLand.ForeColor = System.Drawing.Color.White;
 			this.BtnLand.Image = global::Diva.Properties.Resources.icon_land;
 			this.BtnLand.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnLand.Location = new System.Drawing.Point(9, 219);
+			this.BtnLand.Location = new System.Drawing.Point(9, 378);
 			this.BtnLand.Name = "BtnLand";
 			this.BtnLand.Size = new System.Drawing.Size(90, 87);
 			this.BtnLand.TabIndex = 1;
@@ -667,7 +754,7 @@ namespace Diva
 			this.BtnVideo.ForeColor = System.Drawing.Color.White;
 			this.BtnVideo.Image = global::Diva.Properties.Resources.icon_add;
 			this.BtnVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnVideo.Location = new System.Drawing.Point(105, 405);
+			this.BtnVideo.Location = new System.Drawing.Point(105, 564);
 			this.BtnVideo.Margin = new System.Windows.Forms.Padding(4);
 			this.BtnVideo.Name = "BtnVideo";
 			this.BtnVideo.Size = new System.Drawing.Size(90, 87);
@@ -689,7 +776,7 @@ namespace Diva
 			this.BtnAuto.ForeColor = System.Drawing.Color.White;
 			this.BtnAuto.Image = global::Diva.Properties.Resources.icon_auto;
 			this.BtnAuto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnAuto.Location = new System.Drawing.Point(105, 219);
+			this.BtnAuto.Location = new System.Drawing.Point(105, 378);
 			this.BtnAuto.Name = "BtnAuto";
 			this.BtnAuto.Size = new System.Drawing.Size(90, 87);
 			this.BtnAuto.TabIndex = 3;
@@ -709,7 +796,7 @@ namespace Diva
 			this.BtnArm.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnArm.ForeColor = System.Drawing.Color.White;
 			this.BtnArm.Image = global::Diva.Properties.Resources.icon_connect;
-			this.BtnArm.Location = new System.Drawing.Point(9, 126);
+			this.BtnArm.Location = new System.Drawing.Point(9, 285);
 			this.BtnArm.Name = "BtnArm";
 			this.BtnArm.Size = new System.Drawing.Size(90, 87);
 			this.BtnArm.TabIndex = 0;
@@ -730,7 +817,7 @@ namespace Diva
 			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnReadWPs.Image = global::Diva.Properties.Resources.icon_readwps;
 			this.BtnReadWPs.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnReadWPs.Location = new System.Drawing.Point(105, 312);
+			this.BtnReadWPs.Location = new System.Drawing.Point(105, 471);
 			this.BtnReadWPs.Name = "BtnReadWPs";
 			this.BtnReadWPs.Size = new System.Drawing.Size(90, 87);
 			this.BtnReadWPs.TabIndex = 5;
@@ -751,7 +838,7 @@ namespace Diva
 			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
 			this.BtnTakeOff.Image = global::Diva.Properties.Resources.icon_takeoff;
 			this.BtnTakeOff.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.BtnTakeOff.Location = new System.Drawing.Point(105, 126);
+			this.BtnTakeOff.Location = new System.Drawing.Point(105, 285);
 			this.BtnTakeOff.Name = "BtnTakeOff";
 			this.BtnTakeOff.Size = new System.Drawing.Size(90, 87);
 			this.BtnTakeOff.TabIndex = 2;
@@ -771,7 +858,7 @@ namespace Diva
 			this.BtnWriteWPs.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnWriteWPs.Image = global::Diva.Properties.Resources.icon_writewps;
-			this.BtnWriteWPs.Location = new System.Drawing.Point(9, 312);
+			this.BtnWriteWPs.Location = new System.Drawing.Point(9, 471);
 			this.BtnWriteWPs.Name = "BtnWriteWPs";
 			this.BtnWriteWPs.Size = new System.Drawing.Size(90, 87);
 			this.BtnWriteWPs.TabIndex = 4;
@@ -793,11 +880,39 @@ namespace Diva
 			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
 			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
 			// 
+			// addPolygonPointToolStripMenuItem1
+			// 
+			this.addPolygonPointToolStripMenuItem1.Name = "addPolygonPointToolStripMenuItem1";
+			this.addPolygonPointToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.addPolygonPointToolStripMenuItem1.Text = "Add Polygon Point";
+			this.addPolygonPointToolStripMenuItem1.Click += new System.EventHandler(this.addPolygonPointToolStripMenuItem_Click);
+			// 
+			// clearPolygonToolStripMenuItem
+			// 
+			this.clearPolygonToolStripMenuItem.Name = "clearPolygonToolStripMenuItem";
+			this.clearPolygonToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+			this.clearPolygonToolStripMenuItem.Text = "Clear Polygon";
+			this.clearPolygonToolStripMenuItem.Click += new System.EventHandler(this.clearPolygonToolStripMenuItem_Click);
+			// 
+			// savePolygonToolStripMenuItem
+			// 
+			this.savePolygonToolStripMenuItem.Name = "savePolygonToolStripMenuItem";
+			this.savePolygonToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+			this.savePolygonToolStripMenuItem.Text = "Save Polygon";
+			this.savePolygonToolStripMenuItem.Click += new System.EventHandler(this.savePolygonToolStripMenuItem_Click);
+			// 
+			// loadPolygonToolStripMenuItem
+			// 
+			this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
+			this.loadPolygonToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+			this.loadPolygonToolStripMenuItem.Text = "Load Polygon";
+			this.loadPolygonToolStripMenuItem.Click += new System.EventHandler(this.loadPolygonToolStripMenuItem_Click);
+			// 
 			// CollectionTelemetryData
 			// 
 			this.CollectionTelemetryData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.CollectionTelemetryData.Location = new System.Drawing.Point(595, 262);
+			this.CollectionTelemetryData.Location = new System.Drawing.Point(1551, 262);
 			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
 			this.CollectionTelemetryData.Size = new System.Drawing.Size(341, 245);
 			this.CollectionTelemetryData.TabIndex = 19;
@@ -808,7 +923,7 @@ namespace Diva
 			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
 			this.DroneInfo3.DroneName = "APM-3";
 			this.DroneInfo3.IsActivate = false;
-			this.DroneInfo3.Location = new System.Drawing.Point(592, 178);
+			this.DroneInfo3.Location = new System.Drawing.Point(1548, 178);
 			this.DroneInfo3.Name = "DroneInfo3";
 			this.DroneInfo3.Size = new System.Drawing.Size(344, 78);
 			this.DroneInfo3.TabIndex = 18;
@@ -821,7 +936,7 @@ namespace Diva
 			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
 			this.DroneInfo2.DroneName = "APM-2";
 			this.DroneInfo2.IsActivate = false;
-			this.DroneInfo2.Location = new System.Drawing.Point(592, 94);
+			this.DroneInfo2.Location = new System.Drawing.Point(1548, 94);
 			this.DroneInfo2.Name = "DroneInfo2";
 			this.DroneInfo2.Size = new System.Drawing.Size(344, 78);
 			this.DroneInfo2.TabIndex = 17;
@@ -834,7 +949,7 @@ namespace Diva
 			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
 			this.DroneInfo1.DroneName = "APM-1";
 			this.DroneInfo1.IsActivate = false;
-			this.DroneInfo1.Location = new System.Drawing.Point(592, 10);
+			this.DroneInfo1.Location = new System.Drawing.Point(1548, 10);
 			this.DroneInfo1.Name = "DroneInfo1";
 			this.DroneInfo1.Size = new System.Drawing.Size(344, 78);
 			this.DroneInfo1.TabIndex = 16;
@@ -867,7 +982,7 @@ namespace Diva
 			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
 			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
 			this.myMap.ShowTileGridLines = false;
-			this.myMap.Size = new System.Drawing.Size(948, 528);
+			this.myMap.Size = new System.Drawing.Size(1904, 847);
 			this.myMap.TabIndex = 14;
 			this.myMap.Zoom = 15D;
 			// 
@@ -875,7 +990,7 @@ namespace Diva
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(948, 662);
+			this.ClientSize = new System.Drawing.Size(1904, 1062);
 			this.Controls.Add(this.splitContainer);
 			this.MinimumSize = new System.Drawing.Size(964, 648);
 			this.Name = "Planner";
@@ -952,5 +1067,18 @@ namespace Diva
 		private TextBox TxtHomeLongitude;
 		private ToolStripButton BtnSaveMission;
 		private ToolStripButton BtnReadMission;
+		private ToolStripSeparator toolStripSeparator1;
+		private ToolStripMenuItem addPolygonPointToolStripMenuItem;
+		private ToolStripMenuItem geoFenceToolStripMenuItem;
+		private ToolStripMenuItem GeoFenceuploadToolStripMenuItem;
+		private ToolStripMenuItem GeoFencedownloadToolStripMenuItem;
+		private ToolStripMenuItem setReturnLocationToolStripMenuItem;
+		private ToolStripMenuItem loadFromFileToolStripMenuItem;
+		private ToolStripMenuItem saveToFileToolStripMenuItem;
+		private ToolStripMenuItem clearToolStripMenuItem;
+		private ToolStripMenuItem addPolygonPointToolStripMenuItem1;
+		private ToolStripMenuItem clearPolygonToolStripMenuItem;
+		private ToolStripMenuItem savePolygonToolStripMenuItem;
+		private ToolStripMenuItem loadPolygonToolStripMenuItem;
 	}
 }
