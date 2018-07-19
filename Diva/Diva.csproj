@@ -262,6 +262,16 @@
     <Compile Include="Controls\SplashForm.Designer.cs">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Strings.zh-Hant.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
+    </Compile>
     <Compile Include="Strings.cs" />
     <Compile Include="Utilities\Demux.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
@@ -270,6 +280,7 @@
     <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />
+    <Compile Include="Utilities\ResourceStringHelper.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
     <EmbeddedResource Include="Comms\ConnectionForm.resx">
@@ -342,6 +353,14 @@
     </Compile>
     <EmbeddedResource Include="Controls\SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.zh-Hant.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.zh-Hant.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="LibVlc\plugins\plugins.dat" />

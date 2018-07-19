@@ -78,11 +78,11 @@ namespace Diva
             this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
             this.TxtHomeLatitude = new System.Windows.Forms.TextBox();
             this.TxtHomeAltitude = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.LabelLongitude = new System.Windows.Forms.Label();
             this.LabelLatitude = new System.Windows.Forms.Label();
             this.LabelAltitude = new System.Windows.Forms.Label();
             this.TxtDroneMode = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BtnDroneMode = new System.Windows.Forms.Button();
             this.BtnAltitude = new System.Windows.Forms.Button();
             this.BtnHomeLand = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
@@ -537,11 +537,11 @@ namespace Diva
             this.panelDroneInfo.Controls.Add(this.TxtHomeLongitude);
             this.panelDroneInfo.Controls.Add(this.TxtHomeLatitude);
             this.panelDroneInfo.Controls.Add(this.TxtHomeAltitude);
-            this.panelDroneInfo.Controls.Add(this.label3);
+            this.panelDroneInfo.Controls.Add(this.LabelLongitude);
             this.panelDroneInfo.Controls.Add(this.LabelLatitude);
             this.panelDroneInfo.Controls.Add(this.LabelAltitude);
             this.panelDroneInfo.Controls.Add(this.TxtDroneMode);
-            this.panelDroneInfo.Controls.Add(this.button1);
+            this.panelDroneInfo.Controls.Add(this.BtnDroneMode);
             this.panelDroneInfo.Controls.Add(this.BtnAltitude);
             this.panelDroneInfo.Controls.Add(this.BtnHomeLand);
             this.panelDroneInfo.Controls.Add(this.TxtAltitudeValue);
@@ -565,11 +565,11 @@ namespace Diva
             this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TxtHomeAltitude.Name = "TxtHomeAltitude";
             // 
-            // label3
+            // LabelLongitude
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Name = "label3";
+            resources.ApplyResources(this.LabelLongitude, "LabelLongitude");
+            this.LabelLongitude.ForeColor = System.Drawing.Color.White;
+            this.LabelLongitude.Name = "LabelLongitude";
             // 
             // LabelLatitude
             // 
@@ -589,15 +589,15 @@ namespace Diva
             this.TxtDroneMode.ForeColor = System.Drawing.Color.White;
             this.TxtDroneMode.Name = "TxtDroneMode";
             // 
-            // button1
+            // BtnDroneMode
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = global::Diva.Properties.Resources.icon_airplane_32;
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = false;
+            resources.ApplyResources(this.BtnDroneMode, "BtnDroneMode");
+            this.BtnDroneMode.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnDroneMode.FlatAppearance.BorderSize = 0;
+            this.BtnDroneMode.ForeColor = System.Drawing.Color.White;
+            this.BtnDroneMode.Image = global::Diva.Properties.Resources.icon_airplane_32;
+            this.BtnDroneMode.Name = "BtnDroneMode";
+            this.BtnDroneMode.UseVisualStyleBackColor = false;
             // 
             // BtnAltitude
             // 
@@ -697,9 +697,9 @@ namespace Diva
 		private DroneInfoPanel DroneInfo3;
 		private TelemetryDataPanel CollectionTelemetryData;
 		private Button BtnAltitude;
-		private Button button1;
+		private Button BtnDroneMode;
 		private Label TxtDroneMode;
-		private Label label3;
+		private Label LabelLongitude;
 		private Label LabelLatitude;
 		private Label LabelAltitude;
 		private TextBox TxtHomeAltitude;

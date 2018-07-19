@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Globalization;
+using ResStrings = Diva.Properties.Strings;
 
 namespace Diva.Controls
 {
@@ -16,81 +11,26 @@ namespace Diva.Controls
         private bool disableSelectionUpate;
         private string loginAccount;
 
-        // can be implemented with dynamic or dictionary but this should do
-        private class UIStrings
-        {
-            public string anonymousAccount;
-            public string confirmation;
-            public string createAccountMessage;
-            public string deleteAccountMessage;
-            public string changePasswordMessage;
-        }
-        private UIStrings uiStrings = new UIStrings
-        {
-            anonymousAccount = "(Anonymous)",
-            confirmation = "Confirmation",
-            createAccountMessage = "Create account '{0}'?",
-            deleteAccountMessage = "Delete account '{0}'?",
-            changePasswordMessage = "Change password for account '{0}'?",
-        };
-
         public ConfigAccountPage()
         {
             InitializeComponent();
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-                LocaleUpdate();
-        }
-
-        public void LocaleUpdate()
-        {
-            // User control has no ide supported resx management
-            ComponentResourceManager rm = new ComponentResourceManager(typeof(ConfigureForm));
-            string resName(Control c) => $"ConfigAccountPage.{c.Name}.Text";
-            string rmGetString(string name)
             {
-                string res = null;
-                try
-                {
-                    res = rm.GetString(name);
-                }
-                catch { }
-                return res;
+                this.UpdateLocale();
+                disableSelectionUpate = true;
+                if (InvokeRequired)
+                    Invoke((MethodInvoker)InitAccountPage);
+                else
+                    InitAccountPage();
+                disableSelectionUpate = false;
             }
-            string locFontName = rmGetString("ConfigAccountPage.FontFamily");
-            if (!float.TryParse(rmGetString("ConfigAccountPage.FontSizeAdjust"), out var locFontSizeAdjust))
-                locFontSizeAdjust = 0f;
-            if (locFontName != null)
-            {
-                foreach (Control c in Controls)
-                {
-                    string s = rmGetString(resName(c));
-                    if (s != null)
-                    {
-                        c.Text = s;
-                        c.Font = new Font(locFontName, c.Font.Size + locFontSizeAdjust);
-                    }
-                }
-                var uistrs = typeof(UIStrings).GetFields();
-                foreach (var f in uistrs)
-                {
-                    string s = rmGetString("ConfigAccountPage.UIStrings." + f.Name);
-                    if (s != null)
-                        f.SetValue(uiStrings, s);
-                }
-            }
-            disableSelectionUpate = true;
-            if (InvokeRequired)
-                Invoke((MethodInvoker)InitAccountPage);
-            else
-                InitAccountPage();
-            disableSelectionUpate = false;
         }
 
         private void InitAccountPage()
         {
             loginAccount = AccountManager.GetLoginAccount();
             LabelLoginAccount.Text +=
-                loginAccount == "" ? uiStrings.anonymousAccount : loginAccount;
+                loginAccount == "" ? ResStrings.StrAnonymousAccount : loginAccount;
             LoadAccount();
         }
 
@@ -149,9 +89,9 @@ namespace Diva.Controls
 
         private void BtnCreateAccount_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(
-                String.Format(uiStrings.createAccountMessage, CBoxAccounts.Text),
-                uiStrings.confirmation, MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show(ResStrings.ConfigAccountPage_MsgCreateAccount
+                    .FormatWith(CBoxAccounts.Text),
+                ResStrings.MsgConfirmTitle, MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
             AccountManager.CreateAccount(CBoxAccounts.Text, TBoxPassword.Text);
             TBoxPassword.Text = TBoxConfirmPassword.Text = "";
@@ -160,9 +100,9 @@ namespace Diva.Controls
 
         private void BtnDeleteAccount_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(
-                String.Format(uiStrings.deleteAccountMessage, CBoxAccounts.Text),
-                uiStrings.confirmation, MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show(ResStrings.ConfigAccountPage_MsgDeleteAccount
+                    .FormatWith(CBoxAccounts.Text),
+                ResStrings.MsgConfirmTitle, MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
             AccountManager.DeleteAccount(CBoxAccounts.Text);
             TBoxPassword.Text = TBoxConfirmPassword.Text = "";
@@ -171,9 +111,9 @@ namespace Diva.Controls
 
         private void BtnChangePassword_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(
-                String.Format(uiStrings.changePasswordMessage, CBoxAccounts.Text),
-                uiStrings.confirmation, MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show(ResStrings.ConfigAccountPage_MsgChangePassword
+                    .FormatWith(CBoxAccounts.Text),
+                ResStrings.MsgConfirmTitle, MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
             AccountManager.ChangePassword(CBoxAccounts.Text, TBoxPassword.Text);
             TBoxPassword.Text = TBoxConfirmPassword.Text = "";

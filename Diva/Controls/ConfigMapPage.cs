@@ -33,39 +33,7 @@ namespace Diva.Controls
         public ConfigMapPage()
         {
             InitializeComponent();
-            LocaleUpdate();
-        }
-
-        public void LocaleUpdate()
-        {
-            // User control has no ide supported resx management
-            ComponentResourceManager rm = new ComponentResourceManager(typeof(ConfigureForm));
-            string rmGetString(string name)
-            {
-                string res = null;
-                try
-                {
-                    res = rm.GetString(name);
-                }
-                catch { }
-                return res;
-            }
-            string locFontName = rmGetString("ConfigMapPage.FontFamily");
-            if (!float.TryParse(rmGetString("ConfigMapPage.FontSizeAdjust"), out var locFontSizeAdjust))
-                locFontSizeAdjust = 0f;
-            void updateControl(Control c)
-            {
-                string s = rmGetString($"ConfigMapPage.{c.Name}.Text");
-                if (s != null)
-                {
-                    c.Text = s;
-                    c.Font = new Font(locFontName, c.Font.Size + locFontSizeAdjust);
-                }
-                foreach (Control cc in c.Controls)
-                    updateControl(cc);
-            }
-            if (locFontName != null)
-                updateControl(this);
+            this.UpdateLocale();
         }
 
         protected override void OnLoad(EventArgs e)
