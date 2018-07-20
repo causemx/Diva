@@ -68,29 +68,25 @@ namespace Diva
 
 		private static readonly double WARN_ALT = 2D;
 		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
-		private Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
-		private static readonly string[] overlayNames = {
-			"kmlpolygons",
-			"rallypoints",
-			"polygons",
-			"airports",
-			"objects",
-			"commons",
-			"drawnpolygons",
-			"geofence",
-			"POI"
-		};
-		//private GMapOverlay overlays["polygons"];
-		//private GMapOverlay airportsOverlay;
-		//private GMapOverlay poiOverlay;
-		//private GMapOverlay overlays["drawnpolygons"];
-		//private GMapOverlay overlays["objects"];
-		//private GMapOverlay kmloverlays["polygons"];
-		//private GMapOverlay overlays["rallypoints"];
-		//private GMapOverlay overlays["commons"];
-		//private GMapOverlay geofenceOverlay;
 
-		private GMapMarkerRect currentRectMarker;
+        private class plannerOverlays
+        {
+            public GMapOverlay kmlpolygons;
+            public GMapOverlay rallypoints;
+            public GMapOverlay polygons;
+            public GMapOverlay airports;
+            public GMapOverlay objects;
+            public GMapOverlay commons;
+            public GMapOverlay drawnpolygons;
+            public GMapOverlay geofence;
+            public GMapOverlay POI;
+            internal plannerOverlays()
+                => GetType().GetFields().ToList().ForEach(
+                    f => f.SetValue(this, new GMapOverlay(f.Name)));
+        }
+        private plannerOverlays overlays;
+
+        private GMapMarkerRect currentRectMarker;
 		private GMapMarkerRallyPt currentRallyPt;
 
 		private GMapMarker currentMarker;
@@ -135,18 +131,6 @@ namespace Diva
 
 		private bool useLocation = false;
 		private long recorder_id = 0;
-
-		public static readonly string[] overlayNames = {
-			"kmlpolygons",
-			"rallypoints",
-			"polygons",
-			"airports",
-			"objects",
-			"commons",
-			"drawnpolygons",
-			"geofence",
-			"POI"
-		};
 
 		public enum altmode
 		{
@@ -216,11 +200,9 @@ namespace Diva
 			myMap.OnMarkerEnter += MainMap_OnMarkerEnter;
 			myMap.OnMarkerLeave += MainMap_OnMarkerLeave;
 
-			overlayNames.ToList().ForEach(s =>
-				myMap.Overlays.Add(overlays[s] = new GMapOverlay(s))
-			);
+            overlays = new plannerOverlays();
 
-			overlays["objects"].Markers.Clear();
+			overlays.objects.Markers.Clear();
 
 			// set current marker
 			currentMarker = new GMarkerGoogle(myMap.Position, GMarkerGoogleType.red);
@@ -302,36 +284,6 @@ namespace Diva
 			TxtHomeLongitude.Text = lng.ToString();
 		}
 	
-		protected override void OnActivated(EventArgs e)
-		{
-			base.OnActivated(e);
-
-			
-			FlightRecorder recorder = new FlightRecorder()
-			{
-				UserName = AccountManager.GetLoginAccount(),
-				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				TotalDistance = 0.0d,
-				HomeLatitude = 0.0d,
-				HomeLongitude = 0.0d,
-				HomeAltitude = 0.0d,
-			};
-
-			DatabaseManager.InitialDatabase();
-			recorder_id = DatabaseManager.InsertValue(recorder);
-
-		}
-
-		protected override void OnClosed(EventArgs e)
-		{
-			base.OnClosed(e);
-
-			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
-			DatabaseManager.Dump(recorder_id);
-
-		}
-
 		private void AddRouteOverlay(int count)
 		{
 			GMapOverlay routesOverlay = new GMapOverlay(string.Format("route_{0}", count));
@@ -341,7 +293,21 @@ namespace Diva
 
 		private void Planner_Load(object sender, EventArgs e)
 		{
-			mainThread = new Thread(MainLoop)
+            FlightRecorder recorder = new FlightRecorder()
+            {
+                UserName = AccountManager.GetLoginAccount(),
+                StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+                EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+                TotalDistance = 0.0d,
+                HomeLatitude = 0.0d,
+                HomeLongitude = 0.0d,
+                HomeAltitude = 0.0d,
+            };
+
+            DatabaseManager.InitialDatabase();
+            recorder_id = DatabaseManager.InsertValue(recorder);
+
+            mainThread = new Thread(MainLoop)
 			{
 				IsBackground = true,
 				Name = "Main Serial reader",
@@ -362,7 +328,9 @@ namespace Diva
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			comPorts.ForEach(p => p.onDestroy());
+            DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
+            DatabaseManager.Dump(recorder_id);
+            comPorts.ForEach(p => p.onDestroy());
 			timerMapItemUpdate.Stop();
 		}
 
@@ -652,9 +620,9 @@ namespace Diva
 							continue;
 
 						seen[markerid] = 1;
-						for (int a = 0; a < overlays["objects"].Markers.Count; a++)
+						for (int a = 0; a < overlays.objects.Markers.Count; a++)
 						{
-							var marker = overlays["objects"].Markers[a];
+							var marker = overlays.objects.Markers[a];
 
 							if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 							{
@@ -869,7 +837,7 @@ namespace Diva
 					poly.Points.Add(MouseDownEnd);
 					poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
 
-					foreach (var marker in overlays["objects"].Markers)
+					foreach (var marker in overlays.objects.Markers)
 					{
 						if (poly.IsInside(marker.Position))
 						{
@@ -909,9 +877,9 @@ namespace Diva
 
 						foreach (var markerid in groupmarkers)
 						{
-							for (int a = 0; a < overlays["objects"].Markers.Count; a++)
+							for (int a = 0; a < overlays.objects.Markers.Count; a++)
 							{
-								var marker = overlays["objects"].Markers[a];
+								var marker = overlays.objects.Markers[a];
 
 								if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 								{
@@ -1196,8 +1164,8 @@ namespace Diva
 					}
 				}
 
-				overlays["objects"].Markers.Add(m);
-				// overlays["objects"].Markers.Add(mBorders);
+				overlays.objects.Markers.Add(m);
+				// overlays.objects.Markers.Add(mBorders);
 			}
 			catch (Exception)
 			{
@@ -1258,8 +1226,8 @@ namespace Diva
 					mBorders.InnerMarker = m;
 				}
 
-				overlays["drawnpolygons"].Markers.Add(m);
-				overlays["drawnpolygons"].Markers.Add(mBorders);
+				overlays.drawnpolygons.Markers.Add(m);
+				overlays.drawnpolygons.Markers.Add(mBorders);
 			}
 			catch (Exception ex)
 			{
@@ -1577,9 +1545,9 @@ namespace Diva
 
 			try
 			{
-				if (overlays["objects"] != null) // hasnt been created yet
+				if (overlays.objects != null) // hasnt been created yet
 				{
-					overlays["objects"].Markers.Clear();
+					overlays.objects.Markers.Clear();
 				}
 
 				// process and add home to the list
@@ -1587,7 +1555,7 @@ namespace Diva
 				if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
 				{
 					home = string.Format("{0},{1},{2}\r\n", TxtHomeLongitude.Text, TxtHomeLatitude.Text, TxtAltitudeValue.Text);
-					if (overlays["objects"] != null) // during startup
+					if (overlays.objects != null) // during startup
 					{
 						pointlist.Add(new PointLatLngAlt(double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
 							double.Parse(TxtHomeAltitude.Text), "H"));
@@ -1681,8 +1649,8 @@ namespace Diva
 								if (m.Position.Lat != 0 && m.Position.Lng != 0)
 								{
 									// order matters
-									overlays["objects"].Markers.Add(m);
-									overlays["objects"].Markers.Add(mBorders);
+									overlays.objects.Markers.Add(m);
+									overlays.objects.Markers.Add(mBorders);
 								}
 							}
 							else if (command == (ushort)MAVLink.MAV_CMD.LOITER_TIME ||
@@ -1923,7 +1891,7 @@ namespace Diva
 			route.Clear();
 			homeroute.Clear();
 
-			overlays["polygons"].Routes.Clear();
+			overlays.polygons.Routes.Clear();
 
 			PointLatLngAlt lastpnt = fullpointlist[0];
 			PointLatLngAlt lastpnt2 = fullpointlist[0];
@@ -2003,11 +1971,11 @@ namespace Diva
 				if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
 					homeroute.Stroke.DashStyle = DashStyle.Dash;
 
-				overlays["polygons"].Routes.Add(homeroute);
+				overlays.polygons.Routes.Add(homeroute);
 
 				route.Stroke = new Pen(Color.Yellow, 4);
 				route.Stroke.DashStyle = DashStyle.Custom;
-				overlays["polygons"].Routes.Add(route);
+				overlays.polygons.Routes.Add(route);
 			}
 		}
 
@@ -2687,7 +2655,7 @@ namespace Diva
 				return;
 			}
 
-			overlays["rallypoints"].Markers.Clear();
+			overlays.rallypoints.Markers.Clear();
 
 			int count = int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString());
 
@@ -2696,7 +2664,7 @@ namespace Diva
 				try
 				{
 					PointLatLngAlt plla = comPort.getRallyPoint(a, ref count);
-					overlays["rallypoints"].Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
+					overlays.rallypoints.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
 					{
 						Alt = (int)plla.Alt,
 						ToolTipMode = MarkerTooltipMode.OnMouseOver,
@@ -2710,7 +2678,7 @@ namespace Diva
 				}
 			}
 
-			myMap.UpdateMarkerLocalPosition(overlays["rallypoints"].Markers[0]);
+			myMap.UpdateMarkerLocalPosition(overlays.rallypoints.Markers[0]);
 
 			myMap.Invalidate();
 		}
@@ -2774,10 +2742,10 @@ namespace Diva
 			}
 
 
-			overlays["commons"].Markers.Clear();
+			overlays.commons.Markers.Clear();
 			
 			addpolygonmarker("Guided Mode", gotohere.lng,
-								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays["commons"]);
+								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays.commons);
 
 
 		}
@@ -3533,10 +3501,10 @@ namespace Diva
 			polygongridmode = true;*/
 
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
-			if (overlays["drawnpolygons"].Polygons.Count == 0)
+			if (overlays.drawnpolygons.Polygons.Count == 0)
 			{
 				drawnPolygon.Points.Clear();
-				overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+				overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 			}
 
 			drawnPolygon.Fill = Brushes.Transparent;
@@ -3561,7 +3529,7 @@ namespace Diva
 			if (drawnPolygon == null)
 				return;
 			drawnPolygon.Points.Clear();
-			overlays["drawnpolygons"].Markers.Clear();
+			overlays.drawnpolygons.Markers.Clear();
 			myMap.Invalidate();
 
 			writeKML();
@@ -3619,8 +3587,8 @@ namespace Diva
 				{
 					StreamReader sr = new StreamReader(fd.OpenFile());
 
-					overlays["drawnpolygons"].Markers.Clear();
-					overlays["drawnpolygons"].Polygons.Clear();
+					overlays.drawnpolygons.Markers.Clear();
+					overlays.drawnpolygons.Polygons.Clear();
 					drawnPolygon.Points.Clear();
 
 					int a = 0;
@@ -3653,13 +3621,13 @@ namespace Diva
 						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
 					}
 
-					overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+					overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 
 					myMap.UpdatePolygonLocalPosition(drawnPolygon);
 
 					myMap.Invalidate();
 
-					myMap.ZoomAndCenterMarkers(overlays["drawnpolygons"].Id);
+					myMap.ZoomAndCenterMarkers(overlays.drawnpolygons.Id);
 				}
 			}
 		}
@@ -3703,7 +3671,7 @@ namespace Diva
 				return;
 			}
 
-			if (overlays["geofence"].Markers.Count == 0)
+			if (overlays.geofence.Markers.Count == 0)
 			{
 				MessageBox.Show("No return location set");
 				return;
@@ -3721,7 +3689,7 @@ namespace Diva
 			plll.Add(plll[0]);
 			// check it
 			if (
-				!pnpoly(plll.ToArray(), overlays["geofence"].Markers[0].Position.Lat, overlays["geofence"].Markers[0].Position.Lng))
+				!pnpoly(plll.ToArray(), overlays.geofence.Markers[0].Position.Lat, overlays.geofence.Markers[0].Position.Lng))
 			{
 				MessageBox.Show("Your return location is outside the polygon");
 				return;
@@ -3805,7 +3773,7 @@ namespace Diva
 			{
 				byte a = 0;
 				// add return loc
-				comPort.setFencePoint(a, new PointLatLngAlt(overlays["geofence"].Markers[0].Position), pointcount);
+				comPort.setFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
 				a++;
 				// add points
 				foreach (var pll in drawnPolygon.Points)
@@ -3828,9 +3796,9 @@ namespace Diva
 				}
 
 				// clear everything
-				overlays["polygons"].Polygons.Clear();
-				overlays["polygons"].Markers.Clear();
-				overlays["geofence"].Polygons.Clear();
+				overlays.polygons.Polygons.Clear();
+				overlays.polygons.Markers.Clear();
+				overlays.geofence.Polygons.Clear();
 				geofencePolygon.Points.Clear();
 
 				// add polygon
@@ -3838,7 +3806,7 @@ namespace Diva
 
 				drawnPolygon.Points.Clear();
 
-				overlays["geofence"].Polygons.Add(geofencePolygon);
+				overlays.geofence.Polygons.Add(geofencePolygon);
 
 				/**
 				// update flightdata
@@ -3849,15 +3817,15 @@ namespace Diva
 					Stroke = geofencePolygon.Stroke,
 					Fill = Brushes.Transparent
 				});
-				FlightData.geofence.Markers.Add(new GMarkerGoogle(overlays["geofence"].Markers[0].Position,
+				FlightData.geofence.Markers.Add(new GMarkerGoogle(overlays.geofence.Markers[0].Position,
 					GMarkerGoogleType.red)
 				{
-					ToolTipText = overlays["geofence"].Markers[0].ToolTipText,
-					ToolTipMode = overlays["geofence"].Markers[0].ToolTipMode
+					ToolTipText = overlays.geofence.Markers[0].ToolTipText,
+					ToolTipMode = overlays.geofence.Markers[0].ToolTipMode
 				});*/
 
 				myMap.UpdatePolygonLocalPosition(geofencePolygon);
-				myMap.UpdateMarkerLocalPosition(overlays["geofence"].Markers[0]);
+				myMap.UpdateMarkerLocalPosition(overlays.geofence.Markers[0]);
 
 				myMap.Invalidate();
 			}
@@ -3872,8 +3840,8 @@ namespace Diva
 		}
 		private void setReturnLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			overlays["geofence"].Markers.Clear();
-			overlays["geofence"].Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
+			overlays.geofence.Markers.Clear();
+			overlays.geofence.Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
 				GMarkerGoogleType.red)
 			{ ToolTipMode = MarkerTooltipMode.OnMouseOver, ToolTipText = "GeoFence Return" });
 
@@ -3889,8 +3857,8 @@ namespace Diva
 				{
 					StreamReader sr = new StreamReader(fd.OpenFile());
 
-					overlays["drawnpolygons"].Markers.Clear();
-					overlays["drawnpolygons"].Polygons.Clear();
+					overlays.drawnpolygons.Markers.Clear();
+					overlays.drawnpolygons.Polygons.Clear();
 					drawnPolygon.Points.Clear();
 
 					int a = 0;
@@ -3907,15 +3875,15 @@ namespace Diva
 
 							if (a == 0)
 							{
-								overlays["geofence"].Markers.Clear();
-								overlays["geofence"].Markers.Add(
+								overlays.geofence.Markers.Clear();
+								overlays.geofence.Markers.Add(
 									new GMarkerGoogle(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])),
 										GMarkerGoogleType.red)
 									{
 										ToolTipMode = MarkerTooltipMode.OnMouseOver,
 										ToolTipText = "GeoFence Return"
 									});
-								myMap.UpdateMarkerLocalPosition(overlays["geofence"].Markers[0]);
+								myMap.UpdateMarkerLocalPosition(overlays.geofence.Markers[0]);
 							}
 							else
 							{
@@ -3934,7 +3902,7 @@ namespace Diva
 						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
 					}
 
-					overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+					overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 
 					myMap.UpdatePolygonLocalPosition(drawnPolygon);
 
@@ -3944,7 +3912,7 @@ namespace Diva
 		}
 		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (overlays["geofence"].Markers.Count == 0)
+			if (overlays.geofence.Markers.Count == 0)
 			{
 				MessageBox.Show("Please set a return location");
 				return;
@@ -3963,8 +3931,8 @@ namespace Diva
 
 						sw.WriteLine("#saved by APM Planner " + Application.ProductVersion);
 
-						sw.WriteLine(overlays["geofence"].Markers[0].Position.Lat + " " +
-									 overlays["geofence"].Markers[0].Position.Lng);
+						sw.WriteLine(overlays.geofence.Markers[0].Position.Lat + " " +
+									 overlays.geofence.Markers[0].Position.Lng);
 						if (drawnPolygon.Points.Count > 0)
 						{
 							foreach (var pll in drawnPolygon.Points)
@@ -4033,9 +4001,9 @@ namespace Diva
 			}
 
 			// clear all
-			overlays["drawnpolygons"].Polygons.Clear();
-			overlays["drawnpolygons"].Markers.Clear();
-			overlays["geofence"].Polygons.Clear();
+			overlays.drawnpolygons.Polygons.Clear();
+			overlays.drawnpolygons.Markers.Clear();
+			overlays.geofence.Polygons.Clear();
 			geofencePolygon.Points.Clear();
 		}
 	}
