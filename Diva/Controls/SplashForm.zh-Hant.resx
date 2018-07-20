@@ -253,9 +253,6 @@
   <data name="InvalidPasswordMessage" xml:space="preserve">
     <value>密碼不合法</value>
   </data>
-  <data name="lblProgress_CreateAccountNotification.Text" xml:space="preserve">
-    <value>請建立帳號以保護資料</value>
-  </data>
   <data name="LoginFailedMessage" xml:space="preserve">
     <value>登入失敗(帳號密碼錯誤)</value>
   </data>
@@ -270,5 +267,8 @@
   </data>
   <data name="TooManyTriesMessageFormat" xml:space="preserve">
     <value>登入失敗過多，請 {0}秒後再試</value>
+  </data>
+  <data name="CreateAccountNotification" xml:space="preserve">
+    <value>請建立帳號以保護資料</value>
   </data>
 </root>
