@@ -3492,5 +3492,90 @@ namespace Diva.Mavlink
 			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ACK, req, MAV.sysid, MAV.compid);
 		}
 
+		public bool setFencePoint(byte index, PointLatLngAlt plla, byte fencepointcount)
+		{
+			mavlink_fence_point_t fp = new mavlink_fence_point_t();
+
+			fp.idx = index;
+			fp.count = fencepointcount;
+			fp.lat = (float)plla.Lat;
+			fp.lng = (float)plla.Lng;
+			fp.target_component = MAV.compid;
+			fp.target_system = MAV.sysid;
+
+			int retry = 3;
+
+			PointLatLngAlt newfp;
+
+			while (retry > 0)
+			{
+				generatePacket((byte)MAVLINK_MSG_ID.FENCE_POINT, fp);
+				int counttemp = 0;
+				newfp = getFencePoint(fp.idx, ref counttemp);
+
+				if (newfp.GetDistance(plla) < 5)
+					return true;
+				retry--;
+			}
+
+			throw new Exception("Could not verify GeoFence Point");
+		}
+
+		public PointLatLngAlt getFencePoint(int no, ref int total)
+		{
+			MAVLinkMessage buffer;
+
+			giveComport = true;
+
+			PointLatLngAlt plla = new PointLatLngAlt();
+			mavlink_fence_fetch_point_t req = new mavlink_fence_fetch_point_t();
+
+			req.idx = (byte)no;
+			req.target_component = MAV.compid;
+			req.target_system = MAV.sysid;
+
+			// request point
+			generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
+
+			DateTime start = DateTime.Now;
+			int retrys = 3;
+
+			while (true)
+			{
+				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				{
+					if (retrys > 0)
+					{
+						log.Info("getFencePoint Retry " + retrys + " - giv com " + giveComport);
+						generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
+						start = DateTime.Now;
+						retrys--;
+						continue;
+					}
+					giveComport = false;
+					throw new TimeoutException("Timeout on read - getFencePoint");
+				}
+
+				buffer = readPacket();
+				if (buffer.Length > 5)
+				{
+					if (buffer.msgid == (byte)MAVLINK_MSG_ID.FENCE_POINT)
+					{
+						giveComport = false;
+
+						mavlink_fence_point_t fp = buffer.ToStructure<mavlink_fence_point_t>();
+
+						plla.Lat = fp.lat;
+						plla.Lng = fp.lng;
+						plla.Tag = fp.idx.ToString();
+
+						total = fp.count;
+
+						return plla;
+					}
+				}
+			}
+		}
+
 	}
 }

@@ -39,6 +39,7 @@ namespace Diva
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
 		public const double DEFAULT_ZOOM = 20;
+		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
 		public static MavlinkInterface comPort
 		{
@@ -79,6 +80,15 @@ namespace Diva
 			"geofence",
 			"POI"
 		};
+		//private GMapOverlay overlays["polygons"];
+		//private GMapOverlay airportsOverlay;
+		//private GMapOverlay poiOverlay;
+		//private GMapOverlay overlays["drawnpolygons"];
+		//private GMapOverlay overlays["objects"];
+		//private GMapOverlay kmloverlays["polygons"];
+		//private GMapOverlay overlays["rallypoints"];
+		//private GMapOverlay overlays["commons"];
+		//private GMapOverlay geofenceOverlay;
 
 		private GMapMarkerRect currentRectMarker;
 		private GMapMarkerRallyPt currentRallyPt;
@@ -97,6 +107,7 @@ namespace Diva
 		internal PointLatLng MouseDownEnd;
 
 		// polygon
+		internal GMapPolygon geofencePolygon;
 		internal GMapPolygon drawnPolygon;
 		internal GMapPolygon wpPolygon;
 
@@ -123,6 +134,19 @@ namespace Diva
 
 
 		private bool useLocation = false;
+		private long recorder_id = 0;
+
+		public static readonly string[] overlayNames = {
+			"kmlpolygons",
+			"rallypoints",
+			"polygons",
+			"airports",
+			"objects",
+			"commons",
+			"drawnpolygons",
+			"geofence",
+			"POI"
+		};
 
 		public enum altmode
 		{
@@ -276,6 +300,36 @@ namespace Diva
 			myMap.Zoom = zoom;
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
+		}
+	
+		protected override void OnActivated(EventArgs e)
+		{
+			base.OnActivated(e);
+
+			
+			FlightRecorder recorder = new FlightRecorder()
+			{
+				UserName = AccountManager.GetLoginAccount(),
+				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+				TotalDistance = 0.0d,
+				HomeLatitude = 0.0d,
+				HomeLongitude = 0.0d,
+				HomeAltitude = 0.0d,
+			};
+
+			DatabaseManager.InitialDatabase();
+			recorder_id = DatabaseManager.InsertValue(recorder);
+
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+
+			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
+			DatabaseManager.Dump(recorder_id);
+
 		}
 
 		private void AddRouteOverlay(int count)
@@ -1793,9 +1847,9 @@ namespace Diva
 
 
 						CurrentDroneInfo.UpdateAssumeTime(dist + homedist);
+						DatabaseManager.UpdateTotalDistance(recorder_id, dist);
 					}
-
-					log.Info("Total distance: " + FormatDistance(dist + homedist, false));
+					
 
 				}
 
@@ -2241,7 +2295,7 @@ namespace Diva
 				{
 					comPort.setWPTotal(totalwpcountforupload);
 				}
-				catch (TimeoutException e)
+				catch (TimeoutException)
 				{
 					MessageBox.Show(ResStrings.MsgSaveWPTimeout);
 				}
@@ -2813,6 +2867,8 @@ namespace Diva
 				DroneInfo1.Activate();
 				CurrentDroneInfo = DroneInfo1;
 				comPort = mav;
+
+
 			}
 			catch (Exception exception)
 			{
@@ -2952,6 +3008,8 @@ namespace Diva
 			TxtHomeAltitude.Text = "0";
 			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString();
 			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
+
+			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
 
@@ -2959,7 +3017,6 @@ namespace Diva
 		private void BUT_Rotation2_Click(object sender, EventArgs e)
 		{
 			
-			int _cursor = 0;
 			ProgressDialog _dialog = new ProgressDialog();
 			_dialog.IsActive = true;
 			_dialog.Show();
@@ -3464,5 +3521,522 @@ namespace Diva
 			
 		}
 
+		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			/**
+			if (polygongridmode == false)
+			{
+				CustomMessageBox.Show(
+					"You will remain in polygon mode until you clear the polygon or create a grid/upload a fence");
+			}
+
+			polygongridmode = true;*/
+
+			List<PointLatLng> polygonPoints = new List<PointLatLng>();
+			if (overlays["drawnpolygons"].Polygons.Count == 0)
+			{
+				drawnPolygon.Points.Clear();
+				overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+			}
+
+			drawnPolygon.Fill = Brushes.Transparent;
+
+			// remove full loop is exists
+			if (drawnPolygon.Points.Count > 1 &&
+				drawnPolygon.Points[0] == drawnPolygon.Points[drawnPolygon.Points.Count - 1])
+				drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1); // unmake a full loop
+
+			drawnPolygon.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng));
+
+			addpolygonmarkergrid(drawnPolygon.Points.Count.ToString(), MouseDownStart.Lng, MouseDownStart.Lat, 0);
+
+			myMap.UpdatePolygonLocalPosition(drawnPolygon);
+
+			myMap.Invalidate();
+		}
+
+		private void clearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// polygongridmode = false;
+			if (drawnPolygon == null)
+				return;
+			drawnPolygon.Points.Clear();
+			overlays["drawnpolygons"].Markers.Clear();
+			myMap.Invalidate();
+
+			writeKML();
+		}
+
+		private void savePolygonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (drawnPolygon.Points.Count == 0)
+			{
+				return;
+			}
+
+
+			using (SaveFileDialog sf = new SaveFileDialog())
+			{
+				sf.Filter = "Polygon (*.poly)|*.poly";
+				sf.ShowDialog();
+				if (sf.FileName != "")
+				{
+					try
+					{
+						StreamWriter sw = new StreamWriter(sf.OpenFile());
+
+						sw.WriteLine("#saved by Mission Planner " + Application.ProductVersion);
+
+						if (drawnPolygon.Points.Count > 0)
+						{
+							foreach (var pll in drawnPolygon.Points)
+							{
+								sw.WriteLine(pll.Lat + " " + pll.Lng);
+							}
+
+							PointLatLng pll2 = drawnPolygon.Points[0];
+
+							sw.WriteLine(pll2.Lat + " " + pll2.Lng);
+						}
+
+						sw.Close();
+					}
+					catch
+					{
+						MessageBox.Show("Failed to write fence file");
+					}
+				}
+			}
+		}
+
+		private void loadPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog fd = new OpenFileDialog())
+			{
+				fd.Filter = "Polygon (*.poly)|*.poly";
+				fd.ShowDialog();
+				if (File.Exists(fd.FileName))
+				{
+					StreamReader sr = new StreamReader(fd.OpenFile());
+
+					overlays["drawnpolygons"].Markers.Clear();
+					overlays["drawnpolygons"].Polygons.Clear();
+					drawnPolygon.Points.Clear();
+
+					int a = 0;
+
+					while (!sr.EndOfStream)
+					{
+						string line = sr.ReadLine();
+						if (line.StartsWith("#"))
+						{
+						}
+						else
+						{
+							string[] items = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+							if (items.Length < 2)
+								continue;
+
+							drawnPolygon.Points.Add(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])));
+							addpolygonmarkergrid(drawnPolygon.Points.Count.ToString(), double.Parse(items[1]),
+								double.Parse(items[0]), 0);
+
+							a++;
+						}
+					}
+
+					// remove loop close
+					if (drawnPolygon.Points.Count > 1 &&
+						drawnPolygon.Points[0] == drawnPolygon.Points[drawnPolygon.Points.Count - 1])
+					{
+						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
+					}
+
+					overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+
+					myMap.UpdatePolygonLocalPosition(drawnPolygon);
+
+					myMap.Invalidate();
+
+					myMap.ZoomAndCenterMarkers(overlays["drawnpolygons"].Id);
+				}
+			}
+		}
+
+		/// <summary>
+		/// from http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+		/// </summary>
+		/// <param name="array"> a closed polygon</param>
+		/// <param name="testx"></param>
+		/// <param name="testy"></param>
+		/// <returns> true = outside</returns>
+		bool pnpoly(PointLatLng[] array, double testx, double testy)
+		{
+			int nvert = array.Length;
+			int i, j = 0;
+			bool c = false;
+			for (i = 0, j = nvert - 1; i < nvert; j = i++)
+			{
+				if (((array[i].Lng > testy) != (array[j].Lng > testy)) &&
+					(testx <
+					 (array[j].Lat - array[i].Lat) * (testy - array[i].Lng) / (array[j].Lng - array[i].Lng) + array[i].Lat))
+					c = !c;
+			}
+			return c;
+		}
+
+		private void GeoFenceuploadToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// polygongridmode = false;
+			//FENCE_ENABLE ON COPTER
+			//FENCE_ACTION ON PLANE
+			if (!comPort.MAV.param.ContainsKey("FENCE_ENABLE") && !comPort.MAV.param.ContainsKey("FENCE_ACTION"))
+			{
+				MessageBox.Show("Not Supported");
+				return;
+			}
+
+			if (drawnPolygon == null)
+			{
+				MessageBox.Show("No polygon to upload");
+				return;
+			}
+
+			if (overlays["geofence"].Markers.Count == 0)
+			{
+				MessageBox.Show("No return location set");
+				return;
+			}
+
+			if (drawnPolygon.Points.Count == 0)
+			{
+				MessageBox.Show("No polygon drawn");
+				return;
+			}
+
+			// check if return is inside polygon
+			List<PointLatLng> plll = new List<PointLatLng>(drawnPolygon.Points.ToArray());
+			// close it
+			plll.Add(plll[0]);
+			// check it
+			if (
+				!pnpoly(plll.ToArray(), overlays["geofence"].Markers[0].Position.Lat, overlays["geofence"].Markers[0].Position.Lng))
+			{
+				MessageBox.Show("Your return location is outside the polygon");
+				return;
+			}
+
+			int minalt = 0;
+			int maxalt = 0;
+
+			if (comPort.MAV.param.ContainsKey("FENCE_MINALT"))
+			{
+				string minalts =
+					(int.Parse(comPort.MAV.param["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+						.ToString("0");
+				if (DialogResult.Cancel == InputBox.Show("Min Alt", "Box Minimum Altitude?", ref minalts))
+					return;
+
+				if (!int.TryParse(minalts, out minalt))
+				{
+					MessageBox.Show("Bad Min Alt");
+					return;
+				}
+			}
+
+			if (comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
+			{
+				string maxalts =
+					(int.Parse(comPort.MAV.param["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+						.ToString(
+							"0");
+				if (DialogResult.Cancel == InputBox.Show("Max Alt", "Box Maximum Altitude?", ref maxalts))
+					return;
+
+				if (!int.TryParse(maxalts, out maxalt))
+				{
+					MessageBox.Show("Bad Max Alt");
+					return;
+				}
+			}
+
+			try
+			{
+				if (comPort.MAV.param.ContainsKey("FENCE_MINALT"))
+					comPort.setParam("FENCE_MINALT", minalt);
+				if (comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
+					comPort.setParam("FENCE_MAXALT", maxalt);
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex);
+				MessageBox.Show("Failed to set min/max fence alt");
+				return;
+			}
+
+			float oldaction = (float)comPort.MAV.param["FENCE_ACTION"];
+
+			try
+			{
+				comPort.setParam("FENCE_ACTION", 0);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to set FENCE_ACTION");
+				return;
+			}
+
+			// points + return + close
+			byte pointcount = (byte)(drawnPolygon.Points.Count + 2);
+
+
+			try
+			{
+				comPort.setParam("FENCE_TOTAL", pointcount);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to set FENCE_TOTAL");
+				return;
+			}
+
+			try
+			{
+				byte a = 0;
+				// add return loc
+				comPort.setFencePoint(a, new PointLatLngAlt(overlays["geofence"].Markers[0].Position), pointcount);
+				a++;
+				// add points
+				foreach (var pll in drawnPolygon.Points)
+				{
+					comPort.setFencePoint(a, new PointLatLngAlt(pll), pointcount);
+					a++;
+				}
+
+				// add polygon close
+				comPort.setFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
+
+				try
+				{
+					comPort.setParam("FENCE_ACTION", oldaction);
+				}
+				catch
+				{
+					MessageBox.Show("Failed to restore FENCE_ACTION");
+					return;
+				}
+
+				// clear everything
+				overlays["polygons"].Polygons.Clear();
+				overlays["polygons"].Markers.Clear();
+				overlays["geofence"].Polygons.Clear();
+				geofencePolygon.Points.Clear();
+
+				// add polygon
+				geofencePolygon.Points.AddRange(drawnPolygon.Points.ToArray());
+
+				drawnPolygon.Points.Clear();
+
+				overlays["geofence"].Polygons.Add(geofencePolygon);
+
+				/**
+				// update flightdata
+				FlightData.geofence.Markers.Clear();
+				FlightData.geofence.Polygons.Clear();
+				FlightData.geofence.Polygons.Add(new GMapPolygon(geofencePolygon.Points, "gf fd")
+				{
+					Stroke = geofencePolygon.Stroke,
+					Fill = Brushes.Transparent
+				});
+				FlightData.geofence.Markers.Add(new GMarkerGoogle(overlays["geofence"].Markers[0].Position,
+					GMarkerGoogleType.red)
+				{
+					ToolTipText = overlays["geofence"].Markers[0].ToolTipText,
+					ToolTipMode = overlays["geofence"].Markers[0].ToolTipMode
+				});*/
+
+				myMap.UpdatePolygonLocalPosition(geofencePolygon);
+				myMap.UpdateMarkerLocalPosition(overlays["geofence"].Markers[0]);
+
+				myMap.Invalidate();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Failed to send new fence points " + ex, Strings.ERROR);
+			}
+		}
+		public void GeoFencedownloadToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// TODO: implement the download geo-fence function.
+		}
+		private void setReturnLocationToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			overlays["geofence"].Markers.Clear();
+			overlays["geofence"].Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
+				GMarkerGoogleType.red)
+			{ ToolTipMode = MarkerTooltipMode.OnMouseOver, ToolTipText = "GeoFence Return" });
+
+			myMap.Invalidate();
+		}
+		private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog fd = new OpenFileDialog())
+			{
+				fd.Filter = "Fence (*.fen)|*.fen";
+				fd.ShowDialog();
+				if (File.Exists(fd.FileName))
+				{
+					StreamReader sr = new StreamReader(fd.OpenFile());
+
+					overlays["drawnpolygons"].Markers.Clear();
+					overlays["drawnpolygons"].Polygons.Clear();
+					drawnPolygon.Points.Clear();
+
+					int a = 0;
+
+					while (!sr.EndOfStream)
+					{
+						string line = sr.ReadLine();
+						if (line.StartsWith("#"))
+						{
+						}
+						else
+						{
+							string[] items = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+							if (a == 0)
+							{
+								overlays["geofence"].Markers.Clear();
+								overlays["geofence"].Markers.Add(
+									new GMarkerGoogle(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])),
+										GMarkerGoogleType.red)
+									{
+										ToolTipMode = MarkerTooltipMode.OnMouseOver,
+										ToolTipText = "GeoFence Return"
+									});
+								myMap.UpdateMarkerLocalPosition(overlays["geofence"].Markers[0]);
+							}
+							else
+							{
+								drawnPolygon.Points.Add(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])));
+								addpolygonmarkergrid(drawnPolygon.Points.Count.ToString(), double.Parse(items[1]),
+									double.Parse(items[0]), 0);
+							}
+							a++;
+						}
+					}
+
+					// remove loop close
+					if (drawnPolygon.Points.Count > 1 &&
+						drawnPolygon.Points[0] == drawnPolygon.Points[drawnPolygon.Points.Count - 1])
+					{
+						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
+					}
+
+					overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+
+					myMap.UpdatePolygonLocalPosition(drawnPolygon);
+
+					myMap.Invalidate();
+				}
+			}
+		}
+		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (overlays["geofence"].Markers.Count == 0)
+			{
+				MessageBox.Show("Please set a return location");
+				return;
+			}
+
+
+			using (SaveFileDialog sf = new SaveFileDialog())
+			{
+				sf.Filter = "Fence (*.fen)|*.fen";
+				sf.ShowDialog();
+				if (sf.FileName != "")
+				{
+					try
+					{
+						StreamWriter sw = new StreamWriter(sf.OpenFile());
+
+						sw.WriteLine("#saved by APM Planner " + Application.ProductVersion);
+
+						sw.WriteLine(overlays["geofence"].Markers[0].Position.Lat + " " +
+									 overlays["geofence"].Markers[0].Position.Lng);
+						if (drawnPolygon.Points.Count > 0)
+						{
+							foreach (var pll in drawnPolygon.Points)
+							{
+								sw.WriteLine(pll.Lat + " " + pll.Lng);
+							}
+
+							PointLatLng pll2 = drawnPolygon.Points[0];
+
+							sw.WriteLine(pll2.Lat + " " + pll2.Lng);
+						}
+						else
+						{
+							foreach (var pll in geofencePolygon.Points)
+							{
+								sw.WriteLine(pll.Lat + " " + pll.Lng);
+							}
+
+							PointLatLng pll2 = geofencePolygon.Points[0];
+
+							sw.WriteLine(pll2.Lat + " " + pll2.Lng);
+						}
+
+						sw.Close();
+					}
+					catch
+					{
+						MessageBox.Show("Failed to write fence file");
+					}
+				}
+			}
+		}
+		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//FENCE_ENABLE ON COPTER
+			//FENCE_ACTION ON PLANE
+
+			try
+			{
+				comPort.setParam("FENCE_ENABLE", 0);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to set FENCE_ENABLE");
+				return;
+			}
+
+			try
+			{
+				comPort.setParam("FENCE_ACTION", 0);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to set FENCE_ACTION");
+				return;
+			}
+
+			try
+			{
+				comPort.setParam("FENCE_TOTAL", 0);
+			}
+			catch
+			{
+				MessageBox.Show("Failed to set FENCE_TOTAL");
+				return;
+			}
+
+			// clear all
+			overlays["drawnpolygons"].Polygons.Clear();
+			overlays["drawnpolygons"].Markers.Clear();
+			overlays["geofence"].Polygons.Clear();
+			geofencePolygon.Points.Clear();
+		}
 	}
 }

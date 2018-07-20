@@ -62,13 +62,13 @@ namespace Diva.Controls
 		public void Activate()
 		{
 			this.BackColor = Color.FromArgb(67, 78, 84);
-			PBDroneView.Image = Properties.Resources.if_Psyduck_3151565;
+			PBDroneView.Image = Properties.Resources.icon_debug;
 		}
 
 		public void Deactivate()
 		{
 			this.BackColor = Color.FromArgb(128, 128, 128);
-			PBDroneView.Image = Properties.Resources.if_Psyduck_3186864;
+			PBDroneView.Image = Properties.Resources.icon_debug;
 		}
 
 

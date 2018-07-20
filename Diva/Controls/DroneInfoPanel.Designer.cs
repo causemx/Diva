@@ -47,7 +47,7 @@
 			// PBDroneView
 			// 
 			this.PBDroneView.BackColor = System.Drawing.Color.White;
-			this.PBDroneView.Image = global::Diva.Properties.Resources.if_Psyduck_3151565;
+			this.PBDroneView.Image = global::Diva.Properties.Resources.icon_debug;
 			this.PBDroneView.Location = new System.Drawing.Point(5, 6);
 			this.PBDroneView.Name = "PBDroneView";
 			this.PBDroneView.Size = new System.Drawing.Size(64, 64);
