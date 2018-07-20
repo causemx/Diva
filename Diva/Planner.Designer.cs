@@ -424,6 +424,13 @@ namespace Diva
             this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.myMap.ShowTileGridLines = false;
             this.myMap.Zoom = 15D;
+            this.myMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
+            this.myMap.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
+            this.myMap.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
+            this.myMap.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
+            this.myMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
+            this.myMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
+            this.myMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
             // 
             // cmMap
             // 

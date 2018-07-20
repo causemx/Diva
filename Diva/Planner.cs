@@ -195,15 +195,6 @@ namespace Diva
 						
 			quickadd = false;
 
-			// setup map events
-			myMap.OnPositionChanged += MainMap_OnCurrentPositionChanged;
-			myMap.OnMarkerClick += MainMap_OnMarkerClick;
-			myMap.MouseMove += MainMap_MouseMove;
-			myMap.MouseDown += MainMap_MouseDown;
-			myMap.MouseUp += MainMap_MouseUp;
-			myMap.OnMarkerEnter += MainMap_OnMarkerEnter;
-			myMap.OnMarkerLeave += MainMap_OnMarkerLeave;
-
             overlays = new plannerOverlays(myMap);
 
 			overlays.objects.Markers.Clear();
