@@ -80,9 +80,13 @@ namespace Diva
             public GMapOverlay drawnpolygons;
             public GMapOverlay geofence;
             public GMapOverlay POI;
-            internal plannerOverlays()
-                => GetType().GetFields().ToList().ForEach(
-                    f => f.SetValue(this, new GMapOverlay(f.Name)));
+            internal plannerOverlays(MyGMap map)
+                => GetType().GetFields().ToList().ForEach(f =>
+                    {
+                        var o = new GMapOverlay(f.Name);
+                        if (map != null) map.Overlays.Add(o);
+                        f.SetValue(this, o);
+                    });
         }
         private plannerOverlays overlays;
 
@@ -200,7 +204,7 @@ namespace Diva
 			myMap.OnMarkerEnter += MainMap_OnMarkerEnter;
 			myMap.OnMarkerLeave += MainMap_OnMarkerLeave;
 
-            overlays = new plannerOverlays();
+            overlays = new plannerOverlays(myMap);
 
 			overlays.objects.Markers.Clear();
 
