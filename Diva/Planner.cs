@@ -277,11 +277,11 @@ namespace Diva
 			DroneInfos.Add(DroneInfo3);
 
 			// setup geofence
-			/*
+			
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
 			geofencePolygon = new GMapPolygon(polygonPoints, "geofence");
 			geofencePolygon.Stroke = new Pen(Color.Pink, 5);
-			geofencePolygon.Fill = Brushes.Transparent;*/
+			geofencePolygon.Fill = Brushes.Transparent;
 
 			//setup drawnpolgon
 			List<PointLatLng> polygonPoints2 = new List<PointLatLng>();
