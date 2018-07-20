@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using System.Drawing;
 
 namespace Diva
 {
@@ -41,7 +40,7 @@ namespace Diva
                         if (s != null)
                         {
                             c.Text = s;
-                            c.Font = new Font(locFontName, c.Font.Size + locFontSizeAdjust);
+                            c.Font = new System.Drawing.Font(locFontName, c.Font.Size + locFontSizeAdjust);
                         }
                         processControls(c);
                     }

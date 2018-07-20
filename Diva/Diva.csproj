@@ -136,6 +136,9 @@
       <DependentUpon>ConnectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Comms\ICommsSerial.cs" />
+    <Compile Include="Controls\Components\MyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Components\MyCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -195,9 +198,6 @@
     </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
-    <Compile Include="Controls\MyButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -313,9 +313,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\FileBrowserForm.resx">
       <DependentUpon>FileBrowserForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\MyButton.resx">
-      <DependentUpon>MyButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>

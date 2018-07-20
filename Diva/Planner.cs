@@ -66,7 +66,6 @@ namespace Diva
 		public static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly double WARN_ALT = 2D;
-		//private GMapOverlay top;
 		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
 		private Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
 		private static readonly string[] overlayNames = {
@@ -80,16 +79,6 @@ namespace Diva
 			"geofence",
 			"POI"
 		};
-		//private GMapOverlay overlays["polygons"];
-		//private GMapOverlay airportsOverlay;
-		//private GMapOverlay poiOverlay;
-		//private GMapOverlay overlays["drawnpolygons"];
-		//private GMapOverlay overlays["objects"];
-		//private GMapOverlay kmloverlays["polygons"];
-		//private GMapOverlay overlays["rallypoints"];
-		//private GMapOverlay overlays["commons"];
-		//private GMapOverlay geofenceOverlay;
-
 
 		private GMapMarkerRect currentRectMarker;
 		private GMapMarkerRallyPt currentRallyPt;
@@ -203,40 +192,9 @@ namespace Diva
 			myMap.OnMarkerEnter += MainMap_OnMarkerEnter;
 			myMap.OnMarkerLeave += MainMap_OnMarkerLeave;
 
-			// draw this layer first
-			/*kmloverlays["polygons"] = new GMapOverlay("kmlpolygons");
-			myMap.Overlays.Add(kmloverlays["polygons"]);
-
-			overlays["rallypoints"] = new GMapOverlay("rallypoints");
-			myMap.Overlays.Add(overlays["rallypoints"]);
-
-
-			overlays["polygons"] = new GMapOverlay("polygons");
-			myMap.Overlays.Add(overlays["polygons"]);
-
-			airportsOverlay = new GMapOverlay("airports");
-			myMap.Overlays.Add(airportsOverlay);
-
-			overlays["objects"] = new GMapOverlay("objects");
-			myMap.Overlays.Add(overlays["objects"]);
-
-			overlays["commons"] = new GMapOverlay("commons");
-			myMap.Overlays.Add(overlays["commons"]);
-
-			overlays["drawnpolygons"] = new GMapOverlay("drawnpolygons");
-			myMap.Overlays.Add(overlays["drawnpolygons"]);
-
-			geofenceOverlay = new GMapOverlay("geofence");
-			myMap.Overlays.Add(geofenceOverlay);
-
-			poiOverlay = new GMapOverlay("POI");
-			myMap.Overlays.Add(poiOverlay);*/
 			overlayNames.ToList().ForEach(s =>
 				myMap.Overlays.Add(overlays[s] = new GMapOverlay(s))
 			);
-
-			//top = new GMapOverlay("top");
-			// myMap.Overlays.Add(top);
 
 			overlays["objects"].Markers.Clear();
 
@@ -266,13 +224,14 @@ namespace Diva
 			TSBtnTagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
 
 			//setup toolstrip
-			TSMainPanel.Renderer = new MySR();
+			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
 
 			//Collect DroneInfoPanels
-			DroneInfos = new List<DroneInfoPanel>();
-			DroneInfos.Add(DroneInfo1);
-			DroneInfos.Add(DroneInfo2);
-			DroneInfos.Add(DroneInfo3);
+			DroneInfos = new List<DroneInfoPanel>()
+            { DroneInfo1, DroneInfo2, DroneInfo3 };
+			//DroneInfos.Add(DroneInfo1);
+			//DroneInfos.Add(DroneInfo2);
+			//DroneInfos.Add(DroneInfo3);
 
 			// setup geofence
 			/*
@@ -318,17 +277,6 @@ namespace Diva
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
 		}
-
-
-		/*protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			base.OnFormClosing(e);
-			foreach (MavlinkInterface _port in comPorts)
-			{
-				_port.onDestroy();
-			}
-		}*/
-
 
 		private void AddRouteOverlay(int count)
 		{
@@ -3234,73 +3182,6 @@ namespace Diva
 			}
 		}
 
-		private void BUT_Mouse_Hover(object sender, EventArgs e)
-		{
-			if (((Button)sender).Name.Equals("BtnArm"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect_active));
-			else if (((Button)sender).Name.Equals("BtnLand"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land_active));
-			else if (((Button)sender).Name.Equals("BtnTakeOff"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_takeoff_active));
-			else if (((Button)sender).Name.Equals("BtnAuto"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_auto_active));
-			else if (((Button)sender).Name.Equals("BtnWriteWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps_active));
-			else if (((Button)sender).Name.Equals("BtnReadWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps_active));
-			else if (((Button)sender).Name.Equals("BtnVideo"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add_active));
-		}
-
-		private void BUT_Mouse_Leave(object sender, EventArgs e)
-		{
-			if (((Button)sender).Name.Equals("BtnArm"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect));
-			else if (((Button)sender).Name.Equals("BtnLand"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land));
-			else if (((Button)sender).Name.Equals("BtnTakeOff"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_takeoff));
-			else if (((Button)sender).Name.Equals("BtnAuto"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_auto));
-			else if (((Button)sender).Name.Equals("BtnWriteWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps));
-			else if (((Button)sender).Name.Equals("BtnReadWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps));
-			else if (((Button)sender).Name.Equals("BtnVideo"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add));
-		}
-
-		private void TSBUT_Mouse_Hover(object sender, EventArgs e)
-		{
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm_active));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation_active));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConfigure"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_configure_active));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging_active));
-		}
-
-		private void TSBUT_Mouse_Leave(object sender, EventArgs e)
-		{
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConfigure"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_configure));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging));
-		}
-
-
 		private void DroneInfo_DoubleClick(object sender, EventArgs e)
 		{
 			try
@@ -3325,16 +3206,6 @@ namespace Diva
 			{
 				log.Debug(exception.ToString());
 				return;
-			}
-		}
-
-		public class MySR : ToolStripSystemRenderer
-		{
-			public MySR() { }
-
-			protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
-			{
-				//base.OnRenderToolStripBorder(e);
 			}
 		}
 
