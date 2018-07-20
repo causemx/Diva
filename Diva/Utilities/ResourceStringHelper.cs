@@ -28,10 +28,10 @@ namespace Diva
                 return res;
             }
             string locFontName = getString(ucTypeName + ".FontFamily");
-            if (!float.TryParse(getString(ucTypeName + ".FontSizeAdjust"), out var locFontSizeAdjust))
-                locFontSizeAdjust = 0f;
-            if (locFontName != null)
+            if ((locFontName ?? "").Length > 0)
             {
+                if (!float.TryParse(getString(ucTypeName + ".FontSizeAdjust"), out var locFontSizeAdjust))
+                    locFontSizeAdjust = 0f;
                 void processControls(Control cc)
                 {
                     foreach (Control c in cc.Controls)
