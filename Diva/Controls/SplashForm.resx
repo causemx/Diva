@@ -1,0 +1,810 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;tBoxLoginPassword.Name" xml:space="preserve">
+    <value>tBoxLoginPassword</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblProgress.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tBoxLoginPassword.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnNewAccount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tBoxConfirm.MaxLength" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="lblConfirm.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="tBoxUsername.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblProgress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>420, 35</value>
+  </data>
+  <data name="&gt;&gt;btnSkip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnLogin.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;lblUsername.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tBoxUsername.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>265, 233</value>
+  </data>
+  <data name="lblPassword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 25</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnExit.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;panelNewAccount.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;panelLogin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tBoxConfirm.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="tBoxLoginUser.MaxLength" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;tBoxUsername.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="&gt;&gt;panelNewAccount.Parent" xml:space="preserve">
+    <value>BorderPanel</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BorderPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tBoxPassword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="&gt;&gt;BorderPanel.Name" xml:space="preserve">
+    <value>BorderPanel</value>
+  </data>
+  <data name="panelNewAccount.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;btnExit.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginUser.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="&gt;&gt;btnNewAccount.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;BorderPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblProgress.Name" xml:space="preserve">
+    <value>lblProgress</value>
+  </data>
+  <data name="cBoxDontNotify.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 242</value>
+  </data>
+  <data name="&gt;&gt;BorderPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblProgress.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginUser.Name" xml:space="preserve">
+    <value>tBoxLoginUser</value>
+  </data>
+  <data name="lblConfirm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 110</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="lblLoginPassword.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
+  </data>
+  <data name="panelLogin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>48, 36</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 15</value>
+  </data>
+  <data name="tBoxLoginUser.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;panelNewAccount.Name" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="&gt;&gt;lblNewAccountMessage.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="lblNewAccountMessage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.Name" xml:space="preserve">
+    <value>lblPassword</value>
+  </data>
+  <data name="lblLoginUser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="lblUsername.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
+  </data>
+  <data name="lblLoginMessage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;lblNewAccountMessage.Name" xml:space="preserve">
+    <value>lblNewAccountMessage</value>
+  </data>
+  <data name="cBoxDontNotify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="lblNewAccountMessage.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
+  </data>
+  <data name="&gt;&gt;btnSkip.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Name" xml:space="preserve">
+    <value>btnExit</value>
+  </data>
+  <data name="tBoxConfirm.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;lblLoginMessage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tBoxConfirm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="btnNewAccount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>265, 21</value>
+  </data>
+  <data name="BorderPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="panelNewAccount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>48, 36</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tBoxLoginUser.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblLoginMessage.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>150, 60</value>
+  </data>
+  <data name="tBoxPassword.MaxLength" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="tBoxLoginUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="btnLogin.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;lblLoginUser.Name" xml:space="preserve">
+    <value>lblLoginUser</value>
+  </data>
+  <data name="btnLogin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 38</value>
+  </data>
+  <data name="&gt;&gt;cBoxDontNotify.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelLogin.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tBoxConfirm.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tBoxPassword.Name" xml:space="preserve">
+    <value>tBoxPassword</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginUser.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;cBoxDontNotify.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblLoginMessage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
+  <data name="&gt;&gt;btnSkip.Name" xml:space="preserve">
+    <value>btnSkip</value>
+  </data>
+  <data name="&gt;&gt;tBoxConfirm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblLoginPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tBoxUsername.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="lblNewAccountMessage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>226, 75</value>
+  </data>
+  <data name="lblLoginMessage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnSkip.Text" xml:space="preserve">
+    <value>&amp;Skip</value>
+  </data>
+  <data name="tBoxLoginPassword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="&gt;&gt;lblPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnNewAccount.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="lblUsername.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="lblConfirm.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;cBoxDontNotify.Name" xml:space="preserve">
+    <value>cBoxDontNotify</value>
+  </data>
+  <data name="lblPassword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 70</value>
+  </data>
+  <data name="&gt;&gt;panelLogin.Parent" xml:space="preserve">
+    <value>BorderPanel</value>
+  </data>
+  <data name="&gt;&gt;tBoxConfirm.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tBoxPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="lblUsername.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 25</value>
+  </data>
+  <data name="btnExit.Text" xml:space="preserve">
+    <value>&amp;Exit</value>
+  </data>
+  <data name="lblLoginUser.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;BorderPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginUser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnNewAccount.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="lblProgress.Text" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="btnNewAccount.Text" xml:space="preserve">
+    <value>&amp;New</value>
+  </data>
+  <data name="&gt;&gt;tBoxUsername.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lblProgress.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lblConfirm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblUsername.Name" xml:space="preserve">
+    <value>lblUsername</value>
+  </data>
+  <data name="&gt;&gt;btnSkip.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="lblUsername.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="btnSkip.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="btnLogin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>265, 21</value>
+  </data>
+  <data name="BorderPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;lblConfirm.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="btnNewAccount.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;lblUsername.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tBoxPassword.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lblPassword.Text" xml:space="preserve">
+    <value>&amp;Password:</value>
+  </data>
+  <data name="btnExit.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="tBoxLoginPassword.MaxLength" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="btnSkip.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;lblLoginPassword.Name" xml:space="preserve">
+    <value>lblLoginPassword</value>
+  </data>
+  <data name="&gt;&gt;lblLoginPassword.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lblUsername.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="&gt;&gt;lblProgress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnNewAccount.Name" xml:space="preserve">
+    <value>btnNewAccount</value>
+  </data>
+  <data name="btnExit.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;lblNewAccountMessage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginPassword.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="tBoxPassword.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;lblProgress.Parent" xml:space="preserve">
+    <value>BorderPanel</value>
+  </data>
+  <data name="tBoxUsername.MaxLength" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lblNewAccountMessage.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="panelNewAccount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>384, 288</value>
+  </data>
+  <data name="tBoxPassword.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>SplashForm</value>
+  </data>
+  <data name="&gt;&gt;lblConfirm.Name" xml:space="preserve">
+    <value>lblConfirm</value>
+  </data>
+  <data name="panelLogin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>384, 288</value>
+  </data>
+  <data name="&gt;&gt;lblLoginUser.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblNewAccountMessage.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>150, 60</value>
+  </data>
+  <data name="lblNewAccountMessage.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblLoginUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 25</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnLogin.Name" xml:space="preserve">
+    <value>btnLogin</value>
+  </data>
+  <data name="cBoxDontNotify.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="btnNewAccount.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lblPassword.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblNewAccountMessage.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="BorderPanel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;lblLoginPassword.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="tBoxLoginUser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 27</value>
+  </data>
+  <data name="tBoxLoginPassword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 72</value>
+  </data>
+  <data name="BorderPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 360</value>
+  </data>
+  <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 38</value>
+  </data>
+  <data name="&gt;&gt;tBoxLoginPassword.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="lblProgress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>60, 320</value>
+  </data>
+  <data name="cBoxDontNotify.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnSkip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 38</value>
+  </data>
+  <data name="lblLoginUser.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
+  </data>
+  <data name="&gt;&gt;lblLoginMessage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cBoxDontNotify.Text" xml:space="preserve">
+    <value>&amp;Don't notify next time.</value>
+  </data>
+  <data name="lblLoginPassword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 70</value>
+  </data>
+  <data name="cBoxDontNotify.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btnLogin.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="cBoxDontNotify.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 21</value>
+  </data>
+  <data name="&gt;&gt;lblConfirm.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="&gt;&gt;lblLoginUser.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="lblLoginMessage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>226, 70</value>
+  </data>
+  <data name="tBoxUsername.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 27</value>
+  </data>
+  <data name="tBoxPassword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 72</value>
+  </data>
+  <data name="lblLoginMessage.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomLeft</value>
+  </data>
+  <data name="&gt;&gt;lblLoginMessage.Name" xml:space="preserve">
+    <value>lblLoginMessage</value>
+  </data>
+  <data name="lblUsername.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lblUsername.Text" xml:space="preserve">
+    <value>&amp;Username: </value>
+  </data>
+  <data name="panelNewAccount.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblLoginPassword.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblLoginMessage.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="btnLogin.Text" xml:space="preserve">
+    <value>&amp;Login</value>
+  </data>
+  <data name="btnSkip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>265, 233</value>
+  </data>
+  <data name="lblProgress.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
+  </data>
+  <data name="&gt;&gt;lblLoginUser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnNewAccount.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="tBoxConfirm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 117</value>
+  </data>
+  <data name="tBoxLoginPassword.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="lblLoginPassword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 25</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>480, 360</value>
+  </data>
+  <data name="btnSkip.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="lblConfirm.Text" xml:space="preserve">
+    <value>&amp;Confirm Password:</value>
+  </data>
+  <data name="panelLogin.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="btnSkip.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="lblConfirm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 40</value>
+  </data>
+  <data name="lblPassword.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblConfirm.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;btnExit.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="lblLoginUser.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panelNewAccount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panelLogin.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="btnExit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;panelLogin.Name" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="&gt;&gt;lblLoginMessage.Parent" xml:space="preserve">
+    <value>panelLogin</value>
+  </data>
+  <data name="lblProgress.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cBoxDontNotify.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="panelLogin.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lblPassword.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomRight</value>
+  </data>
+  <data name="&gt;&gt;lblNewAccountMessage.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="lblLoginPassword.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 8pt</value>
+  </data>
+  <data name="&gt;&gt;tBoxUsername.Name" xml:space="preserve">
+    <value>tBoxUsername</value>
+  </data>
+  <data name="&gt;&gt;tBoxUsername.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnNewAccount.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 38</value>
+  </data>
+  <data name="&gt;&gt;tBoxConfirm.Name" xml:space="preserve">
+    <value>tBoxConfirm</value>
+  </data>
+  <data name="btnLogin.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;cBoxDontNotify.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="lblLoginUser.Text" xml:space="preserve">
+    <value>&amp;Username: </value>
+  </data>
+  <data name="panelNewAccount.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tBoxPassword.Parent" xml:space="preserve">
+    <value>panelNewAccount</value>
+  </data>
+  <data name="lblLoginPassword.Text" xml:space="preserve">
+    <value>&amp;Password:</value>
+  </data>
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.Language" type="System.Globalization.CultureInfo, mscorlib">
+    <value>zh-Hant</value>
+  </data>
+  <data name="AccountAlreadyExistMessage" xml:space="preserve">
+    <value>Account already exists.</value>
+  </data>
+  <data name="AccountCreationFailedMessage" xml:space="preserve">
+    <value>Account creation failed. Try again?</value>
+  </data>
+  <data name="CreateAccountNotification" xml:space="preserve">
+    <value>Create account to protect your data.</value>
+  </data>
+  <data name="InvalidNameMessage" xml:space="preserve">
+    <value>Invalid account name.</value>
+  </data>
+  <data name="InvalidPasswordMessage" xml:space="preserve">
+    <value>Invalid password.</value>
+  </data>
+  <data name="LoginFailedMessage" xml:space="preserve">
+    <value>Login failed. (Account/password mismatch)</value>
+  </data>
+  <data name="LoginNotification" xml:space="preserve">
+    <value>Please login to enter system.</value>
+  </data>
+  <data name="PasswordMismatchMessage" xml:space="preserve">
+    <value>Confirm password mismatch.</value>
+  </data>
+  <data name="SplashCountDownNotification" xml:space="preserve">
+    <value>Config loaded, starting...</value>
+  </data>
+  <data name="TooManyTriesMessageFormat" xml:space="preserve">
+    <value>Too many tries. Please login after {0} seconds.</value>
+  </data>
+</root>

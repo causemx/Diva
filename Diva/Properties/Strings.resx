@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MsgDefaultAltitudeInvalid" xml:space="preserve">
+    <value>Your default altitude is not valid</value>
+  </data>
+  <data name="MsgDefaultAltitudeRequired" xml:space="preserve">
+    <value>You must set a default altitude</value>
+  </data>
+  <data name="MsgGetRallyPointFailed" xml:space="preserve">
+    <value>Failed to get rally point</value>
+  </data>
+  <data name="MsgHomeAltitudeRequired" xml:space="preserve">
+    <value>You must have a home altitude</value>
+  </data>
+  <data name="MsgHomeLocationInvalid" xml:space="preserve">
+    <value>Your home location is invalid</value>
+  </data>
+  <data name="MsgInvalidCoordinate" xml:space="preserve">
+    <value>Invalid coordinate, How did you do this?</value>
+  </data>
+  <data name="MsgInvalidEntry" xml:space="preserve">
+    <value>An invalid entry has been detected\n{0}</value>
+  </data>
+  <data name="MsgInvalidHomeOrWPAltitide" xml:space="preserve">
+    <value>Invalid Home or wp Alt</value>
+  </data>
+  <data name="MsgMissionError" xml:space="preserve">
+    <value>There are errors in your mission</value>
+  </data>
+  <data name="MsgMissionRejectedBadWP" xml:space="preserve">
+    <value>Upload failed, mission was rejected by the Mav,\nitem had a bad option wp {0} {1}</value>
+  </data>
+  <data name="MsgMissionRejectedGeneral" xml:space="preserve">
+    <value>Upload wps failed {0} {1}</value>
+  </data>
+  <data name="MsgMissionRejectedTooManyWaypoints" xml:space="preserve">
+    <value>Upload failed, please reduce the number of wp's</value>
+  </data>
+  <data name="MsgNoRallyPoint" xml:space="preserve">
+    <value>Rally points - Nothing to download</value>
+  </data>
+  <data name="MsgResetHomeCoordinate" xml:space="preserve">
+    <value>Reset Home to loaded coordinate</value>
+  </data>
+  <data name="MsgResetHomeCoordinateTitle" xml:space="preserve">
+    <value>Reset Homecoordinate</value>
+  </data>
+  <data name="MsgRowError" xml:space="preserve">
+    <value>Row error</value>
+  </data>
+  <data name="MsgSaveWPRejected" xml:space="preserve">
+    <value>reject by Mav{0}</value>
+  </data>
+  <data name="MsgSaveWPTimeout" xml:space="preserve">
+    <value>timeout on read, please try again.</value>
+  </data>
+  <data name="MsgSetHomeFirst" xml:space="preserve">
+    <value>Please set home first</value>
+  </data>
+  <data name="MsgUnsupported" xml:space="preserve">
+    <value>Not Supported</value>
+  </data>
+  <data name="MsgWarnWPAltitiude" xml:space="preserve">
+    <value>Low altitiude on WP#{0}\nPlease reduce the altitude warning, or increase the altitude</value>
+  </data>
+  <data name="StrAnonymousAccount" xml:space="preserve">
+    <value>(Anonymous)</value>
+  </data>
+  <data name="StrRallyPointToolTipText" xml:space="preserve">
+    <value>Rally Point\nAlt: {0}</value>
+  </data>
+  <data name="MsgNoConnection" xml:space="preserve">
+    <value>no connection</value>
+  </data>
+  <data name="MsgCantGetPosition" xml:space="preserve">
+    <value>can not get position</value>
+  </data>
+  <data name="MsgConfirmClearExistingMission" xml:space="preserve">
+    <value>This will clear your existing planned mission, Continue?</value>
+  </data>
+  <data name="MsgConfirmTitle" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="MsgWaitingForSwitchingTo" xml:space="preserve">
+    <value>Waiting for switching mode to {0}</value>
+  </data>
+  <data name="MsgModeChanged" xml:space="preserve">
+    <value>mode: {0}</value>
+  </data>
+  <data name="MsgArming" xml:space="preserve">
+    <value>arming throttle</value>
+  </data>
+  <data name="MsgTakedOff" xml:space="preserve">
+    <value>status: takeoff</value>
+  </data>
+  <data name="MsgSpecifyVideoURI" xml:space="preserve">
+    <value>Specify video stream URI.</value>
+  </data>
+  <data name="MsgInvalidWaypointFile" xml:space="preserve">
+    <value>Invalid Waypoint file</value>
+  </data>
+  <data name="MsgLineInvalid" xml:space="preserve">
+    <value>Line invalid\n{0}</value>
+  </data>
+  <data name="MsgCantOpenFile" xml:space="preserve">
+    <value>Can't open file! {0}</value>
+  </data>
+  <data name="MsgFileLoaded" xml:space="preserve">
+    <value>Loaded {0}</value>
+  </data>
+  <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.FontFamily" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigAccountPage.MsgCreateAccount" xml:space="preserve">
+    <value>Create account '{0}'?</value>
+  </data>
+  <data name="ConfigAccountPage.MsgChangePassword" xml:space="preserve">
+    <value>Change password for account '{0}'?</value>
+  </data>
+  <data name="ConfigAccountPage.MsgDeleteAccount" xml:space="preserve">
+    <value>Delete account '{0}'?</value>
+  </data>
+  <data name="MsgCannotEstablishConnection" xml:space="preserve">
+    <value>Can not establish a connection\n\n{0}</value>
+  </data>
+</root>

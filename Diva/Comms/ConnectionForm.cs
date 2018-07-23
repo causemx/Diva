@@ -36,8 +36,6 @@ namespace Diva.Comms
 		{
 			InitializeComponent();
 
-			InitializeComponent();
-
 			string file = Settings.GetRunningDirectory() + AIRCRAFT_FILE_NAME;
 
 			LoadXML(AIRCRAFT_FILE_NAME);

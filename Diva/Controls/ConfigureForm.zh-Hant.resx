@@ -117,4 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="BtnMap.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 13.8pt</value>
+  </data>
+  <data name="BtnMap.Text" xml:space="preserve">
+    <value>地圖</value>
+  </data>
+  <data name="BtnAccount.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 13.8pt</value>
+  </data>
+  <data name="BtnAccount.Text" xml:space="preserve">
+    <value>帳號</value>
+  </data>
+  <data name="BtnVehicle.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 13.8pt</value>
+  </data>
+  <data name="BtnVehicle.Text" xml:space="preserve">
+    <value>無人機</value>
+  </data>
+  <data name="BtnAbout.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 13.8pt</value>
+  </data>
+  <data name="BtnAbout.Text" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="BtnTuning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 13.8pt</value>
+  </data>
+  <data name="BtnTuning.Text" xml:space="preserve">
+    <value>調整</value>
+  </data>
+  <data name="BtnGeoFence.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 13.8pt</value>
+  </data>
+  <data name="BtnGeoFence.Text" xml:space="preserve">
+    <value>電子圍籬</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>設定</value>
+  </data>
 </root>
