@@ -12,13 +12,13 @@ using System.Windows.Forms;
 
 namespace Diva.Controls
 {
-	public partial class FileBrowser : Form
+	public partial class FileBrowserForm : Form
 	{
 
 		public List<string> listFiles = new List<string>();
 		public event EventHandler MissionClick;
 
-		public FileBrowser()
+		public FileBrowserForm()
 		{
 			InitializeComponent();
 			OnLoad();

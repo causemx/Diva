@@ -1,6 +1,6 @@
 ﻿namespace Diva.Controls
 {
-	partial class ConfigTuning
+	partial class ConfigTuningPage
 	{
 		/// <summary> 
 		/// 設計工具所需的變數。

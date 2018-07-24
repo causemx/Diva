@@ -55,11 +55,18 @@ namespace GMap.NET
         public PureImage FromImage(Image image)
         {
             PureImage ret = null;
-            using (var ms = new MemoryStream())
+            // chw: GMapImageProxy.FromStream does not set Data field
+            //      which causes nullptr exception later
+            //using (var ms = new MemoryStream())
+            var ms = new MemoryStream();
             {
                 image.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
                 ms.Position = 0;
                 ret = FromStream(ms);
+                if (ret.Data == null)
+                    ret.Data = ms;
+                else
+                    ms.Dispose();
             }
             return ret;
         }

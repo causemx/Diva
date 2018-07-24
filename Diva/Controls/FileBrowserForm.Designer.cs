@@ -1,6 +1,6 @@
 ﻿namespace Diva.Controls
 {
-	partial class FileBrowser
+	partial class FileBrowserForm
 	{
 		/// <summary>
 		/// Required designer variable.

@@ -27,6 +27,8 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
 
+using ResStrings = Diva.Properties.Strings;
+
 namespace Diva
 {
 	public partial class Planner : Form
@@ -65,20 +67,30 @@ namespace Diva
 		public static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly double WARN_ALT = 2D;
-		//private GMapOverlay top;
 		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
-		private Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
-		
-		//private GMapOverlay overlays["polygons"];
-		//private GMapOverlay airportsOverlay;
-		//private GMapOverlay poiOverlay;
-		//private GMapOverlay overlays["drawnpolygons"];
-		//private GMapOverlay overlays["objects"];
-		//private GMapOverlay kmloverlays["polygons"];
-		//private GMapOverlay overlays["rallypoints"];
-		//private GMapOverlay overlays["commons"];
 
-		private GMapMarkerRect currentRectMarker;
+        private class plannerOverlays
+        {
+            public GMapOverlay kmlpolygons;
+            public GMapOverlay rallypoints;
+            public GMapOverlay polygons;
+            public GMapOverlay airports;
+            public GMapOverlay objects;
+            public GMapOverlay commons;
+            public GMapOverlay drawnpolygons;
+            public GMapOverlay geofence;
+            public GMapOverlay POI;
+            internal plannerOverlays(MyGMap map)
+                => GetType().GetFields().ToList().ForEach(f =>
+                    {
+                        var o = new GMapOverlay(f.Name);
+                        if (map != null) map.Overlays.Add(o);
+                        f.SetValue(this, o);
+                    });
+        }
+        private plannerOverlays overlays;
+
+        private GMapMarkerRect currentRectMarker;
 		private GMapMarkerRallyPt currentRallyPt;
 
 		private GMapMarker currentMarker;
@@ -123,18 +135,6 @@ namespace Diva
 
 		private bool useLocation = false;
 		private long recorder_id = 0;
-
-		public static readonly string[] overlayNames = {
-			"kmlpolygons",
-			"rallypoints",
-			"polygons",
-			"airports",
-			"objects",
-			"commons",
-			"drawnpolygons",
-			"geofence",
-			"POI"
-		};
 
 		public enum altmode
 		{
@@ -181,66 +181,23 @@ namespace Diva
 
 
 		private List<DroneInfoPanel> DroneInfos = new List<DroneInfoPanel>();
-
+        internal MyGMap GMapControl => myMap;
 
 		public Planner()
 		{
 			InitializeComponent();
 
 			string username = AccountManager.GetLoginAccount();
-			if (username == "") username = "(Anonymous)";
-			Text += " - " + username;
+			if (username == "") username = ResStrings.StrAnonymousAccount;
+            Text += " - " + username;
 
 			// control size may not be the same as designer (dpi setting?)
 						
 			quickadd = false;
 
-			// setup map events
-			myMap.OnPositionChanged += MainMap_OnCurrentPositionChanged;
-			myMap.OnMarkerClick += MainMap_OnMarkerClick;
-			myMap.MouseMove += MainMap_MouseMove;
-			myMap.MouseDown += MainMap_MouseDown;
-			myMap.MouseUp += MainMap_MouseUp;
-			myMap.OnMarkerEnter += MainMap_OnMarkerEnter;
-			myMap.OnMarkerLeave += MainMap_OnMarkerLeave;
+            overlays = new plannerOverlays(myMap);
 
-			// draw this layer first
-			/*kmloverlays["polygons"] = new GMapOverlay("kmlpolygons");
-			myMap.Overlays.Add(kmloverlays["polygons"]);
-
-			overlays["rallypoints"] = new GMapOverlay("rallypoints");
-			myMap.Overlays.Add(overlays["rallypoints"]);
-
-			airportsOverlay = new GMapOverlay("airports");
-			myMap.Overlays.Add(airportsOverlay);
-
-			overlays["objects"] = new GMapOverlay("objects");
-			myMap.Overlays.Add(overlays["objects"]);
-
-			overlays["commons"] = new GMapOverlay("commons");
-			myMap.Overlays.Add(overlays["commons"]);
-
-			overlays["drawnpolygons"] = new GMapOverlay("drawnpolygons");
-			myMap.Overlays.Add(overlays["drawnpolygons"]);
-
-			poiOverlay = new GMapOverlay("POI");
-			myMap.Overlays.Add(poiOverlay);
-			
-			overlays["polygons"] = new GMapOverlay("polygons");
-			myMap.Overlays.Add(overlays["polygons"]);
-
-			overlays["geofence"] = new GMapOverlay("geofence");
-			myMap.Overlays.Add(overlays["geofence"]);
-			*/
-
-			overlayNames.ToList().ForEach(s =>
-				myMap.Overlays.Add(overlays[s] = new GMapOverlay(s))
-			);
-
-			//top = new GMapOverlay("top");
-			// myMap.Overlays.Add(top);
-
-			overlays["objects"].Markers.Clear();
+			overlays.objects.Markers.Clear();
 
 			// set current marker
 			currentMarker = new GMarkerGoogle(myMap.Position, GMarkerGoogleType.red);
@@ -268,13 +225,14 @@ namespace Diva
 			TSBtnTagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
 
 			//setup toolstrip
-			TSMainPanel.Renderer = new MySR();
+			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
 
 			//Collect DroneInfoPanels
-			DroneInfos = new List<DroneInfoPanel>();
-			DroneInfos.Add(DroneInfo1);
-			DroneInfos.Add(DroneInfo2);
-			DroneInfos.Add(DroneInfo3);
+			DroneInfos = new List<DroneInfoPanel>()
+            { DroneInfo1, DroneInfo2, DroneInfo3 };
+			//DroneInfos.Add(DroneInfo1);
+			//DroneInfos.Add(DroneInfo2);
+			//DroneInfos.Add(DroneInfo3);
 
 			// setup geofence
 			
@@ -321,36 +279,6 @@ namespace Diva
 			TxtHomeLongitude.Text = lng.ToString();
 		}
 	
-		protected override void OnActivated(EventArgs e)
-		{
-			base.OnActivated(e);
-
-			
-			FlightRecorder recorder = new FlightRecorder()
-			{
-				UserName = AccountManager.GetLoginAccount(),
-				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				TotalDistance = 0.0d,
-				HomeLatitude = 0.0d,
-				HomeLongitude = 0.0d,
-				HomeAltitude = 0.0d,
-			};
-
-			DatabaseManager.InitialDatabase();
-			recorder_id = DatabaseManager.InsertValue(recorder);
-
-		}
-
-		protected override void OnClosed(EventArgs e)
-		{
-			base.OnClosed(e);
-
-			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
-			DatabaseManager.Dump(recorder_id);
-
-		}
-
 		private void AddRouteOverlay(int count)
 		{
 			GMapOverlay routesOverlay = new GMapOverlay(string.Format("route_{0}", count));
@@ -360,7 +288,21 @@ namespace Diva
 
 		private void Planner_Load(object sender, EventArgs e)
 		{
-			mainThread = new Thread(MainLoop)
+            FlightRecorder recorder = new FlightRecorder()
+            {
+                UserName = AccountManager.GetLoginAccount(),
+                StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+                EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+                TotalDistance = 0.0d,
+                HomeLatitude = 0.0d,
+                HomeLongitude = 0.0d,
+                HomeAltitude = 0.0d,
+            };
+
+            DatabaseManager.InitialDatabase();
+            recorder_id = DatabaseManager.InsertValue(recorder);
+
+            mainThread = new Thread(MainLoop)
 			{
 				IsBackground = true,
 				Name = "Main Serial reader",
@@ -381,7 +323,9 @@ namespace Diva
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			comPorts.ForEach(p => p.onDestroy());
+            DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
+            DatabaseManager.Dump(recorder_id);
+            comPorts.ForEach(p => p.onDestroy());
 			timerMapItemUpdate.Stop();
 		}
 
@@ -495,9 +439,6 @@ namespace Diva
 
 			colCommand.DataSource = cmds;
 		}
-
-	
-
 
 		private Dictionary<string, string[]> readCMDXML()
 		{
@@ -674,9 +615,9 @@ namespace Diva
 							continue;
 
 						seen[markerid] = 1;
-						for (int a = 0; a < overlays["objects"].Markers.Count; a++)
+						for (int a = 0; a < overlays.objects.Markers.Count; a++)
 						{
-							var marker = overlays["objects"].Markers[a];
+							var marker = overlays.objects.Markers[a];
 
 							if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 							{
@@ -891,7 +832,7 @@ namespace Diva
 					poly.Points.Add(MouseDownEnd);
 					poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
 
-					foreach (var marker in overlays["objects"].Markers)
+					foreach (var marker in overlays.objects.Markers)
 					{
 						if (poly.IsInside(marker.Position))
 						{
@@ -931,9 +872,9 @@ namespace Diva
 
 						foreach (var markerid in groupmarkers)
 						{
-							for (int a = 0; a < overlays["objects"].Markers.Count; a++)
+							for (int a = 0; a < overlays.objects.Markers.Count; a++)
 							{
-								var marker = overlays["objects"].Markers[a];
+								var marker = overlays.objects.Markers[a];
 
 								if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 								{
@@ -1173,7 +1114,8 @@ namespace Diva
 				{
 					log.Warn(ex2);
 				}
-				MessageBox.Show("Can not establish a connection\n\n" + ex.Message);
+                MessageBox.Show(ResStrings.MsgCannotEstablishConnection
+                    .FormatWith(ex.Message));
 				throw new Exception();
 			}
 		}
@@ -1194,7 +1136,7 @@ namespace Diva
 				GMapMarkerWP m = new GMapMarkerWP(point, tag);
 
 				m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-				m.ToolTipText = "Alt: " + alt.ToString("0");
+				m.ToolTipText = colAltitude.HeaderText + ": " + alt.ToString("0");
 				m.Tag = tag;
 
 				int wpno = -1;
@@ -1217,8 +1159,8 @@ namespace Diva
 					}
 				}
 
-				overlays["objects"].Markers.Add(m);
-				// overlays["objects"].Markers.Add(mBorders);
+				overlays.objects.Markers.Add(m);
+				// overlays.objects.Markers.Add(mBorders);
 			}
 			catch (Exception)
 			{
@@ -1279,8 +1221,8 @@ namespace Diva
 					mBorders.InnerMarker = m;
 				}
 
-				overlays["drawnpolygons"].Markers.Add(m);
-				overlays["drawnpolygons"].Markers.Add(mBorders);
+				overlays.drawnpolygons.Markers.Add(m);
+				overlays.drawnpolygons.Markers.Add(mBorders);
 			}
 			catch (Exception ex)
 			{
@@ -1307,7 +1249,7 @@ namespace Diva
 			}
 			catch (Exception)
 			{
-				MessageBox.Show("Row error");
+				MessageBox.Show(ResStrings.MsgRowError);
 			}
 		}
 
@@ -1366,7 +1308,7 @@ namespace Diva
 			// check home point setup.
 			if (IsHomeEmpty())
 			{
-				MessageBox.Show("Please set home first");
+				MessageBox.Show(ResStrings.MsgSetHomeFirst);
 				return;
 			}
 			else
@@ -1476,7 +1418,7 @@ namespace Diva
 		{
 			if (selectedrow > dgvWayPoints.RowCount)
 			{
-				MessageBox.Show("Invalid coord, How did you do this?");
+				MessageBox.Show(ResStrings.MsgInvalidCoordinate);
 				return;
 			}
 
@@ -1489,11 +1431,11 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("A invalid entry has been detected\n" + ex.Message);
-			}
+                MessageBox.Show(ResStrings.MsgInvalidEntry.FormatWith(ex.Message));
+            }
 
-			// remove more than 20 revisions
-			if (history.Count > 20)
+            // remove more than 20 revisions
+            if (history.Count > 20)
 			{
 				history.RemoveRange(0, history.Count - 20);
 			}
@@ -1522,24 +1464,25 @@ namespace Diva
 
 					if (pass == false)
 					{
-						MessageBox.Show("You must have a home altitude");
-					
-						string homealt = "10";
-						if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
-							return;
+                        //MessageBox.Show("You must have a home altitude");
+ 
+                        string homealt = "10";
+                        //if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
+                        if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgHomeAltitudeRequired, homealt, ref homealt))
+                            return;
 						TxtHomeAltitude.Text = homealt;
 					}
 					int results1;
 					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
 					{
-						MessageBox.Show("Your default alt is not valid");
+						MessageBox.Show(ResStrings.MsgDefaultAltitudeInvalid);
 						return;
 					}
 
 					if (results1 == 0)
 					{
 						string defalt = "10";
-						if (DialogResult.Cancel == InputBox.Show("Default Alt", "Default Altitude", ref defalt))
+						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgDefaultAltitudeRequired, defalt, ref defalt))
 							return;
 						TxtAltitudeValue.Text = defalt;
 					}
@@ -1561,7 +1504,7 @@ namespace Diva
 				}
 				else
 				{
-					MessageBox.Show("Invalid Home or wp Alt");
+					MessageBox.Show(ResStrings.MsgInvalidHomeOrWPAltitide);
 					cell.Style.BackColor = Color.Red;
 				}
 			}
@@ -1597,9 +1540,9 @@ namespace Diva
 
 			try
 			{
-				if (overlays["objects"] != null) // hasnt been created yet
+				if (overlays.objects != null) // hasnt been created yet
 				{
-					overlays["objects"].Markers.Clear();
+					overlays.objects.Markers.Clear();
 				}
 
 				// process and add home to the list
@@ -1607,7 +1550,7 @@ namespace Diva
 				if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
 				{
 					home = string.Format("{0},{1},{2}\r\n", TxtHomeLongitude.Text, TxtHomeLatitude.Text, TxtAltitudeValue.Text);
-					if (overlays["objects"] != null) // during startup
+					if (overlays.objects != null) // during startup
 					{
 						pointlist.Add(new PointLatLngAlt(double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
 							double.Parse(TxtHomeAltitude.Text), "H"));
@@ -1701,8 +1644,8 @@ namespace Diva
 								if (m.Position.Lat != 0 && m.Position.Lng != 0)
 								{
 									// order matters
-									overlays["objects"].Markers.Add(m);
-									overlays["objects"].Markers.Add(mBorders);
+									overlays.objects.Markers.Add(m);
+									overlays.objects.Markers.Add(mBorders);
 								}
 							}
 							else if (command == (ushort)MAVLink.MAV_CMD.LOITER_TIME ||
@@ -1943,7 +1886,7 @@ namespace Diva
 			route.Clear();
 			homeroute.Clear();
 
-			overlays["polygons"].Routes.Clear();
+			overlays.polygons.Routes.Clear();
 
 			PointLatLngAlt lastpnt = fullpointlist[0];
 			PointLatLngAlt lastpnt2 = fullpointlist[0];
@@ -2023,11 +1966,11 @@ namespace Diva
 				if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
 					homeroute.Stroke.DashStyle = DashStyle.Dash;
 
-				overlays["polygons"].Routes.Add(homeroute);
+				overlays.polygons.Routes.Add(homeroute);
 
 				route.Stroke = new Pen(Color.Yellow, 4);
 				route.Stroke.DashStyle = DashStyle.Custom;
-				overlays["polygons"].Routes.Add(route);
+				overlays.polygons.Routes.Add(route);
 			}
 		}
 
@@ -2161,7 +2104,7 @@ namespace Diva
 			}
 			catch
 			{
-				MessageBox.Show("Your home location is invalid");
+				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
 				return;
 			}
 
@@ -2175,7 +2118,7 @@ namespace Diva
 					{
 						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
 						{
-							MessageBox.Show("There are errors in your mission");
+							MessageBox.Show(ResStrings.MsgMissionError);
 							return;
 						}
 					}
@@ -2198,8 +2141,7 @@ namespace Diva
 							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
 							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
 						{
-							MessageBox.Show("Low alt on WP#" + (a + 1) +
-												  "\nPlease reduce the alt warning, or increase the altitude");
+							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
 							return;
 						}
 					}
@@ -2318,7 +2260,7 @@ namespace Diva
 				}
 				catch (TimeoutException)
 				{
-					MessageBox.Show("timeout on read, please try again.");
+					MessageBox.Show(ResStrings.MsgSaveWPTimeout);
 				}
 				 // + home
 
@@ -2337,7 +2279,7 @@ namespace Diva
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
 							{
-								MessageBox.Show("reject by mav1");
+								MessageBox.Show(ResStrings.MsgSaveWPRejected.FormatWith(1));
 								return;
 							}
 						}
@@ -2353,7 +2295,7 @@ namespace Diva
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
 							{
-								MessageBox.Show("reject by mav2");
+								MessageBox.Show(ResStrings.MsgSaveWPRejected.FormatWith(2));
 								return;
 							}
 						}
@@ -2417,16 +2359,14 @@ namespace Diva
 
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
 					{
-						MessageBox.Show("Upload failed, please reduce the number of wp's");
+						MessageBox.Show(ResStrings.MsgMissionRejectedTooManyWaypoints);
 						log.Error("Upload failed, please reduce the number of wp's");
 						return;
 					}
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
 					{
 
-						MessageBox.Show("Upload failed, mission was rejected byt the Mav,\n " +
-										"item had a bad option wp# " + a + " " +
-										ans);
+						MessageBox.Show(ResStrings.MsgMissionRejectedBadWP.FormatWith(a, ans));
 						log.Error("Upload failed, mission was rejected byt the Mav,\n " +
 							"item had a bad option wp# " + a + " " +
 							ans);
@@ -2447,8 +2387,9 @@ namespace Diva
 					if (ans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 					{
 
-						MessageBox.Show("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
-										" " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
+						MessageBox.Show(ResStrings.MsgMissionRejectedGeneral.FormatWith(
+                            Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()),
+                            Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString())));
 						Console.WriteLine("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
 										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						return;
@@ -2659,8 +2600,8 @@ namespace Diva
 				{
 					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
-						DialogResult dr = MessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
-							MessageBoxButtons.YesNo);
+						DialogResult dr = MessageBox.Show(ResStrings.MsgResetHomeCoordinate,
+                            ResStrings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
 
 						if (dr == DialogResult.Yes)
 						{
@@ -2699,17 +2640,17 @@ namespace Diva
 		{
 			if (comPort.MAV.param["RALLY_TOTAL"] == null)
 			{
-				MessageBox.Show("Not Supported");
+				MessageBox.Show(ResStrings.MsgUnsupported);
 				return;
 			}
 
 			if (int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString()) < 1)
 			{
-				MessageBox.Show("Rally points - Nothing to download");
+				MessageBox.Show(ResStrings.MsgNoRallyPoint);
 				return;
 			}
 
-			overlays["rallypoints"].Markers.Clear();
+			overlays.rallypoints.Markers.Clear();
 
 			int count = int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString());
 
@@ -2718,11 +2659,11 @@ namespace Diva
 				try
 				{
 					PointLatLngAlt plla = comPort.getRallyPoint(a, ref count);
-					overlays["rallypoints"].Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
+					overlays.rallypoints.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
 					{
 						Alt = (int)plla.Alt,
 						ToolTipMode = MarkerTooltipMode.OnMouseOver,
-						ToolTipText = "Rally Point" + "\nAlt: " + (plla.Alt * 1)
+						ToolTipText = ResStrings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
 					});
 				}
 				catch
@@ -2732,7 +2673,7 @@ namespace Diva
 				}
 			}
 
-			myMap.UpdateMarkerLocalPosition(overlays["rallypoints"].Markers[0]);
+			myMap.UpdateMarkerLocalPosition(overlays.rallypoints.Markers[0]);
 
 			myMap.Invalidate();
 		}
@@ -2758,7 +2699,7 @@ namespace Diva
 			if (!comPort.BaseStream.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
-				MessageBox.Show("no connection");
+				MessageBox.Show(ResStrings.MsgNoConnection);
 				return;
 			}
 
@@ -2773,7 +2714,7 @@ namespace Diva
 			if (MouseDownStart.Lat == 0 || MouseDownStart.Lng == 0)
 			{
 				// CustomMessageBox.Show(Strings.BadCoords, Strings.ERROR);
-				MessageBox.Show("can not get position");
+				MessageBox.Show(Diva.Properties.Strings.MsgCantGetPosition);
 				return;
 			}
 
@@ -2796,10 +2737,10 @@ namespace Diva
 			}
 
 
-			overlays["commons"].Markers.Clear();
+			overlays.commons.Markers.Clear();
 			
 			addpolygonmarker("Guided Mode", gotohere.lng,
-								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays["commons"]);
+								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays.commons);
 
 
 		}
@@ -3014,8 +2955,8 @@ namespace Diva
 			if (dgvWayPoints.Rows.Count > 0)
 			{
 				
-				if (MessageBox.Show("This will clear your existing planned mission, Continue?", "Confirm",
-						MessageBoxButtons.OKCancel) != DialogResult.OK)
+				if (MessageBox.Show(ResStrings.MsgConfirmClearExistingMission,
+                    ResStrings.MsgConfirmTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
 				{
 					return;
 				}
@@ -3058,18 +2999,18 @@ namespace Diva
 				{
 					if (!mav1.BaseStream.IsOpen || !mav2.BaseStream.IsOpen) return;
 						
-					_dialog.ReportProgress(-1, "Waiting for switching mode to GUIDED");
+					_dialog.ReportProgress(-1, ResStrings.MsgWaitingForSwitchingTo.FormatWith("GUIDED"));
 					mav1.setMode(mav1.MAV.sysid, mav1.MAV.compid, "GUIDED");
 					Thread.Sleep(500);
 					mav2.setMode(mav2.MAV.sysid, mav2.MAV.compid, "GUIDED");
 					Thread.Sleep(500);
 					mav3.setMode(mav3.MAV.sysid, mav3.MAV.compid, "GUIDED");
 
-					_dialog.ReportProgress(-1, "mode: GUIDED");
+					_dialog.ReportProgress(-1, ResStrings.MsgModeChanged.FormatWith("GUIDED"));
 
 					// do command - arm throttle
 
-					_dialog.ReportProgress(-1, "arming throttle");
+					_dialog.ReportProgress(-1, ResStrings.MsgArming);
 					while (!mav1.MAV.armed)
 					{
 						mav1.doARM(true);
@@ -3091,11 +3032,11 @@ namespace Diva
 						Thread.Sleep(500);
 					}
 
-					_dialog.ReportProgress(-1, "status: takeoff");
+					_dialog.ReportProgress(-1, ResStrings.MsgTakedOff);
 
 
 						
-					_dialog.ReportProgress(-1, "Waiting for switching mode to AUTO");
+					_dialog.ReportProgress(-1, ResStrings.MsgWaitingForSwitchingTo.FormatWith("AUTO"));
 					// switch mode to AUTO
 					while (mav1.MAV.mode != (uint)3)
 					{
@@ -3206,8 +3147,8 @@ namespace Diva
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-			Configure config = new Configure(myMap);
-			config.ShowDialog();
+			ConfigureForm config = new ConfigureForm();
+			config.ShowDialog(this);
 		}
 
 		private bool isTagging = false;
@@ -3249,7 +3190,7 @@ namespace Diva
 
 		private void VideoDemo_Click(object sender, EventArgs e)
 		{
-			string uri = Microsoft.VisualBasic.Interaction.InputBox("Specify video stream URI.");
+			string uri = Microsoft.VisualBasic.Interaction.InputBox(ResStrings.MsgSpecifyVideoURI);
 			if (uri != null && uri.Length > 0)
 			{
 				// Form form = new Form();
@@ -3260,73 +3201,6 @@ namespace Diva
 				form.Show();
 			}
 		}
-
-		private void BUT_Mouse_Hover(object sender, EventArgs e)
-		{
-			if (((Button)sender).Name.Equals("BtnArm"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect_active));
-			else if (((Button)sender).Name.Equals("BtnLand"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land_active));
-			else if (((Button)sender).Name.Equals("BtnTakeOff"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_takeoff_active));
-			else if (((Button)sender).Name.Equals("BtnAuto"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_auto_active));
-			else if (((Button)sender).Name.Equals("BtnWriteWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps_active));
-			else if (((Button)sender).Name.Equals("BtnReadWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps_active));
-			else if (((Button)sender).Name.Equals("BtnVideo"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add_active));
-		}
-
-		private void BUT_Mouse_Leave(object sender, EventArgs e)
-		{
-			if (((Button)sender).Name.Equals("BtnArm"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_connect));
-			else if (((Button)sender).Name.Equals("BtnLand"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_land));
-			else if (((Button)sender).Name.Equals("BtnTakeOff"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_takeoff));
-			else if (((Button)sender).Name.Equals("BtnAuto"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_auto));
-			else if (((Button)sender).Name.Equals("BtnWriteWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_writewps));
-			else if (((Button)sender).Name.Equals("BtnReadWPs"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_readwps));
-			else if (((Button)sender).Name.Equals("BtnVideo"))
-				((Button)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_add));
-		}
-
-		private void TSBUT_Mouse_Hover(object sender, EventArgs e)
-		{
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm_active));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation_active));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConfigure"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_configure_active));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging_active));
-		}
-
-		private void TSBUT_Mouse_Leave(object sender, EventArgs e)
-		{
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConnect"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_arm));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnRotation"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_rotation));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnConfigure"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_configure));
-
-			if (((ToolStripButton)sender).Name.Equals("TSBtnTagging"))
-				((ToolStripButton)sender).Image = ((System.Drawing.Image)(Properties.Resources.icon_tagging));
-		}
-
 
 		private void DroneInfo_DoubleClick(object sender, EventArgs e)
 		{
@@ -3352,16 +3226,6 @@ namespace Diva
 			{
 				log.Debug(exception.ToString());
 				return;
-			}
-		}
-
-		public class MySR : ToolStripSystemRenderer
-		{
-			public MySR() { }
-
-			protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
-			{
-				//base.OnRenderToolStripBorder(e);
 			}
 		}
 
@@ -3496,7 +3360,7 @@ namespace Diva
 				string header = sr.ReadLine();
 				if (header == null || !header.Contains("QGC WPL"))
 				{
-					MessageBox.Show("Invalid Waypoint file");
+					MessageBox.Show(ResStrings.MsgInvalidWaypointFile);
 					return;
 				}
 
@@ -3550,7 +3414,7 @@ namespace Diva
 					catch (Exception ex)
 					{
 						log.Error(ex);
-						MessageBox.Show("Line invalid\n" + line);
+						MessageBox.Show(ResStrings.MsgLineInvalid.FormatWith(line));
 					}
 				}
 
@@ -3564,7 +3428,7 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Can't open file! " + ex);
+				MessageBox.Show(ResStrings.MsgCantOpenFile.FormatWith(ex.Message));
 			}
 		}
 
@@ -3604,17 +3468,17 @@ namespace Diva
 				}
 				//lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
 				mFileBrowser.Dispose();
-				MessageBox.Show("Loaded " + Path.GetFileName(file));
+				MessageBox.Show(ResStrings.MsgFileLoaded.FormatWith(Path.GetFileName(file)));
 			}
 
 		}
 
-		FileBrowser mFileBrowser = null;
+		FileBrowserForm mFileBrowser = null;
 
 		private void BtnReadMission_Click(object sender, EventArgs e)
 		{
 
-			mFileBrowser = new FileBrowser();
+			mFileBrowser = new FileBrowserForm();
 			mFileBrowser.MissionClick += new EventHandler(Mission_Click);
 			mFileBrowser.Show();
 			
@@ -3632,10 +3496,10 @@ namespace Diva
 			polygongridmode = true;*/
 
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
-			if (overlays["drawnpolygons"].Polygons.Count == 0)
+			if (overlays.drawnpolygons.Polygons.Count == 0)
 			{
 				drawnPolygon.Points.Clear();
-				overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+				overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 			}
 
 			drawnPolygon.Fill = Brushes.Transparent;
@@ -3660,7 +3524,7 @@ namespace Diva
 			if (drawnPolygon == null)
 				return;
 			drawnPolygon.Points.Clear();
-			overlays["drawnpolygons"].Markers.Clear();
+			overlays.drawnpolygons.Markers.Clear();
 			myMap.Invalidate();
 
 			writeKML();
@@ -3718,8 +3582,8 @@ namespace Diva
 				{
 					StreamReader sr = new StreamReader(fd.OpenFile());
 
-					overlays["drawnpolygons"].Markers.Clear();
-					overlays["drawnpolygons"].Polygons.Clear();
+					overlays.drawnpolygons.Markers.Clear();
+					overlays.drawnpolygons.Polygons.Clear();
 					drawnPolygon.Points.Clear();
 
 					int a = 0;
@@ -3752,13 +3616,13 @@ namespace Diva
 						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
 					}
 
-					overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+					overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 
 					myMap.UpdatePolygonLocalPosition(drawnPolygon);
 
 					myMap.Invalidate();
 
-					myMap.ZoomAndCenterMarkers(overlays["drawnpolygons"].Id);
+					myMap.ZoomAndCenterMarkers(overlays.drawnpolygons.Id);
 				}
 			}
 		}
@@ -3802,7 +3666,7 @@ namespace Diva
 				return;
 			}
 
-			if (overlays["geofence"].Markers.Count == 0)
+			if (overlays.geofence.Markers.Count == 0)
 			{
 				MessageBox.Show("No return location set");
 				return;
@@ -3820,7 +3684,7 @@ namespace Diva
 			plll.Add(plll[0]);
 			// check it
 			if (
-				!pnpoly(plll.ToArray(), overlays["geofence"].Markers[0].Position.Lat, overlays["geofence"].Markers[0].Position.Lng))
+				!pnpoly(plll.ToArray(), overlays.geofence.Markers[0].Position.Lat, overlays.geofence.Markers[0].Position.Lng))
 			{
 				MessageBox.Show("Your return location is outside the polygon");
 				return;
@@ -3904,7 +3768,7 @@ namespace Diva
 			{
 				byte a = 0;
 				// add return loc
-				comPort.setFencePoint(a, new PointLatLngAlt(overlays["geofence"].Markers[0].Position), pointcount);
+				comPort.setFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
 				a++;
 				// add points
 				foreach (var pll in drawnPolygon.Points)
@@ -3927,9 +3791,9 @@ namespace Diva
 				}
 
 				// clear everything
-				overlays["polygons"].Polygons.Clear();
-				overlays["polygons"].Markers.Clear();
-				overlays["geofence"].Polygons.Clear();
+				overlays.polygons.Polygons.Clear();
+				overlays.polygons.Markers.Clear();
+				overlays.geofence.Polygons.Clear();
 				geofencePolygon.Points.Clear();
 
 				// add polygon
@@ -3937,7 +3801,7 @@ namespace Diva
 
 				drawnPolygon.Points.Clear();
 
-				overlays["geofence"].Polygons.Add(geofencePolygon);
+				overlays.geofence.Polygons.Add(geofencePolygon);
 
 				/**
 				// update flightdata
@@ -3948,15 +3812,15 @@ namespace Diva
 					Stroke = geofencePolygon.Stroke,
 					Fill = Brushes.Transparent
 				});
-				FlightData.geofence.Markers.Add(new GMarkerGoogle(overlays["geofence"].Markers[0].Position,
+				FlightData.geofence.Markers.Add(new GMarkerGoogle(overlays.geofence.Markers[0].Position,
 					GMarkerGoogleType.red)
 				{
-					ToolTipText = overlays["geofence"].Markers[0].ToolTipText,
-					ToolTipMode = overlays["geofence"].Markers[0].ToolTipMode
+					ToolTipText = overlays.geofence.Markers[0].ToolTipText,
+					ToolTipMode = overlays.geofence.Markers[0].ToolTipMode
 				});*/
 
 				myMap.UpdatePolygonLocalPosition(geofencePolygon);
-				myMap.UpdateMarkerLocalPosition(overlays["geofence"].Markers[0]);
+				myMap.UpdateMarkerLocalPosition(overlays.geofence.Markers[0]);
 
 				myMap.Invalidate();
 			}
@@ -3971,8 +3835,8 @@ namespace Diva
 		}
 		private void setReturnLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			overlays["geofence"].Markers.Clear();
-			overlays["geofence"].Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
+			overlays.geofence.Markers.Clear();
+			overlays.geofence.Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
 				GMarkerGoogleType.red)
 			{ ToolTipMode = MarkerTooltipMode.OnMouseOver, ToolTipText = "GeoFence Return" });
 
@@ -3988,8 +3852,8 @@ namespace Diva
 				{
 					StreamReader sr = new StreamReader(fd.OpenFile());
 
-					overlays["drawnpolygons"].Markers.Clear();
-					overlays["drawnpolygons"].Polygons.Clear();
+					overlays.drawnpolygons.Markers.Clear();
+					overlays.drawnpolygons.Polygons.Clear();
 					drawnPolygon.Points.Clear();
 
 					int a = 0;
@@ -4006,15 +3870,15 @@ namespace Diva
 
 							if (a == 0)
 							{
-								overlays["geofence"].Markers.Clear();
-								overlays["geofence"].Markers.Add(
+								overlays.geofence.Markers.Clear();
+								overlays.geofence.Markers.Add(
 									new GMarkerGoogle(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])),
 										GMarkerGoogleType.red)
 									{
 										ToolTipMode = MarkerTooltipMode.OnMouseOver,
 										ToolTipText = "GeoFence Return"
 									});
-								myMap.UpdateMarkerLocalPosition(overlays["geofence"].Markers[0]);
+								myMap.UpdateMarkerLocalPosition(overlays.geofence.Markers[0]);
 							}
 							else
 							{
@@ -4033,7 +3897,7 @@ namespace Diva
 						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
 					}
 
-					overlays["drawnpolygons"].Polygons.Add(drawnPolygon);
+					overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 
 					myMap.UpdatePolygonLocalPosition(drawnPolygon);
 
@@ -4043,7 +3907,7 @@ namespace Diva
 		}
 		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (overlays["geofence"].Markers.Count == 0)
+			if (overlays.geofence.Markers.Count == 0)
 			{
 				MessageBox.Show("Please set a return location");
 				return;
@@ -4062,8 +3926,8 @@ namespace Diva
 
 						sw.WriteLine("#saved by APM Planner " + Application.ProductVersion);
 
-						sw.WriteLine(overlays["geofence"].Markers[0].Position.Lat + " " +
-									 overlays["geofence"].Markers[0].Position.Lng);
+						sw.WriteLine(overlays.geofence.Markers[0].Position.Lat + " " +
+									 overlays.geofence.Markers[0].Position.Lng);
 						if (drawnPolygon.Points.Count > 0)
 						{
 							foreach (var pll in drawnPolygon.Points)
@@ -4132,9 +3996,9 @@ namespace Diva
 			}
 
 			// clear all
-			overlays["drawnpolygons"].Polygons.Clear();
-			overlays["drawnpolygons"].Markers.Clear();
-			overlays["geofence"].Polygons.Clear();
+			overlays.drawnpolygons.Polygons.Clear();
+			overlays.drawnpolygons.Markers.Clear();
+			overlays.geofence.Polygons.Clear();
 			geofencePolygon.Points.Clear();
 		}
 	}

@@ -7,12 +7,15 @@ using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
+using System.Drawing;
 
 namespace Diva.Controls
 {
 	public class MyGMap : GMapControl
 	{
 		public bool inOnPaint = false;
+        public bool DebugMapLocation { get; set; }
+        public bool IndoorMode { get; private set; }
 		string otherthread = "";
 		int lastx = 0;
 		int lasty = 0;
@@ -22,10 +25,11 @@ namespace Diva.Controls
             DisableFocusOnMouseEnter = true;
             //RoutesEnabled = true; // set by designer
             ForceDoubleBuffer = false;
+            DebugMapLocation = true;
 
             OnSelectionChange += (s, z) =>
             {
-                if (MapProvider == GoogleSatelliteMapProvider.Instance && !s.IsEmpty)
+                if (!IndoorMode && !s.IsEmpty)
                 {
                     for (int i = 0; i < MapProvider.MaxZoom; i++)
                     {
@@ -45,28 +49,38 @@ namespace Diva.Controls
         {
             ResetMapProvider();
 
-            MinZoom = 0;
-            MaxZoom = 24;
-            Zoom = 15;
-
             base.OnLoad(e);
         }
 
         public void ResetMapProvider()
         {
-            if (ConfigData.GetOption(ConfigData.OptionName.UseImageMap) == "true") try
+            IndoorMode = false;
+            if (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)) try
             {
                 var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
                 if (p != null)
                 {
                     MapProvider = p;
+                    IndoorMode = true;
+                    MaxZoom = p.MaxZoom ?? MaxZoom;
+                    MinZoom = p.MinZoom;
+                    if (Zoom > MaxZoom) Zoom = MaxZoom;
+                    if (Zoom < MinZoom) Zoom = MinZoom;
+                    if (p.Area != null)
+                        Position = ((RectLatLng)p.Area).LocationMiddle;
+                    GMaps.Instance.Mode = AccessMode.ServerOnly;
+                    /*if (DebugMapLocation)
+                        ShowTileGridLines = true;*/
                     return;
                 }
-                ConfigData.SetOption(ConfigData.OptionName.UseImageMap, "false");
+                ConfigData.SetBoolOption(ConfigData.OptionName.UseImageMap, false);
             }
             catch { }
             MapProvider = GoogleSatelliteMapProvider.Instance;
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            MinZoom = 0;
+            MaxZoom = 24;
+            Zoom = 15;
 
             try
             {
@@ -127,5 +141,16 @@ namespace Diva.Controls
 
 		}
 
-	}
+        protected override void OnPaintOverlays(Graphics g)
+        {
+            Font f = SystemFonts.SmallCaptionFont;
+            base.OnPaintOverlays(g);
+            if (DebugMapLocation && IndoorMode)
+            {
+                g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
+                    f, Brushes.Blue, 20, Height - 20);
+            }
+        }
+
+    }
 }

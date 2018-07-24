@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MsgDefaultAltitudeInvalid" xml:space="preserve">
+    <value>預設高度錯誤</value>
+  </data>
+  <data name="MsgDefaultAltitudeRequired" xml:space="preserve">
+    <value>必須設定預設高度</value>
+  </data>
+  <data name="MsgGetRallyPointFailed" xml:space="preserve">
+    <value>無法讀取會合點</value>
+  </data>
+  <data name="MsgHomeAltitudeRequired" xml:space="preserve">
+    <value>必須設定原點高度</value>
+  </data>
+  <data name="MsgHomeLocationInvalid" xml:space="preserve">
+    <value>原點設定值錯誤</value>
+  </data>
+  <data name="MsgInvalidCoordinate" xml:space="preserve">
+    <value>座標值發生錯誤</value>
+  </data>
+  <data name="MsgInvalidEntry" xml:space="preserve">
+    <value>發現錯誤的數值\n{0}</value>
+  </data>
+  <data name="MsgInvalidHomeOrWPAltitide" xml:space="preserve">
+    <value>無效的原點或航點高度</value>
+  </data>
+  <data name="MsgMissionError" xml:space="preserve">
+    <value>任務設定值有誤</value>
+  </data>
+  <data name="MsgMissionRejectedBadWP" xml:space="preserve">
+    <value>任務上傳失敗，因航點{0}錯誤{1}遭Mav拒絕</value>
+  </data>
+  <data name="MsgMissionRejectedGeneral" xml:space="preserve">
+    <value>任務上傳失敗，錯誤{0} {1}</value>
+  </data>
+  <data name="MsgMissionRejectedTooManyWaypoints" xml:space="preserve">
+    <value>任務上傳失敗，因航點數量過多遭拒絕</value>
+  </data>
+  <data name="MsgNoConnection" xml:space="preserve">
+    <value>無連線</value>
+  </data>
+  <data name="MsgNoRallyPoint" xml:space="preserve">
+    <value>沒有可下載的會合點</value>
+  </data>
+  <data name="MsgResetHomeCoordinate" xml:space="preserve">
+    <value>依讀取的座標設定原點位置</value>
+  </data>
+  <data name="MsgResetHomeCoordinateTitle" xml:space="preserve">
+    <value>更新原點位置</value>
+  </data>
+  <data name="MsgRowError" xml:space="preserve">
+    <value>命令列發生錯誤</value>
+  </data>
+  <data name="MsgSaveWPRejected" xml:space="preserve">
+    <value>命令遭Mav{0}拒絕</value>
+  </data>
+  <data name="MsgSaveWPTimeout" xml:space="preserve">
+    <value>讀取逾時，請重新嘗試</value>
+  </data>
+  <data name="MsgSetHomeFirst" xml:space="preserve">
+    <value>請先設定原點</value>
+  </data>
+  <data name="MsgUnsupported" xml:space="preserve">
+    <value>不支援此功能</value>
+  </data>
+  <data name="MsgWarnWPAltitiude" xml:space="preserve">
+    <value>航點{0}的設定高度過低，請降低警告度或修正航點高度</value>
+  </data>
+  <data name="StrAnonymousAccount" xml:space="preserve">
+    <value>(未登入)</value>
+  </data>
+  <data name="StrRallyPointToolTipText" xml:space="preserve">
+    <value>會合點\n高: {0}</value>
+  </data>
+  <data name="MsgCantGetPosition" xml:space="preserve">
+    <value>無法取得位置</value>
+  </data>
+  <data name="MsgConfirmTitle" xml:space="preserve">
+    <value>請確認</value>
+  </data>
+  <data name="MsgConfirmClearExistingMission" xml:space="preserve">
+    <value>將會清除現有任務，確定嗎？</value>
+  </data>
+  <data name="MsgWaitingForSwitchingTo" xml:space="preserve">
+    <value>等待模式切換至{0}</value>
+  </data>
+  <data name="MsgTakedOff" xml:space="preserve">
+    <value>狀態: 起飛</value>
+  </data>
+  <data name="MsgArming" xml:space="preserve">
+    <value>發動中</value>
+  </data>
+  <data name="MsgModeChanged" xml:space="preserve">
+    <value>模式: {0}</value>
+  </data>
+  <data name="MsgSpecifyVideoURI" xml:space="preserve">
+    <value>請指定影像URI</value>
+  </data>
+  <data name="MsgInvalidWaypointFile" xml:space="preserve">
+    <value>不合法的任務檔</value>
+  </data>
+  <data name="MsgLineInvalid" xml:space="preserve">
+    <value>第{0}行發現錯誤</value>
+  </data>
+  <data name="MsgFileLoaded" xml:space="preserve">
+    <value>已載入{0}</value>
+  </data>
+  <data name="MsgCantOpenFile" xml:space="preserve">
+    <value>無法開啟檔案{0}</value>
+  </data>
+  <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="ConfigMapPage.FontFamily" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
+  </data>
+  <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
+  </data>
+  <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
+    <value>回復</value>
+  </data>
+  <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
+    <value>套用</value>
+  </data>
+  <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
+    <value>室內地圖</value>
+  </data>
+  <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
+    <value>室內地圖圖檔路徑:</value>
+  </data>
+  <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
+    <value>密碼:</value>
+  </data>
+  <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
+    <value>建立</value>
+  </data>
+  <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
+    <value>戶外地圖</value>
+  </data>
+  <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
+    <value>新密碼:</value>
+  </data>
+  <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
+    <value>瀏覽</value>
+  </data>
+  <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
+    <value>瀏覽</value>
+  </data>
+  <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
+    <value>目前登入帳號: </value>
+  </data>
+  <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
+    <value>確認密碼:</value>
+  </data>
+  <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
+    <value>經度:</value>
+  </data>
+  <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
+    <value>緯度:</value>
+  </data>
+  <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
+    <value>變更密碼</value>
+  </data>
+  <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
+    <value>起始位置</value>
+  </data>
+  <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
+    <value>起始縮放階層:</value>
+  </data>
+  <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
+    <value>離線地圖快取路徑(將存放於TileDBv5\en目錄下)</value>
+  </data>
+  <data name="ConfigAccountPage.MsgDeleteAccount" xml:space="preserve">
+    <value>刪除帳號{0}？</value>
+  </data>
+  <data name="ConfigAccountPage.MsgCreateAccount" xml:space="preserve">
+    <value>建立帳號{0}？</value>
+  </data>
+  <data name="ConfigAccountPage.MsgChangePassword" xml:space="preserve">
+    <value>變更帳號{0}的密碼？</value>
+  </data>
+  <data name="MsgCannotEstablishConnection" xml:space="preserve">
+    <value>無法建立連線\n\n{0}</value>
+  </data>
+</root>

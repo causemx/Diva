@@ -11,9 +11,9 @@ using Diva.Utilities;
 
 namespace Diva.Controls
 {
-	public partial class ConfigGeoFence : UserControl
+	public partial class ConfigGeoFencePage : UserControl
 	{
-		public ConfigGeoFence()
+		public ConfigGeoFencePage()
 		{
 			InitializeComponent();
 		}
