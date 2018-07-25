@@ -21,7 +21,6 @@ namespace Diva.Controls
                 ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
             {
                 BtnAccount.Visible = false;
-                BtnAbout.Top = BtnAccount.Top;
             }
 
             pages = new Dictionary<Button, Control>()
