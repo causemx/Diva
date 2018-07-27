@@ -156,7 +156,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BackColor = System.Drawing.Color.Black;
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.TxtSystemID);
 			this.Controls.Add(this.TxtSatelliteCount);

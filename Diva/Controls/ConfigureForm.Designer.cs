@@ -56,7 +56,7 @@
             // SidePanel
             // 
             resources.ApplyResources(this.SidePanel, "SidePanel");
-            this.SidePanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.SidePanel.BackColor = System.Drawing.Color.Black;
             this.SidePanel.Controls.Add(this.BtnLayoutPanel);
             this.SidePanel.Controls.Add(this.IndicatorPanel);
             this.SidePanel.Name = "SidePanel";
@@ -162,7 +162,7 @@
             // BtnVConfReset
             // 
             resources.ApplyResources(this.BtnVConfReset, "BtnVConfReset");
-            this.BtnVConfReset.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnVConfReset.BackColor = System.Drawing.Color.Black;
             this.BtnVConfReset.FlatAppearance.BorderSize = 0;
             this.BtnVConfReset.ForeColor = System.Drawing.Color.White;
             this.BtnVConfReset.Name = "BtnVConfReset";
@@ -172,7 +172,7 @@
             // BtnVConfApply
             // 
             resources.ApplyResources(this.BtnVConfApply, "BtnVConfApply");
-            this.BtnVConfApply.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnVConfApply.BackColor = System.Drawing.Color.Black;
             this.BtnVConfApply.FlatAppearance.BorderSize = 0;
             this.BtnVConfApply.ForeColor = System.Drawing.Color.White;
             this.BtnVConfApply.Name = "BtnVConfApply";
@@ -182,7 +182,7 @@
             // BtnVConfExport
             // 
             resources.ApplyResources(this.BtnVConfExport, "BtnVConfExport");
-            this.BtnVConfExport.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnVConfExport.BackColor = System.Drawing.Color.Black;
             this.BtnVConfExport.FlatAppearance.BorderSize = 0;
             this.BtnVConfExport.ForeColor = System.Drawing.Color.White;
             this.BtnVConfExport.Name = "BtnVConfExport";
@@ -192,7 +192,7 @@
             // BtnVConfImport
             // 
             resources.ApplyResources(this.BtnVConfImport, "BtnVConfImport");
-            this.BtnVConfImport.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnVConfImport.BackColor = System.Drawing.Color.Black;
             this.BtnVConfImport.FlatAppearance.BorderSize = 0;
             this.BtnVConfImport.ForeColor = System.Drawing.Color.White;
             this.BtnVConfImport.Name = "BtnVConfImport";
@@ -202,14 +202,14 @@
             // configAccountPage
             // 
             resources.ApplyResources(this.configAccountPage, "configAccountPage");
-            this.configAccountPage.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.configAccountPage.BackColor = System.Drawing.Color.Black;
             this.configAccountPage.ForeColor = System.Drawing.Color.White;
             this.configAccountPage.Name = "configAccountPage";
             // 
             // configMapPage
             // 
             resources.ApplyResources(this.configMapPage, "configMapPage");
-            this.configMapPage.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.configMapPage.BackColor = System.Drawing.Color.Black;
             this.configMapPage.ForeColor = System.Drawing.Color.White;
             this.configMapPage.Name = "configMapPage";
             // 

@@ -129,7 +129,7 @@ namespace Diva
             // CollectionTelemetryData
             // 
             resources.ApplyResources(this.CollectionTelemetryData, "CollectionTelemetryData");
-            this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.CollectionTelemetryData.BackColor = System.Drawing.Color.Black;
             this.CollectionTelemetryData.Name = "CollectionTelemetryData";
             // 
             // DroneInfo3
@@ -165,7 +165,7 @@ namespace Diva
             // BtnRTL
             // 
             resources.ApplyResources(this.BtnRTL, "BtnRTL");
-            this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnRTL.BackColor = System.Drawing.Color.Black;
             this.BtnRTL.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnRTL.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnRTL.ClickImage = null;
@@ -181,7 +181,7 @@ namespace Diva
             // BtnLand
             // 
             resources.ApplyResources(this.BtnLand, "BtnLand");
-            this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnLand.BackColor = System.Drawing.Color.Black;
             this.BtnLand.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnLand.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnLand.ClickImage = null;
@@ -198,7 +198,7 @@ namespace Diva
             // BtnVideo
             // 
             resources.ApplyResources(this.BtnVideo, "BtnVideo");
-            this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnVideo.BackColor = System.Drawing.Color.Black;
             this.BtnVideo.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnVideo.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnVideo.ClickImage = null;
@@ -215,7 +215,7 @@ namespace Diva
             // BtnAuto
             // 
             resources.ApplyResources(this.BtnAuto, "BtnAuto");
-            this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnAuto.BackColor = System.Drawing.Color.Black;
             this.BtnAuto.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnAuto.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnAuto.ClickImage = null;
@@ -232,7 +232,7 @@ namespace Diva
             // BtnArm
             // 
             resources.ApplyResources(this.BtnArm, "BtnArm");
-            this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnArm.BackColor = System.Drawing.Color.Black;
             this.BtnArm.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnArm.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnArm.ClickImage = null;
@@ -249,7 +249,7 @@ namespace Diva
             // BtnReadWPs
             // 
             resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
-            this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnReadWPs.BackColor = System.Drawing.Color.Black;
             this.BtnReadWPs.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnReadWPs.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnReadWPs.ClickImage = null;
@@ -266,7 +266,7 @@ namespace Diva
             // BtnTakeOff
             // 
             resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
-            this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnTakeOff.BackColor = System.Drawing.Color.Black;
             this.BtnTakeOff.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnTakeOff.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnTakeOff.ClickImage = null;
@@ -283,7 +283,7 @@ namespace Diva
             // BtnWriteWPs
             // 
             resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
-            this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnWriteWPs.BackColor = System.Drawing.Color.Black;
             this.BtnWriteWPs.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnWriteWPs.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnWriteWPs.ClickImage = null;
@@ -299,7 +299,7 @@ namespace Diva
             // 
             // TSMainPanel
             // 
-            this.TSMainPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.TSMainPanel.BackColor = System.Drawing.Color.Black;
             resources.ApplyResources(this.TSMainPanel, "TSMainPanel");
             this.TSMainPanel.GripMargin = new System.Windows.Forms.Padding(0);
             this.TSMainPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -465,7 +465,7 @@ namespace Diva
             this.dgvWayPoints.AllowUserToAddRows = false;
             this.dgvWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvWayPoints.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvWayPoints.BackgroundColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.dgvWayPoints.BackgroundColor = System.Drawing.Color.Black;
             this.dgvWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -502,14 +502,14 @@ namespace Diva
             this.dgvWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
             this.dgvWayPoints.Name = "dgvWayPoints";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Black;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
@@ -600,7 +600,7 @@ namespace Diva
             // 
             // panelDroneInfo
             // 
-            this.panelDroneInfo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.panelDroneInfo.BackColor = System.Drawing.Color.Black;
             this.panelDroneInfo.Controls.Add(this.TxtHomeLongitude);
             this.panelDroneInfo.Controls.Add(this.TxtHomeLatitude);
             this.panelDroneInfo.Controls.Add(this.TxtHomeAltitude);
@@ -659,7 +659,7 @@ namespace Diva
             // 
             // BtnDroneMode
             // 
-            this.BtnDroneMode.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnDroneMode.BackColor = System.Drawing.Color.Black;
             this.BtnDroneMode.FlatAppearance.BorderSize = 0;
             resources.ApplyResources(this.BtnDroneMode, "BtnDroneMode");
             this.BtnDroneMode.ForeColor = System.Drawing.Color.White;
@@ -670,7 +670,7 @@ namespace Diva
             // BtnAltitude
             // 
             resources.ApplyResources(this.BtnAltitude, "BtnAltitude");
-            this.BtnAltitude.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnAltitude.BackColor = System.Drawing.Color.Black;
             this.BtnAltitude.FlatAppearance.BorderSize = 0;
             this.BtnAltitude.ForeColor = System.Drawing.Color.White;
             this.BtnAltitude.Image = global::Diva.Properties.Resources.icon_edit_32;
@@ -680,7 +680,7 @@ namespace Diva
             // BtnHomeLand
             // 
             resources.ApplyResources(this.BtnHomeLand, "BtnHomeLand");
-            this.BtnHomeLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnHomeLand.BackColor = System.Drawing.Color.Black;
             this.BtnHomeLand.FlatAppearance.BorderSize = 0;
             this.BtnHomeLand.ForeColor = System.Drawing.Color.White;
             this.BtnHomeLand.Image = global::Diva.Properties.Resources.icon_house_32;

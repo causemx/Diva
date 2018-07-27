@@ -57,7 +57,7 @@
             // 
             // BottomPanel
             // 
-            this.BottomPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BottomPanel.BackColor = System.Drawing.Color.Black;
             this.BottomPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.BottomPanel.Controls.Add(this.LabelStreamURIText);
             this.BottomPanel.Controls.Add(this.LabelBaudrateText);
@@ -187,7 +187,7 @@
             // 
             // TopPanel
             // 
-            this.TopPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.TopPanel.BackColor = System.Drawing.Color.Black;
             this.TopPanel.Controls.Add(this.TBoxDroneName);
             this.TopPanel.Controls.Add(this.BtnDeaction);
             this.TopPanel.Controls.Add(this.BtnAction);
@@ -209,7 +209,7 @@
             // 
             // BtnDeaction
             // 
-            this.BtnDeaction.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnDeaction.BackColor = System.Drawing.Color.Black;
             this.BtnDeaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDeaction.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnDeaction.ForeColor = System.Drawing.Color.White;
@@ -224,7 +224,7 @@
             // 
             // BtnAction
             // 
-            this.BtnAction.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BtnAction.BackColor = System.Drawing.Color.Black;
             this.BtnAction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAction.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAction.ForeColor = System.Drawing.Color.White;
@@ -250,7 +250,7 @@
             // 
             // EditPanel
             // 
-            this.EditPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.EditPanel.BackColor = System.Drawing.Color.Black;
             this.EditPanel.Controls.Add(this.TBoxComNo);
             this.EditPanel.Controls.Add(this.TBoxStreamURI);
             this.EditPanel.Controls.Add(this.TBoxPortValue);

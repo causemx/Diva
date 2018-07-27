@@ -59,7 +59,7 @@ namespace Diva.Controls
                 enabled &= c.Enabled;
             if (c is Button)
             {
-                c.BackColor = enabled ? SystemColors.InactiveCaptionText : Color.Gray;
+                c.BackColor = enabled ? System.Drawing.Color.Black : Color.Gray;
             } else if (c is Label)
             {
                 c.Enabled = true;
