@@ -306,4 +306,49 @@
   <data name="MsgCannotEstablishConnection" xml:space="preserve">
     <value>無法建立連線\n\n{0}</value>
   </data>
+  <data name="DroneSettingInput.NewBtn.Text" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="DroneSettingInput.EditBtn.Text" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="DroneSettingInput.RemoveBtn.Text" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="DroneSettingInput.ApplyBtn.Text" xml:space="preserve">
+    <value>套用</value>
+  </data>
+  <data name="DroneSettingInput.DiscardBtn.Text" xml:space="preserve">
+    <value>放棄</value>
+  </data>
+  <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
+    <value>連線名</value>
+  </data>
+  <data name="DroneSettingInput.LabelPortNumber.TExt" xml:space="preserve">
+    <value>埠號</value>
+  </data>
+  <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
+    <value>傳輸率</value>
+  </data>
+  <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
+    <value>影像串流</value>
+  </data>
+  <data name="DroneSettingInput.FontFamily" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
+  </data>
+  <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
+    <value>1.0</value>
+  </data>
+  <data name="DroneSetting_MsgNoName" xml:space="preserve">
+    <value>未命名</value>
+  </data>
+  <data name="DroneSetting_MsgDuplicatedName" xml:space="preserve">
+    <value>名稱重複</value>
+  </data>
+  <data name="DroneSetting_MsgValueInvalid" xml:space="preserve">
+    <value>數值不正確</value>
+  </data>
+  <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
+    <value>"XML檔案|*.xml|所有檔案|*.*"</value>
+  </data>
 </root>

@@ -295,6 +295,132 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicated name assigned.
+        /// </summary>
+        public static string DroneSetting_MsgDuplicatedName {
+            get {
+                return ResourceManager.GetString("DroneSetting_MsgDuplicatedName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No name assigned..
+        /// </summary>
+        public static string DroneSetting_MsgNoName {
+            get {
+                return ResourceManager.GetString("DroneSetting_MsgNoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value.
+        /// </summary>
+        public static string DroneSetting_MsgValueInvalid {
+            get {
+                return ResourceManager.GetString("DroneSetting_MsgValueInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string DroneSettingInput_ApplyBtn_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.ApplyBtn.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard.
+        /// </summary>
+        public static string DroneSettingInput_DiscardBtn_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.DiscardBtn.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string DroneSettingInput_EditBtn_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.EditBtn.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string DroneSettingInput_FontFamily {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.FontFamily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string DroneSettingInput_FontSizeAdjust {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.FontSizeAdjust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string DroneSettingInput_LabelBaudrate_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.LabelBaudrate.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string DroneSettingInput_LabelPortName_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.LabelPortName.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string DroneSettingInput_LabelPortNumber_TExt {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.LabelPortNumber.TExt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string DroneSettingInput_LabelStreamURI_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.LabelStreamURI.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string DroneSettingInput_NewBtn_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.NewBtn.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string DroneSettingInput_RemoveBtn_Text {
+            get {
+                return ResourceManager.GetString("DroneSettingInput.RemoveBtn.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to arming throttle.
         /// </summary>
         public static string MsgArming {
@@ -615,6 +741,15 @@ namespace Diva.Properties {
         public static string StrAnonymousAccount {
             get {
                 return ResourceManager.GetString("StrAnonymousAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;XML files|*.xml|All files|*.*&quot;.
+        /// </summary>
+        public static string StrDroneSettingsFileExtensionFilter {
+            get {
+                return ResourceManager.GetString("StrDroneSettingsFileExtensionFilter", resourceCulture);
             }
         }
         
