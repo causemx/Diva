@@ -34,10 +34,10 @@ namespace Diva
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
 			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
@@ -63,6 +63,20 @@ namespace Diva
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
 			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.savePolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.areaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.noFlyZoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.uploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.setReturnLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvWayPoints = new System.Windows.Forms.DataGridView();
 			this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,20 +103,6 @@ namespace Diva
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
 			this.timerMapItemUpdate = new System.Windows.Forms.Timer(this.components);
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.noFlyZoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.clearPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.savePolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.areaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.uploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.setReturnLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -450,12 +450,12 @@ namespace Diva
 			// 
 			this.cmMap.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.cmMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.drawPolygonToolStripMenuItem,
+            this.noFlyZoneToolStripMenuItem,
+            this.toolStripSeparator1,
             this.miClearMission,
             this.miSetHomeHere,
-            this.miClearAllMissions,
-            this.toolStripSeparator1,
-            this.drawPolygonToolStripMenuItem,
-            this.noFlyZoneToolStripMenuItem});
+            this.miClearAllMissions});
 			this.cmMap.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.cmMap, "cmMap");
 			// 
@@ -477,6 +477,99 @@ namespace Diva
 			resources.ApplyResources(this.miClearAllMissions, "miClearAllMissions");
 			this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+			// 
+			// drawPolygonToolStripMenuItem
+			// 
+			this.drawPolygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPolygonPointToolStripMenuItem,
+            this.clearPolygonToolStripMenuItem,
+            this.savePolygonToolStripMenuItem,
+            this.loadPolygonToolStripMenuItem,
+            this.areaToolStripMenuItem});
+			this.drawPolygonToolStripMenuItem.Name = "drawPolygonToolStripMenuItem";
+			resources.ApplyResources(this.drawPolygonToolStripMenuItem, "drawPolygonToolStripMenuItem");
+			// 
+			// addPolygonPointToolStripMenuItem
+			// 
+			this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
+			resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
+			this.addPolygonPointToolStripMenuItem.Click += new System.EventHandler(this.addPolygonPointToolStripMenuItem_Click);
+			// 
+			// clearPolygonToolStripMenuItem
+			// 
+			this.clearPolygonToolStripMenuItem.Name = "clearPolygonToolStripMenuItem";
+			resources.ApplyResources(this.clearPolygonToolStripMenuItem, "clearPolygonToolStripMenuItem");
+			this.clearPolygonToolStripMenuItem.Click += new System.EventHandler(this.clearPolygonToolStripMenuItem_Click);
+			// 
+			// savePolygonToolStripMenuItem
+			// 
+			this.savePolygonToolStripMenuItem.Name = "savePolygonToolStripMenuItem";
+			resources.ApplyResources(this.savePolygonToolStripMenuItem, "savePolygonToolStripMenuItem");
+			this.savePolygonToolStripMenuItem.Click += new System.EventHandler(this.savePolygonToolStripMenuItem_Click);
+			// 
+			// loadPolygonToolStripMenuItem
+			// 
+			this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
+			resources.ApplyResources(this.loadPolygonToolStripMenuItem, "loadPolygonToolStripMenuItem");
+			this.loadPolygonToolStripMenuItem.Click += new System.EventHandler(this.loadPolygonToolStripMenuItem_Click);
+			// 
+			// areaToolStripMenuItem
+			// 
+			this.areaToolStripMenuItem.Name = "areaToolStripMenuItem";
+			resources.ApplyResources(this.areaToolStripMenuItem, "areaToolStripMenuItem");
+			// 
+			// noFlyZoneToolStripMenuItem
+			// 
+			this.noFlyZoneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.uploadToolStripMenuItem,
+            this.downloadToolStripMenuItem,
+            this.setReturnLocationToolStripMenuItem,
+            this.loadFromFileToolStripMenuItem,
+            this.saveToFileToolStripMenuItem,
+            this.clearToolStripMenuItem});
+			this.noFlyZoneToolStripMenuItem.Name = "noFlyZoneToolStripMenuItem";
+			resources.ApplyResources(this.noFlyZoneToolStripMenuItem, "noFlyZoneToolStripMenuItem");
+			// 
+			// uploadToolStripMenuItem
+			// 
+			this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
+			resources.ApplyResources(this.uploadToolStripMenuItem, "uploadToolStripMenuItem");
+			this.uploadToolStripMenuItem.Click += new System.EventHandler(this.GeoFenceuploadToolStripMenuItem_Click);
+			// 
+			// downloadToolStripMenuItem
+			// 
+			this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
+			resources.ApplyResources(this.downloadToolStripMenuItem, "downloadToolStripMenuItem");
+			this.downloadToolStripMenuItem.Click += new System.EventHandler(this.GeoFencedownloadToolStripMenuItem_Click);
+			// 
+			// setReturnLocationToolStripMenuItem
+			// 
+			this.setReturnLocationToolStripMenuItem.Name = "setReturnLocationToolStripMenuItem";
+			resources.ApplyResources(this.setReturnLocationToolStripMenuItem, "setReturnLocationToolStripMenuItem");
+			this.setReturnLocationToolStripMenuItem.Click += new System.EventHandler(this.setReturnLocationToolStripMenuItem_Click);
+			// 
+			// loadFromFileToolStripMenuItem
+			// 
+			this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
+			resources.ApplyResources(this.loadFromFileToolStripMenuItem, "loadFromFileToolStripMenuItem");
+			this.loadFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileToolStripMenuItem_Click);
+			// 
+			// saveToFileToolStripMenuItem
+			// 
+			this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
+			resources.ApplyResources(this.saveToFileToolStripMenuItem, "saveToFileToolStripMenuItem");
+			this.saveToFileToolStripMenuItem.Click += new System.EventHandler(this.saveToFileToolStripMenuItem_Click);
+			// 
+			// clearToolStripMenuItem
+			// 
+			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+			resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
+			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+			// 
 			// dgvWayPoints
 			// 
 			this.dgvWayPoints.AllowUserToAddRows = false;
@@ -486,14 +579,14 @@ namespace Diva
 			this.dgvWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dgvWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
 			resources.ApplyResources(this.dgvWayPoints, "dgvWayPoints");
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -507,31 +600,31 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
+			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle6;
 			this.dgvWayPoints.EnableHeadersVisualStyles = false;
 			this.dgvWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
 			this.dgvWayPoints.Name = "dgvWayPoints";
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle8;
 			this.dgvWayPoints.RowTemplate.Height = 24;
 			this.dgvWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.dgvWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -725,89 +818,6 @@ namespace Diva
 			this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
 			this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
 			this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-			// 
-			// drawPolygonToolStripMenuItem
-			// 
-			this.drawPolygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addPolygonPointToolStripMenuItem,
-            this.clearPolygonToolStripMenuItem,
-            this.savePolygonToolStripMenuItem,
-            this.loadPolygonToolStripMenuItem,
-            this.areaToolStripMenuItem});
-			this.drawPolygonToolStripMenuItem.Name = "drawPolygonToolStripMenuItem";
-			resources.ApplyResources(this.drawPolygonToolStripMenuItem, "drawPolygonToolStripMenuItem");
-			// 
-			// noFlyZoneToolStripMenuItem
-			// 
-			this.noFlyZoneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.uploadToolStripMenuItem,
-            this.downloadToolStripMenuItem,
-            this.setReturnLocationToolStripMenuItem,
-            this.loadFromFileToolStripMenuItem,
-            this.saveToFileToolStripMenuItem,
-            this.clearToolStripMenuItem});
-			this.noFlyZoneToolStripMenuItem.Name = "noFlyZoneToolStripMenuItem";
-			resources.ApplyResources(this.noFlyZoneToolStripMenuItem, "noFlyZoneToolStripMenuItem");
-			// 
-			// addPolygonPointToolStripMenuItem
-			// 
-			this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
-			resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
-			// 
-			// clearPolygonToolStripMenuItem
-			// 
-			this.clearPolygonToolStripMenuItem.Name = "clearPolygonToolStripMenuItem";
-			resources.ApplyResources(this.clearPolygonToolStripMenuItem, "clearPolygonToolStripMenuItem");
-			// 
-			// savePolygonToolStripMenuItem
-			// 
-			this.savePolygonToolStripMenuItem.Name = "savePolygonToolStripMenuItem";
-			resources.ApplyResources(this.savePolygonToolStripMenuItem, "savePolygonToolStripMenuItem");
-			// 
-			// loadPolygonToolStripMenuItem
-			// 
-			this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
-			resources.ApplyResources(this.loadPolygonToolStripMenuItem, "loadPolygonToolStripMenuItem");
-			// 
-			// areaToolStripMenuItem
-			// 
-			this.areaToolStripMenuItem.Name = "areaToolStripMenuItem";
-			resources.ApplyResources(this.areaToolStripMenuItem, "areaToolStripMenuItem");
-			// 
-			// uploadToolStripMenuItem
-			// 
-			this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
-			resources.ApplyResources(this.uploadToolStripMenuItem, "uploadToolStripMenuItem");
-			// 
-			// downloadToolStripMenuItem
-			// 
-			this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-			resources.ApplyResources(this.downloadToolStripMenuItem, "downloadToolStripMenuItem");
-			// 
-			// setReturnLocationToolStripMenuItem
-			// 
-			this.setReturnLocationToolStripMenuItem.Name = "setReturnLocationToolStripMenuItem";
-			resources.ApplyResources(this.setReturnLocationToolStripMenuItem, "setReturnLocationToolStripMenuItem");
-			// 
-			// loadFromFileToolStripMenuItem
-			// 
-			this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
-			resources.ApplyResources(this.loadFromFileToolStripMenuItem, "loadFromFileToolStripMenuItem");
-			// 
-			// saveToFileToolStripMenuItem
-			// 
-			this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
-			resources.ApplyResources(this.saveToFileToolStripMenuItem, "saveToFileToolStripMenuItem");
-			// 
-			// clearToolStripMenuItem
-			// 
-			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-			resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
 			// 
 			// Planner
 			// 
