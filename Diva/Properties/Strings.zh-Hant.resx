@@ -351,4 +351,7 @@
   <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
     <value>"XML檔案|*.xml|所有檔案|*.*"</value>
   </data>
+  <data name="MsgConnectFirst" xml:space="preserve">
+    <value>尚未連線</value>
+  </data>
 </root>

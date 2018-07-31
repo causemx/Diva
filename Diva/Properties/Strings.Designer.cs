@@ -475,6 +475,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please Connect First!.
+        /// </summary>
+        public static string MsgConnectFirst {
+            get {
+                return ResourceManager.GetString("MsgConnectFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your default altitude is not valid.
         /// </summary>
         public static string MsgDefaultAltitudeInvalid {

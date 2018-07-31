@@ -351,4 +351,7 @@
   <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
     <value>"XML files|*.xml|All files|*.*"</value>
   </data>
+  <data name="MsgConnectFirst" xml:space="preserve">
+    <value>Please Connect First!</value>
+  </data>
 </root>

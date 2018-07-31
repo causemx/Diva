@@ -2178,7 +2178,9 @@ namespace Diva
                 
                 if (!comPort.BaseStream.IsOpen)
                 {
-                    throw new Exception("Please connect first!");
+                    //throw new Exception("Please connect first!");
+                    MessageBox.Show(ResStrings.MsgConnectFirst);
+                    return;
                 }
 
                 comPort.giveComport = true;
@@ -2436,7 +2438,10 @@ namespace Diva
 
                 if (!comPort.BaseStream.IsOpen)
                 {
-                    throw new Exception("Please Connect First!");
+                    // prevent application termination
+                    //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
+                    MessageBox.Show(ResStrings.MsgConnectFirst);
+                    return;
                 }
 
                 comPort.giveComport = true;

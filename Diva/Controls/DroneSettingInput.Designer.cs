@@ -123,7 +123,6 @@
             // 
             // LabelStreamURI
             // 
-            this.LabelStreamURI.AutoSize = true;
             this.LabelStreamURI.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelStreamURI.ForeColor = System.Drawing.Color.White;
             this.LabelStreamURI.Location = new System.Drawing.Point(161, 90);
@@ -132,10 +131,10 @@
             this.LabelStreamURI.Size = new System.Drawing.Size(95, 18);
             this.LabelStreamURI.TabIndex = 4;
             this.LabelStreamURI.Text = "Video stream";
+            this.LabelStreamURI.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // LabelBaudrate
             // 
-            this.LabelBaudrate.AutoSize = true;
             this.LabelBaudrate.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelBaudrate.ForeColor = System.Drawing.Color.White;
             this.LabelBaudrate.Location = new System.Drawing.Point(187, 54);
@@ -149,7 +148,6 @@
             // 
             // LabelPortNumber
             // 
-            this.LabelPortNumber.AutoSize = true;
             this.LabelPortNumber.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelPortNumber.ForeColor = System.Drawing.Color.White;
             this.LabelPortNumber.Location = new System.Drawing.Point(163, 54);
@@ -162,7 +160,6 @@
             // 
             // LabelPortName
             // 
-            this.LabelPortName.AutoSize = true;
             this.LabelPortName.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelPortName.ForeColor = System.Drawing.Color.White;
             this.LabelPortName.Location = new System.Drawing.Point(178, 18);
