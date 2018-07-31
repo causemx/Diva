@@ -205,12 +205,12 @@ namespace Diva.Controls
 		}
         public DroneSetting Setting => new DroneSetting()
             {
-                Name = DroneName,
-                PortName = PortName,
-                PortNumber = PortNumber,
-                Baudrate = Baudrate,
-                StreamURI = StreamURI
-            };
+                Name = DroneName ?? "",
+                PortName = PortName ?? "",
+                PortNumber = PortNumber ?? "",
+                Baudrate = Baudrate ?? "",
+                StreamURI = StreamURI ?? ""
+        };
         #endregion
 
         public DroneSettingInput()
@@ -281,6 +281,7 @@ namespace Diva.Controls
                     break;
                 case Mode.Normal:
                     // remove
+                    DroneList?.Remove(DroneList.Find(d => d.Name == DroneName));
                     Removed?.Invoke(this, null);
                     break;
                 case Mode.Edit:
