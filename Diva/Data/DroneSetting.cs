@@ -7,13 +7,13 @@ using log4net;
 
 namespace Diva
 {
-    public struct DroneSetting
+    public class DroneSetting
     {
-        public string Name;
-        public string PortName;
-        public string PortNumber;
-        public string Baudrate;
-        public string StreamURI;
+        public string Name = "";
+        public string PortName = "";
+        public string PortNumber = "";
+        public string Baudrate = "";
+        public string StreamURI = "";
 
         public static void ExportXML(string file, List<DroneSetting> drones)
         {
@@ -30,11 +30,11 @@ namespace Diva
                     xmlwriter.WriteStartElement("Vehicle");
                     try
                     {
-                        xmlwriter.WriteElementString("name", d.Name);
-                        xmlwriter.WriteElementString("port_name", d.PortName);
-                        xmlwriter.WriteElementString("port_number", d.PortNumber);
-                        xmlwriter.WriteElementString("baudrate", d.Baudrate);
-                        xmlwriter.WriteElementString("streaming", d.StreamURI);
+                        xmlwriter.WriteElementString("Name", d.Name);
+                        xmlwriter.WriteElementString("PortName", d.PortName);
+                        xmlwriter.WriteElementString("PortNumber", d.PortNumber);
+                        xmlwriter.WriteElementString("Baudrate", d.Baudrate);
+                        xmlwriter.WriteElementString("StreamURI", d.StreamURI);
                     }
                     catch (Exception e)
                     {
@@ -73,19 +73,19 @@ namespace Diva
                                         xmlreader.MoveToElement();
                                         switch (xmlreader.Name)
                                         {
-                                            case "name":
+                                            case "Name":
                                                 d.Name = xmlreader.ReadString();
                                                 break;
-                                            case "port_name":
+                                            case "PortName":
                                                 d.PortName = xmlreader.ReadString();
                                                 break;
-                                            case "port_number":
+                                            case "PortNumber":
                                                 d.PortNumber = xmlreader.ReadString();
                                                 break;
-                                            case "baudrate":
+                                            case "Baudrate":
                                                 d.Baudrate = xmlreader.ReadString();
                                                 break;
-                                            case "streaming":
+                                            case "StreamURI":
                                                 d.StreamURI = xmlreader.ReadString();
                                                 break;
                                             case "Vehicle":
