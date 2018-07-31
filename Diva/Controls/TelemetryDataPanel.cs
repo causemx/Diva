@@ -15,9 +15,10 @@ namespace Diva.Controls
 		public TelemetryDataPanel()
 		{
 			InitializeComponent();
-		}
+            this.UpdateLocale();
+        }
 
-		public void UpdateTelemetryData(double altitude, double verticalSpeed, double groundSpeed)
+        public void UpdateTelemetryData(double altitude, double verticalSpeed, double groundSpeed)
 		{
 			TxtVerticalSpeed.Text = verticalSpeed.ToString("F2");
 			TxtGroundSpeed.Text = groundSpeed.ToString("F2");

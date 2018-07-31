@@ -2921,8 +2921,6 @@ namespace Diva
             _dialog.IsActive = true;
             _dialog.Show();
 
-
-
             _dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
             {
     

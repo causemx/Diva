@@ -354,4 +354,25 @@
   <data name="MsgConnectFirst" xml:space="preserve">
     <value>Please Connect First!</value>
   </data>
+  <data name="TelemetryDataPanel.FontFamily" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBTitle.Text" xml:space="preserve">
+    <value>Telemetry Data: </value>
+  </data>
+  <data name="TelemetryDataPanel.GBBattery.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBAltitude.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBGeoFence.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBGroundSpeed.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBVerticalSpeed.Text" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

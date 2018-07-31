@@ -770,5 +770,68 @@ namespace Diva.Properties {
                 return ResourceManager.GetString("StrRallyPointToolTipText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string TelemetryDataPanel_FontFamily {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.FontFamily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string TelemetryDataPanel_GBAltitude_Text {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.GBAltitude.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string TelemetryDataPanel_GBBattery_Text {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.GBBattery.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string TelemetryDataPanel_GBGeoFence_Text {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.GBGeoFence.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string TelemetryDataPanel_GBGroundSpeed_Text {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.GBGroundSpeed.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telemetry Data: .
+        /// </summary>
+        public static string TelemetryDataPanel_GBTitle_Text {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.GBTitle.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string TelemetryDataPanel_GBVerticalSpeed_Text {
+            get {
+                return ResourceManager.GetString("TelemetryDataPanel.GBVerticalSpeed.Text", resourceCulture);
+            }
+        }
     }
 }

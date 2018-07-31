@@ -354,4 +354,25 @@
   <data name="MsgConnectFirst" xml:space="preserve">
     <value>尚未連線</value>
   </data>
+  <data name="TelemetryDataPanel.FontFamily" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
+  </data>
+  <data name="TelemetryDataPanel.GBTitle.Text" xml:space="preserve">
+    <value>遙測數據：</value>
+  </data>
+  <data name="TelemetryDataPanel.GBBattery.Text" xml:space="preserve">
+    <value>    電池</value>
+  </data>
+  <data name="TelemetryDataPanel.GBAltitude.Text" xml:space="preserve">
+    <value>    高度</value>
+  </data>
+  <data name="TelemetryDataPanel.GBGeoFence.Text" xml:space="preserve">
+    <value>電子圍籬</value>
+  </data>
+  <data name="TelemetryDataPanel.GBGroundSpeed.Text" xml:space="preserve">
+    <value>    對地速度</value>
+  </data>
+  <data name="TelemetryDataPanel.GBVerticalSpeed.Text" xml:space="preserve">
+    <value>    垂直速度</value>
+  </data>
 </root>
