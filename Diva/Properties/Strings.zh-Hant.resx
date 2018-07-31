@@ -324,7 +324,7 @@
   <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
     <value>連線名</value>
   </data>
-  <data name="DroneSettingInput.LabelPortNumber.TExt" xml:space="preserve">
+  <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
     <value>埠號</value>
   </data>
   <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">

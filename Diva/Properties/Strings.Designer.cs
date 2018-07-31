@@ -387,9 +387,9 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string DroneSettingInput_LabelPortNumber_TExt {
+        public static string DroneSettingInput_LabelPortNumber_Text {
             get {
-                return ResourceManager.GetString("DroneSettingInput.LabelPortNumber.TExt", resourceCulture);
+                return ResourceManager.GetString("DroneSettingInput.LabelPortNumber.Text", resourceCulture);
             }
         }
         

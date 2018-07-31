@@ -217,11 +217,11 @@ namespace Diva.Controls
         {
             InitializeComponent();
             this.UpdateLocale();
-                Added += DefaultAdded;
-                Modified += DefaultModified;
-                Removed += DefaultRemoved;
-                CurMode = Mode.Empty;
-                NoTrigger = false;
+            Added += DefaultAdded;
+            Modified += DefaultModified;
+            Removed += DefaultRemoved;
+            CurMode = Mode.Empty;
+            NoTrigger = false;
         }
 
         public static DroneSettingInput FromSetting(DroneSetting s)
@@ -235,6 +235,9 @@ namespace Diva.Controls
                 StreamURI = s.StreamURI
             };
             input.CurMode = s.Name == "" ? Mode.Empty : Mode.Normal;
+            bool isUdp = s.PortName.Equals("udp", StringComparison.InvariantCultureIgnoreCase);
+            input.LabelPortNumber.Visible = input.LabelPortNumberText.Visible = isUdp;
+            input.LabelBaudrate.Visible = input.LabelBaudrateText.Visible = !isUdp;
             return input;
         }
 
