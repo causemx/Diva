@@ -226,73 +226,73 @@
     <value>Loaded {0}</value>
   </data>
   <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.FontFamily" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ConfigAccountPage.MsgCreateAccount" xml:space="preserve">
     <value>Create account '{0}'?</value>
@@ -305,5 +305,74 @@
   </data>
   <data name="MsgCannotEstablishConnection" xml:space="preserve">
     <value>Can not establish a connection\n\n{0}</value>
+  </data>
+  <data name="DroneSettingInput.NewBtn.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="DroneSettingInput.EditBtn.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="DroneSettingInput.RemoveBtn.Text" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="DroneSettingInput.ApplyBtn.Text" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="DroneSettingInput.DiscardBtn.Text" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DroneSettingInput.FontFamily" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DroneSetting_MsgNoName" xml:space="preserve">
+    <value>No name assigned.</value>
+  </data>
+  <data name="DroneSetting_MsgDuplicatedName" xml:space="preserve">
+    <value>Duplicated name assigned</value>
+  </data>
+  <data name="DroneSetting_MsgValueInvalid" xml:space="preserve">
+    <value>Invalid value</value>
+  </data>
+  <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
+    <value>"XML files|*.xml|All files|*.*"</value>
+  </data>
+  <data name="MsgConnectFirst" xml:space="preserve">
+    <value>Please Connect First!</value>
+  </data>
+  <data name="TelemetryDataPanel.FontFamily" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBTitle.Text" xml:space="preserve">
+    <value>Telemetry Data: </value>
+  </data>
+  <data name="TelemetryDataPanel.GBBattery.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBAltitude.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBGeoFence.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBGroundSpeed.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TelemetryDataPanel.GBVerticalSpeed.Text" xml:space="preserve">
+    <value></value>
   </data>
 </root>
