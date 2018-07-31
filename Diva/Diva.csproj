@@ -241,20 +241,11 @@
     <Compile Include="Controls\ProgressDialogV2.Designer.cs">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ProgressInputDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\ProgressInputDialog.Designer.cs">
-      <DependentUpon>ProgressInputDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TelemetryDataPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\TelemetryDataPanel.Designer.cs">
       <DependentUpon>TelemetryDataPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TransparentPanel.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\VehicleConfig.cs">
       <SubType>Form</SubType>
@@ -337,9 +328,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
-      <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SplashForm.zh-Hant.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
