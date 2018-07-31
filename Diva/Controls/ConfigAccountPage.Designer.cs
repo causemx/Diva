@@ -168,7 +168,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.LabelLoginAccount);
             this.Controls.Add(this.LabelConfirmPassword);
             this.Controls.Add(this.TBoxConfirmPassword);

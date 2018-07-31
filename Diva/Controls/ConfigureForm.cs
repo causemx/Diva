@@ -21,15 +21,16 @@ namespace Diva.Controls
                 ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
             {
                 BtnAccount.Visible = false;
-                BtnAbout.Top = BtnAccount.Top;
             }
+            InitVehicleSettings();
 
             pages = new Dictionary<Button, Control>()
             {
+                { BtnVehicle, VehicleConfigPanel },
                 { BtnMap, configMapPage },
                 { BtnAccount, configAccountPage }
             };
-            UpdateTabPages(BtnAbout);
+            MenuButton_Click(BtnAbout, null);
         }
 
         private void UpdateTabPages(Button b)
@@ -50,12 +51,15 @@ namespace Diva.Controls
             UpdateTabPages(btn);
         }
 
-        public static void SetEnabled(Control c, bool enabled)
+        public static void SetEnabled(Control c, bool enabled, bool apply = true)
         {
-            c.Enabled = enabled;
+            if (apply)
+                c.Enabled = enabled;
+            else
+                enabled &= c.Enabled;
             if (c is Button)
             {
-                c.BackColor = enabled ? SystemColors.InactiveCaptionText : Color.Gray;
+                c.BackColor = enabled ? System.Drawing.Color.Black : Color.Gray;
             } else if (c is Label)
             {
                 c.Enabled = true;

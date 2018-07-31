@@ -58,14 +58,14 @@
             // lblProgress
             // 
             resources.ApplyResources(this.lblProgress, "lblProgress");
-            this.lblProgress.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblProgress.BackColor = System.Drawing.Color.Black;
             this.lblProgress.ForeColor = System.Drawing.Color.White;
             this.lblProgress.Name = "lblProgress";
             // 
             // panelNewAccount
             // 
             resources.ApplyResources(this.panelNewAccount, "panelNewAccount");
-            this.panelNewAccount.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.panelNewAccount.BackColor = System.Drawing.Color.Black;
             this.panelNewAccount.Controls.Add(this.cBoxDontNotify);
             this.panelNewAccount.Controls.Add(this.btnSkip);
             this.panelNewAccount.Controls.Add(this.btnNewAccount);
@@ -82,7 +82,7 @@
             // cBoxDontNotify
             // 
             resources.ApplyResources(this.cBoxDontNotify, "cBoxDontNotify");
-            this.cBoxDontNotify.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.cBoxDontNotify.BackColor = System.Drawing.Color.Black;
             this.cBoxDontNotify.ForeColor = System.Drawing.Color.White;
             this.cBoxDontNotify.Name = "cBoxDontNotify";
             this.cBoxDontNotify.UseVisualStyleBackColor = false;
@@ -90,7 +90,7 @@
             // btnSkip
             // 
             resources.ApplyResources(this.btnSkip, "btnSkip");
-            this.btnSkip.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnSkip.BackColor = System.Drawing.Color.Black;
             this.btnSkip.ForeColor = System.Drawing.Color.White;
             this.btnSkip.Name = "btnSkip";
             this.btnSkip.UseVisualStyleBackColor = false;
@@ -99,7 +99,7 @@
             // btnNewAccount
             // 
             resources.ApplyResources(this.btnNewAccount, "btnNewAccount");
-            this.btnNewAccount.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnNewAccount.BackColor = System.Drawing.Color.Black;
             this.btnNewAccount.ForeColor = System.Drawing.Color.White;
             this.btnNewAccount.Name = "btnNewAccount";
             this.btnNewAccount.UseVisualStyleBackColor = false;
@@ -131,35 +131,35 @@
             // lblNewAccountMessage
             // 
             resources.ApplyResources(this.lblNewAccountMessage, "lblNewAccountMessage");
-            this.lblNewAccountMessage.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblNewAccountMessage.BackColor = System.Drawing.Color.Black;
             this.lblNewAccountMessage.ForeColor = System.Drawing.Color.White;
             this.lblNewAccountMessage.Name = "lblNewAccountMessage";
             // 
             // lblConfirm
             // 
             resources.ApplyResources(this.lblConfirm, "lblConfirm");
-            this.lblConfirm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblConfirm.BackColor = System.Drawing.Color.Black;
             this.lblConfirm.ForeColor = System.Drawing.Color.White;
             this.lblConfirm.Name = "lblConfirm";
             // 
             // lblPassword
             // 
             resources.ApplyResources(this.lblPassword, "lblPassword");
-            this.lblPassword.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblPassword.BackColor = System.Drawing.Color.Black;
             this.lblPassword.ForeColor = System.Drawing.Color.White;
             this.lblPassword.Name = "lblPassword";
             // 
             // lblUsername
             // 
             resources.ApplyResources(this.lblUsername, "lblUsername");
-            this.lblUsername.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblUsername.BackColor = System.Drawing.Color.Black;
             this.lblUsername.ForeColor = System.Drawing.Color.White;
             this.lblUsername.Name = "lblUsername";
             // 
             // panelLogin
             // 
             resources.ApplyResources(this.panelLogin, "panelLogin");
-            this.panelLogin.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.panelLogin.BackColor = System.Drawing.Color.Black;
             this.panelLogin.Controls.Add(this.lblLoginMessage);
             this.panelLogin.Controls.Add(this.btnExit);
             this.panelLogin.Controls.Add(this.btnLogin);
@@ -174,14 +174,14 @@
             // lblLoginMessage
             // 
             resources.ApplyResources(this.lblLoginMessage, "lblLoginMessage");
-            this.lblLoginMessage.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblLoginMessage.BackColor = System.Drawing.Color.Black;
             this.lblLoginMessage.ForeColor = System.Drawing.Color.White;
             this.lblLoginMessage.Name = "lblLoginMessage";
             // 
             // btnExit
             // 
             resources.ApplyResources(this.btnExit, "btnExit");
-            this.btnExit.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnExit.BackColor = System.Drawing.Color.Black;
             this.btnExit.ForeColor = System.Drawing.Color.White;
             this.btnExit.Name = "btnExit";
             this.btnExit.UseVisualStyleBackColor = false;
@@ -190,7 +190,7 @@
             // btnLogin
             // 
             resources.ApplyResources(this.btnLogin, "btnLogin");
-            this.btnLogin.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnLogin.BackColor = System.Drawing.Color.Black;
             this.btnLogin.ForeColor = System.Drawing.Color.White;
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.UseVisualStyleBackColor = false;
@@ -214,14 +214,14 @@
             // lblLoginPassword
             // 
             resources.ApplyResources(this.lblLoginPassword, "lblLoginPassword");
-            this.lblLoginPassword.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblLoginPassword.BackColor = System.Drawing.Color.Black;
             this.lblLoginPassword.ForeColor = System.Drawing.Color.White;
             this.lblLoginPassword.Name = "lblLoginPassword";
             // 
             // lblLoginUser
             // 
             resources.ApplyResources(this.lblLoginUser, "lblLoginUser");
-            this.lblLoginUser.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.lblLoginUser.BackColor = System.Drawing.Color.Black;
             this.lblLoginUser.ForeColor = System.Drawing.Color.White;
             this.lblLoginUser.Name = "lblLoginUser";
             // 
@@ -238,7 +238,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.BackColor = System.Drawing.Color.Black;
             this.ControlBox = false;
             this.Controls.Add(this.BorderPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -147,12 +147,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
-    <Compile Include="Comms\ConnectionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Comms\ConnectionForm.Designer.cs">
-      <DependentUpon>ConnectionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Comms\ICommsSerial.cs" />
     <Compile Include="Controls\Components\MyButton.cs">
       <SubType>Component</SubType>
@@ -202,11 +196,12 @@
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DroneInput.cs">
+    <Compile Include="Data\DroneSetting.cs" />
+    <Compile Include="Controls\DroneSettingInput.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\DroneInput.Designer.cs">
-      <DependentUpon>DroneInput.cs</DependentUpon>
+    <Compile Include="Controls\DroneSettingInput.Designer.cs">
+      <DependentUpon>DroneSettingInput.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\FileBrowserForm.cs">
       <SubType>Form</SubType>
@@ -246,23 +241,17 @@
     <Compile Include="Controls\ProgressDialogV2.Designer.cs">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ProgressInputDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\ProgressInputDialog.Designer.cs">
-      <DependentUpon>ProgressInputDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TelemetryDataPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\TelemetryDataPanel.Designer.cs">
       <DependentUpon>TelemetryDataPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TransparentPanel.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Controls\VehicleConfig.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cooper\Rotation.cs" />
-    <Compile Include="DataManager.cs" />
+    <Compile Include="Data\DataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
@@ -303,9 +292,6 @@
     <Compile Include="Utilities\ResourceStringHelper.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
-    <EmbeddedResource Include="Comms\ConnectionForm.resx">
-      <DependentUpon>ConnectionForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigAccountPage.resx">
       <DependentUpon>ConfigAccountPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -328,8 +314,8 @@
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DroneInput.resx">
-      <DependentUpon>DroneInput.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DroneSettingInput.resx">
+      <DependentUpon>DroneSettingInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\FileBrowserForm.resx">
       <DependentUpon>FileBrowserForm.cs</DependentUpon>
@@ -342,9 +328,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressInputDialog.resx">
-      <DependentUpon>ProgressInputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SplashForm.zh-Hant.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>

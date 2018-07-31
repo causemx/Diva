@@ -2178,7 +2178,9 @@ namespace Diva
                 
                 if (!comPort.BaseStream.IsOpen)
                 {
-                    throw new Exception("Please connect first!");
+                    //throw new Exception("Please connect first!");
+                    MessageBox.Show(ResStrings.MsgConnectFirst);
+                    return;
                 }
 
                 comPort.giveComport = true;
@@ -2436,7 +2438,10 @@ namespace Diva
 
                 if (!comPort.BaseStream.IsOpen)
                 {
-                    throw new Exception("Please Connect First!");
+                    // prevent application termination
+                    //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
+                    MessageBox.Show(ResStrings.MsgConnectFirst);
+                    return;
                 }
 
                 comPort.giveComport = true;
@@ -2807,22 +2812,13 @@ namespace Diva
             }
         }
 
-
-
-        public void BUT_Batch_Connect_Click(object sender, EventArgs e)
-        {
-            if (connectionDialog is null)
-                return;
-
-            string portname1 = ConnectionForm.aircrafts["APM1"].port_name;
-            string portnumber1 = ConnectionForm.aircrafts["APM1"].port_number;
-            string baudrate1 = ConnectionForm.aircrafts["APM1"].baudrate;
-
-
+		private void BUT_Connect_Click(object sender, EventArgs e)
+		{
+            var drone = ConfigData.GetTypeList<DroneSetting>()[0];
             try
             {
                 var mav = new MavlinkInterface();
-                doConnect(mav, portname1, portnumber1, baudrate1);
+                doConnect(mav, drone.PortName, drone.PortNumber, drone.Baudrate);
                 mav.onCreate();
                 comPorts.Add(mav);
                 AddRouteOverlay(comPorts.Count);
@@ -2837,70 +2833,11 @@ namespace Diva
             {
                 log.Debug(exception);
             }
-
-            connectionDialog.Dispose();
-
-        }
-
-
-        public ConnectionForm connectionDialog = null;
-
-        private void BUT_Connect_Click(object sender, EventArgs e)
-        {
-            connectionDialog = new ConnectionForm();
-            connectionDialog.ButtonSaveClick += new EventHandler(BUT_Batch_Connect_Click);
-            connectionDialog.Show();
-            
-
-            /**
-            ProgressInputDialog dialog = new ProgressInputDialog()
-            {
-                Text = "Connection",
-            };
-            dialog.DoConfirm_Click += delegate (object o, EventArgs ex)
-            {
-                var mav = new MavlinkInterface();
-                try
-                {
-                    doConnect(mav, dialog.port_name, dialog.port_number, dialog.baudrate);
-                    mav.onCreate();
-                    comPorts.Add(mav);
-
-                    switch (mav.sysidcurrent)
-                    {
-                        case 1:
-                            DroneInfo1.Activate();
-                            CurrentDroneInfo = DroneInfo1;
-                            break;
-                        case 2:
-                            DroneInfo2.Activate();
-                            CurrentDroneInfo = DroneInfo2;
-                            break;
-                        case 3:
-                            DroneInfo3.Activate();
-                            CurrentDroneInfo = DroneInfo3;
-                            break;
-                }
-
-                    // TODO: move guidemodez to initialize
-                    mav.MAV.GuidedMode.z = 10;
-                    AddRouteOverlay(comPorts.Count);
-                    comPort = mav;
-                }
-                catch (Exception Exp)
-                {
-                    log.Debug(Exp);
-                }
-                
-                dialog.Dispose();
-            };
-            dialog.ShowDialog();**/
-
         }
 
         private void BUT_Takeoff_Click(object sender, EventArgs e)
-        {
-            comPort.setMode("GUIDED");
+		{
+			comPort.setMode("GUIDED");
 
             comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
         }
@@ -2983,8 +2920,6 @@ namespace Diva
             ProgressDialog _dialog = new ProgressDialog();
             _dialog.IsActive = true;
             _dialog.Show();
-
-
 
             _dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
             {

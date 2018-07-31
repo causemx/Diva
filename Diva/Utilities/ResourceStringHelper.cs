@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Diva
 {
@@ -40,7 +42,10 @@ namespace Diva
                         if (s != null)
                         {
                             c.Text = s;
-                            c.Font = new System.Drawing.Font(locFontName, c.Font.Size + locFontSizeAdjust);
+                            c.Font = new Font(locFontName, c.Font.Size + locFontSizeAdjust);
+                            var prop = c.GetType().GetProperties().SingleOrDefault(p => p.Name == "TitleFont");
+                            if (prop != null)
+                                prop.SetValue(c, new Font(c.Font, FontStyle.Bold));
                         }
                         processControls(c);
                     }
