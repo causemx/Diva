@@ -34,10 +34,10 @@ namespace Diva
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
 			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
@@ -60,10 +60,6 @@ namespace Diva
 			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
-			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
-			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +73,10 @@ namespace Diva
 			this.loadFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
+			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
+			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvWayPoints = new System.Windows.Forms.DataGridView();
 			this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -459,29 +459,6 @@ namespace Diva
 			this.cmMap.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.cmMap, "cmMap");
 			// 
-			// miClearMission
-			// 
-			this.miClearMission.Name = "miClearMission";
-			resources.ApplyResources(this.miClearMission, "miClearMission");
-			this.miClearMission.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
-			// 
-			// miSetHomeHere
-			// 
-			this.miSetHomeHere.Name = "miSetHomeHere";
-			resources.ApplyResources(this.miSetHomeHere, "miSetHomeHere");
-			this.miSetHomeHere.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
-			// 
-			// miClearAllMissions
-			// 
-			this.miClearAllMissions.Name = "miClearAllMissions";
-			resources.ApplyResources(this.miClearAllMissions, "miClearAllMissions");
-			this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-			// 
 			// drawPolygonToolStripMenuItem
 			// 
 			this.drawPolygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -570,6 +547,29 @@ namespace Diva
 			resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
 			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
 			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+			// 
+			// miClearMission
+			// 
+			this.miClearMission.Name = "miClearMission";
+			resources.ApplyResources(this.miClearMission, "miClearMission");
+			this.miClearMission.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
+			// 
+			// miSetHomeHere
+			// 
+			this.miSetHomeHere.Name = "miSetHomeHere";
+			resources.ApplyResources(this.miSetHomeHere, "miSetHomeHere");
+			this.miSetHomeHere.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
+			// 
+			// miClearAllMissions
+			// 
+			this.miClearAllMissions.Name = "miClearAllMissions";
+			resources.ApplyResources(this.miClearAllMissions, "miClearAllMissions");
+			this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
+			// 
 			// dgvWayPoints
 			// 
 			this.dgvWayPoints.AllowUserToAddRows = false;
@@ -579,14 +579,14 @@ namespace Diva
 			this.dgvWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dgvWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
 			this.dgvWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaption;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			resources.ApplyResources(this.dgvWayPoints, "dgvWayPoints");
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
@@ -600,31 +600,31 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
-			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvWayPoints.EnableHeadersVisualStyles = false;
 			this.dgvWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
 			this.dgvWayPoints.Name = "dgvWayPoints";
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle7.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-			dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			dataGridViewCellStyle8.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.InfoText;
-			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+			this.dgvWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
 			this.dgvWayPoints.RowTemplate.Height = 24;
 			this.dgvWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
 			this.dgvWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);

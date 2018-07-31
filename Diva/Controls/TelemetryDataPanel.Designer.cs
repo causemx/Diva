@@ -30,17 +30,16 @@
 		{
 			this.GBTitle = new Diva.Controls.MyGroupBox();
 			this.myGroupBox6 = new Diva.Controls.MyGroupBox();
-			this.myGroupBox5 = new Diva.Controls.MyGroupBox();
-			this.myGroupBox4 = new Diva.Controls.MyGroupBox();
-			this.myGroupBox3 = new Diva.Controls.MyGroupBox();
-			this.myGroupBox2 = new Diva.Controls.MyGroupBox();
-			this.TxtBatteryVoltage = new System.Windows.Forms.Label();
-			this.TxtBatteryPercentage = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.TxtAltitude = new System.Windows.Forms.Label();
-			this.TxtGeoFenceEnable = new System.Windows.Forms.Label();
-			this.TxtGroundSpeed = new System.Windows.Forms.Label();
 			this.TxtVerticalSpeed = new System.Windows.Forms.Label();
+			this.myGroupBox5 = new Diva.Controls.MyGroupBox();
+			this.TxtGroundSpeed = new System.Windows.Forms.Label();
+			this.myGroupBox4 = new Diva.Controls.MyGroupBox();
+			this.TxtGeoFenceEnable = new System.Windows.Forms.Label();
+			this.myGroupBox3 = new Diva.Controls.MyGroupBox();
+			this.TxtAltitude = new System.Windows.Forms.Label();
+			this.myGroupBox2 = new Diva.Controls.MyGroupBox();
+			this.TxtBatteryPercentage = new System.Windows.Forms.Label();
+			this.TxtBatteryVoltage = new System.Windows.Forms.Label();
 			this.GBTitle.SuspendLayout();
 			this.myGroupBox6.SuspendLayout();
 			this.myGroupBox5.SuspendLayout();
@@ -87,6 +86,17 @@
 			this.myGroupBox6.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.myGroupBox6.TitlePadding = 3;
 			// 
+			// TxtVerticalSpeed
+			// 
+			this.TxtVerticalSpeed.AutoSize = true;
+			this.TxtVerticalSpeed.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtVerticalSpeed.ForeColor = System.Drawing.Color.White;
+			this.TxtVerticalSpeed.Location = new System.Drawing.Point(69, 49);
+			this.TxtVerticalSpeed.Name = "TxtVerticalSpeed";
+			this.TxtVerticalSpeed.Size = new System.Drawing.Size(42, 18);
+			this.TxtVerticalSpeed.TabIndex = 6;
+			this.TxtVerticalSpeed.Text = "0.00";
+			// 
 			// myGroupBox5
 			// 
 			this.myGroupBox5.BackColor = System.Drawing.Color.Transparent;
@@ -103,6 +113,17 @@
 			this.myGroupBox5.TitleForeColor = System.Drawing.Color.White;
 			this.myGroupBox5.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.myGroupBox5.TitlePadding = 3;
+			// 
+			// TxtGroundSpeed
+			// 
+			this.TxtGroundSpeed.AutoSize = true;
+			this.TxtGroundSpeed.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtGroundSpeed.ForeColor = System.Drawing.Color.White;
+			this.TxtGroundSpeed.Location = new System.Drawing.Point(67, 49);
+			this.TxtGroundSpeed.Name = "TxtGroundSpeed";
+			this.TxtGroundSpeed.Size = new System.Drawing.Size(42, 18);
+			this.TxtGroundSpeed.TabIndex = 5;
+			this.TxtGroundSpeed.Text = "0.00";
 			// 
 			// myGroupBox4
 			// 
@@ -121,11 +142,21 @@
 			this.myGroupBox4.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.myGroupBox4.TitlePadding = 3;
 			// 
+			// TxtGeoFenceEnable
+			// 
+			this.TxtGeoFenceEnable.AutoSize = true;
+			this.TxtGeoFenceEnable.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtGeoFenceEnable.ForeColor = System.Drawing.Color.White;
+			this.TxtGeoFenceEnable.Location = new System.Drawing.Point(35, 52);
+			this.TxtGeoFenceEnable.Name = "TxtGeoFenceEnable";
+			this.TxtGeoFenceEnable.Size = new System.Drawing.Size(39, 18);
+			this.TxtGeoFenceEnable.TabIndex = 4;
+			this.TxtGeoFenceEnable.Text = "N/A";
+			// 
 			// myGroupBox3
 			// 
 			this.myGroupBox3.BackColor = System.Drawing.Color.Transparent;
 			this.myGroupBox3.Controls.Add(this.TxtAltitude);
-			this.myGroupBox3.Controls.Add(this.label3);
 			this.myGroupBox3.Location = new System.Drawing.Point(113, 24);
 			this.myGroupBox3.Name = "myGroupBox3";
 			this.myGroupBox3.Radious = 1;
@@ -138,6 +169,17 @@
 			this.myGroupBox3.TitleForeColor = System.Drawing.Color.White;
 			this.myGroupBox3.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.myGroupBox3.TitlePadding = 3;
+			// 
+			// TxtAltitude
+			// 
+			this.TxtAltitude.AutoSize = true;
+			this.TxtAltitude.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtAltitude.ForeColor = System.Drawing.Color.White;
+			this.TxtAltitude.Location = new System.Drawing.Point(36, 62);
+			this.TxtAltitude.Name = "TxtAltitude";
+			this.TxtAltitude.Size = new System.Drawing.Size(36, 18);
+			this.TxtAltitude.TabIndex = 3;
+			this.TxtAltitude.Text = "100";
 			// 
 			// myGroupBox2
 			// 
@@ -157,17 +199,6 @@
 			this.myGroupBox2.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.myGroupBox2.TitlePadding = 3;
 			// 
-			// TxtBatteryVoltage
-			// 
-			this.TxtBatteryVoltage.AutoSize = true;
-			this.TxtBatteryVoltage.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtBatteryVoltage.ForeColor = System.Drawing.Color.White;
-			this.TxtBatteryVoltage.Location = new System.Drawing.Point(32, 36);
-			this.TxtBatteryVoltage.Name = "TxtBatteryVoltage";
-			this.TxtBatteryVoltage.Size = new System.Drawing.Size(53, 18);
-			this.TxtBatteryVoltage.TabIndex = 0;
-			this.TxtBatteryVoltage.Text = "12.5 V";
-			// 
 			// TxtBatteryPercentage
 			// 
 			this.TxtBatteryPercentage.AutoSize = true;
@@ -179,60 +210,16 @@
 			this.TxtBatteryPercentage.TabIndex = 1;
 			this.TxtBatteryPercentage.Text = "100%";
 			// 
-			// label3
+			// TxtBatteryVoltage
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.ForeColor = System.Drawing.Color.White;
-			this.label3.Location = new System.Drawing.Point(36, 36);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(41, 18);
-			this.label3.TabIndex = 2;
-			this.label3.Text = "AGL";
-			// 
-			// TxtAltitude
-			// 
-			this.TxtAltitude.AutoSize = true;
-			this.TxtAltitude.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtAltitude.ForeColor = System.Drawing.Color.White;
-			this.TxtAltitude.Location = new System.Drawing.Point(36, 62);
-			this.TxtAltitude.Name = "TxtAltitude";
-			this.TxtAltitude.Size = new System.Drawing.Size(36, 18);
-			this.TxtAltitude.TabIndex = 3;
-			this.TxtAltitude.Text = "100";
-			// 
-			// TxtGeoFenceEnable
-			// 
-			this.TxtGeoFenceEnable.AutoSize = true;
-			this.TxtGeoFenceEnable.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtGeoFenceEnable.ForeColor = System.Drawing.Color.White;
-			this.TxtGeoFenceEnable.Location = new System.Drawing.Point(35, 52);
-			this.TxtGeoFenceEnable.Name = "TxtGeoFenceEnable";
-			this.TxtGeoFenceEnable.Size = new System.Drawing.Size(39, 18);
-			this.TxtGeoFenceEnable.TabIndex = 4;
-			this.TxtGeoFenceEnable.Text = "N/A";
-			// 
-			// TxtGroundSpeed
-			// 
-			this.TxtGroundSpeed.AutoSize = true;
-			this.TxtGroundSpeed.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtGroundSpeed.ForeColor = System.Drawing.Color.White;
-			this.TxtGroundSpeed.Location = new System.Drawing.Point(67, 49);
-			this.TxtGroundSpeed.Name = "TxtGroundSpeed";
-			this.TxtGroundSpeed.Size = new System.Drawing.Size(42, 18);
-			this.TxtGroundSpeed.TabIndex = 5;
-			this.TxtGroundSpeed.Text = "0.00";
-			// 
-			// TxtVerticalSpeed
-			// 
-			this.TxtVerticalSpeed.AutoSize = true;
-			this.TxtVerticalSpeed.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtVerticalSpeed.ForeColor = System.Drawing.Color.White;
-			this.TxtVerticalSpeed.Location = new System.Drawing.Point(69, 49);
-			this.TxtVerticalSpeed.Name = "TxtVerticalSpeed";
-			this.TxtVerticalSpeed.Size = new System.Drawing.Size(42, 18);
-			this.TxtVerticalSpeed.TabIndex = 6;
-			this.TxtVerticalSpeed.Text = "0.00";
+			this.TxtBatteryVoltage.AutoSize = true;
+			this.TxtBatteryVoltage.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtBatteryVoltage.ForeColor = System.Drawing.Color.White;
+			this.TxtBatteryVoltage.Location = new System.Drawing.Point(32, 36);
+			this.TxtBatteryVoltage.Name = "TxtBatteryVoltage";
+			this.TxtBatteryVoltage.Size = new System.Drawing.Size(53, 18);
+			this.TxtBatteryVoltage.TabIndex = 0;
+			this.TxtBatteryVoltage.Text = "12.5 V";
 			// 
 			// TelemetryDataPanel
 			// 
@@ -266,7 +253,6 @@
 		private MyGroupBox myGroupBox5;
 		private MyGroupBox myGroupBox6;
 		private System.Windows.Forms.Label TxtAltitude;
-		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label TxtBatteryPercentage;
 		private System.Windows.Forms.Label TxtBatteryVoltage;
 		private System.Windows.Forms.Label TxtGeoFenceEnable;
