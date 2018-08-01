@@ -16,7 +16,7 @@ DIVA is a lightning fast ground control system which extracts telemetry data fro
  3. Click & Go
  4. Flight mission save/load, import/export
 
-## Mission
+## Mission Planning
  1. Mission management system.
  2. Mission save/load, import/export
 
