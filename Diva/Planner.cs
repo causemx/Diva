@@ -498,6 +498,7 @@ namespace Diva
 		}
 
 		#region GMap event handlers - move to MyGMap.cs when possible
+
 		private void MainMap_OnCurrentPositionChanged(PointLatLng point)
 		{
 			if (point.Lat > 90)
@@ -532,236 +533,6 @@ namespace Diva
 				((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
 			}
 		}
-
-		// click on some marker
-		private void MainMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
-		{
-			int answer;
-			try // when dragging item can sometimes be null
-			{
-				if (item.Tag == null)
-				{
-					// home.. etc
-					return;
-				}
-
-				if (ModifierKeys == Keys.Control)
-				{
-					try
-					{
-						groupmarkeradd(item);
-
-						log.Info("add marker to group");
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-					}
-				}
-				if (int.TryParse(item.Tag.ToString(), out answer))
-				{
-					dgvWayPoints.CurrentCell = dgvWayPoints[0, answer - 1];
-				}
-			}
-			catch (Exception ex)
-			{
-				log.Error(ex);
-			}
-		}
-
-
-		// move current marker with left holding
-		private void MainMap_MouseMove(object sender, MouseEventArgs e)
-		{
-			PointLatLng point = myMap.FromLocalToLatLng(e.X, e.Y);
-
-			if (MouseDownStart == point)
-				return;
-
-			//  Console.WriteLine("MainMap MM " + point);
-
-			currentMarker.Position = point;
-
-			if (!isMouseDown)
-			{
-				// update mouse pos display
-				// SetMouseDisplay(point.Lat, point.Lng, 0);
-			}
-
-			//draging
-			if (e.Button == MouseButtons.Left && isMouseDown)
-			{
-				isMouseDraging = true;
-				if (currentRallyPt != null)
-				{
-					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
-
-					currentRallyPt.Position = pnew;
-				}
-				else if (groupmarkers.Count > 0)
-				{
-					// group drag
-
-					double latdif = MouseDownStart.Lat - point.Lat;
-					double lngdif = MouseDownStart.Lng - point.Lng;
-
-					MouseDownStart = point;
-
-					Hashtable seen = new Hashtable();
-
-					foreach (var markerid in groupmarkers)
-					{
-						if (seen.ContainsKey(markerid))
-							continue;
-
-						seen[markerid] = 1;
-						for (int a = 0; a < overlays.objects.Markers.Count; a++)
-						{
-							var marker = overlays.objects.Markers[a];
-
-							if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
-							{
-								var temp = new PointLatLng(marker.Position.Lat, marker.Position.Lng);
-								temp.Offset(latdif, -lngdif);
-								marker.Position = temp;
-							}
-						}
-					}
-				}
-				else if (currentRectMarker != null) // left click pan
-				{
-					try
-					{
-						// check if this is a grid point
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
-						{
-							drawnPolygon.Points[
-								int.Parse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
-								new PointLatLng(point.Lat, point.Lng);
-							myMap.UpdatePolygonLocalPosition(drawnPolygon);
-							myMap.Invalidate();
-						}
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-					}
-
-					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
-
-					// adjust polyline point while we drag
-					try
-					{
-						if (currentGMapMarker != null && currentGMapMarker.Tag is int)
-						{
-							int? pIndex = (int?)currentRectMarker.Tag;
-							if (pIndex.HasValue)
-							{
-								if (pIndex < wpPolygon.Points.Count)
-								{
-									wpPolygon.Points[pIndex.Value] = pnew;
-									lock (thisLock)
-									{
-										myMap.UpdatePolygonLocalPosition(wpPolygon);
-									}
-								}
-							}
-						}
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-					}
-
-					// update rect and marker pos.
-					if (currentMarker.IsVisible)
-					{
-						currentMarker.Position = pnew;
-					}
-					currentRectMarker.Position = pnew;
-
-					if (currentRectMarker.InnerMarker != null)
-					{
-						currentRectMarker.InnerMarker.Position = pnew;
-					}
-				}
-				/**else if (currentPOIMarker != null)
-				{
-					PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-					CurrentPOIMarker.Position = pnew;
-				}**/
-				else if (currentGMapMarker != null)
-				{
-					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
-
-					currentGMapMarker.Position = pnew;
-				}
-				else if (ModifierKeys == Keys.Control)
-				{
-					// draw selection box
-					double latdif = MouseDownStart.Lat - point.Lat;
-					double lngdif = MouseDownStart.Lng - point.Lng;
-
-					myMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, point.Lat),
-						Math.Min(MouseDownStart.Lng, point.Lng), Math.Abs(lngdif), Math.Abs(latdif));
-				}
-				else // left click pan
-				{
-					double latdif = MouseDownStart.Lat - point.Lat;
-					double lngdif = MouseDownStart.Lng - point.Lng;
-
-					try
-					{
-						lock (thisLock)
-						{
-							if (!isMouseClickOffMenu)
-								myMap.Position = new PointLatLng(center.Position.Lat + latdif,
-									center.Position.Lng + lngdif);
-						}
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-					}
-				}
-			}
-			else if (e.Button == MouseButtons.None)
-			{
-				isMouseDown = false;
-			}
-		}
-
-		private void MainMap_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (isMouseClickOffMenu)
-				return;
-
-			MouseDownStart = myMap.FromLocalToLatLng(e.X, e.Y);
-
-			// Console.WriteLine("MainMap MD");
-
-			if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || ModifierKeys == Keys.Control))
-			{
-				// group move
-				isMouseDown = true;
-				isMouseDraging = false;
-
-				return;
-			}
-
-			if (e.Button == MouseButtons.Left && ModifierKeys != Keys.Alt && ModifierKeys != Keys.Control)
-			{
-				isMouseDown = true;
-				isMouseDraging = false;
-
-				if (currentMarker.IsVisible)
-				{
-					currentMarker.Position = myMap.FromLocalToLatLng(e.X, e.Y);
-				}
-			}
-		}
-
 
 		private void MainMap_MouseUp(object sender, MouseEventArgs e)
 		{
@@ -930,6 +701,234 @@ namespace Diva
 			isMouseDraging = false;
 		}
 
+		private void MainMap_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (isMouseClickOffMenu)
+				return;
+
+			MouseDownStart = myMap.FromLocalToLatLng(e.X, e.Y);
+
+			// Console.WriteLine("MainMap MD");
+
+			if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || ModifierKeys == Keys.Control))
+			{
+				// group move
+				isMouseDown = true;
+				isMouseDraging = false;
+
+				return;
+			}
+
+			if (e.Button == MouseButtons.Left && ModifierKeys != Keys.Alt && ModifierKeys != Keys.Control)
+			{
+				isMouseDown = true;
+				isMouseDraging = false;
+
+				if (currentMarker.IsVisible)
+				{
+					currentMarker.Position = myMap.FromLocalToLatLng(e.X, e.Y);
+				}
+			}
+		}
+
+		// move current marker with left holding
+		private void MainMap_MouseMove(object sender, MouseEventArgs e)
+		{
+			PointLatLng point = myMap.FromLocalToLatLng(e.X, e.Y);
+
+			if (MouseDownStart == point)
+				return;
+
+			//  Console.WriteLine("MainMap MM " + point);
+
+			currentMarker.Position = point;
+
+			if (!isMouseDown)
+			{
+				// update mouse pos display
+				// SetMouseDisplay(point.Lat, point.Lng, 0);
+			}
+
+			//draging
+			if (e.Button == MouseButtons.Left && isMouseDown)
+			{
+				isMouseDraging = true;
+				if (currentRallyPt != null)
+				{
+					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
+
+					currentRallyPt.Position = pnew;
+				}
+				else if (groupmarkers.Count > 0)
+				{
+					// group drag
+
+					double latdif = MouseDownStart.Lat - point.Lat;
+					double lngdif = MouseDownStart.Lng - point.Lng;
+
+					MouseDownStart = point;
+
+					Hashtable seen = new Hashtable();
+
+					foreach (var markerid in groupmarkers)
+					{
+						if (seen.ContainsKey(markerid))
+							continue;
+
+						seen[markerid] = 1;
+						for (int a = 0; a < overlays.objects.Markers.Count; a++)
+						{
+							var marker = overlays.objects.Markers[a];
+
+							if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
+							{
+								var temp = new PointLatLng(marker.Position.Lat, marker.Position.Lng);
+								temp.Offset(latdif, -lngdif);
+								marker.Position = temp;
+							}
+						}
+					}
+				}
+				else if (currentRectMarker != null) // left click pan
+				{
+					try
+					{
+						// check if this is a grid point
+						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+						{
+							drawnPolygon.Points[
+								int.Parse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
+								new PointLatLng(point.Lat, point.Lng);
+							myMap.UpdatePolygonLocalPosition(drawnPolygon);
+							myMap.Invalidate();
+						}
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+					}
+
+					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
+
+					// adjust polyline point while we drag
+					try
+					{
+						if (currentGMapMarker != null && currentGMapMarker.Tag is int)
+						{
+							int? pIndex = (int?)currentRectMarker.Tag;
+							if (pIndex.HasValue)
+							{
+								if (pIndex < wpPolygon.Points.Count)
+								{
+									wpPolygon.Points[pIndex.Value] = pnew;
+									lock (thisLock)
+									{
+										myMap.UpdatePolygonLocalPosition(wpPolygon);
+									}
+								}
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+					}
+
+					// update rect and marker pos.
+					if (currentMarker.IsVisible)
+					{
+						currentMarker.Position = pnew;
+					}
+					currentRectMarker.Position = pnew;
+
+					if (currentRectMarker.InnerMarker != null)
+					{
+						currentRectMarker.InnerMarker.Position = pnew;
+					}
+				}
+				/**else if (currentPOIMarker != null)
+				{
+					PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
+
+					CurrentPOIMarker.Position = pnew;
+				}**/
+				else if (currentGMapMarker != null)
+				{
+					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
+
+					currentGMapMarker.Position = pnew;
+				}
+				else if (ModifierKeys == Keys.Control)
+				{
+					// draw selection box
+					double latdif = MouseDownStart.Lat - point.Lat;
+					double lngdif = MouseDownStart.Lng - point.Lng;
+
+					myMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, point.Lat),
+						Math.Min(MouseDownStart.Lng, point.Lng), Math.Abs(lngdif), Math.Abs(latdif));
+				}
+				else // left click pan
+				{
+					double latdif = MouseDownStart.Lat - point.Lat;
+					double lngdif = MouseDownStart.Lng - point.Lng;
+
+					try
+					{
+						lock (thisLock)
+						{
+							if (!isMouseClickOffMenu)
+								myMap.Position = new PointLatLng(center.Position.Lat + latdif,
+									center.Position.Lng + lngdif);
+						}
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+					}
+				}
+			}
+			else if (e.Button == MouseButtons.None)
+			{
+				isMouseDown = false;
+			}
+		}
+
+		// click on some marker
+		private void MainMap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+		{
+			int answer;
+			try // when dragging item can sometimes be null
+			{
+				if (item.Tag == null)
+				{
+					// home.. etc
+					return;
+				}
+
+				if (ModifierKeys == Keys.Control)
+				{
+					try
+					{
+						groupmarkeradd(item);
+
+						log.Info("add marker to group");
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+					}
+				}
+				if (int.TryParse(item.Tag.ToString(), out answer))
+				{
+					dgvWayPoints.CurrentCell = dgvWayPoints[0, answer - 1];
+				}
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex);
+			}
+		}
+
 		private void MainMap_OnMarkerEnter(GMapMarker item)
 		{
 			if (!isMouseDown)
@@ -982,7 +981,7 @@ namespace Diva
 			}
 		}
 
-		void MainMap_OnMarkerLeave(GMapMarker item)
+		private void MainMap_OnMarkerLeave(GMapMarker item)
 		{
 			if (!isMouseDown)
 			{
@@ -1006,6 +1005,40 @@ namespace Diva
 					// when you click the context menu this triggers and causes problems
 					currentGMapMarker = null;
 				}
+			}
+		}
+
+		private void But_ZoomIn_Click(object sender, EventArgs e)
+		{
+			if (myMap.Zoom > 0)
+			{
+				try
+				{
+					myMap.Zoom += 1;
+				}
+				catch (Exception ex)
+				{
+					log.Error(ex);
+				}
+				//textBoxZoomCurrent.Text = MainMap.Zoom.ToString();
+				center.Position = myMap.Position;
+			}
+		}
+
+		private void But_ZoomOut_Click(object sender, EventArgs e)
+		{
+			if (myMap.Zoom > 0)
+			{
+				try
+				{
+					myMap.Zoom -= 1;
+				}
+				catch (Exception ex)
+				{
+					log.Error(ex);
+				}
+				//textBoxZoomCurrent.Text = MainMap.Zoom.ToString();
+				center.Position = myMap.Position;
 			}
 		}
 		#endregion
@@ -3936,5 +3969,7 @@ namespace Diva
 			overlays.geofence.Polygons.Clear();
 			geofencePolygon.Points.Clear();
 		}
+		
+	
 	}
 }
