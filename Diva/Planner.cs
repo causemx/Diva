@@ -931,6 +931,7 @@ namespace Diva
 
 		private void MainMap_OnMarkerEnter(GMapMarker item)
 		{
+
 			if (!isMouseDown)
 			{
 				if (item is GMapMarkerRect)
@@ -1186,6 +1187,7 @@ namespace Diva
 					mBorders.InnerMarker = m;
 					mBorders.Tag = tag;
 					// mBorders.wprad = (int)(float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist);
+					mBorders.wprad = (int)(30 / 1);
 					if (color.HasValue)
 					{
 						mBorders.Color = color.Value;
@@ -1193,7 +1195,7 @@ namespace Diva
 				}
 
 				overlays.objects.Markers.Add(m);
-				// overlays.objects.Markers.Add(mBorders);
+				overlays.objects.Markers.Add(mBorders);
 			}
 			catch (Exception)
 			{
@@ -1216,6 +1218,7 @@ namespace Diva
 					try
 					{
 						// mBorders.wprad = (int)(Settings.Instance.GetFloat("TXT_WPRad"));
+						mBorders.wprad = 30;
 					}
 					catch
 					{
@@ -1292,13 +1295,6 @@ namespace Diva
 			{
 				return;
 			}
-			// TODO: tracker home for future.
-			/**
-			if (pointno == "Tracker Home")
-			{
-				MainV2.comPort.MAV.cs.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
-				return;
-			}*/
 			
 			// dragging a WP
 			if (pointno == "H")
@@ -1307,6 +1303,13 @@ namespace Diva
 				TxtHomeAltitude.Text = "0";
 				TxtHomeLatitude.Text = lat.ToString();
 				TxtHomeLongitude.Text = lng.ToString();
+				return;
+			}
+
+
+			if (pointno == "Tracker Home")
+			{
+				comPort.MAV.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
 				return;
 			}
 
@@ -1326,18 +1329,120 @@ namespace Diva
 			setfromMap(lat, lng, alt);
 		}
 
+		public void setfromMap(double lat, double lng, int alt, double p1 = 0)
+		{
+			if (selectedrow > dgvWayPoints.RowCount)
+			{
+				MessageBox.Show(ResStrings.MsgInvalidCoordinate);
+				return;
+			}
 
+			try
+			{
+				// get current command list
+				var currentlist = GetCommandList();
+				// add history
+				history.Add(currentlist);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ResStrings.MsgInvalidEntry.FormatWith(ex.Message));
+			}
+
+			// remove more than 20 revisions
+			if (history.Count > 20)
+			{
+				history.RemoveRange(0, history.Count - 20);
+			}
+
+			DataGridViewTextBoxCell cell;
+			if (dgvWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
+			{
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
+				cell.Value = lat.ToString("0.0000000");
+				cell.DataGridView.EndEdit();
+			}
+			if (dgvWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
+			{
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
+				cell.Value = lng.ToString("0.0000000");
+				cell.DataGridView.EndEdit();
+			}
+			if (alt != -1 && alt != -2 &&
+				dgvWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
+			{
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
+
+				{
+					double result;
+					bool pass = double.TryParse(TxtHomeAltitude.Text, out result);
+
+					if (pass == false)
+					{
+						//MessageBox.Show("You must have a home altitude");
+
+						string homealt = "10";
+						//if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
+						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgHomeAltitudeRequired, homealt, ref homealt))
+							return;
+						TxtHomeAltitude.Text = homealt;
+					}
+					int results1;
+					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
+					{
+						MessageBox.Show(ResStrings.MsgDefaultAltitudeInvalid);
+						return;
+					}
+
+					if (results1 == 0)
+					{
+						string defalt = "10";
+						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgDefaultAltitudeRequired, defalt, ref defalt))
+							return;
+						TxtAltitudeValue.Text = defalt;
+					}
+				}
+
+				cell.Value = TxtAltitudeValue.Text;
+
+				float ans;
+				if (float.TryParse(cell.Value.ToString(), out ans))
+				{
+					ans = (int)ans;
+					if (alt != 0) // use passed in value;
+						cell.Value = alt.ToString();
+					if (ans == 0) // default
+						cell.Value = 50;
+
+
+					cell.DataGridView.EndEdit();
+				}
+				else
+				{
+					MessageBox.Show(ResStrings.MsgInvalidHomeOrWPAltitide);
+					cell.Style.BackColor = Color.Red;
+				}
+			}
+
+
+
+			// convert to utm
+			// convertFromGeographic(lat, lng);
+
+			// Add more for other params
+			if (dgvWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
+			{
+				cell = dgvWayPoints.Rows[selectedrow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
+				cell.Value = p1;
+				cell.DataGridView.EndEdit();
+			}
+
+			writeKML();
+			dgvWayPoints.EndEdit();
+		}
 
 		public void AddWPToMap(double lat, double lng, int alt)
 		{
-			/**
-			if (sethome)
-			{
-				sethome = false;
-				callMeDrag("H", lat, lng, alt);
-				return;
-			}*/
-
 			// check home point setup.
 			if (IsHomeEmpty())
 			{
@@ -1359,6 +1464,8 @@ namespace Diva
 
 			setfromMap(lat, lng, alt);
 		}
+
+		
 
 		private bool IsHomeEmpty()
 		{
@@ -1443,122 +1550,6 @@ namespace Diva
 				throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
 			}
 		}
-
-
-
-
-		public void setfromMap(double lat, double lng, int alt, double p1 = 0)
-		{
-			if (selectedrow > dgvWayPoints.RowCount)
-			{
-				MessageBox.Show(ResStrings.MsgInvalidCoordinate);
-				return;
-			}
-
-			try
-			{
-				// get current command list
-				var currentlist = GetCommandList();
-				// add history
-				history.Add(currentlist);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ResStrings.MsgInvalidEntry.FormatWith(ex.Message));
-			}
-
-			// remove more than 20 revisions
-			if (history.Count > 20)
-			{
-				history.RemoveRange(0, history.Count - 20);
-			}
-
-			DataGridViewTextBoxCell cell;
-			if (dgvWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
-			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = lat.ToString("0.0000000");
-				cell.DataGridView.EndEdit();
-			}
-			if (dgvWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
-			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = lng.ToString("0.0000000");
-				cell.DataGridView.EndEdit();
-			}
-			if (alt != -1 && alt != -2 &&
-				dgvWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
-			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
-
-				{
-					double result;
-					bool pass = double.TryParse(TxtHomeAltitude.Text, out result);
-
-					if (pass == false)
-					{
-						//MessageBox.Show("You must have a home altitude");
- 
-						string homealt = "10";
-						//if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
-						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgHomeAltitudeRequired, homealt, ref homealt))
-							return;
-						TxtHomeAltitude.Text = homealt;
-					}
-					int results1;
-					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
-					{
-						MessageBox.Show(ResStrings.MsgDefaultAltitudeInvalid);
-						return;
-					}
-
-					if (results1 == 0)
-					{
-						string defalt = "10";
-						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgDefaultAltitudeRequired, defalt, ref defalt))
-							return;
-						TxtAltitudeValue.Text = defalt;
-					}
-				}
-
-				cell.Value = TxtAltitudeValue.Text;
-
-				float ans;
-				if (float.TryParse(cell.Value.ToString(), out ans))
-				{
-					ans = (int)ans;
-					if (alt != 0) // use passed in value;
-						cell.Value = alt.ToString();
-					if (ans == 0) // default
-						cell.Value = 50;
-				
-
-					cell.DataGridView.EndEdit();
-				}
-				else
-				{
-					MessageBox.Show(ResStrings.MsgInvalidHomeOrWPAltitide);
-					cell.Style.BackColor = Color.Red;
-				}
-			}
-
-			
-
-			// convert to utm
-			// convertFromGeographic(lat, lng);
-
-			// Add more for other params
-			if (dgvWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
-			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
-				cell.Value = p1;
-				cell.DataGridView.EndEdit();
-			}
-
-			writeKML();
-			dgvWayPoints.EndEdit();
-		}
-
 
 		public void writeKML()
 		{

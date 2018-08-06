@@ -1,4 +1,5 @@
-﻿using GMap.NET;
+﻿using Diva.Utilities;
+using GMap.NET;
 using log4net;
 using System;
 using System.Collections.Concurrent;
@@ -333,6 +334,18 @@ namespace Diva.Mavlink
 		public void Dispose()
 		{
 			throw new NotImplementedException();
+		}
+
+		private PointLatLngAlt _trackerloc;
+
+		public PointLatLngAlt TrackerLocation
+		{
+			get
+			{
+				if (_trackerloc.Lng != 0) return _trackerloc;
+				return HomeLocation;
+			}
+			set { _trackerloc = value; }
 		}
 	}
 }
