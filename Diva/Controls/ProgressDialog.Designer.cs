@@ -31,6 +31,7 @@
 			this.LBL_Message = new System.Windows.Forms.Label();
 			this.MyProgressBar = new System.Windows.Forms.ProgressBar();
 			this.Icon = new System.Windows.Forms.PictureBox();
+			this.But_Cancel = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.Icon)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -38,7 +39,7 @@
 			// 
 			this.LBL_Message.AutoSize = true;
 			this.LBL_Message.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LBL_Message.ForeColor = System.Drawing.Color.White;
+			this.LBL_Message.ForeColor = System.Drawing.Color.Black;
 			this.LBL_Message.Location = new System.Drawing.Point(73, 18);
 			this.LBL_Message.Name = "LBL_Message";
 			this.LBL_Message.Size = new System.Drawing.Size(187, 19);
@@ -63,13 +64,25 @@
 			this.Icon.TabIndex = 5;
 			this.Icon.TabStop = false;
 			// 
+			// But_Cancel
+			// 
+			this.But_Cancel.Font = new System.Drawing.Font("Noto Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+			this.But_Cancel.Location = new System.Drawing.Point(153, 82);
+			this.But_Cancel.Name = "But_Cancel";
+			this.But_Cancel.Size = new System.Drawing.Size(75, 23);
+			this.But_Cancel.TabIndex = 6;
+			this.But_Cancel.Text = "Cancel";
+			this.But_Cancel.UseVisualStyleBackColor = true;
+			this.But_Cancel.Click += new System.EventHandler(this.But_Cancel_Click);
+			// 
 			// ProgressDialog
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-			this.ClientSize = new System.Drawing.Size(384, 90);
+			this.BackColor = System.Drawing.SystemColors.Control;
+			this.ClientSize = new System.Drawing.Size(384, 117);
+			this.Controls.Add(this.But_Cancel);
 			this.Controls.Add(this.Icon);
 			this.Controls.Add(this.MyProgressBar);
 			this.Controls.Add(this.LBL_Message);
@@ -87,5 +100,6 @@
 		private System.Windows.Forms.Label LBL_Message;
 		private System.Windows.Forms.ProgressBar MyProgressBar;
 		private System.Windows.Forms.PictureBox Icon;
+		private System.Windows.Forms.Button But_Cancel;
 	}
 }

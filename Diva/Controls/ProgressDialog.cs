@@ -20,6 +20,9 @@ namespace Diva.Controls
 		{
 			InitializeComponent();
 
+			this.Focus();
+			this.CenterToScreen();
+
 			_worker = new BackgroundWorker();
 			_worker.ProgressChanged += Worker_ProgressChanged;
 			_worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
@@ -142,6 +145,11 @@ namespace Diva.Controls
 		protected virtual void OnCancelled(CancelEventArgs e)
 		{
 			Cancelled?.Invoke(this, e);
+		}
+
+		private void But_Cancel_Click(object sender, EventArgs e)
+		{
+			DoDispose(true);
 		}
 	}
 }

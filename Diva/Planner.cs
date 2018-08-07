@@ -2172,38 +2172,30 @@ namespace Diva
 				}
 			}
 
-			ProgressDialog _saveWPsDialog = new ProgressDialog();
-			_saveWPsDialog.IsActive = true;
-			_saveWPsDialog.Show();
-
-			_saveWPsDialog.DoWork += delegate(object dialog, DoWorkEventArgs dwe)
+			ProgressDialog saveWaypointsDialog = new ProgressDialog()
 			{
-				saveWPs();
+				IsActive = true,
 			};
-
-			_saveWPsDialog.Completed += delegate(object sender1, RunWorkerCompletedEventArgs e1)
-			{
-				_saveWPsDialog.Close();
-			};
-
-			_saveWPsDialog.Run();
+			saveWaypointsDialog.Focus();
+			// saveWaypointsDialog.CenterToScreen();
+			saveWaypointsDialog.Show();
+			saveWaypointsDialog.DoWork += saveWPs;
+			saveWaypointsDialog.Run();
 			
-			
-
 			myMap.Focus();
 		}
 
 		
 
-        private void saveWPs()
+        private void saveWPs(object sender, EventArgs e)
         {
             try
             {
                 
                 if (!comPort.BaseStream.IsOpen)
                 {
-                    //throw new Exception("Please connect first!");
-                    MessageBox.Show(ResStrings.MsgConnectFirst);
+                    throw new Exception("Please connect first!");
+                    // MessageBox.Show(ResStrings.MsgConnectFirst);
                     return;
                 }
 
