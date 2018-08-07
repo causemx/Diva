@@ -599,11 +599,22 @@ namespace Diva.Properties {
                 return ResourceManager.GetString("MsgMissionRejectedBadWP", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload wps failed {0} {1}.
-        /// </summary>
-        public static string MsgMissionRejectedGeneral {
+
+		/// <summary>
+		///   Looks up a localized string similar to accept the mission uploading.
+		/// </summary>
+		public static string MsgMissionAcceptMission
+		{
+			get
+			{
+				return ResourceManager.GetString("MsgMissionRejectedBadWP", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Upload wps failed {0} {1}.
+		/// </summary>
+		public static string MsgMissionRejectedGeneral {
             get {
                 return ResourceManager.GetString("MsgMissionRejectedGeneral", resourceCulture);
             }

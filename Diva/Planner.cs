@@ -2415,15 +2415,18 @@ namespace Diva
 				}
 
 				comPort.setWPACK();
-				/**
+				
 				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(95, "Setting params");
 
 				// m
-				port.setParam("WP_RADIUS", float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist);
+				comPort.setParam("WP_RADIUS", float.Parse("30") / 1);
 
 				// cm's
-				port.setParam("WPNAV_RADIUS", float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist * 100.0);
+				comPort.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
 
+				// Remind the user after uploading the mission into firmware.
+				MessageBox.Show(ResStrings.MsgMissionRejectedBadWP.FormatWith(a));
+				/**
 				try
 				{
 					port.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
@@ -2431,9 +2434,9 @@ namespace Diva
 				}
 				catch
 				{
-				}
+				}**/
 
-				((ProgressReporterDialogue)sender).UpdateProgressAndStatus(100, "Done.");*/
+				//((ProgressReporterDialogue)sender).UpdateProgressAndStatus(100, "Done.");
 			}
 			catch (Exception ex)
 			{
