@@ -39,6 +39,7 @@ namespace Diva
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
 		public const double DEFAULT_ZOOM = 20;
+		public const int TAKEOFF_HEIGHT = 130;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
 		public static MavlinkInterface comPort
@@ -2180,6 +2181,7 @@ namespace Diva
 			// saveWaypointsDialog.CenterToScreen();
 			saveWaypointsDialog.Show();
 			saveWaypointsDialog.DoWork += saveWPs;
+			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
 			saveWaypointsDialog.Run();
 			
 			myMap.Focus();
@@ -2425,7 +2427,7 @@ namespace Diva
 				comPort.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
 
 				// Remind the user after uploading the mission into firmware.
-				MessageBox.Show(ResStrings.MsgMissionRejectedBadWP.FormatWith(a));
+				MessageBox.Show(ResStrings.MsgMissionAcceptWP.FormatWith(a));
 				/**
 				try
 				{
@@ -2858,7 +2860,7 @@ namespace Diva
 		{
 			comPort.setMode("GUIDED");
 
-			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
 		}
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
@@ -3042,48 +3044,6 @@ namespace Diva
 		}
 
 
-		/// <summary>
-		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void timerMapItemUpdate_Tick(object sender, EventArgs e)
-		{
-			try
-			{
-				if (isMouseDown || currentRectMarker != null)
-					return;
-				for (int i = 0; i < comPorts.Count; i++)
-				{
-					MavlinkInterface _port = comPorts[i];
-					routesOverlays[i].Markers.Clear();
-
-					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
-						continue;
-
-					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
-						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, _port.MAV.sysid);
-
-					routesOverlays[i].Markers.Add(marker);
-				}
-
-				//autopan
-				if (autopan)
-				{
-					if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
-					{
-						PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
-						updateMapPosition(currentloc);
-						mapupdate = DateTime.Now;
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
-		}
-
 		private Demux demultiplexer = new Demux();
 		private bool isDeplexClicked = false;
 		private void BUT_Deplex_Click(object sender, EventArgs e)
@@ -3188,7 +3148,7 @@ namespace Diva
 		/// <summary>
 		/// Saves a waypoint writer file
 		/// </summary>
-		private void savewaypoints()
+		private void SaveMission()
 		{
 			using (SaveFileDialog fd = new SaveFileDialog())
 			{
@@ -3298,7 +3258,7 @@ namespace Diva
 
 		private void BtnSaveMission_Click(object sender, EventArgs e)
 		{
-			savewaypoints();
+			SaveMission();
 			writeKML();
 		}
 
@@ -3955,7 +3915,52 @@ namespace Diva
 			overlays.geofence.Polygons.Clear();
 			geofencePolygon.Points.Clear();
 		}
-		
-	
+
+
+		/// <summary>
+		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void timerMapItemUpdate_Tick(object sender, EventArgs e)
+		{
+			try
+			{
+				if (isMouseDown || currentRectMarker != null)
+					return;
+				for (int i = 0; i < comPorts.Count; i++)
+				{
+					MavlinkInterface _port = comPorts[i];
+					routesOverlays[i].Markers.Clear();
+
+					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
+						continue;
+
+					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
+						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, _port.MAV.sysid);
+
+					routesOverlays[i].Markers.Add(marker);
+				}
+
+				//autopan
+				if (autopan)
+				{
+					if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+					{
+						PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+						updateMapPosition(currentloc);
+						mapupdate = DateTime.Now;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+
+			// DateTime timerTick = DateTime.Now;
+			// log.Debug("timertick time: " + timerTick.ToString("hh:mm:ss.ffffff"));
+		}
+
 	}
 }

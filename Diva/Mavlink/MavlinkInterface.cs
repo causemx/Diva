@@ -221,6 +221,8 @@ namespace Diva.Mavlink
 
 		uint _mode = 99999;
 
+		#region retrieve sensor data from flight control.
+
 		public void UpdateCurrentSettings(bool updatenow)
 		{
 			MAVLink.MAVLinkMessage mavlinkMessage = readPacket();
@@ -314,42 +316,6 @@ namespace Diva.Mavlink
 								lastautowp = (int)wpno;
 							}
 
-
-							/**
-							if (mode.ToLower() == "auto" && wpno != 0)
-							{
-								lastautowp = (int)wpno;
-							}
-
-							if (oldwp != wpno && MainV2.speechEnable && MainV2.comPort.MAV.cs == this &&
-								Settings.Instance.GetBoolean("speechwaypointenabled"))
-							{
-								MainV2.speechEngine.SpeakAsync(Common.speechConversion("" + Settings.Instance["speechwaypoint"]));
-							}**/
-
-							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.WAYPOINT_CURRENT);
-						}
-					}
-
-
-					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.MISSION_CURRENT))
-					{
-						if (mavlinkMessage != null)
-						{
-							var wpcur = mavlinkMessage.ToStructure<MAVLink.mavlink_mission_current_t>();
-
-							int wpno = 0;
-							int lastautowp = 0;
-
-							int oldwp = (int)wpno;
-
-							wpno = wpcur.seq;
-
-							if (MAV.mode == 4 && wpno != 0)
-							{
-								lastautowp = (int)wpno;
-							}
-
 							/**
 							if (mode.ToLower() == "auto" && wpno != 0)
 							{
@@ -385,21 +351,17 @@ namespace Diva.Mavlink
 							}
 							else
 							{
-								double lat = loc.lat / 10000000.0;
-								double lng = loc.lon / 10000000.0;
-
+								MAV.current_lat = loc.lat / 10000000.0;
+								MAV.current_lng = loc.lon / 10000000.0;
 								MAV.altasl = loc.alt / 1000.0f;
-
-								MAV.current_lat = lat;
-								MAV.current_lng = lng;
-
-								double altasl = loc.alt / 1000.0f;
 
 								double vx = loc.vx * 0.01;
 								double vy = loc.vy * 0.01;
 								double vz = loc.vz * 0.01;
 							}
 						}
+						DateTime globalPositionPacketRecived = DateTime.Now;
+						log.Debug("globalPositionPacketRecived time: " + globalPositionPacketRecived.ToString("hh:mm:ss.ffffff"));
 					}
 
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
@@ -422,24 +384,15 @@ namespace Diva.Mavlink
 
 							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
 
-							byte satcount = gps.satellites_visible;
-
-							float groundspeed = gps.vel * 1.0e-2f;
-							float groundcourse = gps.cog * 1.0e-2f;
-
-							/*
-							Invoke((MethodInvoker)delegate
-							{
-								this.Gauge_speed.Value = groundspeed;
-								this.lbl_speed.Text = groundspeed.ToString();
-							});*/
-
-							MAV.groundspeed = groundspeed;
-							MAV.groundcourse = groundcourse;
-							MAV.satcount = satcount;
-							
+							MAV.satcount = gps.satellites_visible;
+							MAV.groundspeed = gps.vel * 1.0e-2f;
+							MAV.groundcourse = gps.cog * 1.0e-2f;
+														
 							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
+
+						DateTime globalRawPacketRecived = DateTime.Now;
+						log.Debug("globalRawPacketRecived time: " + globalRawPacketRecived.ToString("hh:mm:ss.ffffff"));
 					}
 
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.ATTITUDE))
@@ -506,6 +459,7 @@ namespace Diva.Mavlink
 			}
 		}
 
+		#endregion
 
 		/// <summary>
 		/// Called when object was created

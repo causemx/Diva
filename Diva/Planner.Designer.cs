@@ -841,7 +841,6 @@ namespace Diva
 			// 
 			// timerMapItemUpdate
 			// 
-			this.timerMapItemUpdate.Interval = 1200;
 			this.timerMapItemUpdate.Tick += new System.EventHandler(this.timerMapItemUpdate_Tick);
 			// 
 			// ImgListBatteryHealth

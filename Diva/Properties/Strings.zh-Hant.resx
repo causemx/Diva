@@ -375,4 +375,7 @@
   <data name="TelemetryDataPanel.GBVerticalSpeed.Text" xml:space="preserve">
     <value>    垂直速度</value>
   </data>
+  <data name="MsgMissionAcceptWP" xml:space="preserve">
+    <value>成功寫入航點</value>
+  </data>
 </root>
