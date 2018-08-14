@@ -136,11 +136,11 @@ namespace Diva.Controls
                 MessageBox.Show(Properties.Strings.DroneSetting_MsgDuplicatedName);
             } else if (!int.TryParse(TBoxComNo.Text, out int com) && RBSerial.Checked)
             {
-                MessageBox.Show(Properties.Strings.DroneSetting_MsgDuplicatedName);
+                MessageBox.Show(Properties.Strings.DroneSetting_MsgValueInvalid);
                 TBoxComNo.Focus();
             } else if (!int.TryParse(TBoxPortValue.Text, out int value))
             {
-                MessageBox.Show(Properties.Strings.DroneSetting_MsgDuplicatedName);
+                MessageBox.Show(Properties.Strings.DroneSetting_MsgValueInvalid);
                 TBoxPortValue.Focus();
             } else
             {
