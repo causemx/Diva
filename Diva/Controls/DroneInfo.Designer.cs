@@ -37,7 +37,7 @@
 			this.TxtBatteryHealth = new System.Windows.Forms.Label();
 			this.TxtSatelliteCount = new System.Windows.Forms.Label();
 			this.TxtSystemID = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
+			this.BtnClose = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -140,24 +140,25 @@
 			this.TxtSystemID.TabIndex = 8;
 			this.TxtSystemID.Text = "00";
 			// 
-			// button1
+			// BtnClose
 			// 
-			this.button1.AutoSize = true;
-			this.button1.FlatAppearance.BorderSize = 0;
-			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button1.Image = global::Diva.Properties.Resources.icon_zoomin;
-			this.button1.Location = new System.Drawing.Point(305, 3);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(30, 30);
-			this.button1.TabIndex = 9;
-			this.button1.UseVisualStyleBackColor = true;
+			this.BtnClose.AutoSize = true;
+			this.BtnClose.FlatAppearance.BorderSize = 0;
+			this.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnClose.Image = global::Diva.Properties.Resources.icon_zoomout;
+			this.BtnClose.Location = new System.Drawing.Point(305, 3);
+			this.BtnClose.Name = "BtnClose";
+			this.BtnClose.Size = new System.Drawing.Size(30, 30);
+			this.BtnClose.TabIndex = 9;
+			this.BtnClose.UseVisualStyleBackColor = true;
+			this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
 			// 
-			// DroneInfoPanel
+			// DroneInfo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.BtnClose);
 			this.Controls.Add(this.TxtSystemID);
 			this.Controls.Add(this.TxtSatelliteCount);
 			this.Controls.Add(this.TxtBatteryHealth);
@@ -167,7 +168,7 @@
 			this.Controls.Add(this.pictureBox2);
 			this.Controls.Add(this.TxtDroneName);
 			this.Controls.Add(this.PBDroneView);
-			this.Name = "DroneInfoPanel";
+			this.Name = "DroneInfo";
 			this.Size = new System.Drawing.Size(341, 78);
 			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -189,6 +190,6 @@
 		private System.Windows.Forms.Label TxtBatteryHealth;
 		private System.Windows.Forms.Label TxtSatelliteCount;
 		private System.Windows.Forms.Label TxtSystemID;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button BtnClose;
 	}
 }

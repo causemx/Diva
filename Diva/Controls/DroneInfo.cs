@@ -63,7 +63,7 @@ namespace Diva.Controls
 			mav.onCreate();
 			mav.MAV.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
 			this.BackColor = Color.FromArgb(67, 78, 84);
-			PBDroneView.Image = Bitmap.FromHicon(SystemIcons.Hand.Handle);
+			PBDroneView.Image = Bitmap.FromHicon(SystemIcons.Shield.Handle);
 		}
 
 		public void Deactivate()
@@ -110,6 +110,14 @@ namespace Diva.Controls
 				return 0;
 			}
 			
+		}
+
+
+		public event EventHandler CloseButtonClicked;
+
+		private void BtnClose_Click(object sender, EventArgs e)
+		{
+			CloseButtonClicked?.Invoke(this, e) ;
 		}
 	}
 }

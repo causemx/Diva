@@ -2114,77 +2114,7 @@ namespace Diva
 			}
 		}
 
-		public void BUT_write_Click(object sender, EventArgs e)
-		{
-
-			// check home
-			Locationwp home = new Locationwp();
-			try
-			{
-				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TxtHomeLatitude.Text));
-				home.lng = (double.Parse(TxtHomeLongitude.Text));
-				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
-			}
-			catch
-			{
-				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
-				return;
-			}
-
-			// check for invalid grid data
-			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
-			{
-				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
-				{
-					double answer;
-					if (b >= 1 && b <= 7)
-					{
-						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
-						{
-							MessageBox.Show(ResStrings.MsgMissionError);
-							return;
-						}
-					}
-
-					// if (TXT_altwarn.Text == "")
-					// 	TXT_altwarn.Text = (0).ToString();
-
-					if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
-						continue;
-
-					ushort cmd =
-						(ushort)
-								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
-
-					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
-						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
-					{
-						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
-							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
-						{
-							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
-							return;
-						}
-					}
-				}
-			}
-
-			ProgressDialog saveWaypointsDialog = new ProgressDialog()
-			{
-				IsActive = true,
-			};
-			saveWaypointsDialog.Focus();
-			// saveWaypointsDialog.CenterToScreen();
-			saveWaypointsDialog.Show();
-			saveWaypointsDialog.DoWork += saveWPs;
-			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
-			saveWaypointsDialog.Run();
-			
-			myMap.Focus();
-		}
+		
 
 		
 
@@ -2859,6 +2789,17 @@ namespace Diva
 						return;
 					}
 				};
+
+				droneInfo.CloseButtonClicked += (s3, e3) =>
+				{
+					foreach (var item in comPorts.Where(p => p.Key == drone.Name).ToList())
+					{
+						comPorts[item.Key].mav.onDestroy();
+						comPorts.Remove(item.Key);
+						PanelDroneInfoList.Controls.Remove((Control)s3);
+					}
+				};
+
 				PanelDroneInfoList.Controls.Add(droneInfo);
 				droneInfo.Activate();
 				
@@ -2875,12 +2816,7 @@ namespace Diva
             }
         }
 
-		private void BUT_Takeoff_Click(object sender, EventArgs e)
-		{
-			comPort.setMode("GUIDED");
-
-			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
-		}
+		#region Button click event handlers
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
@@ -2904,8 +2840,27 @@ namespace Diva
 			}
 		}
 
+		private void BUT_Takeoff_Click(object sender, EventArgs e)
+		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
+			comPort.setMode("GUIDED");
+
+			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
+		}
+
 		private void BUT_Auto_Click(object sender, EventArgs e)
 		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
 			if (comPort.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
@@ -2916,6 +2871,12 @@ namespace Diva
 
 		private void BUT_RTL_Click(object sender, EventArgs e)
 		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
 			if (comPort.BaseStream.IsOpen)
 			{
 				comPort.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
@@ -2929,6 +2890,13 @@ namespace Diva
 		/// <param name="e"></param>
 		public void BUT_read_Click(object sender, EventArgs e)
 		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
+
 			if (dgvWayPoints.Rows.Count > 0)
 			{
 				
@@ -2942,6 +2910,86 @@ namespace Diva
 
 			getWPs();
 		}
+
+		public void BUT_write_Click(object sender, EventArgs e)
+		{
+
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
+			// check home
+			Locationwp home = new Locationwp();
+			try
+			{
+				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+				home.lat = (double.Parse(TxtHomeLatitude.Text));
+				home.lng = (double.Parse(TxtHomeLongitude.Text));
+				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+			}
+			catch
+			{
+				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
+				return;
+			}
+
+			// check for invalid grid data
+			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+			{
+				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
+				{
+					double answer;
+					if (b >= 1 && b <= 7)
+					{
+						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
+						{
+							MessageBox.Show(ResStrings.MsgMissionError);
+							return;
+						}
+					}
+
+					// if (TXT_altwarn.Text == "")
+					// 	TXT_altwarn.Text = (0).ToString();
+
+					if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
+						continue;
+
+					ushort cmd =
+						(ushort)
+								Enum.Parse(typeof(MAVLink.MAV_CMD),
+									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
+
+					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
+						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
+					{
+						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
+							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
+							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
+						{
+							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
+							return;
+						}
+					}
+				}
+			}
+
+			ProgressDialog saveWaypointsDialog = new ProgressDialog()
+			{
+				IsActive = true,
+			};
+			saveWaypointsDialog.Focus();
+			// saveWaypointsDialog.CenterToScreen();
+			saveWaypointsDialog.Show();
+			saveWaypointsDialog.DoWork += saveWPs;
+			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
+			saveWaypointsDialog.Run();
+
+			myMap.Focus();
+		}
+
+		#endregion
 
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
