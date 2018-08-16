@@ -39,14 +39,12 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.PanelDroneInfoList = new System.Windows.Forms.Panel();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.But_ZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.But_ZoomOut = new System.Windows.Forms.ToolStripButton();
 			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
-			this.DroneInfo3 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo2 = new Diva.Controls.DroneInfoPanel();
-			this.DroneInfo1 = new Diva.Controls.DroneInfoPanel();
 			this.BtnRTL = new Diva.Controls.Components.MyButton();
 			this.BtnLand = new Diva.Controls.Components.MyButton();
 			this.BtnVideo = new Diva.Controls.Components.MyButton();
@@ -105,7 +103,6 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.timerMapItemUpdate = new System.Windows.Forms.Timer(this.components);
 			this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
@@ -125,11 +122,9 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
+			this.splitContainer.Panel1.Controls.Add(this.PanelDroneInfoList);
 			this.splitContainer.Panel1.Controls.Add(this.toolStrip1);
 			this.splitContainer.Panel1.Controls.Add(this.CollectionTelemetryData);
-			this.splitContainer.Panel1.Controls.Add(this.DroneInfo3);
-			this.splitContainer.Panel1.Controls.Add(this.DroneInfo2);
-			this.splitContainer.Panel1.Controls.Add(this.DroneInfo1);
 			this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
 			this.splitContainer.Panel1.Controls.Add(this.BtnLand);
 			this.splitContainer.Panel1.Controls.Add(this.BtnVideo);
@@ -145,6 +140,12 @@ namespace Diva
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
+			// 
+			// PanelDroneInfoList
+			// 
+			this.PanelDroneInfoList.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			resources.ApplyResources(this.PanelDroneInfoList, "PanelDroneInfoList");
+			this.PanelDroneInfoList.Name = "PanelDroneInfoList";
 			// 
 			// toolStrip1
 			// 
@@ -182,44 +183,14 @@ namespace Diva
 			this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.CollectionTelemetryData.Name = "CollectionTelemetryData";
 			// 
-			// DroneInfo3
-			// 
-			resources.ApplyResources(this.DroneInfo3, "DroneInfo3");
-			this.DroneInfo3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo3.DroneName = "APM-3";
-			this.DroneInfo3.IsActivate = false;
-			this.DroneInfo3.Name = "DroneInfo3";
-			this.DroneInfo3.Tag = "2";
-			this.DroneInfo3.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo2
-			// 
-			resources.ApplyResources(this.DroneInfo2, "DroneInfo2");
-			this.DroneInfo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo2.DroneName = "APM-2";
-			this.DroneInfo2.IsActivate = false;
-			this.DroneInfo2.Name = "DroneInfo2";
-			this.DroneInfo2.Tag = "1";
-			this.DroneInfo2.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
-			// DroneInfo1
-			// 
-			resources.ApplyResources(this.DroneInfo1, "DroneInfo1");
-			this.DroneInfo1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.DroneInfo1.DroneName = "APM-1";
-			this.DroneInfo1.IsActivate = false;
-			this.DroneInfo1.Name = "DroneInfo1";
-			this.DroneInfo1.Tag = "0";
-			this.DroneInfo1.DoubleClick += new System.EventHandler(this.DroneInfo_DoubleClick);
-			// 
 			// BtnRTL
 			// 
-			resources.ApplyResources(this.BtnRTL, "BtnRTL");
 			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnRTL.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnRTL.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnRTL.ClickImage = null;
 			this.BtnRTL.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnRTL, "BtnRTL");
 			this.BtnRTL.ForeColor = System.Drawing.Color.White;
 			this.BtnRTL.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnRTL.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -230,12 +201,12 @@ namespace Diva
 			// 
 			// BtnLand
 			// 
-			resources.ApplyResources(this.BtnLand, "BtnLand");
 			this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnLand.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnLand.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnLand.ClickImage = null;
 			this.BtnLand.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnLand, "BtnLand");
 			this.BtnLand.ForeColor = System.Drawing.Color.White;
 			this.BtnLand.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnLand.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -247,12 +218,12 @@ namespace Diva
 			// 
 			// BtnVideo
 			// 
-			resources.ApplyResources(this.BtnVideo, "BtnVideo");
 			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnVideo.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnVideo.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnVideo.ClickImage = null;
 			this.BtnVideo.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnVideo, "BtnVideo");
 			this.BtnVideo.ForeColor = System.Drawing.Color.White;
 			this.BtnVideo.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnVideo.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -264,12 +235,12 @@ namespace Diva
 			// 
 			// BtnAuto
 			// 
-			resources.ApplyResources(this.BtnAuto, "BtnAuto");
 			this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnAuto.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnAuto.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnAuto.ClickImage = null;
 			this.BtnAuto.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnAuto, "BtnAuto");
 			this.BtnAuto.ForeColor = System.Drawing.Color.White;
 			this.BtnAuto.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnAuto.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -281,12 +252,12 @@ namespace Diva
 			// 
 			// BtnArm
 			// 
-			resources.ApplyResources(this.BtnArm, "BtnArm");
 			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnArm.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnArm.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnArm.ClickImage = null;
 			this.BtnArm.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnArm, "BtnArm");
 			this.BtnArm.ForeColor = System.Drawing.Color.White;
 			this.BtnArm.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnArm.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -298,12 +269,12 @@ namespace Diva
 			// 
 			// BtnReadWPs
 			// 
-			resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
 			this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnReadWPs.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.ClickImage = null;
 			this.BtnReadWPs.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
 			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnReadWPs.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -315,12 +286,12 @@ namespace Diva
 			// 
 			// BtnTakeOff
 			// 
-			resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
 			this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnTakeOff.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.ClickImage = null;
 			this.BtnTakeOff.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
 			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
 			this.BtnTakeOff.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -332,12 +303,12 @@ namespace Diva
 			// 
 			// BtnWriteWPs
 			// 
-			resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
 			this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnWriteWPs.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.ClickImage = null;
 			this.BtnWriteWPs.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
 			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnWriteWPs.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -839,10 +810,6 @@ namespace Diva
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
-			// timerMapItemUpdate
-			// 
-			this.timerMapItemUpdate.Tick += new System.EventHandler(this.timerMapItemUpdate_Tick);
-			// 
 			// ImgListBatteryHealth
 			// 
 			this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
@@ -889,7 +856,6 @@ namespace Diva
 		private System.Windows.Forms.ToolStripMenuItem miClearMission;
 		private System.Windows.Forms.ToolStripMenuItem miSetHomeHere;
 		private System.Windows.Forms.ToolStripMenuItem miClearAllMissions;
-		private System.Windows.Forms.Timer timerMapItemUpdate;
 		private System.Windows.Forms.ToolStrip TSMainPanel;
 		private MyTSButton TSBtnConnect;
 		private MyTSButton TSBtnRotation;
@@ -907,9 +873,6 @@ namespace Diva
 		private Button BtnHomeLand;
 		private ImageList ImgListBatteryHealth;
 		private MyButton BtnRTL;
-		private DroneInfoPanel DroneInfo1;
-		private DroneInfoPanel DroneInfo2;
-		private DroneInfoPanel DroneInfo3;
 		private TelemetryDataPanel CollectionTelemetryData;
 		private Button BtnAltitude;
 		private Button BtnDroneMode;
@@ -951,5 +914,6 @@ namespace Diva
 		private ToolStripLabel toolStripLabel1;
 		private ToolStripButton But_ZoomIn;
 		private ToolStripButton But_ZoomOut;
+		private Panel PanelDroneInfoList;
 	}
 }

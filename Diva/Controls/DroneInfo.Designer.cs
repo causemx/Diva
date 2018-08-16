@@ -1,6 +1,6 @@
 ﻿namespace Diva.Controls
 {
-	partial class DroneInfoPanel
+	partial class DroneInfo
 	{
 		/// <summary> 
 		/// 設計工具所需的變數。
