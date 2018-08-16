@@ -3885,6 +3885,8 @@ namespace Diva
 				
 				Thread.Sleep(500);
 
+				if (comPorts.Count == 0) { overlays.routes.Markers.Clear(); }
+
 				try
 				{
 
