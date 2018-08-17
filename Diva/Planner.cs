@@ -3919,5 +3919,9 @@ namespace Diva
 			}				
 		}
 
+		private void TSBtnCusOverlay_Click(object sender, EventArgs e)
+		{
+			myMap.Overlays.Add(new GMapCustomOverlay());
+		}
 	}
 }

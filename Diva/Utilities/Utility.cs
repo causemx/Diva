@@ -307,9 +307,6 @@ namespace Diva.Utilities
 	}
 
 
-
-
-
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
@@ -447,6 +444,22 @@ namespace Diva.Utilities
 	//    DrawImageUnscaled(g, Resources.shadow50, LocalPosition.X, LocalPosition.Y);
 			DrawImageUnscaled(g, Resources.marker, LocalPosition.X, LocalPosition.Y);
 #endif
+		}
+	}
+
+	[Serializable]
+	public class GMapCustomOverlay : GMapOverlay
+	{
+		public override void OnRender(Graphics g)
+		{
+			base.OnRender(g);
+
+			Font f = new Font("Arial", 64);
+			SolidBrush d = new SolidBrush(Color.Black);
+			float x = 300.0f;
+			float y = 300.0f;
+			StringFormat df = new StringFormat();
+			g.DrawString("Hello World!!!", f, d, new PointF(x, y));
 		}
 	}
 }
