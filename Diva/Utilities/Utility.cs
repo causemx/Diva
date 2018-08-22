@@ -456,10 +456,10 @@ namespace Diva.Utilities
 
 			Font f = new Font("Arial", 64);
 			SolidBrush d = new SolidBrush(Color.Black);
-			float x = 300.0f;
-			float y = 300.0f;
+			float x = 150.0f;
+			float y = 150.0f;
 			StringFormat df = new StringFormat();
-			g.DrawString("Hello World!!!", f, d, new PointF(x, y));
+			g.DrawString("Patrol Area!!!", f, d, new PointF(x, y));
 		}
 	}
 }
