@@ -188,7 +188,7 @@ namespace Diva
 		{
 			InitializeComponent();
 
-			string username = AccountManager.GetLoginAccount();
+            string username = AccountManager.GetLoginAccount();
 			if (username == "") username = ResStrings.StrAnonymousAccount;
 			Text += " - " + username;
 
