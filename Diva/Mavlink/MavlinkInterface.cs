@@ -360,8 +360,7 @@ namespace Diva.Mavlink
 								double vz = loc.vz * 0.01;
 							}
 						}
-						DateTime globalPositionPacketRecived = DateTime.Now;
-						log.Debug("globalPositionPacketRecived time: " + globalPositionPacketRecived.ToString("hh:mm:ss.ffffff"));
+					
 					}
 
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.GPS_RAW_INT))
@@ -391,8 +390,6 @@ namespace Diva.Mavlink
 							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
 
-						DateTime globalRawPacketRecived = DateTime.Now;
-						log.Debug("globalRawPacketRecived time: " + globalRawPacketRecived.ToString("hh:mm:ss.ffffff"));
 					}
 
 					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.ATTITUDE))
@@ -467,6 +464,7 @@ namespace Diva.Mavlink
 		/// <returns></returns>
 		public void onCreate()
 		{
+
 			SerialReaderThread = new Thread(SerialReader)
 			{
 				IsBackground = true,

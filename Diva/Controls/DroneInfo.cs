@@ -11,7 +11,7 @@ using Diva.Mavlink;
 
 namespace Diva.Controls
 {
-	public partial class DroneInfoPanel : UserControl, IActivate, IDeactivate
+	public partial class DroneInfo : UserControl, IActivate, IDeactivate
 	{
 
 		private bool isActive = false;
@@ -39,14 +39,12 @@ namespace Diva.Controls
 				}
 			}
 		}
+		public MavlinkInterface mav { get; }
 
-		private string droneName = "";
-		public string DroneName
+		private string _droneName = "";
+		public string droneName
 		{
-			get
-			{
-				return droneName;
-			}
+			get	{ return droneName; }
 			set
 			{
 				this.droneName = value;
@@ -54,15 +52,18 @@ namespace Diva.Controls
 			}
 		}
 
-		public DroneInfoPanel()
+		public DroneInfo(MavlinkInterface m)
 		{
 			InitializeComponent();
+			this.mav = m;
 		}
 
 		public void Activate()
 		{
+			mav.onCreate();
+			mav.MAV.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
 			this.BackColor = Color.FromArgb(67, 78, 84);
-			PBDroneView.Image = Properties.Resources.icon_debug;
+			PBDroneView.Image = Bitmap.FromHicon(SystemIcons.Shield.Handle);
 		}
 
 		public void Deactivate()
@@ -109,6 +110,14 @@ namespace Diva.Controls
 				return 0;
 			}
 			
+		}
+
+
+		public event EventHandler CloseButtonClicked;
+
+		private void BtnClose_Click(object sender, EventArgs e)
+		{
+			CloseButtonClicked?.Invoke(this, e) ;
 		}
 	}
 }

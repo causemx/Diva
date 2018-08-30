@@ -190,11 +190,11 @@
     <Compile Include="Controls\ConfigTuningPage.Designer.cs">
       <DependentUpon>ConfigTuningPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DroneInfoPanel.cs">
+    <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\DroneInfoPanel.Designer.cs">
-      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    <Compile Include="Controls\DroneInfo.Designer.cs">
+      <DependentUpon>DroneInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
@@ -250,7 +250,6 @@
     <Compile Include="Controls\VehicleConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cooper\Rotation.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
@@ -311,8 +310,8 @@
     <EmbeddedResource Include="Controls\ConfigureForm.zh-Hant.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
-      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DroneInfo.resx">
+      <DependentUpon>DroneInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneSettingInput.resx">
       <DependentUpon>DroneSettingInput.cs</DependentUpon>

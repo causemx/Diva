@@ -12,7 +12,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -23,9 +22,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
+using System.Linq;
 
 using ResStrings = Diva.Properties.Strings;
 
@@ -34,7 +33,7 @@ namespace Diva
 	public partial class Planner : Form
 	{
 
-		public static List<MavlinkInterface> comPorts = new List<MavlinkInterface>();
+		public static Dictionary<string, DroneInfo> comPorts = new Dictionary<string, DroneInfo>();
 		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
@@ -61,14 +60,13 @@ namespace Diva
 			}
 		}
 
-		public DroneInfoPanel CurrentDroneInfo = null;
+		public DroneInfo CurrentDroneInfo = null;
 
 		public bool autopan { get; set; }
 
 		public static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly double WARN_ALT = 2D;
-		private List<GMapOverlay> routesOverlays = new List<GMapOverlay>();
 
 		private class plannerOverlays
 		{
@@ -81,6 +79,7 @@ namespace Diva
 			public GMapOverlay drawnpolygons;
 			public GMapOverlay geofence;
 			public GMapOverlay POI;
+			public GMapOverlay routes;
 			internal plannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
@@ -126,6 +125,7 @@ namespace Diva
 
 		// Thread setup
 		private Thread mainThread = null;
+		private Thread updateMapItemThread = null;
 		private bool serialThread = false;
 
 		private DateTime heartbeatSend = DateTime.Now;
@@ -180,8 +180,6 @@ namespace Diva
 			PX4
 		}
 
-
-		private List<DroneInfoPanel> DroneInfos = new List<DroneInfoPanel>();
 		internal MyGMap GMapControl => myMap;
 
 		public Planner()
@@ -229,11 +227,6 @@ namespace Diva
 			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
 
 			//Collect DroneInfoPanels
-			DroneInfos = new List<DroneInfoPanel>()
-			{ DroneInfo1, DroneInfo2, DroneInfo3 };
-			//DroneInfos.Add(DroneInfo1);
-			//DroneInfos.Add(DroneInfo2);
-			//DroneInfos.Add(DroneInfo3);
 
 			// setup geofence
 			
@@ -280,12 +273,6 @@ namespace Diva
 			TxtHomeLongitude.Text = lng.ToString();
 		}
 	
-		private void AddRouteOverlay(int count)
-		{
-			GMapOverlay routesOverlay = new GMapOverlay(string.Format("route_{0}", count));
-			routesOverlays.Add(routesOverlay);
-			myMap.Overlays.Add(routesOverlay);
-		}
 
 		private void Planner_Load(object sender, EventArgs e)
 		{
@@ -310,7 +297,10 @@ namespace Diva
 				Priority = ThreadPriority.AboveNormal
 			};
 			mainThread.Start();
-			timerMapItemUpdate.Start();
+
+			updateMapItemThread = new Thread(MapitemUpdateLoop) { IsBackground = true };
+			updateMapItemThread.Start();
+			isUpdatemapThreadRun = true;
 		}
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
@@ -319,15 +309,22 @@ namespace Diva
 			{
 				serialThread = false;
 				e.Cancel = true;
+				mainThread = null;
 			}
+
+			if (updateMapItemThread != null)
+			{
+				isUpdatemapThreadRun = false;
+				updateMapItemThread = null;
+			}
+			
 		}
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
 			DatabaseManager.Dump(recorder_id);
-			comPorts.ForEach(p => p.onDestroy());
-			timerMapItemUpdate.Stop();
+			foreach (DroneInfo d in comPorts.Values) { d.mav.onDestroy(); }
 		}
 
 		private void MainLoop()
@@ -1048,7 +1045,7 @@ namespace Diva
 
 
 
-		public static void doConnect(MavlinkInterface comPort, string portname, string port, string baud)
+		public static bool doConnect(MavlinkInterface comPort, string portname, string port, string baud)
 		{
 			// Setup comport.basestream
 			switch (portname)
@@ -1118,7 +1115,7 @@ namespace Diva
 					catch
 					{
 					}
-					return;
+					return false;
 				}
 
 				// get all the params
@@ -1153,6 +1150,8 @@ namespace Diva
 					.FormatWith(ex.Message));
 				throw new Exception();
 			}
+
+			return true;
 		}
 
 
@@ -2115,77 +2114,7 @@ namespace Diva
 			}
 		}
 
-		public void BUT_write_Click(object sender, EventArgs e)
-		{
-
-			// check home
-			Locationwp home = new Locationwp();
-			try
-			{
-				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TxtHomeLatitude.Text));
-				home.lng = (double.Parse(TxtHomeLongitude.Text));
-				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
-			}
-			catch
-			{
-				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
-				return;
-			}
-
-			// check for invalid grid data
-			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
-			{
-				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
-				{
-					double answer;
-					if (b >= 1 && b <= 7)
-					{
-						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
-						{
-							MessageBox.Show(ResStrings.MsgMissionError);
-							return;
-						}
-					}
-
-					// if (TXT_altwarn.Text == "")
-					// 	TXT_altwarn.Text = (0).ToString();
-
-					if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
-						continue;
-
-					ushort cmd =
-						(ushort)
-								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
-
-					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
-						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
-					{
-						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
-							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
-						{
-							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
-							return;
-						}
-					}
-				}
-			}
-
-			ProgressDialog saveWaypointsDialog = new ProgressDialog()
-			{
-				IsActive = true,
-			};
-			saveWaypointsDialog.Focus();
-			// saveWaypointsDialog.CenterToScreen();
-			saveWaypointsDialog.Show();
-			saveWaypointsDialog.DoWork += saveWPs;
-			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
-			saveWaypointsDialog.Run();
-			
-			myMap.Focus();
-		}
+		
 
 		
 
@@ -2839,13 +2768,44 @@ namespace Diva
             try
             {
                 var mav = new MavlinkInterface();
-                doConnect(mav, drone.PortName, drone.PortNumber, drone.Baudrate);
-                mav.onCreate();
-                comPorts.Add(mav);
-                AddRouteOverlay(comPorts.Count);
-                mav.MAV.GuidedMode.z = 10;
-                DroneInfo1.Activate();
-                CurrentDroneInfo = DroneInfo1;
+				if (!doConnect(mav, drone.PortName, drone.PortNumber, drone.Baudrate))
+					return;
+
+				DroneInfo droneInfo = new DroneInfo(mav);
+				droneInfo.DoubleClick += (s2, e2) =>
+				{
+					try
+					{
+						var panel = comPorts[((DroneInfo)s2).droneName];
+						if (!panel.mav.BaseStream.IsOpen) throw new Exception("drone not connected");
+
+						CurrentDroneInfo = panel;
+						CurrentDroneInfo.Activate();
+						comPort = mav;
+					}
+					catch (Exception exception)
+					{
+						log.Debug(exception.ToString());
+						return;
+					}
+				};
+
+				droneInfo.CloseButtonClicked += (s3, e3) =>
+				{
+					foreach (var item in comPorts.Where(p => p.Key == drone.Name).ToList())
+					{
+						comPorts[item.Key].mav.onDestroy();
+						comPorts.Remove(item.Key);
+						PanelDroneInfoList.Controls.Remove((Control)s3);
+					}
+				};
+
+				PanelDroneInfoList.Controls.Add(droneInfo);
+				droneInfo.Activate();
+				
+                comPorts.Add(drone.Name, droneInfo);
+
+                CurrentDroneInfo = droneInfo;
                 comPort = mav;
 
 
@@ -2856,12 +2816,7 @@ namespace Diva
             }
         }
 
-        private void BUT_Takeoff_Click(object sender, EventArgs e)
-		{
-			comPort.setMode("GUIDED");
-
-			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
-		}
+		#region Button click event handlers
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
@@ -2885,8 +2840,27 @@ namespace Diva
 			}
 		}
 
+		private void BUT_Takeoff_Click(object sender, EventArgs e)
+		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
+			comPort.setMode("GUIDED");
+
+			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
+		}
+
 		private void BUT_Auto_Click(object sender, EventArgs e)
 		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
 			if (comPort.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
@@ -2897,6 +2871,12 @@ namespace Diva
 
 		private void BUT_RTL_Click(object sender, EventArgs e)
 		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
 			if (comPort.BaseStream.IsOpen)
 			{
 				comPort.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
@@ -2910,6 +2890,13 @@ namespace Diva
 		/// <param name="e"></param>
 		public void BUT_read_Click(object sender, EventArgs e)
 		{
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
+
 			if (dgvWayPoints.Rows.Count > 0)
 			{
 				
@@ -2924,6 +2911,86 @@ namespace Diva
 			getWPs();
 		}
 
+		public void BUT_write_Click(object sender, EventArgs e)
+		{
+
+			if (!comPort.BaseStream.IsOpen)
+			{
+				log.Error("basestream have opened");
+				return;
+			}
+
+			// check home
+			Locationwp home = new Locationwp();
+			try
+			{
+				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+				home.lat = (double.Parse(TxtHomeLatitude.Text));
+				home.lng = (double.Parse(TxtHomeLongitude.Text));
+				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+			}
+			catch
+			{
+				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
+				return;
+			}
+
+			// check for invalid grid data
+			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+			{
+				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
+				{
+					double answer;
+					if (b >= 1 && b <= 7)
+					{
+						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
+						{
+							MessageBox.Show(ResStrings.MsgMissionError);
+							return;
+						}
+					}
+
+					// if (TXT_altwarn.Text == "")
+					// 	TXT_altwarn.Text = (0).ToString();
+
+					if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
+						continue;
+
+					ushort cmd =
+						(ushort)
+								Enum.Parse(typeof(MAVLink.MAV_CMD),
+									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
+
+					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
+						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
+					{
+						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
+							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
+							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
+						{
+							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
+							return;
+						}
+					}
+				}
+			}
+
+			ProgressDialog saveWaypointsDialog = new ProgressDialog()
+			{
+				IsActive = true,
+			};
+			saveWaypointsDialog.Focus();
+			// saveWaypointsDialog.CenterToScreen();
+			saveWaypointsDialog.Show();
+			saveWaypointsDialog.DoWork += saveWPs;
+			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
+			saveWaypointsDialog.Run();
+
+			myMap.Focus();
+		}
+
+		#endregion
+
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			TxtHomeAltitude.Text = "0";
@@ -2937,94 +3004,7 @@ namespace Diva
 
 		private void BUT_Rotation2_Click(object sender, EventArgs e)
 		{
-			
-			ProgressDialog _dialog = new ProgressDialog();
-			_dialog.IsActive = true;
-			_dialog.Show();
-
-            _dialog.DoWork += delegate (object dialog, DoWorkEventArgs dwe)
-            {
-    
-                // TODO think about mavlinkinterface dispose issue.
-
-				var mav1 = comPorts[0];
-				var mav2 = comPorts[1];
-				var mav3 = comPorts[2];
-
-				try
-				{
-					if (!mav1.BaseStream.IsOpen || !mav2.BaseStream.IsOpen) return;
-						
-					_dialog.ReportProgress(-1, ResStrings.MsgWaitingForSwitchingTo.FormatWith("GUIDED"));
-					mav1.setMode(mav1.MAV.sysid, mav1.MAV.compid, "GUIDED");
-					Thread.Sleep(500);
-					mav2.setMode(mav2.MAV.sysid, mav2.MAV.compid, "GUIDED");
-					Thread.Sleep(500);
-					mav3.setMode(mav3.MAV.sysid, mav3.MAV.compid, "GUIDED");
-
-					_dialog.ReportProgress(-1, ResStrings.MsgModeChanged.FormatWith("GUIDED"));
-
-					// do command - arm throttle
-
-					_dialog.ReportProgress(-1, ResStrings.MsgArming);
-					while (!mav1.MAV.armed)
-					{
-						mav1.doARM(true);
-						mav1.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(500);
-					}
-
-					while (!mav2.MAV.armed)
-					{
-						mav2.doARM(true);
-						mav2.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(500);
-					}
-
-					while (!mav3.MAV.armed)
-					{
-						mav3.doARM(true);
-						mav3.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 20);
-						Thread.Sleep(500);
-					}
-
-					_dialog.ReportProgress(-1, ResStrings.MsgTakedOff);
-
-
-						
-					_dialog.ReportProgress(-1, ResStrings.MsgWaitingForSwitchingTo.FormatWith("AUTO"));
-					// switch mode to AUTO
-					while (mav1.MAV.mode != (uint)3)
-					{
-						mav1.setMode(mav1.MAV.sysid, mav1.MAV.compid, "AUTO");
-						Thread.Sleep(500);
-					}
-
-					while (mav2.MAV.mode != (uint)3)
-					{
-						mav2.setMode(mav2.MAV.sysid, mav2.MAV.compid, "AUTO");
-						Thread.Sleep(500);
-					}
-
-					while (mav3.MAV.mode != (uint)3)
-					{
-						mav3.setMode(mav3.MAV.sysid, mav3.MAV.compid, "AUTO");
-						Thread.Sleep(500);
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.ToString());
-				}
-				
-			};
-
-			_dialog.ProgressChanged += delegate (object dialog, ProgressChangedEventArgs pce) {
-				_dialog.Message = pce.UserState + ".";
-			};
-
-			_dialog.Run();
-
+			// TODO New rotation logic add here.
 		}
 
 		private void BUT_Land_Click(object sender, EventArgs e)
@@ -3116,32 +3096,7 @@ namespace Diva
 			}
 		}
 
-		private void DroneInfo_DoubleClick(object sender, EventArgs e)
-		{
-			try
-			{
-				
-				var mav = comPorts[Convert.ToInt32(((DroneInfoPanel)sender).Tag)];
-				if (!mav.BaseStream.IsOpen) throw new Exception("drone not connected");
-
-				CurrentDroneInfo = (DroneInfoPanel)sender;
-				CurrentDroneInfo.Activate();
-
-				comPort = mav;
-
-				foreach (DroneInfoPanel droneInfo in DroneInfos)
-				{
-					if (droneInfo.Tag != CurrentDroneInfo.Tag)
-						droneInfo.Deactivate();
-				}
-
-			}
-			catch (Exception exception)
-			{
-				log.Debug(exception.ToString());
-				return;
-			}
-		}
+	
 
 		internal string wpfilename;
 
@@ -3916,50 +3871,52 @@ namespace Diva
 			geofencePolygon.Points.Clear();
 		}
 
-
 		/// <summary>
 		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
+		/// Frame rate about 20 ms
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void timerMapItemUpdate_Tick(object sender, EventArgs e)
+
+		public static bool isUpdatemapThreadRun = false;
+		private void MapitemUpdateLoop()
 		{
-			try
+
+			while (isUpdatemapThreadRun)
 			{
-				if (isMouseDown || currentRectMarker != null)
-					return;
-				for (int i = 0; i < comPorts.Count; i++)
+				
+				Thread.Sleep(500);
+
+				if (comPorts.Count == 0) { overlays.routes.Markers.Clear(); }
+
+				try
 				{
-					MavlinkInterface _port = comPorts[i];
-					routesOverlays[i].Markers.Clear();
 
-					if (_port.MAV.current_lat == 0 || _port.MAV.current_lng == 0)
-						continue;
-
-					var marker = new GMapMarkerQuad(new PointLatLng(_port.MAV.current_lat, _port.MAV.current_lng),
-						_port.MAV.yaw, _port.MAV.groundcourse, _port.MAV.nav_bearing, _port.MAV.sysid);
-
-					routesOverlays[i].Markers.Add(marker);
-				}
-
-				//autopan
-				if (autopan)
-				{
-					if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+					foreach (KeyValuePair<string, DroneInfo> entry in comPorts)
 					{
-						PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
-						updateMapPosition(currentloc);
-						mapupdate = DateTime.Now;
+						MavlinkInterface _mav = entry.Value.mav;
+						overlays.routes.Markers.Clear();
+						if (_mav.MAV.current_lat == 0 || _mav.MAV.current_lng == 0) { continue; }
+						var marker = new GMapMarkerQuad(new PointLatLng(_mav.MAV.current_lat, _mav.MAV.current_lng),
+							_mav.MAV.yaw, _mav.MAV.groundcourse, _mav.MAV.nav_bearing, _mav.MAV.sysid);
+						overlays.routes.Markers.Add(marker);
+
+					}
+
+					//autopan
+					if (autopan)
+					{
+						if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+						{
+							PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+							updateMapPosition(currentloc);
+							mapupdate = DateTime.Now;
+						}
 					}
 				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
-
-			// DateTime timerTick = DateTime.Now;
-			// log.Debug("timertick time: " + timerTick.ToString("hh:mm:ss.ffffff"));
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.ToString());
+				}
+			}				
 		}
 
 	}
