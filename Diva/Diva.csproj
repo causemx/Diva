@@ -280,6 +280,7 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Strings.cs" />
+    <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />
     <Compile Include="Utilities\Locationwp.cs" />

@@ -748,7 +748,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="TSMainPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>534, 79</value>
+    <value>565, 79</value>
   </data>
   <data name="TSMainPanel.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1063,7 +1063,7 @@
     <value>False</value>
   </data>
   <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>69</value>
+    <value>71</value>
   </data>
   <data name="dgvWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1535,7 +1535,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAc
-        CwAAAk1TRnQBSQFMAgEBBgEAAZQBAgGUAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBgEAAaQBAgGkAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -1597,9 +1597,6 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>948, 662</value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>962, 644</value>
   </data>
@@ -1625,6 +1622,48 @@
     <value>But_ZoomOut</value>
   </data>
   <data name="&gt;&gt;But_ZoomOut.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConnect.Name" xml:space="preserve">
+    <value>TSBtnConnect</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConnect.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnRotation.Name" xml:space="preserve">
+    <value>TSBtnRotation</value>
+  </data>
+  <data name="&gt;&gt;TSBtnRotation.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConfigure.Name" xml:space="preserve">
+    <value>TSBtnConfigure</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnTagging.Name" xml:space="preserve">
+    <value>TSBtnTagging</value>
+  </data>
+  <data name="&gt;&gt;TSBtnTagging.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnSaveMission.Name" xml:space="preserve">
+    <value>TSBtnSaveMission</value>
+  </data>
+  <data name="&gt;&gt;TSBtnSaveMission.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnReadMission.Name" xml:space="preserve">
+    <value>TSBtnReadMission</value>
+  </data>
+  <data name="&gt;&gt;TSBtnReadMission.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnCusOverlay.Name" xml:space="preserve">
+    <value>TSBtnCusOverlay</value>
+  </data>
+  <data name="&gt;&gt;TSBtnCusOverlay.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;drawPolygonToolStripMenuItem.Name" xml:space="preserve">
@@ -1800,48 +1839,6 @@
   </data>
   <data name="&gt;&gt;ImgListBatteryHealth.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TSBtnCusOverlay.Name" xml:space="preserve">
-    <value>TSBtnCusOverlay</value>
-  </data>
-  <data name="&gt;&gt;TSBtnCusOverlay.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConnect.Name" xml:space="preserve">
-    <value>TSBtnConnect</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConnect.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnRotation.Name" xml:space="preserve">
-    <value>TSBtnRotation</value>
-  </data>
-  <data name="&gt;&gt;TSBtnRotation.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConfigure.Name" xml:space="preserve">
-    <value>TSBtnConfigure</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnTagging.Name" xml:space="preserve">
-    <value>TSBtnTagging</value>
-  </data>
-  <data name="&gt;&gt;TSBtnTagging.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnSaveMission.Name" xml:space="preserve">
-    <value>TSBtnSaveMission</value>
-  </data>
-  <data name="&gt;&gt;TSBtnSaveMission.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnReadMission.Name" xml:space="preserve">
-    <value>TSBtnReadMission</value>
-  </data>
-  <data name="&gt;&gt;TSBtnReadMission.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Planner</value>

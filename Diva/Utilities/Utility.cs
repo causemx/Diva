@@ -450,16 +450,55 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapCustomOverlay : GMapOverlay
 	{
+		private string title;
+
+		public GMapCustomOverlay() { }
+
+		public GMapCustomOverlay(string render_title)
+		{
+			this.title = render_title;
+		}
+
 		public override void OnRender(Graphics g)
 		{
 			base.OnRender(g);
 
-			Font f = new Font("Arial", 64);
-			SolidBrush d = new SolidBrush(Color.Black);
-			float x = 150.0f;
-			float y = 150.0f;
-			StringFormat df = new StringFormat();
-			g.DrawString("Patrol Area!!!", f, d, new PointF(x, y));
+			float width = ((float)this.Control.ClientRectangle.Width);
+			float height = ((float)this.Control.ClientRectangle.Width);
+			float emSize = 30;
+
+
+			Font font = new Font(FontFamily.GenericSansSerif, emSize, FontStyle.Regular);
+			font = FindBestFitFont(g, title, font, this.Control.ClientRectangle.Size);
+			SolidBrush d = new SolidBrush(Color.Red);
+			SizeF size = g.MeasureString(title.ToString(), font);
+
+
+			StringFormat sf = new StringFormat()
+			{
+				Alignment = StringAlignment.Center,
+				LineAlignment = StringAlignment.Center
+			};
+			// g.DrawString(title, font, d, (width - size.Width) / 2, 0, sf);
+			g.DrawString(title, font, d, 0, -300, sf);
+		}
+
+		private Font FindBestFitFont(Graphics g, String text, Font font, Size proposedSize)
+		{
+			// Compute actual size, shrink if needed
+			while (true)
+			{
+				SizeF size = g.MeasureString(text, font);
+
+				// It fits, back out
+				if (size.Height <= proposedSize.Height &&
+					 size.Width <= proposedSize.Width) { return font; }
+
+				// Try a smaller font (90% of old size)
+				Font oldFont = font;
+				font = new Font(font.Name, (float)(font.Size * .1), font.Style);
+				oldFont.Dispose();
+			}
 		}
 	}
 }

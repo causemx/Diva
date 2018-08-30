@@ -24,7 +24,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.Linq;
 
 using ResStrings = Diva.Properties.Strings;
 
@@ -3919,9 +3918,114 @@ namespace Diva
 			}				
 		}
 
-		private void TSBtnCusOverlay_Click(object sender, EventArgs e)
+
+		#region customized overlay related functions
+
+		GMapCustomOverlay customOverlay = null;
+
+
+		private void ReadCustomizedOverlayFile(string file)
 		{
-			myMap.Overlays.Add(new GMapCustomOverlay());
+			int cp_count = 0;
+			bool error = false;
+			List<Customizewp> cmds = new List<Customizewp>();
+
+			try
+			{
+				StreamReader sr = new StreamReader(file); //"defines.h"
+				string title = Path.GetFileName(file);
+				customOverlay = new GMapCustomOverlay(title);
+
+				while (!error && !sr.EndOfStream)
+				{
+					string line = sr.ReadLine();
+					// waypoints
+
+					if (line.StartsWith("#"))
+						continue;
+
+					string[] items = line.Split(new[] { '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+					// if (items.Length <= 9)
+					//	continue;
+
+					try
+					{
+						Customizewp cp = new Customizewp();
+						cp.Id = Convert.ToUInt16(items[0], 16);
+						cp.Lat = (double.Parse(items[1], new CultureInfo("en-US")));
+						cp.Lng = (double.Parse(items[2], new CultureInfo("en-US")));
+						cp.Alt = (float)(double.Parse(items[3], new CultureInfo("en-US")));
+						cp.Tag = items[4];
+						cmds.Add(cp);
+						cp_count++;
+
+
+					}
+					catch (Exception ex)
+					{
+						log.Error(ex);
+					}
+				}
+
+				sr.Close();
+
+				myMap.Overlays.Add(customOverlay);
+				RenderToMap(cmds);
+				
+								
+				// myMap.ZoomAndCenterMarkers("objects");
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ResStrings.MsgCantOpenFile.FormatWith(ex.Message));
+			}
 		}
+
+		public void RenderToMap(List<Customizewp> cmds)
+		{
+			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
+			if (quickadd)
+				return;
+
+			// this is to share the current mission with the data tab
+			pointlist = new List<PointLatLngAlt>();
+
+			fullpointlist.Clear();
+
+			try
+			{
+				if (customOverlay != null) // hasnt been created yet
+				{
+					customOverlay.Markers.Clear();
+				}
+				cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, customOverlay));
+
+			}
+			catch (Exception ex)
+			{
+				log.Info(ex.ToString());
+			}
+		}
+
+
+		private void LoadCustomizedOverlay_Click(object o, EventArgs e)
+		{
+			using (OpenFileDialog op = new OpenFileDialog())
+			{
+				op.Filter = "All Supported Types|*.overlay;";
+				DialogResult result = op.ShowDialog();
+				string file = op.FileName;
+
+				if (File.Exists(file))
+				{
+					ReadCustomizedOverlayFile(file);
+				}
+
+				MessageBox.Show("Overlay Loaded");
+			}
+		}
+
+		#endregion
 	}
 }
