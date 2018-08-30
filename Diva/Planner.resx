@@ -131,6 +131,9 @@
   <data name="splitContainer.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
   </data>
+  <data name="PanelDroneInfoList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="PanelDroneInfoList.Location" type="System.Drawing.Point, System.Drawing">
     <value>595, 9</value>
   </data>
@@ -163,7 +166,7 @@
     <value>None</value>
   </data>
   <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 16</value>
+    <value>40, 15</value>
   </data>
   <data name="toolStripLabel1.Text" xml:space="preserve">
     <value>Zoom</value>
@@ -187,7 +190,7 @@
     <value>Magenta</value>
   </data>
   <data name="But_ZoomIn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 20</value>
+    <value>40, 19</value>
   </data>
   <data name="But_ZoomIn.Text" xml:space="preserve">
     <value>+</value>
@@ -211,16 +214,16 @@
     <value>Magenta</value>
   </data>
   <data name="But_ZoomOut.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 20</value>
+    <value>40, 19</value>
   </data>
   <data name="But_ZoomOut.Text" xml:space="preserve">
     <value>-</value>
   </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>548, 421</value>
+    <value>549, 421</value>
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 67</value>
+    <value>42, 64</value>
   </data>
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -715,106 +718,106 @@
     <value>17, 17</value>
   </metadata>
   <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Polygon Point</value>
   </data>
   <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear Polygon</value>
   </data>
   <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Save Polygon</value>
   </data>
   <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Load Polygon</value>
   </data>
   <data name="areaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="areaToolStripMenuItem.Text" xml:space="preserve">
     <value>Area</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Draw Polygon</value>
   </data>
   <data name="uploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
     <value>Upload</value>
   </data>
   <data name="downloadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="downloadToolStripMenuItem.Text" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="setReturnLocationToolStripMenuItem.Text" xml:space="preserve">
     <value>Set Return Location</value>
   </data>
   <data name="loadFromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="loadFromFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Load from File</value>
   </data>
   <data name="saveToFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="saveToFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Save to File</value>
   </data>
   <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>184, 22</value>
   </data>
   <data name="clearToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
     <value>No-Fly Zone</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 6</value>
+    <value>168, 6</value>
   </data>
   <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miClearMission.Text" xml:space="preserve">
     <value>Takeoff to Here</value>
   </data>
   <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miSetHomeHere.Text" xml:space="preserve">
     <value>Set Home Here</value>
   </data>
   <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miClearAllMissions.Text" xml:space="preserve">
     <value>Clear All Missions</value>
   </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 120</value>
+    <value>172, 120</value>
   </data>
   <data name="&gt;&gt;cmMap.Name" xml:space="preserve">
     <value>cmMap</value>
@@ -1457,7 +1460,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAc
-        CwAAAk1TRnQBSQFMAgEBBgEAAYQBAgGEAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBgEAAZQBAgGUAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -1513,9 +1516,6 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>77</value>
   </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>948, 662</value>
   </data>
