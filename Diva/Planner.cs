@@ -3932,48 +3932,11 @@ namespace Diva
 
 			try
 			{
-				StreamReader sr = new StreamReader(file); //"defines.h"
-				string title = Path.GetFileName(file);
-				customOverlay = new GMapCustomOverlay(title);
-
-				while (!error && !sr.EndOfStream)
-				{
-					string line = sr.ReadLine();
-					// waypoints
-
-					if (line.StartsWith("#"))
-						continue;
-
-					string[] items = line.Split(new[] { '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-					// if (items.Length <= 9)
-					//	continue;
-
-					try
-					{
-						Customizewp cp = new Customizewp();
-						cp.Id = Convert.ToUInt16(items[0], 16);
-						cp.Lat = (double.Parse(items[1], new CultureInfo("en-US")));
-						cp.Lng = (double.Parse(items[2], new CultureInfo("en-US")));
-						cp.Alt = (float)(double.Parse(items[3], new CultureInfo("en-US")));
-						cp.Tag = items[4];
-						cmds.Add(cp);
-						cp_count++;
+				Customizewp cp = new Customizewp();
+				Customizewp.ImportOverlayXML(file);
 
 
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-					}
-				}
 
-				sr.Close();
-
-				myMap.Overlays.Add(customOverlay);
-				RenderToMap(cmds);
-				
-								
 				// myMap.ZoomAndCenterMarkers("objects");
 			}
 			catch (Exception ex)
