@@ -91,6 +91,7 @@ namespace Diva
             public const string ForceAccountLogin = "ForceAccountLogin";
             public const string ImageMapSource = "ImageMapSource";
             public const string Language = "Language";
+            public const string MapProxy = "MapProxy";
             public const string MapCacheLocation = "MapCacheLocation";
             public const string MapInitialLocation = "MapInitialLocation";
             public const string Salt = "Salt";
@@ -139,6 +140,7 @@ namespace Diva
                     }  },
                     { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
                     { "lang|Language=", v => setOpt(OptionName.Language, v) },
+                    { "p|proxy=", v => setOpt(OptionName.Language, v) },
                     { "s|Salt=", v => setOpt(OptionName.Salt, v) },
                     { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }
                 }.Parse(args);

@@ -36,6 +36,12 @@
             this.BtnBrowseIndoorMap = new System.Windows.Forms.Button();
             this.RBtnIndoorMap = new System.Windows.Forms.RadioButton();
             this.PanelGlobalMapControls = new System.Windows.Forms.Panel();
+            this.TBoxProxyPort = new System.Windows.Forms.TextBox();
+            this.LabelProxyPort = new System.Windows.Forms.Label();
+            this.TBoxProxyHost = new System.Windows.Forms.TextBox();
+            this.RBtnProxyCustom = new System.Windows.Forms.RadioButton();
+            this.RBtnProxySystem = new System.Windows.Forms.RadioButton();
+            this.LabelProxySetting = new System.Windows.Forms.Label();
             this.LabelInitialPosition = new System.Windows.Forms.Label();
             this.TBoxInitialZoom = new System.Windows.Forms.TextBox();
             this.LabelInitialZoom = new System.Windows.Forms.Label();
@@ -56,7 +62,7 @@
             this.BtnMapConfigReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnMapConfigReset.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnMapConfigReset.ForeColor = System.Drawing.Color.White;
-            this.BtnMapConfigReset.Location = new System.Drawing.Point(650, 420);
+            this.BtnMapConfigReset.Location = new System.Drawing.Point(650, 500);
             this.BtnMapConfigReset.Name = "BtnMapConfigReset";
             this.BtnMapConfigReset.Size = new System.Drawing.Size(120, 40);
             this.BtnMapConfigReset.TabIndex = 22;
@@ -69,7 +75,7 @@
             this.BtnMapConfigApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnMapConfigApply.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnMapConfigApply.ForeColor = System.Drawing.Color.White;
-            this.BtnMapConfigApply.Location = new System.Drawing.Point(500, 420);
+            this.BtnMapConfigApply.Location = new System.Drawing.Point(500, 500);
             this.BtnMapConfigApply.Name = "BtnMapConfigApply";
             this.BtnMapConfigApply.Size = new System.Drawing.Size(120, 40);
             this.BtnMapConfigApply.TabIndex = 21;
@@ -82,10 +88,11 @@
             this.PanelIndoorMapControls.Controls.Add(this.LabelImageMapLocation);
             this.PanelIndoorMapControls.Controls.Add(this.TBoxIndoorMapLocation);
             this.PanelIndoorMapControls.Controls.Add(this.BtnBrowseIndoorMap);
-            this.PanelIndoorMapControls.Location = new System.Drawing.Point(60, 320);
+            this.PanelIndoorMapControls.Location = new System.Drawing.Point(60, 400);
             this.PanelIndoorMapControls.Name = "PanelIndoorMapControls";
             this.PanelIndoorMapControls.Size = new System.Drawing.Size(760, 60);
             this.PanelIndoorMapControls.TabIndex = 20;
+            this.PanelIndoorMapControls.Visible = false;
             // 
             // LabelImageMapLocation
             // 
@@ -125,16 +132,23 @@
             this.RBtnIndoorMap.AutoSize = true;
             this.RBtnIndoorMap.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RBtnIndoorMap.ForeColor = System.Drawing.Color.White;
-            this.RBtnIndoorMap.Location = new System.Drawing.Point(40, 280);
+            this.RBtnIndoorMap.Location = new System.Drawing.Point(40, 360);
             this.RBtnIndoorMap.Name = "RBtnIndoorMap";
             this.RBtnIndoorMap.Size = new System.Drawing.Size(132, 27);
             this.RBtnIndoorMap.TabIndex = 19;
             this.RBtnIndoorMap.Text = "Indoor Map";
             this.RBtnIndoorMap.UseVisualStyleBackColor = true;
+            this.RBtnIndoorMap.Visible = false;
             this.RBtnIndoorMap.CheckedChanged += new System.EventHandler(this.MapControl_RadioCheckedChanged);
             // 
             // PanelGlobalMapControls
             // 
+            this.PanelGlobalMapControls.Controls.Add(this.TBoxProxyPort);
+            this.PanelGlobalMapControls.Controls.Add(this.LabelProxyPort);
+            this.PanelGlobalMapControls.Controls.Add(this.TBoxProxyHost);
+            this.PanelGlobalMapControls.Controls.Add(this.RBtnProxyCustom);
+            this.PanelGlobalMapControls.Controls.Add(this.RBtnProxySystem);
+            this.PanelGlobalMapControls.Controls.Add(this.LabelProxySetting);
             this.PanelGlobalMapControls.Controls.Add(this.LabelInitialPosition);
             this.PanelGlobalMapControls.Controls.Add(this.TBoxInitialZoom);
             this.PanelGlobalMapControls.Controls.Add(this.LabelInitialZoom);
@@ -148,8 +162,73 @@
             this.PanelGlobalMapControls.ForeColor = System.Drawing.Color.Transparent;
             this.PanelGlobalMapControls.Location = new System.Drawing.Point(60, 80);
             this.PanelGlobalMapControls.Name = "PanelGlobalMapControls";
-            this.PanelGlobalMapControls.Size = new System.Drawing.Size(760, 160);
+            this.PanelGlobalMapControls.Size = new System.Drawing.Size(760, 240);
             this.PanelGlobalMapControls.TabIndex = 18;
+            // 
+            // TBoxProxyPort
+            // 
+            this.TBoxProxyPort.Enabled = false;
+            this.TBoxProxyPort.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBoxProxyPort.Location = new System.Drawing.Point(600, 210);
+            this.TBoxProxyPort.Name = "TBoxProxyPort";
+            this.TBoxProxyPort.Size = new System.Drawing.Size(80, 27);
+            this.TBoxProxyPort.TabIndex = 24;
+            this.TBoxProxyPort.TextChanged += new System.EventHandler(this.MapConfigChanged);
+            // 
+            // LabelProxyPort
+            // 
+            this.LabelProxyPort.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelProxyPort.ForeColor = System.Drawing.Color.White;
+            this.LabelProxyPort.Location = new System.Drawing.Point(510, 210);
+            this.LabelProxyPort.Name = "LabelProxyPort";
+            this.LabelProxyPort.Size = new System.Drawing.Size(90, 23);
+            this.LabelProxyPort.TabIndex = 23;
+            this.LabelProxyPort.Text = "Port";
+            this.LabelProxyPort.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // TBoxProxyHost
+            // 
+            this.TBoxProxyHost.Enabled = false;
+            this.TBoxProxyHost.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBoxProxyHost.Location = new System.Drawing.Point(300, 210);
+            this.TBoxProxyHost.Name = "TBoxProxyHost";
+            this.TBoxProxyHost.Size = new System.Drawing.Size(200, 27);
+            this.TBoxProxyHost.TabIndex = 22;
+            this.TBoxProxyHost.TextChanged += new System.EventHandler(this.MapConfigChanged);
+            // 
+            // RBtnProxyCustom
+            // 
+            this.RBtnProxyCustom.AutoSize = true;
+            this.RBtnProxyCustom.Font = new System.Drawing.Font("Georgia", 10.8F);
+            this.RBtnProxyCustom.Location = new System.Drawing.Point(200, 210);
+            this.RBtnProxyCustom.Name = "RBtnProxyCustom";
+            this.RBtnProxyCustom.Size = new System.Drawing.Size(71, 27);
+            this.RBtnProxyCustom.TabIndex = 21;
+            this.RBtnProxyCustom.Text = "Host";
+            this.RBtnProxyCustom.UseVisualStyleBackColor = true;
+            this.RBtnProxyCustom.CheckedChanged += new System.EventHandler(this.ProxySetting_RadioCheckedChanged);
+            // 
+            // RBtnProxySystem
+            // 
+            this.RBtnProxySystem.AutoSize = true;
+            this.RBtnProxySystem.Font = new System.Drawing.Font("Georgia", 10.8F);
+            this.RBtnProxySystem.Location = new System.Drawing.Point(200, 170);
+            this.RBtnProxySystem.Name = "RBtnProxySystem";
+            this.RBtnProxySystem.Size = new System.Drawing.Size(189, 27);
+            this.RBtnProxySystem.TabIndex = 20;
+            this.RBtnProxySystem.Text = "Use system default";
+            this.RBtnProxySystem.UseVisualStyleBackColor = true;
+            this.RBtnProxySystem.CheckedChanged += new System.EventHandler(this.ProxySetting_RadioCheckedChanged);
+            // 
+            // LabelProxySetting
+            // 
+            this.LabelProxySetting.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelProxySetting.ForeColor = System.Drawing.Color.White;
+            this.LabelProxySetting.Location = new System.Drawing.Point(0, 170);
+            this.LabelProxySetting.Name = "LabelProxySetting";
+            this.LabelProxySetting.Size = new System.Drawing.Size(199, 55);
+            this.LabelProxySetting.TabIndex = 19;
+            this.LabelProxySetting.Text = "Proxy (requires application restart)";
             // 
             // LabelInitialPosition
             // 
@@ -258,14 +337,17 @@
             // RBtnGlobalMap
             // 
             this.RBtnGlobalMap.AutoSize = true;
+            this.RBtnGlobalMap.Checked = true;
             this.RBtnGlobalMap.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RBtnGlobalMap.ForeColor = System.Drawing.Color.White;
             this.RBtnGlobalMap.Location = new System.Drawing.Point(40, 40);
             this.RBtnGlobalMap.Name = "RBtnGlobalMap";
             this.RBtnGlobalMap.Size = new System.Drawing.Size(130, 27);
             this.RBtnGlobalMap.TabIndex = 17;
+            this.RBtnGlobalMap.TabStop = true;
             this.RBtnGlobalMap.Text = "Global Map";
             this.RBtnGlobalMap.UseVisualStyleBackColor = true;
+            this.RBtnGlobalMap.Visible = false;
             this.RBtnGlobalMap.CheckedChanged += new System.EventHandler(this.MapControl_RadioCheckedChanged);
             // 
             // ConfigMapPage
@@ -281,7 +363,7 @@
             this.Controls.Add(this.RBtnGlobalMap);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "ConfigMapPage";
-            this.Size = new System.Drawing.Size(840, 480);
+            this.Size = new System.Drawing.Size(840, 560);
             this.PanelIndoorMapControls.ResumeLayout(false);
             this.PanelIndoorMapControls.PerformLayout();
             this.PanelGlobalMapControls.ResumeLayout(false);
@@ -312,5 +394,11 @@
         private System.Windows.Forms.TextBox TBoxMapCacheLocation;
         private System.Windows.Forms.Button BtnBrowseMapLocation;
         private System.Windows.Forms.RadioButton RBtnGlobalMap;
+        private System.Windows.Forms.TextBox TBoxProxyPort;
+        private System.Windows.Forms.Label LabelProxyPort;
+        private System.Windows.Forms.TextBox TBoxProxyHost;
+        private System.Windows.Forms.RadioButton RBtnProxyCustom;
+        private System.Windows.Forms.RadioButton RBtnProxySystem;
+        private System.Windows.Forms.Label LabelProxySetting;
     }
 }
