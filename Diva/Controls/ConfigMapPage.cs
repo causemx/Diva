@@ -91,7 +91,7 @@ namespace Diva.Controls
             }
             else
             {
-               RBtnProxySystem.Checked = true;
+                RBtnProxySystem.Checked = true;
                 TBoxProxyHost.Text = TBoxProxyPort.Text = "";
             }
 

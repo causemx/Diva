@@ -200,6 +200,7 @@
             // 
             this.RBtnProxyCustom.AutoSize = true;
             this.RBtnProxyCustom.Font = new System.Drawing.Font("Georgia", 10.8F);
+            this.RBtnProxyCustom.ForeColor = System.Drawing.Color.White;
             this.RBtnProxyCustom.Location = new System.Drawing.Point(200, 210);
             this.RBtnProxyCustom.Name = "RBtnProxyCustom";
             this.RBtnProxyCustom.Size = new System.Drawing.Size(71, 27);
@@ -212,11 +213,12 @@
             // 
             this.RBtnProxySystem.AutoSize = true;
             this.RBtnProxySystem.Font = new System.Drawing.Font("Georgia", 10.8F);
+            this.RBtnProxySystem.ForeColor = System.Drawing.Color.White;
             this.RBtnProxySystem.Location = new System.Drawing.Point(200, 170);
             this.RBtnProxySystem.Name = "RBtnProxySystem";
-            this.RBtnProxySystem.Size = new System.Drawing.Size(189, 27);
+            this.RBtnProxySystem.Size = new System.Drawing.Size(188, 27);
             this.RBtnProxySystem.TabIndex = 20;
-            this.RBtnProxySystem.Text = "Use system default";
+            this.RBtnProxySystem.Text = "Use system setting";
             this.RBtnProxySystem.UseVisualStyleBackColor = true;
             this.RBtnProxySystem.CheckedChanged += new System.EventHandler(this.ProxySetting_RadioCheckedChanged);
             // 

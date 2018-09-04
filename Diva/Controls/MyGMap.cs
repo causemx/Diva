@@ -77,7 +77,6 @@ namespace Diva.Controls
                 ConfigData.SetBoolOption(ConfigData.OptionName.UseImageMap, false);
             }
             catch { }
-            MapProvider = GoogleSatelliteMapProvider.Instance;
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
             string[] prox = proxy.Split(':');
@@ -88,6 +87,7 @@ namespace Diva.Controls
             }
             else
                 GMapProvider.WebProxy = WebRequest.DefaultWebProxy;
+            MapProvider = GoogleSatelliteMapProvider.Instance;
             MinZoom = 0;
             MaxZoom = 24;
             Zoom = 15;
