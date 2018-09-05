@@ -77,7 +77,7 @@
             resources.ApplyResources(this.BtnVehicle, "BtnVehicle");
             this.BtnVehicle.FlatAppearance.BorderSize = 0;
             this.BtnVehicle.ForeColor = System.Drawing.Color.White;
-            this.BtnVehicle.Image = global::Diva.Properties.Resources.icon_emoticon_48;
+            this.BtnVehicle.Image = global::Diva.Properties.Resources.icon_drone;
             this.BtnVehicle.Name = "BtnVehicle";
             this.BtnVehicle.UseVisualStyleBackColor = true;
             this.BtnVehicle.Click += new System.EventHandler(this.MenuButton_Click);
@@ -87,7 +87,7 @@
             resources.ApplyResources(this.BtnTuning, "BtnTuning");
             this.BtnTuning.FlatAppearance.BorderSize = 0;
             this.BtnTuning.ForeColor = System.Drawing.Color.White;
-            this.BtnTuning.Image = global::Diva.Properties.Resources.icon_emoticon_48;
+            this.BtnTuning.Image = global::Diva.Properties.Resources.icon_adjust;
             this.BtnTuning.Name = "BtnTuning";
             this.BtnTuning.UseVisualStyleBackColor = true;
             this.BtnTuning.Click += new System.EventHandler(this.MenuButton_Click);
@@ -97,7 +97,7 @@
             resources.ApplyResources(this.BtnGeoFence, "BtnGeoFence");
             this.BtnGeoFence.FlatAppearance.BorderSize = 0;
             this.BtnGeoFence.ForeColor = System.Drawing.Color.White;
-            this.BtnGeoFence.Image = global::Diva.Properties.Resources.icon_emoticon_48;
+            this.BtnGeoFence.Image = global::Diva.Properties.Resources.icon_fence;
             this.BtnGeoFence.Name = "BtnGeoFence";
             this.BtnGeoFence.UseVisualStyleBackColor = true;
             this.BtnGeoFence.Click += new System.EventHandler(this.MenuButton_Click);
@@ -107,7 +107,7 @@
             resources.ApplyResources(this.BtnMap, "BtnMap");
             this.BtnMap.FlatAppearance.BorderSize = 0;
             this.BtnMap.ForeColor = System.Drawing.Color.White;
-            this.BtnMap.Image = global::Diva.Properties.Resources.icon_emoticon_48;
+            this.BtnMap.Image = global::Diva.Properties.Resources.icon_map;
             this.BtnMap.Name = "BtnMap";
             this.BtnMap.UseVisualStyleBackColor = true;
             this.BtnMap.Click += new System.EventHandler(this.MenuButton_Click);
@@ -127,7 +127,7 @@
             resources.ApplyResources(this.BtnAbout, "BtnAbout");
             this.BtnAbout.FlatAppearance.BorderSize = 0;
             this.BtnAbout.ForeColor = System.Drawing.Color.White;
-            this.BtnAbout.Image = global::Diva.Properties.Resources.icon_emoticon_48;
+            this.BtnAbout.Image = global::Diva.Properties.Resources.icon_information;
             this.BtnAbout.Name = "BtnAbout";
             this.BtnAbout.UseVisualStyleBackColor = true;
             this.BtnAbout.Click += new System.EventHandler(this.MenuButton_Click);

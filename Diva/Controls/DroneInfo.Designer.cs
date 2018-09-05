@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DroneInfo));
 			this.PBDroneView = new System.Windows.Forms.PictureBox();
 			this.TxtDroneName = new System.Windows.Forms.Label();
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -46,11 +47,11 @@
 			// 
 			// PBDroneView
 			// 
-			this.PBDroneView.BackColor = System.Drawing.Color.White;
-			this.PBDroneView.Image = global::Diva.Properties.Resources.icon_debug;
-			this.PBDroneView.Location = new System.Drawing.Point(5, 6);
+			this.PBDroneView.BackColor = System.Drawing.Color.Transparent;
+			this.PBDroneView.Image = ((System.Drawing.Image)(resources.GetObject("PBDroneView.Image")));
+			this.PBDroneView.Location = new System.Drawing.Point(8, 10);
 			this.PBDroneView.Name = "PBDroneView";
-			this.PBDroneView.Size = new System.Drawing.Size(64, 64);
+			this.PBDroneView.Size = new System.Drawing.Size(58, 58);
 			this.PBDroneView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.PBDroneView.TabIndex = 0;
 			this.PBDroneView.TabStop = false;
@@ -68,7 +69,7 @@
 			// 
 			// pictureBox2
 			// 
-			this.pictureBox2.Image = global::Diva.Properties.Resources.icon_flytime;
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
 			this.pictureBox2.Location = new System.Drawing.Point(75, 49);
 			this.pictureBox2.Name = "pictureBox2";
 			this.pictureBox2.Size = new System.Drawing.Size(30, 22);
@@ -78,8 +79,8 @@
 			// 
 			// pictureBox3
 			// 
-			this.pictureBox3.Image = global::Diva.Properties.Resources.icon_battery_100;
-			this.pictureBox3.Location = new System.Drawing.Point(164, 49);
+			this.pictureBox3.Image = global::Diva.Properties.Resources.icon_battery_3;
+			this.pictureBox3.Location = new System.Drawing.Point(153, 49);
 			this.pictureBox3.Name = "pictureBox3";
 			this.pictureBox3.Size = new System.Drawing.Size(30, 22);
 			this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -88,7 +89,7 @@
 			// 
 			// pictureBox4
 			// 
-			this.pictureBox4.Image = global::Diva.Properties.Resources.icon_signal_100;
+			this.pictureBox4.Image = global::Diva.Properties.Resources.capacity_signal;
 			this.pictureBox4.Location = new System.Drawing.Point(253, 49);
 			this.pictureBox4.Name = "pictureBox4";
 			this.pictureBox4.Size = new System.Drawing.Size(30, 22);
@@ -103,16 +104,16 @@
 			this.TxtAssumeTime.ForeColor = System.Drawing.Color.White;
 			this.TxtAssumeTime.Location = new System.Drawing.Point(111, 53);
 			this.TxtAssumeTime.Name = "TxtAssumeTime";
-			this.TxtAssumeTime.Size = new System.Drawing.Size(22, 15);
+			this.TxtAssumeTime.Size = new System.Drawing.Size(28, 15);
 			this.TxtAssumeTime.TabIndex = 5;
-			this.TxtAssumeTime.Text = "ub";
+			this.TxtAssumeTime.Text = "n/a";
 			// 
 			// TxtBatteryHealth
 			// 
 			this.TxtBatteryHealth.AutoSize = true;
 			this.TxtBatteryHealth.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TxtBatteryHealth.ForeColor = System.Drawing.Color.White;
-			this.TxtBatteryHealth.Location = new System.Drawing.Point(201, 53);
+			this.TxtBatteryHealth.Location = new System.Drawing.Point(190, 53);
 			this.TxtBatteryHealth.Name = "TxtBatteryHealth";
 			this.TxtBatteryHealth.Size = new System.Drawing.Size(44, 15);
 			this.TxtBatteryHealth.TabIndex = 6;
@@ -145,10 +146,10 @@
 			this.BtnClose.AutoSize = true;
 			this.BtnClose.FlatAppearance.BorderSize = 0;
 			this.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnClose.Image = global::Diva.Properties.Resources.icon_zoomout;
+			this.BtnClose.Image = global::Diva.Properties.Resources.icon_zoomin1;
 			this.BtnClose.Location = new System.Drawing.Point(305, 3);
 			this.BtnClose.Name = "BtnClose";
-			this.BtnClose.Size = new System.Drawing.Size(30, 30);
+			this.BtnClose.Size = new System.Drawing.Size(36, 30);
 			this.BtnClose.TabIndex = 9;
 			this.BtnClose.UseVisualStyleBackColor = true;
 			this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);

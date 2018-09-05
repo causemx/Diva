@@ -63,13 +63,11 @@ namespace Diva.Controls
 			mav.onCreate();
 			mav.MAV.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
 			this.BackColor = Color.FromArgb(67, 78, 84);
-			PBDroneView.Image = Bitmap.FromHicon(SystemIcons.Shield.Handle);
 		}
 
 		public void Deactivate()
 		{
 			this.BackColor = Color.FromArgb(128, 128, 128);
-			PBDroneView.Image = Properties.Resources.icon_debug;
 		}
 
 

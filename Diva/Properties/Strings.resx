@@ -378,4 +378,7 @@
   <data name="MsgMissionAcceptWP" xml:space="preserve">
     <value>Upload mission complete</value>
   </data>
+  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
+    <value>{0} overlay has been imported</value>
+  </data>
 </root>

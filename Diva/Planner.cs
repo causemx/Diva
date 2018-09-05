@@ -79,6 +79,7 @@ namespace Diva
 			public GMapOverlay geofence;
 			public GMapOverlay POI;
 			public GMapOverlay routes;
+			public GMapOverlay customize;
 			internal plannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
@@ -224,11 +225,11 @@ namespace Diva
 
 			//setup toolstrip
 			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
-
+			TSZoomPanel.Renderer = new Controls.Components.MyTSRenderer();
 			//Collect DroneInfoPanels
 
 			// setup geofence
-			
+
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
 			geofencePolygon = new GMapPolygon(polygonPoints, "geofence");
 			geofencePolygon.Stroke = new Pen(Color.Pink, 5);
@@ -3921,23 +3922,22 @@ namespace Diva
 
 		#region customized overlay related functions
 
-		GMapCustomOverlay customOverlay = null;
 
 
 		private void ReadCustomizedOverlayFile(string file)
 		{
-			int cp_count = 0;
-			bool error = false;
+			
 			List<Customizewp> cmds = new List<Customizewp>();
 
 			try
 			{
-				Customizewp cp = new Customizewp();
-				Customizewp.ImportOverlayXML(file);
-
-
+				Dictionary<string, List<Customizewp>> items = Customizewp.ImportOverlayXML(file);
+				foreach (var l in items.Values)
+					RenderToMap(l);
 
 				// myMap.ZoomAndCenterMarkers("objects");
+				string filename = (Path.GetFileName(file)).Split('.')[0];
+				MessageBox.Show(ResStrings.MsgCustomizeOverlayImport.FormatWith(filename));
 			}
 			catch (Exception ex)
 			{
@@ -3954,15 +3954,15 @@ namespace Diva
 			// this is to share the current mission with the data tab
 			pointlist = new List<PointLatLngAlt>();
 
-			fullpointlist.Clear();
+			// fullpointlist.Clear();
 
 			try
 			{
-				if (customOverlay != null) // hasnt been created yet
+				if (overlays.customize != null) // hasnt been created yet
 				{
-					customOverlay.Markers.Clear();
+					// overlays.customize.Markers.Clear();
 				}
-				cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, customOverlay));
+				cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, overlays.customize));
 
 			}
 			catch (Exception ex)
@@ -3976,7 +3976,7 @@ namespace Diva
 		{
 			using (OpenFileDialog op = new OpenFileDialog())
 			{
-				op.Filter = "All Supported Types|*.overlay;";
+				op.Filter = "All Supported Types|*.overlay;*.xml;";
 				DialogResult result = op.ShowDialog();
 				string file = op.FileName;
 
@@ -3984,8 +3984,6 @@ namespace Diva
 				{
 					ReadCustomizedOverlayFile(file);
 				}
-
-				MessageBox.Show("Overlay Loaded");
 			}
 		}
 

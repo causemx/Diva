@@ -40,8 +40,7 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
 			this.PanelDroneInfoList = new System.Windows.Forms.Panel();
-			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
 			this.But_ZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.But_ZoomOut = new System.Windows.Forms.ToolStripButton();
 			this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
@@ -60,7 +59,7 @@ namespace Diva
 			this.TSBtnTagging = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnCusOverlay = new System.Windows.Forms.ToolStripButton();
+			this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +108,7 @@ namespace Diva
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
 			this.splitContainer.SuspendLayout();
-			this.toolStrip1.SuspendLayout();
+			this.TSZoomPanel.SuspendLayout();
 			this.TSMainPanel.SuspendLayout();
 			this.cmMap.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvWayPoints)).BeginInit();
@@ -124,7 +123,7 @@ namespace Diva
 			// splitContainer.Panel1
 			// 
 			this.splitContainer.Panel1.Controls.Add(this.PanelDroneInfoList);
-			this.splitContainer.Panel1.Controls.Add(this.toolStrip1);
+			this.splitContainer.Panel1.Controls.Add(this.TSZoomPanel);
 			this.splitContainer.Panel1.Controls.Add(this.CollectionTelemetryData);
 			this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
 			this.splitContainer.Panel1.Controls.Add(this.BtnLand);
@@ -145,35 +144,34 @@ namespace Diva
 			// PanelDroneInfoList
 			// 
 			resources.ApplyResources(this.PanelDroneInfoList, "PanelDroneInfoList");
-			this.PanelDroneInfoList.BackColor = System.Drawing.SystemColors.InactiveCaption;
+			this.PanelDroneInfoList.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.PanelDroneInfoList.Name = "PanelDroneInfoList";
 			// 
-			// toolStrip1
+			// TSZoomPanel
 			// 
-			resources.ApplyResources(this.toolStrip1, "toolStrip1");
-			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
+			resources.ApplyResources(this.TSZoomPanel, "TSZoomPanel");
+			this.TSZoomPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.TSZoomPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.TSZoomPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.But_ZoomIn,
             this.But_ZoomOut});
-			this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-			this.toolStrip1.Name = "toolStrip1";
-			// 
-			// toolStripLabel1
-			// 
-			this.toolStripLabel1.Name = "toolStripLabel1";
-			resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
+			this.TSZoomPanel.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+			this.TSZoomPanel.Name = "TSZoomPanel";
 			// 
 			// But_ZoomIn
 			// 
-			this.But_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.But_ZoomIn.BackColor = System.Drawing.Color.Transparent;
+			this.But_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.But_ZoomIn.Image = global::Diva.Properties.Resources.icon_4_zoomin;
 			resources.ApplyResources(this.But_ZoomIn, "But_ZoomIn");
 			this.But_ZoomIn.Name = "But_ZoomIn";
 			this.But_ZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
 			// 
 			// But_ZoomOut
 			// 
-			this.But_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.But_ZoomOut.BackColor = System.Drawing.Color.Transparent;
+			this.But_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.But_ZoomOut.Image = global::Diva.Properties.Resources.icon_4_zoomout;
 			resources.ApplyResources(this.But_ZoomOut, "But_ZoomOut");
 			this.But_ZoomOut.Name = "But_ZoomOut";
 			this.But_ZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
@@ -211,8 +209,7 @@ namespace Diva
 			this.BtnLand.ForeColor = System.Drawing.Color.White;
 			this.BtnLand.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnLand.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnLand.HoverImage = global::Diva.Properties.Resources.icon_land_active;
-			this.BtnLand.Image = global::Diva.Properties.Resources.icon_land;
+			this.BtnLand.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnLand.HoverImage")));
 			this.BtnLand.Name = "BtnLand";
 			this.BtnLand.UseVisualStyleBackColor = false;
 			this.BtnLand.Click += new System.EventHandler(this.BUT_Land_Click);
@@ -228,8 +225,7 @@ namespace Diva
 			this.BtnVideo.ForeColor = System.Drawing.Color.White;
 			this.BtnVideo.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnVideo.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnVideo.HoverImage = global::Diva.Properties.Resources.icon_add_active;
-			this.BtnVideo.Image = global::Diva.Properties.Resources.icon_add;
+			this.BtnVideo.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnVideo.HoverImage")));
 			this.BtnVideo.Name = "BtnVideo";
 			this.BtnVideo.UseVisualStyleBackColor = false;
 			this.BtnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
@@ -245,8 +241,7 @@ namespace Diva
 			this.BtnAuto.ForeColor = System.Drawing.Color.White;
 			this.BtnAuto.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnAuto.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnAuto.HoverImage = global::Diva.Properties.Resources.icon_auto_active;
-			this.BtnAuto.Image = global::Diva.Properties.Resources.icon_auto;
+			this.BtnAuto.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnAuto.HoverImage")));
 			this.BtnAuto.Name = "BtnAuto";
 			this.BtnAuto.UseVisualStyleBackColor = false;
 			this.BtnAuto.Click += new System.EventHandler(this.BUT_Auto_Click);
@@ -262,8 +257,7 @@ namespace Diva
 			this.BtnArm.ForeColor = System.Drawing.Color.White;
 			this.BtnArm.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnArm.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnArm.HoverImage = global::Diva.Properties.Resources.icon_connect_active;
-			this.BtnArm.Image = global::Diva.Properties.Resources.icon_connect;
+			this.BtnArm.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnArm.HoverImage")));
 			this.BtnArm.Name = "BtnArm";
 			this.BtnArm.UseVisualStyleBackColor = false;
 			this.BtnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
@@ -279,8 +273,7 @@ namespace Diva
 			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnReadWPs.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnReadWPs.HoverImage = global::Diva.Properties.Resources.icon_readwps_active;
-			this.BtnReadWPs.Image = global::Diva.Properties.Resources.icon_readwps;
+			this.BtnReadWPs.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnReadWPs.HoverImage")));
 			this.BtnReadWPs.Name = "BtnReadWPs";
 			this.BtnReadWPs.UseVisualStyleBackColor = false;
 			this.BtnReadWPs.Click += new System.EventHandler(this.BUT_read_Click);
@@ -296,8 +289,7 @@ namespace Diva
 			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
 			this.BtnTakeOff.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnTakeOff.HoverImage = global::Diva.Properties.Resources.icon_takeoff_active;
-			this.BtnTakeOff.Image = global::Diva.Properties.Resources.icon_takeoff;
+			this.BtnTakeOff.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnTakeOff.HoverImage")));
 			this.BtnTakeOff.Name = "BtnTakeOff";
 			this.BtnTakeOff.UseVisualStyleBackColor = false;
 			this.BtnTakeOff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
@@ -313,8 +305,7 @@ namespace Diva
 			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnWriteWPs.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnWriteWPs.HoverImage = global::Diva.Properties.Resources.icon_writewps_active;
-			this.BtnWriteWPs.Image = global::Diva.Properties.Resources.icon_writewps;
+			this.BtnWriteWPs.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnWriteWPs.HoverImage")));
 			this.BtnWriteWPs.Name = "BtnWriteWPs";
 			this.BtnWriteWPs.UseVisualStyleBackColor = false;
 			this.BtnWriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
@@ -345,8 +336,7 @@ namespace Diva
 			this.TSBtnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnConnect.HoverImage = global::Diva.Properties.Resources.icon_arm_active;
-			this.TSBtnConnect.Image = global::Diva.Properties.Resources.icon_arm;
+			this.TSBtnConnect.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConnect.HoverImage")));
 			this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
 			this.TSBtnConnect.Name = "TSBtnConnect";
 			this.TSBtnConnect.Click += new System.EventHandler(this.BUT_Connect_Click);
@@ -360,8 +350,7 @@ namespace Diva
 			this.TSBtnRotation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnRotation.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnRotation.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnRotation.HoverImage = global::Diva.Properties.Resources.icon_rotation_active;
-			this.TSBtnRotation.Image = global::Diva.Properties.Resources.icon_rotation;
+			this.TSBtnRotation.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnRotation.HoverImage")));
 			this.TSBtnRotation.Name = "TSBtnRotation";
 			this.TSBtnRotation.Click += new System.EventHandler(this.BUT_Rotation2_Click);
 			// 
@@ -374,8 +363,7 @@ namespace Diva
 			this.TSBtnConfigure.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnConfigure.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnConfigure.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnConfigure.HoverImage = global::Diva.Properties.Resources.icon_configure_active;
-			this.TSBtnConfigure.Image = global::Diva.Properties.Resources.icon_configure;
+			this.TSBtnConfigure.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConfigure.HoverImage")));
 			this.TSBtnConfigure.Name = "TSBtnConfigure";
 			this.TSBtnConfigure.Click += new System.EventHandler(this.BUT_Configure_Click);
 			// 
@@ -388,8 +376,7 @@ namespace Diva
 			this.TSBtnTagging.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnTagging.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnTagging.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnTagging.HoverImage = global::Diva.Properties.Resources.icon_tagging_active;
-			this.TSBtnTagging.Image = global::Diva.Properties.Resources.icon_tagging;
+			this.TSBtnTagging.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnTagging.HoverImage")));
 			this.TSBtnTagging.Name = "TSBtnTagging";
 			this.TSBtnTagging.Click += new System.EventHandler(this.BUT_Tagging_Click);
 			// 
@@ -399,11 +386,11 @@ namespace Diva
 			this.TSBtnSaveMission.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnSaveMission.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnSaveMission.ClickImage = null;
-			this.TSBtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.TSBtnSaveMission.ForeColor = System.Drawing.Color.White;
+			this.TSBtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnSaveMission.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnSaveMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnSaveMission.HoverImage = null;
+			this.TSBtnSaveMission.HoverImage = global::Diva.Properties.Resources.icon_r_active;
+			this.TSBtnSaveMission.Image = global::Diva.Properties.Resources.icon_w;
 			this.TSBtnSaveMission.Name = "TSBtnSaveMission";
 			this.TSBtnSaveMission.Click += new System.EventHandler(this.BtnSaveMission_Click);
 			// 
@@ -413,19 +400,25 @@ namespace Diva
 			this.TSBtnReadMission.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnReadMission.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnReadMission.ClickImage = null;
-			this.TSBtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.TSBtnReadMission.ForeColor = System.Drawing.Color.White;
+			this.TSBtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.TSBtnReadMission.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnReadMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnReadMission.HoverImage = null;
+			this.TSBtnReadMission.HoverImage = global::Diva.Properties.Resources.icon_w_active;
+			this.TSBtnReadMission.Image = global::Diva.Properties.Resources.icon_r;
 			this.TSBtnReadMission.Name = "TSBtnReadMission";
 			this.TSBtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
 			// 
 			// TSBtnCusOverlay
 			// 
 			resources.ApplyResources(this.TSBtnCusOverlay, "TSBtnCusOverlay");
-			this.TSBtnCusOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.TSBtnCusOverlay.ForeColor = System.Drawing.Color.White;
+			this.TSBtnCusOverlay.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnCusOverlay.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnCusOverlay.ClickImage = null;
+			this.TSBtnCusOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnCusOverlay.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnCusOverlay.HoverForeColor = System.Drawing.Color.Aqua;
+			this.TSBtnCusOverlay.HoverImage = global::Diva.Properties.Resources.icon_c_active;
+			this.TSBtnCusOverlay.Image = global::Diva.Properties.Resources.icon_c;
 			this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
 			this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
 			// 
@@ -845,8 +838,8 @@ namespace Diva
 			this.splitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
 			this.splitContainer.ResumeLayout(false);
-			this.toolStrip1.ResumeLayout(false);
-			this.toolStrip1.PerformLayout();
+			this.TSZoomPanel.ResumeLayout(false);
+			this.TSZoomPanel.PerformLayout();
 			this.TSMainPanel.ResumeLayout(false);
 			this.TSMainPanel.PerformLayout();
 			this.cmMap.ResumeLayout(false);
@@ -920,11 +913,10 @@ namespace Diva
 		private ToolStripMenuItem loadFromFileToolStripMenuItem;
 		private ToolStripMenuItem saveToFileToolStripMenuItem;
 		private ToolStripMenuItem clearToolStripMenuItem;
-		private ToolStrip toolStrip1;
-		private ToolStripLabel toolStripLabel1;
+		private ToolStrip TSZoomPanel;
 		private ToolStripButton But_ZoomIn;
 		private ToolStripButton But_ZoomOut;
 		private Panel PanelDroneInfoList;
-		private ToolStripButton TSBtnCusOverlay;
+		private MyTSButton TSBtnCusOverlay;
 	}
 }

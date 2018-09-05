@@ -378,4 +378,7 @@
   <data name="MsgMissionAcceptWP" xml:space="preserve">
     <value>成功寫入航點</value>
   </data>
+  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
+    <value>{0}自訂圖層已載入</value>
+  </data>
 </root>

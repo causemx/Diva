@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Diva.Utilities
 {
@@ -13,62 +14,47 @@ namespace Diva.Utilities
 		public double Lat { get; set; }
 		public double Lng { get; set; }
 		public float Alt { get; set; }
-		public object Tag { get; set; }
 
-		public static void ImportOverlayXML(string file)
+		public Customizewp(ushort id, double lat, double lng, float alt)
 		{
-			Dictionary<string, List<Customizewp>> items = new Dictionary<string, List<Customizewp>>();
+			this.Id = id;
+			this.Lat = lat;
+			this.Lng = lng;
+			this.Alt = alt;
+		}
+
+		public static Dictionary<string, List<Customizewp>> ImportOverlayXML(string file)
+		{
+			Dictionary<string, List<Customizewp>> cpDict = new Dictionary<string, List<Customizewp>>();
 			try
 			{
-				using (XmlTextReader reader = new XmlTextReader(file))
+				XElement root = XElement.Load(file);
+				IEnumerable<XElement> polygons = root.Elements("Polygon");
+
+				for (int i = 0; i < polygons.Count(); i++)
 				{
-
-					while (reader.Read())
+					XElement polygon = polygons.ElementAt(i);
+					List<Customizewp> cpList = new List<Customizewp>();
+					string _key = polygon.Attribute("Type").Value;
+					IEnumerable<XElement> points = polygon.Elements("Point");
+					foreach (XElement point in points)
 					{
-						reader.MoveToElement();
-						switch (reader.Name)
-						{
-							case "layout":
 
-								while (reader.Read())
-								{
-									reader.MoveToElement();
-
-									Customizewp item = new Customizewp();
-									string _name = "";
-
-									switch (reader.Name)
-									{
-										case "name":
-											Planner.log.Debug("name " + reader.ReadString());
-											break;
-										case "id":
-											Planner.log.Debug("id " + reader.ReadString());
-											break;
-										case "lat":
-											Planner.log.Debug("lat " + reader.ReadString());
-											break;
-										case "lng":
-											Planner.log.Debug("lng " + reader.ReadString());
-											break;
-										case "alt":
-											Planner.log.Debug("alt " + reader.ReadString());
-											break;
-										case "polygon":
-											break;
-									}
-								}
-
-
-								break;
-							default:
-								break;
-						}
+						cpList.Add(new Customizewp(
+							(ushort)Convert.ToInt16(point.Element("Id").Value), 
+							Double.Parse(point.Element("Lat").Value), 
+							Double.Parse(point.Element("Lng").Value), 
+							(float)Double.Parse(point.Element("Alt").Value)));
 					}
+					cpDict.Add(_key, cpList);
 				}
+
+				return cpDict;
 			}
 			catch (Exception e)
 			{
+				Planner.log.Debug(e.ToString());
+				return null;
 			}
 		}
 	}

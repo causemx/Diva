@@ -484,6 +484,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 {0} overlay has been imported 的當地語系化字串。
+        /// </summary>
+        public static string MsgCustomizeOverlayImport {
+            get {
+                return ResourceManager.GetString("MsgCustomizeOverlayImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Your default altitude is not valid 的當地語系化字串。
         /// </summary>
         public static string MsgDefaultAltitudeInvalid {
