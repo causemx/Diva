@@ -79,7 +79,6 @@ namespace Diva
 			public GMapOverlay geofence;
 			public GMapOverlay POI;
 			public GMapOverlay routes;
-			public GMapOverlay customize;
 			internal plannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
@@ -110,6 +109,7 @@ namespace Diva
 		internal GMapPolygon geofencePolygon;
 		internal GMapPolygon drawnPolygon;
 		internal GMapPolygon wpPolygon;
+		
 
 		private bool quickadd = false;
 		private bool sethome = false;
@@ -240,6 +240,8 @@ namespace Diva
 			drawnPolygon = new GMapPolygon(polygonPoints2, "drawnpoly");
 			drawnPolygon.Stroke = new Pen(Color.Red, 2);
 			drawnPolygon.Fill = Brushes.Transparent;
+
+			
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
@@ -671,7 +673,8 @@ namespace Diva
 
 					if (currentRectMarker != null && currentRectMarker.InnerMarker != null)
 					{
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
+							&& !currentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
 						{
 							try
 							{
@@ -691,6 +694,7 @@ namespace Diva
 							callMeDrag(currentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
 								currentMarker.Position.Lng, -2);
 						}
+						
 						currentRectMarker = null;
 					}
 				}
@@ -792,7 +796,8 @@ namespace Diva
 					try
 					{
 						// check if this is a grid point
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
+							&& !currentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
 						{
 							drawnPolygon.Points[
 								int.Parse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
@@ -1246,7 +1251,7 @@ namespace Diva
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red);
+				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.green);
 				m.ToolTipMode = MarkerTooltipMode.Never;
 				m.ToolTipText = "grid" + tag;
 				m.Tag = "grid" + tag;
@@ -1265,6 +1270,7 @@ namespace Diva
 				log.Info(ex.ToString());
 			}
 		}
+			 
 
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -3371,7 +3377,7 @@ namespace Diva
 				overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 			}
 
-			drawnPolygon.Fill = Brushes.Transparent;
+			drawnPolygon.Fill = Brushes.AliceBlue;
 
 			// remove full loop is exists
 			if (drawnPolygon.Points.Count > 1 &&
@@ -3711,6 +3717,8 @@ namespace Diva
 
 			myMap.Invalidate();
 		}
+
+
 		private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (OpenFileDialog fd = new OpenFileDialog())
@@ -3774,6 +3782,8 @@ namespace Diva
 				}
 			}
 		}
+
+
 		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (overlays.geofence.Markers.Count == 0)
@@ -3932,9 +3942,8 @@ namespace Diva
 			try
 			{
 				Dictionary<string, List<Customizewp>> items = Customizewp.ImportOverlayXML(file);
-				foreach (var l in items.Values)
-					RenderToMap(l);
-
+				foreach (var l in items.Values) { RenderToMap(l); }
+		
 				// myMap.ZoomAndCenterMarkers("objects");
 				string filename = (Path.GetFileName(file)).Split('.')[0];
 				MessageBox.Show(ResStrings.MsgCustomizeOverlayImport.FormatWith(filename));
@@ -3951,19 +3960,26 @@ namespace Diva
 			if (quickadd)
 				return;
 
-			// this is to share the current mission with the data tab
-			pointlist = new List<PointLatLngAlt>();
-
-			// fullpointlist.Clear();
+			
+			// generate new polygon every time.
+			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
+			GMapPolygon customizePolygon = new GMapPolygon(polygonPointsCus, "customize");
+			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
+			customizePolygon.Fill = Brushes.AliceBlue;
 
 			try
 			{
-				if (overlays.customize != null) // hasnt been created yet
-				{
-					// overlays.customize.Markers.Clear();
-				}
-				cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, overlays.customize));
+				// cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, overlays.customize));
 
+				cmds.ForEach(i => {
+					StringBuilder sb = new StringBuilder("_cus_");
+					customizePolygon.Points.Add(Customizewp.ConvertToPoint(i));
+					addpolygonmarkergrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
+				});
+
+				overlays.drawnpolygons.Polygons.Add(customizePolygon);
+				myMap.UpdatePolygonLocalPosition(customizePolygon);
+				myMap.Invalidate();
 			}
 			catch (Exception ex)
 			{

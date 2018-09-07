@@ -23,6 +23,11 @@ namespace Diva.Utilities
 			this.Alt = alt;
 		}
 
+		public static PointLatLngAlt ConvertToPoint(Customizewp cp)
+		{
+			return new PointLatLngAlt(cp.Lat, cp.Lng);
+		}
+
 		public static Dictionary<string, List<Customizewp>> ImportOverlayXML(string file)
 		{
 			Dictionary<string, List<Customizewp>> cpDict = new Dictionary<string, List<Customizewp>>();
