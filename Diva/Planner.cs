@@ -3942,7 +3942,7 @@ namespace Diva
 			try
 			{
 				Dictionary<string, List<Customizewp>> items = Customizewp.ImportOverlayXML(file);
-				foreach (var l in items.Values) { RenderToMap(l); }
+				foreach (var k in items.Keys) { RenderToMap(k, items[k]); }
 		
 				// myMap.ZoomAndCenterMarkers("objects");
 				string filename = (Path.GetFileName(file)).Split('.')[0];
@@ -3954,7 +3954,7 @@ namespace Diva
 			}
 		}
 
-		public void RenderToMap(List<Customizewp> cmds)
+		public void RenderToMap(string areaname, List<Customizewp> cmds)
 		{
 			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
 			if (quickadd)
@@ -3963,9 +3963,10 @@ namespace Diva
 			
 			// generate new polygon every time.
 			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
-			GMapPolygon customizePolygon = new GMapPolygon(polygonPointsCus, "customize");
+			GMapCustomizedPolygon customizePolygon = new GMapCustomizedPolygon(polygonPointsCus, "customize", areaname);
 			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
 			customizePolygon.Fill = Brushes.AliceBlue;
+		
 
 			try
 			{

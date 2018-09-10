@@ -448,57 +448,60 @@ namespace Diva.Utilities
 	}
 
 	[Serializable]
-	public class GMapCustomOverlay : GMapOverlay
+	public class GMapCustomizedPolygon : GMapPolygon
 	{
-		private string title;
+		public string zoneName = "zone";
 
-		public GMapCustomOverlay() { }
-
-		public GMapCustomOverlay(string render_title)
+		public GMapCustomizedPolygon(List<PointLatLng> points, string name, string zonename) : base(points, name)
 		{
-			this.title = render_title;
+			this.zoneName = zonename;
 		}
 
 		public override void OnRender(Graphics g)
 		{
 			base.OnRender(g);
 
-			float width = ((float)this.Control.ClientRectangle.Width);
-			float height = ((float)this.Control.ClientRectangle.Width);
-			float emSize = 30;
+			PointF p = GetCentroid(this.LocalPoints);
+
+			Font font = new Font(FontFamily.GenericSansSerif, 24, FontStyle.Bold);
+			// Measure the size of the text. 
+			// You might want to add some extra space around your text. 
+			// MeasureString is quite tricky...
+			SizeF textSize = g.MeasureString(this.zoneName, font);
+
+			// Get LocalPoint (your LatLng coordinate in pixel)
+			Point localPosition = new Point(0, 0);
+
+			// Move the localPosition by the half size of the text.
+			// PointF textPosition = new PointF((float)(localPosition.X - textSize.Width / 2f), (float)(localPosition.Y - textSize.Height / 2f));
 
 
-			Font font = new Font(FontFamily.GenericSansSerif, emSize, FontStyle.Regular);
-			font = FindBestFitFont(g, title, font, this.Control.ClientRectangle.Size);
-			SolidBrush d = new SolidBrush(Color.Red);
-			SizeF size = g.MeasureString(title.ToString(), font);
 
-
-			StringFormat sf = new StringFormat()
-			{
-				Alignment = StringAlignment.Center,
-				LineAlignment = StringAlignment.Center
-			};
-			// g.DrawString(title, font, d, (width - size.Width) / 2, 0, sf);
-			g.DrawString(title, font, d, 0, -300, sf);
+			// Draw Background
+			g.FillRectangle(new SolidBrush(Color.Transparent), new RectangleF(p, textSize));
+			g.DrawString(this.zoneName, font, new SolidBrush(Color.Red), p);
 		}
 
-		private Font FindBestFitFont(Graphics g, String text, Font font, Size proposedSize)
+		public PointF GetCentroid(List<GPoint> poly)
 		{
-			// Compute actual size, shrink if needed
-			while (true)
+			float accumulatedArea = 0.0f;
+			float centerX = 0.0f;
+			float centerY = 0.0f;
+
+			for (int i = 0, j = poly.Count - 1; i < poly.Count; j = i++)
 			{
-				SizeF size = g.MeasureString(text, font);
-
-				// It fits, back out
-				if (size.Height <= proposedSize.Height &&
-					 size.Width <= proposedSize.Width) { return font; }
-
-				// Try a smaller font (90% of old size)
-				Font oldFont = font;
-				font = new Font(font.Name, (float)(font.Size * .1), font.Style);
-				oldFont.Dispose();
+				float temp = poly[i].X * poly[j].Y - poly[j].X * poly[i].Y;
+				accumulatedArea += temp;
+				centerX += (poly[i].X + poly[j].X) * temp;
+				centerY += (poly[i].Y + poly[j].Y) * temp;
 			}
+
+			if (Math.Abs(accumulatedArea) < 1E-7f)
+				return PointF.Empty;  // Avoid division by zero
+
+			accumulatedArea *= 3f;
+			return new PointF(centerX / accumulatedArea, centerY / accumulatedArea);
+
 		}
 	}
 }
