@@ -56,12 +56,10 @@
             this.GBTitle.Controls.Add(this.GBGeoFence);
             this.GBTitle.Controls.Add(this.GBAltitude);
             this.GBTitle.Controls.Add(this.GBBattery);
-            this.GBTitle.Location = new System.Drawing.Point(4, 4);
-            this.GBTitle.Margin = new System.Windows.Forms.Padding(4);
+            this.GBTitle.Location = new System.Drawing.Point(3, 3);
             this.GBTitle.Name = "GBTitle";
-            this.GBTitle.Padding = new System.Windows.Forms.Padding(4);
             this.GBTitle.Radious = 1;
-            this.GBTitle.Size = new System.Drawing.Size(447, 294);
+            this.GBTitle.Size = new System.Drawing.Size(335, 235);
             this.GBTitle.TabIndex = 0;
             this.GBTitle.TabStop = false;
             this.GBTitle.Text = "Telemetry Data : APM-01";
@@ -75,12 +73,10 @@
             // 
             this.GBVerticalSpeed.BackColor = System.Drawing.Color.Transparent;
             this.GBVerticalSpeed.Controls.Add(this.TxtVerticalSpeed);
-            this.GBVerticalSpeed.Location = new System.Drawing.Point(225, 160);
-            this.GBVerticalSpeed.Margin = new System.Windows.Forms.Padding(4);
+            this.GBVerticalSpeed.Location = new System.Drawing.Point(169, 128);
             this.GBVerticalSpeed.Name = "GBVerticalSpeed";
-            this.GBVerticalSpeed.Padding = new System.Windows.Forms.Padding(4);
             this.GBVerticalSpeed.Radious = 1;
-            this.GBVerticalSpeed.Size = new System.Drawing.Size(217, 125);
+            this.GBVerticalSpeed.Size = new System.Drawing.Size(163, 100);
             this.GBVerticalSpeed.TabIndex = 2;
             this.GBVerticalSpeed.TabStop = false;
             this.GBVerticalSpeed.Text = "Vertical Speed";
@@ -95,10 +91,9 @@
             this.TxtVerticalSpeed.AutoSize = true;
             this.TxtVerticalSpeed.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtVerticalSpeed.ForeColor = System.Drawing.Color.White;
-            this.TxtVerticalSpeed.Location = new System.Drawing.Point(92, 61);
-            this.TxtVerticalSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TxtVerticalSpeed.Location = new System.Drawing.Point(69, 49);
             this.TxtVerticalSpeed.Name = "TxtVerticalSpeed";
-            this.TxtVerticalSpeed.Size = new System.Drawing.Size(51, 24);
+            this.TxtVerticalSpeed.Size = new System.Drawing.Size(42, 18);
             this.TxtVerticalSpeed.TabIndex = 6;
             this.TxtVerticalSpeed.Text = "0.00";
             // 
@@ -106,12 +101,10 @@
             // 
             this.GBGroundSpeed.BackColor = System.Drawing.Color.Transparent;
             this.GBGroundSpeed.Controls.Add(this.TxtGroundSpeed);
-            this.GBGroundSpeed.Location = new System.Drawing.Point(4, 160);
-            this.GBGroundSpeed.Margin = new System.Windows.Forms.Padding(4);
+            this.GBGroundSpeed.Location = new System.Drawing.Point(3, 128);
             this.GBGroundSpeed.Name = "GBGroundSpeed";
-            this.GBGroundSpeed.Padding = new System.Windows.Forms.Padding(4);
             this.GBGroundSpeed.Radious = 1;
-            this.GBGroundSpeed.Size = new System.Drawing.Size(217, 125);
+            this.GBGroundSpeed.Size = new System.Drawing.Size(163, 100);
             this.GBGroundSpeed.TabIndex = 1;
             this.GBGroundSpeed.TabStop = false;
             this.GBGroundSpeed.Text = "Ground Speed";
@@ -126,10 +119,9 @@
             this.TxtGroundSpeed.AutoSize = true;
             this.TxtGroundSpeed.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtGroundSpeed.ForeColor = System.Drawing.Color.White;
-            this.TxtGroundSpeed.Location = new System.Drawing.Point(89, 61);
-            this.TxtGroundSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TxtGroundSpeed.Location = new System.Drawing.Point(67, 49);
             this.TxtGroundSpeed.Name = "TxtGroundSpeed";
-            this.TxtGroundSpeed.Size = new System.Drawing.Size(51, 24);
+            this.TxtGroundSpeed.Size = new System.Drawing.Size(42, 18);
             this.TxtGroundSpeed.TabIndex = 5;
             this.TxtGroundSpeed.Text = "0.00";
             // 
@@ -137,12 +129,10 @@
             // 
             this.GBGeoFence.BackColor = System.Drawing.Color.Transparent;
             this.GBGeoFence.Controls.Add(this.TxtGeoFenceEnable);
-            this.GBGeoFence.Location = new System.Drawing.Point(297, 30);
-            this.GBGeoFence.Margin = new System.Windows.Forms.Padding(4);
+            this.GBGeoFence.Location = new System.Drawing.Point(223, 24);
             this.GBGeoFence.Name = "GBGeoFence";
-            this.GBGeoFence.Padding = new System.Windows.Forms.Padding(4);
             this.GBGeoFence.Radious = 1;
-            this.GBGeoFence.Size = new System.Drawing.Size(145, 125);
+            this.GBGeoFence.Size = new System.Drawing.Size(109, 100);
             this.GBGeoFence.TabIndex = 2;
             this.GBGeoFence.TabStop = false;
             this.GBGeoFence.Text = "GeoFence";
@@ -157,10 +147,9 @@
             this.TxtGeoFenceEnable.AutoSize = true;
             this.TxtGeoFenceEnable.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtGeoFenceEnable.ForeColor = System.Drawing.Color.White;
-            this.TxtGeoFenceEnable.Location = new System.Drawing.Point(47, 65);
-            this.TxtGeoFenceEnable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TxtGeoFenceEnable.Location = new System.Drawing.Point(35, 52);
             this.TxtGeoFenceEnable.Name = "TxtGeoFenceEnable";
-            this.TxtGeoFenceEnable.Size = new System.Drawing.Size(47, 24);
+            this.TxtGeoFenceEnable.Size = new System.Drawing.Size(39, 18);
             this.TxtGeoFenceEnable.TabIndex = 4;
             this.TxtGeoFenceEnable.Text = "N/A";
             // 
@@ -168,12 +157,10 @@
             // 
             this.GBAltitude.BackColor = System.Drawing.Color.Transparent;
             this.GBAltitude.Controls.Add(this.TxtAltitude);
-            this.GBAltitude.Location = new System.Drawing.Point(151, 30);
-            this.GBAltitude.Margin = new System.Windows.Forms.Padding(4);
+            this.GBAltitude.Location = new System.Drawing.Point(113, 24);
             this.GBAltitude.Name = "GBAltitude";
-            this.GBAltitude.Padding = new System.Windows.Forms.Padding(4);
             this.GBAltitude.Radious = 1;
-            this.GBAltitude.Size = new System.Drawing.Size(145, 125);
+            this.GBAltitude.Size = new System.Drawing.Size(109, 100);
             this.GBAltitude.TabIndex = 1;
             this.GBAltitude.TabStop = false;
             this.GBAltitude.Text = "Altitude";
@@ -188,10 +175,9 @@
             this.TxtAltitude.AutoSize = true;
             this.TxtAltitude.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtAltitude.ForeColor = System.Drawing.Color.White;
-            this.TxtAltitude.Location = new System.Drawing.Point(48, 65);
-            this.TxtAltitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TxtAltitude.Location = new System.Drawing.Point(36, 52);
             this.TxtAltitude.Name = "TxtAltitude";
-            this.TxtAltitude.Size = new System.Drawing.Size(43, 24);
+            this.TxtAltitude.Size = new System.Drawing.Size(36, 18);
             this.TxtAltitude.TabIndex = 3;
             this.TxtAltitude.Text = "100";
             // 
@@ -200,12 +186,10 @@
             this.GBBattery.BackColor = System.Drawing.Color.Transparent;
             this.GBBattery.Controls.Add(this.TxtBatteryPercentage);
             this.GBBattery.Controls.Add(this.TxtBatteryVoltage);
-            this.GBBattery.Location = new System.Drawing.Point(4, 30);
-            this.GBBattery.Margin = new System.Windows.Forms.Padding(4);
+            this.GBBattery.Location = new System.Drawing.Point(3, 24);
             this.GBBattery.Name = "GBBattery";
-            this.GBBattery.Padding = new System.Windows.Forms.Padding(4);
             this.GBBattery.Radious = 1;
-            this.GBBattery.Size = new System.Drawing.Size(145, 125);
+            this.GBBattery.Size = new System.Drawing.Size(109, 100);
             this.GBBattery.TabIndex = 0;
             this.GBBattery.TabStop = false;
             this.GBBattery.Text = " Battery";
@@ -220,10 +204,9 @@
             this.TxtBatteryPercentage.AutoSize = true;
             this.TxtBatteryPercentage.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtBatteryPercentage.ForeColor = System.Drawing.Color.White;
-            this.TxtBatteryPercentage.Location = new System.Drawing.Point(43, 78);
-            this.TxtBatteryPercentage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TxtBatteryPercentage.Location = new System.Drawing.Point(32, 62);
             this.TxtBatteryPercentage.Name = "TxtBatteryPercentage";
-            this.TxtBatteryPercentage.Size = new System.Drawing.Size(59, 24);
+            this.TxtBatteryPercentage.Size = new System.Drawing.Size(49, 18);
             this.TxtBatteryPercentage.TabIndex = 1;
             this.TxtBatteryPercentage.Text = "100%";
             // 
@@ -232,22 +215,19 @@
             this.TxtBatteryVoltage.AutoSize = true;
             this.TxtBatteryVoltage.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtBatteryVoltage.ForeColor = System.Drawing.Color.White;
-            this.TxtBatteryVoltage.Location = new System.Drawing.Point(43, 45);
-            this.TxtBatteryVoltage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TxtBatteryVoltage.Location = new System.Drawing.Point(32, 36);
             this.TxtBatteryVoltage.Name = "TxtBatteryVoltage";
-            this.TxtBatteryVoltage.Size = new System.Drawing.Size(64, 24);
+            this.TxtBatteryVoltage.Size = new System.Drawing.Size(53, 18);
             this.TxtBatteryVoltage.TabIndex = 0;
             this.TxtBatteryVoltage.Text = "12.5 V";
             // 
             // TelemetryDataPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.GBTitle);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "TelemetryDataPanel";
-            this.Size = new System.Drawing.Size(455, 302);
+            this.Size = new System.Drawing.Size(341, 242);
             this.GBTitle.ResumeLayout(false);
             this.GBVerticalSpeed.ResumeLayout(false);
             this.GBVerticalSpeed.PerformLayout();

@@ -8,6 +8,7 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using System.Drawing;
+using System.Net;
 
 namespace Diva.Controls
 {
@@ -76,8 +77,17 @@ namespace Diva.Controls
                 ConfigData.SetBoolOption(ConfigData.OptionName.UseImageMap, false);
             }
             catch { }
-            MapProvider = GoogleSatelliteMapProvider.Instance;
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
+            string[] prox = proxy.Split(':');
+            if (prox.Length == 2)
+            {
+                int.TryParse(prox[1], out int port);
+                GMapProvider.WebProxy = new WebProxy(prox[0], port);
+            }
+            else
+                GMapProvider.WebProxy = WebRequest.DefaultWebProxy;
+            MapProvider = GoogleSatelliteMapProvider.Instance;
             MinZoom = 0;
             MaxZoom = 24;
             Zoom = 15;

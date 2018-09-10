@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using ResStrings = Diva.Properties.Strings;
 
 namespace Diva.Controls
 {
@@ -79,6 +80,21 @@ namespace Diva.Controls
             TBoxIPLatitude.Text = lat.ToString();
             TBoxIPLongitude.Text = lng.ToString();
             TBoxInitialZoom.Text = zoom.ToString();
+
+            string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
+            string[] prox = proxy.Split(':');
+            if (prox.Length == 2)
+            {
+                RBtnProxyCustom.Checked = true;
+                TBoxProxyHost.Text = prox[0];
+                TBoxProxyPort.Text = prox[1];
+            }
+            else
+            {
+                RBtnProxySystem.Checked = true;
+                TBoxProxyHost.Text = TBoxProxyPort.Text = "";
+            }
+
             (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)
                 ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
             mapConfigDirtyUpdate = true;
@@ -116,6 +132,9 @@ namespace Diva.Controls
             double.TryParse(TBoxInitialZoom.Text, out zoom);
             ConfigData.SetOption(ConfigData.OptionName.MapInitialLocation,
                 $"{lat},{lng},{zoom}");
+            int.TryParse(TBoxProxyPort.Text, out int port);
+            ConfigData.SetOption(ConfigData.OptionName.MapProxy,
+                RBtnProxySystem.Checked ? "System" : $"{TBoxProxyHost.Text}:{port}");
             ConfigData.SetOption(ConfigData.OptionName.ImageMapSource, TBoxIndoorMapLocation.Text);
             bool imagemap = RBtnIndoorMap.Checked;
             ConfigData.SetOption(ConfigData.OptionName.UseImageMap, imagemap.ToString());
@@ -145,6 +164,13 @@ namespace Diva.Controls
                 if (result == DialogResult.OK)
                     TBoxIndoorMapLocation.Text = dlg.FileName;
             }
+        }
+
+        private void ProxySetting_RadioCheckedChanged(object sender, EventArgs e)
+        {
+            ConfigureForm.SetEnabled(TBoxProxyHost, RBtnProxyCustom.Checked);
+            ConfigureForm.SetEnabled(TBoxProxyPort, RBtnProxyCustom.Checked);
+            MapConfigDirty = true;
         }
     }
 }
