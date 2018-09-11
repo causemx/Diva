@@ -148,6 +148,9 @@
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
+    <Compile Include="Controls\AboutBoxPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\Components\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
