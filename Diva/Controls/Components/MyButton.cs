@@ -91,7 +91,7 @@ namespace Diva.Controls.Components
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) { }
     }
 
-    class MyTSButton : ToolStripButton
+    public class MyTSButton : ToolStripButton
     {
         private Image _NormalImage;
         public new Image Image

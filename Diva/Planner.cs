@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+
 using ResStrings = Diva.Properties.Strings;
 
 namespace Diva
@@ -108,6 +109,7 @@ namespace Diva
 		internal GMapPolygon geofencePolygon;
 		internal GMapPolygon drawnPolygon;
 		internal GMapPolygon wpPolygon;
+		
 
 		private bool quickadd = false;
 		private bool sethome = false;
@@ -184,7 +186,7 @@ namespace Diva
 		{
 			InitializeComponent();
 
-            string username = AccountManager.GetLoginAccount();
+			string username = AccountManager.GetLoginAccount();
 			if (username == "") username = ResStrings.StrAnonymousAccount;
 			Text += " - " + username;
 
@@ -223,11 +225,11 @@ namespace Diva
 
 			//setup toolstrip
 			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
-
+			TSZoomPanel.Renderer = new Controls.Components.MyTSRenderer();
 			//Collect DroneInfoPanels
 
 			// setup geofence
-			
+
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
 			geofencePolygon = new GMapPolygon(polygonPoints, "geofence");
 			geofencePolygon.Stroke = new Pen(Color.Pink, 5);
@@ -238,6 +240,8 @@ namespace Diva
 			drawnPolygon = new GMapPolygon(polygonPoints2, "drawnpoly");
 			drawnPolygon.Stroke = new Pen(Color.Red, 2);
 			drawnPolygon.Fill = Brushes.Transparent;
+
+			
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
@@ -669,7 +673,8 @@ namespace Diva
 
 					if (currentRectMarker != null && currentRectMarker.InnerMarker != null)
 					{
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
+							&& !currentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
 						{
 							try
 							{
@@ -689,6 +694,7 @@ namespace Diva
 							callMeDrag(currentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
 								currentMarker.Position.Lng, -2);
 						}
+						
 						currentRectMarker = null;
 					}
 				}
@@ -790,7 +796,8 @@ namespace Diva
 					try
 					{
 						// check if this is a grid point
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
+							&& !currentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
 						{
 							drawnPolygon.Points[
 								int.Parse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
@@ -1244,7 +1251,7 @@ namespace Diva
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red);
+				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.green);
 				m.ToolTipMode = MarkerTooltipMode.Never;
 				m.ToolTipText = "grid" + tag;
 				m.Tag = "grid" + tag;
@@ -1263,6 +1270,7 @@ namespace Diva
 				log.Info(ex.ToString());
 			}
 		}
+			 
 
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -3369,7 +3377,7 @@ namespace Diva
 				overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 			}
 
-			drawnPolygon.Fill = Brushes.Transparent;
+			drawnPolygon.Fill = Brushes.AliceBlue;
 
 			// remove full loop is exists
 			if (drawnPolygon.Points.Count > 1 &&
@@ -3709,6 +3717,8 @@ namespace Diva
 
 			myMap.Invalidate();
 		}
+
+
 		private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (OpenFileDialog fd = new OpenFileDialog())
@@ -3772,6 +3782,8 @@ namespace Diva
 				}
 			}
 		}
+
+
 		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (overlays.geofence.Markers.Count == 0)
@@ -3917,5 +3929,81 @@ namespace Diva
 			}				
 		}
 
+
+		#region customized overlay related functions
+
+
+
+		private void ReadCustomizedOverlayFile(string file)
+		{
+			
+			List<Customizewp> cmds = new List<Customizewp>();
+
+			try
+			{
+				Dictionary<string, List<Customizewp>> items = Customizewp.ImportOverlayXML(file);
+				foreach (var k in items.Keys) { RenderToMap(k, items[k]); }
+		
+				// myMap.ZoomAndCenterMarkers("objects");
+				string filename = (Path.GetFileName(file)).Split('.')[0];
+				MessageBox.Show(ResStrings.MsgCustomizeOverlayImport.FormatWith(filename));
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ResStrings.MsgCantOpenFile.FormatWith(ex.Message));
+			}
+		}
+
+		public void RenderToMap(string areaname, List<Customizewp> cmds)
+		{
+			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
+			if (quickadd)
+				return;
+
+			
+			// generate new polygon every time.
+			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
+			GMapCustomizedPolygon customizePolygon = new GMapCustomizedPolygon(polygonPointsCus, "customize", areaname);
+			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
+			customizePolygon.Fill = Brushes.AliceBlue;
+		
+
+			try
+			{
+				// cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, overlays.customize));
+
+				cmds.ForEach(i => {
+					StringBuilder sb = new StringBuilder("_cus_");
+					customizePolygon.Points.Add(Customizewp.ConvertToPoint(i));
+					addpolygonmarkergrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
+				});
+
+				overlays.drawnpolygons.Polygons.Add(customizePolygon);
+				myMap.UpdatePolygonLocalPosition(customizePolygon);
+				myMap.Invalidate();
+			}
+			catch (Exception ex)
+			{
+				log.Info(ex.ToString());
+			}
+		}
+
+
+		private void LoadCustomizedOverlay_Click(object o, EventArgs e)
+		{
+			using (OpenFileDialog op = new OpenFileDialog())
+			{
+				op.Filter = "All Supported Types|*.overlay;*.xml;";
+				DialogResult result = op.ShowDialog();
+				string file = op.FileName;
+
+				if (File.Exists(file))
+				{
+					ReadCustomizedOverlayFile(file);
+				}
+			}
+		}
+
+		#endregion
 	}
 }
