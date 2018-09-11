@@ -390,4 +390,7 @@
   <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
     <value></value>
   </data>
+  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
+    <value>Customized Overlay {0} has been importing.</value>
+  </data>
 </root>

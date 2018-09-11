@@ -391,4 +391,7 @@
   <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
     <value>位址</value>
   </data>
+  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
+    <value>自訂圖層:{0}已經載入</value>
+  </data>
 </root>

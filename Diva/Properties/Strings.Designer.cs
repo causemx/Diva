@@ -279,6 +279,24 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類似  的當地語系化字串。
         /// </summary>
+        public static string ConfigMapPage_LabelProxyPort_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.LabelProxyPort.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似  的當地語系化字串。
+        /// </summary>
+        public static string ConfigMapPage_LabelProxySetting_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.LabelProxySetting.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似  的當地語系化字串。
+        /// </summary>
         public static string ConfigMapPage_RBtnGlobalMap_Text {
             get {
                 return ResourceManager.GetString("ConfigMapPage.RBtnGlobalMap.Text", resourceCulture);
@@ -291,6 +309,24 @@ namespace Diva.Properties {
         public static string ConfigMapPage_RBtnIndoorMap_Text {
             get {
                 return ResourceManager.GetString("ConfigMapPage.RBtnIndoorMap.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似  的當地語系化字串。
+        /// </summary>
+        public static string ConfigMapPage_RBtnProxyCustom_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.RBtnProxyCustom.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似  的當地語系化字串。
+        /// </summary>
+        public static string ConfigMapPage_RBtnProxySystem_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.RBtnProxySystem.Text", resourceCulture);
             }
         }
         
@@ -484,7 +520,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類似 {0} overlay has been imported 的當地語系化字串。
+        ///   查詢類似 Customized Overlay {0} has been importing. 的當地語系化字串。
         /// </summary>
         public static string MsgCustomizeOverlayImport {
             get {

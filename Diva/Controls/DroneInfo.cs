@@ -40,27 +40,19 @@ namespace Diva.Controls
 			}
 		}
 		public MavlinkInterface mav { get; }
+		public string DroneName { get; set; }
 
-		private string _droneName = "";
-		public string droneName
-		{
-			get	{ return droneName; }
-			set
-			{
-				this.droneName = value;
-				TxtDroneName.Text = droneName;
-			}
-		}
-
-		public DroneInfo(MavlinkInterface m)
+		public DroneInfo(MavlinkInterface m, string name)
 		{
 			InitializeComponent();
 			this.mav = m;
+			this.DroneName = name;
 		}
 
 		public void Activate()
 		{
 			mav.onCreate();
+			TxtDroneName.Text = DroneName;
 			mav.MAV.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
 			this.BackColor = Color.FromArgb(67, 78, 84);
 		}

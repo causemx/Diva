@@ -37,7 +37,7 @@ namespace Diva
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
 		public const double DEFAULT_ZOOM = 20;
-		public const int TAKEOFF_HEIGHT = 130;
+		public const int TAKEOFF_HEIGHT = 30;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
 		public static MavlinkInterface comPort
@@ -2777,12 +2777,13 @@ namespace Diva
 				if (!doConnect(mav, drone.PortName, drone.PortNumber, drone.Baudrate))
 					return;
 
-				DroneInfo droneInfo = new DroneInfo(mav);
-				droneInfo.DoubleClick += (s2, e2) =>
+				DroneInfo droneInfo = new DroneInfo(mav, drone.Name);
+				
+				droneInfo.Click += (s2, e2) =>
 				{
 					try
 					{
-						var panel = comPorts[((DroneInfo)s2).droneName];
+						var panel = comPorts[((DroneInfo)s2).DroneName];
 						if (!panel.mav.BaseStream.IsOpen) throw new Exception("drone not connected");
 
 						CurrentDroneInfo = panel;
@@ -2835,7 +2836,6 @@ namespace Diva
 			// arm the MAV
 			try
 			{
-				log.InfoFormat("mav armed: {0}", comPort.MAV.armed);
 				bool ans = comPort.doARM(!comPort.MAV.armed);
 				if (ans == false)
 					log.Error("arm failed");
@@ -3964,8 +3964,8 @@ namespace Diva
 			// generate new polygon every time.
 			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
 			GMapCustomizedPolygon customizePolygon = new GMapCustomizedPolygon(polygonPointsCus, "customize", areaname);
-			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
-			customizePolygon.Fill = Brushes.AliceBlue;
+			customizePolygon.Stroke = new Pen(Color.Red, 2);
+			customizePolygon.Fill = new SolidBrush(Color.FromArgb(128, 253, 172, 170));
 		
 
 			try
