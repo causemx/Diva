@@ -2777,7 +2777,7 @@ namespace Diva
 				if (!doConnect(mav, drone.PortName, drone.PortNumber, drone.Baudrate))
 					return;
 
-				DroneInfo droneInfo = new DroneInfo(mav);
+				DroneInfo droneInfo = new DroneInfo(mav, drone.Name);
 				droneInfo.DoubleClick += (s2, e2) =>
 				{
 					try

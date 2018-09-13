@@ -41,21 +41,13 @@ namespace Diva.Controls
 		}
 		public MavlinkInterface mav { get; }
 
-		private string _droneName = "";
-		public string droneName
-		{
-			get	{ return droneName; }
-			set
-			{
-				this.droneName = value;
-				TxtDroneName.Text = droneName;
-			}
-		}
+        public string droneName => TxtDroneName.Text;
 
-		public DroneInfo(MavlinkInterface m)
+		public DroneInfo(MavlinkInterface m, string name)
 		{
 			InitializeComponent();
 			this.mav = m;
+            TxtDroneName.Text = name;
 		}
 
 		public void Activate()
@@ -109,7 +101,6 @@ namespace Diva.Controls
 			}
 			
 		}
-
 
 		public event EventHandler CloseButtonClicked;
 

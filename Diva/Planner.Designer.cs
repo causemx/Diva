@@ -103,7 +103,6 @@ namespace Diva
             this.BtnAltitude = new System.Windows.Forms.Button();
             this.BtnHomeLand = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-            this.ImgListBatteryHealth = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -813,17 +812,6 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
-            // ImgListBatteryHealth
-            // 
-            this.ImgListBatteryHealth.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgListBatteryHealth.ImageStream")));
-            this.ImgListBatteryHealth.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImgListBatteryHealth.Images.SetKeyName(0, "icon-battery-0.png");
-            this.ImgListBatteryHealth.Images.SetKeyName(1, "icon-battery-20.png");
-            this.ImgListBatteryHealth.Images.SetKeyName(2, "icon-battery-40.png");
-            this.ImgListBatteryHealth.Images.SetKeyName(3, "icon-battery-60.png");
-            this.ImgListBatteryHealth.Images.SetKeyName(4, "icon-battery-80.png");
-            this.ImgListBatteryHealth.Images.SetKeyName(5, "icon-battery-100.png");
-            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -874,7 +862,6 @@ namespace Diva
         private MyButton BtnVideo;
         private SplitContainer splitContainer;
 		private Button BtnHomeLand;
-		private ImageList ImgListBatteryHealth;
 		private MyButton BtnRTL;
 		private TelemetryDataPanel CollectionTelemetryData;
 		private Button BtnAltitude;
