@@ -24,6 +24,7 @@ namespace Diva.Mavlink
 
 		public static readonly int SLEEP_TIME_SETMODE = 10;
 		public static readonly double CONNECT_TIMEOUT_SECONDS = 30;
+        public static int GET_PARAM_TIMEOUT = 1000;
 
 		public Subject<int> WhenPacketLost { get; set; }
 		public Subject<int> WhenPacketReceived { get; set; }
@@ -868,7 +869,7 @@ namespace Diva.Mavlink
 
 			while (true)
 			{
-				if (!(start.AddMilliseconds(700) > DateTime.Now))
+				if (!(start.AddMilliseconds(GET_PARAM_TIMEOUT) > DateTime.Now))
 				{
 					if (retrys > 0)
 					{
@@ -2571,8 +2572,8 @@ namespace Diva.Mavlink
 
 			try
 			{
-				flightmode _out;
-				foreach (string key in Enum.GetNames(typeof(flightmode)))
+				FlightMode _out;
+				foreach (string key in Enum.GetNames(typeof(FlightMode)))
 				{
 					if (modein == key)
 					{

@@ -16,26 +16,19 @@ namespace Diva.Controls
 
 		private bool isActive = false;
 
-		public bool IsActivate
+		public bool IsActive
 		{
 			get
 			{
-				return this.isActive;
+				return isActive;
 			}
-			set
+			private set
 			{
-				this.isActive = value;
-				if (isActive)
+				isActive = value;
+                BackColor = isActive ? Color.FromArgb(67, 78, 84) : Color.FromArgb(128, 128, 128);
+				if (Parent != null)
 				{
-					Activate();
-				}
-				else
-				{
-					Deactivate();
-				}
-				if (this.Parent != null)
-				{
-					Parent.Invalidate(this.Bounds, true);
+					Parent.Invalidate(Bounds, true);
 				}
 			}
 		}
@@ -46,24 +39,17 @@ namespace Diva.Controls
 		public DroneInfo(MavlinkInterface m, string name)
 		{
 			InitializeComponent();
-			this.mav = m;
+			mav = m;
+            mav.onCreate();
+            mav.Status.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
             TxtDroneName.Text = name;
+            Margin = new Padding(0);
 		}
 
-		public void Activate()
-		{
-			mav.onCreate();
-			mav.Status.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
-			this.BackColor = Color.FromArgb(67, 78, 84);
-		}
+        public void Activate() => IsActive = true;
+        public void Deactivate() => IsActive = false;
 
-		public void Deactivate()
-		{
-			this.BackColor = Color.FromArgb(128, 128, 128);
-		}
-
-
-		public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
+        public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
 		{
 			TxtSystemID.Text = sysid.ToString();
 			TxtBatteryHealth.Text = battry_voltage.ToString("F2");

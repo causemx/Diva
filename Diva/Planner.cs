@@ -31,8 +31,7 @@ namespace Diva
 {
 	public partial class Planner : Form
 	{
-
-		public static Dictionary<string, DroneInfo> comPorts = new Dictionary<string, DroneInfo>();
+        public static Dictionary<string, DroneInfo> comPorts = new Dictionary<string, DroneInfo>();
 		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
@@ -41,14 +40,13 @@ namespace Diva
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
         private static Planner Instance = null;
-        public static Planner GetPlannerInstance() => Instance;
-        public static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
+        internal static Planner GetPlannerInstance() => Instance;
+        internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
 
-		public DroneInfo CurrentDroneInfo = null;
-        public MavlinkInterface ActiveDrone = new MavlinkInterface();
+		private DroneInfo CurrentDroneInfo = null;
+        private MavlinkInterface ActiveDrone = new MavlinkInterface();
 
         public bool autopan { get; set; }
-
 
 		private static readonly double WARN_ALT = 2D;
 
@@ -97,7 +95,6 @@ namespace Diva
 		
 
 		private bool quickadd = false;
-		private bool sethome = false;
 		private int selectedrow = 0;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
@@ -118,18 +115,16 @@ namespace Diva
 		private DateTime lastdata = DateTime.MinValue;
 		private DateTime mapupdate = DateTime.MinValue;
 
-
-		private bool useLocation = false;
 		private long recorder_id = 0;
 
-		public enum altmode
+		public enum AltitudeMode
 		{
 			Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
 			Absolute = MAVLink.MAV_FRAME.GLOBAL,
 			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
 		}
 
-		public enum flightmode
+		public enum FlightMode
 		{
 			STABILIZE = 0,
 			ACRO = 1,
@@ -227,8 +222,6 @@ namespace Diva
 			drawnPolygon.Stroke = new Pen(Color.Red, 2);
 			drawnPolygon.Fill = Brushes.Transparent;
 
-			
-
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
 			if (myMap.MapProvider is ImageMapProvider)
@@ -261,7 +254,6 @@ namespace Diva
 			TxtHomeLongitude.Text = lng.ToString();
 		}
 	
-
 		private void Planner_Load(object sender, EventArgs e)
 		{
 			FlightRecorder recorder = new FlightRecorder()
@@ -330,17 +322,19 @@ namespace Diva
 		
 					Invoke((MethodInvoker)delegate
 					{
-						foreach (int mode in Enum.GetValues(typeof(flightmode)))
+						foreach (int mode in Enum.GetValues(typeof(FlightMode)))
 						{
 							if ((uint)mode == ActiveDrone.Status.mode)
 							{
-								TxtDroneMode.Text = Enum.GetName(typeof(flightmode), mode);
+								TxtDroneMode.Text = Enum.GetName(typeof(FlightMode), mode);
 							}
 						}
 
 						CurrentDroneInfo.UpdateTelemetryData(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
 						CollectionTelemetryData.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.groundspeed, ActiveDrone.Status.verticalspeed);
-					});
+                        DroneInfoPanel.UpdateDroneInfo(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
+                        DroneInfoPanel.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.groundspeed, ActiveDrone.Status.verticalspeed);
+                    });
 
 					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
 
@@ -1441,10 +1435,6 @@ namespace Diva
 				MessageBox.Show(ResStrings.MsgSetHomeFirst);
 				return;
 			}
-			else
-			{
-				sethome = true;
-			}
 
 			// creating a WP
 			selectedrow = dgvWayPoints.Rows.Add();
@@ -1826,6 +1816,7 @@ namespace Diva
 
 
 						CurrentDroneInfo.UpdateAssumeTime(dist + homedist);
+                        DroneInfoPanel.UpdateAssumeTime(dist + homedist);
 						DatabaseManager.UpdateTotalDistance(recorder_id, dist);
 					}
 					
@@ -2265,13 +2256,13 @@ namespace Diva
 					// make sure we are using the correct frame for these commands
 					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
 					{
-						var mode = altmode.Relative;
+						var mode = AltitudeMode.Relative;
 
-						if (mode == altmode.Terrain)
+						if (mode == AltitudeMode.Terrain)
 						{
 							frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
 						}
-						else if (mode == altmode.Absolute)
+						else if (mode == AltitudeMode.Absolute)
 						{
 							frame = MAVLink.MAV_FRAME.GLOBAL;
 						}
@@ -2800,7 +2791,7 @@ namespace Diva
                 CurrentDroneInfo = droneInfo;
                 ActiveDrone = mav;
 
-
+                DroneInfoPanel.AddDrone(drone);
             }
             catch (Exception exception)
             {

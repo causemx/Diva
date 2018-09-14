@@ -39,6 +39,7 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
             this.PanelDroneInfoList = new System.Windows.Forms.Panel();
             this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
             this.But_ZoomIn = new System.Windows.Forms.ToolStripButton();
@@ -121,6 +122,7 @@ namespace Diva
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
             this.splitContainer.Panel1.Controls.Add(this.PanelDroneInfoList);
             this.splitContainer.Panel1.Controls.Add(this.TSZoomPanel);
             this.splitContainer.Panel1.Controls.Add(this.CollectionTelemetryData);
@@ -140,6 +142,12 @@ namespace Diva
             this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
             this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
             // 
+            // DroneInfoPanel
+            // 
+            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
+            this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
+            this.DroneInfoPanel.Name = "DroneInfoPanel";
+            // 
             // PanelDroneInfoList
             // 
             resources.ApplyResources(this.PanelDroneInfoList, "PanelDroneInfoList");
@@ -148,8 +156,8 @@ namespace Diva
             // 
             // TSZoomPanel
             // 
-            resources.ApplyResources(this.TSZoomPanel, "TSZoomPanel");
             this.TSZoomPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            resources.ApplyResources(this.TSZoomPanel, "TSZoomPanel");
             this.TSZoomPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.TSZoomPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.But_ZoomIn,
@@ -905,5 +913,6 @@ namespace Diva
 		private ToolStripButton But_ZoomOut;
 		private Panel PanelDroneInfoList;
 		private MyTSButton TSBtnCusOverlay;
-	}
+        private DroneInfoPanel DroneInfoPanel;
+    }
 }

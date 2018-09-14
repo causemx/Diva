@@ -391,4 +391,7 @@
   <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
     <value>位址</value>
   </data>
+  <data name="strActivateDrone" xml:space="preserve">
+    <value>點擊設為使用中</value>
+  </data>
 </root>
