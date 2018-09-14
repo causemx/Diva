@@ -440,18 +440,31 @@ namespace Diva
 			colCommand.DataSource = cmds;
 		}
 
-		private Dictionary<string, string[]> readCMDXML()
+		Dictionary<string, string[]> readCMDXML()
 		{
 			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
 
-			// do lang stuff here
+			log.Info("Reading MAV_CMD for " + Planner.comPort.MAV.firmware);
+
 			using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
 			using (XmlReader reader = XmlReader.Create(file))
 			{
 				reader.Read();
 				reader.ReadStartElement("CMD");
-				// read part of firmware - APM, because mavcmd.xml very large...
-				reader.ReadToFollowing("APM");
+				if (Planner.comPort.MAV.firmware == Planner.Firmwares.ArduPlane ||
+					Planner.comPort.MAV.firmware == Planner.Firmwares.Ateryx)
+				{
+					reader.ReadToFollowing("APM");
+				}
+				else if (Planner.comPort.MAV.firmware == Planner.Firmwares.ArduRover)
+				{
+					reader.ReadToFollowing("APRover");
+				}
+				else
+				{
+					reader.ReadToFollowing("AC2");
+				}
+
 				XmlReader inner = reader.ReadSubtree();
 
 				inner.Read();
@@ -490,6 +503,8 @@ namespace Diva
 
 			return cmd;
 		}
+
+		
 
 		void comPort_MavChanged(object sender, EventArgs e)
 		{
