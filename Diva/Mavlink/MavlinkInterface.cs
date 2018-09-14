@@ -80,7 +80,7 @@ namespace Diva.Mavlink
 
 		public MavList MAVlist;
 
-		public MavStatus MAV
+		public MavStatus Status
 		{
 			get { return MAVlist[sysidcurrent, compidcurrent]; }
 			set { MAVlist[sysidcurrent, compidcurrent] = value; }
@@ -192,7 +192,7 @@ namespace Diva.Mavlink
 					};
 
 					if (!BaseStream.IsOpen) continue;
-					sendPacket(htb, MAV.sysid, MAV.compid);
+					sendPacket(htb, Status.sysid, Status.compid);
 
 				}
 
@@ -241,13 +241,13 @@ namespace Diva.Mavlink
 					{
 						try
 						{
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.POSITION, 2);
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
-							getDatastream(MAV.sysid, MAV.compid, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.POSITION, 2);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.EXTRA1, 4);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.EXTRA2, 4);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.EXTRA3, 2);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.RAW_SENSORS, 2);
+							getDatastream(Status.sysid, Status.compid, MAVLink.MAV_DATA_STREAM.RC_CHANNELS, 2);
 						}
 						catch
 						{
@@ -262,10 +262,10 @@ namespace Diva.Mavlink
 						{
 							var hb = mavlinkMessage.ToStructure<MAVLink.mavlink_heartbeat_t>();
 
-							MAV.mode = hb.custom_mode;
+							Status.mode = hb.custom_mode;
 
 
-							MAV.sys_status = hb.system_status;
+							Status.sys_status = hb.system_status;
 
 							if (hb.type == (byte)MAVLink.MAV_TYPE.GCS)
 							{
@@ -278,7 +278,7 @@ namespace Diva.Mavlink
 								//Console.WriteLine("custom_mode:" + hb.custom_mode);
 								//Console.WriteLine("armd: " + (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED));
 
-								MAV.armed = (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED) ==
+								Status.armed = (hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED) ==
 								   (byte)MAVLink.MAV_MODE_FLAG.SAFETY_ARMED;
 
 								// saftey switch
@@ -290,9 +290,9 @@ namespace Diva.Mavlink
 								}*/
 
 								// for future use
-								MAV.landed = hb.system_status == (byte)MAVLink.MAV_STATE.STANDBY;
-								MAV.actived = hb.system_status == (byte)MAVLink.MAV_STATE.ACTIVE;
-								MAV.failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;
+								Status.landed = hb.system_status == (byte)MAVLink.MAV_STATE.STANDBY;
+								Status.actived = hb.system_status == (byte)MAVLink.MAV_STATE.ACTIVE;
+								Status.failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;
 
 							}
 						}
@@ -311,7 +311,7 @@ namespace Diva.Mavlink
 
 							wpno = wpcur.seq;
 
-							if (MAV.mode == 4 && wpno != 0)
+							if (Status.mode == 4 && wpno != 0)
 							{
 								lastautowp = (int)wpno;
 							}
@@ -342,7 +342,7 @@ namespace Diva.Mavlink
 							// the new arhs deadreckoning may send 0 alt and 0 long. check for and undo
 
 							
-							MAV.alt = loc.relative_alt / 1000.0f;
+							Status.alt = loc.relative_alt / 1000.0f;
 
 							useLocation = true;
 							if (loc.lat == 0 && loc.lon == 0)
@@ -351,9 +351,9 @@ namespace Diva.Mavlink
 							}
 							else
 							{
-								MAV.current_lat = loc.lat / 10000000.0;
-								MAV.current_lng = loc.lon / 10000000.0;
-								MAV.altasl = loc.alt / 1000.0f;
+								Status.current_lat = loc.lat / 10000000.0;
+								Status.current_lng = loc.lon / 10000000.0;
+								Status.altasl = loc.alt / 1000.0f;
 
 								double vx = loc.vx * 0.01;
 								double vy = loc.vy * 0.01;
@@ -371,10 +371,10 @@ namespace Diva.Mavlink
 
 							if (!useLocation)
 							{
-								MAV.current_lat = gps.lat * 1.0e-7;
-								MAV.current_lng = gps.lon * 1.0e-7;
+								Status.current_lat = gps.lat * 1.0e-7;
+								Status.current_lng = gps.lon * 1.0e-7;
 
-								MAV.altasl = gps.alt / 1000.0f;
+								Status.altasl = gps.alt / 1000.0f;
 								// alt = gps.alt; // using vfr as includes baro calc
 								
 							}
@@ -383,9 +383,9 @@ namespace Diva.Mavlink
 
 							float gpshdop = (float)Math.Round((double)gps.eph / 100.0, 2);
 
-							MAV.satcount = gps.satellites_visible;
-							MAV.groundspeed = gps.vel * 1.0e-2f;
-							MAV.groundcourse = gps.cog * 1.0e-2f;
+							Status.satcount = gps.satellites_visible;
+							Status.groundspeed = gps.vel * 1.0e-2f;
+							Status.groundcourse = gps.cog * 1.0e-2f;
 														
 							//MAVLink.packets[(byte)MAVLink.MSG_NAMES.GPS_RAW);
 						}
@@ -402,7 +402,7 @@ namespace Diva.Mavlink
 							float pitch = (float)(att.pitch * MathHelper.rad2deg);
 							float yaw = (float)(att.yaw * MathHelper.rad2deg);
 
-							MAV.yaw = yaw;
+							Status.yaw = yaw;
 						}
 					}
 
@@ -421,7 +421,7 @@ namespace Diva.Mavlink
 
 							ushort packetdropremote = sysstatus.drop_rate_comm;
 
-							MAV.battery_voltage = battery_voltage;
+							Status.battery_voltage = battery_voltage;
 
 							/*
 							Invoke((MethodInvoker)delegate
@@ -447,7 +447,7 @@ namespace Diva.Mavlink
 							float aspd_error = nav.aspd_error / 100.0f;
 							float xtrack_error = nav.xtrack_error;
 
-							MAV.nav_bearing = nav_bearing;
+							Status.nav_bearing = nav_bearing;
 
 						}
 					}
@@ -729,7 +729,7 @@ namespace Diva.Mavlink
 				if (getparams)
 				{
 					frmProgressReporter.UpdateProgressAndStatus(0,
-					   "Getting Params.. (sysid " + MAV.sysid + " compid " + MAV.compid + ") ");
+					   "Getting Params.. (sysid " + Status.sysid + " compid " + Status.compid + ") ");
 					getParamListBG();
 				}
 
@@ -758,9 +758,9 @@ namespace Diva.Mavlink
 			//frmProgressReporter.Close();
 			giveComport = false;
 			frmProgressReporter.UpdateProgressAndStatus(100, "done");
-			log.Info("Done open " + MAV.sysid + " " + MAV.compid);
-			MAV.packetslost = 0;
-			MAV.synclost = 0;
+			log.Info("Done open " + Status.sysid + " " + Status.compid);
+			Status.packetslost = 0;
+			Status.synclost = 0;
 		}
 
 
@@ -799,13 +799,13 @@ namespace Diva.Mavlink
 		public void getParamPoll()
 		{
 			// check if we have all
-			if (MAV.param.TotalReceived >= MAV.param.TotalReported)
+			if (Status.param.TotalReceived >= Status.param.TotalReported)
 			{
 				return;
 			}
 
 			// if we are connected as primary to a vechile where we dont have all the params, poll for them
-			short i = (short)(_parampoll % MAV.param.TotalReported);
+			short i = (short)(_parampoll % Status.param.TotalReported);
 
 			GetParam("", i, false);
 
@@ -824,7 +824,7 @@ namespace Diva.Mavlink
 
 		public float GetParam(string name = "", short index = -1, bool requireresponce = true)
 		{
-			return GetParam(MAV.sysid, MAV.compid, name, index, requireresponce);
+			return GetParam(Status.sysid, Status.compid, name, index, requireresponce);
 		}
 
 		/// <summary>
@@ -948,8 +948,8 @@ namespace Diva.Mavlink
 			int param_total = 1;
 
 			mavlink_param_request_list_t req = new mavlink_param_request_list_t();
-			req.target_system = MAV.sysid;
-			req.target_component = MAV.compid;
+			req.target_system = Status.sysid;
+			req.target_component = Status.compid;
 
 			generatePacket((byte)MAVLINK_MSG_ID.PARAM_REQUEST_LIST, req);
 
@@ -972,7 +972,7 @@ namespace Diva.Mavlink
 					frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
 					giveComport = false;
 					frmProgressReporter.doWorkArgs.ErrorMessage = "User Canceled";
-					return MAV.param;
+					return Status.param;
 				}
 
 				// 4 seconds between valid packets
@@ -1004,7 +1004,7 @@ namespace Diva.Mavlink
 									frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
 									giveComport = false;
 									frmProgressReporter.doWorkArgs.ErrorMessage = "User Canceled";
-									return MAV.param;
+									return Status.param;
 								}
 
 								// prevent dropping out of this get params loop
@@ -1013,8 +1013,8 @@ namespace Diva.Mavlink
 									queued++;
 
 									mavlink_param_request_read_t req2 = new mavlink_param_request_read_t();
-									req2.target_system = MAV.sysid;
-									req2.target_component = MAV.compid;
+									req2.target_system = Status.sysid;
+									req2.target_component = Status.compid;
 									req2.param_index = i;
 									req2.param_id = new byte[] { 0x0 };
 
@@ -1085,7 +1085,7 @@ namespace Diva.Mavlink
 
 						//Console.WriteLine(DateTime.Now.Millisecond + " gp2a ");
 
-						if (MAV.apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+						if (Status.apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
 						{
 							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
 							newparamlist[paramID] = new MAVLinkParam(paramID, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
@@ -1102,7 +1102,7 @@ namespace Diva.Mavlink
 						if (par.param_index != 65535)
 							indexsreceived.Add(par.param_index);
 
-						MAV.param_types[paramID] = (MAV_PARAM_TYPE)par.param_type;
+						Status.param_types[paramID] = (MAV_PARAM_TYPE)par.param_type;
 
 						//Console.WriteLine(DateTime.Now.Millisecond + " gp3 ");
 
@@ -1126,19 +1126,19 @@ namespace Diva.Mavlink
 						if (logdata.ToLower().Contains("copter") || logdata.ToLower().Contains("rover") ||
 							logdata.ToLower().Contains("plane"))
 						{
-							MAV.VersionString = logdata;
+							Status.VersionString = logdata;
 						}
 						else if (logdata.ToLower().Contains("nuttx"))
 						{
-							MAV.SoftwareVersions = logdata;
+							Status.SoftwareVersions = logdata;
 						}
 						else if (logdata.ToLower().Contains("px4v2"))
 						{
-							MAV.SerialString = logdata;
+							Status.SerialString = logdata;
 						}
 						else if (logdata.ToLower().Contains("frame"))
 						{
-							MAV.FrameString = logdata;
+							Status.FrameString = logdata;
 						}
 					}
 					//stopwatch.Stop();
@@ -1165,20 +1165,20 @@ namespace Diva.Mavlink
 			}
 			giveComport = false;
 
-			MAV.param.Clear();
-			MAV.param.TotalReported = param_total;
-			MAV.param.AddRange(newparamlist);
-			return MAV.param;
+			Status.param.Clear();
+			Status.param.TotalReported = param_total;
+			Status.param.AddRange(newparamlist);
+			return Status.param;
 		}
 
 		public List<PointLatLngAlt> getRallyPoints()
 		{
 			List<PointLatLngAlt> points = new List<PointLatLngAlt>();
 
-			if (!MAV.param.ContainsKey("RALLY_TOTAL"))
+			if (!Status.param.ContainsKey("RALLY_TOTAL"))
 				return points;
 
-			int count = int.Parse(MAV.param["RALLY_TOTAL"].ToString());
+			int count = int.Parse(Status.param["RALLY_TOTAL"].ToString());
 
 			for (int a = 0; a < (count - 1); a++)
 			{
@@ -1206,8 +1206,8 @@ namespace Diva.Mavlink
 			mavlink_rally_fetch_point_t req = new mavlink_rally_fetch_point_t();
 
 			req.idx = (byte)no;
-			req.target_component = MAV.compid;
-			req.target_system = MAV.sysid;
+			req.target_component = Status.compid;
+			req.target_system = Status.sysid;
 
 			// request point
 			generatePacket((byte)MAVLINK_MSG_ID.RALLY_FETCH_POINT, req);
@@ -1287,15 +1287,15 @@ namespace Diva.Mavlink
 			compidcurrent = message.compid;
 
 			mavlinkversion = hb.mavlink_version;
-			MAV.aptype = (MAV_TYPE)hb.type;
-			MAV.apname = (MAV_AUTOPILOT)hb.autopilot;
+			Status.aptype = (MAV_TYPE)hb.type;
+			Status.apname = (MAV_AUTOPILOT)hb.autopilot;
 
 			// for different firmwares.
 			// setAPType(message.sysid, message.compid);
 
-			MAV.sysid = message.sysid;
-			MAV.compid = message.compid;
-			MAV.recvpacketcount = message.seq;
+			Status.sysid = message.sysid;
+			Status.compid = message.compid;
+			Status.recvpacketcount = message.seq;
 
 		}
 
@@ -1340,7 +1340,7 @@ namespace Diva.Mavlink
 						else
 						{
 							// time updated for internal reference
-							MAV.datetime = DateTime.Now;
+							Status.datetime = DateTime.Now;
 
 							DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
@@ -2021,7 +2021,7 @@ namespace Diva.Mavlink
 
 				MAVlist[sysid, compid].param_types[st] = (MAV_PARAM_TYPE)value.param_type;
 
-				if (MAV.apname == MAV_AUTOPILOT.ARDUPILOTMEGA && buffer.compid != (byte)MAV_COMPONENT.MAV_COMP_ID_UDP_BRIDGE)
+				if (Status.apname == MAV_AUTOPILOT.ARDUPILOTMEGA && buffer.compid != (byte)MAV_COMPONENT.MAV_COMP_ID_UDP_BRIDGE)
 				{
 					var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
 					MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(value.param_value),
@@ -2278,8 +2278,8 @@ namespace Diva.Mavlink
 		{
 			mavlink_autopilot_version_request_t req = new mavlink_autopilot_version_request_t();
 
-			req.target_component = MAV.compid;
-			req.target_system = MAV.sysid;
+			req.target_component = Status.compid;
+			req.target_system = Status.sysid;
 
 			// request point
 			generatePacket((byte)MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req);
@@ -2342,7 +2342,7 @@ namespace Diva.Mavlink
 		void generatePacket(int messageType, object indata)
 		{
 			//uses currently targeted mavs sysid and compid
-			generatePacket(messageType, indata, MAV.sysid, MAV.compid);
+			generatePacket(messageType, indata, Status.sysid, Status.compid);
 		}
 
 		public void generatePacket(int messageType, object indata, byte sysid, byte compid)
@@ -2387,7 +2387,7 @@ namespace Diva.Mavlink
 
 		public bool doARM(bool armit)
 		{
-			return doARM(MAV.sysid, MAV.compid, armit);
+			return doARM(Status.sysid, Status.compid, armit);
 		}
 
 		public bool doARM(byte sysid, byte compid, bool armit)
@@ -2409,7 +2409,7 @@ namespace Diva.Mavlink
 		public bool doCommand(MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7,
 			bool requireack = true)
 		{
-			return doCommand(MAV.sysid, MAV.compid, actionid, p1, p2, p3, p4, p5, p6, p7, requireack, null);
+			return doCommand(Status.sysid, Status.compid, actionid, p1, p2, p3, p4, p5, p6, p7, requireack, null);
 		}
 
 		public bool doCommand(byte sysid, byte compid, MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7, bool requireack = true, MethodInvoker uicallback = null)
@@ -2608,7 +2608,7 @@ namespace Diva.Mavlink
 
 		public void setMode(string modein)
 		{
-			setMode(MAV.sysid, MAV.compid, modein);
+			setMode(Status.sysid, Status.compid, modein);
 		}
 
 		public void setMode(byte sysid, byte compid, string modein)
@@ -2623,7 +2623,7 @@ namespace Diva.Mavlink
 
 		public void setMode(mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
 		{
-			setMode(MAV.sysid, MAV.compid, mode, base_mode);
+			setMode(Status.sysid, Status.compid, mode, base_mode);
 		}
 
 		public void setMode(byte sysid, byte compid, mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
@@ -2788,7 +2788,7 @@ namespace Diva.Mavlink
 
 		public void setGuidedModeWP(Locationwp gotohere, bool setguidedmode = true)
 		{
-			setGuidedModeWP(MAV.sysid, MAV.compid, gotohere, setguidedmode);
+			setGuidedModeWP(Status.sysid, Status.compid, gotohere, setguidedmode);
 		}
 
 		public void setGuidedModeWP(byte sysid, byte compid, Locationwp gotohere, bool setguidedmode = true)
@@ -2821,7 +2821,7 @@ namespace Diva.Mavlink
 		public MAV_MISSION_RESULT setWP(Locationwp loc, ushort index, MAV_FRAME frame, byte current = 0,
 			byte autocontinue = 1, bool use_int = false)
 		{
-			return setWP(MAV.sysid, MAV.compid, loc, index, frame, current, autocontinue, use_int);
+			return setWP(Status.sysid, Status.compid, loc, index, frame, current, autocontinue, use_int);
 		}
 
 		/// <summary>
@@ -3105,8 +3105,8 @@ namespace Diva.Mavlink
 			MAVLinkMessage buffer;
 			mavlink_mission_request_list_t req = new mavlink_mission_request_list_t();
 
-			req.target_system = MAV.sysid;
-			req.target_component = MAV.compid;
+			req.target_system = Status.sysid;
+			req.target_component = Status.compid;
 
 			// request list
 			generatePacket((byte)MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req);
@@ -3168,8 +3168,8 @@ namespace Diva.Mavlink
 			{
 				mavlink_mission_request_int_t reqi = new mavlink_mission_request_int_t();
 
-				reqi.target_system = MAV.sysid;
-				reqi.target_component = MAV.compid;
+				reqi.target_system = Status.sysid;
+				reqi.target_component = Status.compid;
 
 				reqi.seq = index;
 
@@ -3182,8 +3182,8 @@ namespace Diva.Mavlink
 			{
 				mavlink_mission_request_t reqf = new mavlink_mission_request_t();
 
-				reqf.target_system = MAV.sysid;
-				reqf.target_component = MAV.compid;
+				reqf.target_system = Status.sysid;
+				reqf.target_component = Status.compid;
 
 				reqf.seq = index;
 
@@ -3329,13 +3329,13 @@ namespace Diva.Mavlink
 		{
 			mavlink_mission_write_partial_list_t req = new mavlink_mission_write_partial_list_t();
 
-			req.target_system = MAV.sysid;
-			req.target_component = MAV.compid;
+			req.target_system = Status.sysid;
+			req.target_component = Status.compid;
 
 			req.start_index = (short)startwp;
 			req.end_index = (short)endwp;
 
-			generatePacket((byte)MAVLINK_MSG_ID.MISSION_WRITE_PARTIAL_LIST, req, MAV.sysid, MAV.compid);
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_WRITE_PARTIAL_LIST, req, Status.sysid, Status.compid);
 		}
 
 		/// <summary>
@@ -3347,12 +3347,12 @@ namespace Diva.Mavlink
 			giveComport = true;
 			mavlink_mission_count_t req = new mavlink_mission_count_t();
 
-			req.target_system = MAV.sysid;
-			req.target_component = MAV.compid; // MSG_NAMES.MISSION_COUNT
+			req.target_system = Status.sysid;
+			req.target_component = Status.compid; // MSG_NAMES.MISSION_COUNT
 
 			req.count = wp_total;
 
-			generatePacket((byte)MAVLINK_MSG_ID.MISSION_COUNT, req, MAV.sysid, MAV.compid);
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_COUNT, req, Status.sysid, Status.compid);
 
 			DateTime start = DateTime.Now;
 			int retrys = 3;
@@ -3364,7 +3364,7 @@ namespace Diva.Mavlink
 					if (retrys > 0)
 					{
 						log.Info("setWPTotal Retry " + retrys);
-						generatePacket((byte)MAVLINK_MSG_ID.MISSION_COUNT, req, MAV.sysid, MAV.compid);
+						generatePacket((byte)MAVLINK_MSG_ID.MISSION_COUNT, req, Status.sysid, Status.compid);
 						start = DateTime.Now;
 						retrys--;
 						continue;
@@ -3383,14 +3383,14 @@ namespace Diva.Mavlink
 
 						if (request.seq == 0)
 						{
-							if (MAV.param["WP_TOTAL"] != null)
-								MAV.param["WP_TOTAL"].Value = wp_total - 1;
-							if (MAV.param["CMD_TOTAL"] != null)
-								MAV.param["CMD_TOTAL"].Value = wp_total - 1;
-							if (MAV.param["MIS_TOTAL"] != null)
-								MAV.param["MIS_TOTAL"].Value = wp_total - 1;
+							if (Status.param["WP_TOTAL"] != null)
+								Status.param["WP_TOTAL"].Value = wp_total - 1;
+							if (Status.param["CMD_TOTAL"] != null)
+								Status.param["CMD_TOTAL"].Value = wp_total - 1;
+							if (Status.param["MIS_TOTAL"] != null)
+								Status.param["MIS_TOTAL"].Value = wp_total - 1;
 
-							MAV.wps.Clear();
+							Status.wps.Clear();
 
 							giveComport = false;
 							return;
@@ -3437,11 +3437,11 @@ namespace Diva.Mavlink
 		public void setWPACK()
 		{
 			mavlink_mission_ack_t req = new mavlink_mission_ack_t();
-			req.target_system = MAV.sysid;
-			req.target_component = MAV.compid;
+			req.target_system = Status.sysid;
+			req.target_component = Status.compid;
 			req.type = 0;
 
-			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ACK, req, MAV.sysid, MAV.compid);
+			generatePacket((byte)MAVLINK_MSG_ID.MISSION_ACK, req, Status.sysid, Status.compid);
 		}
 
 		public bool setFencePoint(byte index, PointLatLngAlt plla, byte fencepointcount)
@@ -3452,8 +3452,8 @@ namespace Diva.Mavlink
 			fp.count = fencepointcount;
 			fp.lat = (float)plla.Lat;
 			fp.lng = (float)plla.Lng;
-			fp.target_component = MAV.compid;
-			fp.target_system = MAV.sysid;
+			fp.target_component = Status.compid;
+			fp.target_system = Status.sysid;
 
 			int retry = 3;
 
@@ -3483,8 +3483,8 @@ namespace Diva.Mavlink
 			mavlink_fence_fetch_point_t req = new mavlink_fence_fetch_point_t();
 
 			req.idx = (byte)no;
-			req.target_component = MAV.compid;
-			req.target_system = MAV.sysid;
+			req.target_component = Status.compid;
+			req.target_system = Status.sysid;
 
 			// request point
 			generatePacket((byte)MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);

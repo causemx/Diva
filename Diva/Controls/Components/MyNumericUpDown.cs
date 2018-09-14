@@ -169,7 +169,7 @@ namespace Diva.Controls.Components
 			{
 				try
 				{
-					bool ans = Planner.comPort.setParam(ParamName, (float)base.Value * (float)_scale);
+					bool ans = Planner.GetActiveDrone().setParam(ParamName, (float)base.Value * (float)_scale);
 					if (ans == false)
 						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
 				}

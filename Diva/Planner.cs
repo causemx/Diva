@@ -40,30 +40,15 @@ namespace Diva
 		public const int TAKEOFF_HEIGHT = 130;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
-		public static MavlinkInterface comPort
-		{
-			get
-			{
-				return _comPort;
-			}
-			set
-			{
-				if (_comPort == value)
-					return;
-				_comPort = value;
-
-				// the behavior is used by mission planner 
-				// _comPort.MavChanged -= comPort_MavChanged;
-				// _comPort.MavChanged += comPort_MavChanged;
-				// comPort_MavChanged(null, null);
-			}
-		}
+        private static Planner Instance = null;
+        public static Planner GetPlannerInstance() => Instance;
+        public static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
 
 		public DroneInfo CurrentDroneInfo = null;
+        public MavlinkInterface ActiveDrone = new MavlinkInterface();
 
-		public bool autopan { get; set; }
+        public bool autopan { get; set; }
 
-		public static MavlinkInterface _comPort = new MavlinkInterface();
 
 		private static readonly double WARN_ALT = 2D;
 
@@ -185,8 +170,9 @@ namespace Diva
 		public Planner()
 		{
 			InitializeComponent();
+            Instance = this;
 
-			string username = AccountManager.GetLoginAccount();
+            string username = AccountManager.GetLoginAccount();
 			if (username == "") username = ResStrings.StrAnonymousAccount;
 			Text += " - " + username;
 
@@ -339,26 +325,26 @@ namespace Diva
 			while (serialThread)
 			{
 				Thread.Sleep(20);
-				if (comPort.BaseStream.IsOpen)
+				if (ActiveDrone.BaseStream.IsOpen)
 				{
 		
 					Invoke((MethodInvoker)delegate
 					{
 						foreach (int mode in Enum.GetValues(typeof(flightmode)))
 						{
-							if ((uint)mode == comPort.MAV.mode)
+							if ((uint)mode == ActiveDrone.Status.mode)
 							{
 								TxtDroneMode.Text = Enum.GetName(typeof(flightmode), mode);
 							}
 						}
 
-						CurrentDroneInfo.UpdateTelemetryData(comPort.MAV.sysid, comPort.MAV.battery_voltage, comPort.MAV.satcount);
-						CollectionTelemetryData.UpdateTelemetryData(comPort.MAV.altasl, comPort.MAV.groundspeed, comPort.MAV.verticalspeed);
+						CurrentDroneInfo.UpdateTelemetryData(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
+						CollectionTelemetryData.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.groundspeed, ActiveDrone.Status.verticalspeed);
 					});
 
-					PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
 
-					if (comPort.MAV.current_lat != 0 && comPort.MAV.current_lng != 0)
+					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
 					{
 						updateMapPosition(currentloc);
 					}
@@ -1315,7 +1301,7 @@ namespace Diva
 
 			if (pointno == "Tracker Home")
 			{
-				comPort.MAV.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
+				ActiveDrone.Status.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
 				return;
 			}
 
@@ -2129,14 +2115,14 @@ namespace Diva
             try
             {
                 
-                if (!comPort.BaseStream.IsOpen)
+                if (!ActiveDrone.BaseStream.IsOpen)
                 {
                     throw new Exception("Please connect first!");
                     // MessageBox.Show(ResStrings.MsgConnectFirst);
                     return;
                 }
 
-				comPort.giveComport = true;
+				ActiveDrone.giveComport = true;
 				int a = 0;
 
 				// define the home point
@@ -2154,16 +2140,16 @@ namespace Diva
 				}
 
 				// log
-				log.Info("wps values " + comPort.MAV.wps.Values.Count);
+				log.Info("wps values " + ActiveDrone.Status.wps.Values.Count);
 				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
 
 				// check for changes / future mod to send just changed wp's
-				if (comPort.MAV.wps.Values.Count == (dgvWayPoints.Rows.Count + 1))
+				if (ActiveDrone.Status.wps.Values.Count == (dgvWayPoints.Rows.Count + 1))
 				{
 					Hashtable wpstoupload = new Hashtable();
 
 					a = -1;
-					foreach (var item in comPort.MAV.wps.Values)
+					foreach (var item in ActiveDrone.Status.wps.Values)
 					{
 						// skip home
 						if (a == -1)
@@ -2204,14 +2190,14 @@ namespace Diva
 
 				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
 
-				if (comPort.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
+				if (ActiveDrone.Status.apname == MAVLink.MAV_AUTOPILOT.PX4)
 				{
 					totalwpcountforupload--;
 				}
 
 				try
 				{
-					comPort.setWPTotal(totalwpcountforupload);
+					ActiveDrone.setWPTotal(totalwpcountforupload);
 				}
 				catch (TimeoutException)
 				{
@@ -2225,11 +2211,11 @@ namespace Diva
 				// upload from wp0
 				a = 0;
 
-				if (comPort.MAV.apname != MAVLink.MAV_AUTOPILOT.PX4)
+				if (ActiveDrone.Status.apname != MAVLink.MAV_AUTOPILOT.PX4)
 				{
 					try
 					{
-						var homeans = comPort.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						var homeans = ActiveDrone.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
 						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
@@ -2244,8 +2230,8 @@ namespace Diva
 					{
 						use_int = false;
 						// added here to prevent timeout errors
-						comPort.setWPTotal(totalwpcountforupload);
-						var homeans = comPort.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						ActiveDrone.setWPTotal(totalwpcountforupload);
+						var homeans = ActiveDrone.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
 						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
@@ -2297,19 +2283,19 @@ namespace Diva
 
 					// handle current wp upload number
 					int uploadwpno = a;
-					if (comPort.MAV.apname == MAVLink.MAV_AUTOPILOT.PX4)
+					if (ActiveDrone.Status.apname == MAVLink.MAV_AUTOPILOT.PX4)
 						uploadwpno--;
 
 					// try send the wp
-					MAVLink.MAV_MISSION_RESULT ans = comPort.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+					MAVLink.MAV_MISSION_RESULT ans = ActiveDrone.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
 
 					// we timed out while uploading wps/ command wasnt replaced/ command wasnt added
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
 					{
 						// resend for partial upload
-						comPort.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
+						ActiveDrone.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
 						// reupload this point.
-						ans = comPort.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+						ans = ActiveDrone.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
 					}
 
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
@@ -2335,7 +2321,7 @@ namespace Diva
 						// the ans is received via mission_ack, so we dont know for certain what our current request is for. as we may have lost the mission_request
 
 						// get requested wp no - 1;
-						a = comPort.getRequestedWPNo() - 1;
+						a = ActiveDrone.getRequestedWPNo() - 1;
 
 						continue;
 					}
@@ -2351,15 +2337,15 @@ namespace Diva
 					}
 				}
 
-				comPort.setWPACK();
+				ActiveDrone.setWPACK();
 				
 				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(95, "Setting params");
 
 				// m
-				comPort.setParam("WP_RADIUS", float.Parse("30") / 1);
+				ActiveDrone.setParam("WP_RADIUS", float.Parse("30") / 1);
 
 				// cm's
-				comPort.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
+				ActiveDrone.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
 
 				// Remind the user after uploading the mission into firmware.
 				MessageBox.Show(ResStrings.MsgMissionAcceptWP.FormatWith(a));
@@ -2378,11 +2364,11 @@ namespace Diva
 			catch (Exception ex)
 			{
 				log.Error(ex);
-				comPort.giveComport = false;
+				ActiveDrone.giveComport = false;
 				throw;
 			}
 
-			comPort.giveComport = false;
+			ActiveDrone.giveComport = false;
 		}
 
 		void getWPs(object passdata = null)
@@ -2392,7 +2378,7 @@ namespace Diva
 			try
 			{
 
-                if (!comPort.BaseStream.IsOpen)
+                if (!ActiveDrone.BaseStream.IsOpen)
                 {
                     // prevent application termination
                     //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
@@ -2400,22 +2386,22 @@ namespace Diva
                     return;
                 }
 
-				comPort.giveComport = true;
+				ActiveDrone.giveComport = true;
 
 				// param = port.MAV.param;
 
 				Console.WriteLine("Getting Home");
 				Console.WriteLine("Getting WP #");
 
-				int cmdcount = comPort.getWPCount();
+				int cmdcount = ActiveDrone.getWPCount();
 
 				for (ushort a = 0; a < cmdcount; a++)
 				{
 					Console.WriteLine("Getting WP" + a);
-					cmds.Add(comPort.getWP(a));
+					cmds.Add(ActiveDrone.getWP(a));
 				}
 
-				comPort.setWPACK();
+				ActiveDrone.setWPACK();
 
 				Console.WriteLine("Done");
 			}
@@ -2446,8 +2432,8 @@ namespace Diva
 					
 					try
 					{
-						if (withrally && comPort.MAV.param.ContainsKey("RALLY_TOTAL") &&
-							int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString()) >= 1)
+						if (withrally && ActiveDrone.Status.param.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) >= 1)
 						{
 							Console.WriteLine("get rally points");
 							getRallyPoints();
@@ -2458,7 +2444,7 @@ namespace Diva
 					{
 					}
 
-					comPort.giveComport = false;
+					ActiveDrone.giveComport = false;
 
 					// BUT_ReadWPs.Enabled = true;
 
@@ -2599,13 +2585,13 @@ namespace Diva
 
 		public void getRallyPoints()
 		{
-			if (comPort.MAV.param["RALLY_TOTAL"] == null)
+			if (ActiveDrone.Status.param["RALLY_TOTAL"] == null)
 			{
 				MessageBox.Show(ResStrings.MsgUnsupported);
 				return;
 			}
 
-			if (int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString()) < 1)
+			if (int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) < 1)
 			{
 				MessageBox.Show(ResStrings.MsgNoRallyPoint);
 				return;
@@ -2613,13 +2599,13 @@ namespace Diva
 
 			overlays.rallypoints.Markers.Clear();
 
-			int count = int.Parse(comPort.MAV.param["RALLY_TOTAL"].ToString());
+			int count = int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString());
 
 			for (int a = 0; a < (count); a++)
 			{
 				try
 				{
-					PointLatLngAlt plla = comPort.getRallyPoint(a, ref count);
+					PointLatLngAlt plla = ActiveDrone.getRallyPoint(a, ref count);
 					overlays.rallypoints.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
 					{
 						Alt = (int)plla.Alt,
@@ -2657,18 +2643,18 @@ namespace Diva
 		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
 				MessageBox.Show(ResStrings.MsgNoConnection);
 				return;
 			}
 
-			if (comPort.MAV.GuidedMode.z == 0)
+			if (ActiveDrone.Status.GuidedMode.z == 0)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 
-				if (comPort.MAV.GuidedMode.z == 0)
+				if (ActiveDrone.Status.GuidedMode.z == 0)
 					return;
 			}
 
@@ -2689,11 +2675,11 @@ namespace Diva
 
 			try
 			{
-				comPort.setGuidedModeWP(gotohere);
+				ActiveDrone.setGuidedModeWP(gotohere);
 			}
 			catch (Exception ex)
 			{
-				comPort.giveComport = false;
+				ActiveDrone.giveComport = false;
 				MessageBox.Show(ex.Message);
 			}
 
@@ -2787,7 +2773,7 @@ namespace Diva
 
 						CurrentDroneInfo = panel;
 						CurrentDroneInfo.Activate();
-						comPort = mav;
+						ActiveDrone = mav;
 					}
 					catch (Exception exception)
 					{
@@ -2812,7 +2798,7 @@ namespace Diva
                 comPorts.Add(drone.Name, droneInfo);
 
                 CurrentDroneInfo = droneInfo;
-                comPort = mav;
+                ActiveDrone = mav;
 
 
             }
@@ -2826,7 +2812,7 @@ namespace Diva
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -2835,8 +2821,8 @@ namespace Diva
 			// arm the MAV
 			try
 			{
-				log.InfoFormat("mav armed: {0}", comPort.MAV.armed);
-				bool ans = comPort.doARM(!comPort.MAV.armed);
+				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.armed);
+				bool ans = ActiveDrone.doARM(!ActiveDrone.Status.armed);
 				if (ans == false)
 					log.Error("arm failed");
 			}
@@ -2848,44 +2834,44 @@ namespace Diva
 
 		private void BUT_Takeoff_Click(object sender, EventArgs e)
 		{
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			comPort.setMode("GUIDED");
+			ActiveDrone.setMode("GUIDED");
 
-			comPort.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
+			ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
 		}
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
 		{
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			if (comPort.BaseStream.IsOpen)
+			if (ActiveDrone.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
-				comPort.setMode(comPort.MAV.sysid, comPort.MAV.compid, "AUTO");
+				ActiveDrone.setMode(ActiveDrone.Status.sysid, ActiveDrone.Status.compid, "AUTO");
 			}
 		}
 
 
 		private void BUT_RTL_Click(object sender, EventArgs e)
 		{
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			if (comPort.BaseStream.IsOpen)
+			if (ActiveDrone.BaseStream.IsOpen)
 			{
-				comPort.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
+				ActiveDrone.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 			}
 		}
 
@@ -2896,7 +2882,7 @@ namespace Diva
 		/// <param name="e"></param>
 		public void BUT_read_Click(object sender, EventArgs e)
 		{
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -2920,7 +2906,7 @@ namespace Diva
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
 
-			if (!comPort.BaseStream.IsOpen)
+			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -3015,14 +3001,14 @@ namespace Diva
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
-			if (comPort.BaseStream.IsOpen)
+			if (ActiveDrone.BaseStream.IsOpen)
 			{
-				comPort.setMode(
-					comPort.MAV.sysid,
-					comPort.MAV.compid,
+				ActiveDrone.setMode(
+					ActiveDrone.Status.sysid,
+					ActiveDrone.Status.compid,
 					new MAVLink.mavlink_set_mode_t()
 					{
-						target_system = comPort.MAV.sysid,
+						target_system = ActiveDrone.Status.sysid,
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)9,
 					});
@@ -3081,7 +3067,7 @@ namespace Diva
 				// Do whatever cleanup you need to.
 				Console.WriteLine("ping timer");
 
-				AddWPToMap(comPort.MAV.current_lat, comPort.MAV.current_lng, 10);
+				AddWPToMap(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng, 10);
 
 				// set the time span
 				await Task.Delay(TimeSpan.FromSeconds(5), _tokenSource.Token);
@@ -3529,7 +3515,7 @@ namespace Diva
 			// polygongridmode = false;
 			//FENCE_ENABLE ON COPTER
 			//FENCE_ACTION ON PLANE
-			if (!comPort.MAV.param.ContainsKey("FENCE_ENABLE") && !comPort.MAV.param.ContainsKey("FENCE_ACTION"))
+			if (!ActiveDrone.Status.param.ContainsKey("FENCE_ENABLE") && !ActiveDrone.Status.param.ContainsKey("FENCE_ACTION"))
 			{
 				MessageBox.Show("Not Supported");
 				return;
@@ -3568,10 +3554,10 @@ namespace Diva
 			int minalt = 0;
 			int maxalt = 0;
 
-			if (comPort.MAV.param.ContainsKey("FENCE_MINALT"))
+			if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
 			{
 				string minalts =
-					(int.Parse(comPort.MAV.param["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+					(int.Parse(ActiveDrone.Status.param["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
 						.ToString("0");
 				if (DialogResult.Cancel == InputBox.Show("Min Alt", "Box Minimum Altitude?", ref minalts))
 					return;
@@ -3583,10 +3569,10 @@ namespace Diva
 				}
 			}
 
-			if (comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
+			if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
 			{
 				string maxalts =
-					(int.Parse(comPort.MAV.param["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+					(int.Parse(ActiveDrone.Status.param["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
 						.ToString(
 							"0");
 				if (DialogResult.Cancel == InputBox.Show("Max Alt", "Box Maximum Altitude?", ref maxalts))
@@ -3601,10 +3587,10 @@ namespace Diva
 
 			try
 			{
-				if (comPort.MAV.param.ContainsKey("FENCE_MINALT"))
-					comPort.setParam("FENCE_MINALT", minalt);
-				if (comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
-					comPort.setParam("FENCE_MAXALT", maxalt);
+				if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
+					ActiveDrone.setParam("FENCE_MINALT", minalt);
+				if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
+					ActiveDrone.setParam("FENCE_MAXALT", maxalt);
 			}
 			catch (Exception ex)
 			{
@@ -3613,11 +3599,11 @@ namespace Diva
 				return;
 			}
 
-			float oldaction = (float)comPort.MAV.param["FENCE_ACTION"];
+			float oldaction = (float)ActiveDrone.Status.param["FENCE_ACTION"];
 
 			try
 			{
-				comPort.setParam("FENCE_ACTION", 0);
+				ActiveDrone.setParam("FENCE_ACTION", 0);
 			}
 			catch
 			{
@@ -3631,7 +3617,7 @@ namespace Diva
 
 			try
 			{
-				comPort.setParam("FENCE_TOTAL", pointcount);
+				ActiveDrone.setParam("FENCE_TOTAL", pointcount);
 			}
 			catch
 			{
@@ -3643,21 +3629,21 @@ namespace Diva
 			{
 				byte a = 0;
 				// add return loc
-				comPort.setFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
+				ActiveDrone.setFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
 				a++;
 				// add points
 				foreach (var pll in drawnPolygon.Points)
 				{
-					comPort.setFencePoint(a, new PointLatLngAlt(pll), pointcount);
+					ActiveDrone.setFencePoint(a, new PointLatLngAlt(pll), pointcount);
 					a++;
 				}
 
 				// add polygon close
-				comPort.setFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
+				ActiveDrone.setFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
 
 				try
 				{
-					comPort.setParam("FENCE_ACTION", oldaction);
+					ActiveDrone.setParam("FENCE_ACTION", oldaction);
 				}
 				catch
 				{
@@ -3846,7 +3832,7 @@ namespace Diva
 
 			try
 			{
-				comPort.setParam("FENCE_ENABLE", 0);
+				ActiveDrone.setParam("FENCE_ENABLE", 0);
 			}
 			catch
 			{
@@ -3856,7 +3842,7 @@ namespace Diva
 
 			try
 			{
-				comPort.setParam("FENCE_ACTION", 0);
+				ActiveDrone.setParam("FENCE_ACTION", 0);
 			}
 			catch
 			{
@@ -3866,7 +3852,7 @@ namespace Diva
 
 			try
 			{
-				comPort.setParam("FENCE_TOTAL", 0);
+				ActiveDrone.setParam("FENCE_TOTAL", 0);
 			}
 			catch
 			{
@@ -3904,9 +3890,9 @@ namespace Diva
 					{
 						MavlinkInterface _mav = entry.Value.mav;
 						overlays.routes.Markers.Clear();
-						if (_mav.MAV.current_lat == 0 || _mav.MAV.current_lng == 0) { continue; }
-						var marker = new GMapMarkerQuad(new PointLatLng(_mav.MAV.current_lat, _mav.MAV.current_lng),
-							_mav.MAV.yaw, _mav.MAV.groundcourse, _mav.MAV.nav_bearing, _mav.MAV.sysid);
+						if (_mav.Status.current_lat == 0 || _mav.Status.current_lng == 0) { continue; }
+						var marker = new GMapMarkerQuad(new PointLatLng(_mav.Status.current_lat, _mav.Status.current_lng),
+							_mav.Status.yaw, _mav.Status.groundcourse, _mav.Status.nav_bearing, _mav.Status.sysid);
 						overlays.routes.Markers.Add(marker);
 
 					}
@@ -3916,7 +3902,7 @@ namespace Diva
 					{
 						if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
 						{
-							PointLatLng currentloc = new PointLatLng(comPort.MAV.current_lat, comPort.MAV.current_lng);
+							PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
 							updateMapPosition(currentloc);
 							mapupdate = DateTime.Now;
 						}

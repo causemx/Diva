@@ -53,7 +53,7 @@ namespace Diva.Controls
 		public void Activate()
 		{
 			mav.onCreate();
-			mav.MAV.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
+			mav.Status.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
 			this.BackColor = Color.FromArgb(67, 78, 84);
 		}
 
@@ -77,30 +77,6 @@ namespace Diva.Controls
 			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
 			Planner.log.Info("distance double: " + missionDistance);
 		} 
-
-		public int GetParam(string paramname)
-		{
-			int _scale = 1;
-			MAVLink.MAVLinkParamList paramlist = Planner.comPort.MAV.param;
-			try
-			{
-				if (paramlist.ContainsKey(paramname))
-				{
-					int value = (int)((float)paramlist[paramname] / _scale);
-					return value;
-				}
-				else
-				{
-					throw new Exception("can not retrive parameters");
-				}
-			}
-			catch (Exception e)
-			{
-				Planner.log.Debug(e.ToString());
-				return 0;
-			}
-			
-		}
 
 		public event EventHandler CloseButtonClicked;
 

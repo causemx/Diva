@@ -22,15 +22,16 @@ namespace Diva.Controls
 		private static Hashtable tooltips = new Hashtable();
 		private readonly Hashtable changes = new Hashtable();
 		internal bool startup = true;
+        private Mavlink.MavlinkInterface mav = Planner.GetActiveDrone();
 
-		public ConfigTuningPage()
+        public ConfigTuningPage()
 		{
 			InitializeComponent();
 		}
 
 		public void Activate()
 		{
-			if (!Planner.comPort.BaseStream.IsOpen)
+            if (!mav.BaseStream.IsOpen)
 			{
 				Enabled = false;
 				return;
@@ -40,11 +41,11 @@ namespace Diva.Controls
 
 			changes.Clear();
 
-			myNumericUpDown1.setup(0, 0, 1, 0.001f, "WPNAV_LOIT_SPEED", Planner.comPort.MAV.param);
-			myNumericUpDown2.setup(0, 0, 1, 0.001f, "WPNAV_RADIUS", Planner.comPort.MAV.param);
-			myNumericUpDown3.setup(0, 0, 1, 0.001f, "WPNAV_SPEED", Planner.comPort.MAV.param);
-			myNumericUpDown4.setup(0, 0, 1, 0.001f, "WPNAV_SPEED_DN", Planner.comPort.MAV.param);
-			myNumericUpDown5.setup(0, 0, 1, 0.001f, "WPNAV_SPEED_UP", Planner.comPort.MAV.param);
+			myNumericUpDown1.setup(0, 0, 1, 0.001f, "WPNAV_LOIT_SPEED", mav.Status.param);
+			myNumericUpDown2.setup(0, 0, 1, 0.001f, "WPNAV_RADIUS", mav.Status.param);
+			myNumericUpDown3.setup(0, 0, 1, 0.001f, "WPNAV_SPEED", mav.Status.param);
+			myNumericUpDown4.setup(0, 0, 1, 0.001f, "WPNAV_SPEED_DN", mav.Status.param);
+			myNumericUpDown5.setup(0, 0, 1, 0.001f, "WPNAV_SPEED_UP", mav.Status.param);
 		}
 
 		internal void EEPROM_View_float_TextChanged(object sender, EventArgs e)
@@ -79,7 +80,7 @@ namespace Diva.Controls
 			{
 				try
 				{
-					if ((float)changes[value] > (float)Planner.comPort.MAV.param[value] * 2.0f)
+					if ((float)changes[value] > (float)mav.Status.param[value] * 2.0f)
 						if (
 							MessageBox.Show(value + " has more than doubled the last input. Are you sure?",
 								"Large Value", MessageBoxButtons.YesNo) == DialogResult.No)
@@ -91,7 +92,7 @@ namespace Diva.Controls
 								if (textControls.Length > 0)
 								{
 									// restore old value
-									textControls[0].Text = Planner.comPort.MAV.param[value].Value.ToString();
+									textControls[0].Text = mav.Status.param[value].Value.ToString();
 									textControls[0].BackColor = Color.FromArgb(0x43, 0x44, 0x45);
 								}
 							}
@@ -101,7 +102,7 @@ namespace Diva.Controls
 							return;
 						}
 
-					Planner.comPort.setParam(value, (float)changes[value]);
+					mav.setParam(value, (float)changes[value]);
 
 					changes.Remove(value);
 
@@ -132,14 +133,14 @@ namespace Diva.Controls
 		/// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
 		protected void BUT_rerequestparams_Click(object sender, EventArgs e)
 		{
-			if (!Planner.comPort.BaseStream.IsOpen)
+			if (!mav.BaseStream.IsOpen)
 				return;
 
 			((Control)sender).Enabled = false;
 
 			try
 			{
-				Planner.comPort.getParamList();
+				mav.getParamList();
 			}
 			catch (Exception ex)
 			{
@@ -155,7 +156,7 @@ namespace Diva.Controls
 
 		private void BUT_refreshpart_Click(object sender, EventArgs e)
 		{
-			if (!Planner.comPort.BaseStream.IsOpen)
+			if (!mav.BaseStream.IsOpen)
 				return;
 
 			((Control)sender).Enabled = false;
@@ -177,7 +178,7 @@ namespace Diva.Controls
 				{
 					try
 					{
-						Planner.comPort.GetParam(ctl.Name);
+						mav.GetParam(ctl.Name);
 					}
 					catch
 					{
