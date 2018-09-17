@@ -2762,7 +2762,7 @@ namespace Diva
                 if (drone == null)
                     return;
 
-                DroneInfoPanel.AddDrone(drone);
+                OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
                 ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
             }
             catch (Exception exception)
