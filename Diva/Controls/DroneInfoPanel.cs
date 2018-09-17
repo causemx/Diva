@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.Mavlink;
 
 namespace Diva.Controls
 {
     public partial class DroneInfoPanel : UserControl
     {
         private DroneInfo activeDrone = null;
-        public DroneInfo ActiveDrone
+        public DroneInfo ActiveDroneInfo
         {
             get => activeDrone;
             set
@@ -36,6 +37,7 @@ namespace Diva.Controls
                 }
             }
         }
+        [Browsable(true)]
         public event EventHandler DroneClosed;
 
         public DroneInfoPanel()
@@ -44,61 +46,61 @@ namespace Diva.Controls
             TelemetryData.Visible = false;
         }
 
-        private DroneInfo newDroneInfo(string name)
+        public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
         {
-            var drone = new DroneInfo(new Mavlink.MavlinkInterface(), name);
-            drone.Click += (s, e) => ActiveDrone = s as DroneInfo;
-            drone.DoubleClick += (s, e) =>
+            var dinfo = new DroneInfo(drone, drone.Name);
+            dinfo.Click += (s, e) => ActiveDroneInfo = s as DroneInfo;
+            dinfo.DoubleClick += (s, e) =>
             {
                 ThePanel.Controls.Remove(s as Control);
-                if (s == ActiveDrone)
-                    ActiveDrone = null;
+                if (s == ActiveDroneInfo)
+                {
+                    ActiveDroneInfo = null;
+                    TelemetryData.Visible = false;
+                }
+                drone.Disconnect();
                 DroneClosed?.Invoke(s, e);
             };
-            drone.CloseButtonClicked += (s, e) =>
+            dinfo.CloseButtonClicked += (s, e) =>
             {
                 var d = s as DroneInfo;
                 if (d != null)
                 {
-                    if (d != ActiveDrone)
+                    if (d != ActiveDroneInfo)
                     {
-                        ActiveDrone = d;
-                    } else
+                        ActiveDroneInfo = d;
+                    }
+                    else
                     {
                         TelemetryData.Visible = !TelemetryData.Visible;
                     }
                 }
             };
-            return drone;
-        }
-
-        public void AddDrone(DroneSetting drone, bool setActive = true)
-        {
-            var dinfo = newDroneInfo(drone.Name);
             ThePanel.Controls.Remove(TelemetryData);
             ThePanel.Controls.Add(dinfo);
             ThePanel.Controls.Add(TelemetryData);
             if (setActive)
-                ActiveDrone = dinfo;
+                ActiveDroneInfo = dinfo;
+            return dinfo;
         }
 
         public void UpdateDroneInfo(byte sysid, double battry_voltage, float satellite_count) =>
-            ActiveDrone?.UpdateTelemetryData(sysid, battry_voltage, satellite_count);
+            ActiveDroneInfo?.UpdateTelemetryData(sysid, battry_voltage, satellite_count);
 
         public void UpdateTelemetryData(double altitude, double verticalSpeed, double groundSpeed)
         {
             TelemetryData.UpdateTelemetryData(altitude, verticalSpeed, groundSpeed);
-            if (ActiveDrone != null)
+            if (ActiveDroneInfo != null)
             {
                 string getText(string name) =>
                     TelemetryData.Controls.Find(name, true)[0].Text;
-                DroneInfoTip.SetToolTip(ActiveDrone, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
+                DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
 {getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
 {getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}");
             }
         }
 
         public void UpdateAssumeTime(double missionDistance) =>
-            ActiveDrone?.UpdateAssumeTime(missionDistance);
+            ActiveDroneInfo?.UpdateAssumeTime(missionDistance);
     }
 }

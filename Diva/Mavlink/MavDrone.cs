@@ -55,9 +55,9 @@ namespace Diva.Mavlink
                     if (baud != "" && baud != "0")
                         mav.BaseStream.BaudRate = int.Parse(baud);
                 }
-                catch (Exception exp)
+                catch (Exception e)
                 {
-                    log.Error(exp);
+                    log.Error(e);
                 }
 
                 // prevent serialreader from doing anything
@@ -96,24 +96,22 @@ namespace Diva.Mavlink
                 mav.sysidcurrent = mav.MAVlist.First().sysid;
                 mav.compidcurrent = mav.MAVlist.First().compid;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                log.Warn(ex);
-                try
+                 try
                 {
                     mav.close();
                 }
-                catch (Exception ex2)
+                catch (Exception ex)
                 {
-                    log.Warn(ex2);
+                    log.Warn(ex);
                 }
-                MessageBox.Show(Properties.Strings.MsgCannotEstablishConnection
-                    .FormatWith(ex.Message));
-                throw new Exception();
+                throw e;
             }
-
             return true;
         }
+
+        public void Disconnect() => mav.onDestroy();
 
         /*public void SaveWPs(DataGridView dgvWayPoints, Locationwp home)
         {

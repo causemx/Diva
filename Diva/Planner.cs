@@ -31,7 +31,6 @@ namespace Diva
 {
 	public partial class Planner : Form
 	{
-        public static Dictionary<string, DroneInfo> comPorts = new Dictionary<string, DroneInfo>();
 		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
@@ -43,8 +42,9 @@ namespace Diva
         internal static Planner GetPlannerInstance() => Instance;
         internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
 
-		private DroneInfo CurrentDroneInfo = null;
         private MavlinkInterface ActiveDrone = new MavlinkInterface();
+        private List<MavDrone> OnlineDrones = new List<MavDrone>();
+        private MavDrone CurrentDrone;
 
         public bool autopan { get; set; }
 
@@ -304,7 +304,7 @@ namespace Diva
 		{
 			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
 			DatabaseManager.Dump(recorder_id);
-			foreach (DroneInfo d in comPorts.Values) { d.mav.onDestroy(); }
+            OnlineDrones.ForEach(d => d.Disconnect());
 		}
 
 		private void MainLoop()
@@ -330,8 +330,6 @@ namespace Diva
 							}
 						}
 
-						CurrentDroneInfo.UpdateTelemetryData(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
-						CollectionTelemetryData.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.groundspeed, ActiveDrone.Status.verticalspeed);
                         DroneInfoPanel.UpdateDroneInfo(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
                         DroneInfoPanel.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.groundspeed, ActiveDrone.Status.verticalspeed);
                     });
@@ -1814,8 +1812,6 @@ namespace Diva
 
 						dist += myMap.MapProvider.Projection.GetDistance(fullpointlist[a - 1], fullpointlist[a]);
 
-
-						CurrentDroneInfo.UpdateAssumeTime(dist + homedist);
                         DroneInfoPanel.UpdateAssumeTime(dist + homedist);
 						DatabaseManager.UpdateTotalDistance(recorder_id, dist);
 					}
@@ -2396,9 +2392,10 @@ namespace Diva
 
 				Console.WriteLine("Done");
 			}
-			catch
+			catch (Exception e)
 			{
-				throw;
+                Console.WriteLine("getWps: " + e.Message);
+				throw e;
 			}
 
 			WPtoScreen(cmds);
@@ -2747,51 +2744,26 @@ namespace Diva
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-            var drone = ConfigData.GetTypeList<DroneSetting>()[0];
+            var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
             try
             {
-                var mav = new MavlinkInterface();
-				if (!doConnect(mav, drone.PortName, drone.PortNumber, drone.Baudrate))
-					return;
-
-				DroneInfo droneInfo = new DroneInfo(mav, drone.Name);
-				droneInfo.DoubleClick += (s2, e2) =>
-				{
-					try
-					{
-						var panel = comPorts[((DroneInfo)s2).droneName];
-						if (!panel.mav.BaseStream.IsOpen) throw new Exception("drone not connected");
-
-						CurrentDroneInfo = panel;
-						CurrentDroneInfo.Activate();
-						ActiveDrone = mav;
-					}
-					catch (Exception exception)
-					{
-						log.Debug(exception.ToString());
-						return;
-					}
-				};
-
-				droneInfo.CloseButtonClicked += (s3, e3) =>
-				{
-					foreach (var item in comPorts.Where(p => p.Key == drone.Name).ToList())
-					{
-						comPorts[item.Key].mav.onDestroy();
-						comPorts.Remove(item.Key);
-						PanelDroneInfoList.Controls.Remove((Control)s3);
-					}
-				};
-
-				PanelDroneInfoList.Controls.Add(droneInfo);
-				droneInfo.Activate();
-				
-                comPorts.Add(drone.Name, droneInfo);
-
-                CurrentDroneInfo = droneInfo;
-                ActiveDrone = mav;
+                MavDrone drone = null;
+                try
+                {
+                    drone = new MavDrone(dsetting);
+                    drone?.Connect();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(ResStrings.MsgCannotEstablishConnection
+                        .FormatWith(ex.Message));
+                    drone?.Disconnect();
+                    drone = null;
+                }
+                if (drone == null)
+                    return;
 
                 DroneInfoPanel.AddDrone(drone);
+                ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
             }
             catch (Exception exception)
             {
@@ -3872,20 +3844,18 @@ namespace Diva
 				
 				Thread.Sleep(500);
 
-				if (comPorts.Count == 0) { overlays.routes.Markers.Clear(); }
+				if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
 
 				try
 				{
 
-					foreach (KeyValuePair<string, DroneInfo> entry in comPorts)
+					foreach (MavlinkInterface mav in OnlineDrones)
 					{
-						MavlinkInterface _mav = entry.Value.mav;
 						overlays.routes.Markers.Clear();
-						if (_mav.Status.current_lat == 0 || _mav.Status.current_lng == 0) { continue; }
-						var marker = new GMapMarkerQuad(new PointLatLng(_mav.Status.current_lat, _mav.Status.current_lng),
-							_mav.Status.yaw, _mav.Status.groundcourse, _mav.Status.nav_bearing, _mav.Status.sysid);
+						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
+						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
+							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
 						overlays.routes.Markers.Add(marker);
-
 					}
 
 					//autopan
@@ -3981,6 +3951,12 @@ namespace Diva
 			}
 		}
 
-		#endregion
-	}
+        #endregion
+
+        private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
+        {
+            OnlineDrones.Remove((sender as DroneInfo)?.Drone);
+            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
+        }
+    }
 }

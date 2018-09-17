@@ -144,9 +144,11 @@ namespace Diva
             // 
             // DroneInfoPanel
             // 
+            this.DroneInfoPanel.ActiveDroneInfo = null;
             resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
             this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
             this.DroneInfoPanel.Name = "DroneInfoPanel";
+            this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
             // 
             // PanelDroneInfoList
             // 
