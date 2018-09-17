@@ -148,6 +148,9 @@
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
+    <Compile Include="Controls\AboutBoxPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\Components\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -195,6 +198,12 @@
     </Compile>
     <Compile Include="Controls\DroneInfo.Designer.cs">
       <DependentUpon>DroneInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DroneInfoPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DroneInfoPanel.Designer.cs">
+      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
@@ -246,6 +255,7 @@
     </Compile>
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
+    <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
@@ -311,6 +321,9 @@
     <EmbeddedResource Include="Controls\DroneSettingInput.resx">
       <DependentUpon>DroneSettingInput.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
+      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\FileBrowserForm.resx">
       <DependentUpon>FileBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -348,6 +361,7 @@
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.zh-Hant.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

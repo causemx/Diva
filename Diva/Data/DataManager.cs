@@ -168,10 +168,10 @@ namespace Diva
             Lists.GetOrAdd(typeof(T).AssemblyQualifiedName,
                 (k) => new List<T>()) as List<T>;
 
-        public static void UpdateList<T>(List<T> list)
+        public static void UpdateList<T>(List<T> list, bool writeback = true)
         {
             Lists[typeof(T).AssemblyQualifiedName] = list;
-            Save();
+            if (writeback) Save();
         }
 
         public static string GetOption(string name)
@@ -305,7 +305,7 @@ namespace Diva
                                     && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
                             var list = deserializeMethod.Invoke(null, new object[] { jstr });
                             var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
-                            updateListMethod.Invoke(lazy.Value, new object[] { list });
+                            updateListMethod.Invoke(lazy.Value, new object[] { list, false });
                         }
                         else
                             Console.WriteLine($"Unable to resolve type '{s}'.");

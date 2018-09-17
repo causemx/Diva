@@ -16,54 +16,41 @@ namespace Diva.Controls
 
 		private bool isActive = false;
 
-		public bool IsActivate
+		public bool IsActive
 		{
 			get
 			{
-				return this.isActive;
+				return isActive;
 			}
-			set
+			private set
 			{
-				this.isActive = value;
-				if (isActive)
+				isActive = value;
+                BackColor = isActive ? Color.FromArgb(67, 78, 84) : Color.FromArgb(128, 128, 128);
+				if (Parent != null)
 				{
-					Activate();
-				}
-				else
-				{
-					Deactivate();
-				}
-				if (this.Parent != null)
-				{
-					Parent.Invalidate(this.Bounds, true);
+					Parent.Invalidate(Bounds, true);
 				}
 			}
 		}
-		public MavlinkInterface mav { get; }
-		public string DroneName { get; set; }
+        public MavDrone Drone { get; private set; }
 
-		public DroneInfo(MavlinkInterface m, string name)
+        public string droneName => TxtDroneName.Text;
+
+		public DroneInfo(MavDrone m, string name)
 		{
 			InitializeComponent();
-			this.mav = m;
-			this.DroneName = name;
-		}
+            TxtDroneName.Text = name;
+            Margin = new Padding(0);
+            var mav = (MavlinkInterface)m;
+            mav.Status.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
+            mav.onCreate();
+            Drone = m;
+        }
 
-		public void Activate()
-		{
-			mav.onCreate();
-			TxtDroneName.Text = DroneName;
-			mav.MAV.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
-			this.BackColor = Color.FromArgb(67, 78, 84);
-		}
+        public void Activate() => IsActive = true;
+        public void Deactivate() => IsActive = false;
 
-		public void Deactivate()
-		{
-			this.BackColor = Color.FromArgb(128, 128, 128);
-		}
-
-
-		public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
+        public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
 		{
 			TxtSystemID.Text = sysid.ToString();
 			TxtBatteryHealth.Text = battry_voltage.ToString("F2");
@@ -77,31 +64,6 @@ namespace Diva.Controls
 			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
 			Planner.log.Info("distance double: " + missionDistance);
 		} 
-
-		public int GetParam(string paramname)
-		{
-			int _scale = 1;
-			MAVLink.MAVLinkParamList paramlist = Planner.comPort.MAV.param;
-			try
-			{
-				if (paramlist.ContainsKey(paramname))
-				{
-					int value = (int)((float)paramlist[paramname] / _scale);
-					return value;
-				}
-				else
-				{
-					throw new Exception("can not retrive parameters");
-				}
-			}
-			catch (Exception e)
-			{
-				Planner.log.Debug(e.ToString());
-				return 0;
-			}
-			
-		}
-
 
 		public event EventHandler CloseButtonClicked;
 

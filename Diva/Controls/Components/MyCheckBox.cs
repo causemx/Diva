@@ -119,7 +119,7 @@ namespace Diva.Controls.Components
 				enableControl(true);
 				try
 				{
-					bool ans = Planner.comPort.setParam(ParamName, OnValue);
+					bool ans = Planner.GetActiveDrone().setParam(ParamName, OnValue);
 					if (ans == false)
 						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
 				}
@@ -133,7 +133,7 @@ namespace Diva.Controls.Components
 				enableControl(false);
 				try
 				{
-					bool ans = Planner.comPort.setParam(ParamName, OffValue);
+					bool ans = Planner.GetActiveDrone().setParam(ParamName, OffValue);
 					if (ans == false)
 						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
 				}

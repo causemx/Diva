@@ -23,12 +23,14 @@ namespace Diva.Controls
                 BtnAccount.Visible = false;
             }
             InitVehicleSettings();
+            InitAboutBox();
 
             pages = new Dictionary<Button, Control>()
             {
                 { BtnVehicle, VehicleConfigPanel },
                 { BtnMap, configMapPage },
-                { BtnAccount, configAccountPage }
+                { BtnAccount, configAccountPage },
+                { BtnAbout, AboutBoxPanel }
             };
             MenuButton_Click(BtnAbout, null);
         }
@@ -59,7 +61,7 @@ namespace Diva.Controls
                 enabled &= c.Enabled;
             if (c is Button)
             {
-                c.BackColor = enabled ? System.Drawing.Color.Black : Color.Gray;
+                c.BackColor = enabled ? Color.Black : Color.Gray;
             } else if (c is Label)
             {
                 c.Enabled = true;
