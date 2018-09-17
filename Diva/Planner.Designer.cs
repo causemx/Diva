@@ -40,11 +40,9 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
-            this.PanelDroneInfoList = new System.Windows.Forms.Panel();
             this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
             this.But_ZoomIn = new System.Windows.Forms.ToolStripButton();
             this.But_ZoomOut = new System.Windows.Forms.ToolStripButton();
-            this.CollectionTelemetryData = new Diva.Controls.TelemetryDataPanel();
             this.BtnRTL = new Diva.Controls.Components.MyButton();
             this.BtnLand = new Diva.Controls.Components.MyButton();
             this.BtnVideo = new Diva.Controls.Components.MyButton();
@@ -123,9 +121,7 @@ namespace Diva
             // splitContainer.Panel1
             // 
             this.splitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
-            this.splitContainer.Panel1.Controls.Add(this.PanelDroneInfoList);
             this.splitContainer.Panel1.Controls.Add(this.TSZoomPanel);
-            this.splitContainer.Panel1.Controls.Add(this.CollectionTelemetryData);
             this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
             this.splitContainer.Panel1.Controls.Add(this.BtnLand);
             this.splitContainer.Panel1.Controls.Add(this.BtnVideo);
@@ -149,12 +145,6 @@ namespace Diva
             this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
             this.DroneInfoPanel.Name = "DroneInfoPanel";
             this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
-            // 
-            // PanelDroneInfoList
-            // 
-            resources.ApplyResources(this.PanelDroneInfoList, "PanelDroneInfoList");
-            this.PanelDroneInfoList.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.PanelDroneInfoList.Name = "PanelDroneInfoList";
             // 
             // TSZoomPanel
             // 
@@ -184,12 +174,6 @@ namespace Diva
             resources.ApplyResources(this.But_ZoomOut, "But_ZoomOut");
             this.But_ZoomOut.Name = "But_ZoomOut";
             this.But_ZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
-            // 
-            // CollectionTelemetryData
-            // 
-            resources.ApplyResources(this.CollectionTelemetryData, "CollectionTelemetryData");
-            this.CollectionTelemetryData.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.CollectionTelemetryData.Name = "CollectionTelemetryData";
             // 
             // BtnRTL
             // 
@@ -873,7 +857,6 @@ namespace Diva
         private SplitContainer splitContainer;
 		private Button BtnHomeLand;
 		private MyButton BtnRTL;
-		private TelemetryDataPanel CollectionTelemetryData;
 		private Button BtnAltitude;
 		private Button BtnDroneMode;
 		private Label TxtDroneMode;
@@ -913,7 +896,6 @@ namespace Diva
 		private ToolStrip TSZoomPanel;
 		private ToolStripButton But_ZoomIn;
 		private ToolStripButton But_ZoomOut;
-		private Panel PanelDroneInfoList;
 		private MyTSButton TSBtnCusOverlay;
         private DroneInfoPanel DroneInfoPanel;
     }

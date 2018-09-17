@@ -331,7 +331,7 @@ namespace Diva
 						}
 
                         DroneInfoPanel.UpdateDroneInfo(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
-                        DroneInfoPanel.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.groundspeed, ActiveDrone.Status.verticalspeed);
+                        DroneInfoPanel.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.verticalspeed, ActiveDrone.Status.groundspeed);
                     });
 
 					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
