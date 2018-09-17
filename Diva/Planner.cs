@@ -2097,7 +2097,7 @@ namespace Diva
 
 		
 
-        private void saveWPs(object sender, EventArgs e)
+        private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
         {
             try
             {
@@ -2866,6 +2866,9 @@ namespace Diva
 			getWPs();
 		}
 
+
+		private ProgressDialogV2 uploadWPReporter;
+
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
 
@@ -2930,16 +2933,16 @@ namespace Diva
 				}
 			}
 
-			ProgressDialog saveWaypointsDialog = new ProgressDialog()
+			uploadWPReporter = new ProgressDialogV2
 			{
-				IsActive = true,
+				StartPosition = FormStartPosition.CenterScreen,
+				HintImage = Resources.icon_info,
+				Text = "Uploading waypoints",
 			};
-			saveWaypointsDialog.Focus();
-			// saveWaypointsDialog.CenterToScreen();
-			saveWaypointsDialog.Show();
-			saveWaypointsDialog.DoWork += saveWPs;
-			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
-			saveWaypointsDialog.Run();
+
+			uploadWPReporter.DoWork += saveWPs;
+			uploadWPReporter.RunBackgroundOperationAsync();
+			uploadWPReporter.Dispose();
 
 			myMap.Focus();
 		}
