@@ -1261,12 +1261,12 @@ namespace Diva
 		}
 
 
-		private void addpolygonmarkergrid(string tag, double lng, double lat, int alt)
+		private void addpolygonmarkergrid(string tag, double lng, double lat, int alt, GMarkerGoogleType gtype = GMarkerGoogleType.red)
 		{
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.green);
+				GMarkerGoogle m = new GMarkerGoogle(point, gtype);
 				m.ToolTipMode = MarkerTooltipMode.Never;
 				m.ToolTipText = "grid" + tag;
 				m.Tag = "grid" + tag;
@@ -2135,11 +2135,7 @@ namespace Diva
 			}
 		}
 
-		
-
-		
-
-        private void saveWPs(object sender, EventArgs e)
+        private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
         {
             try
             {
@@ -2388,7 +2384,6 @@ namespace Diva
 				{
 				}**/
 
-				//((ProgressReporterDialogue)sender).UpdateProgressAndStatus(100, "Done.");
 			}
 			catch (Exception ex)
 			{
@@ -2932,6 +2927,8 @@ namespace Diva
 			getWPs();
 		}
 
+		private ProgressDialogV2 uploadWPReporter;
+
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
 
@@ -2996,16 +2993,17 @@ namespace Diva
 				}
 			}
 
-			ProgressDialog saveWaypointsDialog = new ProgressDialog()
+			uploadWPReporter = new ProgressDialogV2
 			{
-				IsActive = true,
+				StartPosition = FormStartPosition.CenterScreen,
+				HintImage = Resources.icon_info,
+				Text = "Uploading Waypoints",
 			};
-			saveWaypointsDialog.Focus();
-			// saveWaypointsDialog.CenterToScreen();
-			saveWaypointsDialog.Show();
-			saveWaypointsDialog.DoWork += saveWPs;
-			saveWaypointsDialog.Completed += delegate (object o, RunWorkerCompletedEventArgs re) { saveWaypointsDialog.Close(); };
-			saveWaypointsDialog.Run();
+
+			uploadWPReporter.DoWork += saveWPs;
+			uploadWPReporter.RunBackgroundOperationAsync();
+			uploadWPReporter.Dispose();
+
 
 			myMap.Focus();
 		}
@@ -3392,7 +3390,7 @@ namespace Diva
 				overlays.drawnpolygons.Polygons.Add(drawnPolygon);
 			}
 
-			drawnPolygon.Fill = Brushes.AliceBlue;
+			drawnPolygon.Fill = Brushes.Transparent;
 
 			// remove full loop is exists
 			if (drawnPolygon.Points.Count > 1 &&
@@ -3990,7 +3988,7 @@ namespace Diva
 				cmds.ForEach(i => {
 					StringBuilder sb = new StringBuilder("_cus_");
 					customizePolygon.Points.Add(Customizewp.ConvertToPoint(i));
-					addpolygonmarkergrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
+					addpolygonmarkergrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0, GMarkerGoogleType.red_pushpin);
 				});
 
 				overlays.drawnpolygons.Polygons.Add(customizePolygon);

@@ -293,6 +293,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_error {
+            get {
+                object obj = ResourceManager.GetObject("icon_error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_fence {
             get {
                 object obj = ResourceManager.GetObject("icon_fence", resourceCulture);
@@ -316,6 +326,16 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_house_32 {
             get {
                 object obj = ResourceManager.GetObject("icon_house_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_info {
+            get {
+                object obj = ResourceManager.GetObject("icon_info", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -503,6 +523,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_warn {
+            get {
+                object obj = ResourceManager.GetObject("icon_warn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_writewps {
             get {
                 object obj = ResourceManager.GetObject("icon_writewps", resourceCulture);
@@ -526,16 +556,6 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_zoomin1 {
             get {
                 object obj = ResourceManager.GetObject("icon_zoomin1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap if_warning_32 {
-            get {
-                object obj = ResourceManager.GetObject("if_warning_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -583,86 +603,6 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap point_blue {
             get {
                 object obj = ResourceManager.GetObject("point_blue", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_down {
-            get {
-                object obj = ResourceManager.GetObject("rocker_down", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_down_active {
-            get {
-                object obj = ResourceManager.GetObject("rocker_down_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_left {
-            get {
-                object obj = ResourceManager.GetObject("rocker_left", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_left_active {
-            get {
-                object obj = ResourceManager.GetObject("rocker_left_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_right {
-            get {
-                object obj = ResourceManager.GetObject("rocker_right", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_right_active {
-            get {
-                object obj = ResourceManager.GetObject("rocker_right_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_up {
-            get {
-                object obj = ResourceManager.GetObject("rocker_up", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap rocker_up_active {
-            get {
-                object obj = ResourceManager.GetObject("rocker_up_active", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

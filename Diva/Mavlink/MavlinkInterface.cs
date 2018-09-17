@@ -1,5 +1,6 @@
 ﻿using Diva.Comms;
 using Diva.Controls;
+using Diva.Properties;
 using Diva.Utilities;
 using log4net;
 using System;
@@ -517,6 +518,7 @@ namespace Diva.Mavlink
 			frmProgressReporter = new ProgressDialogV2
 			{
 				StartPosition = FormStartPosition.CenterScreen,
+				HintImage = Resources.icon_warn,
 				Text = "Connection",
 			};
 
@@ -528,7 +530,7 @@ namespace Diva.Mavlink
 			{
 				frmProgressReporter.DoWork += FrmProgressReporterDoWorkNOParams;
 			}
-			frmProgressReporter.UpdateProgressAndStatus(-1, "??");
+			frmProgressReporter.UpdateProgressAndStatus(-1, "sync...");
 			// ThemeManager.ApplyThemeTo(frmProgressReporter);
 
 			frmProgressReporter.RunBackgroundOperationAsync();
@@ -1070,7 +1072,7 @@ namespace Diva.Mavlink
 						// check if we already have it
 						if (indexsreceived.Contains(par.param_index))
 						{
-							log.Info("Already got " + (par.param_index) + " '" + paramID + "'");
+							// log.Info("Already got " + (par.param_index) + " '" + paramID + "'");
 							// this.frmProgressReporter.UpdateProgressAndStatus((indexsreceived.Count * 100) / param_total,
 							//	"Already Got param " + paramID);
 							continue;

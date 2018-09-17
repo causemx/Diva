@@ -229,12 +229,6 @@
     <Compile Include="Controls\MyVideoForm.Designer.cs">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ProgressDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\ProgressDialog.Designer.cs">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ProgressDialogV2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,9 +316,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressDialog.resx">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
@@ -1341,6 +1332,9 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon-warn.png" />
+    <None Include="Resources\icon-info.png" />
+    <None Include="Resources\icon-error.png" />
     <None Include="Resources\capacity-signal.png" />
     <None Include="Resources\icon-w-active.png" />
     <None Include="Resources\icon-w.png" />
