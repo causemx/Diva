@@ -338,7 +338,7 @@ namespace Diva
 					
 					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
 					{
-						updateMapPosition(currentloc);
+						UpdateMapPosition(currentloc);
 					}
 				}
 			}
@@ -347,8 +347,9 @@ namespace Diva
 			Invoke((MethodInvoker)(() => Close()));
 		}
 
+
 		DateTime lastmapposchange = DateTime.MinValue;
-		private void updateMapPosition(PointLatLng currentloc)
+		private void UpdateMapPosition(PointLatLng currentloc)
 		{
 			Invoke((MethodInvoker)delegate
 			{
@@ -3020,9 +3021,9 @@ namespace Diva
 			{
 				Task.Run(async () => await CleanupAsync());
 			}
-
 			
 		}
+
 
 		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
@@ -3062,8 +3063,6 @@ namespace Diva
 			{
 				log.Error(ex.ToString());
 			}
-			
-			
 		}
 
 	
@@ -3271,56 +3270,44 @@ namespace Diva
 			}
 		}
 
-
-		public void Mission_Click(object sender, EventArgs e)
-		{
-			MyListView _myListView = (MyListView)sender;
-			log.Info("focus file: " + _myListView.FocusFile);
-
-			string file = _myListView.FocusFile;
-
-			if (File.Exists(file))
-			{
-
-				string line = "";
-				using (var fs = File.OpenText(file))
-				{
-					line = fs.ReadLine();
-				}
-
-				if (line.StartsWith("{"))
-				{
-					var format = MissionFile.ReadFile(file);
-
-					var cmds = MissionFile.ConvertToLocationwps(format);
-
-					processToScreen(cmds);
-
-					writeKML();
-
-					myMap.ZoomAndCenterMarkers("objects");
-				}
-				else
-				{
-					wpfilename = file;
-					readQGC110wpfile(file);
-				}
-				//lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
-				mFileBrowser.Dispose();
-				MessageBox.Show(ResStrings.MsgFileLoaded.FormatWith(Path.GetFileName(file)));
-			}
-
-		}
-
-		FileBrowserForm mFileBrowser = null;
-
 		private void BtnReadMission_Click(object sender, EventArgs e)
 		{
+			using (OpenFileDialog fd = new OpenFileDialog())
+			{
+				fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
+				DialogResult result = fd.ShowDialog();
+				string file = fd.FileName;
 
-			mFileBrowser = new FileBrowserForm();
-			mFileBrowser.MissionClick += new EventHandler(Mission_Click);
-			mFileBrowser.Show();
-			
+				if (File.Exists(file))
+				{
+
+					string line = "";
+					using (var fs = File.OpenText(file))
+					{
+						line = fs.ReadLine();
+					}
+
+					if (line.StartsWith("{"))
+					{
+						var format = MissionFile.ReadFile(file);
+
+						var cmds = MissionFile.ConvertToLocationwps(format);
+
+						processToScreen(cmds);
+
+						writeKML();
+
+						myMap.ZoomAndCenterMarkers("objects");
+					}
+					else
+					{
+						wpfilename = file;
+						readQGC110wpfile(file);
+					}
+					//lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+					MessageBox.Show("Loaded " + Path.GetFileName(file));
+				}
+			}
 		}
 
 		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3879,7 +3866,7 @@ namespace Diva
 						if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
 						{
 							PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
-							updateMapPosition(currentloc);
+							UpdateMapPosition(currentloc);
 							mapupdate = DateTime.Now;
 						}
 					}
@@ -3973,5 +3960,7 @@ namespace Diva
             OnlineDrones.Remove((sender as DroneInfo)?.Drone);
             ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
         }
-    }
+
+		
+	}
 }

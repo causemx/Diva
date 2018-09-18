@@ -39,27 +39,11 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
 			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
+			this.But_MapFocus = new System.Windows.Forms.ToolStripButton();
 			this.But_ZoomIn = new System.Windows.Forms.ToolStripButton();
 			this.But_ZoomOut = new System.Windows.Forms.ToolStripButton();
-			this.BtnRTL = new Diva.Controls.Components.MyButton();
-			this.BtnLand = new Diva.Controls.Components.MyButton();
-			this.BtnVideo = new Diva.Controls.Components.MyButton();
-			this.BtnAuto = new Diva.Controls.Components.MyButton();
-			this.BtnArm = new Diva.Controls.Components.MyButton();
-			this.BtnReadWPs = new Diva.Controls.Components.MyButton();
-			this.BtnTakeOff = new Diva.Controls.Components.MyButton();
-			this.BtnWriteWPs = new Diva.Controls.Components.MyButton();
 			this.TSMainPanel = new System.Windows.Forms.ToolStrip();
-			this.TSBtnConnect = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnRotation = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnConfigure = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnTagging = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
-			this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
-			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,7 +86,23 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.But_Focus = new System.Windows.Forms.ToolStripButton();
+			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
+			this.BtnRTL = new Diva.Controls.Components.MyButton();
+			this.BtnLand = new Diva.Controls.Components.MyButton();
+			this.BtnVideo = new Diva.Controls.Components.MyButton();
+			this.BtnAuto = new Diva.Controls.Components.MyButton();
+			this.BtnArm = new Diva.Controls.Components.MyButton();
+			this.BtnReadWPs = new Diva.Controls.Components.MyButton();
+			this.BtnTakeOff = new Diva.Controls.Components.MyButton();
+			this.BtnWriteWPs = new Diva.Controls.Components.MyButton();
+			this.TSBtnConnect = new Diva.Controls.Components.MyTSButton();
+			this.TSBtnRotation = new Diva.Controls.Components.MyTSButton();
+			this.TSBtnConfigure = new Diva.Controls.Components.MyTSButton();
+			this.TSBtnTagging = new Diva.Controls.Components.MyTSButton();
+			this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
+			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
+			this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
+			this.myMap = new Diva.Controls.MyGMap();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -139,25 +139,25 @@ namespace Diva
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
 			// 
-			// DroneInfoPanel
-			// 
-			this.DroneInfoPanel.ActiveDroneInfo = null;
-			resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
-			this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
-			this.DroneInfoPanel.Name = "DroneInfoPanel";
-			this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
-			// 
 			// TSZoomPanel
 			// 
 			this.TSZoomPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			resources.ApplyResources(this.TSZoomPanel, "TSZoomPanel");
 			this.TSZoomPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.TSZoomPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.But_Focus,
+            this.But_MapFocus,
             this.But_ZoomIn,
             this.But_ZoomOut});
 			this.TSZoomPanel.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
 			this.TSZoomPanel.Name = "TSZoomPanel";
+			// 
+			// But_MapFocus
+			// 
+			this.But_MapFocus.CheckOnClick = true;
+			this.But_MapFocus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.But_MapFocus.Image = global::Diva.Properties.Resources.icon_location;
+			resources.ApplyResources(this.But_MapFocus, "But_MapFocus");
+			this.But_MapFocus.Name = "But_MapFocus";
 			// 
 			// But_ZoomIn
 			// 
@@ -177,134 +177,6 @@ namespace Diva
 			this.But_ZoomOut.Name = "But_ZoomOut";
 			this.But_ZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
 			// 
-			// BtnRTL
-			// 
-			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnRTL.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnRTL.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnRTL.ClickImage = null;
-			this.BtnRTL.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnRTL, "BtnRTL");
-			this.BtnRTL.ForeColor = System.Drawing.Color.White;
-			this.BtnRTL.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnRTL.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnRTL.HoverImage = null;
-			this.BtnRTL.Name = "BtnRTL";
-			this.BtnRTL.UseVisualStyleBackColor = false;
-			this.BtnRTL.Click += new System.EventHandler(this.BUT_RTL_Click);
-			// 
-			// BtnLand
-			// 
-			this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnLand.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnLand.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnLand.ClickImage = null;
-			this.BtnLand.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnLand, "BtnLand");
-			this.BtnLand.ForeColor = System.Drawing.Color.White;
-			this.BtnLand.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnLand.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnLand.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnLand.HoverImage")));
-			this.BtnLand.Name = "BtnLand";
-			this.BtnLand.UseVisualStyleBackColor = false;
-			this.BtnLand.Click += new System.EventHandler(this.BUT_Land_Click);
-			// 
-			// BtnVideo
-			// 
-			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnVideo.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnVideo.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnVideo.ClickImage = null;
-			this.BtnVideo.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnVideo, "BtnVideo");
-			this.BtnVideo.ForeColor = System.Drawing.Color.White;
-			this.BtnVideo.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnVideo.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnVideo.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnVideo.HoverImage")));
-			this.BtnVideo.Name = "BtnVideo";
-			this.BtnVideo.UseVisualStyleBackColor = false;
-			this.BtnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
-			// 
-			// BtnAuto
-			// 
-			this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnAuto.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnAuto.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnAuto.ClickImage = null;
-			this.BtnAuto.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnAuto, "BtnAuto");
-			this.BtnAuto.ForeColor = System.Drawing.Color.White;
-			this.BtnAuto.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnAuto.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnAuto.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnAuto.HoverImage")));
-			this.BtnAuto.Name = "BtnAuto";
-			this.BtnAuto.UseVisualStyleBackColor = false;
-			this.BtnAuto.Click += new System.EventHandler(this.BUT_Auto_Click);
-			// 
-			// BtnArm
-			// 
-			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnArm.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnArm.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnArm.ClickImage = null;
-			this.BtnArm.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnArm, "BtnArm");
-			this.BtnArm.ForeColor = System.Drawing.Color.White;
-			this.BtnArm.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnArm.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnArm.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnArm.HoverImage")));
-			this.BtnArm.Name = "BtnArm";
-			this.BtnArm.UseVisualStyleBackColor = false;
-			this.BtnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
-			// 
-			// BtnReadWPs
-			// 
-			this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnReadWPs.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnReadWPs.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnReadWPs.ClickImage = null;
-			this.BtnReadWPs.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
-			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
-			this.BtnReadWPs.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnReadWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnReadWPs.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnReadWPs.HoverImage")));
-			this.BtnReadWPs.Name = "BtnReadWPs";
-			this.BtnReadWPs.UseVisualStyleBackColor = false;
-			this.BtnReadWPs.Click += new System.EventHandler(this.BUT_read_Click);
-			// 
-			// BtnTakeOff
-			// 
-			this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnTakeOff.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnTakeOff.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnTakeOff.ClickImage = null;
-			this.BtnTakeOff.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
-			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
-			this.BtnTakeOff.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnTakeOff.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnTakeOff.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnTakeOff.HoverImage")));
-			this.BtnTakeOff.Name = "BtnTakeOff";
-			this.BtnTakeOff.UseVisualStyleBackColor = false;
-			this.BtnTakeOff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
-			// 
-			// BtnWriteWPs
-			// 
-			this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-			this.BtnWriteWPs.ClickBackColor = System.Drawing.Color.Empty;
-			this.BtnWriteWPs.ClickForeColor = System.Drawing.Color.Empty;
-			this.BtnWriteWPs.ClickImage = null;
-			this.BtnWriteWPs.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
-			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
-			this.BtnWriteWPs.HoverBackColor = System.Drawing.Color.Empty;
-			this.BtnWriteWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.BtnWriteWPs.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnWriteWPs.HoverImage")));
-			this.BtnWriteWPs.Name = "BtnWriteWPs";
-			this.BtnWriteWPs.UseVisualStyleBackColor = false;
-			this.BtnWriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
-			// 
 			// TSMainPanel
 			// 
 			this.TSMainPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
@@ -321,135 +193,6 @@ namespace Diva
             this.TSBtnReadMission,
             this.TSBtnCusOverlay});
 			this.TSMainPanel.Name = "TSMainPanel";
-			// 
-			// TSBtnConnect
-			// 
-			resources.ApplyResources(this.TSBtnConnect, "TSBtnConnect");
-			this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnConnect.ClickImage = null;
-			this.TSBtnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnConnect.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConnect.HoverImage")));
-			this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
-			this.TSBtnConnect.Name = "TSBtnConnect";
-			this.TSBtnConnect.Click += new System.EventHandler(this.BUT_Connect_Click);
-			// 
-			// TSBtnRotation
-			// 
-			resources.ApplyResources(this.TSBtnRotation, "TSBtnRotation");
-			this.TSBtnRotation.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnRotation.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnRotation.ClickImage = null;
-			this.TSBtnRotation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnRotation.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnRotation.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnRotation.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnRotation.HoverImage")));
-			this.TSBtnRotation.Name = "TSBtnRotation";
-			this.TSBtnRotation.Click += new System.EventHandler(this.BUT_Rotation2_Click);
-			// 
-			// TSBtnConfigure
-			// 
-			resources.ApplyResources(this.TSBtnConfigure, "TSBtnConfigure");
-			this.TSBtnConfigure.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnConfigure.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnConfigure.ClickImage = null;
-			this.TSBtnConfigure.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnConfigure.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnConfigure.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnConfigure.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConfigure.HoverImage")));
-			this.TSBtnConfigure.Name = "TSBtnConfigure";
-			this.TSBtnConfigure.Click += new System.EventHandler(this.BUT_Configure_Click);
-			// 
-			// TSBtnTagging
-			// 
-			resources.ApplyResources(this.TSBtnTagging, "TSBtnTagging");
-			this.TSBtnTagging.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnTagging.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnTagging.ClickImage = null;
-			this.TSBtnTagging.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnTagging.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnTagging.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnTagging.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnTagging.HoverImage")));
-			this.TSBtnTagging.Name = "TSBtnTagging";
-			this.TSBtnTagging.Click += new System.EventHandler(this.BUT_Tagging_Click);
-			// 
-			// TSBtnSaveMission
-			// 
-			resources.ApplyResources(this.TSBtnSaveMission, "TSBtnSaveMission");
-			this.TSBtnSaveMission.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnSaveMission.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnSaveMission.ClickImage = null;
-			this.TSBtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnSaveMission.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnSaveMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnSaveMission.HoverImage = global::Diva.Properties.Resources.icon_r_active;
-			this.TSBtnSaveMission.Image = global::Diva.Properties.Resources.icon_w;
-			this.TSBtnSaveMission.Name = "TSBtnSaveMission";
-			this.TSBtnSaveMission.Click += new System.EventHandler(this.BtnSaveMission_Click);
-			// 
-			// TSBtnReadMission
-			// 
-			resources.ApplyResources(this.TSBtnReadMission, "TSBtnReadMission");
-			this.TSBtnReadMission.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnReadMission.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnReadMission.ClickImage = null;
-			this.TSBtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnReadMission.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnReadMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-			this.TSBtnReadMission.HoverImage = global::Diva.Properties.Resources.icon_w_active;
-			this.TSBtnReadMission.Image = global::Diva.Properties.Resources.icon_r;
-			this.TSBtnReadMission.Name = "TSBtnReadMission";
-			this.TSBtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
-			// 
-			// TSBtnCusOverlay
-			// 
-			resources.ApplyResources(this.TSBtnCusOverlay, "TSBtnCusOverlay");
-			this.TSBtnCusOverlay.ClickBackColor = System.Drawing.Color.Empty;
-			this.TSBtnCusOverlay.ClickForeColor = System.Drawing.Color.Empty;
-			this.TSBtnCusOverlay.ClickImage = null;
-			this.TSBtnCusOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.TSBtnCusOverlay.HoverBackColor = System.Drawing.Color.Empty;
-			this.TSBtnCusOverlay.HoverForeColor = System.Drawing.Color.Aqua;
-			this.TSBtnCusOverlay.HoverImage = global::Diva.Properties.Resources.icon_c_active;
-			this.TSBtnCusOverlay.Image = global::Diva.Properties.Resources.icon_c;
-			this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
-			this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
-			// 
-			// myMap
-			// 
-			this.myMap.BackColor = System.Drawing.SystemColors.Control;
-			this.myMap.Bearing = 0F;
-			this.myMap.CanDragMap = true;
-			this.myMap.ContextMenuStrip = this.cmMap;
-			this.myMap.DebugMapLocation = true;
-			resources.ApplyResources(this.myMap, "myMap");
-			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
-			this.myMap.GrayScaleMode = false;
-			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-			this.myMap.LevelsKeepInMemmory = 5;
-			this.myMap.MarkersEnabled = true;
-			this.myMap.MaxZoom = 24;
-			this.myMap.MinZoom = 0;
-			this.myMap.MouseWheelZoomEnabled = true;
-			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
-			this.myMap.Name = "myMap";
-			this.myMap.NegativeMode = false;
-			this.myMap.PolygonsEnabled = true;
-			this.myMap.RetryLoadTile = 0;
-			this.myMap.RoutesEnabled = true;
-			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-			this.myMap.ShowTileGridLines = false;
-			this.myMap.Zoom = 15D;
-			this.myMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
-			this.myMap.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
-			this.myMap.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
-			this.myMap.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
-			this.myMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
-			this.myMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
-			this.myMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
 			// 
 			// cmMap
 			// 
@@ -808,12 +551,270 @@ namespace Diva
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
-			// But_Focus
+			// DroneInfoPanel
 			// 
-			this.But_Focus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.But_Focus.Image = global::Diva.Properties.Resources.icon_location;
-			resources.ApplyResources(this.But_Focus, "But_Focus");
-			this.But_Focus.Name = "But_Focus";
+			this.DroneInfoPanel.ActiveDroneInfo = null;
+			resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
+			this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
+			this.DroneInfoPanel.Name = "DroneInfoPanel";
+			this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
+			// 
+			// BtnRTL
+			// 
+			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnRTL.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnRTL.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnRTL.ClickImage = null;
+			this.BtnRTL.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnRTL, "BtnRTL");
+			this.BtnRTL.ForeColor = System.Drawing.Color.White;
+			this.BtnRTL.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnRTL.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnRTL.HoverImage = null;
+			this.BtnRTL.Name = "BtnRTL";
+			this.BtnRTL.UseVisualStyleBackColor = false;
+			this.BtnRTL.Click += new System.EventHandler(this.BUT_RTL_Click);
+			// 
+			// BtnLand
+			// 
+			this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnLand.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnLand.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnLand.ClickImage = null;
+			this.BtnLand.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnLand, "BtnLand");
+			this.BtnLand.ForeColor = System.Drawing.Color.White;
+			this.BtnLand.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnLand.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnLand.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnLand.HoverImage")));
+			this.BtnLand.Name = "BtnLand";
+			this.BtnLand.UseVisualStyleBackColor = false;
+			this.BtnLand.Click += new System.EventHandler(this.BUT_Land_Click);
+			// 
+			// BtnVideo
+			// 
+			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnVideo.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnVideo.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnVideo.ClickImage = null;
+			this.BtnVideo.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnVideo, "BtnVideo");
+			this.BtnVideo.ForeColor = System.Drawing.Color.White;
+			this.BtnVideo.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnVideo.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnVideo.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnVideo.HoverImage")));
+			this.BtnVideo.Name = "BtnVideo";
+			this.BtnVideo.UseVisualStyleBackColor = false;
+			this.BtnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
+			// 
+			// BtnAuto
+			// 
+			this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnAuto.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnAuto.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnAuto.ClickImage = null;
+			this.BtnAuto.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnAuto, "BtnAuto");
+			this.BtnAuto.ForeColor = System.Drawing.Color.White;
+			this.BtnAuto.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnAuto.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnAuto.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnAuto.HoverImage")));
+			this.BtnAuto.Name = "BtnAuto";
+			this.BtnAuto.UseVisualStyleBackColor = false;
+			this.BtnAuto.Click += new System.EventHandler(this.BUT_Auto_Click);
+			// 
+			// BtnArm
+			// 
+			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnArm.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnArm.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnArm.ClickImage = null;
+			this.BtnArm.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnArm, "BtnArm");
+			this.BtnArm.ForeColor = System.Drawing.Color.White;
+			this.BtnArm.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnArm.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnArm.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnArm.HoverImage")));
+			this.BtnArm.Name = "BtnArm";
+			this.BtnArm.UseVisualStyleBackColor = false;
+			this.BtnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
+			// 
+			// BtnReadWPs
+			// 
+			this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnReadWPs.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnReadWPs.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnReadWPs.ClickImage = null;
+			this.BtnReadWPs.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
+			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
+			this.BtnReadWPs.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnReadWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnReadWPs.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnReadWPs.HoverImage")));
+			this.BtnReadWPs.Name = "BtnReadWPs";
+			this.BtnReadWPs.UseVisualStyleBackColor = false;
+			this.BtnReadWPs.Click += new System.EventHandler(this.BUT_read_Click);
+			// 
+			// BtnTakeOff
+			// 
+			this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnTakeOff.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnTakeOff.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnTakeOff.ClickImage = null;
+			this.BtnTakeOff.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
+			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
+			this.BtnTakeOff.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnTakeOff.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnTakeOff.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnTakeOff.HoverImage")));
+			this.BtnTakeOff.Name = "BtnTakeOff";
+			this.BtnTakeOff.UseVisualStyleBackColor = false;
+			this.BtnTakeOff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
+			// 
+			// BtnWriteWPs
+			// 
+			this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BtnWriteWPs.ClickBackColor = System.Drawing.Color.Empty;
+			this.BtnWriteWPs.ClickForeColor = System.Drawing.Color.Empty;
+			this.BtnWriteWPs.ClickImage = null;
+			this.BtnWriteWPs.FlatAppearance.BorderSize = 0;
+			resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
+			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
+			this.BtnWriteWPs.HoverBackColor = System.Drawing.Color.Empty;
+			this.BtnWriteWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.BtnWriteWPs.HoverImage = ((System.Drawing.Image)(resources.GetObject("BtnWriteWPs.HoverImage")));
+			this.BtnWriteWPs.Name = "BtnWriteWPs";
+			this.BtnWriteWPs.UseVisualStyleBackColor = false;
+			this.BtnWriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
+			// 
+			// TSBtnConnect
+			// 
+			resources.ApplyResources(this.TSBtnConnect, "TSBtnConnect");
+			this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnConnect.ClickImage = null;
+			this.TSBtnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.TSBtnConnect.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConnect.HoverImage")));
+			this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
+			this.TSBtnConnect.Name = "TSBtnConnect";
+			this.TSBtnConnect.Click += new System.EventHandler(this.BUT_Connect_Click);
+			// 
+			// TSBtnRotation
+			// 
+			resources.ApplyResources(this.TSBtnRotation, "TSBtnRotation");
+			this.TSBtnRotation.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnRotation.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnRotation.ClickImage = null;
+			this.TSBtnRotation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnRotation.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnRotation.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.TSBtnRotation.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnRotation.HoverImage")));
+			this.TSBtnRotation.Name = "TSBtnRotation";
+			this.TSBtnRotation.Click += new System.EventHandler(this.BUT_Rotation2_Click);
+			// 
+			// TSBtnConfigure
+			// 
+			resources.ApplyResources(this.TSBtnConfigure, "TSBtnConfigure");
+			this.TSBtnConfigure.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnConfigure.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnConfigure.ClickImage = null;
+			this.TSBtnConfigure.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnConfigure.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnConfigure.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.TSBtnConfigure.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConfigure.HoverImage")));
+			this.TSBtnConfigure.Name = "TSBtnConfigure";
+			this.TSBtnConfigure.Click += new System.EventHandler(this.BUT_Configure_Click);
+			// 
+			// TSBtnTagging
+			// 
+			resources.ApplyResources(this.TSBtnTagging, "TSBtnTagging");
+			this.TSBtnTagging.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnTagging.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnTagging.ClickImage = null;
+			this.TSBtnTagging.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnTagging.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnTagging.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.TSBtnTagging.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnTagging.HoverImage")));
+			this.TSBtnTagging.Name = "TSBtnTagging";
+			this.TSBtnTagging.Click += new System.EventHandler(this.BUT_Tagging_Click);
+			// 
+			// TSBtnSaveMission
+			// 
+			resources.ApplyResources(this.TSBtnSaveMission, "TSBtnSaveMission");
+			this.TSBtnSaveMission.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnSaveMission.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnSaveMission.ClickImage = null;
+			this.TSBtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnSaveMission.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnSaveMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.TSBtnSaveMission.HoverImage = global::Diva.Properties.Resources.icon_r_active;
+			this.TSBtnSaveMission.Image = global::Diva.Properties.Resources.icon_w;
+			this.TSBtnSaveMission.Name = "TSBtnSaveMission";
+			this.TSBtnSaveMission.Click += new System.EventHandler(this.BtnSaveMission_Click);
+			// 
+			// TSBtnReadMission
+			// 
+			resources.ApplyResources(this.TSBtnReadMission, "TSBtnReadMission");
+			this.TSBtnReadMission.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnReadMission.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnReadMission.ClickImage = null;
+			this.TSBtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnReadMission.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnReadMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+			this.TSBtnReadMission.HoverImage = global::Diva.Properties.Resources.icon_w_active;
+			this.TSBtnReadMission.Image = global::Diva.Properties.Resources.icon_r;
+			this.TSBtnReadMission.Name = "TSBtnReadMission";
+			this.TSBtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
+			// 
+			// TSBtnCusOverlay
+			// 
+			resources.ApplyResources(this.TSBtnCusOverlay, "TSBtnCusOverlay");
+			this.TSBtnCusOverlay.ClickBackColor = System.Drawing.Color.Empty;
+			this.TSBtnCusOverlay.ClickForeColor = System.Drawing.Color.Empty;
+			this.TSBtnCusOverlay.ClickImage = null;
+			this.TSBtnCusOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnCusOverlay.HoverBackColor = System.Drawing.Color.Empty;
+			this.TSBtnCusOverlay.HoverForeColor = System.Drawing.Color.Aqua;
+			this.TSBtnCusOverlay.HoverImage = global::Diva.Properties.Resources.icon_c_active;
+			this.TSBtnCusOverlay.Image = global::Diva.Properties.Resources.icon_c;
+			this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
+			this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
+			// 
+			// myMap
+			// 
+			this.myMap.BackColor = System.Drawing.SystemColors.Control;
+			this.myMap.Bearing = 0F;
+			this.myMap.CanDragMap = true;
+			this.myMap.ContextMenuStrip = this.cmMap;
+			this.myMap.DebugMapLocation = true;
+			resources.ApplyResources(this.myMap, "myMap");
+			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
+			this.myMap.GrayScaleMode = false;
+			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+			this.myMap.LevelsKeepInMemmory = 5;
+			this.myMap.MarkersEnabled = true;
+			this.myMap.MaxZoom = 24;
+			this.myMap.MinZoom = 0;
+			this.myMap.MouseWheelZoomEnabled = true;
+			this.myMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+			this.myMap.Name = "myMap";
+			this.myMap.NegativeMode = false;
+			this.myMap.PolygonsEnabled = true;
+			this.myMap.RetryLoadTile = 0;
+			this.myMap.RoutesEnabled = true;
+			this.myMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+			this.myMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+			this.myMap.ShowTileGridLines = false;
+			this.myMap.Zoom = 15D;
+			this.myMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
+			this.myMap.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
+			this.myMap.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
+			this.myMap.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
+			this.myMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
+			this.myMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
+			this.myMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
 			// 
 			// Planner
 			// 
@@ -907,6 +908,6 @@ namespace Diva
 		private ToolStripButton But_ZoomOut;
 		private MyTSButton TSBtnCusOverlay;
         private DroneInfoPanel DroneInfoPanel;
-		private ToolStripButton But_Focus;
+		private ToolStripButton But_MapFocus;
 	}
 }
