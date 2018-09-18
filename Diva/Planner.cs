@@ -285,19 +285,17 @@ namespace Diva
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (mainThread != null)
+            if (updateMapItemThread != null)
+            {
+                isUpdatemapThreadRun = false;
+                updateMapItemThread = null;
+            }
+            if (mainThread != null)
 			{
 				serialThread = false;
 				e.Cancel = true;
 				mainThread = null;
 			}
-
-			if (updateMapItemThread != null)
-			{
-				isUpdatemapThreadRun = false;
-				updateMapItemThread = null;
-			}
-			
 		}
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
@@ -330,8 +328,7 @@ namespace Diva
 							}
 						}
 
-                        DroneInfoPanel.UpdateDroneInfo(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
-                        DroneInfoPanel.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.verticalspeed, ActiveDrone.Status.groundspeed);
+                        DroneInfoPanel.UpdateDisplayInfo();
                     });
 
 					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
@@ -3841,17 +3838,14 @@ namespace Diva
 
 			while (isUpdatemapThreadRun)
 			{
-				
-				Thread.Sleep(500);
-
 				if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
 
 				try
 				{
 
-					foreach (MavlinkInterface mav in OnlineDrones)
-					{
-						overlays.routes.Markers.Clear();
+                    foreach (MavlinkInterface mav in OnlineDrones)
+                    {
+                        Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
 						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
 						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
 							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
@@ -3873,10 +3867,10 @@ namespace Diva
 				{
 					Console.WriteLine(ex.ToString());
 				}
-			}				
-		}
 
-
+                Thread.Sleep(500);
+            }
+        }
 		#region customized overlay related functions
 
 

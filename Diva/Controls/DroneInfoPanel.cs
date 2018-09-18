@@ -84,14 +84,13 @@ namespace Diva.Controls
             return dinfo;
         }
 
-        public void UpdateDroneInfo(byte sysid, double battry_voltage, float satellite_count) =>
-            ActiveDroneInfo?.UpdateTelemetryData(sysid, battry_voltage, satellite_count);
-
-        public void UpdateTelemetryData(double altitude, double verticalSpeed, double groundSpeed)
+        public void UpdateDisplayInfo()
         {
-            TelemetryData.UpdateTelemetryData(altitude, verticalSpeed, groundSpeed);
             if (ActiveDroneInfo != null)
             {
+                MavStatus status = ActiveDroneInfo.Drone.Status;
+                ActiveDroneInfo.UpdateTelemetryData(status.sysid, status.battery_voltage, status.satcount);
+                TelemetryData.UpdateTelemetryData(status.alt, status.verticalspeed, status.groundspeed);
                 string getText(string name) =>
                     TelemetryData.Controls.Find(name, true)[0].Text;
                 DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
