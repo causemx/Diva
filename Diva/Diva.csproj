@@ -1346,6 +1346,8 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon_location.png" />
+    <None Include="Resources\icon_lock.png" />
     <None Include="Resources\icon-warn.png" />
     <None Include="Resources\icon-info.png" />
     <None Include="Resources\icon-error.png" />

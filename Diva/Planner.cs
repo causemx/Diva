@@ -335,7 +335,7 @@ namespace Diva
                     });
 
 					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
-
+					
 					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
 					{
 						updateMapPosition(currentloc);
@@ -3042,16 +3042,28 @@ namespace Diva
 
 		private void VideoDemo_Click(object sender, EventArgs e)
 		{
-			string uri = Microsoft.VisualBasic.Interaction.InputBox(ResStrings.MsgSpecifyVideoURI);
-			if (uri != null && uri.Length > 0)
+			// string uri = Microsoft.VisualBasic.Interaction.InputBox(ResStrings.MsgSpecifyVideoURI);
+
+			var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
+			string streamUri = dsetting.StreamURI;
+
+			if (streamUri == null || streamUri.Length == 0)
+				return;
+
+			try
 			{
-				// Form form = new Form();
 				MyVideoForm form = new MyVideoForm();
-				VideoPlayer player = new VideoPlayer(uri);
+				VideoPlayer player = new VideoPlayer(streamUri);
 				form.Controls.Add(player);
 				player.Start();
 				form.Show();
 			}
+			catch (Exception ex)
+			{
+				log.Error(ex.ToString());
+			}
+			
+			
 		}
 
 	
@@ -3860,7 +3872,7 @@ namespace Diva
 							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
 						overlays.routes.Markers.Add(marker);
 					}
-
+					
 					//autopan
 					if (autopan)
 					{
