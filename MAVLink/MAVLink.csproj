@@ -50,7 +50,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MAVLink.cs" />
+    <Compile Include="Mavlink.cs" />
     <Compile Include="MavlinkCRC.cs" />
     <Compile Include="MAVLinkMessage.cs" />
     <Compile Include="MAVLinkParam.cs" />
