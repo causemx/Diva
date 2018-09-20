@@ -1557,7 +1557,7 @@ namespace Diva.Mavlink
 			{
 				if (msginfo.length == 0) // pass for unknown packets
 				{
-					log.InfoFormat("unknown packet type {0}", message.msgid);
+					// log.InfoFormat("unknown packet type {0}", message.msgid);
 				}
 				else
 				{
@@ -3382,7 +3382,7 @@ namespace Diva.Mavlink
 					{
 						var request = buffer.ToStructure<mavlink_mission_request_t>();
 
-						Console.WriteLine("receive mission request feedback");
+						log.Info("receive mission request feedback");
 
 						if (request.seq == 0)
 						{
@@ -3401,7 +3401,7 @@ namespace Diva.Mavlink
 					}
 					else
 					{
-						//Console.WriteLine(DateTime.Now + " PC getwp " + buffer.msgid);
+						log.Info(DateTime.Now + " PC getwp " + buffer.msgid);
 					}
 				}
 			}
@@ -3436,6 +3436,51 @@ namespace Diva.Mavlink
 			}
 		}
 
+		public KeyValuePair<MAVLink.MAVLINK_MSG_ID, Func<MAVLink.MAVLinkMessage, bool>> SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID type,
+			Func<MAVLink.MAVLinkMessage, bool> function, bool exclusive = false)
+		{
+			var item = new KeyValuePair<MAVLink.MAVLINK_MSG_ID, Func<MAVLink.MAVLinkMessage, bool>>(type, function);
+
+			lock (Subscriptions)
+			{
+				if (exclusive)
+				{
+					foreach (var subitem in Subscriptions)
+					{
+						if (subitem.Key == item.Key)
+						{
+							Subscriptions.Remove(subitem);
+							break;
+						}
+					}
+				}
+
+				log.Info("SubscribeToPacketType " + item.Key + " " + item.Value);
+
+				Subscriptions.Add(item);
+			}
+
+			return item;
+		}
+
+		public void UnSubscribeToPacketType(KeyValuePair<MAVLink.MAVLINK_MSG_ID, Func<MAVLink.MAVLinkMessage, bool>> item)
+		{
+			lock (Subscriptions)
+			{
+				log.Info("UnSubscribeToPacketType " + item.Key + " " + item.Value);
+				Subscriptions.Remove(item);
+			}
+		}
+
+		public void UnSubscribeToPacketType(MAVLink.MAVLINK_MSG_ID msgtype, Func<MAVLink.MAVLinkMessage, bool> item)
+		{
+			lock (Subscriptions)
+			{
+				log.Info("UnSubscribeToPacketType " + msgtype + " " + item);
+				var ans = Subscriptions.Where(a => { return a.Key == msgtype && a.Value == item; });
+				Subscriptions.Remove(ans.First());
+			}
+		}
 
 		public void setWPACK()
 		{
