@@ -18,6 +18,7 @@ namespace Diva.Controls
         public ConfigGeoFencePage()
 		{
 			InitializeComponent();
+			Activate();
 		}
 
 		public void Activate()

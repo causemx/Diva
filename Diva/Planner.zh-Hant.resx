@@ -222,7 +222,7 @@
     <value>90, 87</value>
   </data>
   <data name="BtnAuto.Text" xml:space="preserve">
-    <value>自動</value>
+    <value>執行任務</value>
   </data>
   <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>

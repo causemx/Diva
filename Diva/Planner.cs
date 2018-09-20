@@ -117,6 +117,8 @@ namespace Diva
 
 		private long recorder_id = 0;
 
+		private bool isMapFocusing = true;
+
 		public enum AltitudeMode
 		{
 			Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
@@ -347,10 +349,13 @@ namespace Diva
 			Invoke((MethodInvoker)(() => Close()));
 		}
 
-
+		
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
+
+			if (!isMapFocusing) return;
+
 			Invoke((MethodInvoker)delegate
 			{
 				try
@@ -2359,7 +2364,7 @@ namespace Diva
 			ActiveDrone.giveComport = false;
 		}
 
-		void getWPs(object passdata = null)
+		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
 		{
 			List<Locationwp> cmds = new List<Locationwp>();
 
@@ -2378,25 +2383,36 @@ namespace Diva
 
 				// param = port.MAV.param;
 
-				Console.WriteLine("Getting Home");
-				Console.WriteLine("Getting WP #");
+				log.Info("Getting Home");
+
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Getting WP count");
+
+				log.Info("Getting WP #");
 
 				int cmdcount = ActiveDrone.getWPCount();
 
 				for (ushort a = 0; a < cmdcount; a++)
 				{
-					Console.WriteLine("Getting WP" + a);
+
+					if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
+					{
+						((ProgressDialogV2)sender).doWorkArgs.CancelAcknowledged = true;
+						throw new Exception("Cancel Requested");
+					}
+
+					log.Info("Getting WP" + a);
 					cmds.Add(ActiveDrone.getWP(a));
 				}
 
 				ActiveDrone.setWPACK();
 
-				Console.WriteLine("Done");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Done");
+
+				log.Info("Done");
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
-                Console.WriteLine("getWps: " + e.Message);
-				throw e;
+				throw;
 			}
 
 			WPtoScreen(cmds);
@@ -2820,7 +2836,7 @@ namespace Diva
 			if (ActiveDrone.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
-				ActiveDrone.setMode(ActiveDrone.Status.sysid, ActiveDrone.Status.compid, "AUTO");
+				ActiveDrone.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 			}
 		}
 
@@ -2838,6 +2854,8 @@ namespace Diva
 				ActiveDrone.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 			}
 		}
+
+		ProgressDialogV2 downloadWPReporter = null;
 
 		/// <summary>
 		/// Reads the EEPROM from a com port
@@ -2864,7 +2882,17 @@ namespace Diva
 				
 			}
 
-			getWPs();
+			downloadWPReporter = new ProgressDialogV2
+			{
+				StartPosition = FormStartPosition.CenterScreen,
+				HintImage = Resources.icon_info,
+				Text = "Downloading waypoints",
+			};
+
+			downloadWPReporter.DoWork += getWPs;
+			downloadWPReporter.RunBackgroundOperationAsync();
+			downloadWPReporter.Dispose();
+						
 		}
 
 
@@ -3185,6 +3213,13 @@ namespace Diva
 			SaveMission();
 			writeKML();
 		}
+
+
+		private void But_MapFocus_Click(object sender, EventArgs e)
+		{
+			isMapFocusing = !isMapFocusing;
+		}
+
 
 		public void readQGC110wpfile(string file, bool append = false)
 		{
