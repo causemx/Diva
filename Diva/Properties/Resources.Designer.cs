@@ -608,6 +608,26 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;Params&gt;
+        ///  &lt;ArduCopter2&gt;
+        ///    &lt;SYSID_SW_MREV&gt;
+        ///      &lt;DisplayName&gt;Eeprom format version number&lt;/DisplayName&gt;
+        ///      &lt;Description&gt;This value is incremented when changes are made to the eeprom format&lt;/Description&gt;
+        ///      &lt;User&gt;Advanced&lt;/User&gt;
+        ///      &lt;ReadOnly&gt;True&lt;/ReadOnly&gt;
+        ///    &lt;/SYSID_SW_MREV&gt;
+        ///    &lt;SYSID_SW_TYPE&gt;
+        ///      &lt;DisplayName&gt;Software Type&lt;/DisplayName&gt;
+        ///      &lt;Description&gt;This is used by the ground station to recognise the software type (eg ArduPlane vs ArduCopter)&lt;/Descrip [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        internal static string ParameterMetaData {
+            get {
+                return ResourceManager.GetString("ParameterMetaData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
         internal static System.Drawing.Bitmap point_blue {
