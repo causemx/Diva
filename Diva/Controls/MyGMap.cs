@@ -142,8 +142,11 @@ namespace Diva.Controls
 				lastx = e.X;
 				lasty = e.Y;
 
-				base.OnMouseMove(e);
-			}
+                lock (Overlays)
+                {
+                    base.OnMouseMove(e);
+                }
+            }
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());

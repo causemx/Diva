@@ -13,6 +13,7 @@ namespace Diva.Controls
 	public partial class ConfigureForm : Form
 	{
         private Dictionary<Button, Control> pages;
+        public string InitPage = "";
 
 		public ConfigureForm()
         {
@@ -33,7 +34,20 @@ namespace Diva.Controls
                 { BtnAccount, configAccountPage },
                 { BtnAbout, AboutBoxPanel }
             };
-            MenuButton_Click(BtnAbout, null);
+        }
+
+        private void ConfigureForm_Load(object sender, EventArgs e)
+        {
+            Button initButton = BtnAbout;
+            if (InitPage != null && InitPage != "")
+            {
+                var s = InitPage.ToLower();
+                var m = pages.Keys.Where(b => b.Name.ToLower().Contains(s));
+                if (m.Count() == 1)
+                    initButton = m.First();
+            }
+            IndicatorPanel.Top = 0;
+            MenuButton_Click(initButton, null);
         }
 
         private void UpdateTabPages(Button b)

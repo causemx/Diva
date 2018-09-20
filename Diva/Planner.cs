@@ -287,19 +287,17 @@ namespace Diva
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (mainThread != null)
+            if (updateMapItemThread != null)
+            {
+                isUpdatemapThreadRun = false;
+                updateMapItemThread = null;
+            }
+            if (mainThread != null)
 			{
 				serialThread = false;
 				e.Cancel = true;
 				mainThread = null;
 			}
-
-			if (updateMapItemThread != null)
-			{
-				isUpdatemapThreadRun = false;
-				updateMapItemThread = null;
-			}
-			
 		}
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
@@ -332,8 +330,7 @@ namespace Diva
 							}
 						}
 
-                        DroneInfoPanel.UpdateDroneInfo(ActiveDrone.Status.sysid, ActiveDrone.Status.battery_voltage, ActiveDrone.Status.satcount);
-                        DroneInfoPanel.UpdateTelemetryData(ActiveDrone.Status.altasl, ActiveDrone.Status.verticalspeed, ActiveDrone.Status.groundspeed);
+                        DroneInfoPanel.UpdateDisplayInfo();
                     });
 
 					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
@@ -2761,36 +2758,52 @@ namespace Diva
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-            var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
-            try
+            if (OnlineDrones.Count > 0)
             {
-                MavDrone drone = null;
+                if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
+                        MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    return;
+                DroneInfoPanel.Clear();
+                OnlineDrones.Clear();
+            }
+            var dsettings = ConfigData.GetTypeList<DroneSetting>();
+            if (dsettings.Count == 0)
+            {
+                BUT_Configure_Click("Vehicle", null);
+                return;
+            }
+            foreach (var dsetting in dsettings)
+            {
                 try
                 {
-                    drone = new MavDrone(dsetting);
-                    drone?.Connect();
-                } catch (Exception ex)
-                {
-                    MessageBox.Show(ResStrings.MsgCannotEstablishConnection
-                        .FormatWith(ex.Message));
-                    drone?.Disconnect();
-                    drone = null;
+                    MavDrone drone = null;
+                    try
+                    {
+                        drone = new MavDrone(dsetting);
+                        drone?.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ResStrings.MsgCannotEstablishConnection
+                            .FormatWith(ex.Message));
+                        drone?.Disconnect();
+                        drone = null;
+                    }
+                    if (drone == null)
+                        return;
+                    OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
                 }
-                if (drone == null)
-                    return;
-
-                OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
-                ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
+                catch (Exception exception)
+                {
+                    log.Debug(exception);
+                }
             }
-            catch (Exception exception)
-            {
-                log.Debug(exception);
-            }
+            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
         }
 
-		#region Button click event handlers
+        #region Button click event handlers
 
-		private void BUT_Arm_Click(object sender, EventArgs e)
+        private void BUT_Arm_Click(object sender, EventArgs e)
 		{
 			if (!ActiveDrone.BaseStream.IsOpen)
 			{
@@ -3029,6 +3042,7 @@ namespace Diva
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
 			ConfigureForm config = new ConfigureForm();
+            config.InitPage = sender as string;
 			config.ShowDialog(this);
 		}
 
@@ -3878,17 +3892,14 @@ namespace Diva
 
 			while (isUpdatemapThreadRun)
 			{
-				
-				Thread.Sleep(500);
-
 				if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
 
 				try
 				{
 
-					foreach (MavlinkInterface mav in OnlineDrones)
-					{
-						overlays.routes.Markers.Clear();
+                    foreach (MavlinkInterface mav in OnlineDrones)
+                    {
+                        Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
 						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
 						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
 							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
@@ -3910,10 +3921,10 @@ namespace Diva
 				{
 					Console.WriteLine(ex.ToString());
 				}
-			}				
-		}
 
-
+                Thread.Sleep(500);
+            }
+        }
 		#region customized overlay related functions
 
 
