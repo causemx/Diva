@@ -2227,12 +2227,20 @@ namespace GMap.NET.WindowsForms
 
 #if !PocketPC
 
+        internal void InvokeIfRequired(MethodInvoker action)
+        {
+            if (InvokeRequired)
+                Invoke(action);
+            else
+                action();
+        }
+
         internal void RestoreCursorOnLeave()
         {
             if (overObjectCount <= 0 && cursorBefore != null)
             {
                 overObjectCount = 0;
-                this.Cursor = this.cursorBefore;
+                InvokeIfRequired(() => Cursor = cursorBefore);
                 cursorBefore = null;
             }
         }
@@ -2243,7 +2251,7 @@ namespace GMap.NET.WindowsForms
             {
                 overObjectCount = 0;
                 cursorBefore = this.Cursor;
-                this.Cursor = Cursors.Hand;
+                InvokeIfRequired(() => Cursor = Cursors.Hand);
             }
         }
 

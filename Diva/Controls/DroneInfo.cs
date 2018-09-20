@@ -65,6 +65,7 @@ namespace Diva.Controls
 			Planner.log.Info("distance double: " + missionDistance);
 		} 
 
+        [Browsable(true)]
 		public event EventHandler CloseButtonClicked;
 
 		private void BtnClose_Click(object sender, EventArgs e)

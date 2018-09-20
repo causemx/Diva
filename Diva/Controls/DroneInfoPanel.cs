@@ -84,6 +84,15 @@ namespace Diva.Controls
             return dinfo;
         }
 
+        public void Clear()
+        {
+            ActiveDroneInfo = null;
+            TelemetryData.Visible = false;
+            ThePanel.Controls.OfType<DroneInfo>().ToList().ForEach(d => d.Drone.Disconnect());
+            ThePanel.Controls.Clear();
+            ThePanel.Controls.Add(TelemetryData);
+        }
+
         public void UpdateDisplayInfo()
         {
             if (ActiveDroneInfo != null)

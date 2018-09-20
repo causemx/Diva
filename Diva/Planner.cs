@@ -2741,36 +2741,52 @@ namespace Diva
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-            var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
-            try
+            if (OnlineDrones.Count > 0)
             {
-                MavDrone drone = null;
+                if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
+                        MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    return;
+                DroneInfoPanel.Clear();
+                OnlineDrones.Clear();
+            }
+            var dsettings = ConfigData.GetTypeList<DroneSetting>();
+            if (dsettings.Count == 0)
+            {
+                BUT_Configure_Click("Vehicle", null);
+                return;
+            }
+            foreach (var dsetting in dsettings)
+            {
                 try
                 {
-                    drone = new MavDrone(dsetting);
-                    drone?.Connect();
-                } catch (Exception ex)
-                {
-                    MessageBox.Show(ResStrings.MsgCannotEstablishConnection
-                        .FormatWith(ex.Message));
-                    drone?.Disconnect();
-                    drone = null;
+                    MavDrone drone = null;
+                    try
+                    {
+                        drone = new MavDrone(dsetting);
+                        drone?.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ResStrings.MsgCannotEstablishConnection
+                            .FormatWith(ex.Message));
+                        drone?.Disconnect();
+                        drone = null;
+                    }
+                    if (drone == null)
+                        return;
+                    OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
                 }
-                if (drone == null)
-                    return;
-
-                OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
-                ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
+                catch (Exception exception)
+                {
+                    log.Debug(exception);
+                }
             }
-            catch (Exception exception)
-            {
-                log.Debug(exception);
-            }
+            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
         }
 
-		#region Button click event handlers
+        #region Button click event handlers
 
-		private void BUT_Arm_Click(object sender, EventArgs e)
+        private void BUT_Arm_Click(object sender, EventArgs e)
 		{
 			if (!ActiveDrone.BaseStream.IsOpen)
 			{
@@ -2994,6 +3010,7 @@ namespace Diva
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
 			ConfigureForm config = new ConfigureForm();
+            config.InitPage = sender as string;
 			config.ShowDialog(this);
 		}
 

@@ -270,6 +270,7 @@
             this.Controls.Add(this.configMapPage);
             this.Controls.Add(this.SidePanel);
             this.Name = "ConfigureForm";
+            this.Load += new System.EventHandler(this.ConfigureForm_Load);
             this.SidePanel.ResumeLayout(false);
             this.BtnLayoutPanel.ResumeLayout(false);
             this.VehicleConfigPanel.ResumeLayout(false);
