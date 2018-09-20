@@ -271,8 +271,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
 			this.Controls.Add(this.TBoxLicenseTerms);
-			this.Controls.Add(this.configGeoFencePage);
 			this.Controls.Add(this.VehicleConfigPanel);
+			this.Controls.Add(this.configGeoFencePage);
 			this.Controls.Add(this.configAccountPage);
 			this.Controls.Add(this.configMapPage);
 			this.Controls.Add(this.AboutBoxPanel);
