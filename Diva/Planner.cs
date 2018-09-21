@@ -2863,13 +2863,24 @@ namespace Diva
 				return;
 			}
 
+			
+			float targetHeight = 0.0f;
+			InputDataDialog _dialog = new InputDataDialog()
+			{
+				Hint = "Please enter the height",
+				Unit = "m",
+			};
+			
+			_dialog.DoClick += (s2, e2) => targetHeight = float.Parse(_dialog.Value);
+			_dialog.ShowDialog();
+
 			Locationwp gotohere = new Locationwp();
 
 			gotohere.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-			gotohere.alt = 10; // back to m
+			gotohere.alt = targetHeight; // back to m
 			gotohere.lat = (MouseDownStart.Lat);
 			gotohere.lng = (MouseDownStart.Lng);
-
+			
 
 			try
 			{
@@ -2884,7 +2895,7 @@ namespace Diva
 
 			overlays.commons.Markers.Clear();
 			
-			addpolygonmarker("Guided Mode", gotohere.lng,
+			addpolygonmarker("Click & GO", gotohere.lng,
 								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays.commons);
 
 
@@ -3038,10 +3049,9 @@ namespace Diva
 			_dialog.DoClick += (s2, e2) => {
 				ActiveDrone.setMode("GUIDED");
 				ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, float.Parse(_dialog.Value));
-				_dialog.Dispose();
 			};
 
-			_dialog.Show();
+			_dialog.ShowDialog();
 
 			
 		}

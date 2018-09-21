@@ -2805,13 +2805,27 @@ namespace Diva.Mavlink
 			{
 				gotohere.id = (ushort)MAV_CMD.WAYPOINT;
 
-				// Set guided mode first
+				if (setguidedmode)
+				{
+					// fix for followme change
+					setMode(sysid, compid, "GUIDED");
+				}
 
-				MAV_MISSION_RESULT ans = setWP(sysid, compid, gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT,
-					(byte)2);
+				log.InfoFormat("setGuidedModeWP {0}:{1} lat {2} lng {3} alt {4}", sysid, compid, gotohere.lat, gotohere.lng, gotohere.alt);
 
-				if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-					throw new Exception("Guided Mode Failed");
+				if (MAVlist[sysid, compid].firmware == Firmwares.ArduPlane)
+				{
+					MAV_MISSION_RESULT ans = setWP(sysid, compid, gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT, (byte)2);
+
+					if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+						throw new Exception("Guided Mode Failed");
+				}
+				else
+				{
+					setPositionTargetGlobalInt((byte)sysid, (byte)compid,
+						true, false, false, false, MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
+						gotohere.lat, gotohere.lng, gotohere.alt, 0, 0, 0, 0, 0);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -2820,6 +2834,62 @@ namespace Diva.Mavlink
 
 			giveComport = false;
 		}
+
+
+		public void setPositionTargetGlobalInt(byte sysid, byte compid, bool pos, bool vel, bool acc, bool yaw, MAV_FRAME frame, double lat, double lng, double alt, double vx, double vy, double vz, double yawangle, double yawrate)
+		{
+			// for mavlink SET_POSITION_TARGET messages
+			const ushort MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE = ((1 << 0) | (1 << 1) | (1 << 2));
+			const ushort MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE = ((0 << 0) | (0 << 1) | (1 << 2));
+			const ushort MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE = ((1 << 3) | (1 << 4) | (1 << 5));
+			const ushort MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE = ((1 << 6) | (1 << 7) | (1 << 8));
+			const ushort MAVLINK_SET_POS_TYPE_MASK_FORCE = ((1 << 9));
+			const ushort MAVLINK_SET_POS_TYPE_MASK_YAW_IGNORE = ((1 << 10) | (1 << 11));
+
+			mavlink_set_position_target_global_int_t target = new mavlink_set_position_target_global_int_t()
+			{
+				target_system = sysid,
+				target_component = compid,
+				alt = (float)alt,
+				lat_int = (int)(lat * 1e7),
+				lon_int = (int)(lng * 1e7),
+				coordinate_frame = (byte)frame,
+				vx = (float)vx,
+				vy = (float)vy,
+				vz = (float)vz,
+				yaw = (float)yawangle,
+				yaw_rate = (float)yawrate
+			};
+
+			target.type_mask = ushort.MaxValue;
+
+			if (pos && lat != 0 && lng != 0)
+				target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE;
+			if (pos && lat == 0 && lng == 0)
+				target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE;
+			if (vel)
+				target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE;
+			if (acc)
+				target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE;
+			if (yaw)
+				target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_YAW_IGNORE;
+
+			if (pos)
+			{
+				if (lat != 0)
+					MAVlist[sysid, compid].GuidedMode.x = (float)lat;
+				if (lng != 0)
+					MAVlist[sysid, compid].GuidedMode.y = (float)lng;
+				MAVlist[sysid, compid].GuidedMode.z = (float)alt;
+			}
+
+			bool pos_ignore = (target.type_mask & MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE) > 0;
+			bool vel_ignore = (target.type_mask & MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE) > 0;
+			bool acc_ignore = (target.type_mask & MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE) > 0;
+
+			generatePacket((byte)MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target, sysid, compid);
+		}
+
 
 		public MAV_MISSION_RESULT setWP(Locationwp loc, ushort index, MAV_FRAME frame, byte current = 0,
 			byte autocontinue = 1, bool use_int = false)

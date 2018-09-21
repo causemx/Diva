@@ -36,6 +36,7 @@ namespace Diva.Controls
 		private void Btn_Confirm_Click(object sender, EventArgs e)
 		{
 			this.DoClick(sender, e);
+			Dispose();
 		}
 
 		private void Btn_Cancel_Click(object sender, EventArgs e)
