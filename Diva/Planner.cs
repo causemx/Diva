@@ -35,7 +35,7 @@ namespace Diva
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
 		public const double DEFAULT_ZOOM = 20;
-		public const int TAKEOFF_HEIGHT = 130;
+		public const int TAKEOFF_HEIGHT = 30;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
         private static Planner Instance = null;
@@ -3029,9 +3029,21 @@ namespace Diva
 				return;
 			}
 
-			ActiveDrone.setMode("GUIDED");
+			InputDataDialog _dialog = new InputDataDialog()
+			{
+				Hint = "Please enter the height",
+				Unit = "m",
+			};
 
-			ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
+			_dialog.DoClick += (s2, e2) => {
+				ActiveDrone.setMode("GUIDED");
+				ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, float.Parse(_dialog.Value));
+				_dialog.Dispose();
+			};
+
+			_dialog.Show();
+
+			
 		}
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
