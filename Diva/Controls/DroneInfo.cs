@@ -13,27 +13,21 @@ namespace Diva.Controls
 {
 	public partial class DroneInfo : UserControl, IActivate, IDeactivate
 	{
-
 		private bool isActive = false;
-
-		public bool IsActive
+        public bool IsActive
 		{
-			get
-			{
-				return isActive;
-			}
+            get => isActive;
 			private set
 			{
 				isActive = value;
                 BackColor = isActive ? Color.FromArgb(67, 78, 84) : Color.FromArgb(128, 128, 128);
-				if (Parent != null)
-				{
-					Parent.Invalidate(Bounds, true);
-				}
+				Parent?.Invalidate(Bounds, true);
 			}
 		}
-        public MavDrone Drone { get; private set; }
+        public void Activate() => IsActive = true;
+        public void Deactivate() => IsActive = false;
 
+        public MavDrone Drone { get; private set; }
         public string droneName => TxtDroneName.Text;
 
 		public DroneInfo(MavDrone m, string name)
@@ -46,9 +40,6 @@ namespace Diva.Controls
             mav.onCreate();
             Drone = m;
         }
-
-        public void Activate() => IsActive = true;
-        public void Deactivate() => IsActive = false;
 
         public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
 		{
@@ -67,7 +58,6 @@ namespace Diva.Controls
 
         [Browsable(true)]
 		public event EventHandler CloseButtonClicked;
-
 		private void BtnClose_Click(object sender, EventArgs e)
 		{
 			CloseButtonClicked?.Invoke(this, e) ;
