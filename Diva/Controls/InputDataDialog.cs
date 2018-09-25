@@ -23,8 +23,8 @@ namespace Diva.Controls
 		public string Unit { get => unit; set { unit = value; Lbl_Unit.Text = value; } }
 		
 
-		public event UserControlClickHandler DoClick;
-		public delegate void UserControlClickHandler(object sender, EventArgs e);
+		public EventHandler DoClick;
+		// public delegate void UserControlClickHandler(object sender, EventArgs e);
 
 
 		public InputDataDialog()

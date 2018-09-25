@@ -2805,6 +2805,7 @@ namespace Diva.Mavlink
 			{
 				gotohere.id = (ushort)MAV_CMD.WAYPOINT;
 
+				// Must be Guided mode.s
 				if (setguidedmode)
 				{
 					// fix for followme change
