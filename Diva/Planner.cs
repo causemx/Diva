@@ -226,12 +226,7 @@ namespace Diva
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
-			if (myMap.MapProvider is ImageMapProvider)
-			{
-				lng = 0;
-				lat = 0;
-				zoom = (myMap.MapProvider as ImageMapProvider).OriginalZoom;
-			} else try
+            try
 			{
 				string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
 				if (loc != "")

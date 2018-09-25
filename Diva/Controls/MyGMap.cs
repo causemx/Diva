@@ -56,27 +56,6 @@ namespace Diva.Controls
         public void ResetMapProvider()
         {
             IndoorMode = false;
-            if (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)) try
-            {
-                var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
-                if (p != null)
-                {
-                    MapProvider = p;
-                    IndoorMode = true;
-                    MaxZoom = p.MaxZoom ?? MaxZoom;
-                    MinZoom = p.MinZoom;
-                    if (Zoom > MaxZoom) Zoom = MaxZoom;
-                    if (Zoom < MinZoom) Zoom = MinZoom;
-                    if (p.Area != null)
-                        Position = ((RectLatLng)p.Area).LocationMiddle;
-                    GMaps.Instance.Mode = AccessMode.ServerOnly;
-                    /*if (DebugMapLocation)
-                        ShowTileGridLines = true;*/
-                    return;
-                }
-                ConfigData.SetBoolOption(ConfigData.OptionName.UseImageMap, false);
-            }
-            catch { }
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
             string[] prox = proxy.Split(':');
