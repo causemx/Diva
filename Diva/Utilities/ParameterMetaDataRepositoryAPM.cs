@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Diva.Properties;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,15 +29,9 @@ namespace Diva.Utilities
 
 		public static void Reload()
 		{
-			string paramMetaDataXMLFileName = String.Format("{0}{1}", "C:\\Users\\user\\Projects\\FooApplication\\FooApplication", ConfigurationManager.AppSettings["ParameterMetaDataXMLFileName"]);
-			Console.WriteLine(paramMetaDataXMLFileName);
-			string paramMetaDataXMLFileNameBackup = String.Format("{0}{1}{2}", Settings.GetRunningDirectory(),
-				Path.DirectorySeparatorChar, ConfigurationManager.AppSettings["ParameterMetaDataXMLFileNameBackup"]);
-
 			try
 			{
-				if (File.Exists(paramMetaDataXMLFileName))
-					_parameterMetaDataXML = XDocument.Load(paramMetaDataXMLFileName);
+					_parameterMetaDataXML = XDocument.Parse(Resources.ParameterMetaData);
 
 			}
 			catch (Exception ex)
@@ -45,18 +40,6 @@ namespace Diva.Utilities
 				//Tracking.AddException(ex);
 			}
 
-			try
-			{
-				// error loading the good file, load the backup
-				if (File.Exists(paramMetaDataXMLFileNameBackup) && _parameterMetaDataXML == null)
-				{
-					_parameterMetaDataXML = XDocument.Load(paramMetaDataXMLFileNameBackup);
-					Console.WriteLine("Using backup param data");
-				}
-			}
-			catch
-			{
-			}
 		}
 
 		/// <summary>

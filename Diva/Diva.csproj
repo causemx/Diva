@@ -205,6 +205,12 @@
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\InputDataDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\InputDataDialog.Designer.cs">
+      <DependentUpon>InputDataDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
       <SubType>UserControl</SubType>
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InputDataDialog.resx">
+      <DependentUpon>InputDataDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
@@ -1337,6 +1346,7 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\ParameterMetaData.xml" />
     <None Include="Resources\icon_location.png" />
     <None Include="Resources\icon_lock.png" />
     <None Include="Resources\icon-warn.png" />

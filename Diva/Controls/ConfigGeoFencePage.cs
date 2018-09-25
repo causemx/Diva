@@ -18,9 +18,13 @@ namespace Diva.Controls
         public ConfigGeoFencePage()
 		{
 			InitializeComponent();
+			if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+			{
+				RenderToCtl();
+			}
 		}
 
-		public void Activate()
+		public void RenderToCtl()
 		{
 			myCheckBox1.setup(1, 0, "FENCE_ENABLE", mav.Status.param);
 

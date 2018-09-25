@@ -29,6 +29,7 @@ namespace Diva.Controls
             pages = new Dictionary<Button, Control>()
             {
                 { BtnVehicle, VehicleConfigPanel },
+				{ BtnGeoFence, configGeoFencePage },
                 { BtnMap, configMapPage },
                 { BtnAccount, configAccountPage },
                 { BtnAbout, AboutBoxPanel }

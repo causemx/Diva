@@ -52,7 +52,6 @@
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.577F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.423F));
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
@@ -64,7 +63,8 @@
 			this.tableLayoutPanel1.Controls.Add(this.myNumericUpDown2, 1, 4);
 			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 5);
 			this.tableLayoutPanel1.Controls.Add(this.myNumericUpDown3, 1, 5);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(29, 18);
+			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(39, 25);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 6;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.47059F));
@@ -79,51 +79,62 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.White;
 			this.label1.Location = new System.Drawing.Point(3, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(37, 12);
+			this.label1.Size = new System.Drawing.Size(56, 18);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Enable";
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.ForeColor = System.Drawing.Color.White;
 			this.label2.Location = new System.Drawing.Point(3, 38);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(29, 12);
+			this.label2.Size = new System.Drawing.Size(45, 18);
 			this.label2.TabIndex = 1;
 			this.label2.Text = "Type";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.ForeColor = System.Drawing.Color.White;
 			this.label3.Location = new System.Drawing.Point(3, 74);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(36, 12);
+			this.label3.Size = new System.Drawing.Size(53, 18);
 			this.label3.TabIndex = 2;
 			this.label3.Text = "Action";
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.ForeColor = System.Drawing.Color.White;
 			this.label4.Location = new System.Drawing.Point(3, 113);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(61, 12);
+			this.label4.Size = new System.Drawing.Size(92, 18);
 			this.label4.TabIndex = 3;
 			this.label4.Text = "Max Radius";
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.ForeColor = System.Drawing.Color.White;
 			this.label5.Location = new System.Drawing.Point(3, 156);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(66, 12);
+			this.label5.Size = new System.Drawing.Size(101, 18);
 			this.label5.TabIndex = 4;
 			this.label5.Text = "Max Altitude";
 			// 
 			// myCheckBox1
 			// 
 			this.myCheckBox1.Enabled = false;
+			this.myCheckBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.myCheckBox1.Location = new System.Drawing.Point(134, 3);
 			this.myCheckBox1.Name = "myCheckBox1";
 			this.myCheckBox1.OffValue = 0D;
@@ -143,7 +154,7 @@
 			this.myComboBox1.Location = new System.Drawing.Point(134, 41);
 			this.myComboBox1.Name = "myComboBox1";
 			this.myComboBox1.ParamName = null;
-			this.myComboBox1.Size = new System.Drawing.Size(121, 20);
+			this.myComboBox1.Size = new System.Drawing.Size(160, 20);
 			this.myComboBox1.SubControl = null;
 			this.myComboBox1.TabIndex = 6;
 			// 
@@ -155,7 +166,7 @@
 			this.myComboBox2.Location = new System.Drawing.Point(134, 77);
 			this.myComboBox2.Name = "myComboBox2";
 			this.myComboBox2.ParamName = null;
-			this.myComboBox2.Size = new System.Drawing.Size(121, 20);
+			this.myComboBox2.Size = new System.Drawing.Size(160, 20);
 			this.myComboBox2.SubControl = null;
 			this.myComboBox2.TabIndex = 7;
 			// 
@@ -167,7 +178,7 @@
 			this.myNumericUpDown1.Min = 0F;
 			this.myNumericUpDown1.Name = "myNumericUpDown1";
 			this.myNumericUpDown1.ParamName = null;
-			this.myNumericUpDown1.Size = new System.Drawing.Size(120, 22);
+			this.myNumericUpDown1.Size = new System.Drawing.Size(160, 22);
 			this.myNumericUpDown1.TabIndex = 8;
 			// 
 			// myNumericUpDown2
@@ -178,15 +189,17 @@
 			this.myNumericUpDown2.Min = 0F;
 			this.myNumericUpDown2.Name = "myNumericUpDown2";
 			this.myNumericUpDown2.ParamName = null;
-			this.myNumericUpDown2.Size = new System.Drawing.Size(120, 22);
+			this.myNumericUpDown2.Size = new System.Drawing.Size(160, 22);
 			this.myNumericUpDown2.TabIndex = 9;
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.ForeColor = System.Drawing.Color.White;
 			this.label6.Location = new System.Drawing.Point(3, 197);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(67, 12);
+			this.label6.Size = new System.Drawing.Size(101, 18);
 			this.label6.TabIndex = 10;
 			this.label6.Text = "RTL Altitude";
 			// 
@@ -198,15 +211,16 @@
 			this.myNumericUpDown3.Min = 0F;
 			this.myNumericUpDown3.Name = "myNumericUpDown3";
 			this.myNumericUpDown3.ParamName = null;
-			this.myNumericUpDown3.Size = new System.Drawing.Size(120, 22);
+			this.myNumericUpDown3.Size = new System.Drawing.Size(160, 22);
 			this.myNumericUpDown3.TabIndex = 11;
 			// 
-			// ConfigGeoFence
+			// ConfigGeoFencePage
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.Name = "ConfigGeoFence";
+			this.Name = "ConfigGeoFencePage";
 			this.Size = new System.Drawing.Size(433, 297);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();

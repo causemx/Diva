@@ -35,7 +35,7 @@ namespace Diva
 		public const double DEFAULT_LATITUDE = 24.773518;
 		public const double DEFAULT_LONGITUDE = 121.0443385;
 		public const double DEFAULT_ZOOM = 20;
-		public const int TAKEOFF_HEIGHT = 130;
+		public const int TAKEOFF_HEIGHT = 30;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
         private static Planner Instance = null;
@@ -116,6 +116,8 @@ namespace Diva
 		private DateTime mapupdate = DateTime.MinValue;
 
 		private long recorder_id = 0;
+
+		private bool isMapFocusing = true;
 
 		public enum AltitudeMode
 		{
@@ -344,10 +346,13 @@ namespace Diva
 			Invoke((MethodInvoker)(() => Close()));
 		}
 
-
+		
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
+
+			if (!isMapFocusing) return;
+
 			Invoke((MethodInvoker)delegate
 			{
 				try
@@ -2091,11 +2096,205 @@ namespace Diva
 			}
 		}
 
-		
+		#region save waypoints
 
 		
 
-        private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
+
+		void saveWPsFast(object sender, ProgressWorkerEventArgs e, object passdata)
+		{
+			var totalwpcountforupload = (ushort)(dgvWayPoints.RowCount + 1);
+			var reqno = 0;
+			MAVLink.MAV_MISSION_RESULT result = MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
+
+			var sub1 = ActiveDrone.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_ACK,
+				message =>
+				{
+					var data = ((MAVLink.mavlink_mission_ack_t)message.data);
+					var ans = (MAVLink.MAV_MISSION_RESULT)data.type;
+					if (ActiveDrone.Status.sysid != message.sysid &&
+						ActiveDrone.Status.compid != message.compid)
+						return true;
+					result = ans;
+					log.Info("MISSION_ACK " + ans);
+					return true;
+				});
+
+			var sub2 = ActiveDrone.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_REQUEST,
+				message =>
+				{
+					var data = ((MAVLink.mavlink_mission_request_t)message.data);
+					if (ActiveDrone.Status.sysid != message.sysid &&
+						ActiveDrone.Status.compid != message.compid)
+						return true;
+					reqno = data.seq;
+					log.Info("MISSION_REQUEST " + reqno);
+					return true;
+				});
+
+			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Set total wps ");
+			ActiveDrone.setWPTotal(totalwpcountforupload);
+
+			// define the home point
+			Locationwp home = new Locationwp();
+			try
+			{
+				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+				home.lat = (double.Parse(TxtHomeLatitude.Text));
+				home.lng = (double.Parse(TxtHomeLongitude.Text));
+				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+			}
+			catch
+			{
+				ActiveDrone.UnSubscribeToPacketType(sub1);
+				ActiveDrone.UnSubscribeToPacketType(sub2);
+				throw new Exception("Your home location is invalid");
+			}
+
+			// define the default frame.
+			MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+
+			// get the command list from the datagrid
+			var commandlist = GetCommandList();
+
+			commandlist.Insert(0, home);
+
+			// process commandlist to the mav
+			for (var a = 0; a < commandlist.Count; a++)
+			{
+				if (a % 10 == 0 && a != 0)
+				{
+					var start = DateTime.Now;
+					while (true)
+					{
+						if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
+						{
+							ActiveDrone.setWPTotal(0);
+							ActiveDrone.UnSubscribeToPacketType(sub1);
+							ActiveDrone.UnSubscribeToPacketType(sub2);
+							return;
+						}
+
+						if (reqno == a)
+						{
+							// all received
+							break;
+						}
+
+						if (start.AddSeconds(1.1) < DateTime.Now)
+						{
+							// do next 10 starting at reqno
+							a = reqno;
+							break;
+						}
+
+						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
+							Thread.Sleep(500);
+
+						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
+						{
+							// resend for partial upload
+							ActiveDrone.setWPPartialUpdate((ushort)(reqno), totalwpcountforupload);
+							a = reqno;
+							break;
+						}
+
+						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
+						{
+							log.Error("Upload failed, please reduce the number of wp's");
+							ActiveDrone.UnSubscribeToPacketType(sub1);
+							ActiveDrone.UnSubscribeToPacketType(sub2);
+							return;
+						}
+						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
+						{
+							log.Error(
+								"Upload failed, mission was rejected byt the Mav,\n item had a bad option wp# " + a + " " +
+								result);
+							ActiveDrone.UnSubscribeToPacketType(sub1);
+							ActiveDrone.UnSubscribeToPacketType(sub2);
+							return;
+						}
+						if (result != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
+						{
+							log.Error("Upload wps failed " + reqno +
+											 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), result.ToString()));
+							ActiveDrone.UnSubscribeToPacketType(sub1);
+							ActiveDrone.UnSubscribeToPacketType(sub2);
+							return;
+						}
+
+						System.Threading.Thread.Sleep(10);
+					}
+				}
+
+				var loc = commandlist[a];
+
+				// make sure we are using the correct frame for these commands
+				if (loc.id < (ushort)MAVLink.MAV_CMD.LAST || loc.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
+				{
+					var mode = AltitudeMode.Relative;
+
+					if (mode == AltitudeMode.Terrain)
+					{
+						frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
+					}
+					else if (mode == AltitudeMode.Absolute)
+					{
+						frame = MAVLink.MAV_FRAME.GLOBAL;
+					}
+					else
+					{
+						frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+					}
+				}
+
+				MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
+
+				req.target_system = ActiveDrone.Status.sysid;
+				req.target_component = ActiveDrone.Status.compid;
+
+				req.command = loc.id;
+
+				req.current = 0;
+				req.autocontinue = 1;
+
+				req.frame = (byte)frame;
+				if (loc.id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONFIGURE)
+				{
+					req.y = (int)(loc.lng);
+					req.x = (int)(loc.lat);
+				}
+				else
+				{
+					req.y = (int)(loc.lng * 1.0e7);
+					req.x = (int)(loc.lat * 1.0e7);
+				}
+				req.z = (float)(loc.alt);
+
+				req.param1 = loc.p1;
+				req.param2 = loc.p2;
+				req.param3 = loc.p3;
+				req.param4 = loc.p4;
+
+				req.seq = (ushort)a;
+
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1,	"Setting WP " + a);
+				log.Info("WP no " + a);
+
+				ActiveDrone.sendPacket(req, ActiveDrone.Status.sysid, ActiveDrone.Status.compid);
+			}
+
+			ActiveDrone.UnSubscribeToPacketType(sub1);
+			ActiveDrone.UnSubscribeToPacketType(sub2);
+
+			ActiveDrone.setWPACK();
+		}
+
+		
+
+
+		private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
         {
             try
             {
@@ -2104,7 +2303,7 @@ namespace Diva
                 {
                     throw new Exception("Please connect first!");
                     // MessageBox.Show(ResStrings.MsgConnectFirst);
-                    return;
+                 
                 }
 
 				ActiveDrone.giveComport = true;
@@ -2171,7 +2370,7 @@ namespace Diva
 				bool use_int = (capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
 
 				// set wp total
-				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set total wps ");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Set total wps ");
 
 				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
 
@@ -2244,8 +2443,7 @@ namespace Diva
 				{
 					var temp = commandlist[a - 1];
 
-					// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(a * 100 / Commands.Rows.Count,
-					//	"Setting WP " + a);
+					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Setting WP " + a);
 
 					// make sure we are using the correct frame for these commands
 					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
@@ -2316,7 +2514,7 @@ namespace Diva
 						MessageBox.Show(ResStrings.MsgMissionRejectedGeneral.FormatWith(
 							Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()),
 							Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString())));
-						Console.WriteLine("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
+						log.Error("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
 										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						return;
 					}
@@ -2324,7 +2522,7 @@ namespace Diva
 
 				ActiveDrone.setWPACK();
 				
-				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(95, "Setting params");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Setting params");
 
 				// m
 				ActiveDrone.setParam("WP_RADIUS", float.Parse("30") / 1);
@@ -2334,17 +2532,17 @@ namespace Diva
 
 				// Remind the user after uploading the mission into firmware.
 				MessageBox.Show(ResStrings.MsgMissionAcceptWP.FormatWith(a));
-				/**
+				
 				try
 				{
-					port.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
-						float.Parse(TXT_loiterrad.Text) / CurrentState.multiplierdist);
+					ActiveDrone.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
+						float.Parse("45"));
 				}
 				catch
 				{
-				}**/
+				}
 
-				//((ProgressReporterDialogue)sender).UpdateProgressAndStatus(100, "Done.");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Done.");
 			}
 			catch (Exception ex)
 			{
@@ -2356,7 +2554,10 @@ namespace Diva
 			ActiveDrone.giveComport = false;
 		}
 
-		void getWPs(object passdata = null)
+
+		#endregion
+
+		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
 		{
 			List<Locationwp> cmds = new List<Locationwp>();
 
@@ -2375,25 +2576,36 @@ namespace Diva
 
 				// param = port.MAV.param;
 
-				Console.WriteLine("Getting Home");
-				Console.WriteLine("Getting WP #");
+				log.Info("Getting Home");
+
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Getting WP count");
+
+				log.Info("Getting WP #");
 
 				int cmdcount = ActiveDrone.getWPCount();
 
 				for (ushort a = 0; a < cmdcount; a++)
 				{
-					Console.WriteLine("Getting WP" + a);
+
+					if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
+					{
+						((ProgressDialogV2)sender).doWorkArgs.CancelAcknowledged = true;
+						throw new Exception("Cancel Requested");
+					}
+
+					log.Info("Getting WP" + a);
 					cmds.Add(ActiveDrone.getWP(a));
 				}
 
 				ActiveDrone.setWPACK();
 
-				Console.WriteLine("Done");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Done");
+
+				log.Info("Done");
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
-                Console.WriteLine("getWps: " + e.Message);
-				throw e;
+				throw;
 			}
 
 			WPtoScreen(cmds);
@@ -2651,13 +2863,24 @@ namespace Diva
 				return;
 			}
 
+			
+			float targetHeight = 0.0f;
+			InputDataDialog _dialog = new InputDataDialog()
+			{
+				Hint = "Please enter the height",
+				Unit = "m",
+			};
+			
+			_dialog.DoClick += (s2, e2) => targetHeight = float.Parse(_dialog.Value);
+			_dialog.ShowDialog();
+
 			Locationwp gotohere = new Locationwp();
 
 			gotohere.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-			gotohere.alt = 10; // back to m
+			gotohere.alt = targetHeight; // back to m
 			gotohere.lat = (MouseDownStart.Lat);
 			gotohere.lng = (MouseDownStart.Lng);
-
+			
 
 			try
 			{
@@ -2672,7 +2895,7 @@ namespace Diva
 
 			overlays.commons.Markers.Clear();
 			
-			addpolygonmarker("Guided Mode", gotohere.lng,
+			addpolygonmarker("Click & GO", gotohere.lng,
 								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays.commons);
 
 
@@ -2817,9 +3040,20 @@ namespace Diva
 				return;
 			}
 
-			ActiveDrone.setMode("GUIDED");
+			InputDataDialog _dialog = new InputDataDialog()
+			{
+				Hint = "Please enter the height",
+				Unit = "m",
+			};
 
-			ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, TAKEOFF_HEIGHT);
+			_dialog.DoClick += (s2, e2) => {
+				ActiveDrone.setMode("GUIDED");
+				ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, float.Parse(_dialog.Value));
+			};
+
+			_dialog.ShowDialog();
+
+			
 		}
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
@@ -2833,7 +3067,7 @@ namespace Diva
 			if (ActiveDrone.BaseStream.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
-				ActiveDrone.setMode(ActiveDrone.Status.sysid, ActiveDrone.Status.compid, "AUTO");
+				ActiveDrone.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 			}
 		}
 
@@ -2851,6 +3085,8 @@ namespace Diva
 				ActiveDrone.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 			}
 		}
+
+		ProgressDialogV2 downloadWPReporter = null;
 
 		/// <summary>
 		/// Reads the EEPROM from a com port
@@ -2877,7 +3113,17 @@ namespace Diva
 				
 			}
 
-			getWPs();
+			downloadWPReporter = new ProgressDialogV2
+			{
+				StartPosition = FormStartPosition.CenterScreen,
+				HintImage = Resources.icon_info,
+				Text = "Downloading waypoints",
+			};
+
+			downloadWPReporter.DoWork += getWPs;
+			downloadWPReporter.RunBackgroundOperationAsync();
+			downloadWPReporter.Dispose();
+						
 		}
 
 
@@ -2954,7 +3200,7 @@ namespace Diva
 				Text = "Uploading waypoints",
 			};
 
-			uploadWPReporter.DoWork += saveWPs;
+			uploadWPReporter.DoWork += saveWPsFast;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
@@ -3199,6 +3445,13 @@ namespace Diva
 			SaveMission();
 			writeKML();
 		}
+
+
+		private void But_MapFocus_Click(object sender, EventArgs e)
+		{
+			isMapFocusing = !isMapFocusing;
+		}
+
 
 		public void readQGC110wpfile(string file, bool append = false)
 		{
