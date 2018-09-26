@@ -21,7 +21,7 @@ namespace Diva.Controls
             set
             {
                 if (activeDrone != value &&
-                    ThePanel.Controls.IndexOf(value) >= 0)
+                    (value == null || ThePanel.Controls.IndexOf(value) >= 0))
                 {
                     if (activeDrone != null)
                     {
@@ -57,10 +57,7 @@ namespace Diva.Controls
             {
                 ThePanel.Controls.Remove(s as Control);
                 if (s == ActiveDroneInfo)
-                {
                     ActiveDroneInfo = null;
-                    TelemetryData.Visible = false;
-                }
                 drone.Disconnect();
                 DroneClosed?.Invoke(s, e);
             };
@@ -70,13 +67,9 @@ namespace Diva.Controls
                 if (d != null)
                 {
                     if (d != ActiveDroneInfo)
-                    {
                         ActiveDroneInfo = d;
-                    }
                     else
-                    {
                         TelemetryData.Visible = !TelemetryData.Visible;
-                    }
                 }
             };
 

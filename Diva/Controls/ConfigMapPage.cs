@@ -95,8 +95,6 @@ namespace Diva.Controls
                 TBoxProxyHost.Text = TBoxProxyPort.Text = "";
             }
 
-            (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)
-                ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
             mapConfigDirtyUpdate = true;
         }
 
@@ -109,7 +107,6 @@ namespace Diva.Controls
             }
             if (!(sender as RadioButton).Checked) return;
             updateControls(PanelGlobalMapControls, RBtnGlobalMap.Checked);
-            updateControls(PanelIndoorMapControls, RBtnIndoorMap.Checked);
             MapConfigDirty = true;
         }
 
@@ -135,12 +132,6 @@ namespace Diva.Controls
             int.TryParse(TBoxProxyPort.Text, out int port);
             ConfigData.SetOption(ConfigData.OptionName.MapProxy,
                 RBtnProxySystem.Checked ? "System" : $"{TBoxProxyHost.Text}:{port}");
-            ConfigData.SetOption(ConfigData.OptionName.ImageMapSource, TBoxIndoorMapLocation.Text);
-            bool imagemap = RBtnIndoorMap.Checked;
-            ConfigData.SetOption(ConfigData.OptionName.UseImageMap, imagemap.ToString());
-            if (gmap != null && (imagemap || gmap.MapProvider
-                    != GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance))
-                gmap.ResetMapProvider();
         }
 
         private void BtnBrowseMapLocation_Click(object sender, EventArgs e)
@@ -152,17 +143,6 @@ namespace Diva.Controls
                 dlg.InitialDirectory = TBoxMapCacheLocation.Text;
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                     TBoxMapCacheLocation.Text = dlg.FileName;
-            }
-        }
-
-        private void BtnBrowseIndoorMap_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog dlg = new OpenFileDialog())
-            {
-                dlg.CheckFileExists = true;
-                var result = dlg.ShowDialog();
-                if (result == DialogResult.OK)
-                    TBoxIndoorMapLocation.Text = dlg.FileName;
             }
         }
 

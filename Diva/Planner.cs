@@ -169,10 +169,6 @@ namespace Diva
 			InitializeComponent();
             Instance = this;
 
-            string username = AccountManager.GetLoginAccount();
-			if (username == "") username = ResStrings.StrAnonymousAccount;
-			Text += " - " + username;
-
 			// control size may not be the same as designer (dpi setting?)
 						
 			quickadd = false;
@@ -226,12 +222,7 @@ namespace Diva
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
-			if (myMap.MapProvider is ImageMapProvider)
-			{
-				lng = 0;
-				lat = 0;
-				zoom = (myMap.MapProvider as ImageMapProvider).OriginalZoom;
-			} else try
+            try
 			{
 				string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
 				if (loc != "")
@@ -260,7 +251,7 @@ namespace Diva
 		{
 			FlightRecorder recorder = new FlightRecorder()
 			{
-				UserName = AccountManager.GetLoginAccount(),
+				UserName = ResStrings.StrAnonymousAccount,
 				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
 				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
 				TotalDistance = 0.0d,
