@@ -316,7 +316,7 @@ namespace Diva
 
 			while (serialThread)
 			{
-				Thread.Sleep(20);
+				Thread.Sleep(1000);
 				if (ActiveDrone.BaseStream.IsOpen)
 				{
 		
@@ -338,6 +338,7 @@ namespace Diva
 					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
 					{
 						UpdateMapPosition(currentloc);
+											
 					}
 				}
 			}

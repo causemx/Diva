@@ -289,6 +289,7 @@
     <Compile Include="Utilities\Demux.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
+    <Compile Include="Utilities\NotificationManager.cs" />
     <Compile Include="Utilities\ParameterMetaDataConstants.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Diva.Mavlink;
+using Diva.Utilities;
 
 namespace Diva.Controls
 {
@@ -46,6 +47,8 @@ namespace Diva.Controls
             TelemetryData.Visible = false;
         }
 
+		public NotificationManager.INotification battNotification;
+
         public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
         {
             var dinfo = new DroneInfo(drone, drone.Name);
@@ -76,11 +79,15 @@ namespace Diva.Controls
                     }
                 }
             };
+
+			battNotification = new NotificationManager.BatteryNotification(drone);
+			battNotification.Register("FS_BATT_VOLTAGE");
+
             ThePanel.Controls.Remove(TelemetryData);
             ThePanel.Controls.Add(dinfo);
             ThePanel.Controls.Add(TelemetryData);
-            if (setActive)
-                ActiveDroneInfo = dinfo;
+            if (setActive) ActiveDroneInfo = dinfo;
+					   
             return dinfo;
         }
 
@@ -105,6 +112,9 @@ namespace Diva.Controls
                 DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
 {getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
 {getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}");
+
+
+				battNotification.Notify();
             }
         }
 
