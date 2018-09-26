@@ -163,12 +163,6 @@
     <Compile Include="Controls\Components\MyNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigAccountPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ConfigAccountPage.Designer.cs">
-      <DependentUpon>ConfigAccountPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ConfigGeoFencePage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -296,9 +290,6 @@
     <Compile Include="Utilities\ResourceStringHelper.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
-    <EmbeddedResource Include="Controls\ConfigAccountPage.resx">
-      <DependentUpon>ConfigAccountPage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigGeoFencePage.resx">
       <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
     </EmbeddedResource>

@@ -18,11 +18,6 @@ namespace Diva.Controls
 		public ConfigureForm()
         {
             InitializeComponent();
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime &&
-                ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
-            {
-                BtnAccount.Visible = false;
-            }
             InitVehicleSettings();
             InitAboutBox();
 
@@ -31,7 +26,6 @@ namespace Diva.Controls
                 { BtnVehicle, VehicleConfigPanel },
 				{ BtnGeoFence, configGeoFencePage },
                 { BtnMap, configMapPage },
-                { BtnAccount, configAccountPage },
                 { BtnAbout, AboutBoxPanel }
             };
         }

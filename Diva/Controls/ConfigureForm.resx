@@ -279,45 +279,6 @@
   <data name="&gt;&gt;BtnMap.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="BtnAccount.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnAccount.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 12pt</value>
-  </data>
-  <data name="BtnAccount.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="BtnAccount.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnAccount.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 393</value>
-  </data>
-  <data name="BtnAccount.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 5, 6, 5</value>
-  </data>
-  <data name="BtnAccount.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 85</value>
-  </data>
-  <data name="BtnAccount.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="BtnAccount.Text" xml:space="preserve">
-    <value>Account</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.Name" xml:space="preserve">
-    <value>BtnAccount</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="BtnAbout.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -331,7 +292,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 484</value>
+    <value>3, 393</value>
   </data>
   <data name="BtnAbout.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 5, 6, 5</value>
@@ -355,7 +316,7 @@
     <value>BtnLayoutPanel</value>
   </data>
   <data name="&gt;&gt;BtnAbout.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="BtnLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
@@ -433,7 +394,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;SidePanel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="VehicleSettingsPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -832,7 +793,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;AboutBoxPanel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="TBoxLicenseTerms.Font" type="System.Drawing.Font, System.Drawing">
     <value>Consolas, 10.2pt</value>
@@ -867,36 +828,6 @@
   <data name="&gt;&gt;TBoxLicenseTerms.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="configAccountPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="configAccountPage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 10.8pt</value>
-  </data>
-  <data name="configAccountPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>266, 0</value>
-  </data>
-  <data name="configAccountPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="configAccountPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 641</value>
-  </data>
-  <data name="configAccountPage.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;configAccountPage.Name" xml:space="preserve">
-    <value>configAccountPage</value>
-  </data>
-  <data name="&gt;&gt;configAccountPage.Type" xml:space="preserve">
-    <value>Diva.Controls.ConfigAccountPage, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;configAccountPage.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;configAccountPage.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="configMapPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -925,7 +856,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;configMapPage.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="configGeoFencePage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
