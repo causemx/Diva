@@ -169,10 +169,6 @@ namespace Diva
 			InitializeComponent();
             Instance = this;
 
-            string username = AccountManager.GetLoginAccount();
-			if (username == "") username = ResStrings.StrAnonymousAccount;
-			Text += " - " + username;
-
 			// control size may not be the same as designer (dpi setting?)
 						
 			quickadd = false;
@@ -255,7 +251,7 @@ namespace Diva
 		{
 			FlightRecorder recorder = new FlightRecorder()
 			{
-				UserName = AccountManager.GetLoginAccount(),
+				UserName = ResStrings.StrAnonymousAccount,
 				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
 				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
 				TotalDistance = 0.0d,

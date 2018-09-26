@@ -59,13 +59,19 @@ namespace Diva.Controls
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
             string[] prox = proxy.Split(':');
+            var webproxy = WebRequest.DefaultWebProxy;
             if (prox.Length == 2)
             {
                 int.TryParse(prox[1], out int port);
-                GMapProvider.WebProxy = new WebProxy(prox[0], port);
+                try
+                {
+                    webproxy = new WebProxy(prox[0], port);
+                } catch (Exception e)
+                {
+                    Console.WriteLine($"Error creating proxy {prox[0]}:{prox[1]} ({e.Message}), use system default instead.");
+                }
             }
-            else
-                GMapProvider.WebProxy = WebRequest.DefaultWebProxy;
+            GMapProvider.WebProxy = webproxy;
             MapProvider = GoogleSatelliteMapProvider.Instance;
             MinZoom = 0;
             MaxZoom = 24;

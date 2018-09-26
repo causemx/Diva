@@ -121,154 +121,29 @@
   <data name="lblProgress.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 13.8pt</value>
   </data>
+  <data name="lblProgress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 256</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblProgress.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="lblProgress.Size" type="System.Drawing.Size, System.Drawing">
+    <value>315, 28</value>
+  </data>
   <data name="lblProgress.Text" xml:space="preserve">
     <value>讀取中…</value>
   </data>
-  <data name="cBoxDontNotify.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
+  <data name="BorderPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="cBoxDontNotify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 240</value>
+  <data name="BorderPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>360, 288</value>
   </data>
-  <data name="cBoxDontNotify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 28</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
   </data>
-  <data name="cBoxDontNotify.Text" xml:space="preserve">
-    <value>永遠略過</value>
-  </data>
-  <data name="btnSkip.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="btnSkip.Text" xml:space="preserve">
-    <value>略過</value>
-  </data>
-  <data name="btnNewAccount.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="btnNewAccount.Text" xml:space="preserve">
-    <value>建立</value>
-  </data>
-  <data name="tBoxConfirm.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="tBoxConfirm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="tBoxPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="tBoxPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="tBoxUsername.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="tBoxUsername.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="lblNewAccountMessage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblNewAccountMessage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
-  </data>
-  <data name="lblConfirm.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblConfirm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 115</value>
-  </data>
-  <data name="lblConfirm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 25</value>
-  </data>
-  <data name="lblConfirm.Text" xml:space="preserve">
-    <value>確認密碼:</value>
-  </data>
-  <data name="lblConfirm.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomRight</value>
-  </data>
-  <data name="lblPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblPassword.Text" xml:space="preserve">
-    <value>密碼:</value>
-  </data>
-  <data name="lblUsername.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblUsername.Text" xml:space="preserve">
-    <value>使用者: </value>
-  </data>
-  <data name="lblLoginMessage.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblLoginMessage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
-  </data>
-  <data name="btnExit.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="btnExit.Text" xml:space="preserve">
-    <value>離開</value>
-  </data>
-  <data name="btnLogin.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="btnLogin.Text" xml:space="preserve">
-    <value>登入</value>
-  </data>
-  <data name="tBoxLoginPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="tBoxLoginPassword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="tBoxLoginUser.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="tBoxLoginUser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="lblLoginPassword.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblLoginPassword.Text" xml:space="preserve">
-    <value>密碼:</value>
-  </data>
-  <data name="lblLoginUser.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.8pt</value>
-  </data>
-  <data name="lblLoginUser.Text" xml:space="preserve">
-    <value>使用者: </value>
-  </data>
-  <data name="AccountAlreadyExistMessage" xml:space="preserve">
-    <value>帳號已存在</value>
-  </data>
-  <data name="AccountCreationFailedMessage" xml:space="preserve">
-    <value>帳號建立失敗，請再試試</value>
-  </data>
-  <data name="InvalidNameMessage" xml:space="preserve">
-    <value>帳號名稱不合法</value>
-  </data>
-  <data name="InvalidPasswordMessage" xml:space="preserve">
-    <value>密碼不合法</value>
-  </data>
-  <data name="LoginFailedMessage" xml:space="preserve">
-    <value>登入失敗(帳號密碼錯誤)</value>
-  </data>
-  <data name="LoginNotification" xml:space="preserve">
-    <value>請輸入登入資料</value>
-  </data>
-  <data name="PasswordMismatchMessage" xml:space="preserve">
-    <value>密碼與確認密碼不相符</value>
-  </data>
-  <data name="SplashCountDownNotification" xml:space="preserve">
-    <value>已讀取設定，進入程式…</value>
-  </data>
-  <data name="TooManyTriesMessageFormat" xml:space="preserve">
-    <value>登入失敗過多，請 {0}秒後再試</value>
-  </data>
-  <data name="CreateAccountNotification" xml:space="preserve">
-    <value>請建立帳號以保護資料</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>360, 288</value>
   </data>
 </root>
