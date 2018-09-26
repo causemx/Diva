@@ -218,7 +218,6 @@
     <Compile Include="Controls\DroneSettingInput.Designer.cs">
       <DependentUpon>DroneSettingInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>

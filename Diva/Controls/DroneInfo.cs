@@ -11,7 +11,7 @@ using Diva.Mavlink;
 
 namespace Diva.Controls
 {
-	public partial class DroneInfo : UserControl, IActivate, IDeactivate
+	public partial class DroneInfo : UserControl
 	{
 
 		private bool isActive = false;
