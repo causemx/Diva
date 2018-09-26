@@ -322,22 +322,22 @@
     <value>Discard</value>
   </data>
   <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DroneSettingInput.FontFamily" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DroneSetting_MsgNoName" xml:space="preserve">
     <value>No name assigned.</value>
@@ -355,24 +355,45 @@
     <value>Please Connect First!</value>
   </data>
   <data name="TelemetryDataPanel.FontFamily" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TelemetryDataPanel.GBTitle.Text" xml:space="preserve">
     <value>Telemetry Data: </value>
   </data>
   <data name="TelemetryDataPanel.GBBattery.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TelemetryDataPanel.GBAltitude.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TelemetryDataPanel.GBGeoFence.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TelemetryDataPanel.GBGroundSpeed.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="TelemetryDataPanel.GBVerticalSpeed.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MsgMissionAcceptWP" xml:space="preserve">
+    <value>Upload mission complete</value>
+  </data>
+  <data name="ConfigMapPage.LabelProxySetting.Text" xml:space="preserve">
     <value></value>
+  </data>
+  <data name="ConfigMapPage.LabelProxyPort.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.RBtnProxySystem.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="strActivateDrone" xml:space="preserve">
+    <value>Click to activate drone</value>
+  </data>
+  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
+    <value>{0} overlay has been imported</value>
   </data>
 </root>

@@ -307,9 +307,6 @@ namespace Diva.Utilities
 	}
 
 
-
-
-
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
@@ -447,6 +444,64 @@ namespace Diva.Utilities
 	//    DrawImageUnscaled(g, Resources.shadow50, LocalPosition.X, LocalPosition.Y);
 			DrawImageUnscaled(g, Resources.marker, LocalPosition.X, LocalPosition.Y);
 #endif
+		}
+	}
+
+	[Serializable]
+	public class GMapCustomizedPolygon : GMapPolygon
+	{
+		public string zoneName = "zone";
+
+		public GMapCustomizedPolygon(List<PointLatLng> points, string name, string zonename) : base(points, name)
+		{
+			this.zoneName = zonename;
+		}
+
+		public override void OnRender(Graphics g)
+		{
+			base.OnRender(g);
+
+			PointF p = GetCentroid(this.LocalPoints);
+
+			Font font = new Font(FontFamily.GenericSansSerif, 24, FontStyle.Bold);
+			// Measure the size of the text. 
+			// You might want to add some extra space around your text. 
+			// MeasureString is quite tricky...
+			SizeF textSize = g.MeasureString(this.zoneName, font);
+
+			// Get LocalPoint (your LatLng coordinate in pixel)
+			Point localPosition = new Point(0, 0);
+
+			// Move the localPosition by the half size of the text.
+			// PointF textPosition = new PointF((float)(localPosition.X - textSize.Width / 2f), (float)(localPosition.Y - textSize.Height / 2f));
+
+
+
+			// Draw Background
+			g.FillRectangle(new SolidBrush(Color.Transparent), new RectangleF(p, textSize));
+			g.DrawString(this.zoneName, font, new SolidBrush(Color.Red), p);
+		}
+
+		public PointF GetCentroid(List<GPoint> poly)
+		{
+			float accumulatedArea = 0.0f;
+			float centerX = 0.0f;
+			float centerY = 0.0f;
+
+			for (int i = 0, j = poly.Count - 1; i < poly.Count; j = i++)
+			{
+				float temp = poly[i].X * poly[j].Y - poly[j].X * poly[i].Y;
+				accumulatedArea += temp;
+				centerX += (poly[i].X + poly[j].X) * temp;
+				centerY += (poly[i].Y + poly[j].Y) * temp;
+			}
+
+			if (Math.Abs(accumulatedArea) < 1E-7f)
+				return PointF.Empty;  // Avoid division by zero
+
+			accumulatedArea *= 3f;
+			return new PointF(centerX / accumulatedArea, centerY / accumulatedArea);
+
 		}
 	}
 }

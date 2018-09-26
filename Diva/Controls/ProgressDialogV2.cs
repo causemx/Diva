@@ -29,6 +29,9 @@ namespace Diva.Controls
 
 		public event DoWorkEventHandler DoWork;
 
+		private Image _hintImage;
+		public Image HintImage { get => _hintImage; set => img_warning.Image = value; }
+
 		public ProgressDialogV2()
 		{
 			InitializeComponent();

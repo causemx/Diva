@@ -181,4 +181,13 @@
   <data name="$this.Text" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="LabelAboutSoftware.Text" xml:space="preserve">
+    <value>此軟體之開發運用了第三方開放原始碼軟體，其列表如下：</value>
+  </data>
+  <data name="LabelProject.Text" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="LabelLicense.Text" xml:space="preserve">
+    <value>授權</value>
+  </data>
 </root>

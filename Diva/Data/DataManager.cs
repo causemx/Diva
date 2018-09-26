@@ -91,6 +91,7 @@ namespace Diva
             public const string ForceAccountLogin = "ForceAccountLogin";
             public const string ImageMapSource = "ImageMapSource";
             public const string Language = "Language";
+            public const string MapProxy = "MapProxy";
             public const string MapCacheLocation = "MapCacheLocation";
             public const string MapInitialLocation = "MapInitialLocation";
             public const string Salt = "Salt";
@@ -139,6 +140,7 @@ namespace Diva
                     }  },
                     { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
                     { "lang|Language=", v => setOpt(OptionName.Language, v) },
+                    { "p|proxy=", v => setOpt(OptionName.Language, v) },
                     { "s|Salt=", v => setOpt(OptionName.Salt, v) },
                     { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }
                 }.Parse(args);
@@ -166,10 +168,10 @@ namespace Diva
             Lists.GetOrAdd(typeof(T).AssemblyQualifiedName,
                 (k) => new List<T>()) as List<T>;
 
-        public static void UpdateList<T>(List<T> list)
+        public static void UpdateList<T>(List<T> list, bool writeback = true)
         {
             Lists[typeof(T).AssemblyQualifiedName] = list;
-            Save();
+            if (writeback) Save();
         }
 
         public static string GetOption(string name)
@@ -303,7 +305,7 @@ namespace Diva
                                     && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
                             var list = deserializeMethod.Invoke(null, new object[] { jstr });
                             var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
-                            updateListMethod.Invoke(lazy.Value, new object[] { list });
+                            updateListMethod.Invoke(lazy.Value, new object[] { list, false });
                         }
                         else
                             Console.WriteLine($"Unable to resolve type '{s}'.");

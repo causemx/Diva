@@ -375,4 +375,23 @@
   <data name="TelemetryDataPanel.GBVerticalSpeed.Text" xml:space="preserve">
     <value>    垂直速度</value>
   </data>
+  <data name="MsgMissionAcceptWP" xml:space="preserve">
+    <value>成功寫入航點</value>
+  </data>
+  <data name="ConfigMapPage.LabelProxySetting.Text" xml:space="preserve">
+    <value>代理伺服器
+(需重啟程式)</value>
+  </data>
+  <data name="ConfigMapPage.LabelProxyPort.Text" xml:space="preserve">
+    <value>連接埠</value>
+  </data>
+  <data name="ConfigMapPage.RBtnProxySystem.Text" xml:space="preserve">
+    <value>使用系統設定</value>
+  </data>
+  <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
+    <value>位址</value>
+  </data>
+  <data name="strActivateDrone" xml:space="preserve">
+    <value>點擊設為使用中</value>
+  </data>
 </root>

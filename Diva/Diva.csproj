@@ -148,6 +148,9 @@
     </Compile>
     <Compile Include="Comms\CommsUdpSerial.cs" />
     <Compile Include="Comms\ICommsSerial.cs" />
+    <Compile Include="Controls\AboutBoxPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\Components\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -190,11 +193,23 @@
     <Compile Include="Controls\ConfigTuningPage.Designer.cs">
       <DependentUpon>ConfigTuningPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DroneInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DroneInfo.Designer.cs">
+      <DependentUpon>DroneInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DroneInfoPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InputDataDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\InputDataDialog.Designer.cs">
+      <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
@@ -202,12 +217,6 @@
     </Compile>
     <Compile Include="Controls\DroneSettingInput.Designer.cs">
       <DependentUpon>DroneSettingInput.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\FileBrowserForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\FileBrowserForm.Designer.cs">
-      <DependentUpon>FileBrowserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
@@ -229,12 +238,6 @@
     <Compile Include="Controls\MyVideoForm.Designer.cs">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ProgressDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\ProgressDialog.Designer.cs">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ProgressDialogV2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,9 +253,9 @@
     <Compile Include="Controls\VehicleConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cooper\Rotation.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
+    <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
@@ -281,6 +284,7 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Strings.cs" />
+    <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
@@ -311,20 +315,20 @@
     <EmbeddedResource Include="Controls\ConfigureForm.zh-Hant.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
-      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DroneInfo.resx">
+      <DependentUpon>DroneInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneSettingInput.resx">
       <DependentUpon>DroneSettingInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\FileBrowserForm.resx">
-      <DependentUpon>FileBrowserForm.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
+      <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InputDataDialog.resx">
+      <DependentUpon>InputDataDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressDialog.resx">
-      <DependentUpon>ProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
@@ -357,6 +361,7 @@
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.zh-Hant.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1341,10 +1346,55 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\icon-debug.png" />
+    <None Include="Resources\ParameterMetaData.xml" />
+    <None Include="Resources\icon_location.png" />
+    <None Include="Resources\icon_lock.png" />
+    <None Include="Resources\icon-warn.png" />
+    <None Include="Resources\icon-info.png" />
+    <None Include="Resources\icon-error.png" />
+    <None Include="Resources\capacity-signal.png" />
+    <None Include="Resources\icon-w-active.png" />
+    <None Include="Resources\icon-w.png" />
+    <None Include="Resources\icon-r-active.png" />
+    <None Include="Resources\icon-r.png" />
+    <None Include="Resources\icon-c-active.png" />
+    <None Include="Resources\icon-c.png" />
     <None Include="Resources\point-blue.png" />
-    <None Include="Resources\icon-drone-4axis.png" />
+    <None Include="Resources\icon-4_zoomout.png" />
+    <None Include="Resources\icon-4_zoomin.png" />
+    <None Include="Resources\icon_zoomin.png" />
+    <None Include="Resources\icon-writewps-active.png" />
+    <None Include="Resources\icon-writewps.png" />
+    <None Include="Resources\icon-takeoff-active.png" />
+    <None Include="Resources\icon-takeoff.png" />
+    <None Include="Resources\icon-tagging-active.png" />
+    <None Include="Resources\icon-tagging.png" />
+    <None Include="Resources\icon-rotation-active.png" />
+    <None Include="Resources\icon-rotation.png" />
+    <None Include="Resources\icon-readwps-active.png" />
+    <None Include="Resources\icon-readwps.png" />
+    <None Include="Resources\icon-flytime.png" />
+    <None Include="Resources\icon-land-active.png" />
+    <None Include="Resources\icon-land.png" />
+    <None Include="Resources\icon_map.png" />
+    <None Include="Resources\icon_information.png" />
+    <None Include="Resources\icon_fence.png" />
+    <None Include="Resources\icon_drone.png" />
+    <None Include="Resources\icon_adjust.png" />
     <None Include="Resources\icon-drone-4axis-32.png" />
+    <None Include="Resources\icon-drone-4axis.png" />
+    <None Include="Resources\icon-connect-active.png" />
+    <None Include="Resources\icon-connect.png" />
+    <None Include="Resources\icon-configure-active.png" />
+    <None Include="Resources\icon-configure.png" />
+    <None Include="Resources\icon-battery-3.png" />
+    <None Include="Resources\icon-auto-active.png" />
+    <None Include="Resources\icon-auto.png" />
+    <None Include="Resources\icon-add-active.png" />
+    <None Include="Resources\icon-add.png" />
+    <None Include="Resources\icon-arm-active.png" />
+    <None Include="Resources\icon-arm.png" />
+    <None Include="Resources\icon-debug.png" />
     <None Include="Resources\icon_house_32.png" />
     <None Include="Resources\icon_edit_32.png" />
     <None Include="Resources\icon_airplane_32.png" />
@@ -1360,30 +1410,7 @@
     <None Include="Resources\size_height_settings-64.png" />
     <None Include="Resources\news-64.png" />
     <None Include="Resources\home-64.png" />
-    <None Include="Resources\icon-arm.png" />
-    <None Include="Resources\icon-writewps-active.png" />
-    <None Include="Resources\icon-writewps.png" />
-    <None Include="Resources\icon-takeoff-active.png" />
-    <None Include="Resources\icon-takeoff.png" />
-    <None Include="Resources\icon-readwps-active.png" />
-    <None Include="Resources\icon-readwps.png" />
-    <None Include="Resources\icon-land-active.png" />
-    <None Include="Resources\icon-land.png" />
-    <None Include="Resources\icon-auto-active.png" />
-    <None Include="Resources\icon-auto.png" />
-    <None Include="Resources\icon-arm-active.png" />
-    <None Include="Resources\icon-add-active.png" />
-    <None Include="Resources\icon-add.png" />
-    <None Include="Resources\icon-tagging-active.png" />
-    <None Include="Resources\icon-tagging.png" />
-    <None Include="Resources\icon-rotation-active.png" />
-    <None Include="Resources\icon-rotation.png" />
-    <None Include="Resources\icon-connect-active.png" />
-    <None Include="Resources\icon-connect.png" />
-    <None Include="Resources\icon-configure-active.png" />
-    <None Include="Resources\icon-configure.png" />
     <None Include="Resources\if_Psyduck_3151565.png" />
-    <None Include="Resources\capacity-signal.png" />
     <None Include="Resources\capacity-flytime.png" />
     <None Include="Resources\capacity-battery.png" />
     <None Include="Resources\icon-drone-6axis.png" />

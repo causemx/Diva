@@ -279,6 +279,24 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string ConfigMapPage_LabelProxyPort_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.LabelProxyPort.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ConfigMapPage_LabelProxySetting_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.LabelProxySetting.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string ConfigMapPage_RBtnGlobalMap_Text {
             get {
                 return ResourceManager.GetString("ConfigMapPage.RBtnGlobalMap.Text", resourceCulture);
@@ -291,6 +309,24 @@ namespace Diva.Properties {
         public static string ConfigMapPage_RBtnIndoorMap_Text {
             get {
                 return ResourceManager.GetString("ConfigMapPage.RBtnIndoorMap.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ConfigMapPage_RBtnProxyCustom_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.RBtnProxyCustom.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ConfigMapPage_RBtnProxySystem_Text {
+            get {
+                return ResourceManager.GetString("ConfigMapPage.RBtnProxySystem.Text", resourceCulture);
             }
         }
         
@@ -484,6 +520,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} overlay has been imported.
+        /// </summary>
+        public static string MsgCustomizeOverlayImport {
+            get {
+                return ResourceManager.GetString("MsgCustomizeOverlayImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your default altitude is not valid.
         /// </summary>
         public static string MsgDefaultAltitudeInvalid {
@@ -579,6 +624,15 @@ namespace Diva.Properties {
         public static string MsgLineInvalid {
             get {
                 return ResourceManager.GetString("MsgLineInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload mission complete.
+        /// </summary>
+        public static string MsgMissionAcceptWP {
+            get {
+                return ResourceManager.GetString("MsgMissionAcceptWP", resourceCulture);
             }
         }
         
@@ -741,6 +795,15 @@ namespace Diva.Properties {
         public static string MsgWarnWPAltitiude {
             get {
                 return ResourceManager.GetString("MsgWarnWPAltitiude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to activate drone.
+        /// </summary>
+        public static string strActivateDrone {
+            get {
+                return ResourceManager.GetString("strActivateDrone", resourceCulture);
             }
         }
         

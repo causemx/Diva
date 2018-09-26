@@ -11,104 +11,104 @@ using Diva.Mavlink;
 
 namespace Diva.Controls
 {
-	public partial class DroneInfoPanel : UserControl, IActivate, IDeactivate
-	{
+    public partial class DroneInfoPanel : UserControl
+    {
+        private DroneInfo activeDrone = null;
+        public DroneInfo ActiveDroneInfo
+        {
+            get => activeDrone;
+            set
+            {
+                if (activeDrone != value &&
+                    ThePanel.Controls.IndexOf(value) >= 0)
+                {
+                    if (activeDrone != null)
+                    {
+                        activeDrone.Deactivate();
+                        DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
+                    }
+                    activeDrone = value;
+                    if (activeDrone != null)
+                    {
+                        activeDrone.Activate();
+                        DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
+                    }
+                    TelemetryData.Visible = false;
+                }
+            }
+        }
+        [Browsable(true)]
+        public event EventHandler DroneClosed;
 
-		private bool isActive = false;
+        public DroneInfoPanel()
+        {
+            InitializeComponent();
+            TelemetryData.Visible = false;
+        }
 
-		public bool IsActivate
-		{
-			get
-			{
-				return this.isActive;
-			}
-			set
-			{
-				this.isActive = value;
-				if (isActive)
-				{
-					Activate();
-				}
-				else
-				{
-					Deactivate();
-				}
-				if (this.Parent != null)
-				{
-					Parent.Invalidate(this.Bounds, true);
-				}
-			}
-		}
+        public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
+        {
+            var dinfo = new DroneInfo(drone, drone.Name);
+            dinfo.Click += (s, e) => ActiveDroneInfo = s as DroneInfo;
+            dinfo.DoubleClick += (s, e) =>
+            {
+                ThePanel.Controls.Remove(s as Control);
+                if (s == ActiveDroneInfo)
+                {
+                    ActiveDroneInfo = null;
+                    TelemetryData.Visible = false;
+                }
+                drone.Disconnect();
+                DroneClosed?.Invoke(s, e);
+            };
+            dinfo.CloseButtonClicked += (s, e) =>
+            {
+                var d = s as DroneInfo;
+                if (d != null)
+                {
+                    if (d != ActiveDroneInfo)
+                    {
+                        ActiveDroneInfo = d;
+                    }
+                    else
+                    {
+                        TelemetryData.Visible = !TelemetryData.Visible;
+                    }
+                }
+            };
+            ThePanel.Controls.Remove(TelemetryData);
+            ThePanel.Controls.Add(dinfo);
+            ThePanel.Controls.Add(TelemetryData);
+            if (setActive)
+                ActiveDroneInfo = dinfo;
+            return dinfo;
+        }
 
-		private string droneName = "";
-		public string DroneName
-		{
-			get
-			{
-				return droneName;
-			}
-			set
-			{
-				this.droneName = value;
-				TxtDroneName.Text = droneName;
-			}
-		}
+        public void Clear()
+        {
+            ActiveDroneInfo = null;
+            TelemetryData.Visible = false;
+            ThePanel.Controls.OfType<DroneInfo>().ToList().ForEach(d => d.Drone.Disconnect());
+            ThePanel.Controls.Clear();
+            ThePanel.Controls.Add(TelemetryData);
+        }
 
-		public DroneInfoPanel()
-		{
-			InitializeComponent();
-		}
+        public void UpdateDisplayInfo()
+        {
+            if (ActiveDroneInfo != null)
+            {
+                MavStatus status = ActiveDroneInfo.Drone.Status;
+                ActiveDroneInfo.UpdateTelemetryData(status.sysid, status.battery_voltage, status.satcount);
+                TelemetryData.UpdateTelemetryData(status.alt, status.verticalspeed, status.groundspeed);
+                string getText(string name) =>
+                    TelemetryData.Controls.Find(name, true)[0].Text;
+                DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
+{getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
+{getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}");
+            }
+        }
 
-		public void Activate()
-		{
-			this.BackColor = Color.FromArgb(67, 78, 84);
-			PBDroneView.Image = Properties.Resources.icon_debug;
-		}
-
-		public void Deactivate()
-		{
-			this.BackColor = Color.FromArgb(128, 128, 128);
-			PBDroneView.Image = Properties.Resources.icon_debug;
-		}
-
-
-		public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
-		{
-			TxtSystemID.Text = sysid.ToString();
-			TxtBatteryHealth.Text = battry_voltage.ToString("F2");
-			TxtSatelliteCount.Text = satellite_count.ToString();
-		}
-
-		public void UpdateAssumeTime(double missionDistance)
-		{
-			// get the waypoint speed, default unit is mile/second
-			// TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
-			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
-			Planner.log.Info("distance double: " + missionDistance);
-		} 
-
-		public int GetParam(string paramname)
-		{
-			int _scale = 1;
-			MAVLink.MAVLinkParamList paramlist = Planner.comPort.MAV.param;
-			try
-			{
-				if (paramlist.ContainsKey(paramname))
-				{
-					int value = (int)((float)paramlist[paramname] / _scale);
-					return value;
-				}
-				else
-				{
-					throw new Exception("can not retrive parameters");
-				}
-			}
-			catch (Exception e)
-			{
-				Planner.log.Debug(e.ToString());
-				return 0;
-			}
-			
-		}
-	}
+        public void UpdateAssumeTime(double missionDistance) =>
+            ActiveDroneInfo?.UpdateAssumeTime(missionDistance);
+    }
 }
