@@ -150,5 +150,40 @@ namespace Diva.Controls
             }
         }
 
+        private bool markingCache = false;
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            markingCache = (ModifierKeys == Keys.Alt);
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            if (markingCache)
+            {
+                markingCache = false;
+                CacheSelection();
+            }
+            base.OnMouseUp(e);
+        }
+
+        private void CacheSelection()
+        {
+            var cache = GMaps.Instance.PrimaryCache as GMap.NET.CacheProviders.SQLitePureImageCache;
+            if (cache == null) return;
+            RectLatLng sel = SelectedArea;
+            if (sel.IsEmpty) return;
+            int zmax = MapProvider.MaxZoom ?? 20;
+            for (var z = MapProvider.MinZoom; z < zmax; z++)
+            {
+                using (TilePrefetcher pf = new TilePrefetcher())
+                {
+                    pf.ShowCompleteMessage = false;
+                    pf.Shuffle = true;
+                    pf.Start(sel, z, MapProvider, 100, 3);
+                }
+            }
+            GMaps.Instance.ExportToGMDB(cache.CacheLocation);
+        }
     }
 }

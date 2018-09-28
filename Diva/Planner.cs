@@ -44,7 +44,6 @@ namespace Diva
 
         private MavlinkInterface ActiveDrone = new MavlinkInterface();
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
-        private MavDrone CurrentDrone;
 
         public bool autopan { get; set; }
 
@@ -307,7 +306,7 @@ namespace Diva
 
 			while (serialThread)
 			{
-				Thread.Sleep(1000);
+				Thread.Sleep(20);
 				if (ActiveDrone.BaseStream.IsOpen)
 				{
 		
@@ -329,7 +328,6 @@ namespace Diva
 					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
 					{
 						UpdateMapPosition(currentloc);
-											
 					}
 				}
 			}
@@ -365,7 +363,6 @@ namespace Diva
 			});
 		}
 
-
 		private void updateRowNumbers()
 		{
 			// number rows 
@@ -395,7 +392,6 @@ namespace Diva
 				}
 			});
 		}
-
 
 		private void updateCMDParams()
 		{
@@ -462,12 +458,6 @@ namespace Diva
 			}
 
 			return cmd;
-		}
-
-		void comPort_MavChanged(object sender, EventArgs e)
-		{
-
-			// TODO: Change mav when calling.
 		}
 
 		#region GMap event handlers - move to MyGMap.cs when possible
@@ -1020,119 +1010,6 @@ namespace Diva
 		}
 		#endregion
 
-
-
-
-		public static bool doConnect(MavlinkInterface comPort, string portname, string port, string baud)
-		{
-			// Setup comport.basestream
-			switch (portname)
-			{
-				
-				case "udp":
-					comPort.BaseStream = new UdpSerial(port);
-					break;
-				default:
-					comPort.BaseStream = new SerialPort();
-					break;
-			}
-			
-	
-
-			// Tell the connection UI that we are now connected.
-			// TODO re-write UI behavior in panel X.
-
-			// Here we want to reset the connection stats counter etc.
-			// TODO refresh the connect icon.
-			// this.ResetConnectionStats();
-
-			// comPort.MAV.cs.ResetInternals();
-
-			try
-			{
-				log.Info("Set Portname");
-				// set port, then options
-				if (portname.ToLower() != "preset")
-					comPort.BaseStream.PortName = portname;
-
-				log.Info("Set Baudrate");
-				try
-				{
-					if (baud != "" && baud != "0")
-						comPort.BaseStream.BaudRate = int.Parse(baud);
-				}
-				catch (Exception exp)
-				{
-					log.Error(exp);
-				}
-
-				// prevent serialreader from doing anything
-				comPort.giveComport = true;
-
-				comPort.giveComport = false;
-
-
-				// reset connect time - for timeout functions
-				DateTime connecttime = DateTime.Now;
-
-				// do the connect
-			
-				comPort.open();
-			
-				
-
-				if (!comPort.BaseStream.IsOpen)
-				{
-					log.Info("comport is closed. existing connect");
-					try
-					{
-						// _connectionControl.IsConnected(false);
-						
-						comPort.close();
-					}
-					catch
-					{
-					}
-					return false;
-				}
-
-				// get all the params
-				foreach (var mavstate in comPort.MAVlist)
-				{
-					comPort.sysidcurrent = mavstate.sysid;
-					comPort.compidcurrent = mavstate.compid;
-					// TODO: comPort.getParamList();
-				}
-
-				// set to first seen
-				comPort.sysidcurrent = comPort.MAVlist.First().sysid;
-				comPort.compidcurrent = comPort.MAVlist.First().compid;
-
-				// _connectionControl.UpdateSysIDS();
-
-			}
-			catch (Exception ex)
-			{
-				log.Warn(ex);
-				try
-				{
-					// _connectionControl.IsConnected(false);
-					
-					comPort.close();
-				}
-				catch (Exception ex2)
-				{
-					log.Warn(ex2);
-				}
-				MessageBox.Show(ResStrings.MsgCannotEstablishConnection
-					.FormatWith(ex.Message));
-				throw new Exception();
-			}
-
-			return true;
-		}
-
-
 		/// <summary>
 		/// used to add a marker to the map display
 		/// </summary>
@@ -1218,7 +1095,6 @@ namespace Diva
 			}
 		}
 
-
 		private void addpolygonmarkergrid(string tag, double lng, double lat, int alt)
 		{
 			try
@@ -1243,7 +1119,6 @@ namespace Diva
 				log.Info(ex.ToString());
 			}
 		}
-			 
 
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -1304,7 +1179,6 @@ namespace Diva
 				return;
 			}
 
-			
 			setfromMap(lat, lng, alt);
 		}
 
@@ -1439,8 +1313,6 @@ namespace Diva
 
 			setfromMap(lat, lng, alt);
 		}
-
-		
 
 		private bool IsHomeEmpty()
 		{
@@ -1857,7 +1729,6 @@ namespace Diva
 			}
 		}
 
-
 		private double find_angle(List<PointLatLngAlt> points)
 		{
 			log.Info("find_angle");
@@ -1972,10 +1843,6 @@ namespace Diva
 			}
 		}
 
-
-		
-
-
 		private void Commands_RowEnter(object sender, DataGridViewCellEventArgs e)
 		{
 			if (quickadd)
@@ -2089,10 +1956,6 @@ namespace Diva
 		}
 
 		#region save waypoints
-
-		
-
-
 		void saveWPsFast(object sender, ProgressWorkerEventArgs e, object passdata)
 		{
 			var totalwpcountforupload = (ushort)(dgvWayPoints.RowCount + 1);
@@ -2282,9 +2145,6 @@ namespace Diva
 
 			ActiveDrone.setWPACK();
 		}
-
-		
-
 
 		private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
         {
@@ -2545,8 +2405,6 @@ namespace Diva
 
 			ActiveDrone.giveComport = false;
 		}
-
-
 		#endregion
 
 		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
@@ -2997,7 +2855,6 @@ namespace Diva
                     log.Debug(exception);
                 }
             }
-            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
         }
 
         #region Button click event handlers
@@ -3192,7 +3049,7 @@ namespace Diva
 				Text = "Uploading waypoints",
 			};
 
-			uploadWPReporter.DoWork += saveWPs;
+			uploadWPReporter.DoWork += saveWPsFast;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
@@ -3210,81 +3067,10 @@ namespace Diva
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
-		public bool isRotating = true;
-		ProgressDialogV2 rotationDialog = null;
-
-		private void TSBtnRotation_DoubleClick(object sender, EventArgs e)
-		{
-			isRotating = false; // stop the ratation.
-		}
-
-		private void TSBtnRotation_Click(object sender, EventArgs e)
+		private void BUT_Rotation2_Click(object sender, EventArgs e)
 		{
 			// TODO New rotation logic add here.
-
-			rotationDialog = new ProgressDialogV2
-			{
-				StartPosition = FormStartPosition.CenterScreen,
-				HintImage = Resources.icon_info,
-				Text = "Execute Rotation",
-			};
-
-			rotationDialog.DoWork += Rotation;
-			rotationDialog.RunBackgroundOperationAsync();
-			rotationDialog.Dispose();
-
 		}
-
-
-		private void Rotation(object sender, ProgressWorkerEventArgs e, object passdata)
-		{
-			//if (OnlineDrones.Count < 3) return;
-
-			int index = 0;
-
-			while (isRotating)
-			{
-				MavlinkInterface mav = OnlineDrones[index];
-
-				try
-				{
-					if (!mav.BaseStream.IsOpen) continue;
-					while (mav.Status.mode != (uint)4)
-					{
-						Thread.Sleep(2000);
-						mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
-					}
-
-					while (!mav.Status.armed)
-					{
-						Thread.Sleep(1000);
-						mav.doARM(true);
-						mav.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-					}
-
-					while (mav.Status.mode != (uint)3)
-					{
-						Thread.Sleep(3000);
-						// switch mode to AUTO
-						mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
-					}
-
-					while (!mav.Status.landed)
-					{
-						Thread.Sleep(1000);
-					}
-
-					index = index++ % OnlineDrones.Count;
-
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.ToString());
-				}
-
-			}
-		}
-
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
@@ -4171,14 +3957,13 @@ namespace Diva
 
 			while (isUpdatemapThreadRun)
 			{
-				if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
+				//if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
 
 				try
 				{
-
+                    Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
                     foreach (MavlinkInterface mav in OnlineDrones)
                     {
-                        Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
 						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
 						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
 							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
@@ -4286,6 +4071,9 @@ namespace Diva
             ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
         }
 
-		
-	}
+        private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
+        {
+            ActiveDrone = (sender as DroneInfo)?.Drone;
+        }
+    }
 }
