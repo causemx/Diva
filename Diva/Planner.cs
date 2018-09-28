@@ -3086,7 +3086,7 @@ namespace Diva
 			}
 			else
 			{
-				Lbl_Rotate.Text = "Rotating";
+				Lbl_Rotate.Text = ResStrings.MsgStatusRotating;
 				isRotating = true;
 				rotationWorker.RunWorkerAsync();
 			}
@@ -3096,7 +3096,7 @@ namespace Diva
 		{
 			if (OnlineDrones.Count < 3)
 			{
-				MessageBox.Show("Yout need at lease three drones online", "Warning", MessageBoxButtons.OK);
+				MessageBox.Show(ResStrings.MsgDroneNumberRequest, ResStrings.DialogTitleWarning, MessageBoxButtons.OK);
 				return;
 			}
 			

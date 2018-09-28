@@ -43,7 +43,7 @@ namespace Diva.Utilities
 						Task.Factory.StartNew(() =>
 						{
 							dinfo.LowVoltageWarning(true);
-							MessageBox.Show("Low voltage level, Start to Return...", "Warning", MessageBoxButtons.OK);
+							MessageBox.Show(Diva.Properties.Strings.MsgLowVoltageWarning, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
 						});
 						isShowing = true;
 					}

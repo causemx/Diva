@@ -396,4 +396,16 @@
   <data name="MsgCustomizeOverlayImport" xml:space="preserve">
     <value>{0} overlay has been imported</value>
   </data>
+  <data name="MsgLowVoltageWarning" xml:space="preserve">
+    <value>Low voltage level, Starting return to launch.</value>
+  </data>
+  <data name="DialogTitleWarning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="MsgDroneNumberRequest" xml:space="preserve">
+    <value>You need at lease three drones online</value>
+  </data>
+  <data name="MsgStatusRotating" xml:space="preserve">
+    <value>Rotating</value>
+  </data>
 </root>

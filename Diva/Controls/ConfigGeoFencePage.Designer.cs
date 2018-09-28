@@ -43,11 +43,12 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.label9 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.NumericUpDown_LowBatt_Value = new Diva.Controls.Components.MyNumericUpDown();
-			this.label9 = new System.Windows.Forms.Label();
 			this.ComboBox_Batt_Action = new Diva.Controls.Components.MyComboBox();
 			this.label10 = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Fence_Radius)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDown_Fence_Altitude)).BeginInit();
@@ -252,6 +253,17 @@
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(350, 57);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("Georgia", 12F);
+			this.label9.ForeColor = System.Drawing.Color.White;
+			this.label9.Location = new System.Drawing.Point(3, 28);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(53, 18);
+			this.label9.TabIndex = 2;
+			this.label9.Text = "Action";
+			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
@@ -273,17 +285,6 @@
 			this.NumericUpDown_LowBatt_Value.ParamName = null;
 			this.NumericUpDown_LowBatt_Value.Size = new System.Drawing.Size(160, 22);
 			this.NumericUpDown_LowBatt_Value.TabIndex = 1;
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Font = new System.Drawing.Font("Georgia", 12F);
-			this.label9.ForeColor = System.Drawing.Color.White;
-			this.label9.Location = new System.Drawing.Point(3, 28);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(53, 18);
-			this.label9.TabIndex = 2;
-			this.label9.Text = "Action";
 			// 
 			// ComboBox_Batt_Action
 			// 
@@ -308,11 +309,23 @@
 			this.label10.TabIndex = 3;
 			this.label10.Text = "Simple GeoFence";
 			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label11.ForeColor = System.Drawing.Color.Red;
+			this.label11.Location = new System.Drawing.Point(39, 363);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(341, 15);
+			this.label11.TabIndex = 4;
+			this.label11.Text = "Please restart system after adjusting for working properly";
+			// 
 			// ConfigGeoFencePage
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+			this.Controls.Add(this.label11);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.tableLayoutPanel2);
 			this.Controls.Add(this.label7);
@@ -354,5 +367,6 @@
 		private Components.MyNumericUpDown NumericUpDown_LowBatt_Value;
 		private Components.MyComboBox ComboBox_Batt_Action;
 		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label label11;
 	}
 }

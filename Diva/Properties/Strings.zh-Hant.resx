@@ -394,4 +394,19 @@
   <data name="strActivateDrone" xml:space="preserve">
     <value>點擊設為使用中</value>
   </data>
+  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
+    <value>{0} 自訂圖層已經被匯入</value>
+  </data>
+  <data name="MsgLowVoltageWarning" xml:space="preserve">
+    <value>電量過低，開始返航</value>
+  </data>
+  <data name="DialogTitleWarning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="MsgDroneNumberRequest" xml:space="preserve">
+    <value>至少需要三架飛機同時上線</value>
+  </data>
+  <data name="MsgStatusRotating" xml:space="preserve">
+    <value>輪值中</value>
+  </data>
 </root>

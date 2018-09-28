@@ -53,7 +53,6 @@ namespace Diva.Controls
 			// get the waypoint speed, default unit is mile/second
 			// TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
 			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
-			Planner.log.Info("distance double: " + missionDistance);
 		}
 
 		public void LowVoltageWarning(bool isLowVoltage)
