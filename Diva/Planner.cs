@@ -44,7 +44,6 @@ namespace Diva
 
         private MavlinkInterface ActiveDrone = new MavlinkInterface();
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
-        private MavDrone CurrentDrone;
 
         public bool autopan { get; set; }
 
@@ -364,7 +363,6 @@ namespace Diva
 			});
 		}
 
-
 		private void updateRowNumbers()
 		{
 			// number rows 
@@ -394,7 +392,6 @@ namespace Diva
 				}
 			});
 		}
-
 
 		private void updateCMDParams()
 		{
@@ -461,12 +458,6 @@ namespace Diva
 			}
 
 			return cmd;
-		}
-
-		void comPort_MavChanged(object sender, EventArgs e)
-		{
-
-			// TODO: Change mav when calling.
 		}
 
 		#region GMap event handlers - move to MyGMap.cs when possible
@@ -1104,7 +1095,6 @@ namespace Diva
 			}
 		}
 
-
 		private void addpolygonmarkergrid(string tag, double lng, double lat, int alt)
 		{
 			try
@@ -1129,7 +1119,6 @@ namespace Diva
 				log.Info(ex.ToString());
 			}
 		}
-			 
 
 		private void Commands_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -1190,7 +1179,6 @@ namespace Diva
 				return;
 			}
 
-			
 			setfromMap(lat, lng, alt);
 		}
 
@@ -1325,8 +1313,6 @@ namespace Diva
 
 			setfromMap(lat, lng, alt);
 		}
-
-		
 
 		private bool IsHomeEmpty()
 		{
@@ -1743,7 +1729,6 @@ namespace Diva
 			}
 		}
 
-
 		private double find_angle(List<PointLatLngAlt> points)
 		{
 			log.Info("find_angle");
@@ -1858,10 +1843,6 @@ namespace Diva
 			}
 		}
 
-
-		
-
-
 		private void Commands_RowEnter(object sender, DataGridViewCellEventArgs e)
 		{
 			if (quickadd)
@@ -1975,10 +1956,6 @@ namespace Diva
 		}
 
 		#region save waypoints
-
-		
-
-
 		void saveWPsFast(object sender, ProgressWorkerEventArgs e, object passdata)
 		{
 			var totalwpcountforupload = (ushort)(dgvWayPoints.RowCount + 1);
@@ -2168,9 +2145,6 @@ namespace Diva
 
 			ActiveDrone.setWPACK();
 		}
-
-		
-
 
 		private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
         {
@@ -2431,8 +2405,6 @@ namespace Diva
 
 			ActiveDrone.giveComport = false;
 		}
-
-
 		#endregion
 
 		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
@@ -2883,7 +2855,6 @@ namespace Diva
                     log.Debug(exception);
                 }
             }
-            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
         }
 
         #region Button click event handlers
@@ -3095,8 +3066,6 @@ namespace Diva
 
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
-
-
 
 		private void BUT_Rotation2_Click(object sender, EventArgs e)
 		{
@@ -3988,14 +3957,13 @@ namespace Diva
 
 			while (isUpdatemapThreadRun)
 			{
-				if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
+				//if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
 
 				try
 				{
-
+                    Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
                     foreach (MavlinkInterface mav in OnlineDrones)
                     {
-                        Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
 						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
 						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
 							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
@@ -4103,6 +4071,9 @@ namespace Diva
             ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
         }
 
-		
-	}
+        private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
+        {
+            ActiveDrone = (sender as DroneInfo)?.Drone;
+        }
+    }
 }

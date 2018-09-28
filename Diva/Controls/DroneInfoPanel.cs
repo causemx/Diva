@@ -32,6 +32,7 @@ namespace Diva.Controls
                     {
                         activeDrone.Activate();
                         DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
+                        ActiveDroneChanged?.Invoke(activeDrone, null);
                     }
                     TelemetryData.Visible = false;
                 }
@@ -39,6 +40,10 @@ namespace Diva.Controls
         }
         [Browsable(true)]
         public event EventHandler DroneClosed;
+
+        [Browsable(true)]
+        public event EventHandler ActiveDroneChanged;
+
 
         public DroneInfoPanel()
         {
