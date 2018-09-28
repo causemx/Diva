@@ -244,6 +244,7 @@ namespace Diva
 			myMap.Zoom = zoom;
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
+
 		}
 	
 		private void Planner_Load(object sender, EventArgs e)
@@ -3067,10 +3068,82 @@ namespace Diva
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
-		private void BUT_Rotation2_Click(object sender, EventArgs e)
+		bool isRotating = false;
+		BackgroundWorker rotationWorker;
+
+		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
-			// TODO New rotation logic add here.
+			rotationWorker = new BackgroundWorker();
+			rotationWorker.WorkerSupportsCancellation = true;
+			rotationWorker.DoWork += new DoWorkEventHandler(Rotation);
+
+			if (isRotating)
+			{
+				isRotating = !isRotating;
+				rotationWorker.CancelAsync();
+				Lbl_Rotate.Text = "";
+				return;
+			}
+			else
+			{
+				Lbl_Rotate.Text = "Rotating";
+				isRotating = true;
+				rotationWorker.RunWorkerAsync();
+			}
 		}
+
+		private void Rotation(object sender, DoWorkEventArgs e)
+		{
+			if (OnlineDrones.Count < 3)
+			{
+				MessageBox.Show("Yout need at lease three drones online", "Warning", MessageBoxButtons.OK);
+				return;
+			}
+			
+
+			int index = 0;
+
+			while (isRotating)
+			{
+				MavlinkInterface mav = OnlineDrones[index];
+
+				try
+				{
+					if (!mav.BaseStream.IsOpen) continue;
+					while (mav.Status.mode != (uint)4)
+					{
+						Thread.Sleep(1000);
+						mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
+					}
+
+					while (!mav.Status.armed)
+					{
+						Thread.Sleep(1000);
+						mav.doARM(true);
+						mav.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+					}
+										
+					Thread.Sleep(1000);
+					// switch mode to AUTO
+					mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
+
+
+					while (!mav.Status.landed)
+					{
+						Thread.Sleep(500);
+					}
+
+					index = (index + 1) % OnlineDrones.Count;
+
+				}
+				catch (Exception ex)
+				{
+					log.Error(ex.ToString());
+				}
+
+			}
+		}
+
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
@@ -3989,6 +4062,7 @@ namespace Diva
                 Thread.Sleep(500);
             }
         }
+
 		#region customized overlay related functions
 
 
@@ -4075,5 +4149,7 @@ namespace Diva
         {
             ActiveDrone = (sender as DroneInfo)?.Drone;
         }
-    }
+
+		
+	}
 }
