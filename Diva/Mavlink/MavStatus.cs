@@ -143,6 +143,9 @@ namespace Diva.Mavlink
 
 		internal double _battery_voltage;
 
+		internal double _lowVoltage;
+		public double low_voltage { get { return _lowVoltage; } set { _lowVoltage = value; } }
+
 		public float yaw
 		{
 			get { return _yaw; }
@@ -347,5 +350,7 @@ namespace Diva.Mavlink
 			}
 			set { _trackerloc = value; }
 		}
+
+		
 	}
 }

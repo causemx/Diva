@@ -733,7 +733,11 @@ namespace Diva.Mavlink
 				{
 					frmProgressReporter.UpdateProgressAndStatus(0,
 					   "Getting Params.. (sysid " + Status.sysid + " compid " + Status.compid + ") ");
-					getParamListBG();
+					getParamListBG() ;
+
+					// get the low battery constrain
+					Status.low_voltage = GetParam("FS_BATT_VOLTAGE");
+
 				}
 
 				
@@ -2631,7 +2635,7 @@ namespace Diva.Mavlink
 
 		public void setMode(byte sysid, byte compid, mavlink_set_mode_t mode, MAV_MODE_FLAG base_mode = 0)
 		{
-			Console.WriteLine("mode switching");
+			log.Info("mode switching");
 			mode.base_mode |= (byte)base_mode;
 
 			generatePacket((byte)(byte)MAVLINK_MSG_ID.SET_MODE, mode, sysid, compid);

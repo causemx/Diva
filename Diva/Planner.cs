@@ -3192,7 +3192,7 @@ namespace Diva
 				Text = "Uploading waypoints",
 			};
 
-			uploadWPReporter.DoWork += saveWPsFast;
+			uploadWPReporter.DoWork += saveWPs;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
@@ -3210,12 +3210,81 @@ namespace Diva
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
+		public bool isRotating = true;
+		ProgressDialogV2 rotationDialog = null;
 
+		private void TSBtnRotation_DoubleClick(object sender, EventArgs e)
+		{
+			isRotating = false; // stop the ratation.
+		}
 
-		private void BUT_Rotation2_Click(object sender, EventArgs e)
+		private void TSBtnRotation_Click(object sender, EventArgs e)
 		{
 			// TODO New rotation logic add here.
+
+			rotationDialog = new ProgressDialogV2
+			{
+				StartPosition = FormStartPosition.CenterScreen,
+				HintImage = Resources.icon_info,
+				Text = "Execute Rotation",
+			};
+
+			rotationDialog.DoWork += Rotation;
+			rotationDialog.RunBackgroundOperationAsync();
+			rotationDialog.Dispose();
+
 		}
+
+
+		private void Rotation(object sender, ProgressWorkerEventArgs e, object passdata)
+		{
+			//if (OnlineDrones.Count < 3) return;
+
+			int index = 0;
+
+			while (isRotating)
+			{
+				MavlinkInterface mav = OnlineDrones[index];
+
+				try
+				{
+					if (!mav.BaseStream.IsOpen) continue;
+					while (mav.Status.mode != (uint)4)
+					{
+						Thread.Sleep(2000);
+						mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
+					}
+
+					while (!mav.Status.armed)
+					{
+						Thread.Sleep(1000);
+						mav.doARM(true);
+						mav.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+					}
+
+					while (mav.Status.mode != (uint)3)
+					{
+						Thread.Sleep(3000);
+						// switch mode to AUTO
+						mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
+					}
+
+					while (!mav.Status.landed)
+					{
+						Thread.Sleep(1000);
+					}
+
+					index = index++ % OnlineDrones.Count;
+
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.ToString());
+				}
+
+			}
+		}
+
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{

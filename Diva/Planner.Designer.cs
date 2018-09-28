@@ -356,7 +356,8 @@ namespace Diva
 			this.TSBtnRotation.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.TSBtnRotation.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnRotation.HoverImage")));
 			this.TSBtnRotation.Name = "TSBtnRotation";
-			this.TSBtnRotation.Click += new System.EventHandler(this.BUT_Rotation2_Click);
+			this.TSBtnRotation.Click += new System.EventHandler(this.TSBtnRotation_Click);
+			this.TSBtnRotation.DoubleClick += new System.EventHandler(this.TSBtnRotation_DoubleClick);
 			// 
 			// TSBtnConfigure
 			// 

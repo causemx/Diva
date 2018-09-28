@@ -73,8 +73,7 @@ namespace Diva.Controls
                 }
             };
 
-			battNotification = new NotificationManager.BatteryNotification(drone);
-			battNotification.Register("FS_BATT_VOLTAGE");
+			battNotification = new NotificationManager.BatteryNotification(dinfo);
 
             ThePanel.Controls.Remove(TelemetryData);
             ThePanel.Controls.Add(dinfo);

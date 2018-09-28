@@ -54,7 +54,12 @@ namespace Diva.Controls
 			// TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
 			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
 			Planner.log.Info("distance double: " + missionDistance);
-		} 
+		}
+
+		public void LowVoltageWarning(bool isLowVoltage)
+		{
+			TxtBatteryHealth.ForeColor = isLowVoltage ? Color.Red : Color.White;
+		}
 
         [Browsable(true)]
 		public event EventHandler CloseButtonClicked;

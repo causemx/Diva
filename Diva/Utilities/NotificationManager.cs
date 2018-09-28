@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.Controls;
 using Diva.Mavlink;
 
 namespace Diva.Utilities
@@ -13,41 +14,47 @@ namespace Diva.Utilities
 
 		public interface INotification
 		{
-			void Register(string paramName);
 			void Notify();
 		}
 
 		public class BatteryNotification : INotification
 		{
+			bool isShowing = false;
+			DroneInfo dinfo;
 			MavlinkInterface activeDrone = null;
-			float cacheValue = 0.1f;
-			bool isShown = false;
+			
 
-			public BatteryNotification(MavlinkInterface mav)
+			public BatteryNotification(DroneInfo info)
 			{
-				this.activeDrone = mav;
-				
-			}
-
-			public void Register(string paramName)
-			{
-				cacheValue = activeDrone.GetParam(paramName);
+				this.dinfo = info;
+				this.activeDrone = info.Drone;
 			}
 
 			public void Notify()
 			{
+				
 				try
 				{
-					if (!isShown && activeDrone.Status.battery_voltage < activeDrone.GetParam("FS_BATT_VOLTAGE"))
-						MessageBox.Show("Low voltage level, Start to Return...", "Warning", MessageBoxButtons.OK);
 
-					isShown = (cacheValue == activeDrone.GetParam("FS_BATT_VOLTAGE")) ? true : false;
+					if (!isShowing && activeDrone.Status.battery_voltage < activeDrone.Status.low_voltage)
+					{
+						Task.Factory.StartNew(() =>
+						{
+							dinfo.LowVoltageWarning(true);
+							MessageBox.Show("Low voltage level, Start to Return...", "Warning", MessageBoxButtons.OK);
+						});
+						isShowing = true;
+					}
+					else if (activeDrone.Status.battery_voltage > activeDrone.Status.low_voltage)
+					{
+						dinfo.LowVoltageWarning(false);
+						isShowing = false;
+					}
 
 				}
 				catch (Exception e)
 				{
-					if (activeDrone.Status.battery_voltage < activeDrone.GetParam("LOW_VOLT"))
-						MessageBox.Show("Low voltage level", "Warning", MessageBoxButtons.OK);
+					Planner.log.Error(e.ToString());
 				}
 			}
 
