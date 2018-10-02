@@ -182,6 +182,17 @@ namespace Diva.Controls.Components
 			}
 		}
 
-
+		public class RaiseEventArgs : EventArgs
+		{
+			public RaiseEventArgs(float _value)
+			{
+				value = _value;
+			}
+			private float value;
+			public float Value
+			{
+				get { return value; }
+			}
+		}
 	}
 }

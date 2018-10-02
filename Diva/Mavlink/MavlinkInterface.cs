@@ -735,9 +735,10 @@ namespace Diva.Mavlink
 					   "Getting Params.. (sysid " + Status.sysid + " compid " + Status.compid + ") ");
 					getParamListBG() ;
 
-					// get the low battery constrain
-					Status.low_voltage = GetParam("FS_BATT_VOLTAGE");
-
+					// set the default low voltage warning: 10.5d
+					
+					Status.low_voltage = 10.5d;
+					
 				}
 
 				
@@ -2496,7 +2497,7 @@ namespace Diva.Mavlink
 
 			return true;
 
-			/**
+			/*
 			DateTime fromNow = DateTime.Now;
 			log.WarnFormat("datefromnow: {0}", DateTime.Now);
 			while (true)
@@ -2551,9 +2552,8 @@ namespace Diva.Mavlink
 						}
 					}
 				}
-
-				log.WarnFormat("duration: {0}", (DateTime.Now - fromNow));
-			}**/
+								
+			}*/
 		}
 
 		public void SendAck()

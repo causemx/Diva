@@ -409,19 +409,31 @@ namespace Diva
 
 			colCommand.DataSource = cmds;
 		}
+		
 
-		private Dictionary<string, string[]> readCMDXML()
+		Dictionary<string, string[]> readCMDXML()
 		{
 			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
-
-			// do lang stuff here
+						
 			using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
 			using (XmlReader reader = XmlReader.Create(file))
 			{
 				reader.Read();
 				reader.ReadStartElement("CMD");
-				// read part of firmware - APM, because mavcmd.xml very large...
-				reader.ReadToFollowing("APM");
+				if (ActiveDrone.Status.firmware == Firmwares.ArduPlane ||
+					ActiveDrone.Status.firmware == Firmwares.Ateryx)
+				{
+					reader.ReadToFollowing("APM");
+				}
+				else if (ActiveDrone.Status.firmware == Firmwares.ArduRover)
+				{
+					reader.ReadToFollowing("APRover");
+				}
+				else
+				{
+					reader.ReadToFollowing("AC2");
+				}
+
 				XmlReader inner = reader.ReadSubtree();
 
 				inner.Read();
@@ -460,6 +472,7 @@ namespace Diva
 
 			return cmd;
 		}
+
 
 		#region GMap event handlers - move to MyGMap.cs when possible
 
