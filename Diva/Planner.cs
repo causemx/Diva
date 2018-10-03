@@ -1,6 +1,7 @@
 ﻿using Diva.Comms;
 using Diva.Controls;
 using Diva.Mavlink;
+using Diva.Mission;
 using Diva.Properties;
 using Diva.Utilities;
 using GMap.NET;
@@ -1708,6 +1709,52 @@ namespace Diva
 			}
 		}
 
+
+        public void writeKMLV2()
+        {
+            // quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
+            if (quickadd)
+                return;
+
+            updateRowNumbers();
+
+            var home = new PointLatLngAlt(
+                    double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
+                    double.Parse(TxtHomeAltitude.Text), "H");
+
+            var overlay = new WPOverlay(overlays.objects);
+
+            overlay.CreateOverlay(home, GetCommandList());
+
+            myMap.HoldInvalidation = true;
+
+            var existing = myMap.Overlays.Where(a => a.Id == overlay.overlay.Id).ToList();
+            foreach (var b in existing)
+            {
+                myMap.Overlays.Remove(b);
+            }
+
+            overlay.overlay.ForceUpdate();
+
+            
+
+            // setgradanddistandaz(overlay.pointlist, home);
+
+            if (overlay.pointlist.Count <= 1)
+            {
+                RectLatLng? rect = myMap.GetRectOfAllMarkers(overlay.overlay.Id);
+                if (rect.HasValue)
+                {
+                    myMap.Position = rect.Value.LocationMiddle;
+                }
+
+                // myMap_OnMapZoomChanged();
+            }
+
+            pointlist = overlay.pointlist;
+
+            myMap.Refresh();
+        }
 
 		/// <summary>
 		/// Format distance according to prefer distance unit

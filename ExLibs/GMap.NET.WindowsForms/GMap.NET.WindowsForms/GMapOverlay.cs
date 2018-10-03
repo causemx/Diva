@@ -253,7 +253,7 @@ namespace GMap.NET.WindowsForms
       /// <summary>
       /// updates local positions of objects
       /// </summary>
-      internal void ForceUpdate()
+      public void ForceUpdate()
       {
          if(Control != null)
          {

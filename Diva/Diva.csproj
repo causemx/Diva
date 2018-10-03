@@ -252,6 +252,7 @@
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
+    <Compile Include="Mission\WPOverlay.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>
     </Compile>
