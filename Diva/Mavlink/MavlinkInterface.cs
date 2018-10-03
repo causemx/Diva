@@ -37,18 +37,6 @@ namespace Diva.Mavlink
 		}
 
 
-		public DateTime lastlogread { get; set; }
-		public BinaryReader logplaybackfile
-		{
-			get { return _logplaybackfile; }
-			set
-			{
-				_logplaybackfile = value;
-				if (_logplaybackfile != null && _logplaybackfile.BaseStream is FileStream)
-					log.Info("Logplaybackfile set " + ((FileStream)_logplaybackfile.BaseStream).Name);
-			}
-		}
-
 		public ICommsSerial BaseStream
 		{
 			get { return _baseStream; }
@@ -141,7 +129,6 @@ namespace Diva.Mavlink
 		private int pacCount = 0;
 		private const int gcssysid = 255;
 		private ICommsSerial _baseStream = null;
-		private BinaryReader _logplaybackfile;
 		private string buildplaintxtline = "";
 		private byte mavlinkversion = 0;
 		private int _mavlink1count = 0;
@@ -220,8 +207,6 @@ namespace Diva.Mavlink
 			Console.WriteLine("serialreader done");
 
 		}
-
-		uint _mode = 99999;
 
 		#region retrieve sensor data from flight control.
 
@@ -796,33 +781,9 @@ namespace Diva.Mavlink
 			getParamListBG();
 		}
 
-
-		private int _parampoll = 0;
-
-		public void getParamPoll()
-		{
-			// check if we have all
-			if (Status.param.TotalReceived >= Status.param.TotalReported)
-			{
-				return;
-			}
-
-			// if we are connected as primary to a vechile where we dont have all the params, poll for them
-			short i = (short)(_parampoll % Status.param.TotalReported);
-
-			GetParam("", i, false);
-
-			_parampoll++;
-		}
-
 		public float GetParam(string name)
 		{
 			return GetParam(name, -1);
-		}
-
-		public float GetParam(short index)
-		{
-			return GetParam("", index);
 		}
 
 		public float GetParam(string name = "", short index = -1, bool requireresponce = true)
@@ -979,7 +940,7 @@ namespace Diva.Mavlink
 				}
 
 				// 4 seconds between valid packets
-				if (!(start.AddMilliseconds(4000) > DateTime.Now) && !logreadmode)
+				if (!(start.AddMilliseconds(4000) > DateTime.Now))
 				{
 					if (retry < 6)
 					{
@@ -1148,11 +1109,7 @@ namespace Diva.Mavlink
 					// Console.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
 					// Console.WriteLine(DateTime.Now.Millisecond + " gp4 " + BaseStream.BytesToRead);
 				}
-				if (logreadmode && logplaybackfile.BaseStream.Position >= logplaybackfile.BaseStream.Length)
-				{
-					break;
-				}
-				if (!logreadmode && !BaseStream.IsOpen)
+				if (!BaseStream.IsOpen)
 				{
 					var exp = new Exception("Not Connected");
 					// frmProgressReporter.doWorkArgs.ErrorMessage = exp.Message;
@@ -1172,31 +1129,6 @@ namespace Diva.Mavlink
 			Status.param.TotalReported = param_total;
 			Status.param.AddRange(newparamlist);
 			return Status.param;
-		}
-
-		public List<PointLatLngAlt> getRallyPoints()
-		{
-			List<PointLatLngAlt> points = new List<PointLatLngAlt>();
-
-			if (!Status.param.ContainsKey("RALLY_TOTAL"))
-				return points;
-
-			int count = int.Parse(Status.param["RALLY_TOTAL"].ToString());
-
-			for (int a = 0; a < (count - 1); a++)
-			{
-				try
-				{
-					PointLatLngAlt plla = getRallyPoint(a, ref count);
-					points.Add(plla);
-				}
-				catch
-				{
-					return points;
-				}
-			}
-
-			return points;
 		}
 
 		public PointLatLngAlt getRallyPoint(int no, ref int total)
@@ -1302,8 +1234,6 @@ namespace Diva.Mavlink
 
 		}
 
-		bool logreadmode = false;
-
 		public MAVLinkMessage readPacket()
 		{
 			byte[] buffer = new byte[MAVLINK_MAX_PACKET_LEN + 25];
@@ -1324,7 +1254,7 @@ namespace Diva.Mavlink
 
 				//Console.WriteLine(DateTime.Now.Millisecond + " SR1 " + BaseStream.BytesToRead);
 
-				while (BaseStream.IsOpen || logreadmode)
+				while (BaseStream.IsOpen)
 				{
 					try
 					{
@@ -1333,42 +1263,33 @@ namespace Diva.Mavlink
 							break;
 						}
 						readcount++;
-						if (logreadmode)
+
+						// time updated for internal reference
+						Status.datetime = DateTime.Now;
+
+						DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
+
+						// Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
+
+						while (BaseStream.IsOpen && BaseStream.BytesToRead <= 0)
 						{
-							message = readlogPacketMavlink();
-							buffer = message.buffer;
-							if (buffer == null || buffer.Length == 0)
-								return MAVLinkMessage.Invalid;
+							if (DateTime.Now > to)
+							{
+								log.InfoFormat("MAVLINK: 1 wait time out btr {0} len {1}", BaseStream.BytesToRead,
+									length);
+								throw new TimeoutException("Timeout");
+							}
+							Thread.Sleep(1);
+							//Console.WriteLine(DateTime.Now.Millisecond + " SR0b " + BaseStream.BytesToRead);
 						}
-						else
+						//Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
+						if (BaseStream.IsOpen)
 						{
-							// time updated for internal reference
-							Status.datetime = DateTime.Now;
-
-							DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
-
-							// Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
-
-							while (BaseStream.IsOpen && BaseStream.BytesToRead <= 0)
-							{
-								if (DateTime.Now > to)
-								{
-									log.InfoFormat("MAVLINK: 1 wait time out btr {0} len {1}", BaseStream.BytesToRead,
-										length);
-									throw new TimeoutException("Timeout");
-								}
-								Thread.Sleep(1);
-								//Console.WriteLine(DateTime.Now.Millisecond + " SR0b " + BaseStream.BytesToRead);
-							}
-							//Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
-							if (BaseStream.IsOpen)
-							{
-								BaseStream.Read(buffer, count, 1);
-								if (rawlogfile != null && rawlogfile.CanWrite)
-									rawlogfile.WriteByte(buffer[count]);
-							}
-							//Console.WriteLine(DateTime.Now.Millisecond + " SR1b " + BaseStream.BytesToRead);
+							BaseStream.Read(buffer, count, 1);
+							if (rawlogfile != null && rawlogfile.CanWrite)
+								rawlogfile.WriteByte(buffer[count]);
 						}
+						//Console.WriteLine(DateTime.Now.Millisecond + " SR1b " + BaseStream.BytesToRead);
 					}
 					catch (Exception e)
 					{
@@ -1416,7 +1337,7 @@ namespace Diva.Mavlink
 						int headerlengthstx = headerlength + 1;
 
 						// if we have the header, and no other chars, get the length and packet identifiers
-						if (count == 0 && !logreadmode)
+						if (count == 0)
 						{
 							DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
@@ -1450,38 +1371,32 @@ namespace Diva.Mavlink
 							length = buffer[1] + headerlengthstx + MAVLINK_NUM_CHECKSUM_BYTES; // data + header + checksum - U - length    
 						}
 
-						if (count >= headerlength || logreadmode)
+						if (count >= headerlength)
 						{
 							try
 							{
-								if (logreadmode)
-								{
-								}
-								else
-								{
-									DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
+								DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
-									while (BaseStream.IsOpen && BaseStream.BytesToRead < (length - (headerlengthstx)))
+								while (BaseStream.IsOpen && BaseStream.BytesToRead < (length - (headerlengthstx)))
+								{
+									if (DateTime.Now > to)
 									{
-										if (DateTime.Now > to)
-										{
-											log.InfoFormat("MAVLINK: 3 wait time out btr {0} len {1}",
-												BaseStream.BytesToRead, length);
-											break;
-										}
-										Thread.Sleep(1);
+										log.InfoFormat("MAVLINK: 3 wait time out btr {0} len {1}",
+											BaseStream.BytesToRead, length);
+										break;
 									}
-									if (BaseStream.IsOpen)
+									Thread.Sleep(1);
+								}
+								if (BaseStream.IsOpen)
+								{
+									int read = BaseStream.Read(buffer, headerlengthstx, length - (headerlengthstx));
+									if (read != (length - headerlengthstx))
+										log.InfoFormat("MAVLINK: bad read {0}, {1}, {2}", headerlengthstx, length,
+											count);
+									if (rawlogfile != null && rawlogfile.CanWrite)
 									{
-										int read = BaseStream.Read(buffer, headerlengthstx, length - (headerlengthstx));
-										if (read != (length - headerlengthstx))
-											log.InfoFormat("MAVLINK: bad read {0}, {1}, {2}", headerlengthstx, length,
-												count);
-										if (rawlogfile != null && rawlogfile.CanWrite)
-										{
-											// write only what we read, temp is the whole packet, so 6-end
-											rawlogfile.Write(buffer, headerlengthstx, read);
-										}
+										// write only what we read, temp is the whole packet, so 6-end
+										rawlogfile.Write(buffer, headerlengthstx, read);
 									}
 								}
 								count = length;
@@ -1515,10 +1430,6 @@ namespace Diva.Mavlink
 				if (BaseStream != null && BaseStream.IsOpen)
 				{
 					btr = BaseStream.BytesToRead;
-				}
-				else if (logreadmode)
-				{
-					btr = logplaybackfile.BaseStream.Length - logplaybackfile.BaseStream.Position;
 				}
 				/*Console.Write("bps {0} loss {1} left {2} mem {3} mav2 {4} sign {5} mav1 {6} mav2 {7} signed {8}      \n", _bps1, MAV.synclost, btr,
 					GC.GetTotalMemory(false) / 1024 / 1024.0, MAV.mavlinkv2, MAV.signing, _mavlink1count, _mavlink2count, _mavlink2signed); */
@@ -1574,8 +1485,6 @@ namespace Diva.Mavlink
 					log.InfoFormat("Mavlink Bad Packet (crc fail) len {0} crc {1} vs {4} pkno {2} {3}", buffer.Length,
 						crc, message.msgid, msginfo.name.ToString(),
 						message.crc16);
-				if (logreadmode)
-					log.InfoFormat("bad packet pos {0} ", logplaybackfile.BaseStream.Position);
 				return MAVLinkMessage.Invalid;
 			}
 
@@ -1662,21 +1571,15 @@ namespace Diva.Mavlink
 			}
 
 			// if its a gcs packet - dont process further
-			if (buffer.Length >= 5 && (sysid == 255 || sysid == 253) && logreadmode) // gcs packet
+			if (buffer.Length >= 5 && (sysid == 255 || sysid == 253)) // gcs packet
 			{
 				return message;
 			}
 
 			// update packet loss statistics
-			if (!logreadmode && MAVlist[sysid, compid].packetlosttimer.AddSeconds(5) < DateTime.Now)
+			if (MAVlist[sysid, compid].packetlosttimer.AddSeconds(5) < DateTime.Now)
 			{
 				MAVlist[sysid, compid].packetlosttimer = DateTime.Now;
-				MAVlist[sysid, compid].packetslost = (MAVlist[sysid, compid].packetslost * 0.8f);
-				MAVlist[sysid, compid].packetsnotlost = (MAVlist[sysid, compid].packetsnotlost * 0.8f);
-			}
-			else if (logreadmode && MAVlist[sysid, compid].packetlosttimer.AddSeconds(5) < lastlogread)
-			{
-				MAVlist[sysid, compid].packetlosttimer = lastlogread;
 				MAVlist[sysid, compid].packetslost = (MAVlist[sysid, compid].packetslost * 0.8f);
 				MAVlist[sysid, compid].packetsnotlost = (MAVlist[sysid, compid].packetsnotlost * 0.8f);
 			}
@@ -1806,7 +1709,7 @@ namespace Diva.Mavlink
 
 					try
 					{
-						if (logfile != null && logfile.CanWrite && !logreadmode)
+						if (logfile != null && logfile.CanWrite)
 						{
 							lock (logfile)
 							{
@@ -2146,134 +2049,6 @@ namespace Diva.Mavlink
 					}
 					break;
 			}
-		}
-
-		MAVLinkMessage readlogPacketMavlink()
-		{
-			byte[] datearray = new byte[8];
-
-			bool missingtimestamp = false;
-
-			if (logplaybackfile.BaseStream is FileStream)
-			{
-				if (((FileStream)_logplaybackfile.BaseStream).Name.ToLower().EndsWith(".rlog"))
-					missingtimestamp = true;
-			}
-
-			if (!missingtimestamp)
-			{
-				int tem = logplaybackfile.BaseStream.Read(datearray, 0, datearray.Length);
-
-				Array.Reverse(datearray);
-
-				DateTime date1 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-				UInt64 dateint = BitConverter.ToUInt64(datearray, 0);
-
-				try
-				{
-					// array is reversed above
-					if (datearray[7] == 254 || datearray[7] == 253)
-					{
-						//rewind 8bytes
-						logplaybackfile.BaseStream.Seek(-8, SeekOrigin.Current);
-					}
-					else
-					{
-						if ((dateint / 1000 / 1000 / 60 / 60) < 9999999)
-						{
-							date1 = date1.AddMilliseconds(dateint / 1000);
-
-							lastlogread = date1.ToLocalTime();
-						}
-					}
-				}
-				catch
-				{
-				}
-			}
-
-			byte[] temp = new byte[0];
-
-			byte byte0 = 0;
-			byte byte1 = 0;
-			byte byte2 = 0;
-
-			var filelength = logplaybackfile.BaseStream.Length;
-			var filepos = logplaybackfile.BaseStream.Position;
-
-			if (filelength == filepos)
-				return MAVLinkMessage.Invalid;
-
-			int length = 5;
-			int a = 0;
-			while (a < length)
-			{
-				if (filelength == filepos)
-					return MAVLinkMessage.Invalid;
-
-				var tempb = (byte)logplaybackfile.ReadByte();
-				filepos++;
-
-				switch (a)
-				{
-					case 0:
-						byte0 = tempb;
-						if (byte0 != 'U' && byte0 != MAVLINK_STX_MAVLINK1 && byte0 != MAVLINK_STX)
-						{
-							log.DebugFormat("logread - lost sync byte {0} pos {1}", byte0,
-								logplaybackfile.BaseStream.Position);
-							// seek to next valid
-							do
-							{
-								byte0 = logplaybackfile.ReadByte();
-							}
-							while (byte0 != 'U' && byte0 != MAVLINK_STX_MAVLINK1 && byte0 != MAVLINK_STX);
-							a = 1;
-							continue;
-						}
-						break;
-					case 1:
-						byte1 = tempb;
-						// handle length
-						{
-							int headerlength = byte0 == MAVLINK_STX ? 9 : 5;
-							int headerlengthstx = headerlength + 1;
-
-							length = byte1 + headerlengthstx + 2; // header + 2 checksum
-						}
-						break;
-					case 2:
-						byte2 = tempb;
-						// handle signing and mavlink2
-						if (byte0 == MAVLINK_STX)
-						{
-							if ((byte2 & MAVLINK_IFLAG_SIGNED) > 0)
-								length += MAVLINK_SIGNATURE_BLOCK_LEN;
-						}
-						// handle rest
-						{
-							temp = new byte[length];
-							temp[0] = byte0;
-							temp[1] = byte1;
-							temp[2] = byte2;
-
-							var readto = a + 1;
-							var readlength = length - (a + 1);
-							logplaybackfile.Read(temp, readto, readlength);
-							a = length;
-						}
-						break;
-				}
-
-				a++;
-			}
-
-			MAVLinkMessage tmp = new MAVLinkMessage(temp);
-
-			MAVlist[tmp.sysid, tmp.compid].datetime = lastlogread;
-
-			return tmp;
 		}
 
 
@@ -3367,11 +3142,6 @@ namespace Diva.Mavlink
 			}
 			giveComport = false;
 			return loc;
-		}
-
-		public void getDatastream(MAV_DATA_STREAM id, byte hzrate)
-		{
-			getDatastream((byte)sysidcurrent, (byte)compidcurrent, id, hzrate);
 		}
 
 		public void getDatastream(byte sysid, byte compid, MAV_DATA_STREAM id, byte hzrate)
