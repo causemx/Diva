@@ -14,12 +14,7 @@ namespace Diva.Mission
 {
     public class WPOverlay
     {
-        public GMapOverlay overlay;
-
-        public WPOverlay(GMapOverlay _overlay)
-        {
-            overlay = _overlay;
-        }
+        public GMapOverlay overlay = new GMapOverlay("WPOverlay");
 
         public GMapRoute route = new GMapRoute("wp route");
         public GMapRoute homeroute = new GMapRoute("home route");
