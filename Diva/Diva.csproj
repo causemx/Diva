@@ -252,7 +252,6 @@
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
-    <Compile Include="Mission\WPOverlay.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -281,9 +280,11 @@
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />
+    <Compile Include="Utilities\IOverlayUtility.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
+    <Compile Include="Utilities\OverlayUtility.cs" />
     <Compile Include="Utilities\ParameterMetaDataConstants.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />

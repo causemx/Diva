@@ -1,7 +1,6 @@
 ﻿using Diva.Comms;
 using Diva.Controls;
 using Diva.Mavlink;
-using Diva.Mission;
 using Diva.Properties;
 using Diva.Utilities;
 using GMap.NET;
@@ -1305,8 +1304,11 @@ namespace Diva
 				cell.DataGridView.EndEdit();
 			}
 
-			writeKMLV2();
-			dgvWayPoints.EndEdit();
+            writeKMLV2();
+            // writeKML();
+
+
+            dgvWayPoints.EndEdit();
 		}
 
 		public void AddWPToMap(double lat, double lng, int alt)
@@ -1412,7 +1414,7 @@ namespace Diva
 				throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
 			}
 		}
-
+                
         public void writeKMLV2()
         {
             // quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
@@ -1425,20 +1427,22 @@ namespace Diva
                     double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
                     double.Parse(TxtHomeAltitude.Text), "H");
 
-            var overlay = new WPOverlay();
+            // var overlay = new WPOverlay(overlays.objects);
+            var overlay = new OverlayUtility.WPOverlay(overlays.objects);
 
-            overlay.CreateOverlay(home, GetCommandList());
+            overlay.CreateOverlay(home, GetCommandList(), 30, 30);
 
             myMap.HoldInvalidation = true;
 
+            /*
             var existing = myMap.Overlays.Where(a => a.Id == overlay.overlay.Id).ToList();
             foreach (var b in existing)
             {
                 myMap.Overlays.Remove(b);
-            }
+            }*/
 
-            myMap.Overlays.Insert(1, overlay.overlay);
-
+            // myMap.Overlays.Insert(1, overlay.overlay);
+                       
             overlay.overlay.ForceUpdate();
 
 
