@@ -2796,8 +2796,9 @@ namespace Diva
 					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
 						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
 					{
-						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
+                        if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
+                            cmd != (ushort)MAVLink.MAV_CMD.LAND &&
+                            cmd != (ushort)MAVLink.MAV_CMD.DELAY &&
 							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
 						{
 							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
@@ -2814,7 +2815,7 @@ namespace Diva
 				Text = "Uploading waypoints",
 			};
 
-			uploadWPReporter.DoWork += saveWPsFast;
+			uploadWPReporter.DoWork += saveWPs;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
