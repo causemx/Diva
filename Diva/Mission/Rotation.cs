@@ -32,9 +32,9 @@ namespace Diva.Mission
 			worker.DoWork += new DoWorkEventHandler(DoRotation);
 			worker.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
 
-			dialog = new InformDialog();
+			dialog = new InformDialog() { StartPosition = FormStartPosition.CenterScreen, };
 			dialog.Title("Rotation");
-			dialog.Message("Initialize");
+			dialog.Message("Initialize....^o^");
 			dialog.DoCancelHandler += (o, e) =>
 			{
 				Console.WriteLine("call cancel");
@@ -68,9 +68,6 @@ namespace Diva.Mission
 		{
 			isActive = false;
 			worker.CancelAsync();
-			dialog.Dispose();
-			manualResetEvent.Dispose();
-
 			// force all drones return to launch.
 			drones.ForEach(d =>
 			{
@@ -79,6 +76,10 @@ namespace Diva.Mission
 				mav.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 
 			});
+
+			dialog.Dispose();
+			manualResetEvent.Dispose();
+
 		}
 
 		public void ProgressChanged(object sender, ProgressChangedEventArgs pe)
@@ -123,6 +124,8 @@ namespace Diva.Mission
 						continue;
 					}
 
+					dialog.Message(String.Format("switch next drone, index: {0}.", index));
+
 					while (mav.Status.mode != (uint)Planner.FlightMode.GUIDED)
 					{
 						// Task.Delay(1000).Wait();
@@ -142,16 +145,19 @@ namespace Diva.Mission
 						manualResetEvent.WaitOne(1000);
 					}
 
+					dialog.Message(String.Format("drone takeoff to 10m, index: {0}.", index));
+
 					// switch mode to AUTO
 					mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 
-
-					Console.WriteLine("sys_status: " + mav.Status.sys_status);
+					dialog.Message(String.Format("execute the mission, index: {0}.", index));
 
 					while (mav.Status.sys_status == (byte)MAVLink.MAV_STATE.ACTIVE)
 					{
 						manualResetEvent.WaitOne(1000);
 					}
+
+					dialog.Message(String.Format("drone landed, index: {0}.", index));
 
 					index = (index + 1) % drones.Count;
 				}

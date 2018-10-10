@@ -35,7 +35,7 @@
 			// BUT_Cancel
 			// 
 			this.BUT_Cancel.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BUT_Cancel.Location = new System.Drawing.Point(78, 100);
+			this.BUT_Cancel.Location = new System.Drawing.Point(83, 100);
 			this.BUT_Cancel.Name = "BUT_Cancel";
 			this.BUT_Cancel.Size = new System.Drawing.Size(75, 23);
 			this.BUT_Cancel.TabIndex = 1;
