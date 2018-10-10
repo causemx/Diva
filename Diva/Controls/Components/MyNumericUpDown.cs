@@ -26,6 +26,8 @@ namespace Diva.Controls.Components
 		[System.ComponentModel.Browsable(true)]
 		public event EventHandler ValueUpdated;
 
+		public EventHandler Value_Updated;
+
 		Timer timer = new Timer();
 
 		public MyNumericUpDown()
@@ -50,7 +52,7 @@ namespace Diva.Controls.Components
 		public void setup(float Min, float Max, float Scale, float Increment, string[] paramname,
 			MAVLink.MAVLinkParamList paramlist, Control enabledisable = null)
 		{
-			this.ValueChanged -= MyNumericUpDown_ValueChanged;
+			// this.ValueChanged -= MyNumericUpDown_ValueChanged;
 
 			// default to first item
 			this.ParamName = paramname[0];
@@ -121,7 +123,7 @@ namespace Diva.Controls.Components
 				enableControl(false);
 			}
 
-			this.ValueChanged += new EventHandler(MyNumericUpDown_ValueChanged);
+			// this.ValueChanged += new EventHandler(MyNumericUpDown_ValueChanged);
 		}
 
 		void enableControl(bool enable)
@@ -135,6 +137,8 @@ namespace Diva.Controls.Components
 
 		void MyNumericUpDown_ValueChanged(object sender, EventArgs e)
 		{
+
+			Console.WriteLine("value change");
 			string value = base.Text;
 			if (decimal.Parse(value) > base.Maximum)
 			{
@@ -147,14 +151,17 @@ namespace Diva.Controls.Components
 				}
 			}
 
+			/*
 			if (ValueUpdated != null)
 			{
 				this.UpdateEditText();
 				ValueUpdated(this, new MAVLinkParamChanged(ParamName, (float)base.Value * (float)_scale));
 				return;
-			}
+			}*/
 
-			lock (timer)
+			this.Value_Updated(sender, e);
+
+				lock (timer)
 			{
 				timer.Interval = 300;
 
@@ -182,17 +189,17 @@ namespace Diva.Controls.Components
 			}
 		}
 
-		public class RaiseEventArgs : EventArgs
+		private void InitializeComponent()
 		{
-			public RaiseEventArgs(float _value)
-			{
-				value = _value;
-			}
-			private float value;
-			public float Value
-			{
-				get { return value; }
-			}
+			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+			this.SuspendLayout();
+			// 
+			// MyNumericUpDown
+			// 
+			this.ValueChanged += new System.EventHandler(this.MyNumericUpDown_ValueChanged);
+			((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+			this.ResumeLayout(false);
+
 		}
 	}
 }

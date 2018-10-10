@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using log4net;
 using Diva.Comms;
 using Diva.Utilities;
+using Diva.Mission;
 
 namespace Diva.Mavlink
 {
@@ -19,13 +20,16 @@ namespace Diva.Mavlink
         private DroneSetting setting;
         public bool IsOpen => mav.BaseStream.IsOpen;
         public MavStatus Status => mav.Status;
-        public static implicit operator MavlinkInterface(MavDrone drone) => drone.mav;
 
-        public MavDrone(DroneSetting setting = null)
-        {
-            mav = new MavlinkInterface();
-            this.setting = setting;
-        }
+		public bool IsRotationStandby = true; 
+
+		public static implicit operator MavlinkInterface(MavDrone drone) => drone.mav;
+
+		public MavDrone(DroneSetting setting = null)
+		{
+			mav = new MavlinkInterface();
+			this.setting = setting;
+		}
 
         public bool Connect()
         {

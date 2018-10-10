@@ -26,7 +26,7 @@ namespace Diva.Controls
 		public EventHandler DoClick;
 		// public delegate void UserControlClickHandler(object sender, EventArgs e);
 
-
+	
 		public InputDataDialog()
 		{
 			InitializeComponent();
@@ -43,5 +43,6 @@ namespace Diva.Controls
 		{
 			Dispose();
 		}
+
 	}
 }

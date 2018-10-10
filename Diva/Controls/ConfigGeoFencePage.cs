@@ -66,6 +66,13 @@ namespace Diva.Controls
             {
 				NumericUpDown_LowBatt_Value.setup(6, 99, 1, 0.1f, "FS_BATT_VOLTAGE", mav.Status.param);
             }
+
+
+			NumericUpDown_LowBatt_Value.ValueUpdated += (s, e) =>
+			{
+				
+			};
+
 		}
 			
 
