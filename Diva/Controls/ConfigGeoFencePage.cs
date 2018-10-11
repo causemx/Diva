@@ -42,10 +42,10 @@ namespace Diva.Controls
 
 			// myNumericUpDown1.setup(10, 1000, (float)CurrentState.fromDistDisplayUnit(1), 1, "FENCE_ALT_MAX",
 			//	MainV2.comPort.MAV.param);
-			NumericUpDown_Fence_Radius.setup(10, 1000, (float)(1), 1, "FENCE_ALT_MAX",
+			NumericUpDown_Fence_Radius.setup(10, 1000, (float)(1), 1, "FENCE_RADIUS",
 				mav.Status.param);
 
-			NumericUpDown_Fence_Altitude.setup(30, 65536, (float)(1), 1, "FENCE_RADIUS",
+			NumericUpDown_Fence_Altitude.setup(30, 65536, (float)(1), 1, "FENCE_ALT_MAX",
 				mav.Status.param);
 
 			NumericUpDown_Fence_RTL_Altitude.setup(1, 500, (float)(100), 1, "RTL_ALT",
