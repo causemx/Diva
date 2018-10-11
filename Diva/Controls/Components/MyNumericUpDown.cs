@@ -26,8 +26,6 @@ namespace Diva.Controls.Components
 		[System.ComponentModel.Browsable(true)]
 		public event EventHandler ValueUpdated;
 
-		public EventHandler Value_Updated;
-
 		Timer timer = new Timer();
 
 		public MyNumericUpDown()
@@ -52,7 +50,7 @@ namespace Diva.Controls.Components
 		public void setup(float Min, float Max, float Scale, float Increment, string[] paramname,
 			MAVLink.MAVLinkParamList paramlist, Control enabledisable = null)
 		{
-			// this.ValueChanged -= MyNumericUpDown_ValueChanged;
+			this.ValueChanged -= MyNumericUpDown_ValueChanged;
 
 			// default to first item
 			this.ParamName = paramname[0];
@@ -123,7 +121,7 @@ namespace Diva.Controls.Components
 				enableControl(false);
 			}
 
-			// this.ValueChanged += new EventHandler(MyNumericUpDown_ValueChanged);
+			this.ValueChanged += new EventHandler(MyNumericUpDown_ValueChanged);
 		}
 
 		void enableControl(bool enable)
@@ -151,15 +149,13 @@ namespace Diva.Controls.Components
 				}
 			}
 
-			/*
+			
 			if (ValueUpdated != null)
 			{
 				this.UpdateEditText();
 				ValueUpdated(this, new MAVLinkParamChanged(ParamName, (float)base.Value * (float)_scale));
 				return;
-			}*/
-
-			this.Value_Updated(sender, e);
+			}
 
 				lock (timer)
 			{

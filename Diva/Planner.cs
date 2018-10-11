@@ -2728,7 +2728,14 @@ namespace Diva
 				return;
 			}
 
-			
+
+			if (ActiveDrone.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
+			{
+				DialogResult dr = MessageBox.Show("The Drone must be actived.", "Warning", MessageBoxButtons.OK);
+				if (dr == DialogResult.OK) return;
+			}
+
+
 			float targetHeight = 0.0f;
 			InputDataDialog _dialog = new InputDataDialog()
 			{
