@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
+using Diva.Controls.Components;
 using Diva.Utilities;
 
 namespace Diva.Controls
@@ -66,6 +60,9 @@ namespace Diva.Controls
             {
 				NumericUpDown_LowBatt_Value.setup(6, 99, 1, 0.1f, "FS_BATT_VOLTAGE", mav.Status.param);
             }
+
+			NumericUpDown_LowBatt_Value.RaisingValueChanged += (s, e) => {
+				mav.Status.low_voltage = (double)((MyNumericUpDown)s).Value; };
 
 		}
 			

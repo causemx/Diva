@@ -26,6 +26,8 @@ namespace Diva.Controls.Components
 		[System.ComponentModel.Browsable(true)]
 		public event EventHandler ValueUpdated;
 
+		public event EventHandler RaisingValueChanged;
+
 		Timer timer = new Timer();
 
 		public MyNumericUpDown()
@@ -133,7 +135,7 @@ namespace Diva.Controls.Components
 			}
 		}
 
-		void MyNumericUpDown_ValueChanged(object sender, EventArgs e)
+		public void MyNumericUpDown_ValueChanged(object sender, EventArgs e)
 		{
 
 			Console.WriteLine("value change");
@@ -149,6 +151,11 @@ namespace Diva.Controls.Components
 				}
 			}
 
+			if (RaisingValueChanged != null)
+			{
+				// for polling the updating value
+				this.RaisingValueChanged(sender, e);
+			}
 			
 			if (ValueUpdated != null)
 			{
@@ -183,19 +190,6 @@ namespace Diva.Controls.Components
 
 				timer.Stop();
 			}
-		}
-
-		private void InitializeComponent()
-		{
-			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// MyNumericUpDown
-			// 
-			this.ValueChanged += new System.EventHandler(this.MyNumericUpDown_ValueChanged);
-			((System.ComponentModel.ISupportInitialize)(this)).EndInit();
-			this.ResumeLayout(false);
-
 		}
 	}
 }
