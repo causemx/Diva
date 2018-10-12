@@ -27,8 +27,10 @@ namespace Diva.Mission
 
 			manualResetEvent = new ManualResetEvent(false);
 
-			worker = new BackgroundWorker();
-			worker.WorkerSupportsCancellation = true;
+			worker = new BackgroundWorker
+			{
+				WorkerSupportsCancellation = true
+			};
 			worker.DoWork += new DoWorkEventHandler(DoRotation);
 			worker.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
 
@@ -37,7 +39,7 @@ namespace Diva.Mission
 			dialog.Message("Initialize....^o^");
 			dialog.DoCancelHandler += (o, e) =>
 			{
-				Console.WriteLine("call cancel");
+				Planner.log.Info("Rotation Canceling...");
 				Stop();
 				dialog.Dispose();
 			};
@@ -59,7 +61,7 @@ namespace Diva.Mission
 
 		}
 
-		public bool isStart()
+		public bool IsStart()
 		{
 			return worker.IsBusy;
 		}
@@ -71,7 +73,7 @@ namespace Diva.Mission
 			// force all drones return to launch.
 			drones.ForEach(d =>
 			{
-				manualResetEvent.WaitOne(1000);
+				manualResetEvent.WaitOne(500);
 				var mav = (MavlinkInterface)d;
 				mav.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 
@@ -120,7 +122,7 @@ namespace Diva.Mission
 					}
 					catch (Exception e)
 					{
-						Console.WriteLine("drone not online");
+						Planner.log.Error(e.ToString());
 						continue;
 					}
 
@@ -169,7 +171,7 @@ namespace Diva.Mission
 		public class StatusChecker
 		{
 			private int invokeCount;
-			private int maxCount;
+			private readonly int maxCount;
 
 			public StatusChecker(int count)
 			{
