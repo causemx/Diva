@@ -292,10 +292,11 @@ namespace Diva.Mavlink
 								}*/
 
 								// for future use
+								/*
 								Status.landed = hb.system_status == (byte)MAVLink.MAV_STATE.STANDBY;
 								Status.actived = hb.system_status == (byte)MAVLink.MAV_STATE.ACTIVE;
-								Status.failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;
-
+								Status.failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;*/
+								Status.sys_status = hb.system_status;
 							}
 						}
 					}

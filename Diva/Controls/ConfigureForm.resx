@@ -162,45 +162,6 @@
   <data name="&gt;&gt;BtnVehicle.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="BtnTuning.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnTuning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 12pt</value>
-  </data>
-  <data name="BtnTuning.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="BtnTuning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnTuning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 120</value>
-  </data>
-  <data name="BtnTuning.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 5, 6, 5</value>
-  </data>
-  <data name="BtnTuning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 85</value>
-  </data>
-  <data name="BtnTuning.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="BtnTuning.Text" xml:space="preserve">
-    <value>Tuning</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.Name" xml:space="preserve">
-    <value>BtnTuning</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="BtnGeoFence.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -214,7 +175,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnGeoFence.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 211</value>
+    <value>3, 120</value>
   </data>
   <data name="BtnGeoFence.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 5, 6, 5</value>
@@ -238,7 +199,7 @@
     <value>BtnLayoutPanel</value>
   </data>
   <data name="&gt;&gt;BtnGeoFence.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="BtnMap.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -253,7 +214,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnMap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 302</value>
+    <value>3, 211</value>
   </data>
   <data name="BtnMap.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 5, 6, 5</value>
@@ -277,7 +238,7 @@
     <value>BtnLayoutPanel</value>
   </data>
   <data name="&gt;&gt;BtnMap.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="BtnAbout.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -292,7 +253,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnAbout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 393</value>
+    <value>3, 302</value>
   </data>
   <data name="BtnAbout.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 5, 6, 5</value>
@@ -316,7 +277,7 @@
     <value>BtnLayoutPanel</value>
   </data>
   <data name="&gt;&gt;BtnAbout.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="BtnLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>

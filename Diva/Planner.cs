@@ -1,6 +1,7 @@
 ﻿using Diva.Comms;
 using Diva.Controls;
 using Diva.Mavlink;
+using Diva.Mission;
 using Diva.Properties;
 using Diva.Utilities;
 using GMap.NET;
@@ -2482,7 +2483,14 @@ namespace Diva
 				return;
 			}
 
-			
+
+			if (ActiveDrone.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
+			{
+				DialogResult dr = MessageBox.Show("The Drone must be actived.", "Warning", MessageBoxButtons.OK);
+				if (dr == DialogResult.OK) return;
+			}
+
+
 			float targetHeight = 0.0f;
 			InputDataDialog _dialog = new InputDataDialog()
 			{
@@ -2837,83 +2845,16 @@ namespace Diva
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
-		bool isRotating = false;
-		BackgroundWorker rotationWorker;
+		private Rotation rotationMission = null;
 
 		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
-			rotationWorker = new BackgroundWorker();
-			rotationWorker.WorkerSupportsCancellation = true;
-			rotationWorker.DoWork += new DoWorkEventHandler(Rotation);
+			if (rotationMission == null)
+				rotationMission = new Rotation(OnlineDrones);
 
-			if (isRotating)
-			{
-				isRotating = !isRotating;
-				rotationWorker.CancelAsync();
-				Lbl_Rotate.Text = "";
-				return;
-			}
-			else
-			{
-				Lbl_Rotate.Text = ResStrings.MsgStatusRotating;
-				isRotating = true;
-				rotationWorker.RunWorkerAsync();
-			}
+			rotationMission.Start();
 		}
-
-		private void Rotation(object sender, DoWorkEventArgs e)
-		{
-			if (OnlineDrones.Count < 3)
-			{
-				MessageBox.Show(ResStrings.MsgDroneNumberRequest, ResStrings.DialogTitleWarning, MessageBoxButtons.OK);
-				return;
-			}
-			
-
-			int index = 0;
-
-			while (isRotating)
-			{
-				MavlinkInterface mav = OnlineDrones[index];
-
-				try
-				{
-					if (!mav.BaseStream.IsOpen) continue;
-					while (mav.Status.mode != (uint)4)
-					{
-						Thread.Sleep(1000);
-						mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
-					}
-
-					while (!mav.Status.armed)
-					{
-						Thread.Sleep(1000);
-						mav.doARM(true);
-						mav.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
-					}
-										
-					Thread.Sleep(1000);
-					// switch mode to AUTO
-					mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
-
-
-					while (!mav.Status.landed)
-					{
-						Thread.Sleep(500);
-					}
-
-					index = (index + 1) % OnlineDrones.Count;
-
-				}
-				catch (Exception ex)
-				{
-					log.Error(ex.ToString());
-				}
-
-			}
-		}
-
-
+		
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
 			if (ActiveDrone.BaseStream.IsOpen)

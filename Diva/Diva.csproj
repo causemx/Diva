@@ -198,6 +198,13 @@
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IDialog.cs" />
+    <Compile Include="Controls\InformDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\InformDialog.Designer.cs">
+      <DependentUpon>InformDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InputDataDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,6 +259,7 @@
     <Compile Include="Mavlink\MavlinkInterface.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
+    <Compile Include="Mission\Rotation.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -292,6 +300,9 @@
     <Compile Include="Utilities\ResourceStringHelper.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <EmbeddedResource Include="Controls\Components\MyNumericUpDown.resx">
+      <DependentUpon>MyNumericUpDown.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigGeoFencePage.resx">
       <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
     </EmbeddedResource>
@@ -316,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InformDialog.resx">
+      <DependentUpon>InformDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\InputDataDialog.resx">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
@@ -1465,6 +1479,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
