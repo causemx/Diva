@@ -13,7 +13,7 @@ namespace Diva.Controls
 {
 	public partial class ConfigGeoFencePage : UserControl
 	{
-        private Mavlink.MavlinkInterface mav = Planner.GetActiveDrone();
+        private Mavlink.MavDrone mav = Planner.GetActiveDrone();
 
         public ConfigGeoFencePage()
 		{

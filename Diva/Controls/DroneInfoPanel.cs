@@ -14,6 +14,8 @@ namespace Diva.Controls
     public partial class DroneInfoPanel : UserControl
     {
         private DroneInfo activeDrone = null;
+        [Browsable(true)]
+        public event EventHandler ActiveDroneChanged;
         public DroneInfo ActiveDroneInfo
         {
             get => activeDrone;
@@ -34,6 +36,7 @@ namespace Diva.Controls
                         DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
                     }
                     TelemetryData.Visible = false;
+                    ActiveDroneChanged?.Invoke(value, null);
                 }
             }
         }

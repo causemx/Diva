@@ -40,11 +40,15 @@ namespace Diva
 
         private static Planner Instance = null;
         internal static Planner GetPlannerInstance() => Instance;
-        internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
-
-        private MavlinkInterface ActiveDrone = new MavlinkInterface();
+        internal static MavDrone DummyDrone = new MavDrone();
+        internal static MavDrone GetActiveDrone() => Instance?.ActiveDrone;
+        private MavDrone currenDrone = DummyDrone;
+        private MavDrone ActiveDrone
+        {
+            get => currenDrone;
+            set => currenDrone = value ?? DummyDrone;
+        }
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
-        private MavDrone CurrentDrone;
 
         public bool autopan { get; set; }
 
@@ -317,7 +321,7 @@ namespace Diva
 			while (serialThread)
 			{
 				Thread.Sleep(20);
-				if (ActiveDrone.BaseStream.IsOpen)
+				if (ActiveDrone.IsOpen)
 				{
 		
 					Invoke((MethodInvoker)delegate
@@ -2186,7 +2190,7 @@ namespace Diva
             try
             {
                 
-                if (!ActiveDrone.BaseStream.IsOpen)
+                if (!ActiveDrone.IsOpen)
                 {
                     throw new Exception("Please connect first!");
                     // MessageBox.Show(ResStrings.MsgConnectFirst);
@@ -2451,7 +2455,7 @@ namespace Diva
 			try
 			{
 
-                if (!ActiveDrone.BaseStream.IsOpen)
+                if (!ActiveDrone.IsOpen)
                 {
                     // prevent application termination
                     //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
@@ -2728,7 +2732,7 @@ namespace Diva
 		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
 				MessageBox.Show(ResStrings.MsgNoConnection);
@@ -2857,8 +2861,8 @@ namespace Diva
                 if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
                         MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                     return;
-                DroneInfoPanel.Clear();
                 OnlineDrones.Clear();
+                DroneInfoPanel.Clear();
             }
             var dsettings = ConfigData.GetTypeList<DroneSetting>();
             if (dsettings.Count == 0)
@@ -2892,14 +2896,13 @@ namespace Diva
                     log.Debug(exception);
                 }
             }
-            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone;
         }
 
         #region Button click event handlers
 
         private void BUT_Arm_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -2921,7 +2924,7 @@ namespace Diva
 
 		private void BUT_Takeoff_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -2945,13 +2948,13 @@ namespace Diva
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			if (ActiveDrone.BaseStream.IsOpen)
+			if (ActiveDrone.IsOpen)
 			{
 				// flyToHereAltToolStripMenuItem_Click(null, null);
 				ActiveDrone.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
@@ -2961,13 +2964,13 @@ namespace Diva
 
 		private void BUT_RTL_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			if (ActiveDrone.BaseStream.IsOpen)
+			if (ActiveDrone.IsOpen)
 			{
 				ActiveDrone.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 			}
@@ -2982,7 +2985,7 @@ namespace Diva
 		/// <param name="e"></param>
 		public void BUT_read_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -3019,7 +3022,7 @@ namespace Diva
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
 
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -3114,7 +3117,7 @@ namespace Diva
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
-			if (ActiveDrone.BaseStream.IsOpen)
+			if (ActiveDrone.IsOpen)
 			{
 				ActiveDrone.setMode(
 					ActiveDrone.Status.sysid,
@@ -3994,20 +3997,16 @@ namespace Diva
 		public static bool isUpdatemapThreadRun = false;
 		private void MapitemUpdateLoop()
 		{
-
 			while (isUpdatemapThreadRun)
 			{
-				if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
-
-				try
-				{
-
-                    foreach (MavlinkInterface mav in OnlineDrones)
+                try
+                {
+                    Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
+                    foreach (MavDrone drone in OnlineDrones)
                     {
-                        Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
-						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
-						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
-							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
+						if (drone.Status.current_lat == 0 || drone.Status.current_lng == 0) { continue; }
+						var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.current_lat, drone.Status.current_lng),
+							drone.Status.yaw, drone.Status.groundcourse, drone.Status.nav_bearing, drone.Status.sysid);
 						overlays.routes.Markers.Add(marker);
 					}
 					
@@ -4109,9 +4108,12 @@ namespace Diva
         private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
         {
             OnlineDrones.Remove((sender as DroneInfo)?.Drone);
-            ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
         }
 
-		
-	}
+        private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
+        {
+            ActiveDrone = (sender as DroneInfo)?.Drone;
+        }
+
+    }
 }

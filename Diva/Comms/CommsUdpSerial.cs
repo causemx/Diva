@@ -21,67 +21,36 @@ namespace Diva.Comms
 		byte[] rbuffer = new byte[0];
 		int rbufferread = 0;
 
-		public int WriteBufferSize { get; set; }
-		public int WriteTimeout { get; set; }
-		public bool RtsEnable { get; set; }
-		public Stream BaseStream { get { return this.BaseStream; } }
-
-		public UdpSerial(string port)
+		public UdpSerial(string portnumber)
 		{
-			//System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-			//System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-
-			Port = port;
-			ReadTimeout = 500;
+            int.TryParse(portnumber, out port);
+			ReadTimeout = 5000;
 		}
 
-		public UdpSerial(UdpClient client)
-		{
-			this.client = client;
-			_isopen = true;
-			ReadTimeout = 500;
-		}
-
-		public void toggleDTR()
-		{
-		}
-
-		public string Port { get; set; }
-
+        private int port;
+        private int recvTimeout;
 		public int ReadTimeout
-		{
-			get;// { return client.ReceiveTimeout; }
-			set;// { client.ReceiveTimeout = value; }
-		}
-
+        {
+            get => recvTimeout;
+            set => recvTimeout = value;
+        }
 		public int ReadBufferSize { get; set; }
-
 		public int BaudRate { get; set; }
-		public StopBits StopBits { get; set; }
 		public Parity Parity { get; set; }
-		public int DataBits { get; set; }
 
-		public string PortName
-		{
-			get { return "UDP" + Port; }
-			set { }
-		}
+		public string PortName { get; set; }
 
 		public int BytesToRead
 		{
 			get { return client.Available + rbuffer.Length - rbufferread; }
 		}
 
-		public int BytesToWrite { get { return 0; } }
-
 		private bool _isopen = false;
-		public bool IsOpen { get { if (client.Client == null) return false; return _isopen; } set { _isopen = value; } }
-
-		public bool DtrEnable
-		{
-			get;
-			set;
-		}
+		public bool IsOpen
+        {
+            get => _isopen && client.Client != null;
+            set => _isopen = value;
+        }
 
 		public bool CancelConnect = false;
 
@@ -93,9 +62,6 @@ namespace Diva.Comms
 				return;
 			}
 
-			client.Close();
-
-
 			try
 			{
 				if (client != null)
@@ -105,33 +71,8 @@ namespace Diva.Comms
 			}
 			catch { }
 
-			client = new UdpClient(int.Parse(Port));
-			client.Client.ReceiveTimeout = 5000;
-
-			/**
-			while (true)
-			{
-				System.Threading.Thread.Sleep(500);
-
-				if (CancelConnect)
-				{
-					try
-					{
-						client.Close();
-					}
-					catch { }
-					return;
-				}
-
-				if (BytesToRead > 0)
-					break;
-
-					
-			}
-
-
-			if (BytesToRead == 0)
-				return; **/
+			client = new UdpClient(port);
+			client.Client.ReceiveTimeout = ReadTimeout;
 
 			try
 			{
@@ -150,14 +91,20 @@ namespace Diva.Comms
 			}
 		}
 
+        public void DiscardInBuffer()
+        {
+            VerifyConnected();
+            int size = client.Available;
+            byte[] crap = new byte[size];
+            log.InfoFormat("UdpSerial DiscardInBuffer {0}", size);
+            Read(crap, 0, size);
+        }
 
-
-
-		void VerifyConnected()
+        void VerifyConnected()
 		{
 			if (client == null || !IsOpen)
 			{
-				this.Close();
+				Close();
 				throw new Exception("The socket/serialproxy is closed");
 			}
 		}
@@ -205,53 +152,6 @@ namespace Diva.Comms
 			catch { throw; }
 		}
 
-		public int ReadByte()
-		{
-			VerifyConnected();
-			int count = 0;
-			while (this.BytesToRead == 0)
-			{
-				System.Threading.Thread.Sleep(1);
-				if (count > ReadTimeout)
-					throw new Exception("NetSerial Timeout on read");
-				count++;
-			}
-			byte[] buffer = new byte[1];
-			Read(buffer, 0, 1);
-			return buffer[0];
-		}
-
-		public int ReadChar()
-		{
-			return ReadByte();
-		}
-
-		public string ReadExisting()
-		{
-			VerifyConnected();
-			byte[] data = new byte[client.Available];
-			if (data.Length > 0)
-				Read(data, 0, data.Length);
-
-			string line = Encoding.ASCII.GetString(data, 0, data.Length);
-
-			return line;
-		}
-
-		public void WriteLine(string line)
-		{
-			VerifyConnected();
-			line = line + "\n";
-			Write(line);
-		}
-
-		public void Write(string line)
-		{
-			VerifyConnected();
-			byte[] data = new System.Text.ASCIIEncoding().GetBytes(line);
-			Write(data, 0, data.Length);
-		}
-
 		public void Write(byte[] write, int offset, int length)
 		{
 			VerifyConnected();
@@ -260,53 +160,6 @@ namespace Diva.Comms
 				client.Send(write, length, RemoteIpEndPoint);
 			}
 			catch { }//throw new Exception("Comport / Socket Closed"); }
-		}
-
-		public void DiscardInBuffer()
-		{
-			VerifyConnected();
-			int size = client.Available;
-			byte[] crap = new byte[size];
-			log.InfoFormat("UdpSerial DiscardInBuffer {0}", size);
-			Read(crap, 0, size);
-		}
-
-		public string ReadLine()
-		{
-			byte[] temp = new byte[4000];
-			int count = 0;
-			int timeout = 0;
-
-			while (timeout <= 100)
-			{
-				if (!this.IsOpen) { break; }
-				if (this.BytesToRead > 0)
-				{
-					byte letter = (byte)this.ReadByte();
-
-					temp[count] = letter;
-
-					if (letter == '\n') // normal line
-					{
-						break;
-					}
-
-
-					count++;
-					if (count == temp.Length)
-						break;
-					timeout = 0;
-				}
-				else
-				{
-					timeout++;
-					System.Threading.Thread.Sleep(5);
-				}
-			}
-
-			Array.Resize<byte>(ref temp, count + 1);
-
-			return Encoding.ASCII.GetString(temp, 0, temp.Length);
 		}
 
 		public void Close()
@@ -325,7 +178,7 @@ namespace Diva.Comms
 			if (disposing)
 			{
 				// dispose managed resources
-				this.Close();
+				Close();
 				client = null;
 			}
 			// free native resources
@@ -335,11 +188,6 @@ namespace Diva.Comms
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
-		}
-
-		public void DiscardOutBuffer()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

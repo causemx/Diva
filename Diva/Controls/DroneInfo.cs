@@ -41,9 +41,7 @@ namespace Diva.Controls
 			InitializeComponent();
             TxtDroneName.Text = name;
             Margin = new Padding(0);
-            var mav = (MavlinkInterface)m;
-            mav.Status.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
-            mav.onCreate();
+            m.Status.GuidedMode.z = Planner.TAKEOFF_HEIGHT;
             Drone = m;
         }
 

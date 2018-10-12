@@ -17,9 +17,9 @@ namespace Diva.Mavlink
 
         private MavlinkInterface mav;
         private DroneSetting setting;
-        public bool IsOpen => mav.BaseStream.IsOpen;
         public MavStatus Status => mav.Status;
-        public static implicit operator MavlinkInterface(MavDrone drone) => drone.mav;
+        public bool IsOpen => mav.BaseStream.IsOpen;
+        public bool giveComport { get => mav.giveComport; set => mav.giveComport = value; }
 
         public MavDrone(DroneSetting setting = null)
         {
@@ -70,13 +70,13 @@ namespace Diva.Mavlink
                 DateTime connecttime = DateTime.Now;
 
                 // do the connect
-                mav.open();
+                mav.Open(true);
                 if (!mav.BaseStream.IsOpen)
                 {
                     log.Info("comport is closed. existing connect");
                     try
                     {
-                        mav.close();
+                        mav.Close();
                     }
                     catch
                     {
@@ -100,7 +100,7 @@ namespace Diva.Mavlink
             {
                  try
                 {
-                    mav.close();
+                    mav.Close();
                 }
                 catch (Exception ex)
                 {
@@ -111,7 +111,51 @@ namespace Diva.Mavlink
             return true;
         }
 
-        public void Disconnect() => mav.onDestroy();
+        public void Disconnect() => mav.Close();
+
+        #region Intermediate functions before replacing MavlinkInterface
+        public KeyValuePair<MAVLink.MAVLINK_MSG_ID, Func<MAVLink.MAVLinkMessage, bool>>
+            SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID type,
+                Func<MAVLink.MAVLinkMessage, bool> function, bool exclusive = false)
+            => mav.SubscribeToPacketType(type, function, exclusive);
+                public void UnSubscribeToPacketType
+                (KeyValuePair<MAVLink.MAVLINK_MSG_ID, Func<MAVLink.MAVLinkMessage, bool>> item)
+            => mav.UnSubscribeToPacketType(item);
+
+        public void sendPacket(object indata, int sysid, int compid)
+            => mav.sendPacket(indata, sysid, compid);
+        public bool doCommand(MAVLink.MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5,
+                float p6, float p7, bool requireack = true)
+            => mav.doCommand(actionid, p1, p2, p3, p4, p5, p6, p7, requireack);
+
+        public bool setParam(string[] paramnames, double value) => mav.setParam(paramnames, value);
+        public bool setParam(string paramname, double value, bool force = false)
+            => mav.setParam(paramname, value, force);
+        public void GetParam(string name) => mav.GetParam(name);
+        public void getParamList() => mav.getParamList();
+        public bool doARM(bool armit) => mav.doARM(armit);
+        public void setMode(string modein) => mav.setMode(modein);
+        public void setMode(byte sysid, byte compid, MAVLink.mavlink_set_mode_t mode,
+                MAVLink.MAV_MODE_FLAG base_mode = 0)
+            => mav.setMode(sysid, compid, mode, base_mode);
+        public void setGuidedModeWP(Locationwp gotohere, bool setguidedmode = true)
+            => mav.setGuidedModeWP(gotohere, setguidedmode);
+
+        public MAVLink.MAV_MISSION_RESULT setWP(Locationwp loc, ushort index, MAVLink.MAV_FRAME frame,
+                byte current = 0, byte autocontinue = 1, bool use_int = false)
+            => mav.setWP(loc, index, frame, current, autocontinue, use_int);
+        public void setWPTotal(ushort wp_total) => mav.setWPTotal(wp_total);
+        public void setWPPartialUpdate(ushort startwp, ushort endwp) => mav.setWPPartialUpdate(startwp, endwp);
+        public void setWPACK() => mav.setWPACK();
+        public int getRequestedWPNo() => mav.getRequestedWPNo();
+        public int getWPCount() => mav.getWPCount();
+        public Locationwp getWP(ushort index) => mav.getWP(index);
+
+        public PointLatLngAlt getRallyPoint(int no, ref int total) => mav.getRallyPoint(no, ref total);
+        public bool setFencePoint(byte index, PointLatLngAlt plla, byte fencepointcount)
+            => mav.setFencePoint(index, plla, fencepointcount);
+
+#endregion
 
         /*public void SaveWPs(DataGridView dgvWayPoints, Locationwp home)
         {

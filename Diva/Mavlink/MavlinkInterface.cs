@@ -10,32 +10,24 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Diva.Planner;
 using Timer = System.Timers.Timer;
 
 namespace Diva.Mavlink
 {
-	public class MavlinkInterface : MAVLink, IDisposable
+	public class MavlinkInterface : MAVLink
 	{
-
-		public static readonly int SLEEP_TIME_SETMODE = 10;
 		public static readonly double CONNECT_TIMEOUT_SECONDS = 30;
         public static int GET_PARAM_TIMEOUT = 1000;
-
-		public Subject<int> WhenPacketLost { get; set; }
-		public Subject<int> WhenPacketReceived { get; set; }
 
 		public bool giveComport
 		{
 			get { return _giveComport; }
 			set { _giveComport = value; }
 		}
-
 
 		public ICommsSerial BaseStream
 		{
@@ -154,8 +146,6 @@ namespace Diva.Mavlink
 		{
 			MAVlist = new MavList(this);
 			this.BaseStream = new SerialPort();
-			this.WhenPacketLost = new Subject<int>();
-			this.WhenPacketReceived = new Subject<int>();
 		}
 
 
@@ -445,52 +435,21 @@ namespace Diva.Mavlink
 
 		#endregion
 
-		/// <summary>
-		/// Called when object was created
-		/// </summary>
-		/// <returns></returns>
-		public void onCreate()
-		{
-
-			SerialReaderThread = new Thread(SerialReader)
-			{
-				IsBackground = true,
-				Name = "mav serial reader",
-				// Priority = ThreadPriority.AboveNormal
-			};
-			SerialReaderThread.Start();
-		}
-
-
-		/// <summary>
-		/// Called when object was not used
-		/// </summary>
-		/// <returns></returns>
-		public void onDestroy()
+		public void Close()
 		{
 			threadRunnable = false;
 			if (SerialReaderThread != null)
 				SerialReaderThread.Join();
 
-			close();
-		}
-
-		public void open()
-		{
-			Open(true);
-		}
-
-		public void close()
-		{
-			try
-			{
-				if (BaseStream.IsOpen)
-					BaseStream.Close();
-			}
-			catch
-			{
-			}
-		}
+            try
+            {
+                if (BaseStream.IsOpen)
+                    BaseStream.Close();
+            }
+            catch
+            {
+            }
+        }
 
 		public void Open(bool getparams, bool skipconnectedcheck = false)
 		{
@@ -523,16 +482,22 @@ namespace Diva.Mavlink
 
 			frmProgressReporter.Dispose();
 
-			/**
+            /**
 			if (ParamListChanged != null)
 			{
 				ParamListChanged(this, null);
 			}*/
 
+            SerialReaderThread = new Thread(SerialReader)
+            {
+                IsBackground = true,
+                Name = "mav serial reader",
+                // Priority = ThreadPriority.AboveNormal
+            };
+            SerialReaderThread.Start();
+        }
 
-		}
-
-		void FrmProgressReporterDoWorkAndParams(object sender, ProgressWorkerEventArgs e, object passdata = null)
+        void FrmProgressReporterDoWorkAndParams(object sender, ProgressWorkerEventArgs e, object passdata = null)
 		{
 			OpenBg(sender, true, e);
 		}
@@ -631,7 +596,8 @@ namespace Diva.Mavlink
 						//if (Progress != null)
 						//    Progress(-1, "No Heartbeat Packets");
 						countDown.Stop();
-						this.close();
+                        if (BaseStream.IsOpen)
+                            BaseStream.Close();
 
 						if (hbseen)
 						{
@@ -1609,8 +1575,6 @@ namespace Diva.Mavlink
 							}
 
 							MAVlist[sysid, compid].packetslost += numLost;
-							WhenPacketLost.OnNext(numLost);
-
 						}
 
 						MAVlist[sysid, compid].packetsnotlost++;
@@ -1619,7 +1583,6 @@ namespace Diva.Mavlink
 
 						MAVlist[sysid, compid].recvpacketcount = packetSeqNo;
 					}
-					WhenPacketReceived.OnNext(1);
 
 					// packet stats per mav
 					if (!MAVlist[sysid, compid].packetspersecond.ContainsKey(msgid) || double.IsInfinity(MAVlist[sysid, compid].packetspersecond[msgid]))
@@ -3157,11 +3120,6 @@ namespace Diva.Mavlink
 			// send each one twice.
 			generatePacket((byte)MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req, sysid, compid);
 			generatePacket((byte)MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req, sysid, compid);
-		}
-
-		public void Dispose()
-		{
-			throw new NotImplementedException();
 		}
 
 		/// <summary>

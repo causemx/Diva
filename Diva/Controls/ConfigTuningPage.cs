@@ -22,7 +22,7 @@ namespace Diva.Controls
 		private static Hashtable tooltips = new Hashtable();
 		private readonly Hashtable changes = new Hashtable();
 		internal bool startup = true;
-        private Mavlink.MavlinkInterface mav = Planner.GetActiveDrone();
+        private Mavlink.MavDrone mav = Planner.GetActiveDrone();
 
         public ConfigTuningPage()
 		{
@@ -31,7 +31,7 @@ namespace Diva.Controls
 
 		public void Activate()
 		{
-            if (!mav.BaseStream.IsOpen)
+            if (!mav.IsOpen)
 			{
 				Enabled = false;
 				return;
@@ -133,7 +133,7 @@ namespace Diva.Controls
 		/// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
 		protected void BUT_rerequestparams_Click(object sender, EventArgs e)
 		{
-			if (!mav.BaseStream.IsOpen)
+			if (!mav.IsOpen)
 				return;
 
 			((Control)sender).Enabled = false;
@@ -156,7 +156,7 @@ namespace Diva.Controls
 
 		private void BUT_refreshpart_Click(object sender, EventArgs e)
 		{
-			if (!mav.BaseStream.IsOpen)
+			if (!mav.IsOpen)
 				return;
 
 			((Control)sender).Enabled = false;
