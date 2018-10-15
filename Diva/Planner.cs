@@ -3552,10 +3552,7 @@ namespace Diva
 				MessageBox.Show("Failed to send new fence points " + ex, Strings.ERROR);
 			}
 		}
-		public void GeoFencedownloadToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// TODO: implement the download geo-fence function.
-		}
+	
 		private void setReturnLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			overlays.geofence.Markers.Clear();
