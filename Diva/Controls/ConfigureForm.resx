@@ -117,165 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;BtnLayoutPanel.Name" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Parent" xml:space="preserve">
-    <value>SidePanel</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;IndicatorPanel.Name" xml:space="preserve">
-    <value>IndicatorPanel</value>
-  </data>
-  <data name="&gt;&gt;IndicatorPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;IndicatorPanel.Parent" xml:space="preserve">
-    <value>SidePanel</value>
-  </data>
-  <data name="&gt;&gt;IndicatorPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SidePanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="SidePanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="SidePanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>266, 641</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SidePanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SidePanel.Name" xml:space="preserve">
-    <value>SidePanel</value>
-  </data>
-  <data name="&gt;&gt;SidePanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SidePanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;SidePanel.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;BtnVehicle.Name" xml:space="preserve">
-    <value>BtnVehicle</value>
-  </data>
-  <data name="&gt;&gt;BtnVehicle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnVehicle.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnVehicle.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.Name" xml:space="preserve">
-    <value>BtnTuning</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnTuning.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;BtnGeoFence.Name" xml:space="preserve">
-    <value>BtnGeoFence</value>
-  </data>
-  <data name="&gt;&gt;BtnGeoFence.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnGeoFence.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnGeoFence.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;BtnMap.Name" xml:space="preserve">
-    <value>BtnMap</value>
-  </data>
-  <data name="&gt;&gt;BtnMap.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnMap.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnMap.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.Name" xml:space="preserve">
-    <value>BtnAccount</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnAccount.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;BtnAbout.Name" xml:space="preserve">
-    <value>BtnAbout</value>
-  </data>
-  <data name="&gt;&gt;BtnAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAbout.Parent" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnAbout.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="BtnLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="BtnLayoutPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>TopDown</value>
-  </data>
-  <data name="BtnLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 0</value>
-  </data>
-  <data name="BtnLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="BtnLayoutPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 32, 0, 0</value>
-  </data>
-  <data name="BtnLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 641</value>
-  </data>
-  <data name="BtnLayoutPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Name" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Parent" xml:space="preserve">
-    <value>SidePanel</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="BtnVehicle.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BtnVehicle.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 12pt</value>
   </data>
@@ -297,6 +143,7 @@
   <data name="BtnVehicle.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 85</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BtnVehicle.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
@@ -510,6 +357,39 @@
   <data name="&gt;&gt;BtnAbout.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="BtnLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="BtnLayoutPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+    <value>TopDown</value>
+  </data>
+  <data name="BtnLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 0</value>
+  </data>
+  <data name="BtnLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="BtnLayoutPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 32, 0, 0</value>
+  </data>
+  <data name="BtnLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>254, 641</value>
+  </data>
+  <data name="BtnLayoutPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;BtnLayoutPanel.Name" xml:space="preserve">
+    <value>BtnLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;BtnLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnLayoutPanel.Parent" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="&gt;&gt;BtnLayoutPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="IndicatorPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 32</value>
   </data>
@@ -530,6 +410,30 @@
   </data>
   <data name="&gt;&gt;IndicatorPanel.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="SidePanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="SidePanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SidePanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 641</value>
+  </data>
+  <data name="SidePanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.Name" xml:space="preserve">
+    <value>SidePanel</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;SidePanel.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="VehicleSettingsPanel.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -563,123 +467,6 @@
   </data>
   <data name="&gt;&gt;VehicleSettingsPanel.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.Name" xml:space="preserve">
-    <value>VConfBtnsPanel</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.Parent" xml:space="preserve">
-    <value>VehicleConfigPanel</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="VehicleConfigPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="VehicleConfigPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>266, 0</value>
-  </data>
-  <data name="VehicleConfigPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
-  </data>
-  <data name="VehicleConfigPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 641</value>
-  </data>
-  <data name="VehicleConfigPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;VehicleConfigPanel.Name" xml:space="preserve">
-    <value>VehicleConfigPanel</value>
-  </data>
-  <data name="&gt;&gt;VehicleConfigPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;VehicleConfigPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;VehicleConfigPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfReset.Name" xml:space="preserve">
-    <value>BtnVConfReset</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfReset.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfReset.Parent" xml:space="preserve">
-    <value>VConfBtnsPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfReset.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfApply.Name" xml:space="preserve">
-    <value>BtnVConfApply</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfApply.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfApply.Parent" xml:space="preserve">
-    <value>VConfBtnsPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfApply.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfExport.Name" xml:space="preserve">
-    <value>BtnVConfExport</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfExport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfExport.Parent" xml:space="preserve">
-    <value>VConfBtnsPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfExport.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfImport.Name" xml:space="preserve">
-    <value>BtnVConfImport</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfImport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfImport.Parent" xml:space="preserve">
-    <value>VConfBtnsPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnVConfImport.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="VConfBtnsPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="VConfBtnsPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>RightToLeft</value>
-  </data>
-  <data name="VConfBtnsPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 600</value>
-  </data>
-  <data name="VConfBtnsPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
-  </data>
-  <data name="VConfBtnsPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 41</value>
-  </data>
-  <data name="VConfBtnsPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.Name" xml:space="preserve">
-    <value>VConfBtnsPanel</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.Parent" xml:space="preserve">
-    <value>VehicleConfigPanel</value>
-  </data>
-  <data name="&gt;&gt;VConfBtnsPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="BtnVConfReset.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -813,68 +600,65 @@
   <data name="&gt;&gt;BtnVConfImport.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="AboutBoxPanel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="VConfBtnsPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
-  <data name="&gt;&gt;CreditsTablePanel.Name" xml:space="preserve">
-    <value>CreditsTablePanel</value>
+  <data name="VConfBtnsPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
+    <value>RightToLeft</value>
   </data>
-  <data name="&gt;&gt;CreditsTablePanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="VConfBtnsPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 600</value>
   </data>
-  <data name="&gt;&gt;CreditsTablePanel.Parent" xml:space="preserve">
-    <value>AboutBoxPanel</value>
+  <data name="VConfBtnsPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 2, 3</value>
   </data>
-  <data name="&gt;&gt;CreditsTablePanel.ZOrder" xml:space="preserve">
+  <data name="VConfBtnsPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>784, 41</value>
+  </data>
+  <data name="VConfBtnsPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="CreditsTablePanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LabelProject" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="LabelLicense" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="AutoSize,0,Absolute,24" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="&gt;&gt;VConfBtnsPanel.Name" xml:space="preserve">
+    <value>VConfBtnsPanel</value>
   </data>
-  <data name="&gt;&gt;LabelAboutSoftware.Name" xml:space="preserve">
-    <value>LabelAboutSoftware</value>
+  <data name="&gt;&gt;VConfBtnsPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LabelAboutSoftware.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;VConfBtnsPanel.Parent" xml:space="preserve">
+    <value>VehicleConfigPanel</value>
   </data>
-  <data name="&gt;&gt;LabelAboutSoftware.Parent" xml:space="preserve">
-    <value>AboutBoxPanel</value>
-  </data>
-  <data name="&gt;&gt;LabelAboutSoftware.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;VConfBtnsPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="AboutBoxPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="VehicleConfigPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="AboutBoxPanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 10.2pt</value>
-  </data>
-  <data name="AboutBoxPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="VehicleConfigPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>266, 0</value>
   </data>
-  <data name="AboutBoxPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="VehicleConfigPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 3, 2, 3</value>
   </data>
-  <data name="AboutBoxPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
-  </data>
-  <data name="AboutBoxPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="VehicleConfigPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>784, 641</value>
   </data>
-  <data name="AboutBoxPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="VehicleConfigPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;AboutBoxPanel.Name" xml:space="preserve">
-    <value>AboutBoxPanel</value>
+  <data name="&gt;&gt;VehicleConfigPanel.Name" xml:space="preserve">
+    <value>VehicleConfigPanel</value>
   </data>
-  <data name="&gt;&gt;AboutBoxPanel.Type" xml:space="preserve">
+  <data name="&gt;&gt;VehicleConfigPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;AboutBoxPanel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;VehicleConfigPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;AboutBoxPanel.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;VehicleConfigPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AboutBoxPanel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CreditsTablePanel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -884,66 +668,6 @@
   </data>
   <data name="CreditsTablePanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="&gt;&gt;LabelProject.Name" xml:space="preserve">
-    <value>LabelProject</value>
-  </data>
-  <data name="&gt;&gt;LabelProject.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelProject.Parent" xml:space="preserve">
-    <value>CreditsTablePanel</value>
-  </data>
-  <data name="&gt;&gt;LabelProject.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.Name" xml:space="preserve">
-    <value>LabelLicense</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.Parent" xml:space="preserve">
-    <value>CreditsTablePanel</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="CreditsTablePanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="CreditsTablePanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 20</value>
-  </data>
-  <data name="CreditsTablePanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 3, 2, 3</value>
-  </data>
-  <data name="CreditsTablePanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>16, 17, 16, 17</value>
-  </data>
-  <data name="CreditsTablePanel.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="CreditsTablePanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>780, 59</value>
-  </data>
-  <data name="CreditsTablePanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;CreditsTablePanel.Name" xml:space="preserve">
-    <value>CreditsTablePanel</value>
-  </data>
-  <data name="&gt;&gt;CreditsTablePanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CreditsTablePanel.Parent" xml:space="preserve">
-    <value>AboutBoxPanel</value>
-  </data>
-  <data name="&gt;&gt;CreditsTablePanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="CreditsTablePanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LabelProject" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="LabelLicense" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="AutoSize,0,Absolute,24" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="LabelProject.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1005,6 +729,42 @@
   <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="CreditsTablePanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="CreditsTablePanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 20</value>
+  </data>
+  <data name="CreditsTablePanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 2, 3</value>
+  </data>
+  <data name="CreditsTablePanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>16, 17, 16, 17</value>
+  </data>
+  <data name="CreditsTablePanel.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="CreditsTablePanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>780, 59</value>
+  </data>
+  <data name="CreditsTablePanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;CreditsTablePanel.Name" xml:space="preserve">
+    <value>CreditsTablePanel</value>
+  </data>
+  <data name="&gt;&gt;CreditsTablePanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CreditsTablePanel.Parent" xml:space="preserve">
+    <value>AboutBoxPanel</value>
+  </data>
+  <data name="&gt;&gt;CreditsTablePanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="CreditsTablePanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LabelProject" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="LabelLicense" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="AutoSize,0,Absolute,24" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="LabelAboutSoftware.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1040,6 +800,39 @@
   </data>
   <data name="&gt;&gt;LabelAboutSoftware.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="AboutBoxPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AboutBoxPanel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="AboutBoxPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>266, 0</value>
+  </data>
+  <data name="AboutBoxPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 2, 3</value>
+  </data>
+  <data name="AboutBoxPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 3, 2, 3</value>
+  </data>
+  <data name="AboutBoxPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>784, 641</value>
+  </data>
+  <data name="AboutBoxPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;AboutBoxPanel.Name" xml:space="preserve">
+    <value>AboutBoxPanel</value>
+  </data>
+  <data name="&gt;&gt;AboutBoxPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AboutBoxPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;AboutBoxPanel.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="TBoxLicenseTerms.Font" type="System.Drawing.Font, System.Drawing">
     <value>Consolas, 10.2pt</value>
