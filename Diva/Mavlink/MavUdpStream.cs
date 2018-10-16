@@ -7,29 +7,19 @@ namespace Diva.Mavlink
 {
     class MavUdpStream : MavBaseStream, IDisposable
     {
-        private UdpClient client;
-
         internal MavUdpStream(DroneSetting setting) : base(setting)
         {
             int.TryParse(setting.PortNumber, out port);
         }
-
         ~MavUdpStream() { Dispose(false);  }
-
         // IDisposable override
         protected override void Dispose(bool disposing)
         {
-            if (!disposed && disposing)
-            {
-                try
-                {
-                    client?.Close();
-                } catch { }
-                client = null;
-            }
+            if (!disposed && disposing) Close();
         }
 
         // UDP specific
+        private UdpClient client;
         private class readBufferStruct
         {
             private byte[] buffer;
@@ -62,7 +52,7 @@ namespace Diva.Mavlink
         // common overrides
         public override string StreamDescription => "UDP" + port;
         public override int BytesAvailable { get => readBuffer.length + client.Available; }
-        protected override bool? streamOpened => client?.Client?.Connected;
+        protected override bool streamOpened => client?.Client != null;
 
         public override void Open()
         {
@@ -90,7 +80,7 @@ namespace Diva.Mavlink
         public override void Close()
         {
             IsOpen = false;
-            try { if (client != null) client.Close(); } catch { }
+            try { client?.Close(); } catch { }
             client = null;
         }
 

@@ -5,16 +5,12 @@ namespace Diva.Mavlink
 {
     class MavSerialStream : MavBaseStream, IDisposable
     {
-        SerialPort serialPort;
-
         internal MavSerialStream(DroneSetting setting) : base(setting)
         {
             portname = setting.PortName;
             int.TryParse(setting.Baudrate, out baudrate);
         }
-
         ~MavSerialStream() { Dispose(false); }
-
         // IDisposable override
         protected override void Dispose(bool disposing)
         {
@@ -22,36 +18,24 @@ namespace Diva.Mavlink
         }
 
         // Serial port specific
+        private SerialPort serialPort = new SerialPort();
+        public const int SERIALPORT_DEFAULT_OPEN_DELAY = 1000;
+        public int OpenDelay = SERIALPORT_DEFAULT_OPEN_DELAY;
         private int baudrate, dataBits;
         public int BaurdRate {
             get => baudrate;
-            set
-            {
-                baudrate = value;
-                if (serialPort != null)
-                    serialPort.BaudRate = value;
-            }
+            set => serialPort.BaudRate = baudrate = value;
         }
         public int DataBits
         {
             get => dataBits;
-            set
-            {
-                dataBits = value;
-                if (serialPort != null)
-                    serialPort.DataBits = value;
-            }
+            set => serialPort.DataBits = dataBits = value;
         }
         private Parity parity;
         public Parity Parity
         {
             get => parity;
-            set
-            {
-                parity = value;
-                if (serialPort != null)
-                    serialPort.Parity = value;
-            }
+            set => serialPort.Parity = parity = value;
         }
         private string portname;
 
@@ -78,7 +62,7 @@ namespace Diva.Mavlink
         }
         public override string StreamDescription => portname + "@" + baudrate;
         public override int BytesAvailable { get => serialPort.BytesToRead; }
-        protected override bool? streamOpened => serialPort?.IsOpen;
+        protected override bool streamOpened => serialPort.IsOpen;
 
         public override void Open()
         {
@@ -89,6 +73,7 @@ namespace Diva.Mavlink
                 serialPort = new SerialPort(portname, BaurdRate, Parity, DataBits);
                 serialPort.ReadTimeout = ReadTimeout;
                 serialPort.ReadBufferSize = ReadBufferSize;
+                System.Threading.Thread.Sleep(OpenDelay);
                 serialPort.DiscardInBuffer();
                 IsOpen = true;
             } catch
@@ -105,7 +90,7 @@ namespace Diva.Mavlink
             {
                 log.Info("Closing port " + serialPort.PortName);
                 try { serialPort.Close(); } catch { }
-                serialPort = null;
+                serialPort = new SerialPort();
             }
         }
 

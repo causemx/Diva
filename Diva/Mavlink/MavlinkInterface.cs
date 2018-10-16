@@ -481,12 +481,6 @@ namespace Diva.Mavlink
 
 			giveComport = true;
 
-			if (BaseStream is MavSerialStream)
-			{
-				// allow settings to settle - previous dtr 
-				Thread.Sleep(1000);
-			}
-
 			bool hbseen = false;
 
 			try
@@ -497,23 +491,10 @@ namespace Diva.Mavlink
 				{
 					log.Info("Open port with " + BaseStream.StreamDescription);
 
-					if (BaseStream is MavUdpStream)
-					{
-						progressWorkerEventArgs.CancelRequestChanged += (o, e) =>
-						{
-							((ProgressWorkerEventArgs)o)
-								.CancelAcknowledged = true;
-						};
-					
-					}
+					progressWorkerEventArgs.CancelRequestChanged += (o, e) =>
+							((ProgressWorkerEventArgs)o).CancelAcknowledged = true;
 
 					BaseStream.Open();
-
-					// other boards seem to have issues if there is no delay? posible bootloader timeout issue
-					if (BaseStream is MavSerialStream)
-					{
-						Thread.Sleep(1000);
-					}
 				}
 				
 				
