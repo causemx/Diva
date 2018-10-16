@@ -7,7 +7,7 @@ namespace Diva.Mavlink
 {
     class MavUdpStream : MavBaseStream, IDisposable
     {
-        private UdpClient client { get => streamObject as UdpClient; set => streamObject = value; }
+        private UdpClient client;
 
         internal MavUdpStream(DroneSetting setting) : base(setting)
         {
@@ -62,10 +62,11 @@ namespace Diva.Mavlink
         // common overrides
         public override string StreamDescription => "UDP" + port;
         public override int BytesAvailable { get => readBuffer.length + client.Available; }
+        protected override bool? streamOpened => client?.Client?.Connected;
 
         public override void Open()
         {
-            if (client?.Client?.Connected ?? false)
+            if (IsOpen)
             {
                 log.Info("udpserial socket already open");
                 return;

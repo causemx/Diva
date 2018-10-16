@@ -5,7 +5,7 @@ namespace Diva.Mavlink
 {
     class MavSerialStream : MavBaseStream, IDisposable
     {
-        SerialPort serialPort { get => streamObject as SerialPort; set => streamObject = value; }
+        SerialPort serialPort;
 
         internal MavSerialStream(DroneSetting setting) : base(setting)
         {
@@ -78,6 +78,7 @@ namespace Diva.Mavlink
         }
         public override string StreamDescription => portname + "@" + baudrate;
         public override int BytesAvailable { get => serialPort.BytesToRead; }
+        protected override bool? streamOpened => serialPort?.IsOpen;
 
         public override void Open()
         {
