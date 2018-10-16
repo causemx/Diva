@@ -143,11 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
-    <Compile Include="Comms\CommsSerialPort.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Comms\CommsUdpSerial.cs" />
-    <Compile Include="Comms\ICommsSerial.cs" />
     <Compile Include="Controls\AboutBoxPage.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,5 +1,4 @@
-﻿using Diva.Comms;
-using Diva.Controls;
+﻿using Diva.Controls;
 using Diva.Properties;
 using Diva.Utilities;
 using log4net;
@@ -29,36 +28,16 @@ namespace Diva.Mavlink
 			set { _giveComport = value; }
 		}
 
-		public ICommsSerial BaseStream
-		{
-			get { return _baseStream; }
-			set
-			{
-				// This is called every time user changes the port selection, so we need to make sure we cleanup
-				// any previous objects so we don't leave the cleanup of system resources to the garbage collector.
-				if (_baseStream != null)
-				{
-					try
-					{
-						if (_baseStream.IsOpen)
-						{
-							_baseStream.Close();
-						}
-					}
-					catch { }
-					IDisposable dsp = _baseStream as IDisposable;
-					if (dsp != null)
-					{
-						try
-						{
-							dsp.Dispose();
-						}
-						catch { }
-					}
-				}
-				_baseStream = value;
-			}
-		}
+        private MavBaseStream baseStream;
+        public MavBaseStream BaseStream
+        {
+            get => baseStream;
+            set
+            {
+                baseStream?.Dispose();
+                baseStream = value;
+            }
+        }
 
 		public MavList MAVlist;
 
@@ -120,12 +99,10 @@ namespace Diva.Mavlink
 		private volatile object readlock = new object();
 		private int pacCount = 0;
 		private const int gcssysid = 255;
-		private ICommsSerial _baseStream = null;
 		private string buildplaintxtline = "";
 		private byte mavlinkversion = 0;
 		private int _mavlink1count = 0;
 		private int _mavlink2count = 0;
-		private int _mavlink2signed = 0;
 		private int _bps1 = 0;
 		private int _bps2 = 0;
 		private bool useLocation = false;
@@ -145,7 +122,6 @@ namespace Diva.Mavlink
 		public MavlinkInterface()
 		{
 			MAVlist = new MavList(this);
-			this.BaseStream = new SerialPort();
 		}
 
 
@@ -476,23 +452,15 @@ namespace Diva.Mavlink
 				frmProgressReporter.DoWork += FrmProgressReporterDoWorkNOParams;
 			}
 			frmProgressReporter.UpdateProgressAndStatus(-1, "sync...");
-			// ThemeManager.ApplyThemeTo(frmProgressReporter);
 
 			frmProgressReporter.RunBackgroundOperationAsync();
 
 			frmProgressReporter.Dispose();
 
-            /**
-			if (ParamListChanged != null)
-			{
-				ParamListChanged(this, null);
-			}*/
-
             SerialReaderThread = new Thread(SerialReader)
             {
                 IsBackground = true,
                 Name = "mav serial reader",
-                // Priority = ThreadPriority.AboveNormal
             };
             SerialReaderThread.Start();
         }
@@ -513,13 +481,12 @@ namespace Diva.Mavlink
 
 			giveComport = true;
 
-			if (BaseStream is SerialPort)
+			if (BaseStream is MavSerialStream)
 			{
 				// allow settings to settle - previous dtr 
 				Thread.Sleep(1000);
 			}
 
-			// Terrain = new TerrainFollow(this);	// TODO Terrain not used now.
 			bool hbseen = false;
 
 			try
@@ -528,13 +495,12 @@ namespace Diva.Mavlink
 
 				lock (objlock) // so we dont have random traffic
 				{
-					log.Info("Open port with " + BaseStream.PortName + " " + BaseStream.BaudRate);
+					log.Info("Open port with " + BaseStream.StreamDescription);
 
-					if (BaseStream is UdpSerial)
+					if (BaseStream is MavUdpStream)
 					{
 						progressWorkerEventArgs.CancelRequestChanged += (o, e) =>
 						{
-							((UdpSerial)BaseStream).CancelConnect = true;
 							((ProgressWorkerEventArgs)o)
 								.CancelAcknowledged = true;
 						};
@@ -543,10 +509,8 @@ namespace Diva.Mavlink
 
 					BaseStream.Open();
 
-					BaseStream.DiscardInBuffer();
-
 					// other boards seem to have issues if there is no delay? posible bootloader timeout issue
-					if (BaseStream is SerialPort)
+					if (BaseStream is MavSerialStream)
 					{
 						Thread.Sleep(1000);
 					}
@@ -1212,13 +1176,9 @@ namespace Diva.Mavlink
 
 			DateTime start = DateTime.Now;
 
-			//Console.WriteLine(DateTime.Now.Millisecond + " SR0 " + BaseStream.BytesToRead);
-
 			lock (readlock)
 			{
 				lastbad = new byte[2];
-
-				//Console.WriteLine(DateTime.Now.Millisecond + " SR1 " + BaseStream.BytesToRead);
 
 				while (BaseStream.IsOpen)
 				{
@@ -1235,27 +1195,22 @@ namespace Diva.Mavlink
 
 						DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
-						// Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
-
-						while (BaseStream.IsOpen && BaseStream.BytesToRead <= 0)
+						while (BaseStream.IsOpen && BaseStream.BytesAvailable <= 0)
 						{
 							if (DateTime.Now > to)
 							{
-								log.InfoFormat("MAVLINK: 1 wait time out btr {0} len {1}", BaseStream.BytesToRead,
+								log.InfoFormat("MAVLINK: 1 wait time out btr {0} len {1}", BaseStream.BytesAvailable,
 									length);
 								throw new TimeoutException("Timeout");
 							}
 							Thread.Sleep(1);
-							//Console.WriteLine(DateTime.Now.Millisecond + " SR0b " + BaseStream.BytesToRead);
 						}
-						//Console.WriteLine(DateTime.Now.Millisecond + " SR1a " + BaseStream.BytesToRead);
 						if (BaseStream.IsOpen)
 						{
 							BaseStream.Read(buffer, count, 1);
 							if (rawlogfile != null && rawlogfile.CanWrite)
 								rawlogfile.WriteByte(buffer[count]);
 						}
-						//Console.WriteLine(DateTime.Now.Millisecond + " SR1b " + BaseStream.BytesToRead);
 					}
 					catch (Exception e)
 					{
@@ -1307,11 +1262,11 @@ namespace Diva.Mavlink
 						{
 							DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
-							while (BaseStream.IsOpen && BaseStream.BytesToRead < headerlength)
+							while (BaseStream.IsOpen && BaseStream.BytesAvailable < headerlength)
 							{
 								if (DateTime.Now > to)
 								{
-									log.InfoFormat("MAVLINK: 2 wait time out btr {0} len {1}", BaseStream.BytesToRead,
+									log.InfoFormat("MAVLINK: 2 wait time out btr {0} len {1}", BaseStream.BytesAvailable,
 										length);
 									throw new TimeoutException("Timeout");
 								}
@@ -1343,12 +1298,12 @@ namespace Diva.Mavlink
 							{
 								DateTime to = DateTime.Now.AddMilliseconds(BaseStream.ReadTimeout);
 
-								while (BaseStream.IsOpen && BaseStream.BytesToRead < (length - (headerlengthstx)))
+								while (BaseStream.IsOpen && BaseStream.BytesAvailable < (length - (headerlengthstx)))
 								{
 									if (DateTime.Now > to)
 									{
 										log.InfoFormat("MAVLINK: 3 wait time out btr {0} len {1}",
-											BaseStream.BytesToRead, length);
+											BaseStream.BytesAvailable, length);
 										break;
 									}
 									Thread.Sleep(1);
@@ -1395,7 +1350,7 @@ namespace Diva.Mavlink
 				long btr = 0;
 				if (BaseStream != null && BaseStream.IsOpen)
 				{
-					btr = BaseStream.BytesToRead;
+					btr = BaseStream.BytesAvailable;
 				}
 				/*Console.Write("bps {0} loss {1} left {2} mem {3} mav2 {4} sign {5} mav1 {6} mav2 {7} signed {8}      \n", _bps1, MAV.synclost, btr,
 					GC.GetTotalMemory(false) / 1024 / 1024.0, MAV.mavlinkv2, MAV.signing, _mavlink1count, _mavlink2count, _mavlink2signed); */
@@ -1404,7 +1359,6 @@ namespace Diva.Mavlink
 				_bpstime = DateTime.Now;
 				_mavlink1count = 0;
 				_mavlink2count = 0;
-				_mavlink2signed = 0;
 			}
 
 			_bps1 += buffer.Length;

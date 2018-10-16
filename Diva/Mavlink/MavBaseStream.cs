@@ -16,6 +16,13 @@ namespace Diva.Mavlink
 
         public static MavBaseStream CreateStream(DroneSetting setting)
         {
+            /*bool isUdp = setting.PortName.ToLower() == "udp";
+            MavBaseStream stream;
+            if (isUdp)
+                stream = new MavUdpStream(setting);
+            else
+                stream = new MavSerialStream(setting);
+            return stream;*/
             return (setting.PortName.ToLower() == "udp") ?
                 new MavUdpStream(setting) as MavBaseStream :
                 new MavSerialStream(setting) as MavBaseStream;
@@ -53,6 +60,8 @@ namespace Diva.Mavlink
             return ret;
         }
         public int ReadBufferSize { get; set; }
+        public abstract string StreamDescription { get; }
+        public abstract int BytesAvailable { get; }
 
         // common methods
         public abstract void Open();

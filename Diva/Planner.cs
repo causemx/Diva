@@ -1,5 +1,4 @@
-﻿using Diva.Comms;
-using Diva.Controls;
+﻿using Diva.Controls;
 using Diva.Mavlink;
 using Diva.Properties;
 using Diva.Utilities;

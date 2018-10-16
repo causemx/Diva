@@ -60,6 +60,9 @@ namespace Diva.Mavlink
         private IPEndPoint Remote;
 
         // common overrides
+        public override string StreamDescription => "UDP" + port;
+        public override int BytesAvailable { get => readBuffer.length + client.Available; }
+
         public override void Open()
         {
             if (client?.Client?.Connected ?? false)

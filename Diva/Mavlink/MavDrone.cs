@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
-using Diva.Comms;
 using Diva.Utilities;
 
 namespace Diva.Mavlink
@@ -18,7 +17,7 @@ namespace Diva.Mavlink
         private MavlinkInterface mav;
         private DroneSetting setting;
         public MavStatus Status => mav.Status;
-        public bool IsOpen => mav.BaseStream.IsOpen;
+        public bool IsOpen => mav.BaseStream?.IsOpen ?? false;
         public bool giveComport { get => mav.giveComport; set => mav.giveComport = value; }
 
         public MavDrone(DroneSetting setting = null)
@@ -29,43 +28,10 @@ namespace Diva.Mavlink
 
         public bool Connect()
         {
-            string portname = setting.PortName.ToLower();
-            // Setup comport.basestream
-            switch (portname)
-            {
-                case "udp":
-                    mav.BaseStream = new UdpSerial(setting.PortNumber);
-                    break;
-                default:
-                    mav.BaseStream = new SerialPort();
-                    break;
-            }
+            mav.BaseStream = MavBaseStream.CreateStream(setting);
 
             try
             {
-                log.Info("Set Portname");
-                // set port, then options
-                if (portname != "preset")
-                    mav.BaseStream.PortName = portname;
-
-                log.Info("Set Baudrate");
-                string baud = setting.Baudrate;
-                try
-                {
-                    if (baud != "" && baud != "0")
-                        mav.BaseStream.BaudRate = int.Parse(baud);
-                }
-                catch (Exception e)
-                {
-                    log.Error(e);
-                }
-
-                // prevent serialreader from doing anything
-                mav.giveComport = true;
-
-                mav.giveComport = false;
-
-
                 // reset connect time - for timeout functions
                 DateTime connecttime = DateTime.Now;
 

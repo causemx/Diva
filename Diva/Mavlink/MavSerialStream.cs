@@ -76,6 +76,8 @@ namespace Diva.Mavlink
                     serialPort.ReadTimeout = value;
             }
         }
+        public override string StreamDescription => portname + "@" + baudrate;
+        public override int BytesAvailable { get => serialPort.BytesToRead; }
 
         public override void Open()
         {
