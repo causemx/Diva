@@ -14,7 +14,7 @@ namespace Diva
         public string PortNumber = "";
         public string Baudrate = "";
         public string StreamURI = "";
-        public bool Enabled = true;
+        public bool Checked = true;
 
         public static void ExportXML(string file, List<DroneSetting> drones)
         {

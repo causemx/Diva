@@ -219,7 +219,7 @@ namespace Diva.Controls
             PortNumber = PortNumber ?? "",
             Baudrate = Baudrate ?? "",
             StreamURI = StreamURI ?? "",
-            Enabled = Checked
+            Checked = Checked
         };
         #endregion
 
@@ -243,7 +243,7 @@ namespace Diva.Controls
                 PortNumber = s.PortNumber,
                 Baudrate = s.Baudrate,
                 StreamURI = s.StreamURI,
-                Checked = s.Enabled
+                Checked = s.Checked
             };
             input.CurMode = s.Name == "" ? Mode.Empty : Mode.Normal;
             bool isUdp = s.PortName.Equals("udp", StringComparison.InvariantCultureIgnoreCase);
@@ -314,7 +314,7 @@ namespace Diva.Controls
         private void ChkDroneNameText_CheckedChanged(object sender, EventArgs e)
         {
             var d = DroneList?.Find(n => n.Name == DroneName);
-            if (d != null) d.Enabled = Checked;
+            if (d != null) d.Checked = Checked;
             SetDirty();
         }
         #endregion

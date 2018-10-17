@@ -82,7 +82,7 @@ namespace Diva.Controls
 
         private void BtnVConfApply_Click(object sender, EventArgs e)
         {
-            ConfigData.UpdateList(EditingDroneList);
+            ConfigData.UpdateList(new List<DroneSetting>(EditingDroneList));
             DroneSettingDirty = false;
         }
 
