@@ -36,17 +36,11 @@ namespace Diva.Mavlink
                 DateTime connecttime = DateTime.Now;
 
                 // do the connect
-                mav.Open(true);
-                if (!mav.BaseStream.IsOpen)
+                mav.Open();
+                if (!IsOpen)
                 {
                     log.Info("comport is closed. existing connect");
-                    try
-                    {
-                        mav.Close();
-                    }
-                    catch
-                    {
-                    }
+                    mav.Close();
                     return false;
                 }
 
@@ -64,14 +58,7 @@ namespace Diva.Mavlink
             }
             catch (Exception e)
             {
-                 try
-                {
-                    mav.Close();
-                }
-                catch (Exception ex)
-                {
-                    log.Warn(ex);
-                }
+                mav.Close();
                 throw e;
             }
             return true;

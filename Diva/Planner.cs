@@ -111,7 +111,7 @@ namespace Diva
 		// Thread setup
 		private Thread mainThread = null;
 		private Thread updateMapItemThread = null;
-		private bool serialThread = false;
+		private volatile bool serialThread = false;
 
 		private DateTime heartbeatSend = DateTime.Now;
 		private DateTime lastupdate = DateTime.Now;
