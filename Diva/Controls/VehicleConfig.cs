@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -14,13 +15,21 @@ namespace Diva.Controls
             {
                 SetEnabled(BtnVConfApply, value);
                 SetEnabled(BtnVConfReset, value);
+/*                BtnVConfApply.ForeColor = BtnVConfReset.ForeColor = value ?
+                    System.Drawing.Color.White : System.Drawing.Color.Gray;*/
+                VConfBtnsPanel.Enabled = true;
             }
+        }
+        public void FreezeVConfPanel()
+        {
+            VConfBtnsPanel.Enabled = false;
         }
 
         private void InitVehicleSettings(List<DroneSetting> droneSettings = null)
         {
             VehicleSettingsPanel.Controls.Clear();
-            drones = droneSettings ?? new List<DroneSetting>(ConfigData.GetTypeList<DroneSetting>());
+            drones = droneSettings ?? new List<DroneSetting>(
+                ConfigData.GetTypeList<DroneSetting>().Select(d => d.GetCopy()));
             DroneSettingInput.SetDefaultHandlers(DroneAdded, DroneModified, DroneRemoved);
             foreach (var d in drones)
                 VehicleSettingsPanel.Controls.Add(DroneSettingInput.FromSetting(d));
@@ -82,7 +91,7 @@ namespace Diva.Controls
 
         private void BtnVConfApply_Click(object sender, EventArgs e)
         {
-            ConfigData.UpdateList(new List<DroneSetting>(EditingDroneList));
+            ConfigData.UpdateList(new List<DroneSetting>(EditingDroneList.Select(d => d.GetCopy())));
             DroneSettingDirty = false;
         }
 

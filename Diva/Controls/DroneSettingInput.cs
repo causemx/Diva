@@ -12,19 +12,18 @@ namespace Diva.Controls
 {
 	public partial class DroneSettingInput : UserControl
 	{
-        private List<DroneSetting> DroneList =>
-            ((Parent?.Parent?.Parent) as ConfigureForm)?.EditingDroneList;
+        private ConfigureForm confForm => (Parent?.Parent?.Parent) as ConfigureForm;
+        private List<DroneSetting> DroneList => confForm?.EditingDroneList;
         private bool NoTrigger = true;
         private static void SetEnabled(Button btn, bool enabled)
             => ConfigureForm.SetEnabled(btn, enabled);
-        private void SetDirty()
+        private void SetSettingsDirty(bool dirty)
         {
-            for (var p = Parent; p != null; p = p.Parent)
-                if (p is ConfigureForm)
-                {
-                    (p as ConfigureForm).DroneSettingDirty = true;
-                    break;
-                }
+            if (confForm != null)
+            {
+                confForm.DroneSettingDirty = dirty;
+                //confForm.FreezeVConfPanel();
+            }
         }
 
         #region Mode switching
@@ -64,24 +63,21 @@ namespace Diva.Controls
             }
         }
 
+        private void SetActionButtons(bool enable)
+        {
+            foreach (var d in Parent.Controls.OfType<DroneSettingInput>())
+            {
+                SetEnabled(d.BtnAction, enable || this == d);
+                SetEnabled(d.BtnDeaction, enable || this == d);
+            }
+        }
+
         private void StartEdit(Mode m)
         {
             // freeze others
-            foreach (var d in Parent.Controls.OfType<DroneSettingInput>())
-            {
-                if (d != this)
-                {
-                    SetEnabled(d.BtnAction, false);
-                    SetEnabled(d.BtnDeaction, false);
-                }
-            }
+            SetActionButtons(false);
             // freeze control panels
-            foreach (var p in Parent.Parent.Controls.OfType<Panel>().Where(p => p != Parent))
-            {
-                p.Enabled = false;
-                foreach (var b in p.Controls.OfType<Button>())
-                    b.BackColor = Color.Gray;
-            }
+            confForm?.FreezeVConfPanel();
             EditPanel.Visible = TBoxDroneName.Visible = true;
             if (m == Mode.Edit)
             {
@@ -114,15 +110,8 @@ namespace Diva.Controls
             // defreeze controls
             if (Parent != null)
             {
-                foreach (var d in Parent.Controls.OfType<DroneSettingInput>())
-                {
-                    if (d != this)
-                    {
-                        SetEnabled(d.BtnAction, true);
-                        SetEnabled(d.BtnDeaction, true);
-                    }
-                }
-                SetDirty();
+                SetActionButtons(true);
+                SetSettingsDirty(false);
             }
             EditPanel.Visible = TBoxDroneName.Visible = false;
         }
@@ -168,6 +157,7 @@ namespace Diva.Controls
                 EditPanel.Visible = false;
                 ok = true;
             }
+            SetSettingsDirty(true);
             return ok;
         }
         #endregion
@@ -315,7 +305,7 @@ namespace Diva.Controls
         {
             var d = DroneList?.Find(n => n.Name == DroneName);
             if (d != null) d.Checked = Checked;
-            SetDirty();
+            SetSettingsDirty(true);
         }
         #endregion
     }
