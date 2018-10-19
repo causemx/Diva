@@ -39,6 +39,7 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.Lbl_Rotate = new System.Windows.Forms.Label();
 			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
 			this.But_MapFocus = new System.Windows.Forms.ToolStripButton();
 			this.But_ZoomIn = new System.Windows.Forms.ToolStripButton();
@@ -86,7 +87,6 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.Lbl_Rotate = new System.Windows.Forms.Label();
 			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
 			this.BtnRTL = new Diva.Controls.Components.MyButton();
 			this.BtnLand = new Diva.Controls.Components.MyButton();
@@ -140,6 +140,13 @@ namespace Diva
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
+			// 
+			// Lbl_Rotate
+			// 
+			resources.ApplyResources(this.Lbl_Rotate, "Lbl_Rotate");
+			this.Lbl_Rotate.BackColor = System.Drawing.Color.White;
+			this.Lbl_Rotate.ForeColor = System.Drawing.Color.Red;
+			this.Lbl_Rotate.Name = "Lbl_Rotate";
 			// 
 			// TSZoomPanel
 			// 
@@ -553,13 +560,6 @@ namespace Diva
 			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
-			// 
-			// Lbl_Rotate
-			// 
-			resources.ApplyResources(this.Lbl_Rotate, "Lbl_Rotate");
-			this.Lbl_Rotate.BackColor = System.Drawing.Color.White;
-			this.Lbl_Rotate.ForeColor = System.Drawing.Color.Red;
-			this.Lbl_Rotate.Name = "Lbl_Rotate";
 			// 
 			// DroneInfoPanel
 			// 
