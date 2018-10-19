@@ -3223,6 +3223,7 @@ namespace Diva
 			KMLFileUtility kUtility = new KMLFileUtility();
 			List<Locationwp> cmds = kUtility.ReadKMLMission();
 
+			
 			processToScreen(cmds, false);
 			writeKML();
 			myMap.ZoomAndCenterMarkers("objects");
