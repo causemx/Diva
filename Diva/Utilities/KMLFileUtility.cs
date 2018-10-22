@@ -50,7 +50,7 @@ namespace Diva.Utilities
 
 						var parser = new Parser();
 
-						parser.ElementAdded += ProcessKMLMission;
+						parser.ElementAdded += ProcessKMLReadMission;
 						parser.ParseString(kml, false);
 					}
 					catch (Exception e1)
@@ -66,7 +66,7 @@ namespace Diva.Utilities
 			}
 		}
 
-		private void ProcessKMLMission(object sender, ElementEventArgs e)
+		private void ProcessKMLReadMission(object sender, ElementEventArgs e)
 		{
 			Element element = e.Element;
 			Document doc = element as Document;
@@ -100,8 +100,8 @@ namespace Diva.Utilities
 					temp.p2 = (float)(double.Parse(datas[5].Text, new CultureInfo("en-US")));
 					temp.p3 = (float)(double.Parse(datas[6].Text, new CultureInfo("en-US")));
 					temp.p4 = (float)(double.Parse(datas[7].Text, new CultureInfo("en-US")));
-					temp.lat = point.Longitude;
-					temp.lng = point.Latitude;
+					temp.lat = point.Latitude;
+					temp.lng = point.Longitude;
 					temp.alt = (float)point.Altitude;
 
 					cmds.Add(temp);
@@ -114,12 +114,13 @@ namespace Diva.Utilities
 		{
 			using (SaveFileDialog fd = new SaveFileDialog())
 			{
+				wpCount = 0;
 				fd.Filter = "Google Earth KML |*.kml";
 				fd.DefaultExt = ".kml";
 				fd.FileName = wpfilename;
 				DialogResult result = fd.ShowDialog();
 				string file = fd.FileName;
-				int count = 0;
+				
 				if (file != "")
 				{
 					try
@@ -128,67 +129,19 @@ namespace Diva.Utilities
 
 						// This is the root element of the file
 						Kml kml = new Kml();
-
-						Point point = new Point();
 						Document document = new Document();
-						Placemark placemark = new Placemark();
 
-						point.Coordinate = new Vector(home.lng, home.lat, home.alt);
-						placemark.Name = "home";
-						placemark.Geometry = point;
-
-						
-						ExtendedData extendedData = new ExtendedData();
-						SchemaData schemaData = new SchemaData();
-						schemaData.SchemaUrl = new Uri("http://192.168.0.1");
-						schemaData.AddData(new SimpleData() { Name = "p1", Text = count.ToString() });
-						schemaData.AddData(new SimpleData() { Name = "p2", Text = "1" });
-						schemaData.AddData(new SimpleData() { Name = "p3", Text = "0" });
-						schemaData.AddData(new SimpleData() { Name = "p4", Text = "16" });
-						schemaData.AddData(new SimpleData() { Name = "p5", Text = "0" });
-						schemaData.AddData(new SimpleData() { Name = "p6", Text = "0" });
-						schemaData.AddData(new SimpleData() { Name = "p7", Text = "0" });
-						schemaData.AddData(new SimpleData() { Name = "p8", Text = "0" });
-						extendedData.AddSchemaData(schemaData);
-						placemark.ExtendedData = extendedData;
-
-						document.AddFeature(placemark);
-						
-
-						
+						document.AddFeature(ProcessKMLSaveMission(home, true));
+					
 						foreach (Locationwp wp in _cmds)
 						{
-							count = count + 1;
-							Point _point = new Point();
-							Placemark _placemark = new Placemark();
-							_point.Coordinate = new Vector(wp.lng, wp.lat, wp.alt);
-							_placemark.Name = "waypoint";
-							_placemark.Geometry = _point;
-
-
-							ExtendedData _extendedData = new ExtendedData();
-							SchemaData _schemaData = new SchemaData();
-							_schemaData.SchemaUrl = new Uri("http://192.168.0.1");
-							_schemaData.AddData(new SimpleData() { Name = "p1", Text = count.ToString() });
-							_schemaData.AddData(new SimpleData() { Name = "p2", Text = "1" });
-							_schemaData.AddData(new SimpleData() { Name = "p3", Text = "0" });
-							_schemaData.AddData(new SimpleData() { Name = "p4", Text = "16" });
-							_schemaData.AddData(new SimpleData() { Name = "p5", Text = "0" });
-							_schemaData.AddData(new SimpleData() { Name = "p6", Text = "0" });
-							_schemaData.AddData(new SimpleData() { Name = "p7", Text = "0" });
-							_schemaData.AddData(new SimpleData() { Name = "p8", Text = "0" });
-							_extendedData.AddSchemaData(_schemaData);
-							_placemark.ExtendedData = _extendedData;
-
-							document.AddFeature(_placemark);
-
+							document.AddFeature(ProcessKMLSaveMission(wp, false));
 						}
 
 						kml.Feature = document;
 
 						Serializer serializer = new Serializer();
 						serializer.Serialize(kml, fs);
-						// Console.WriteLine(serializer.Xml);
 
 					}
 					catch (Exception e)
@@ -197,6 +150,39 @@ namespace Diva.Utilities
 					}
 				}
 			}
+		}
+
+		private int wpCount;
+
+		private Placemark ProcessKMLSaveMission(Locationwp wp, bool isHome)
+		{
+
+			Point point = new Point();
+			Placemark placemark = new Placemark();
+
+			point.Coordinate = new Vector(wp.lat, wp.lng, wp.alt);
+			placemark.Name = isHome? "home" : "waypoint";
+			placemark.Geometry = point;
+
+
+			ExtendedData extendedData = new ExtendedData();
+			SchemaData schemaData = new SchemaData();
+			schemaData.SchemaUrl = new Uri("http://192.168.0.1");
+			schemaData.AddData(new SimpleData() { Name = "p1", Text = wpCount.ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p2", Text = isHome? "1" : "0" });
+			schemaData.AddData(new SimpleData() { Name = "p3", Text = isHome ? "0" : "3" });
+			schemaData.AddData(new SimpleData() { Name = "p4", Text = (wp.id).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p5", Text = (wp.p1).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p6", Text = (wp.p2).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p7", Text = (wp.p3).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p8", Text = (wp.p4).ToString() });
+			extendedData.AddSchemaData(schemaData);
+			placemark.ExtendedData = extendedData;
+
+			wpCount = wpCount + 1;
+
+			return placemark;
+
 		}
 	}
 }

@@ -3215,6 +3215,9 @@ namespace Diva
 			};
 
 			kUtility.SaveKMLMission(GetCommandList(), home);
+			Thread.Sleep(1000);
+			MessageBox.Show("Save Mission");
+
 			writeKML();
 		}
 
