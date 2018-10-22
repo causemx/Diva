@@ -148,7 +148,7 @@
     <value>864, 505</value>
   </data>
   <data name="Lbl_Rotate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 18</value>
+    <value>0, 29</value>
   </data>
   <data name="Lbl_Rotate.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
@@ -1765,106 +1765,100 @@
     <value>17, 17</value>
   </metadata>
   <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>250, 30</value>
   </data>
   <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Polygon Point</value>
   </data>
   <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>250, 30</value>
   </data>
   <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear Polygon</value>
   </data>
   <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>250, 30</value>
   </data>
   <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Save Polygon</value>
   </data>
   <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>250, 30</value>
   </data>
   <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Load Polygon</value>
   </data>
   <data name="areaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>182, 22</value>
+    <value>250, 30</value>
   </data>
   <data name="areaToolStripMenuItem.Text" xml:space="preserve">
     <value>Area</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>240, 28</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Draw Polygon</value>
   </data>
   <data name="uploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>260, 30</value>
   </data>
   <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
     <value>Upload</value>
   </data>
-  <data name="downloadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
-  </data>
-  <data name="downloadToolStripMenuItem.Text" xml:space="preserve">
-    <value>Download</value>
-  </data>
   <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>260, 30</value>
   </data>
   <data name="setReturnLocationToolStripMenuItem.Text" xml:space="preserve">
     <value>Set Return Location</value>
   </data>
   <data name="loadFromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>260, 30</value>
   </data>
   <data name="loadFromFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Load from File</value>
   </data>
   <data name="saveToFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>260, 30</value>
   </data>
   <data name="saveToFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Save to File</value>
   </data>
   <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 22</value>
+    <value>260, 30</value>
   </data>
   <data name="clearToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>240, 28</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
     <value>No-Fly Zone</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 6</value>
+    <value>237, 6</value>
   </data>
   <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>240, 28</value>
   </data>
   <data name="miClearMission.Text" xml:space="preserve">
     <value>Takeoff to Here</value>
   </data>
   <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>240, 28</value>
   </data>
   <data name="miSetHomeHere.Text" xml:space="preserve">
     <value>Set Home Here</value>
   </data>
   <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
+    <value>240, 28</value>
   </data>
   <data name="miClearAllMissions.Text" xml:space="preserve">
     <value>Clear All Missions</value>
   </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 120</value>
+    <value>241, 183</value>
   </data>
   <data name="&gt;&gt;cmMap.Name" xml:space="preserve">
     <value>cmMap</value>
@@ -1930,7 +1924,7 @@
     <value>APM Command</value>
   </data>
   <data name="colCommand.Width" type="System.Int32, mscorlib">
-    <value>82</value>
+    <value>119</value>
   </data>
   <metadata name="colParam1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1942,7 +1936,7 @@
     <value>50</value>
   </data>
   <data name="colParam1.Width" type="System.Int32, mscorlib">
-    <value>62</value>
+    <value>92</value>
   </data>
   <metadata name="colParam2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1954,7 +1948,7 @@
     <value>50</value>
   </data>
   <data name="colParam2.Width" type="System.Int32, mscorlib">
-    <value>62</value>
+    <value>92</value>
   </data>
   <metadata name="colParam3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1966,7 +1960,7 @@
     <value>50</value>
   </data>
   <data name="colParam3.Width" type="System.Int32, mscorlib">
-    <value>62</value>
+    <value>92</value>
   </data>
   <metadata name="colParam4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1978,7 +1972,7 @@
     <value>50</value>
   </data>
   <data name="colParam4.Width" type="System.Int32, mscorlib">
-    <value>62</value>
+    <value>92</value>
   </data>
   <metadata name="colLatitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1990,7 +1984,7 @@
     <value>60</value>
   </data>
   <data name="colLatitude.Width" type="System.Int32, mscorlib">
-    <value>67</value>
+    <value>98</value>
   </data>
   <metadata name="colLongitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2002,7 +1996,7 @@
     <value>60</value>
   </data>
   <data name="colLongitude.Width" type="System.Int32, mscorlib">
-    <value>81</value>
+    <value>117</value>
   </data>
   <metadata name="colAltitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2014,7 +2008,7 @@
     <value>60</value>
   </data>
   <data name="colAltitude.Width" type="System.Int32, mscorlib">
-    <value>66</value>
+    <value>95</value>
   </data>
   <metadata name="colAngle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2026,7 +2020,7 @@
     <value>60</value>
   </data>
   <data name="colAngle.Width" type="System.Int32, mscorlib">
-    <value>60</value>
+    <value>74</value>
   </data>
   <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2041,7 +2035,7 @@
     <value>Delete the row</value>
   </data>
   <data name="colDelete.Width" type="System.Int32, mscorlib">
-    <value>56</value>
+    <value>81</value>
   </data>
   <metadata name="colTagData.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2056,7 +2050,7 @@
     <value>False</value>
   </data>
   <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>69</value>
+    <value>103</value>
   </data>
   <data name="dgvWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2281,7 +2275,7 @@
     <value>864, 18</value>
   </data>
   <data name="TxtDroneMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 15</value>
+    <value>44, 21</value>
   </data>
   <data name="TxtDroneMode.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
@@ -2556,6 +2550,48 @@
   <data name="&gt;&gt;But_ZoomOut.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;TSBtnConnect.Name" xml:space="preserve">
+    <value>TSBtnConnect</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConnect.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;Btn_Rotation.Name" xml:space="preserve">
+    <value>Btn_Rotation</value>
+  </data>
+  <data name="&gt;&gt;Btn_Rotation.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConfigure.Name" xml:space="preserve">
+    <value>TSBtnConfigure</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnTagging.Name" xml:space="preserve">
+    <value>TSBtnTagging</value>
+  </data>
+  <data name="&gt;&gt;TSBtnTagging.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnSaveMission.Name" xml:space="preserve">
+    <value>TSBtnSaveMission</value>
+  </data>
+  <data name="&gt;&gt;TSBtnSaveMission.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnReadMission.Name" xml:space="preserve">
+    <value>TSBtnReadMission</value>
+  </data>
+  <data name="&gt;&gt;TSBtnReadMission.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnCusOverlay.Name" xml:space="preserve">
+    <value>TSBtnCusOverlay</value>
+  </data>
+  <data name="&gt;&gt;TSBtnCusOverlay.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
   <data name="&gt;&gt;drawPolygonToolStripMenuItem.Name" xml:space="preserve">
     <value>drawPolygonToolStripMenuItem</value>
   </data>
@@ -2602,12 +2638,6 @@
     <value>uploadToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;uploadToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;downloadToolStripMenuItem.Name" xml:space="preserve">
-    <value>downloadToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;downloadToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;setReturnLocationToolStripMenuItem.Name" xml:space="preserve">
@@ -2723,48 +2753,6 @@
   </data>
   <data name="&gt;&gt;colTagData.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConnect.Name" xml:space="preserve">
-    <value>TSBtnConnect</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConnect.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;Btn_Rotation.Name" xml:space="preserve">
-    <value>Btn_Rotation</value>
-  </data>
-  <data name="&gt;&gt;Btn_Rotation.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConfigure.Name" xml:space="preserve">
-    <value>TSBtnConfigure</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnTagging.Name" xml:space="preserve">
-    <value>TSBtnTagging</value>
-  </data>
-  <data name="&gt;&gt;TSBtnTagging.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnSaveMission.Name" xml:space="preserve">
-    <value>TSBtnSaveMission</value>
-  </data>
-  <data name="&gt;&gt;TSBtnSaveMission.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnReadMission.Name" xml:space="preserve">
-    <value>TSBtnReadMission</value>
-  </data>
-  <data name="&gt;&gt;TSBtnReadMission.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnCusOverlay.Name" xml:space="preserve">
-    <value>TSBtnCusOverlay</value>
-  </data>
-  <data name="&gt;&gt;TSBtnCusOverlay.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Planner</value>

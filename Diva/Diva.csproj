@@ -293,9 +293,11 @@
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
+    <Compile Include="Utilities\IOverlayUtility.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
+    <Compile Include="Utilities\OverlayUtility.cs" />
     <Compile Include="Utilities\ParameterMetaDataConstants.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />
