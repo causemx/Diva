@@ -24,7 +24,7 @@ namespace Diva
         {
             private static int AES_KEYSIZE = 128;
             private static int ITERATIONS = 1024;
-            private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
+            private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("THUNDERBIRD");
             private static Aes aes = null;
             private static Rfc2898DeriveBytes key;
             public static UInt64 Salt { set {
