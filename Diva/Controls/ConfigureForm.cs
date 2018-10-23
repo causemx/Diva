@@ -26,6 +26,7 @@ namespace Diva.Controls
                 { BtnVehicle, VehicleConfigPanel },
 				{ BtnGeoFence, configGeoFencePage },
                 { BtnMap, configMapPage },
+				{ BtnAccount, configAccountPage },
                 { BtnAbout, AboutBoxPanel }
             };
         }

@@ -19,6 +19,64 @@ namespace Diva
 
     class ConfigData
     {
+        #region Data Encryption Utility Class
+        class DataCryptor
+        {
+            private static int AES_KEYSIZE = 128;
+            private static int ITERATIONS = 1024;
+            private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
+            private static Aes aes = null;
+            private static Rfc2898DeriveBytes key;
+            public static UInt64 Salt { set {
+                    if (value == 0)
+                    {
+                        key = null;
+                        if (aes != null) aes.Dispose();
+                        aes = null;
+                    } else
+                    {
+                        key = new Rfc2898DeriveBytes(cryptKey, BitConverter.GetBytes(value), ITERATIONS);
+                        if (aes != null) aes.Dispose();
+                        aes = new AesManaged { KeySize = AES_KEYSIZE };
+                        aes.Key = key.GetBytes(aes.KeySize / 8);
+                        aes.IV = key.GetBytes(aes.BlockSize / 8);
+                    }
+                } }
+
+            private static byte[] Cryptor(byte[] src, ICryptoTransform transform)
+            {
+                byte[] res = null;
+                using (MemoryStream ms = new MemoryStream())
+                using (CryptoStream cs = new CryptoStream(ms, transform, CryptoStreamMode.Write))
+                {
+                    cs.Write(src, 0, src.Length);
+                    cs.Close();
+                    res = ms.ToArray();
+                }
+                return res;
+            }
+            public static byte[] Encrypt(byte[] clear)
+            {
+                return Cryptor(clear, aes.CreateEncryptor());
+            }
+
+            public static byte[] Decrypt(byte[] crypt)
+            {
+                return Cryptor(crypt, aes.CreateDecryptor());
+            }
+
+            public static string Encrypt(string clearText)
+            {
+                return Convert.ToBase64String(Encrypt(Encoding.UTF8.GetBytes(clearText)));
+            }
+
+            public static string Decrypt(string cryptText)
+            {
+                return Encoding.UTF8.GetString(Decrypt(Convert.FromBase64String(cryptText)));
+            }
+        }
+        #endregion
+
         private static readonly Lazy<ConfigData> lazy = new Lazy<ConfigData>(() => new ConfigData());
         private static Configuration config;
 
@@ -30,10 +88,15 @@ namespace Diva
         #region Config options
         public class OptionName
         {
+            public const string ForceAccountLogin = "ForceAccountLogin";
+            public const string ImageMapSource = "ImageMapSource";
             public const string Language = "Language";
             public const string MapProxy = "MapProxy";
             public const string MapCacheLocation = "MapCacheLocation";
             public const string MapInitialLocation = "MapInitialLocation";
+            public const string Salt = "Salt";
+            public const string SkipNoAccountAlert = "NoAccountAlert";
+            public const string UseImageMap = "UseImageMap";
             public const string Version = "Version";
         }
 
@@ -47,6 +110,7 @@ namespace Diva
             return new ConcurrentDictionary<string, string>
             {
                 [OptionName.Version] = VERSION_STRING,
+                [OptionName.Salt] = NO_ENCRYPT_SALT
             };
         }
         #endregion
@@ -62,10 +126,23 @@ namespace Diva
                 void setBoolean(string o, string v) => CLOptions[o] = (v != null).ToString();
                 new OptionSet()
                 {
+                    { "a|NoAccountAlert", v => setBoolean(OptionName.SkipNoAccountAlert, v) },
                     { "c|MapCacheLocation=", v => setOpt(OptionName.MapCacheLocation, v) },
+                    { "f|ForceAccountLogin", v => setBoolean(OptionName.ForceAccountLogin, v) },
+                    { "i|ImageMapSource=", v => {
+                        if (v != null)
+                        {
+                            CLOptions[OptionName.UseImageMap] = true.ToString();
+                            if (v.Substring(1) != "i+")
+                                CLOptions[OptionName.ImageMapSource] = v;
+                        } else
+                            CLOptions[OptionName.UseImageMap] = false.ToString();
+                    }  },
                     { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
                     { "lang|Language=", v => setOpt(OptionName.Language, v) },
                     { "p|proxy=", v => setOpt(OptionName.Language, v) },
+                    { "s|Salt=", v => setOpt(OptionName.Salt, v) },
+                    { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }
                 }.Parse(args);
             } catch (Exception e)
             {
@@ -190,6 +267,14 @@ namespace Diva
                             catch { }
                         }
                     }
+                    bool decrypt = GetOption(OptionName.Salt) != "0";
+                    if (decrypt)
+                    {
+                        if (!config.AppSettings.Settings.AllKeys.Contains(AccountManager.AccountConfigEntryName))
+                            throw new InvalidDataException("No account data found.");
+                        DataCryptor.Salt = UInt64.Parse(Options[OptionName.Salt]) +
+                                    Convert.ToUInt64(config.AppSettings.Settings["divaOptions"].Value.Length);
+                    }
                     var asms = AppDomain.CurrentDomain.GetAssemblies();
                     var settings = from k in config.AppSettings.Settings.AllKeys
                                    where k.StartsWith("dv")
@@ -209,6 +294,8 @@ namespace Diva
                         if (t != null)
                         {
                             string jstr = config.AppSettings.Settings["dv" + s].Value;
+                            if (decrypt)
+                                jstr = DataCryptor.Decrypt(jstr);
                             var typeOfList = typeof(List<>).MakeGenericType(t);
                             var deserializeMethod = typeof(JsonConvert).GetMethods()
                                 .Single(m => m.Name == "DeserializeObject"
@@ -230,17 +317,24 @@ namespace Diva
                         return lazy.Value.ready = false;
                     Reset(false);
                 }
+            DataCryptor.Salt = 0;
             return lazy.Value.ready = true;
         }
 
         public static void Reset(bool writeback = true)
         {
             lazy.Value.options = GetInitOptions();
+            /*foreach (var kv in typeLists)
+            {
+                var list = kv.Value as IDisposable;
+                if (list != null)
+                    list.Dispose();
+            }*/
             lazy.Value.typeLists.Clear();
             if (writeback) Save();
         }
 
-        private static int WriteSetting(string key, object obj)
+        private static int WriteSetting(string key, object obj, bool encrypt)
         {
             string jstr = JsonConvert.SerializeObject(obj);
             if (key != "divaOptions")
@@ -249,6 +343,8 @@ namespace Diva
                 if (type.IsGenericType)
                     type = type.GetGenericArguments()[0];
             }
+            if (encrypt)
+                jstr = DataCryptor.Encrypt(jstr);
             if (config.AppSettings.Settings[key] == null)
                 config.AppSettings.Settings.Add(key, jstr);
             else
@@ -260,7 +356,24 @@ namespace Diva
         {
             lock (config)
             {
-                WriteSetting("divaOptions", Options);
+                bool encrypt = AccountManager.GetAccounts().Count() > 0;
+                if (encrypt)
+                {
+                    UInt64 salt;
+                    using (var rng = RNGCryptoServiceProvider.Create())
+                    {
+                        byte[] buffer = new byte[sizeof(UInt64)];
+                        rng.GetBytes(buffer);
+                        salt = BitConverter.ToUInt64(buffer, 0);
+                        Options[OptionName.Salt] = salt.ToString();
+                    }
+                    salt += Convert.ToUInt64(WriteSetting("divaOptions", Options, false));
+                    DataCryptor.Salt = salt;
+                } else
+                {
+                    Options[OptionName.Salt] = "0";
+                    WriteSetting("divaOptions", Options, false);
+                }
                 foreach (var kv in Lists) try
                     {
                         int count = (int)typeof(List<>).MakeGenericType(
@@ -270,12 +383,13 @@ namespace Diva
                         string keyName = "dv" + (tname.StartsWith("Diva.") &&
                             tname.IndexOf(".", 5) < 0 ? tname.Substring(5) : tname);
                         if (count > 0)
-                            WriteSetting(keyName, kv.Value);
+                            WriteSetting(keyName, kv.Value, encrypt);
                         else if (config.AppSettings.Settings[keyName] != null)
                             config.AppSettings.Settings.Remove(keyName);
                     }
                     catch { }
                 config.Save();
+                if (encrypt) DataCryptor.Salt = 0;
             }
         }
         #endregion
