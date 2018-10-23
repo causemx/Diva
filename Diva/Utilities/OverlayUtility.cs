@@ -207,7 +207,10 @@ namespace Diva.Utilities
                 RegenerateWPRoute(fullpointlist, home);
             }
 
-            public void RegenerateWPRoute(List<PointLatLngAlt> fullpointlist, PointLatLngAlt HomeLocation)
+
+			public event EventHandler<FullPointsEventArgs> RaiseFullPointsEvent;
+
+			public void RegenerateWPRoute(List<PointLatLngAlt> fullpointlist, PointLatLngAlt HomeLocation)
             {
                 route.Clear();
                 homeroute.Clear();
@@ -277,7 +280,12 @@ namespace Diva.Utilities
                         route.Points.Add(x);
                     });
 
-                    homeroute.Stroke = new Pen(Color.Yellow, 2);
+
+					// raise the fullpointslist outside
+					RaiseFullPointsEvent?.Invoke(this, new FullPointsEventArgs(fullpointlist, pointlist));
+
+
+					homeroute.Stroke = new Pen(Color.Yellow, 2);
                     // if we have a large distance between home and the first/last point, it hangs on the draw of a the dashed line.
                     if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
                         homeroute.Stroke.DashStyle = DashStyle.Dash;
@@ -305,6 +313,19 @@ namespace Diva.Utilities
 
                 return homealt;
             }
+
+
+			public class FullPointsEventArgs : EventArgs
+			{
+				public FullPointsEventArgs(List<PointLatLngAlt> _fullPoints, List<PointLatLngAlt> _points)
+				{
+					this.FullPoints = _fullPoints;
+					this.Points = _points;
+				}
+
+				public List<PointLatLngAlt> FullPoints { get; set; }
+				public List<PointLatLngAlt> Points { get; set; }
+			}
         }
     }
 }

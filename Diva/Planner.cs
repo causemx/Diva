@@ -27,7 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-
+using static Diva.Utilities.OverlayUtility.WPOverlay;
 using ResStrings = Diva.Properties.Strings;
 
 namespace Diva
@@ -1420,6 +1420,8 @@ namespace Diva
                 
         public void writeKMLV2()
         {
+
+
             // quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
             if (quickadd)
                 return;
@@ -1433,7 +1435,28 @@ namespace Diva
             // var overlay = new WPOverlay(overlays.objects);
             var overlay = new OverlayUtility.WPOverlay(overlays.objects);
 
-            overlay.CreateOverlay(home, GetCommandList(), 30, 30);
+			overlay.RaiseFullPointsEvent += (s ,e) => {
+
+				if (e.FullPoints.Count > 0)
+				{
+					double dist = 0.0d;
+
+					for (int a = 1; a < e.FullPoints.Count; a++)
+					{
+						if (e.FullPoints[a - 1] == null)
+							continue;
+
+						if (e.FullPoints[a] == null)
+							continue;
+
+						dist += myMap.MapProvider.Projection.GetDistance(e.FullPoints[a - 1], e.FullPoints[a]);
+						DroneInfoPanel.UpdateAssumeTime(dist);
+						DatabaseManager.UpdateTotalDistance(recorder_id, dist);
+					}
+				}
+			};
+
+			overlay.CreateOverlay(home, GetCommandList(), 30, 30);
 
             myMap.HoldInvalidation = true;
 
@@ -1449,9 +1472,11 @@ namespace Diva
             overlay.overlay.ForceUpdate();
 
 
-            // setgradanddistandaz(overlay.pointlist, home);
 
-            if (overlay.pointlist.Count <= 1)
+
+			// setgradanddistandaz(overlay.pointlist, home);
+
+			if (overlay.pointlist.Count <= 1)
             {
                 RectLatLng? rect = myMap.GetRectOfAllMarkers(overlay.overlay.Id);
                 if (rect.HasValue)
@@ -1459,13 +1484,16 @@ namespace Diva
                     myMap.Position = rect.Value.LocationMiddle;
                 }
 
-                // myMap_OnMapZoomChanged();
-            }
+				DroneInfoPanel.ResetAssumeTime();
+
+				// myMap_OnMapZoomChanged();
+			}
 
             pointlist = overlay.pointlist;
 
-            myMap.Refresh();
+			myMap.Refresh();
         }
+
 
 		/// <summary>
 		/// Format distance according to prefer distance unit
@@ -2974,7 +3002,7 @@ namespace Diva
 			Thread.Sleep(1000);
 			MessageBox.Show("Save Mission");
 
-			writeKML();
+			writeKMLV2();
 		}
 
 		private void BtnReadMission_Click(object sender, EventArgs e)
@@ -2984,7 +3012,7 @@ namespace Diva
 
 			
 			processToScreen(cmds, false);
-			writeKML();
+			writeKMLV2();
 			myMap.ZoomAndCenterMarkers("objects");
 		}
 
@@ -2993,94 +3021,7 @@ namespace Diva
 		{
 			isMapFocusing = !isMapFocusing;
 		}
-
-
-		public void readQGC110wpfile(string file, bool append = false)
-		{
-			int wp_count = 0;
-			bool error = false;
-			List<Locationwp> cmds = new List<Locationwp>();
-
-			try
-			{
-				StreamReader sr = new StreamReader(file); //"defines.h"
-				string header = sr.ReadLine();
-				if (header == null || !header.Contains("QGC WPL"))
-				{
-					MessageBox.Show(ResStrings.MsgInvalidWaypointFile);
-					return;
-				}
-
-				while (!error && !sr.EndOfStream)
-				{
-					string line = sr.ReadLine();
-					// waypoints
-
-					if (line.StartsWith("#"))
-						continue;
-
-					string[] items = line.Split(new[] { '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-					if (items.Length <= 9)
-						continue;
-
-					try
-					{
-						Locationwp temp = new Locationwp();
-						if (items[2] == "3")
-						{
-							// abs MAV_FRAME_GLOBAL_RELATIVE_ALT=3
-							temp.options = 1;
-						}
-						else if (items[2] == "10")
-						{
-							temp.options = 8;
-						}
-						else
-						{
-							temp.options = 0;
-						}
-						temp.id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), items[3], false);
-						temp.p1 = float.Parse(items[4], new CultureInfo("en-US"));
-
-						if (temp.id == 99)
-							temp.id = 0;
-
-						temp.alt = (float)(double.Parse(items[10], new CultureInfo("en-US")));
-						temp.lat = (double.Parse(items[8], new CultureInfo("en-US")));
-						temp.lng = (double.Parse(items[9], new CultureInfo("en-US")));
-
-						temp.p2 = (float)(double.Parse(items[5], new CultureInfo("en-US")));
-						temp.p3 = (float)(double.Parse(items[6], new CultureInfo("en-US")));
-						temp.p4 = (float)(double.Parse(items[7], new CultureInfo("en-US")));
-
-						cmds.Add(temp);
-
-						wp_count++;
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-						MessageBox.Show(ResStrings.MsgLineInvalid.FormatWith(line));
-					}
-				}
-
-				sr.Close();
-
-				processToScreen(cmds, append);
-
-				writeKMLV2();
-
-				myMap.ZoomAndCenterMarkers("objects");
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ResStrings.MsgCantOpenFile.FormatWith(ex.Message));
-			}
-		}
-
 		
-
 		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			/**

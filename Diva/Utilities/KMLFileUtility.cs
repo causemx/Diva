@@ -176,6 +176,7 @@ namespace Diva.Utilities
 			schemaData.AddData(new SimpleData() { Name = "p6", Text = (wp.p2).ToString() });
 			schemaData.AddData(new SimpleData() { Name = "p7", Text = (wp.p3).ToString() });
 			schemaData.AddData(new SimpleData() { Name = "p8", Text = (wp.p4).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "wp_speed", Text = "2ms" });
 			extendedData.AddSchemaData(schemaData);
 			placemark.ExtendedData = extendedData;
 

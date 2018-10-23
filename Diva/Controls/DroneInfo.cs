@@ -52,7 +52,12 @@ namespace Diva.Controls
 		{
 			// get the waypoint speed, default unit is mile/second
 			// TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
-			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1");
+			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1") + "m";
+		}
+
+		public void ResetAssumeTime()
+		{
+			TxtAssumeTime.Text = "0.0m";
 		}
 
 		public void LowVoltageWarning(bool isLowVoltage)
