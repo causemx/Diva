@@ -282,7 +282,7 @@ namespace Diva.Utilities
 
 
 					// raise the fullpointslist outside
-					RaiseFullPointsEvent?.Invoke(this, new FullPointsEventArgs(fullpointlist, pointlist));
+					RaiseFullPointsEvent?.Invoke(this, new FullPointsEventArgs(fullpointlist));
 
 
 					homeroute.Stroke = new Pen(Color.BlanchedAlmond, 2);
@@ -317,14 +317,12 @@ namespace Diva.Utilities
 
 			public class FullPointsEventArgs : EventArgs
 			{
-				public FullPointsEventArgs(List<PointLatLngAlt> _fullPoints, List<PointLatLngAlt> _points)
+				public FullPointsEventArgs(List<PointLatLngAlt> _fullPoints)
 				{
 					this.FullPoints = _fullPoints;
-					this.Points = _points;
 				}
 
 				public List<PointLatLngAlt> FullPoints { get; set; }
-				public List<PointLatLngAlt> Points { get; set; }
 			}
         }
     }
