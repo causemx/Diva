@@ -184,12 +184,6 @@
     <Compile Include="Controls\ConfigureForm.Designer.cs">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConfigTuningPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ConfigTuningPage.Designer.cs">
-      <DependentUpon>ConfigTuningPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -314,9 +308,6 @@
     <Compile Include="VideoPlayer.cs" />
     <EmbeddedResource Include="Controls\ConfigMapPage.resx">
       <DependentUpon>ConfigMapPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ConfigTuningPage.resx">
-      <DependentUpon>ConfigTuningPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
