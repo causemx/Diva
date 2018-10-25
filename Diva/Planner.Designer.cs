@@ -346,7 +346,7 @@ namespace Diva
 			this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnConnect.ClickImage = null;
-			this.TSBtnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnConnect.ForeColor = System.Drawing.Color.White;
 			this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.TSBtnConnect.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConnect.HoverImage")));
@@ -360,7 +360,7 @@ namespace Diva
 			this.Btn_Rotation.ClickBackColor = System.Drawing.Color.Empty;
 			this.Btn_Rotation.ClickForeColor = System.Drawing.Color.Empty;
 			this.Btn_Rotation.ClickImage = null;
-			this.Btn_Rotation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.Btn_Rotation.ForeColor = System.Drawing.Color.White;
 			this.Btn_Rotation.HoverBackColor = System.Drawing.Color.Empty;
 			this.Btn_Rotation.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.Btn_Rotation.HoverImage = ((System.Drawing.Image)(resources.GetObject("Btn_Rotation.HoverImage")));
@@ -373,7 +373,7 @@ namespace Diva
 			this.TSBtnConfigure.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnConfigure.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnConfigure.ClickImage = null;
-			this.TSBtnConfigure.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnConfigure.ForeColor = System.Drawing.Color.White;
 			this.TSBtnConfigure.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnConfigure.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.TSBtnConfigure.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnConfigure.HoverImage")));
@@ -386,7 +386,7 @@ namespace Diva
 			this.TSBtnTagging.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnTagging.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnTagging.ClickImage = null;
-			this.TSBtnTagging.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnTagging.ForeColor = System.Drawing.Color.White;
 			this.TSBtnTagging.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnTagging.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.TSBtnTagging.HoverImage = ((System.Drawing.Image)(resources.GetObject("TSBtnTagging.HoverImage")));
@@ -399,7 +399,7 @@ namespace Diva
 			this.TSBtnSaveMission.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnSaveMission.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnSaveMission.ClickImage = null;
-			this.TSBtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnSaveMission.ForeColor = System.Drawing.Color.White;
 			this.TSBtnSaveMission.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnSaveMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.TSBtnSaveMission.HoverImage = global::Diva.Properties.Resources.icon_r_active;
@@ -413,7 +413,7 @@ namespace Diva
 			this.TSBtnReadMission.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnReadMission.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnReadMission.ClickImage = null;
-			this.TSBtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnReadMission.ForeColor = System.Drawing.Color.White;
 			this.TSBtnReadMission.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnReadMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
 			this.TSBtnReadMission.HoverImage = global::Diva.Properties.Resources.icon_w_active;
@@ -427,7 +427,7 @@ namespace Diva
 			this.TSBtnCusOverlay.ClickBackColor = System.Drawing.Color.Empty;
 			this.TSBtnCusOverlay.ClickForeColor = System.Drawing.Color.Empty;
 			this.TSBtnCusOverlay.ClickImage = null;
-			this.TSBtnCusOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.TSBtnCusOverlay.ForeColor = System.Drawing.Color.White;
 			this.TSBtnCusOverlay.HoverBackColor = System.Drawing.Color.Empty;
 			this.TSBtnCusOverlay.HoverForeColor = System.Drawing.Color.Aqua;
 			this.TSBtnCusOverlay.HoverImage = global::Diva.Properties.Resources.icon_c_active;

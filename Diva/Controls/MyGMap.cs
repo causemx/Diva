@@ -72,7 +72,7 @@ namespace Diva.Controls
                 }
             }
             GMapProvider.WebProxy = webproxy;
-            MapProvider = OpenStreetMapProvider.Instance;
+            MapProvider = BingSatelliteMapProvider.Instance;
             MinZoom = 0;
             MaxZoom = 24;
             Zoom = 15;
