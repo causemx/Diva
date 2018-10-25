@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputDataDialog));
 			this.Tbox_Value = new System.Windows.Forms.TextBox();
 			this.Lbl_Unit = new System.Windows.Forms.Label();
 			this.Btn_Confirm = new System.Windows.Forms.Button();
@@ -37,65 +38,43 @@
 			// 
 			// Tbox_Value
 			// 
-			this.Tbox_Value.Location = new System.Drawing.Point(20, 54);
+			resources.ApplyResources(this.Tbox_Value, "Tbox_Value");
 			this.Tbox_Value.Name = "Tbox_Value";
-			this.Tbox_Value.Size = new System.Drawing.Size(167, 22);
-			this.Tbox_Value.TabIndex = 0;
 			// 
 			// Lbl_Unit
 			// 
-			this.Lbl_Unit.AutoSize = true;
-			this.Lbl_Unit.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Lbl_Unit.Location = new System.Drawing.Point(191, 55);
+			resources.ApplyResources(this.Lbl_Unit, "Lbl_Unit");
 			this.Lbl_Unit.Name = "Lbl_Unit";
-			this.Lbl_Unit.Size = new System.Drawing.Size(32, 15);
-			this.Lbl_Unit.TabIndex = 1;
-			this.Lbl_Unit.Text = "unit";
 			// 
 			// Btn_Confirm
 			// 
-			this.Btn_Confirm.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Btn_Confirm.Location = new System.Drawing.Point(26, 81);
+			resources.ApplyResources(this.Btn_Confirm, "Btn_Confirm");
 			this.Btn_Confirm.Name = "Btn_Confirm";
-			this.Btn_Confirm.Size = new System.Drawing.Size(75, 23);
-			this.Btn_Confirm.TabIndex = 2;
-			this.Btn_Confirm.Text = "Enter";
 			this.Btn_Confirm.UseVisualStyleBackColor = true;
 			this.Btn_Confirm.Click += new System.EventHandler(this.Btn_Confirm_Click);
 			// 
 			// Btn_Cancel
 			// 
-			this.Btn_Cancel.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Btn_Cancel.Location = new System.Drawing.Point(109, 81);
+			resources.ApplyResources(this.Btn_Cancel, "Btn_Cancel");
 			this.Btn_Cancel.Name = "Btn_Cancel";
-			this.Btn_Cancel.Size = new System.Drawing.Size(75, 23);
-			this.Btn_Cancel.TabIndex = 3;
-			this.Btn_Cancel.Text = "Cancel";
 			this.Btn_Cancel.UseVisualStyleBackColor = true;
 			this.Btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
 			// 
 			// Lbl_Hint
 			// 
-			this.Lbl_Hint.AutoSize = true;
-			this.Lbl_Hint.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Lbl_Hint.Location = new System.Drawing.Point(20, 36);
+			resources.ApplyResources(this.Lbl_Hint, "Lbl_Hint");
 			this.Lbl_Hint.Name = "Lbl_Hint";
-			this.Lbl_Hint.Size = new System.Drawing.Size(84, 15);
-			this.Lbl_Hint.TabIndex = 4;
-			this.Lbl_Hint.Text = "do something";
 			// 
 			// InputDataDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(231, 133);
 			this.Controls.Add(this.Lbl_Hint);
 			this.Controls.Add(this.Btn_Cancel);
 			this.Controls.Add(this.Btn_Confirm);
 			this.Controls.Add(this.Lbl_Unit);
 			this.Controls.Add(this.Tbox_Value);
 			this.Name = "InputDataDialog";
-			this.Text = "InputDataDialog";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

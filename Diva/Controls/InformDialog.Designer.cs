@@ -28,39 +28,30 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformDialog));
 			this.BUT_Cancel = new System.Windows.Forms.Button();
 			this.LBL_Message = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// BUT_Cancel
 			// 
-			this.BUT_Cancel.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.BUT_Cancel.Location = new System.Drawing.Point(83, 100);
+			resources.ApplyResources(this.BUT_Cancel, "BUT_Cancel");
 			this.BUT_Cancel.Name = "BUT_Cancel";
-			this.BUT_Cancel.Size = new System.Drawing.Size(75, 23);
-			this.BUT_Cancel.TabIndex = 1;
-			this.BUT_Cancel.Text = "Cancel";
 			this.BUT_Cancel.UseVisualStyleBackColor = true;
 			this.BUT_Cancel.Click += new System.EventHandler(this.BUT_Cancel_Click);
 			// 
 			// LBL_Message
 			// 
-			this.LBL_Message.AutoSize = true;
-			this.LBL_Message.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LBL_Message.Location = new System.Drawing.Point(42, 62);
+			resources.ApplyResources(this.LBL_Message, "LBL_Message");
 			this.LBL_Message.Name = "LBL_Message";
-			this.LBL_Message.Size = new System.Drawing.Size(0, 15);
-			this.LBL_Message.TabIndex = 2;
 			// 
 			// InformDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(246, 166);
 			this.Controls.Add(this.LBL_Message);
 			this.Controls.Add(this.BUT_Cancel);
 			this.Name = "InformDialog";
-			this.Text = "InformDialog";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

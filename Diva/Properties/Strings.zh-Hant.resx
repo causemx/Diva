@@ -409,4 +409,34 @@
   <data name="MsgStatusRotating" xml:space="preserve">
     <value>輪值中</value>
   </data>
+  <data name="MsgDialogSetTotalWps" xml:space="preserve">
+    <value>設定全部航點</value>
+  </data>
+  <data name="MsgDialogSetWp" xml:space="preserve">
+    <value>設定航點 </value>
+  </data>
+  <data name="MsgDialogSetParams" xml:space="preserve">
+    <value>設定參數 </value>
+  </data>
+  <data name="MsgDialogGetWpCount" xml:space="preserve">
+    <value>取得航點 </value>
+  </data>
+  <data name="MsgDialogDone" xml:space="preserve">
+    <value>設定完成</value>
+  </data>
+  <data name="MsgDialogUploadWps" xml:space="preserve">
+    <value>上傳航點中</value>
+  </data>
+  <data name="MsgDialogDownloadWps" xml:space="preserve">
+    <value>下載航點中</value>
+  </data>
+  <data name="MsgBoxSaveMission" xml:space="preserve">
+    <value>任務已儲存</value>
+  </data>
+  <data name="MsgInputDialogHeightHint" xml:space="preserve">
+    <value>請輸入高度</value>
+  </data>
+  <data name="MsgDialogConnect" xml:space="preserve">
+    <value>連線</value>
+  </data>
 </root>

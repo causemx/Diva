@@ -340,13 +340,22 @@
     <EmbeddedResource Include="Controls\InformDialog.resx">
       <DependentUpon>InformDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InformDialog.zh-Hant.resx">
+      <DependentUpon>InformDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\InputDataDialog.resx">
+      <DependentUpon>InputDataDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InputDataDialog.zh-Hant.resx">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
+      <DependentUpon>ProgressDialogV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProgressDialogV2.zh-Hant.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SplashForm.zh-Hant.resx">

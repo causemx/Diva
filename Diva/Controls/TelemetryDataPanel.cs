@@ -22,7 +22,7 @@ namespace Diva.Controls
 		{
 			TxtVerticalSpeed.Text = verticalSpeed.ToString("F2");
 			TxtGroundSpeed.Text = groundSpeed.ToString("F2");
-			TxtAltitude.Text = altitude.ToString();
+			TxtAltitude.Text = altitude.ToString("F2");
 		}
 	}
 }

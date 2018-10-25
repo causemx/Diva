@@ -475,6 +475,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Mission Saved 的當地語系化字串。
+        /// </summary>
+        public static string MsgBoxSaveMission {
+            get {
+                return ResourceManager.GetString("MsgBoxSaveMission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Can not establish a connection\n\n{0} 的當地語系化字串。
         /// </summary>
         public static string MsgCannotEstablishConnection {
@@ -556,6 +565,78 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 Connect 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogConnect {
+            get {
+                return ResourceManager.GetString("MsgDialogConnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Done. 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogDone {
+            get {
+                return ResourceManager.GetString("MsgDialogDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Downloading waypoints 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogDownloadWps {
+            get {
+                return ResourceManager.GetString("MsgDialogDownloadWps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Getting WP count 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogGetWpCount {
+            get {
+                return ResourceManager.GetString("MsgDialogGetWpCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Setting params 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogSetParams {
+            get {
+                return ResourceManager.GetString("MsgDialogSetParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Set total wps 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogSetTotalWps {
+            get {
+                return ResourceManager.GetString("MsgDialogSetTotalWps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Setting WP  的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogSetWp {
+            get {
+                return ResourceManager.GetString("MsgDialogSetWp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Uploading waypoints 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogUploadWps {
+            get {
+                return ResourceManager.GetString("MsgDialogUploadWps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 You need at lease three drones online 的當地語系化字串。
         /// </summary>
         public static string MsgDroneNumberRequest {
@@ -597,6 +678,15 @@ namespace Diva.Properties {
         public static string MsgHomeLocationInvalid {
             get {
                 return ResourceManager.GetString("MsgHomeLocationInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Please enter the height 的當地語系化字串。
+        /// </summary>
+        public static string MsgInputDialogHeightHint {
+            get {
+                return ResourceManager.GetString("MsgInputDialogHeightHint", resourceCulture);
             }
         }
         

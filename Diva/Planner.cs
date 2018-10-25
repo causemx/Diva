@@ -1787,7 +1787,7 @@ namespace Diva
 					return true;
 				});
 
-			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Set total wps ");
+			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetTotalWps);
 			ActiveDrone.setWPTotal(totalwpcountforupload);
 
 			// define the home point
@@ -1934,7 +1934,7 @@ namespace Diva
 
 				req.seq = (ushort)a;
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1,	"Setting WP " + a);
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetWp + a);
 				log.Info("WP no " + a);
 
 				ActiveDrone.sendPacket(req, ActiveDrone.Status.sysid, ActiveDrone.Status.compid);
@@ -2022,7 +2022,7 @@ namespace Diva
 				bool use_int = (capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
 
 				// set wp total
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Set total wps ");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetTotalWps);
 
 				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
 
@@ -2095,7 +2095,7 @@ namespace Diva
 				{
 					var temp = commandlist[a - 1];
 
-					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Setting WP " + a);
+					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetWp + a);
 
 					// make sure we are using the correct frame for these commands
 					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
@@ -2174,7 +2174,7 @@ namespace Diva
 
 				ActiveDrone.setWPACK();
 				
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Setting params");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetParams);
 
 				// m
 				ActiveDrone.setParam("WP_RADIUS", float.Parse("30") / 1);
@@ -2194,7 +2194,7 @@ namespace Diva
 				{
 				}
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Done.");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogDone);
 			}
 			catch (Exception ex)
 			{
@@ -2228,7 +2228,7 @@ namespace Diva
 
 				log.Info("Getting Home");
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Getting WP count");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Diva.Properties.Strings.MsgDialogGetWpCount);
 
 				log.Info("Getting WP #");
 
@@ -2249,7 +2249,7 @@ namespace Diva
 
 				ActiveDrone.setWPACK();
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Done");
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogDone);
 
 				log.Info("Done");
 			}
@@ -2524,7 +2524,7 @@ namespace Diva
 			float targetHeight = 0.0f;
 			InputDataDialog _dialog = new InputDataDialog()
 			{
-				Hint = "Please enter the height",
+				Hint = ResStrings.MsgInputDialogHeightHint,
 				Unit = "m",
 			};
 			
@@ -2698,7 +2698,7 @@ namespace Diva
 
 			InputDataDialog _dialog = new InputDataDialog()
 			{
-				Hint = "Please enter the height",
+				Hint = ResStrings.MsgInputDialogHeightHint,
 				Unit = "m",
 			};
 
@@ -2773,7 +2773,7 @@ namespace Diva
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_info,
-				Text = "Downloading waypoints",
+				Text = ResStrings.MsgDialogDownloadWps,
 			};
 
 			downloadWPReporter.DoWork += getWPs;
@@ -2854,7 +2854,7 @@ namespace Diva
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_info,
-				Text = "Uploading waypoints",
+				Text = ResStrings.MsgDialogUploadWps,
 			};
 
 			uploadWPReporter.DoWork += saveWPs;
@@ -3000,7 +3000,7 @@ namespace Diva
 
 			kUtility.SaveKMLMission(GetCommandList(), home);
 			Thread.Sleep(1000);
-			MessageBox.Show("Save Mission");
+			MessageBox.Show(ResStrings.MsgBoxSaveMission);
 
 			writeKMLV2();
 		}

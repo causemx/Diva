@@ -521,7 +521,7 @@ namespace Diva.Mavlink
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_warn,
-				Text = "Connection",
+				Text = Diva.Properties.Strings.MsgDialogConnect,
 			};
 
 			if (getparams)

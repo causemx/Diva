@@ -408,4 +408,34 @@
   <data name="MsgStatusRotating" xml:space="preserve">
     <value>Rotating</value>
   </data>
+  <data name="MsgDialogSetTotalWps" xml:space="preserve">
+    <value>Set total wps</value>
+  </data>
+  <data name="MsgDialogSetWp" xml:space="preserve">
+    <value>Setting WP </value>
+  </data>
+  <data name="MsgDialogSetParams" xml:space="preserve">
+    <value>Setting params</value>
+  </data>
+  <data name="MsgDialogGetWpCount" xml:space="preserve">
+    <value>Getting WP count</value>
+  </data>
+  <data name="MsgDialogDone" xml:space="preserve">
+    <value>Done.</value>
+  </data>
+  <data name="MsgDialogUploadWps" xml:space="preserve">
+    <value>Uploading waypoints</value>
+  </data>
+  <data name="MsgDialogDownloadWps" xml:space="preserve">
+    <value>Downloading waypoints</value>
+  </data>
+  <data name="MsgBoxSaveMission" xml:space="preserve">
+    <value>Mission Saved</value>
+  </data>
+  <data name="MsgInputDialogHeightHint" xml:space="preserve">
+    <value>Please enter the height</value>
+  </data>
+  <data name="MsgDialogConnect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
 </root>
