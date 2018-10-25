@@ -316,6 +316,9 @@
       <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="VideoPlayer.cs" />
+    <EmbeddedResource Include="Controls\ConfigGeoFencePage.zh-Hant.resx">
+      <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigMapPage.resx">
       <DependentUpon>ConfigMapPage.cs</DependentUpon>
     </EmbeddedResource>
