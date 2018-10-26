@@ -2875,13 +2875,10 @@ namespace Diva
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
-		private Rotation rotationMission = null;
-
 		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
-			if (rotationMission == null)
-				rotationMission = new Rotation(OnlineDrones);
 
+			Rotation rotationMission = new Rotation(OnlineDrones);
 			rotationMission.Start();
 		}
 		
