@@ -439,4 +439,16 @@
   <data name="MsgDialogConnect" xml:space="preserve">
     <value>連線</value>
   </data>
+  <data name="MsgDialogRotationSwitch" xml:space="preserve">
+    <value>無人機控制移轉，機器系統編號:{0}</value>
+  </data>
+  <data name="MsgDialogRotationExecute" xml:space="preserve">
+    <value>輪值任務執行中，若要離開請按取消</value>
+  </data>
+  <data name="MsgWarnDroneMustActive" xml:space="preserve">
+    <value>請先啟動無人機</value>
+  </data>
+  <data name="MsgWarnRotationExcuteing" xml:space="preserve">
+    <value>輪值執行中</value>
+  </data>
 </root>

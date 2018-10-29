@@ -601,6 +601,24 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   查詢類似 execute the mission 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogRotationExecute {
+            get {
+                return ResourceManager.GetString("MsgDialogRotationExecute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 switch next drone, index: {0}. 的當地語系化字串。
+        /// </summary>
+        public static string MsgDialogRotationSwitch {
+            get {
+                return ResourceManager.GetString("MsgDialogRotationSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Setting params 的當地語系化字串。
         /// </summary>
         public static string MsgDialogSetParams {
@@ -912,6 +930,24 @@ namespace Diva.Properties {
         public static string MsgWaitingForSwitchingTo {
             get {
                 return ResourceManager.GetString("MsgWaitingForSwitchingTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 The Drone must be actived. 的當地語系化字串。
+        /// </summary>
+        public static string MsgWarnDroneMustActive {
+            get {
+                return ResourceManager.GetString("MsgWarnDroneMustActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Rotation mission have executing 的當地語系化字串。
+        /// </summary>
+        public static string MsgWarnRotationExcuteing {
+            get {
+                return ResourceManager.GetString("MsgWarnRotationExcuteing", resourceCulture);
             }
         }
         

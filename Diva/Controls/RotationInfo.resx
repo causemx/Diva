@@ -117,19 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BUT_Cancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BUT_Cancel.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
   <data name="BUT_Cancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 120</value>
+    <value>81, 80</value>
   </data>
   <data name="BUT_Cancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 23</value>
+    <value>174, 23</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BUT_Cancel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="BUT_Cancel.Text" xml:space="preserve">
     <value>Cancel</value>
@@ -150,16 +154,16 @@
     <value>True</value>
   </data>
   <data name="LBL_Message.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
+    <value>Georgia, 11.25pt</value>
   </data>
   <data name="LBL_Message.Location" type="System.Drawing.Point, System.Drawing">
-    <value>42, 62</value>
+    <value>33, 37</value>
   </data>
   <data name="LBL_Message.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+    <value>0, 18</value>
   </data>
   <data name="LBL_Message.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;LBL_Message.Name" xml:space="preserve">
     <value>LBL_Message</value>
@@ -179,16 +183,13 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>246, 166</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>InformDialog</value>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>339, 114</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>InformDialog</value>
+    <value>RotationInfo</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

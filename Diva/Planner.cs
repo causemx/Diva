@@ -122,6 +122,7 @@ namespace Diva
 		private bool isMapFocusing = true;
 
 		private Rotation rotationMission = null;
+		private RotationInfo rotationInfo = null;
 
 		public enum AltitudeMode
 		{
@@ -223,6 +224,10 @@ namespace Diva
 			drawnPolygon = new GMapPolygon(polygonPoints2, "drawnpoly");
 			drawnPolygon.Stroke = new Pen(Color.Red, 2);
 			drawnPolygon.Fill = Brushes.Transparent;
+
+			//setup rotationinfo panel
+			rotationInfo = new RotationInfo() { Visible = false };
+			RotationInfoPanel.Controls.Add(rotationInfo);
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
@@ -2518,7 +2523,7 @@ namespace Diva
 
 			if (ActiveDrone.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
 			{
-				DialogResult dr = MessageBox.Show("The Drone must be actived.", "Warning", MessageBoxButtons.OK);
+				DialogResult dr = MessageBox.Show(ResStrings.MsgWarnDroneMustActive, ResStrings.DialogTitleWarning, MessageBoxButtons.OK);
 				if (dr == DialogResult.OK) return;
 			}
 
@@ -2877,13 +2882,15 @@ namespace Diva
 			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
+		
+
 		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
-			if (rotationMission == null) { rotationMission = new Rotation(OnlineDrones); }
+			if (rotationMission == null) { rotationMission = new Rotation(OnlineDrones, rotationInfo); }
 			try
 			{
 				if (rotationMission.IsActived()) {
-					MessageBox.Show("Rotation mission have executing");
+					MessageBox.Show(ResStrings.MsgWarnRotationExcuteing);
 					return;
 				}
 				rotationMission.ShowDialog();
@@ -2893,9 +2900,7 @@ namespace Diva
 			{
 				log.Error(e1.ToString());
 			}
-		
 
-			
 		}
 		
 		private void BUT_Land_Click(object sender, EventArgs e)

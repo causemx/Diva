@@ -1,16 +1,16 @@
 ﻿namespace Diva.Controls
 {
-	partial class InformDialog
+	partial class RotationInfo
 	{
-		/// <summary>
-		/// Required designer variable.
+		/// <summary> 
+		/// 設計工具所需的變數。
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
+		/// <summary> 
+		/// 清除任何使用中的資源。
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">如果應該處置受控資源則為 true，否則為 false。</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && (components != null))
@@ -20,15 +20,15 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+		#region 元件設計工具產生的程式碼
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// <summary> 
+		/// 此為設計工具支援所需的方法 - 請勿使用程式碼編輯器修改
+		/// 這個方法的內容。
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformDialog));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RotationInfo));
 			this.BUT_Cancel = new System.Windows.Forms.Button();
 			this.LBL_Message = new System.Windows.Forms.Label();
 			this.SuspendLayout();
@@ -36,6 +36,7 @@
 			// BUT_Cancel
 			// 
 			resources.ApplyResources(this.BUT_Cancel, "BUT_Cancel");
+			this.BUT_Cancel.ForeColor = System.Drawing.Color.White;
 			this.BUT_Cancel.Name = "BUT_Cancel";
 			this.BUT_Cancel.UseVisualStyleBackColor = true;
 			this.BUT_Cancel.Click += new System.EventHandler(this.BUT_Cancel_Click);
@@ -43,16 +44,17 @@
 			// LBL_Message
 			// 
 			resources.ApplyResources(this.LBL_Message, "LBL_Message");
+			this.LBL_Message.ForeColor = System.Drawing.Color.White;
 			this.LBL_Message.Name = "LBL_Message";
 			// 
-			// InformDialog
+			// RotationInfo
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Black;
 			this.Controls.Add(this.LBL_Message);
 			this.Controls.Add(this.BUT_Cancel);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Name = "InformDialog";
+			this.Name = "RotationInfo";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

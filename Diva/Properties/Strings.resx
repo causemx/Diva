@@ -438,4 +438,16 @@
   <data name="MsgDialogConnect" xml:space="preserve">
     <value>Connect</value>
   </data>
+  <data name="MsgDialogRotationSwitch" xml:space="preserve">
+    <value>switch next drone, index: {0}.</value>
+  </data>
+  <data name="MsgDialogRotationExecute" xml:space="preserve">
+    <value>execute the mission</value>
+  </data>
+  <data name="MsgWarnDroneMustActive" xml:space="preserve">
+    <value>The Drone must be actived.</value>
+  </data>
+  <data name="MsgWarnRotationExcuteing" xml:space="preserve">
+    <value>Rotation mission have executing</value>
+  </data>
 </root>

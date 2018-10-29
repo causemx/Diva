@@ -1,5 +1,6 @@
 ﻿using Diva.Controls;
 using Diva.Mavlink;
+using Diva.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,27 +16,16 @@ namespace Diva.Mission
 
 		public static readonly int DRONE_NUMBER_CONSTRAIN = 0;
 		public bool isActive = false;
-		
-		public InformDialog dialog;
+		public RotationInfo infoDialog;
 		public List<MavDrone> drones;
 		public ManualResetEvent manualResetEvent;
 
-		public Rotation(List<MavDrone> _drones)
+		public Rotation(List<MavDrone> _drones, RotationInfo _infoDialog)
 		{
 			drones = _drones;
-			manualResetEvent = new ManualResetEvent(false);
-
-			dialog = new InformDialog() {
-				StartPosition = FormStartPosition.CenterScreen,
-			};
-			dialog.Title("Rotation");
-			dialog.Message("Initialize....^o^");
-
-			dialog.DoCancelHandler += (o, e) =>
-			{
-				Planner.log.Info("Rotation Canceling...");
-				Stop();
-			};
+			infoDialog = _infoDialog;
+			infoDialog.DoCancelHandler += (s, e) => Stop();
+			manualResetEvent = new ManualResetEvent(false);	
 
 		}
 
@@ -49,7 +39,7 @@ namespace Diva.Mission
 
 		public void ShowDialog()
 		{
-			dialog.Show();
+			infoDialog.Show(true);
 		}
 
 		private BackgroundWorker worker = null;
@@ -65,7 +55,6 @@ namespace Diva.Mission
 			worker = new BackgroundWorker();
 			worker.WorkerSupportsCancellation = true;
 			worker.DoWork += new DoWorkEventHandler(DoRotation);
-			worker.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
 
 			
 			if (worker.IsBusy)
@@ -90,16 +79,11 @@ namespace Diva.Mission
 		public void Stop()
 		{
 			isActive = false;
-			dialog.Hide();
+			infoDialog.Show(false);
 			worker.CancelAsync();
 			manualResetEvent.Dispose();
 
 			
-		}
-
-		public void ProgressChanged(object sender, ProgressChangedEventArgs pe)
-		{
-			((InformDialog)sender).Message("chenge");
 		}
 
 		public void LockDrone(int index)
@@ -115,7 +99,7 @@ namespace Diva.Mission
 		{
 			if (drones.Count < DRONE_NUMBER_CONSTRAIN)
 			{
-				MessageBox.Show("number invalid", "warning", MessageBoxButtons.OK);
+				MessageBox.Show(Diva.Properties.Strings.MsgDroneNumberRequest, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				return;
 			}
 					   
@@ -138,9 +122,9 @@ namespace Diva.Mission
 						continue;
 					}
 
-					dialog.Message(String.Format("switch next drone, index: {0}.", index));
+					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationSwitch, index));
 
-					// If using the INF firmware, mark this line.
+					// **IMPORTANT**: If using the INF firmware, mark this line.
 					mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
 
 					while (!mav.Status.armed)
@@ -155,19 +139,15 @@ namespace Diva.Mission
 						manualResetEvent.WaitOne(1000);
 					}
 
-					dialog.Message(String.Format("drone takeoff to 10m, index: {0}.", index));
-
 					// switch mode to AUTO
 					mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 
-					dialog.Message(String.Format("execute the mission, index: {0}.", index));
+					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationExecute, index));
 
 					while (mav.Status.sys_status == (byte)MAVLink.MAV_STATE.ACTIVE)
 					{
 						manualResetEvent.WaitOne(1000);
 					}
-
-					dialog.Message(String.Format("drone landed, index: {0}.", index));
 
 					index = (index + 1) % drones.Count;
 				}

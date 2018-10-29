@@ -39,7 +39,6 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.Lbl_Rotate = new System.Windows.Forms.Label();
 			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
 			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
 			this.But_MapFocus = new System.Windows.Forms.ToolStripButton();
@@ -103,6 +102,7 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
+			this.RotationInfoPanel = new System.Windows.Forms.FlowLayoutPanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -121,7 +121,7 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.Lbl_Rotate);
+			this.splitContainer.Panel1.Controls.Add(this.RotationInfoPanel);
 			this.splitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
 			this.splitContainer.Panel1.Controls.Add(this.TSZoomPanel);
 			this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
@@ -139,13 +139,6 @@ namespace Diva
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
-			// 
-			// Lbl_Rotate
-			// 
-			resources.ApplyResources(this.Lbl_Rotate, "Lbl_Rotate");
-			this.Lbl_Rotate.BackColor = System.Drawing.Color.White;
-			this.Lbl_Rotate.ForeColor = System.Drawing.Color.Red;
-			this.Lbl_Rotate.Name = "Lbl_Rotate";
 			// 
 			// DroneInfoPanel
 			// 
@@ -819,6 +812,11 @@ namespace Diva
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
+			// RotationInfoPanel
+			// 
+			resources.ApplyResources(this.RotationInfoPanel, "RotationInfoPanel");
+			this.RotationInfoPanel.Name = "RotationInfoPanel";
+			// 
 			// Planner
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -911,6 +909,6 @@ namespace Diva
 		private MyTSButton TSBtnCusOverlay;
         private DroneInfoPanel DroneInfoPanel;
 		private ToolStripButton But_MapFocus;
-		private Label Lbl_Rotate;
+		private FlowLayoutPanel RotationInfoPanel;
 	}
 }
