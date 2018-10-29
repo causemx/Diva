@@ -125,7 +125,7 @@ namespace Diva.Mission
 					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationSwitch, index));
 
 					// **IMPORTANT**: If using the INF firmware, mark this line.
-					mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
+					// mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
 
 					while (!mav.Status.armed)
 					{
