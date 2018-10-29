@@ -15,7 +15,7 @@ namespace Diva.Mission
 
 		public static readonly int DRONE_NUMBER_CONSTRAIN = 0;
 		public bool isActive = false;
-		public BackgroundWorker worker;
+		
 		public InformDialog dialog;
 		public List<MavDrone> drones;
 		public ManualResetEvent manualResetEvent;
@@ -25,24 +25,18 @@ namespace Diva.Mission
 			drones = _drones;
 			manualResetEvent = new ManualResetEvent(false);
 
-			worker = new BackgroundWorker
-			{
-				WorkerSupportsCancellation = true
+			dialog = new InformDialog() {
+				StartPosition = FormStartPosition.CenterScreen,
 			};
-			worker.DoWork += new DoWorkEventHandler(DoRotation);
-			worker.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
-
-			dialog = new InformDialog() { StartPosition = FormStartPosition.CenterScreen, };
 			dialog.Title("Rotation");
 			dialog.Message("Initialize....^o^");
-			dialog.Show();
 
 			dialog.DoCancelHandler += (o, e) =>
 			{
 				Planner.log.Info("Rotation Canceling...");
 				Stop();
 			};
-			
+
 		}
 
 		public void InitializeState()
@@ -53,9 +47,27 @@ namespace Diva.Mission
 			});
 		}
 
+		public void ShowDialog()
+		{
+			dialog.Show();
+		}
+
+		private BackgroundWorker worker = null;
+
+
+		/// <summary>
+		/// start a new backgroundw worker, which own independency life cycle.
+		/// </summary>
 		public void Start()
 		{
 			isActive = true;
+
+			worker = new BackgroundWorker();
+			worker.WorkerSupportsCancellation = true;
+			worker.DoWork += new DoWorkEventHandler(DoRotation);
+			worker.ProgressChanged += new ProgressChangedEventHandler(ProgressChanged);
+
+			
 			if (worker.IsBusy)
 			{
 				worker.CancelAsync();
@@ -64,18 +76,25 @@ namespace Diva.Mission
 			worker.RunWorkerAsync();
 		}
 
-		public bool IsStart()
+		public bool IsBusy()
 		{
 			return worker.IsBusy;
+		}
+
+		public bool IsActived()
+		{
+			return isActive;
+			
 		}
 
 		public void Stop()
 		{
 			isActive = false;
-			if (worker.IsBusy) { worker.CancelAsync(); }
-			dialog.Dispose();
+			dialog.Hide();
+			worker.CancelAsync();
 			manualResetEvent.Dispose();
 
+			
 		}
 
 		public void ProgressChanged(object sender, ProgressChangedEventArgs pe)
@@ -155,36 +174,5 @@ namespace Diva.Mission
 				
 			}
 		}
-
-
-		public class StatusChecker
-		{
-			private int invokeCount;
-			private readonly int maxCount;
-
-			public StatusChecker(int count)
-			{
-				invokeCount = 0;
-				maxCount = count;
-			}
-
-			// This method is called by the timer delegate.
-			public void CheckStatus(Object stateInfo)
-			{
-				AutoResetEvent autoEvent = (AutoResetEvent)stateInfo;
-				Console.WriteLine("{0} Checking status {1,2}.",
-					DateTime.Now.ToString("h:mm:ss.fff"),
-					(++invokeCount).ToString());
-
-				if (invokeCount == maxCount)
-				{
-					// Reset the counter and signal the waiting thread.
-					invokeCount = 0;
-					autoEvent.Set();
-				}
-			}
-		}
-
 	}
-
 }

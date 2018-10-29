@@ -51,6 +51,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.LBL_Message);
 			this.Controls.Add(this.BUT_Cancel);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "InformDialog";
 			this.ResumeLayout(false);
 			this.PerformLayout();

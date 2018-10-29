@@ -35,5 +35,32 @@ namespace Diva.Controls
 			if (DoCancelHandler != null)
 				DoCancelHandler(s, e);
 		}
+
+
+/*
+Constants in Windows API
+0x84 = WM_NCHITTEST - Mouse Capture Test
+0x1 = HTCLIENT - Application Client Area
+0x2 = HTCAPTION - Application Title Bar
+
+This function intercepts all the commands sent to the application. 
+It checks to see of the message is a mouse click in the application. 
+It passes the action to the base action by default. It reassigns 
+the action to the title bar if it occured in the client area
+to allow the drag and move behavior.
+*/
+		protected override void WndProc(ref Message m)
+		{
+			switch (m.Msg)
+			{
+				case 0x84:
+					base.WndProc(ref m);
+					if ((int)m.Result == 0x1)
+						m.Result = (IntPtr)0x2;
+					return;
+			}
+
+			base.WndProc(ref m);
+		}
 	}
 }

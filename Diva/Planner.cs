@@ -121,6 +121,8 @@ namespace Diva
 
 		private bool isMapFocusing = true;
 
+		private Rotation rotationMission = null;
+
 		public enum AltitudeMode
 		{
 			Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
@@ -2877,9 +2879,23 @@ namespace Diva
 
 		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
+			if (rotationMission == null) { rotationMission = new Rotation(OnlineDrones); }
+			try
+			{
+				if (rotationMission.IsActived()) {
+					MessageBox.Show("Rotation mission have executing");
+					return;
+				}
+				rotationMission.ShowDialog();
+				rotationMission.Start(); 
+			}
+			catch (Exception e1)
+			{
+				log.Error(e1.ToString());
+			}
+		
 
-			Rotation rotationMission = new Rotation(OnlineDrones);
-			rotationMission.Start();
+			
 		}
 		
 		private void BUT_Land_Click(object sender, EventArgs e)
