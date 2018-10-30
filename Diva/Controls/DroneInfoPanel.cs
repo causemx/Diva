@@ -115,6 +115,8 @@ namespace Diva.Controls
             }
         }
 
+
+
         public void UpdateAssumeTime(double missionDistance) =>
             ActiveDroneInfo?.UpdateAssumeTime(missionDistance);
 

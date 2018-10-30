@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,41 +29,49 @@ namespace Diva.Utilities
 
 			using (OpenFileDialog fd = new OpenFileDialog())
 			{
-				fd.Filter = "Google Earth KML |*.kml;*.kmz";
+				fd.Filter = "Google Earth KML |*.kml";
 				DialogResult result = fd.ShowDialog();
-				try
+				if (result == DialogResult.OK)
 				{
-					string file = fd.FileName;
 					try
 					{
-						string kml = "";
-						string tempdir = "";
+						string file = fd.FileName;
+						try
+						{
+							string kml = "";
+							string tempdir = "";
 
-						var sr = new StreamReader(File.OpenRead(file));
-						kml = sr.ReadToEnd();
-						sr.Close();
+							var sr = new StreamReader(File.OpenRead(file));
+							kml = sr.ReadToEnd();
+							sr.Close();
 
-						// cleanup after out
-						if (tempdir != "")
-							Directory.Delete(tempdir, true);
+							// cleanup after out
+							if (tempdir != "")
+								Directory.Delete(tempdir, true);
 
-						kml = kml.Replace("<Snippet/>", "");
+							kml = kml.Replace("<Snippet/>", "");
 
-						var parser = new Parser();
+							var parser = new Parser();
 
-						parser.ElementAdded += ProcessKMLReadMission;
-						parser.ParseString(kml, false);
+							parser.ElementAdded += ProcessKMLReadMission;
+							parser.ParseString(kml, false);
+						}
+						catch (Exception e1)
+						{
+							Planner.log.Error("Bad kml error" + e1);
+						}
 					}
-					catch (Exception e1)
+					catch (Exception e2)
 					{
-						MessageBox.Show("Bad kml error" + e1);
+						Planner.log.Error("Can not find the file" + e2);
 					}
+					return cmds;
 				}
-				catch( Exception e2)
+				else
 				{
-					MessageBox.Show("Can not find the file" + e2);
+					throw new Exception("no wapoints readed");
 				}
-				return cmds;
+				
 			}
 		}
 
@@ -119,35 +128,43 @@ namespace Diva.Utilities
 				fd.DefaultExt = ".kml";
 				fd.FileName = wpfilename;
 				DialogResult result = fd.ShowDialog();
-				string file = fd.FileName;
-				
-				if (file != "")
+
+				if (result == DialogResult.OK)
 				{
-					try
+					string file = fd.FileName;
+					if (file != "")
 					{
-						FileStream fs = File.Create(file);
-
-						// This is the root element of the file
-						Kml kml = new Kml();
-						Document document = new Document();
-
-						document.AddFeature(ProcessKMLSaveMission(home, true));
-					
-						foreach (Locationwp wp in _cmds)
+						try
 						{
-							document.AddFeature(ProcessKMLSaveMission(wp, false));
+							FileStream fs = File.Create(file);
+
+							// This is the root element of the file
+							Kml kml = new Kml();
+							Document document = new Document();
+
+							document.AddFeature(ProcessKMLSaveMission(home, true));
+
+							foreach (Locationwp wp in _cmds)
+							{
+								document.AddFeature(ProcessKMLSaveMission(wp, false));
+							}
+
+							kml.Feature = document;
+
+							Serializer serializer = new Serializer();
+							serializer.Serialize(kml, fs);
+							fs.Close();
+
 						}
-
-						kml.Feature = document;
-
-						Serializer serializer = new Serializer();
-						serializer.Serialize(kml, fs);
-
+						catch (Exception e)
+						{
+							Planner.log.Error(e.ToString());
+						}
 					}
-					catch (Exception e)
-					{
-						Planner.log.Error(e.ToString());
-					}
+
+					Thread.Sleep(1000);
+					MessageBox.Show(Diva.Properties.Strings.MsgBoxSaveMission);
+					
 				}
 			}
 		}

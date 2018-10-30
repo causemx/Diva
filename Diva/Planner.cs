@@ -3017,21 +3017,25 @@ namespace Diva
 			};
 
 			kUtility.SaveKMLMission(GetCommandList(), home);
-			Thread.Sleep(1000);
-			MessageBox.Show(ResStrings.MsgBoxSaveMission);
 
 			writeKMLV2();
 		}
 
 		private void BtnReadMission_Click(object sender, EventArgs e)
 		{
-			KMLFileUtility kUtility = new KMLFileUtility();
-			List<Locationwp> cmds = kUtility.ReadKMLMission();
-
+			try
+			{
+				KMLFileUtility kUtility = new KMLFileUtility();
+				List<Locationwp> cmds = kUtility.ReadKMLMission();
+				processToScreen(cmds, false);
+				writeKMLV2();
+				myMap.ZoomAndCenterMarkers("objects");
+			}
+			catch (Exception e1)
+			{
+				log.Warn(e1.ToString());
+			}
 			
-			processToScreen(cmds, false);
-			writeKMLV2();
-			myMap.ZoomAndCenterMarkers("objects");
 		}
 
 
