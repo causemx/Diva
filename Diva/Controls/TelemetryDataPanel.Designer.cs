@@ -34,11 +34,11 @@
 			this.GBGroundSpeed = new Diva.Controls.MyGroupBox();
 			this.TxtGroundSpeed = new System.Windows.Forms.Label();
 			this.GBGeoFence = new Diva.Controls.MyGroupBox();
-			this.TxtGeoFenceEnable = new System.Windows.Forms.Label();
+			this.LBL_GeoFenceChecker = new System.Windows.Forms.Label();
 			this.GBAltitude = new Diva.Controls.MyGroupBox();
 			this.TxtAltitude = new System.Windows.Forms.Label();
 			this.GBBattery = new Diva.Controls.MyGroupBox();
-			this.TxtBatteryPercentage = new System.Windows.Forms.Label();
+			this.LBL_LowBatteryChecker = new System.Windows.Forms.Label();
 			this.GBTitle.SuspendLayout();
 			this.GBVerticalSpeed.SuspendLayout();
 			this.GBGroundSpeed.SuspendLayout();
@@ -127,7 +127,7 @@
 			// GBGeoFence
 			// 
 			this.GBGeoFence.BackColor = System.Drawing.Color.Transparent;
-			this.GBGeoFence.Controls.Add(this.TxtGeoFenceEnable);
+			this.GBGeoFence.Controls.Add(this.LBL_GeoFenceChecker);
 			this.GBGeoFence.Location = new System.Drawing.Point(223, 24);
 			this.GBGeoFence.Name = "GBGeoFence";
 			this.GBGeoFence.Radious = 1;
@@ -141,16 +141,16 @@
 			this.GBGeoFence.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.GBGeoFence.TitlePadding = 3;
 			// 
-			// TxtGeoFenceEnable
+			// LBL_GeoFenceChecker
 			// 
-			this.TxtGeoFenceEnable.AutoSize = true;
-			this.TxtGeoFenceEnable.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtGeoFenceEnable.ForeColor = System.Drawing.Color.White;
-			this.TxtGeoFenceEnable.Location = new System.Drawing.Point(35, 52);
-			this.TxtGeoFenceEnable.Name = "TxtGeoFenceEnable";
-			this.TxtGeoFenceEnable.Size = new System.Drawing.Size(39, 18);
-			this.TxtGeoFenceEnable.TabIndex = 4;
-			this.TxtGeoFenceEnable.Text = "N/A";
+			this.LBL_GeoFenceChecker.AutoSize = true;
+			this.LBL_GeoFenceChecker.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LBL_GeoFenceChecker.ForeColor = System.Drawing.Color.White;
+			this.LBL_GeoFenceChecker.Location = new System.Drawing.Point(35, 52);
+			this.LBL_GeoFenceChecker.Name = "LBL_GeoFenceChecker";
+			this.LBL_GeoFenceChecker.Size = new System.Drawing.Size(39, 18);
+			this.LBL_GeoFenceChecker.TabIndex = 4;
+			this.LBL_GeoFenceChecker.Text = "N/A";
 			// 
 			// GBAltitude
 			// 
@@ -183,7 +183,7 @@
 			// GBBattery
 			// 
 			this.GBBattery.BackColor = System.Drawing.Color.Transparent;
-			this.GBBattery.Controls.Add(this.TxtBatteryPercentage);
+			this.GBBattery.Controls.Add(this.LBL_LowBatteryChecker);
 			this.GBBattery.Location = new System.Drawing.Point(3, 24);
 			this.GBBattery.Name = "GBBattery";
 			this.GBBattery.Radious = 1;
@@ -197,16 +197,16 @@
 			this.GBBattery.TitleHatchStyle = System.Drawing.Drawing2D.HatchStyle.Percent60;
 			this.GBBattery.TitlePadding = 3;
 			// 
-			// TxtBatteryPercentage
+			// LBL_LowBatteryChecker
 			// 
-			this.TxtBatteryPercentage.AutoSize = true;
-			this.TxtBatteryPercentage.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtBatteryPercentage.ForeColor = System.Drawing.Color.White;
-			this.TxtBatteryPercentage.Location = new System.Drawing.Point(31, 52);
-			this.TxtBatteryPercentage.Name = "TxtBatteryPercentage";
-			this.TxtBatteryPercentage.Size = new System.Drawing.Size(39, 18);
-			this.TxtBatteryPercentage.TabIndex = 1;
-			this.TxtBatteryPercentage.Text = "N/A";
+			this.LBL_LowBatteryChecker.AutoSize = true;
+			this.LBL_LowBatteryChecker.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LBL_LowBatteryChecker.ForeColor = System.Drawing.Color.White;
+			this.LBL_LowBatteryChecker.Location = new System.Drawing.Point(31, 52);
+			this.LBL_LowBatteryChecker.Name = "LBL_LowBatteryChecker";
+			this.LBL_LowBatteryChecker.Size = new System.Drawing.Size(39, 18);
+			this.LBL_LowBatteryChecker.TabIndex = 1;
+			this.LBL_LowBatteryChecker.Text = "N/A";
 			// 
 			// TelemetryDataPanel
 			// 
@@ -239,8 +239,8 @@
 		private MyGroupBox GBGroundSpeed;
 		private MyGroupBox GBVerticalSpeed;
 		private System.Windows.Forms.Label TxtAltitude;
-		private System.Windows.Forms.Label TxtBatteryPercentage;
-		private System.Windows.Forms.Label TxtGeoFenceEnable;
+		private System.Windows.Forms.Label LBL_LowBatteryChecker;
+		private System.Windows.Forms.Label LBL_GeoFenceChecker;
 		private System.Windows.Forms.Label TxtVerticalSpeed;
 		private System.Windows.Forms.Label TxtGroundSpeed;
 	}

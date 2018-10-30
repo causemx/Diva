@@ -24,5 +24,12 @@ namespace Diva.Controls
 			TxtGroundSpeed.Text = groundSpeed.ToString("F2");
 			TxtAltitude.Text = altitude.ToString("F2");
 		}
+
+		public void UpdateStatusChecker(bool lowBattEnable, bool geoFenceEnable)
+		{
+			LBL_LowBatteryChecker.Text = lowBattEnable.ToString();
+			LBL_GeoFenceChecker.Text = geoFenceEnable.ToString();
+				
+		}
 	}
 }
