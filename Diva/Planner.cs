@@ -1,5 +1,4 @@
-﻿using Diva.Comms;
-using Diva.Controls;
+﻿using Diva.Controls;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
@@ -9,16 +8,11 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
-using SharpKml.Base;
-using SharpKml.Dom;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,7 +21,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using static Diva.Utilities.OverlayUtility.WPOverlay;
 using ResStrings = Diva.Properties.Strings;
 
 namespace Diva
@@ -2886,6 +2879,8 @@ namespace Diva
 
 		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
+			if (OnlineDrones.Count == 0) return;
+
 			if (rotationMission == null) { rotationMission = new Rotation(OnlineDrones, rotationInfo); }
 			try
 			{
@@ -2960,6 +2955,27 @@ namespace Diva
 				Task.Run(async () => await CleanupAsync());
 			}
 			
+		}
+
+		private void BUT_PowerConsume_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				log.InfoFormat("WPNAV_SPEED:{0}", ActiveDrone.Status.param["WPNAV_SPEED"]);
+				log.InfoFormat("WPNAV_SPEED_UP:{0}", ActiveDrone.Status.param["WPNAV_SPEED_UP"]);
+				log.InfoFormat("WPNAV_SPEED_DN:{0}", ActiveDrone.Status.param["WPNAV_SPEED_DN"]);
+				log.InfoFormat("LAND_SPEED:{0}", ActiveDrone.Status.param["LAND_SPEED"]);
+				log.InfoFormat("LAND_SPEED_HIGH:{0}", ActiveDrone.Status.param["LAND_SPEED_HIGH"]);
+				log.InfoFormat("RTL_SPEED:{0}", ActiveDrone.Status.param["RTL_SPEED"]);
+				log.InfoFormat("RTL_ALT:{0}", ActiveDrone.Status.param["RTL_ALT"]);
+				log.InfoFormat("WPNAV_ACCEL:{0}", ActiveDrone.Status.param["WPNAV_ACCEL"]);
+				log.InfoFormat("WPNAV_ACCEL_Z:{0}", ActiveDrone.Status.param["WPNAV_ACCEL_Z"]);
+			}
+			catch (Exception e1)
+			{
+			}
+		
+
 		}
 
 
@@ -3693,5 +3709,7 @@ namespace Diva
         {
             ActiveDrone = (sender as DroneInfo)?.Drone;
         }
+
+		
 	}
 }
