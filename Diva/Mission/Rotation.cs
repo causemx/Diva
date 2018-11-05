@@ -14,7 +14,7 @@ namespace Diva.Mission
 	class Rotation
 	{
 
-		public static readonly int DRONE_NUMBER_CONSTRAIN = 0;
+		public static readonly int DRONE_NUMBER_CONSTRAIN = 2;
 		public bool isActive = false;
 		public RotationInfo infoDialog;
 		public List<MavDrone> drones;

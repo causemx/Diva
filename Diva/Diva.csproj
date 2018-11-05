@@ -292,6 +292,8 @@
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />
+    <Compile Include="Utilities\FileUtility.cs" />
+    <Compile Include="Utilities\IFileUtility.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
     <Compile Include="Utilities\IOverlayUtility.cs" />
     <Compile Include="Utilities\Locationwp.cs" />

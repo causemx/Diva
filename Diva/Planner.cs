@@ -408,7 +408,7 @@ namespace Diva
 				cmds.Add(item);
 			}
 
-			cmds.Add("UNKNOWN");
+			// cmds.Add("UNKNOWN");
 
 			colCommand.DataSource = cmds;
 		}
@@ -2959,6 +2959,7 @@ namespace Diva
 
 		private void BUT_PowerConsume_Click(object sender, EventArgs e)
 		{
+			/*
 			try
 			{
 				log.InfoFormat("WPNAV_SPEED:{0}", ActiveDrone.Status.param["WPNAV_SPEED"]);
@@ -2973,9 +2974,23 @@ namespace Diva
 			}
 			catch (Exception e1)
 			{
-			}
-		
+				log.Error(e1.ToString());
+			}*/
 
+			try
+			{
+				Locationwp home = new Locationwp()
+				{
+					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+					lat = (double.Parse(TxtHomeLatitude.Text)),
+					lng = (double.Parse(TxtHomeLongitude.Text)),
+					alt = (float.Parse(TxtHomeAltitude.Text)),
+				};
+
+				FileUtility fu = new FileUtility(ActiveDrone, GetCommandList(), home);
+				fu.Write();
+			}
+			catch (Exception) {	}
 		}
 
 
