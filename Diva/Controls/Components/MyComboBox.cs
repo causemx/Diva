@@ -111,7 +111,7 @@ namespace Diva.Controls.Components
 						return;
 					}
 
-					if (!Planner.GetActiveDrone().setParam(ParamName, (float)(Int32)Enum.Parse(_source, this.Text)))
+					if (!Planner.GetActiveDrone().SetParam(ParamName, (float)(Int32)Enum.Parse(_source, this.Text)))
 					{
 						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
 					}
@@ -119,7 +119,7 @@ namespace Diva.Controls.Components
 					if (paramname2 != "")
 					{
 						if (
-							!Planner.GetActiveDrone().setParam(paramname2,
+							!Planner.GetActiveDrone().SetParam(paramname2,
 								(float)(Int32)Enum.Parse(_source, this.Text) > 0 ? 1 : 0))
 						{
 							MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, paramname2), Strings.ERROR);
@@ -142,7 +142,7 @@ namespace Diva.Controls.Components
 						return;
 					}
 
-					if (!Planner.GetActiveDrone().setParam(ParamName, (float)(int)((MyComboBox)sender).SelectedValue))
+					if (!Planner.GetActiveDrone().SetParam(ParamName, (float)(int)((MyComboBox)sender).SelectedValue))
 					{
 						MessageBox.Show("Set " + ParamName + " Failed!", Strings.ERROR);
 					}
@@ -150,7 +150,7 @@ namespace Diva.Controls.Components
 					if (paramname2 != "")
 					{
 						if (
-							!Planner.GetActiveDrone().setParam(paramname2,
+							!Planner.GetActiveDrone().SetParam(paramname2,
 								(float)(int)((MyComboBox)sender).SelectedValue > 0 ? 1 : 0))
 						{
 							MessageBox.Show("Set " + paramname2 + " Failed!", Strings.ERROR);

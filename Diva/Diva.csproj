@@ -251,11 +251,12 @@
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavBaseStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
-    <Compile Include="Mavlink\MavlinkInterface.cs" />
+    <Compile Include="Mavlink\MavCore.cs" />
     <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavSerialStream.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
     <Compile Include="Mavlink\MavUdpStream.cs" />
+    <Compile Include="Mavlink\MavUtlities.cs" />
     <Compile Include="Mavlink\MavWaypoint.cs" />
     <Compile Include="Mavlink\MavWrapper.cs" />
     <Compile Include="Planner.cs">
@@ -283,6 +284,7 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Strings.cs" />
+    <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />

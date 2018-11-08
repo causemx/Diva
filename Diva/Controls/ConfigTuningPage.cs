@@ -102,7 +102,7 @@ namespace Diva.Controls
 							return;
 						}
 
-					mav.setParam(value, (float)changes[value]);
+					mav.SetParam(value, (float)changes[value]);
 
 					changes.Remove(value);
 
@@ -140,7 +140,7 @@ namespace Diva.Controls
 
 			try
 			{
-				mav.getParamList();
+				mav.GetParamList();
 			}
 			catch (Exception ex)
 			{

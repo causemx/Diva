@@ -28,30 +28,6 @@ namespace Diva.Mavlink
         public int ReadTimeout { get; set; }
 
         // general property access
-        private PropertyInfo GetProperty(string prop) => this.GetType().GetProperty(prop);
-        public bool SetPropertyValue(string prop, object value)
-        {
-            bool ret = false;
-            try
-            {
-                var setter = GetProperty(prop).GetSetMethod();
-                setter.Invoke(this, new [] { value });
-                ret = true;
-            } catch { }
-            return ret;
-        }
-        public bool GetPropertyValue(string prop, out object value)
-        {
-            bool ret = false;
-            try
-            {
-                var setter = GetProperty(prop).GetGetMethod();
-                value = setter.Invoke(this, null);
-                ret = true;
-            }
-            catch { value = null; }
-            return ret;
-        }
         public int ReadBufferSize { get; set; }
         public abstract string StreamDescription { get; }
         public abstract int BytesAvailable { get; }

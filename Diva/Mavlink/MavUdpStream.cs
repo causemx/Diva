@@ -10,6 +10,7 @@ namespace Diva.Mavlink
         internal MavUdpStream(DroneSetting setting) : base(setting)
         {
             int.TryParse(setting.PortNumber, out port);
+            ReadTimeout = 5000;
         }
         ~MavUdpStream() { Dispose(false);  }
         // IDisposable override
@@ -67,13 +68,13 @@ namespace Diva.Mavlink
             {
                 client.Client.ReceiveTimeout = ReadTimeout;
                 client.Receive(ref Remote);
-                Console.WriteLine($"UDPSerial connecting to {Remote.Address} : {Remote.Port}");
+                Console.WriteLine($"MavUDPStream connecting to {Remote.Address} : {Remote.Port}");
                 IsOpen = true;
                 readBuffer.reset();
             } catch (Exception ex)
             {
                 Close();
-                throw new Exception("The socket/UDPSerial is closed " + ex);
+                throw new Exception("MavUDPStream is closed " + ex);
             }
         }
 

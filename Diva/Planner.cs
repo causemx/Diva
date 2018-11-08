@@ -109,9 +109,7 @@ namespace Diva
 
 
 		// Thread setup
-		private Thread mainThread = null;
-		private Thread updateMapItemThread = null;
-		private volatile bool serialThread = false;
+		private BackgroundLoop mainThread = null;
 
 		private DateTime heartbeatSend = DateTime.Now;
 		private DateTime lastupdate = DateTime.Now;
@@ -127,42 +125,6 @@ namespace Diva
 			Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
 			Absolute = MAVLink.MAV_FRAME.GLOBAL,
 			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
-		}
-
-		public enum FlightMode
-		{
-			STABILIZE = 0,
-			ACRO = 1,
-			ALT_HOLD = 2,
-			AUTO = 3,
-			GUIDED = 4,
-			LOITER = 5,
-			RTL = 6,
-			CIRCLE = 7,
-			POSITION = 8,
-			LAND = 9,
-			OF_LOITER = 10,
-			DRIFT = 11,
-			SPORT = 13,
-			FLIP = 14,
-			AUTOTUNE = 15,
-			POSHOLD = 16,
-			BRAKE = 17,
-			THROW = 18,
-			AVOID_ADSB = 19,
-			GUIDED_NOGPS = 20,
-		}
-
-		public enum Firmwares
-		{
-			ArduPlane,
-			ArduCopter2,
-			ArduRover,
-			ArduSub,
-			Ateryx,
-			ArduTracker,
-			Gymbal,
-			PX4
 		}
 
 		internal MyGMap GMapControl => myMap;
@@ -275,32 +237,13 @@ namespace Diva
 			DatabaseManager.InitialDatabase();
 			recorder_id = DatabaseManager.InsertValue(recorder);
 
-			mainThread = new Thread(MainLoop)
-			{
-				IsBackground = true,
-				Name = "Main Serial reader",
-				Priority = ThreadPriority.AboveNormal
-			};
-			mainThread.Start();
-
-			updateMapItemThread = new Thread(MapitemUpdateLoop) { IsBackground = true };
-			updateMapItemThread.Start();
-			isUpdatemapThreadRun = true;
+            mainThread = BackgroundLoop.Start(MainLoop);
 		}
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
 		{
-            if (updateMapItemThread != null)
-            {
-                isUpdatemapThreadRun = false;
-                updateMapItemThread = null;
-            }
-            if (mainThread != null)
-			{
-				serialThread = false;
-				e.Cancel = true;
-				mainThread = null;
-			}
+            if (mainThread?.IsRunning ?? false)
+                mainThread.Cancel();
 		}
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
@@ -308,31 +251,21 @@ namespace Diva
 			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
 			DatabaseManager.Dump(recorder_id);
             OnlineDrones.ForEach(d => d.Disconnect());
+            BackgroundLoop.FreeTasks(5000);
 		}
 
-		private void MainLoop()
+		private void MainLoop(CancellationToken token)
 		{
-			if (serialThread == true)
-				return;
-
-			serialThread = true;
-
-			while (serialThread)
+            DateTime mapUpdateTime = DateTime.Now.AddMilliseconds(500);
+			while (!token.IsCancellationRequested)
 			{
-				Thread.Sleep(20);
 				if (ActiveDrone.IsOpen)
 				{
-		
 					Invoke((MethodInvoker)delegate
 					{
-						foreach (int mode in Enum.GetValues(typeof(FlightMode)))
-						{
-							if ((uint)mode == ActiveDrone.Status.mode)
-							{
-								TxtDroneMode.Text = Enum.GetName(typeof(FlightMode), mode);
-							}
-						}
-
+                        string mode = MavUtlities.GetFlightModeName(ActiveDrone.Status.mode);
+                        if (mode != null)
+                            TxtDroneMode.Text = mode;
                         DroneInfoPanel.UpdateDisplayInfo();
                     });
 
@@ -343,12 +276,15 @@ namespace Diva
 						UpdateMapPosition(currentloc);
 					}
 				}
-			}
-
-			mainThread = null;
-			Invoke((MethodInvoker)(() => Close()));
+                if (DateTime.Now > mapUpdateTime)
+                {
+                    mapUpdateTime = DateTime.Now.AddMilliseconds(500);
+                    UpdateMapItems();
+                }
+                Thread.Sleep(20);
+            }
+            Invoke((MethodInvoker)(() => Close()));
 		}
-
 		
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
@@ -2023,7 +1959,7 @@ namespace Diva
 				});
 
 			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Set total wps ");
-			ActiveDrone.setWPTotal(totalwpcountforupload);
+			ActiveDrone.SetWPTotal(totalwpcountforupload);
 
 			// define the home point
 			Locationwp home = new Locationwp();
@@ -2059,7 +1995,7 @@ namespace Diva
 					{
 						if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
 						{
-							ActiveDrone.setWPTotal(0);
+							ActiveDrone.SetWPTotal(0);
 							ActiveDrone.UnSubscribeToPacketType(sub1);
 							ActiveDrone.UnSubscribeToPacketType(sub2);
 							return;
@@ -2084,7 +2020,7 @@ namespace Diva
 						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
 						{
 							// resend for partial upload
-							ActiveDrone.setWPPartialUpdate((ushort)(reqno), totalwpcountforupload);
+							ActiveDrone.SetWPPartialUpdate((ushort)(reqno), totalwpcountforupload);
 							a = reqno;
 							break;
 						}
@@ -2172,13 +2108,13 @@ namespace Diva
 				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1,	"Setting WP " + a);
 				log.Info("WP no " + a);
 
-				ActiveDrone.sendPacket(req, ActiveDrone.Status.sysid, ActiveDrone.Status.compid);
+				ActiveDrone.SendPacket(MAVLink.MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
 			}
 
 			ActiveDrone.UnSubscribeToPacketType(sub1);
 			ActiveDrone.UnSubscribeToPacketType(sub2);
 
-			ActiveDrone.setWPACK();
+			ActiveDrone.SetWayPointAck();
 		}
 
 		
@@ -2196,7 +2132,7 @@ namespace Diva
                  
                 }
 
-				ActiveDrone.giveComport = true;
+				ActiveDrone.PortInUse = true;
 				int a = 0;
 
 				// define the home point
@@ -2271,7 +2207,7 @@ namespace Diva
 
 				try
 				{
-					ActiveDrone.setWPTotal(totalwpcountforupload);
+					ActiveDrone.SetWPTotal(totalwpcountforupload);
 				}
 				catch (TimeoutException)
 				{
@@ -2289,7 +2225,7 @@ namespace Diva
 				{
 					try
 					{
-						var homeans = ActiveDrone.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						var homeans = ActiveDrone.SetWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, use_int);
 						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
@@ -2304,8 +2240,8 @@ namespace Diva
 					{
 						use_int = false;
 						// added here to prevent timeout errors
-						ActiveDrone.setWPTotal(totalwpcountforupload);
-						var homeans = ActiveDrone.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
+						ActiveDrone.SetWPTotal(totalwpcountforupload);
+						var homeans = ActiveDrone.SetWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, use_int);
 						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
@@ -2360,15 +2296,15 @@ namespace Diva
 						uploadwpno--;
 
 					// try send the wp
-					MAVLink.MAV_MISSION_RESULT ans = ActiveDrone.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+					MAVLink.MAV_MISSION_RESULT ans = ActiveDrone.SetWP(temp, (ushort)(uploadwpno), frame, use_int);
 
 					// we timed out while uploading wps/ command wasnt replaced/ command wasnt added
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
 					{
 						// resend for partial upload
-						ActiveDrone.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
+						ActiveDrone.SetWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
 						// reupload this point.
-						ans = ActiveDrone.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
+						ans = ActiveDrone.SetWP(temp, (ushort)(uploadwpno), frame, use_int);
 					}
 
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
@@ -2394,7 +2330,7 @@ namespace Diva
 						// the ans is received via mission_ack, so we dont know for certain what our current request is for. as we may have lost the mission_request
 
 						// get requested wp no - 1;
-						a = ActiveDrone.getRequestedWPNo() - 1;
+						a = ActiveDrone.GetRequestedWPNo() - 1;
 
 						continue;
 					}
@@ -2410,22 +2346,22 @@ namespace Diva
 					}
 				}
 
-				ActiveDrone.setWPACK();
+				ActiveDrone.SetWayPointAck();
 				
 				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Setting params");
 
 				// m
-				ActiveDrone.setParam("WP_RADIUS", float.Parse("30") / 1);
+				ActiveDrone.SetParam("WP_RADIUS", float.Parse("30") / 1);
 
 				// cm's
-				ActiveDrone.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
+				ActiveDrone.SetParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
 
 				// Remind the user after uploading the mission into firmware.
 				MessageBox.Show(ResStrings.MsgMissionAcceptWP.FormatWith(a));
 				
 				try
 				{
-					ActiveDrone.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
+					ActiveDrone.SetAnyParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
 						float.Parse("45"));
 				}
 				catch
@@ -2437,11 +2373,11 @@ namespace Diva
 			catch (Exception ex)
 			{
 				log.Error(ex);
-				ActiveDrone.giveComport = false;
+				ActiveDrone.PortInUse = false;
 				throw;
 			}
 
-			ActiveDrone.giveComport = false;
+			ActiveDrone.PortInUse = false;
 		}
 
 
@@ -2462,7 +2398,7 @@ namespace Diva
                     return;
                 }
 
-				ActiveDrone.giveComport = true;
+				ActiveDrone.PortInUse = true;
 
 				// param = port.MAV.param;
 
@@ -2472,7 +2408,7 @@ namespace Diva
 
 				log.Info("Getting WP #");
 
-				int cmdcount = ActiveDrone.getWPCount();
+				int cmdcount = ActiveDrone.GetWPCount();
 
 				for (ushort a = 0; a < cmdcount; a++)
 				{
@@ -2484,10 +2420,10 @@ namespace Diva
 					}
 
 					log.Info("Getting WP" + a);
-					cmds.Add(ActiveDrone.getWP(a));
+					cmds.Add(ActiveDrone.GetWP(a));
 				}
 
-				ActiveDrone.setWPACK();
+				ActiveDrone.SetWayPointAck();
 
 				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, "Done");
 
@@ -2532,7 +2468,7 @@ namespace Diva
 					{
 					}
 
-					ActiveDrone.giveComport = false;
+					ActiveDrone.PortInUse = false;
 
 					// BUT_ReadWPs.Enabled = true;
 
@@ -2693,7 +2629,7 @@ namespace Diva
 			{
 				try
 				{
-					PointLatLngAlt plla = ActiveDrone.getRallyPoint(a, ref count);
+					PointLatLngAlt plla = ActiveDrone.GetRallyPoint(a, ref count);
 					overlays.rallypoints.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
 					{
 						Alt = (int)plla.Alt,
@@ -2774,11 +2710,11 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setGuidedModeWP(gotohere);
+				ActiveDrone.SetGuidedModeWP(gotohere);
 			}
 			catch (Exception ex)
 			{
-				ActiveDrone.giveComport = false;
+				ActiveDrone.PortInUse = false;
 				MessageBox.Show(ex.Message);
 			}
 
@@ -2886,9 +2822,8 @@ namespace Diva
                         drone?.Disconnect();
                         drone = null;
                     }
-                    if (drone == null)
-                        return;
-                    OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
+                    if (drone?.IsOpen ?? false)
+                        OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
                 }
                 catch (Exception exception)
                 {
@@ -2911,7 +2846,7 @@ namespace Diva
 			try
 			{
 				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.armed);
-				bool ans = ActiveDrone.doARM(!ActiveDrone.Status.armed);
+				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.armed);
 				if (ans == false)
 					log.Error("arm failed");
 			}
@@ -2936,8 +2871,8 @@ namespace Diva
 			};
 
 			_dialog.DoClick += (s2, e2) => {
-				ActiveDrone.setMode("GUIDED");
-				ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, float.Parse(_dialog.Value));
+				ActiveDrone.SetMode("GUIDED");
+				ActiveDrone.TakeOff(float.Parse(_dialog.Value));
 			};
 
 			_dialog.ShowDialog();
@@ -2955,9 +2890,8 @@ namespace Diva
 
 			if (ActiveDrone.IsOpen)
 			{
-				// flyToHereAltToolStripMenuItem_Click(null, null);
-				ActiveDrone.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
-			}
+                ActiveDrone.StartMission();
+            }
 		}
 
 
@@ -2971,7 +2905,7 @@ namespace Diva
 
 			if (ActiveDrone.IsOpen)
 			{
-				ActiveDrone.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
+				ActiveDrone.ReturnToLaunch();
 			}
 		}
 
@@ -3118,15 +3052,7 @@ namespace Diva
 		{
 			if (ActiveDrone.IsOpen)
 			{
-				ActiveDrone.setMode(
-					ActiveDrone.Status.sysid,
-					ActiveDrone.Status.compid,
-					new MAVLink.mavlink_set_mode_t()
-					{
-						target_system = ActiveDrone.Status.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)9,
-					});
+                ActiveDrone.SetMode("LAND");
 			}
 		}
 
@@ -3709,9 +3635,9 @@ namespace Diva
 			try
 			{
 				if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
-					ActiveDrone.setParam("FENCE_MINALT", minalt);
+					ActiveDrone.SetParam("FENCE_MINALT", minalt);
 				if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
-					ActiveDrone.setParam("FENCE_MAXALT", maxalt);
+					ActiveDrone.SetParam("FENCE_MAXALT", maxalt);
 			}
 			catch (Exception ex)
 			{
@@ -3724,7 +3650,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_ACTION", 0);
+				ActiveDrone.SetParam("FENCE_ACTION", 0);
 			}
 			catch
 			{
@@ -3738,7 +3664,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_TOTAL", pointcount);
+				ActiveDrone.SetParam("FENCE_TOTAL", pointcount);
 			}
 			catch
 			{
@@ -3750,21 +3676,21 @@ namespace Diva
 			{
 				byte a = 0;
 				// add return loc
-				ActiveDrone.setFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
+				ActiveDrone.SetFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
 				a++;
 				// add points
 				foreach (var pll in drawnPolygon.Points)
 				{
-					ActiveDrone.setFencePoint(a, new PointLatLngAlt(pll), pointcount);
+					ActiveDrone.SetFencePoint(a, new PointLatLngAlt(pll), pointcount);
 					a++;
 				}
 
 				// add polygon close
-				ActiveDrone.setFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
+				ActiveDrone.SetFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
 
 				try
 				{
-					ActiveDrone.setParam("FENCE_ACTION", oldaction);
+					ActiveDrone.SetParam("FENCE_ACTION", oldaction);
 				}
 				catch
 				{
@@ -3953,7 +3879,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_ENABLE", 0);
+				ActiveDrone.SetParam("FENCE_ENABLE", 0);
 			}
 			catch
 			{
@@ -3963,7 +3889,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_ACTION", 0);
+				ActiveDrone.SetParam("FENCE_ACTION", 0);
 			}
 			catch
 			{
@@ -3973,7 +3899,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_TOTAL", 0);
+				ActiveDrone.SetParam("FENCE_TOTAL", 0);
 			}
 			catch
 			{
@@ -3988,51 +3914,41 @@ namespace Diva
 			geofencePolygon.Points.Clear();
 		}
 
-		/// <summary>
-		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
-		/// Frame rate about 20 ms
-		/// </summary>
-
-		public static bool isUpdatemapThreadRun = false;
-		private void MapitemUpdateLoop()
-		{
-			while (isUpdatemapThreadRun)
-			{
-                try
+        private void UpdateMapItems()
+        {
+            try
+            {
+                Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
+                foreach (MavDrone drone in OnlineDrones)
                 {
-                    Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
-                    foreach (MavDrone drone in OnlineDrones)
-                    {
-						if (drone.Status.current_lat == 0 || drone.Status.current_lng == 0) { continue; }
-						var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.current_lat, drone.Status.current_lng),
-							drone.Status.yaw, drone.Status.groundcourse, drone.Status.nav_bearing, drone.Status.sysid);
-						overlays.routes.Markers.Add(marker);
-					}
-					
-					//autopan
-					if (autopan)
-					{
-						if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
-						{
-							PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
-							UpdateMapPosition(currentloc);
-							mapupdate = DateTime.Now;
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.ToString());
-				}
+                    if (drone.Status.current_lat == 0 || drone.Status.current_lng == 0) { continue; }
+                    var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.current_lat, drone.Status.current_lng),
+                        drone.Status.yaw, drone.Status.groundcourse, drone.Status.nav_bearing, drone.Status.sysid);
+                    overlays.routes.Markers.Add(marker);
+                }
 
-                Thread.Sleep(500);
+                //autopan
+                if (autopan)
+                {
+                    if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+                    {
+                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
+                        UpdateMapPosition(currentloc);
+                        mapupdate = DateTime.Now;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
-		#region customized overlay related functions
+
+        #region customized overlay related functions
 
 
 
-		private void ReadCustomizedOverlayFile(string file)
+        private void ReadCustomizedOverlayFile(string file)
 		{
 			
 			List<Customizewp> cmds = new List<Customizewp>();

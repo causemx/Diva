@@ -15,9 +15,9 @@ namespace Diva.Mavlink
 	{
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-		public MavlinkInterface parent;
+		public MavCore parent;
 
-		public MavStatus(MavlinkInterface mavLinkInterface, byte sysid, byte compid)
+		public MavStatus(MavCore mavLinkInterface, byte sysid, byte compid)
 		{
 			this.parent = mavLinkInterface;
 			this.sysid = sysid;
@@ -82,7 +82,7 @@ namespace Diva.Mavlink
 
 		public float nav_bearing { get; set; }
 
-		public Planner.Firmwares firmware = Planner.Firmwares.ArduCopter2;
+		public MavUtlities.Firmwares firmware = MavUtlities.Firmwares.ArduCopter2;
 
 		public float alt
 		{
@@ -115,12 +115,7 @@ namespace Diva.Mavlink
 			set { _verticalspeed = _verticalspeed * 0.4f + value * 0.6f; }
 		}
 
-		float _climbrate;
-		public float climbrate
-		{
-			get { return _climbrate; }
-			set { _climbrate = value; }
-		}
+		public float climbrate { get; set; }
 
 		public float satcount { get; set; }
 
