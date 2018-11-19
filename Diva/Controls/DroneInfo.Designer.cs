@@ -38,6 +38,8 @@
 			this.TxtSatelliteCount = new System.Windows.Forms.Label();
 			this.TxtSystemID = new System.Windows.Forms.Label();
 			this.BtnClose = new System.Windows.Forms.Button();
+			this.BtnPowerModel = new System.Windows.Forms.Button();
+			this.PanelConsumptionPower = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -153,10 +155,33 @@
 			this.BtnClose.UseVisualStyleBackColor = true;
 			this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
 			// 
+			// BtnPowerModel
+			// 
+			this.BtnPowerModel.AutoSize = true;
+			this.BtnPowerModel.FlatAppearance.BorderSize = 0;
+			this.BtnPowerModel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnPowerModel.Image = global::Diva.Properties.Resources.icon_lighting_24;
+			this.BtnPowerModel.Location = new System.Drawing.Point(263, 3);
+			this.BtnPowerModel.Name = "BtnPowerModel";
+			this.BtnPowerModel.Size = new System.Drawing.Size(36, 30);
+			this.BtnPowerModel.TabIndex = 10;
+			this.BtnPowerModel.UseVisualStyleBackColor = true;
+			this.BtnPowerModel.Click += new System.EventHandler(this.BtnPowerModel_Click);
+			// 
+			// PanelConsumptionPower
+			// 
+			this.PanelConsumptionPower.AutoSize = true;
+			this.PanelConsumptionPower.Location = new System.Drawing.Point(149, 6);
+			this.PanelConsumptionPower.Name = "PanelConsumptionPower";
+			this.PanelConsumptionPower.Size = new System.Drawing.Size(0, 0);
+			this.PanelConsumptionPower.TabIndex = 11;
+			// 
 			// DroneInfo
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Black;
+			this.Controls.Add(this.PanelConsumptionPower);
+			this.Controls.Add(this.BtnPowerModel);
 			this.Controls.Add(this.BtnClose);
 			this.Controls.Add(this.TxtSystemID);
 			this.Controls.Add(this.TxtSatelliteCount);
@@ -190,5 +215,7 @@
 		private System.Windows.Forms.Label TxtSatelliteCount;
 		private System.Windows.Forms.Label TxtSystemID;
 		private System.Windows.Forms.Button BtnClose;
+		private System.Windows.Forms.Button BtnPowerModel;
+		private System.Windows.Forms.Panel PanelConsumptionPower;
 	}
 }

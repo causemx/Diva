@@ -373,6 +373,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_lighting_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon_lighting_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_live {
             get {
                 object obj = ResourceManager.GetObject("icon_live", resourceCulture);
@@ -456,16 +466,6 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_rotation_active {
             get {
                 object obj = ResourceManager.GetObject("icon_rotation_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_signal_100 {
-            get {
-                object obj = ResourceManager.GetObject("icon_signal_100", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

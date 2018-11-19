@@ -71,5 +71,18 @@ namespace Diva.Controls
 		{
 			CloseButtonClicked?.Invoke(this, e) ;
 		}
+
+		private void BtnPowerModel_Click(object sender, EventArgs e)
+		{
+			DialogInputPowerModel dp = new DialogInputPowerModel();
+			dp.ShowDialog();
+			dp.DroneID = (Drone.Status.sysid).ToString();
+			dp.DoClickEvent += (s, e1) =>
+			{
+				PictureBox pb = new PictureBox();
+				Label lb = new Label();
+				PanelConsumptionPower.Controls.Add(pb);
+			};
+		}
 	}
 }
