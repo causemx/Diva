@@ -31,13 +31,9 @@ namespace Diva.Mavlink
         public bool Connect()
         {
             BaseStream = MavBaseStream.CreateStream(setting);
-
             try
             {
-                // reset connect time - for timeout functions
                 DateTime connecttime = DateTime.Now;
-
-                // do the connect
                 Open();
                 if (!IsOpen)
                 {
@@ -45,8 +41,6 @@ namespace Diva.Mavlink
                     Close();
                     return false;
                 }
-
-                // set to first seen
                 sysidcurrent = MAVlist.First().sysid;
                 compidcurrent = MAVlist.First().compid;
             }
@@ -99,11 +93,11 @@ namespace Diva.Mavlink
         public bool DoArm(bool arm) => arm ?
             DoCommand(MAV_CMD.COMPONENT_ARM_DISARM, 1,
 #if FORCE_ARM
-                                                                    2989.0f
+                                                        2989.0f
 #else
-                                                                    0
+                                                        0
 #endif
-                                                                            , 0, 0, 0, 0, 0) :
+                                                               , 0, 0, 0, 0, 0) :
             DoCommand(MAV_CMD.COMPONENT_ARM_DISARM, 0, 21196.0f, 0, 0, 0, 0, 0);
 
         public bool TakeOff(float height) => DoCommand(MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, height);
@@ -114,10 +108,9 @@ namespace Diva.Mavlink
 
         public void SetMode(string targetmode)
         {
-            uint modeval;
-            if (MavUtlities.GetFlightModeByName(targetmode, out modeval))
+            if (MavUtlities.GetFlightModeByName(targetmode, out uint modeval))
             {
-                var mode = new mavlink_set_mode_t()
+                var mode = new mavlink_set_mode_t
                 {
                     target_system = SysId,
                     base_mode = (byte)MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
@@ -136,24 +129,19 @@ namespace Diva.Mavlink
         #region Waypoints, RallyPoints and Fencepoints
         public PointLatLngAlt GetRallyPoint(int no, ref int total)
         {
-            MAVLinkMessage buffer;
-
             PortInUse = true;
 
-            PointLatLngAlt plla = new PointLatLngAlt();
-            mavlink_rally_fetch_point_t req = new mavlink_rally_fetch_point_t()
+            MAVLinkMessage buffer;
+            var req = new mavlink_rally_fetch_point_t
             {
                 idx = (byte)no,
                 target_component = CompId,
                 target_system = SysId
             };
-
-            // request point
             SendPacket(MAVLINK_MSG_ID.RALLY_FETCH_POINT, req);
 
             DateTime start = DateTime.Now;
             int retrys = 3;
-
             while (true)
             {
                 if (!(start.AddMilliseconds(700) > DateTime.Now))
@@ -176,23 +164,20 @@ namespace Diva.Mavlink
                     if (buffer.msgid == (byte)MAVLINK_MSG_ID.RALLY_POINT)
                     {
                         var fp = buffer.ToStructure<mavlink_rally_point_t>();
-
                         if (req.idx != fp.idx)
                         {
                             SendPacket(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
                             continue;
                         }
-
-                        plla.Lat = fp.lat / 1.0e7;
-                        plla.Lng = fp.lng / 1.0e7;
-                        plla.Tag = fp.idx.ToString();
-                        plla.Alt = fp.alt;
-
                         total = fp.count;
-
                         PortInUse = false;
-
-                        return plla;
+                        return new PointLatLngAlt
+                                {
+                                    Alt = fp.alt,
+                                    Lat = fp.lat / 1.0e7,
+                                    Lng = fp.lng / 1.0e7,
+                                    Tag = fp.idx.ToString()
+                                };
                     }
                 }
             }
@@ -200,18 +185,13 @@ namespace Diva.Mavlink
 
         public PointLatLngAlt GetFencePoint(int no, ref int total)
         {
-            MAVLinkMessage buffer;
-
             PortInUse = true;
-
-            PointLatLngAlt plla = new PointLatLngAlt();
-            mavlink_fence_fetch_point_t req = new mavlink_fence_fetch_point_t()
+            var req = new mavlink_fence_fetch_point_t
             {
                 idx = (byte)no,
                 target_system = SysId,
                 target_component = CompId
             };
-
             SendPacket(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
 
             DateTime start = DateTime.Now;
@@ -233,22 +213,20 @@ namespace Diva.Mavlink
                     throw new TimeoutException("Timeout on read - getFencePoint");
                 }
 
-                buffer = ReadPacket();
+                var buffer = ReadPacket();
                 if (buffer.Length > 5)
                 {
                     if (buffer.msgid == (byte)MAVLINK_MSG_ID.FENCE_POINT)
                     {
                         PortInUse = false;
-
                         mavlink_fence_point_t fp = buffer.ToStructure<mavlink_fence_point_t>();
-
-                        plla.Lat = fp.lat;
-                        plla.Lng = fp.lng;
-                        plla.Tag = fp.idx.ToString();
-
                         total = fp.count;
-
-                        return plla;
+                        return new PointLatLngAlt
+                                {
+                                    Lat = fp.lat,
+                                    Lng = fp.lng,
+                                    Tag = fp.idx.ToString()
+                                };
                     }
                 }
             }
@@ -256,7 +234,7 @@ namespace Diva.Mavlink
 
         public bool SetFencePoint(byte index, PointLatLngAlt plla, byte fencepointcount)
         {
-            var fp = new mavlink_fence_point_t()
+            var fp = new mavlink_fence_point_t
             {
                 idx = index,
                 count = fencepointcount,
@@ -267,14 +245,11 @@ namespace Diva.Mavlink
             };
 
             int retry = 3;
-
-            PointLatLngAlt newfp;
-
             while (retry > 0)
             {
                 SendPacket(MAVLINK_MSG_ID.FENCE_POINT, fp);
                 int counttemp = 0;
-                newfp = GetFencePoint(fp.idx, ref counttemp);
+                var newfp = GetFencePoint(fp.idx, ref counttemp);
 
                 if (newfp.GetDistance(plla) < 5)
                     return true;
@@ -287,18 +262,15 @@ namespace Diva.Mavlink
         public ushort GetWPCount()
         {
             PortInUse = true;
-            MAVLinkMessage buffer;
-            mavlink_mission_request_list_t req = new mavlink_mission_request_list_t();
-
-            req.target_system = Status.sysid;
-            req.target_component = Status.compid;
-
-            // request list
+            var req = new mavlink_mission_request_list_t
+            {
+                target_component = CompId,
+                target_system = SysId
+            };
             SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req);
 
             DateTime start = DateTime.Now;
             int retrys = 6;
-
             while (true)
             {
                 if (!(start.AddMilliseconds(700) > DateTime.Now))
@@ -312,18 +284,15 @@ namespace Diva.Mavlink
                         continue;
                     }
                     PortInUse = false;
-                    //return (byte)int.Parse(param["WP_TOTAL"].ToString());
                     throw new TimeoutException("Timeout on read - getWPCount");
                 }
 
-                buffer = ReadPacket();
+                var buffer = ReadPacket();
                 if (buffer.Length > 5)
                 {
                     if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
                     {
                         var count = buffer.ToStructure<mavlink_mission_count_t>();
-
-
                         log.Info("wpcount: " + count.count);
                         PortInUse = false;
                         return count.count; // should be ushort, but apm has limited wp count < byte
@@ -334,51 +303,35 @@ namespace Diva.Mavlink
 
         public Locationwp GetWP(ushort index)
         {
-            while (PortInUse)
-            {
-                System.Threading.Thread.Sleep(100);
-            }
+            while (PortInUse) Thread.Sleep(100);
 
-            // bool use_int = (MAV.cs.capabilities & MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
             bool use_int = true;
-
             object req;
-
+            var msgid = use_int ? MAVLINK_MSG_ID.MISSION_REQUEST_INT : MAVLINK_MSG_ID.MISSION_REQUEST;
             if (use_int)
             {
-                mavlink_mission_request_int_t reqi = new mavlink_mission_request_int_t();
-
-                reqi.target_system = Status.sysid;
-                reqi.target_component = Status.compid;
-
-                reqi.seq = index;
-
-                // request
-                SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_INT, reqi);
-
-                req = reqi;
+                req = new mavlink_mission_request_int_t
+                {
+                    target_system = SysId,
+                    target_component = CompId,
+                    seq = index
+                };
             }
             else
             {
-                mavlink_mission_request_t reqf = new mavlink_mission_request_t();
-
-                reqf.target_system = Status.sysid;
-                reqf.target_component = Status.compid;
-
-                reqf.seq = index;
-
-                // request
-                SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST, reqf);
-
-                req = reqf;
+                req = new mavlink_mission_request_t
+                {
+                    target_system = SysId,
+                    target_component = CompId,
+                    seq = index
+                };
             }
-
+            SendPacket(msgid, req);
             PortInUse = true;
             Locationwp loc = new Locationwp();
 
             DateTime start = DateTime.Now;
             int retrys = 5;
-
             while (true)
             {
                 if (!(start.AddMilliseconds(3500) > DateTime.Now)) // apm times out after 5000ms
@@ -386,10 +339,7 @@ namespace Diva.Mavlink
                     if (retrys > 0)
                     {
                         log.Info("getWP Retry " + retrys);
-                        if (use_int)
-                            SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_INT, req);
-                        else
-                            SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST, req);
+                        SendPacket(msgid, req);
                         start = DateTime.Now;
                         retrys--;
                         continue;
@@ -397,18 +347,12 @@ namespace Diva.Mavlink
                     PortInUse = false;
                     throw new TimeoutException("Timeout on read - getWP");
                 }
-                //Console.WriteLine("getwp read " + DateTime.Now.Millisecond);
-                MAVLinkMessage buffer = ReadPacket();
-                //Console.WriteLine("getwp readend " + DateTime.Now.Millisecond);
+                var buffer = ReadPacket();
                 if (buffer.Length > 5)
                 {
                     if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
                     {
-                        //Console.WriteLine("getwp ans " + DateTime.Now.Millisecond);
-
                         var wp = buffer.ToStructure<mavlink_mission_item_t>();
-
-                        // received a packet, but not what we requested
                         if (index != wp.seq)
                         {
                             SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST, req);
@@ -433,11 +377,7 @@ namespace Diva.Mavlink
                     }
                     else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM_INT)
                     {
-                        //Console.WriteLine("getwp ans " + DateTime.Now.Millisecond);
-
                         var wp = buffer.ToStructure<mavlink_mission_item_int_t>();
-
-                        // received a packet, but not what we requested
                         if (index != wp.seq)
                         {
                             SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_INT, req);
@@ -485,35 +425,26 @@ namespace Diva.Mavlink
                 if (!(start.AddMilliseconds(5000) > DateTime.Now))
                 {
                     PortInUse = false;
-                    throw new TimeoutException("Timeout on read - getRequestedWPNo");
+                    throw new TimeoutException("Timeout on read - GetRequestedWPNo");
                 }
                 MAVLinkMessage buffer = ReadPacket();
-                if (buffer.Length > 5)
+                if (buffer.Length > 5 && buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
                 {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
-                    {
-                        var ans = buffer.ToStructure<mavlink_mission_request_t>();
-
-                        log.InfoFormat("getRequestedWPNo seq {0} ts {1} tc {2}", ans.seq, ans.target_system, ans.target_component);
-
-                        PortInUse = false;
-
-                        return ans.seq;
-                    }
+                    var ans = buffer.ToStructure<mavlink_mission_request_t>();
+                    log.InfoFormat("GetRequestedWPNo seq {0} ts {1} tc {2}", ans.seq, ans.target_system, ans.target_component);
+                    PortInUse = false;
+                    return ans.seq;
                 }
             }
         }
 
-        private void SetPositionTargetGlobalInt(bool pos, bool vel, bool acc, bool yaw, MAV_FRAME frame, double lat, double lng, double alt, double vx, double vy, double vz, double yawangle, double yawrate)
+        private void SetPositionTargetGlobalInt(MAV_FRAME frame, double lat, double lng, double alt)
         {
             // for mavlink SET_POSITION_TARGET messages
             const ushort MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE = ((1 << 0) | (1 << 1) | (1 << 2));
             const ushort MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE = ((0 << 0) | (0 << 1) | (1 << 2));
-            const ushort MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE = ((1 << 3) | (1 << 4) | (1 << 5));
-            const ushort MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE = ((1 << 6) | (1 << 7) | (1 << 8));
-            const ushort MAVLINK_SET_POS_TYPE_MASK_YAW_IGNORE = ((1 << 10) | (1 << 11));
 
-            mavlink_set_position_target_global_int_t target = new mavlink_set_position_target_global_int_t()
+            mavlink_set_position_target_global_int_t target = new mavlink_set_position_target_global_int_t
             {
                 target_system = Status.sysid,
                 target_component = Status.compid,
@@ -521,58 +452,43 @@ namespace Diva.Mavlink
                 lat_int = (int)(lat * 1e7),
                 lon_int = (int)(lng * 1e7),
                 coordinate_frame = (byte)frame,
-                vx = (float)vx,
-                vy = (float)vy,
-                vz = (float)vz,
-                yaw = (float)yawangle,
-                yaw_rate = (float)yawrate
+                vx = 0f,
+                vy = 0f,
+                vz = 0f,
+                yaw = 0f,
+                yaw_rate = 0f
             };
 
             target.type_mask = ushort.MaxValue;
 
-            if (pos && lat != 0 && lng != 0)
+            if (lat != 0 && lng != 0)
                 target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE;
-            if (pos && lat == 0 && lng == 0)
+            if (lat == 0 && lng == 0)
                 target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE;
-            if (vel)
-                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE;
-            if (acc)
-                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE;
-            if (yaw)
-                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_YAW_IGNORE;
 
-            if (pos)
-            {
-                if (lat != 0)
-                    MAVlist[Status.sysid, Status.compid].GuidedMode.x = (float)lat;
-                if (lng != 0)
-                    MAVlist[Status.sysid, Status.compid].GuidedMode.y = (float)lng;
-                MAVlist[Status.sysid, Status.compid].GuidedMode.z = (float)alt;
-            }
-
-            bool pos_ignore = (target.type_mask & MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE) > 0;
-            bool vel_ignore = (target.type_mask & MAVLINK_SET_POS_TYPE_MASK_VEL_IGNORE) > 0;
-            bool acc_ignore = (target.type_mask & MAVLINK_SET_POS_TYPE_MASK_ACC_IGNORE) > 0;
+            if (lat != 0)
+                MAVlist[Status.sysid, Status.compid].GuidedMode.x = (float)lat;
+            if (lng != 0)
+                MAVlist[Status.sysid, Status.compid].GuidedMode.y = (float)lng;
+            MAVlist[Status.sysid, Status.compid].GuidedMode.z = (float)alt;
 
             SendPacket(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target);
         }
 
         public void SetWayPointAck()
         {
-            mavlink_mission_ack_t req = new mavlink_mission_ack_t()
+            SendPacket(MAVLINK_MSG_ID.MISSION_ACK, new mavlink_mission_ack_t
             {
                 target_component = CompId,
                 target_system = SysId,
                 type = 0
-            };
-
-            SendPacket(MAVLINK_MSG_ID.MISSION_ACK, req);
+            });
         }
 
         public MAV_MISSION_RESULT SetWP(Locationwp loc, ushort index, MAV_FRAME frame, bool use_int = false)
         {
             byte contmode = (byte)((MAVlist[Status.sysid, Status.compid].firmware == MavUtlities.Firmwares.ArduPlane) ? 2 : 1);
-
+            object req;
             if (use_int)
             {
                 bool camcon = loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE;
@@ -583,7 +499,7 @@ namespace Diva.Mavlink
                     y *= 1.0e7;
                 }
 
-                mavlink_mission_item_int_t req = new mavlink_mission_item_int_t()
+                req = new mavlink_mission_item_int_t
                 {
                     target_component = Status.compid,
                     target_system = Status.sysid,
@@ -600,12 +516,10 @@ namespace Diva.Mavlink
                     param4 = loc.p4,
                     seq = index
                 };
-
-                return SetWP(req);
             }
             else
             {
-                mavlink_mission_item_t req = new mavlink_mission_item_t()
+                req = new mavlink_mission_item_t
                 {
                     target_component = Status.compid,
                     target_system = Status.sysid,
@@ -622,39 +536,29 @@ namespace Diva.Mavlink
                     param4 = loc.p4,
                     seq = index
                 };
-
-                return SetWP(req);
             }
-        }
 
-        private MAV_MISSION_RESULT SetWP(mavlink_mission_item_t req)
-        {
+            var msgid = use_int ? MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
             PortInUse = true;
-
-            ushort index = req.seq;
-
-            // request
-            SendPacket(MAVLINK_MSG_ID.MISSION_ITEM, req);
-
+            SendPacket(msgid, req);
 
             DateTime start = DateTime.Now;
             int retrys = 10;
-
             while (true)
             {
                 if (!(start.AddMilliseconds(400) > DateTime.Now))
                 {
                     if (retrys > 0)
                     {
-                        log.Info("setWP Retry " + retrys);
-                        SendPacket(MAVLINK_MSG_ID.MISSION_ITEM, req);
+                        log.Info("SetWP Retry " + retrys);
+                        SendPacket(msgid, req);
 
                         start = DateTime.Now;
                         retrys--;
                         continue;
                     }
                     PortInUse = false;
-                    throw new TimeoutException("Timeout on read - setWP");
+                    throw new TimeoutException("Timeout on read - SetWP");
                 }
                 MAVLinkMessage buffer = ReadPacket();
                 if (buffer.Length > 5)
@@ -662,124 +566,10 @@ namespace Diva.Mavlink
                     if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ACK)
                     {
                         var ans = buffer.ToStructure<mavlink_mission_ack_t>();
-                        log.Info("set wp " + index + " ACK 47 : " + buffer.msgid + " ans " +
-                                 Enum.Parse(typeof(MAV_MISSION_RESULT), ans.type.ToString()));
-
-
-                        if (req.current == 2)
-                        {
-                            // MAVlist[req.target_system, req.target_component].GuidedMode = req;
-                        }
-                        else if (req.current == 3)
-                        {
-                        }
-                        else
-                        {
-                            // MAVlist[req.target_system, req.target_component].wps[req.seq] = req;
-                        }
-
-                        //if (ans.target_system == req.target_system && ans.target_component == req.target_component)
-                        {
-                            PortInUse = false;
-                            return (MAV_MISSION_RESULT)ans.type;
-                        }
-                    }
-                    else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
-                    {
-                        var ans = buffer.ToStructure<mavlink_mission_request_t>();
-                        if (ans.seq == (index + 1))
-                        {
-                            log.Info("set wp doing " + index + " req " + ans.seq + " REQ 40 : " + buffer.msgid);
-                            PortInUse = false;
-
-                            if (req.current == 2)
-                            {
-                                // MAVlist[req.target_system, req.target_component].GuidedMode = req;
-                            }
-                            else if (req.current == 3)
-                            {
-                            }
-                            else
-                            {
-                                // MAVlist[req.target_system, req.target_component].wps[req.seq] = req;
-                            }
-
-                            //if (ans.target_system == req.target_system && ans.target_component == req.target_component)
-                            {
-                                PortInUse = false;
-                                return MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
-                            }
-                        }
-                        else
-                        {
-                            start = DateTime.MinValue;
-                        }
-                    }
-                    else
-                    {
-                        // Console.WriteLine(DateTime.Now + " PC setwp " + buffer.msgid);
-                    }
-                }
-            }
-
-            // return MAV_MISSION_RESULT.MAV_MISSION_INVALID;
-        }
-
-        private MAV_MISSION_RESULT SetWP(mavlink_mission_item_int_t req)
-        {
-            PortInUse = true;
-
-            ushort index = req.seq;
-
-            // request
-            SendPacket(MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
-
-            DateTime start = DateTime.Now;
-            int retrys = 10;
-
-            while (true)
-            {
-                if (!(start.AddMilliseconds(400) > DateTime.Now))
-                {
-                    if (retrys > 0)
-                    {
-                        log.Info("setWP Retry " + retrys);
-                        SendPacket(MAVLINK_MSG_ID.MISSION_ITEM_INT, req);
-
-                        start = DateTime.Now;
-                        retrys--;
-                        continue;
-                    }
-                    PortInUse = false;
-                    throw new TimeoutException("Timeout on read - setWP");
-                }
-                MAVLinkMessage buffer = ReadPacket();
-                if (buffer.Length > 5)
-                {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ACK)
-                    {
-                        var ans = buffer.ToStructure<mavlink_mission_ack_t>();
-                        log.Info("set wp " + index + " ACK 47 : " + buffer.msgid + " ans " +
+                        log.Info("SetWP " + index + " ACK 47 : " + buffer.msgid + " ans " +
                                  Enum.Parse(typeof(MAV_MISSION_RESULT), ans.type.ToString()));
                         PortInUse = false;
-
-                        if (req.current == 2)
-                        {
-                            // MAVlist[req.target_system, req.target_component].GuidedMode = (Locationwp)req;
-                        }
-                        else if (req.current == 3)
-                        {
-                        }
-                        else
-                        {
-                            // MAVlist[req.target_system, req.target_component].wps[req.seq] = (Locationwp)req;
-                        }
-
-                        //if (ans.target_system == req.target_system && ans.target_component == req.target_component)
-                        {
-                            PortInUse = false;
-                            return (MAV_MISSION_RESULT)ans.type;
-                        }
+                        return (MAV_MISSION_RESULT)ans.type;
                     }
                     else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
                     {
@@ -788,41 +578,20 @@ namespace Diva.Mavlink
                         {
                             log.Info("set wp doing " + index + " req " + ans.seq + " REQ 40 : " + buffer.msgid);
                             PortInUse = false;
-
-                            if (req.current == 2)
-                            {
-                                // MAVlist[req.target_system, req.target_component].GuidedMode = (Locationwp)req;
-                            }
-                            else if (req.current == 3)
-                            {
-
-                            }
-                            else
-                            {
-                                // MAVlist[req.target_system, req.target_component].wps[req.seq] = (Locationwp)req;
-                            }
-
-                            //if (ans.target_system == req.target_system && ans.target_component == req.target_component)
-                            {
-                                PortInUse = false;
-                                return MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
-                            }
+                            PortInUse = false;
+                            return MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
                         }
                         else
                         {
-
-                            // resend point now
                             start = DateTime.MinValue;
                         }
                     }
                     else
                     {
-                        Console.WriteLine(DateTime.Now + " PC setwp " + buffer.msgid);
+                        Console.WriteLine(DateTime.Now + " PC SetWP " + buffer.msgid);
                     }
                 }
             }
-
-            // return MAV_MISSION_RESULT.MAV_MISSION_INVALID;
         }
 
         public void SetWPPartialUpdate(ushort startwp, ushort endwp)
@@ -841,14 +610,13 @@ namespace Diva.Mavlink
         public void SetWPTotal(ushort wp_total)
         {
             PortInUse = true;
-            mavlink_mission_count_t req = new mavlink_mission_count_t();
-
-            req.target_system = Status.sysid;
-            req.target_component = Status.compid; // MSG_NAMES.MISSION_COUNT
-
-            req.count = wp_total;
-
-            SendPacket(MAVLINK_MSG_ID.MISSION_COUNT, req);
+            var req = new mavlink_mission_count_t
+            {
+                target_system = Status.sysid,
+                target_component = Status.compid, // MSG_NAMES.MISSION_COUNT
+                count = wp_total
+            };
+                        SendPacket(MAVLINK_MSG_ID.MISSION_COUNT, req);
 
             DateTime start = DateTime.Now;
             int retrys = 3;
@@ -859,14 +627,14 @@ namespace Diva.Mavlink
                 {
                     if (retrys > 0)
                     {
-                        log.Info("setWPTotal Retry " + retrys);
+                        log.Info("SetWPTotal Retry " + retrys);
                         SendPacket(MAVLINK_MSG_ID.MISSION_COUNT, req);
                         start = DateTime.Now;
                         retrys--;
                         continue;
                     }
                     PortInUse = false;
-                    throw new TimeoutException("Timeout on read - setWPTotal");
+                    throw new TimeoutException("Timeout on read - SetWPTotal");
                 }
                 MAVLinkMessage buffer = ReadPacket();
                 if (buffer.Length > 9)
@@ -910,25 +678,20 @@ namespace Diva.Mavlink
             try
             {
                 gotohere.id = (ushort)MAV_CMD.WAYPOINT;
-
                 // Must be Guided mode.s
                 // fix for followme change
-                (this as MavDrone)?.SetMode("GUIDED");
-
+                SetMode("GUIDED");
                 log.InfoFormat("setGuidedModeWP {0}:{1} lat {2} lng {3} alt {4}", Status.sysid, Status.compid, gotohere.lat, gotohere.lng, gotohere.alt);
-
                 if (MAVlist[Status.sysid, Status.compid].firmware == MavUtlities.Firmwares.ArduPlane)
                 {
                     MAV_MISSION_RESULT ans = SetWP(gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT);
-
                     if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                         throw new Exception("Guided Mode Failed");
                 }
                 else
                 {
-                    SetPositionTargetGlobalInt(
-                        true, false, false, false, MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
-                        gotohere.lat, gotohere.lng, gotohere.alt, 0, 0, 0, 0, 0);
+                    SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
+                        gotohere.lat, gotohere.lng, gotohere.alt);
                 }
             }
             catch (Exception ex)

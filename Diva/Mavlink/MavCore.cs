@@ -254,7 +254,7 @@ namespace Diva.Mavlink
 				Array.Resize(ref temp, 50);
 
 				SendPacket(MAVLINK_MSG_ID.STATUSTEXT,
-					new mavlink_statustext_t() { severity = (byte)MAV_SEVERITY.INFO, text = temp });
+					new mavlink_statustext_t { severity = (byte)MAV_SEVERITY.INFO, text = temp });
 
 				GetHeartBeat();
 
@@ -712,7 +712,7 @@ namespace Diva.Mavlink
 
 				if (lastHeartBeatSent.Second != DateTime.Now.Second)
 				{
-					mavlink_heartbeat_t htb = new mavlink_heartbeat_t()
+					mavlink_heartbeat_t htb = new mavlink_heartbeat_t
 					{
 						type = (byte)MAV_TYPE.GCS,
 						autopilot = (byte)MAV_AUTOPILOT.INVALID,
@@ -886,7 +886,7 @@ namespace Diva.Mavlink
 
 			log.Info("GetParam name: '" + name + "' " + Status.sysid + ":" + Status.compid);
 
-            mavlink_param_request_read_t req = new mavlink_param_request_read_t()
+            mavlink_param_request_read_t req = new mavlink_param_request_read_t
             {
                 target_component = Status.compid,
                 target_system = Status.sysid,
@@ -980,7 +980,7 @@ namespace Diva.Mavlink
             PortInUse = true;
 
             // param type is set here, however it is always sent over the air as a float 100int = 100f.
-            var req = new mavlink_param_set_t()
+            var req = new mavlink_param_set_t
             {
                 target_system = Status.sysid,
                 target_component = Status.compid,
@@ -1118,7 +1118,7 @@ namespace Diva.Mavlink
 								try
 								{
 									queued++;
-                                    mavlink_param_request_read_t req2 = new mavlink_param_request_read_t()
+                                    mavlink_param_request_read_t req2 = new mavlink_param_request_read_t
                                     {
                                         target_system = Status.sysid,
                                         target_component = Status.compid,
@@ -1607,7 +1607,7 @@ namespace Diva.Mavlink
 		public bool DoCommand(MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7)
 		{
 			PortInUse = true;
-			mavlink_command_long_t req = new mavlink_command_long_t()
+			mavlink_command_long_t req = new mavlink_command_long_t
             {
                 target_system = Status.sysid,
                 target_component = Status.compid,
@@ -1675,7 +1675,7 @@ namespace Diva.Mavlink
 
 		public void GetDataStream(MAV_DATA_STREAM id, byte hzrate)
 		{
-			mavlink_request_data_stream_t req = new mavlink_request_data_stream_t()
+			mavlink_request_data_stream_t req = new mavlink_request_data_stream_t
             {
                 target_component = Status.compid,
                 target_system = Status.sysid,
