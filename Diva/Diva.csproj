@@ -215,6 +215,12 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PowerModelInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PowerModelInfo.Designer.cs">
+      <DependentUpon>PowerModelInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RotationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -355,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PowerModelInfo.resx">
+      <DependentUpon>PowerModelInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
@@ -1381,6 +1390,7 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon_close_24.png" />
     <None Include="Resources\icon_lighting_24.png" />
     <None Include="Resources\ParameterMetaData.xml" />
     <None Include="Resources\icon_location.png" />
@@ -1504,9 +1514,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

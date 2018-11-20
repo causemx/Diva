@@ -72,17 +72,38 @@ namespace Diva.Controls
 			CloseButtonClicked?.Invoke(this, e) ;
 		}
 
+		public event EventHandler<PowerInfo> RaiseEvent;
+
 		private void BtnPowerModel_Click(object sender, EventArgs e)
 		{
-			DialogInputPowerModel dp = new DialogInputPowerModel();
-			dp.ShowDialog();
-			dp.DroneID = (Drone.Status.sysid).ToString();
-			dp.DoClickEvent += (s, e1) =>
+			DialogInputPowerModel dp = new DialogInputPowerModel()
 			{
-				PictureBox pb = new PictureBox();
-				Label lb = new Label();
-				PanelConsumptionPower.Controls.Add(pb);
+				StartPosition = FormStartPosition.CenterScreen,
 			};
+			
+			dp.DroneID = (Drone.Status.sysid).ToString();
+			dp.DoClick += (s, e1) =>
+			{
+				Planner.log.Info(dp.BatteryCapacity);
+				PowerInfo pi = new PowerInfo(dp.BatteryCapacity, dp.AvailableCapacity);
+				RaiseEvent?.Invoke(sender, pi);
+				dp.Close();
+			};
+			dp.ShowDialog();
 		}
+
+
+		public class PowerInfo : EventArgs
+		{
+			public double BattCapacity { get; set; }
+			public double AvaiCapacity { get; set; }
+
+			public PowerInfo(double _capacity, double _consumption)
+			{
+				BattCapacity = _capacity;
+				AvaiCapacity = _consumption;
+			}
+		}
+	
 	}
 }

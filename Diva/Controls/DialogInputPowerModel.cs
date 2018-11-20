@@ -17,11 +17,17 @@ namespace Diva.Controls
 		private double batteryCapacity;
 		private double availableCapacity;
 
-		public event EventHandler DoClickEvent;
+		public event EventHandler DoClick;
 
-		public string DroneID { get => LBLDroneID.Text; set => droneID = value; }
+		public string DroneID { get => LBLDroneID.Text;
+			set
+			{
+				droneID = value;
+				LBLDroneID.Text = value;
+			}
+		}
 		public double BatteryCapacity {
-			get => batteryCapacity;
+			get => double.Parse(TXTBatteryCapacity.Text);
 			set
 			{
 				batteryCapacity = value;
@@ -29,7 +35,7 @@ namespace Diva.Controls
 			}
 		}
 		public double AvailableCapacity {
-			get => availableCapacity;
+			get => double.Parse(TXTAvailableCapacity.Text);
 			set
 			{
 				availableCapacity = value;
@@ -44,7 +50,7 @@ namespace Diva.Controls
 
 		private void BTNConfirm_Click(object sender, EventArgs e)
 		{
-			DoClickEvent?.Invoke(sender, e);
+			DoClick?.Invoke(sender, e);
 		}
 
 		private void BTNCancel_Click(object sender, EventArgs e)

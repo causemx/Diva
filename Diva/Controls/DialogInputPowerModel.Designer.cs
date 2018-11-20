@@ -55,14 +55,14 @@
 			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.TXTBatteryCapacity, 1, 2);
 			this.tableLayoutPanel1.Controls.Add(this.TXTAvailableCapacity, 1, 3);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(24, 32);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 4;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(541, 203);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(514, 176);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label6
@@ -70,7 +70,7 @@
 			this.label6.AutoSize = true;
 			this.label6.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.label6.ForeColor = System.Drawing.Color.White;
-			this.label6.Location = new System.Drawing.Point(217, 51);
+			this.label6.Location = new System.Drawing.Point(207, 43);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(242, 22);
 			this.label6.TabIndex = 7;
@@ -81,7 +81,7 @@
 			this.LBLDroneID.AutoSize = true;
 			this.LBLDroneID.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.LBLDroneID.ForeColor = System.Drawing.Color.White;
-			this.LBLDroneID.Location = new System.Drawing.Point(217, 0);
+			this.LBLDroneID.Location = new System.Drawing.Point(207, 0);
 			this.LBLDroneID.Name = "LBLDroneID";
 			this.LBLDroneID.Size = new System.Drawing.Size(38, 22);
 			this.LBLDroneID.TabIndex = 4;
@@ -103,7 +103,7 @@
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.label2.ForeColor = System.Drawing.Color.White;
-			this.label2.Location = new System.Drawing.Point(3, 51);
+			this.label2.Location = new System.Drawing.Point(3, 43);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(165, 22);
 			this.label2.TabIndex = 1;
@@ -114,7 +114,7 @@
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.label3.ForeColor = System.Drawing.Color.White;
-			this.label3.Location = new System.Drawing.Point(3, 102);
+			this.label3.Location = new System.Drawing.Point(3, 86);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(182, 22);
 			this.label3.TabIndex = 2;
@@ -125,7 +125,7 @@
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.label4.ForeColor = System.Drawing.Color.White;
-			this.label4.Location = new System.Drawing.Point(3, 157);
+			this.label4.Location = new System.Drawing.Point(3, 131);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(172, 22);
 			this.label4.TabIndex = 3;
@@ -133,14 +133,14 @@
 			// 
 			// TXTBatteryCapacity
 			// 
-			this.TXTBatteryCapacity.Location = new System.Drawing.Point(217, 105);
+			this.TXTBatteryCapacity.Location = new System.Drawing.Point(207, 89);
 			this.TXTBatteryCapacity.Name = "TXTBatteryCapacity";
 			this.TXTBatteryCapacity.Size = new System.Drawing.Size(242, 22);
 			this.TXTBatteryCapacity.TabIndex = 5;
 			// 
 			// TXTAvailableCapacity
 			// 
-			this.TXTAvailableCapacity.Location = new System.Drawing.Point(217, 160);
+			this.TXTAvailableCapacity.Location = new System.Drawing.Point(207, 134);
 			this.TXTAvailableCapacity.Name = "TXTAvailableCapacity";
 			this.TXTAvailableCapacity.Size = new System.Drawing.Size(242, 22);
 			this.TXTAvailableCapacity.TabIndex = 6;
@@ -150,7 +150,7 @@
 			this.BTNConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BTNConfirm.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.BTNConfirm.ForeColor = System.Drawing.Color.White;
-			this.BTNConfirm.Location = new System.Drawing.Point(481, 251);
+			this.BTNConfirm.Location = new System.Drawing.Point(442, 203);
 			this.BTNConfirm.Name = "BTNConfirm";
 			this.BTNConfirm.Size = new System.Drawing.Size(84, 34);
 			this.BTNConfirm.TabIndex = 1;
@@ -163,7 +163,7 @@
 			this.BTNCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BTNCancel.Font = new System.Drawing.Font("Noto Sans", 12F);
 			this.BTNCancel.ForeColor = System.Drawing.Color.White;
-			this.BTNCancel.Location = new System.Drawing.Point(381, 251);
+			this.BTNCancel.Location = new System.Drawing.Point(342, 203);
 			this.BTNCancel.Name = "BTNCancel";
 			this.BTNCancel.Size = new System.Drawing.Size(84, 34);
 			this.BTNCancel.TabIndex = 2;
@@ -173,10 +173,9 @@
 			// 
 			// DialogInputPowerModel
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(588, 310);
+			this.ClientSize = new System.Drawing.Size(542, 255);
 			this.Controls.Add(this.BTNCancel);
 			this.Controls.Add(this.BTNConfirm);
 			this.Controls.Add(this.tableLayoutPanel1);
