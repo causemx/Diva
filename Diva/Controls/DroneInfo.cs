@@ -11,7 +11,7 @@ using Diva.Mavlink;
 
 namespace Diva.Controls
 {
-	public partial class DroneInfo : UserControl, IActivate, IDeactivate
+	public partial class DroneInfo : UserControl
 	{
 		private bool isActive = false;
         public bool IsActive
@@ -24,9 +24,6 @@ namespace Diva.Controls
 				Parent?.Invalidate(Bounds, true);
 			}
 		}
-        public void Activate() => IsActive = true;
-        public void Deactivate() => IsActive = false;
-
         public MavDrone Drone { get; private set; }
         public string droneName => TxtDroneName.Text;
 
@@ -40,6 +37,9 @@ namespace Diva.Controls
             mav.onCreate();
             Drone = m;
         }
+
+        public void Activate() => IsActive = true;
+        public void Deactivate() => IsActive = false;
 
         public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
 		{

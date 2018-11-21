@@ -2630,8 +2630,8 @@ namespace Diva
                 DroneInfoPanel.Clear();
                 OnlineDrones.Clear();
             }
-            var dsettings = ConfigData.GetTypeList<DroneSetting>();
-            if (dsettings.Count == 0)
+            var dsettings = ConfigData.GetTypeList<DroneSetting>().Where(d => d.Checked);
+            if (!dsettings.Any())
             {
                 BUT_Configure_Click("Vehicle", null);
                 return;

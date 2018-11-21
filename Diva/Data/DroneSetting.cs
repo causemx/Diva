@@ -14,6 +14,19 @@ namespace Diva
         public string PortNumber = "";
         public string Baudrate = "";
         public string StreamURI = "";
+        public bool Checked = true;
+
+        public DroneSetting GetCopy()
+        {
+            DroneSetting s = new DroneSetting();
+            s.Name = Name;
+            s.PortName = PortName;
+            s.PortNumber = PortNumber;
+            s.Baudrate = Baudrate;
+            s.StreamURI = StreamURI;
+            s.Checked = Checked;
+            return s;
+        }
 
         public static void ExportXML(string file, List<DroneSetting> drones)
         {
