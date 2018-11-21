@@ -39,7 +39,7 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
-			this.RotationInfoPanel = new System.Windows.Forms.FlowLayoutPanel();
+			this.PanelRotationInfo = new System.Windows.Forms.FlowLayoutPanel();
 			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
 			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
 			this.But_MapFocus = new System.Windows.Forms.ToolStripButton();
@@ -61,6 +61,7 @@ namespace Diva
 			this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
+			this.BUT_PowerConsume = new System.Windows.Forms.ToolStripButton();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,7 +104,7 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.BUT_PowerConsume = new System.Windows.Forms.ToolStripButton();
+			this.PanelPowerConsumption = new System.Windows.Forms.FlowLayoutPanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -122,7 +123,8 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
-			this.splitContainer.Panel1.Controls.Add(this.RotationInfoPanel);
+			this.splitContainer.Panel1.Controls.Add(this.PanelPowerConsumption);
+			this.splitContainer.Panel1.Controls.Add(this.PanelRotationInfo);
 			this.splitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
 			this.splitContainer.Panel1.Controls.Add(this.TSZoomPanel);
 			this.splitContainer.Panel1.Controls.Add(this.BtnRTL);
@@ -141,10 +143,10 @@ namespace Diva
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
 			// 
-			// RotationInfoPanel
+			// PanelRotationInfo
 			// 
-			resources.ApplyResources(this.RotationInfoPanel, "RotationInfoPanel");
-			this.RotationInfoPanel.Name = "RotationInfoPanel";
+			resources.ApplyResources(this.PanelRotationInfo, "PanelRotationInfo");
+			this.PanelRotationInfo.Name = "PanelRotationInfo";
 			// 
 			// DroneInfoPanel
 			// 
@@ -434,6 +436,14 @@ namespace Diva
 			this.TSBtnCusOverlay.Image = global::Diva.Properties.Resources.icon_c;
 			this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
 			this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
+			// 
+			// BUT_PowerConsume
+			// 
+			resources.ApplyResources(this.BUT_PowerConsume, "BUT_PowerConsume");
+			this.BUT_PowerConsume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.BUT_PowerConsume.ForeColor = System.Drawing.Color.White;
+			this.BUT_PowerConsume.Name = "BUT_PowerConsume";
+			this.BUT_PowerConsume.Click += new System.EventHandler(this.BUT_PowerConsume_Click);
 			// 
 			// myMap
 			// 
@@ -819,13 +829,10 @@ namespace Diva
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
-			// BUT_PowerConsume
+			// PanelPowerConsumption
 			// 
-			resources.ApplyResources(this.BUT_PowerConsume, "BUT_PowerConsume");
-			this.BUT_PowerConsume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.BUT_PowerConsume.ForeColor = System.Drawing.Color.White;
-			this.BUT_PowerConsume.Name = "BUT_PowerConsume";
-			this.BUT_PowerConsume.Click += new System.EventHandler(this.BUT_PowerConsume_Click);
+			resources.ApplyResources(this.PanelPowerConsumption, "PanelPowerConsumption");
+			this.PanelPowerConsumption.Name = "PanelPowerConsumption";
 			// 
 			// Planner
 			// 
@@ -919,7 +926,8 @@ namespace Diva
 		private MyTSButton TSBtnCusOverlay;
         private DroneInfoPanel DroneInfoPanel;
 		private ToolStripButton But_MapFocus;
-		private FlowLayoutPanel RotationInfoPanel;
+		private FlowLayoutPanel PanelRotationInfo;
 		private ToolStripButton BUT_PowerConsume;
+		private FlowLayoutPanel PanelPowerConsumption;
 	}
 }

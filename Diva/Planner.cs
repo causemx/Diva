@@ -220,7 +220,7 @@ namespace Diva
 
 			//setup rotationinfo panel
 			rotationInfo = new RotationInfo() { Visible = false };
-			RotationInfoPanel.Controls.Add(rotationInfo);
+			PanelRotationInfo.Controls.Add(rotationInfo);
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;

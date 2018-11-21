@@ -55,6 +55,11 @@ namespace Diva.Controls
 		public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
 		{
 			var dinfo = new DroneInfo(drone, drone.Name);
+			var pinfo = new PowerModelInfo()
+			{
+				Visible = false,
+			};
+
 			dinfo.Click += (s, e) => ActiveDroneInfo = s as DroneInfo;
 			dinfo.DoubleClick += (s, e) =>
 			{
@@ -83,10 +88,18 @@ namespace Diva.Controls
                 }
 			};
 
+			dinfo.RaiseEvent += (s, pi) =>
+			{
+				// TODO: Fill information into pinfo here.
+				pinfo.Visible = !pinfo.Visible;
+				pinfo.PowerConsumption = pi.AvaiCapacity;
+			};			
+
 			battNotification = new NotificationManager.BatteryNotification(dinfo);
 
 			ThePanel.Controls.Remove(TelemetryData);
 			ThePanel.Controls.Add(dinfo);
+			ThePanel.Controls.Add(pinfo);
 			ThePanel.Controls.Add(TelemetryData);
 			if (setActive) ActiveDroneInfo = dinfo;
 

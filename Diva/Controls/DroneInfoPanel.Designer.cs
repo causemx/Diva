@@ -28,54 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.ThePanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.TelemetryData = new Diva.Controls.TelemetryDataPanel();
-            this.DroneInfoTip = new System.Windows.Forms.ToolTip(this.components);
-            this.ThePanel.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // ThePanel
-            // 
-            this.ThePanel.AutoSize = true;
-            this.ThePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ThePanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.ThePanel.Controls.Add(this.TelemetryData);
-            this.ThePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.ThePanel.Location = new System.Drawing.Point(0, 0);
-            this.ThePanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ThePanel.Name = "ThePanel";
-            this.ThePanel.Size = new System.Drawing.Size(341, 242);
-            this.ThePanel.TabIndex = 0;
-            // 
-            // TelemetryData
-            // 
-            this.TelemetryData.BackColor = System.Drawing.Color.Black;
-            this.TelemetryData.Location = new System.Drawing.Point(0, 0);
-            this.TelemetryData.Margin = new System.Windows.Forms.Padding(0);
-            this.TelemetryData.Name = "TelemetryData";
-            this.TelemetryData.Size = new System.Drawing.Size(341, 242);
-            this.TelemetryData.TabIndex = 0;
-            // 
-            // DroneInfoTip
-            // 
-            this.DroneInfoTip.UseAnimation = false;
-            this.DroneInfoTip.UseFading = false;
-            // 
-            // DroneInfoPanel
-            // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.ThePanel);
-            this.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "DroneInfoPanel";
-            this.Size = new System.Drawing.Size(341, 242);
-            this.ThePanel.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			this.components = new System.ComponentModel.Container();
+			this.ThePanel = new System.Windows.Forms.FlowLayoutPanel();
+			this.DroneInfoTip = new System.Windows.Forms.ToolTip(this.components);
+			this.TelemetryData = new Diva.Controls.TelemetryDataPanel();
+			this.ThePanel.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// ThePanel
+			// 
+			this.ThePanel.AutoSize = true;
+			this.ThePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.ThePanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.ThePanel.Controls.Add(this.TelemetryData);
+			this.ThePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.ThePanel.Location = new System.Drawing.Point(0, 0);
+			this.ThePanel.Margin = new System.Windows.Forms.Padding(0);
+			this.ThePanel.Name = "ThePanel";
+			this.ThePanel.Size = new System.Drawing.Size(341, 243);
+			this.ThePanel.TabIndex = 0;
+			// 
+			// DroneInfoTip
+			// 
+			this.DroneInfoTip.UseAnimation = false;
+			this.DroneInfoTip.UseFading = false;
+			// 
+			// TelemetryData
+			// 
+			this.TelemetryData.BackColor = System.Drawing.Color.Black;
+			this.TelemetryData.Location = new System.Drawing.Point(0, 0);
+			this.TelemetryData.Margin = new System.Windows.Forms.Padding(0);
+			this.TelemetryData.Name = "TelemetryData";
+			this.TelemetryData.Size = new System.Drawing.Size(341, 243);
+			this.TelemetryData.TabIndex = 0;
+			// 
+			// DroneInfoPanel
+			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.Controls.Add(this.ThePanel);
+			this.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ForeColor = System.Drawing.Color.White;
+			this.Margin = new System.Windows.Forms.Padding(0);
+			this.Name = "DroneInfoPanel";
+			this.Size = new System.Drawing.Size(341, 243);
+			this.ThePanel.ResumeLayout(false);
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
