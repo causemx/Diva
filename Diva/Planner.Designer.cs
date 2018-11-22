@@ -39,6 +39,7 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.PanelPowerConsumption = new System.Windows.Forms.FlowLayoutPanel();
 			this.PanelRotationInfo = new System.Windows.Forms.FlowLayoutPanel();
 			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
 			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
@@ -61,7 +62,6 @@ namespace Diva
 			this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
-			this.BUT_PowerConsume = new System.Windows.Forms.ToolStripButton();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,7 +104,8 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.PanelPowerConsumption = new System.Windows.Forms.FlowLayoutPanel();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.powerConsumptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -142,6 +143,11 @@ namespace Diva
 			// 
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
+			// 
+			// PanelPowerConsumption
+			// 
+			resources.ApplyResources(this.PanelPowerConsumption, "PanelPowerConsumption");
+			this.PanelPowerConsumption.Name = "PanelPowerConsumption";
 			// 
 			// PanelRotationInfo
 			// 
@@ -338,8 +344,7 @@ namespace Diva
             this.TSBtnTagging,
             this.TSBtnSaveMission,
             this.TSBtnReadMission,
-            this.TSBtnCusOverlay,
-            this.BUT_PowerConsume});
+            this.TSBtnCusOverlay});
 			this.TSMainPanel.Name = "TSMainPanel";
 			// 
 			// TSBtnConnect
@@ -437,14 +442,6 @@ namespace Diva
 			this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
 			this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
 			// 
-			// BUT_PowerConsume
-			// 
-			resources.ApplyResources(this.BUT_PowerConsume, "BUT_PowerConsume");
-			this.BUT_PowerConsume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.BUT_PowerConsume.ForeColor = System.Drawing.Color.White;
-			this.BUT_PowerConsume.Name = "BUT_PowerConsume";
-			this.BUT_PowerConsume.Click += new System.EventHandler(this.BUT_PowerConsume_Click);
-			// 
 			// myMap
 			// 
 			this.myMap.BackColor = System.Drawing.SystemColors.Control;
@@ -488,7 +485,9 @@ namespace Diva
             this.toolStripSeparator1,
             this.miClearMission,
             this.miSetHomeHere,
-            this.miClearAllMissions});
+            this.miClearAllMissions,
+            this.toolStripSeparator2,
+            this.powerConsumptionToolStripMenuItem});
 			this.cmMap.Name = "contextMenuStrip1";
 			resources.ApplyResources(this.cmMap, "cmMap");
 			// 
@@ -829,10 +828,16 @@ namespace Diva
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
-			// PanelPowerConsumption
+			// toolStripSeparator2
 			// 
-			resources.ApplyResources(this.PanelPowerConsumption, "PanelPowerConsumption");
-			this.PanelPowerConsumption.Name = "PanelPowerConsumption";
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+			// 
+			// powerConsumptionToolStripMenuItem
+			// 
+			this.powerConsumptionToolStripMenuItem.Name = "powerConsumptionToolStripMenuItem";
+			resources.ApplyResources(this.powerConsumptionToolStripMenuItem, "powerConsumptionToolStripMenuItem");
+			this.powerConsumptionToolStripMenuItem.Click += new System.EventHandler(this.powerConsumptionToolStripMenuItem_Click);
 			// 
 			// Planner
 			// 
@@ -927,7 +932,8 @@ namespace Diva
         private DroneInfoPanel DroneInfoPanel;
 		private ToolStripButton But_MapFocus;
 		private FlowLayoutPanel PanelRotationInfo;
-		private ToolStripButton BUT_PowerConsume;
 		private FlowLayoutPanel PanelPowerConsumption;
+		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripMenuItem powerConsumptionToolStripMenuItem;
 	}
 }

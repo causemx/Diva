@@ -32,9 +32,9 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.LBLConsumption = new System.Windows.Forms.TextBox();
 			this.LBLDescription = new System.Windows.Forms.Label();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.PBHint = new System.Windows.Forms.PictureBox();
 			this.BTNClose = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PBHint)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -77,15 +77,15 @@
 			this.LBLDescription.TabIndex = 4;
 			this.LBLDescription.Text = "Full Power(about 100%)";
 			// 
-			// pictureBox1
+			// PBHint
 			// 
-			this.pictureBox1.Image = global::Diva.Properties.Resources.icon_warn;
-			this.pictureBox1.Location = new System.Drawing.Point(53, 70);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(32, 32);
-			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox1.TabIndex = 3;
-			this.pictureBox1.TabStop = false;
+			this.PBHint.Image = global::Diva.Properties.Resources.icon_warn;
+			this.PBHint.Location = new System.Drawing.Point(53, 70);
+			this.PBHint.Name = "PBHint";
+			this.PBHint.Size = new System.Drawing.Size(32, 32);
+			this.PBHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.PBHint.TabIndex = 3;
+			this.PBHint.TabStop = false;
 			// 
 			// BTNClose
 			// 
@@ -105,16 +105,16 @@
 			// PowerModelInfo
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-			this.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.BackColor = System.Drawing.Color.Black;
 			this.Controls.Add(this.BTNClose);
 			this.Controls.Add(this.LBLDescription);
-			this.Controls.Add(this.pictureBox1);
+			this.Controls.Add(this.PBHint);
 			this.Controls.Add(this.LBLConsumption);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Name = "PowerModelInfo";
 			this.Size = new System.Drawing.Size(340, 119);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PBHint)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -126,7 +126,7 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox LBLConsumption;
 		private System.Windows.Forms.Label LBLDescription;
-		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.PictureBox PBHint;
 		private System.Windows.Forms.Button BTNClose;
 	}
 }

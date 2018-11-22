@@ -11,6 +11,7 @@ using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -2959,38 +2960,7 @@ namespace Diva
 
 		private void BUT_PowerConsume_Click(object sender, EventArgs e)
 		{
-			/*
-			try
-			{
-				log.InfoFormat("WPNAV_SPEED:{0}", ActiveDrone.Status.param["WPNAV_SPEED"]);
-				log.InfoFormat("WPNAV_SPEED_UP:{0}", ActiveDrone.Status.param["WPNAV_SPEED_UP"]);
-				log.InfoFormat("WPNAV_SPEED_DN:{0}", ActiveDrone.Status.param["WPNAV_SPEED_DN"]);
-				log.InfoFormat("LAND_SPEED:{0}", ActiveDrone.Status.param["LAND_SPEED"]);
-				log.InfoFormat("LAND_SPEED_HIGH:{0}", ActiveDrone.Status.param["LAND_SPEED_HIGH"]);
-				log.InfoFormat("RTL_SPEED:{0}", ActiveDrone.Status.param["RTL_SPEED"]);
-				log.InfoFormat("RTL_ALT:{0}", ActiveDrone.Status.param["RTL_ALT"]);
-				log.InfoFormat("WPNAV_ACCEL:{0}", ActiveDrone.Status.param["WPNAV_ACCEL"]);
-				log.InfoFormat("WPNAV_ACCEL_Z:{0}", ActiveDrone.Status.param["WPNAV_ACCEL_Z"]);
-			}
-			catch (Exception e1)
-			{
-				log.Error(e1.ToString());
-			}*/
-
-			try
-			{
-				Locationwp home = new Locationwp()
-				{
-					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-					lat = (double.Parse(TxtHomeLatitude.Text)),
-					lng = (double.Parse(TxtHomeLongitude.Text)),
-					alt = (float.Parse(TxtHomeAltitude.Text)),
-				};
-
-				FileUtility fu = new FileUtility(ActiveDrone, GetCommandList(), home);
-				fu.Write();
-			}
-			catch (Exception) {	}
+			
 		}
 
 
@@ -3552,6 +3522,49 @@ namespace Diva
 				}
 			}
 		}
+
+		private void powerConsumptionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				Locationwp home = new Locationwp()
+				{
+					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+					lat = (double.Parse(TxtHomeLatitude.Text)),
+					lng = (double.Parse(TxtHomeLongitude.Text)),
+					alt = (float.Parse(TxtHomeAltitude.Text)),
+				};
+
+				FileUtility fu = new FileUtility(ActiveDrone, GetCommandList(), home);
+				fu.Write();
+
+				/*
+				string cmd = @"C:\Users\user\Projects\mpm\Predict.py";
+				string args = "param.txt foo.waypoints";
+				run_cmd(cmd, args);*/
+
+			}
+			catch (Exception) { }
+
+		}
+
+		private void run_cmd(string cmd, string args)
+		{
+			ProcessStartInfo start = new ProcessStartInfo();
+			start.FileName = @"C:\Python36\python.exe";
+			start.Arguments = string.Format("{0} {1}", cmd, args);
+			start.UseShellExecute = false;
+			start.RedirectStandardOutput = true;
+			using (Process process = Process.Start(start))
+			{
+				using (StreamReader reader = process.StandardOutput)
+				{
+					string result = reader.ReadToEnd();
+					Console.Write(result);
+				}
+			}
+		}
+
 		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//FENCE_ENABLE ON COPTER

@@ -87,7 +87,8 @@ namespace Diva.Controls
 			{
 				// TODO: Fill information into pinfo here.
 				pinfo.Visible = !pinfo.Visible;
-				pinfo.PowerConsumption = pi.AvaiCapacity;
+				pinfo.UpdateConsumption(pi.BattCapacity, pi.AvaiPercentage);
+				pinfo.EstimatedPower = pi.Prediction;
 			};			
 
 			battNotification = new NotificationManager.BatteryNotification(dinfo);
