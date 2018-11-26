@@ -79,9 +79,8 @@
 			this.LBLModelPath.ForeColor = System.Drawing.Color.White;
 			this.LBLModelPath.Location = new System.Drawing.Point(185, 43);
 			this.LBLModelPath.Name = "LBLModelPath";
-			this.LBLModelPath.Size = new System.Drawing.Size(242, 22);
+			this.LBLModelPath.Size = new System.Drawing.Size(0, 22);
 			this.LBLModelPath.TabIndex = 7;
-			this.LBLModelPath.Text = "c://users/Project/Diva/*.model";
 			// 
 			// LBLDroneID
 			// 

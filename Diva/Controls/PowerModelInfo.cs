@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
 using Diva.Properties;
 
@@ -17,27 +18,35 @@ namespace Diva.Controls
 		public double EstimatedPower { get => estimatedPower;
 			set
 			{
+
 				LBLConsumption.Text = value.ToString();
 				estimatedPower = value;
 
 				if (estimatedPower <= availableCapacity * 0.8)
 				{
 					PBHint.Image = Resources.icon_power_full_32;
+					LBLDescription.Text = "Power Level: Full";
+					
+					
 				}
 				else if (estimatedPower > availableCapacity * 0.8 && estimatedPower < availableCapacity)
 				{
 					PBHint.Image = Resources.icon_power_medium_32;
+					LBLDescription.Text = "Power Level: Medium";
 				}
 				else if (estimatedPower > availableCapacity)
 				{
 					PBHint.Image = Resources.icon_power_low_32;
+					LBLDescription.Text = "Power Level: Low";
 				}
+
+				LBLDescriptionTip.Text = "Consumption: " + ((estimatedPower / availableCapacity) / 100).ToString("F2") + "%";
 			}
 		}
 
-		public void UpdateConsumption(double batteryCapacity, double availablePercentage)
+		public void UpdateConsumption(double batteryCapacity, int availablePercentage)
 		{
-			this.availableCapacity = batteryCapacity * availableCapacity;
+			this.availableCapacity = batteryCapacity * availablePercentage / 100;
 		}
 
 

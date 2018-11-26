@@ -34,6 +34,7 @@
 			this.LBLDescription = new System.Windows.Forms.Label();
 			this.PBHint = new System.Windows.Forms.PictureBox();
 			this.BTNClose = new System.Windows.Forms.Button();
+			this.LBLDescriptionTip = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.PBHint)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -73,9 +74,9 @@
 			this.LBLDescription.ForeColor = System.Drawing.Color.White;
 			this.LBLDescription.Location = new System.Drawing.Point(91, 76);
 			this.LBLDescription.Name = "LBLDescription";
-			this.LBLDescription.Size = new System.Drawing.Size(175, 20);
+			this.LBLDescription.Size = new System.Drawing.Size(21, 20);
 			this.LBLDescription.TabIndex = 4;
-			this.LBLDescription.Text = "Full Power(about 100%)";
+			this.LBLDescription.Text = "...";
 			// 
 			// PBHint
 			// 
@@ -102,10 +103,22 @@
 			this.BTNClose.UseVisualStyleBackColor = true;
 			this.BTNClose.Click += new System.EventHandler(this.BTNClose_Click);
 			// 
+			// LBLDescriptionTip
+			// 
+			this.LBLDescriptionTip.AutoSize = true;
+			this.LBLDescriptionTip.Font = new System.Drawing.Font("Noto Sans", 11.25F);
+			this.LBLDescriptionTip.ForeColor = System.Drawing.Color.White;
+			this.LBLDescriptionTip.Location = new System.Drawing.Point(144, 76);
+			this.LBLDescriptionTip.Name = "LBLDescriptionTip";
+			this.LBLDescriptionTip.Size = new System.Drawing.Size(21, 20);
+			this.LBLDescriptionTip.TabIndex = 6;
+			this.LBLDescriptionTip.Text = "...";
+			// 
 			// PowerModelInfo
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Black;
+			this.Controls.Add(this.LBLDescriptionTip);
 			this.Controls.Add(this.BTNClose);
 			this.Controls.Add(this.LBLDescription);
 			this.Controls.Add(this.PBHint);
@@ -128,5 +141,6 @@
 		private System.Windows.Forms.Label LBLDescription;
 		private System.Windows.Forms.PictureBox PBHint;
 		private System.Windows.Forms.Button BTNClose;
+		private System.Windows.Forms.Label LBLDescriptionTip;
 	}
 }

@@ -16,7 +16,7 @@ namespace Diva.Controls
 		private string modelFile = null;
 		private string droneID;
 		private double batteryCapacity;
-		private double availableCapacity;
+		private int availablePercentage;
 
 		public event EventHandler DoClick;
 
@@ -35,11 +35,11 @@ namespace Diva.Controls
 				TXTBatteryCapacity.Text = batteryCapacity.ToString();
 			}
 		}
-		public double AvailablePercentage {
-			get => double.Parse(TXTAvailablePercentage.Text);
+		public int AvailablePercentage {
+			get => int.Parse(TXTAvailablePercentage.Text);
 			set
 			{
-				availableCapacity = value;
+				availablePercentage = value;
 				TXTAvailablePercentage.Text = AvailablePercentage.ToString();
 			}
 		}

@@ -96,10 +96,10 @@ namespace Diva.Controls
 		public class PowerInfoArgs : EventArgs
 		{
 			public double BattCapacity { get; set; }
-			public double AvaiPercentage { get; set; }
+			public int AvaiPercentage { get; set; }
 			public double Prediction { get; set; }
 
-			public PowerInfoArgs(double _battCapacity, double _avaiPercentage, double _prediction)
+			public PowerInfoArgs(double _battCapacity, int _avaiPercentage, double _prediction)
 			{
 				BattCapacity = _battCapacity;
 				AvaiPercentage = _avaiPercentage;

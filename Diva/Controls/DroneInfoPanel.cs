@@ -86,7 +86,7 @@ namespace Diva.Controls
 			dinfo.RaiseEvent += (s, pi) =>
 			{
 				// TODO: Fill information into pinfo here.
-				pinfo.Visible = !pinfo.Visible;
+				if (!pinfo.Visible) pinfo.Visible = true;
 				pinfo.UpdateConsumption(pi.BattCapacity, pi.AvaiPercentage);
 				pinfo.EstimatedPower = pi.Prediction;
 			};			
