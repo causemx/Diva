@@ -14,19 +14,20 @@ namespace Diva
         public string PortNumber = "";
         public string Baudrate = "";
         public string StreamURI = "";
+        public string PowerModel = "";
         public bool Checked = true;
 
-        public DroneSetting GetCopy()
-        {
-            DroneSetting s = new DroneSetting();
-            s.Name = Name;
-            s.PortName = PortName;
-            s.PortNumber = PortNumber;
-            s.Baudrate = Baudrate;
-            s.StreamURI = StreamURI;
-            s.Checked = Checked;
-            return s;
-        }
+        public DroneSetting GetCopy() =>
+            new DroneSetting
+            {
+                Name = Name,
+                PortName = PortName,
+                PortNumber = PortNumber,
+                Baudrate = Baudrate,
+                StreamURI = StreamURI,
+                PowerModel = PowerModel,
+                Checked = Checked
+            };
 
         public static void ExportXML(string file, List<DroneSetting> drones)
         {
@@ -48,6 +49,8 @@ namespace Diva
                         xmlwriter.WriteElementString("PortNumber", d.PortNumber);
                         xmlwriter.WriteElementString("Baudrate", d.Baudrate);
                         xmlwriter.WriteElementString("StreamURI", d.StreamURI);
+                        xmlwriter.WriteElementString("PowerModel", d.PowerModel);
+                        xmlwriter.WriteElementString("Checked", d.Checked.ToString());
                     }
                     catch (Exception e)
                     {
@@ -100,6 +103,12 @@ namespace Diva
                                                 break;
                                             case "StreamURI":
                                                 d.StreamURI = xmlreader.ReadString();
+                                                break;
+                                            case "PowerModel":
+                                                d.PowerModel = xmlreader.ReadString();
+                                                break;
+                                            case "Checked":
+                                                bool.TryParse(xmlreader.ReadString(), out d.Checked);
                                                 break;
                                             case "Vehicle":
                                                 drones.Add(d);

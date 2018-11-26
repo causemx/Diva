@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.EnergyConsumption;
 
 namespace Diva.Controls
 {
@@ -17,14 +18,7 @@ namespace Diva.Controls
         private bool NoTrigger = true;
         private static void SetEnabled(Button btn, bool enabled)
             => ConfigureForm.SetEnabled(btn, enabled);
-        private void SetSettingsDirty(bool dirty)
-        {
-            if (confForm != null)
-            {
-                confForm.DroneSettingDirty = dirty;
-                //confForm.FreezeVConfPanel();
-            }
-        }
+        private void SetSettingsDirty() => Modified?.Invoke(this, null);
 
         #region Mode switching
         public enum Mode
@@ -77,7 +71,7 @@ namespace Diva.Controls
             // freeze others
             SetActionButtons(false);
             // freeze control panels
-            confForm?.FreezeVConfPanel();
+            confForm?.FreezeVConfPanel(true);
             EditPanel.Visible = TBoxDroneName.Visible = true;
             if (m == Mode.Edit)
             {
@@ -96,6 +90,7 @@ namespace Diva.Controls
                     TBoxPortValue.Text = Baudrate;
                 }
                 TBoxStreamURI.Text = StreamURI;
+                ComboPowerModel.SelectedItem = PowerModelName;
                 NoTrigger = false;
             } else
             {
@@ -111,7 +106,7 @@ namespace Diva.Controls
             if (Parent != null)
             {
                 SetActionButtons(true);
-                SetSettingsDirty(false);
+                confForm?.FreezeVConfPanel(false);
             }
             EditPanel.Visible = TBoxDroneName.Visible = false;
         }
@@ -152,12 +147,13 @@ namespace Diva.Controls
                 LabelBaudrate.Visible = LabelBaudrateText.Visible = RBSerial.Checked;
                 d.PortName = PortName;
                 StreamURI = d.StreamURI = TBoxStreamURI.Text;
+                d.PowerModel = PowerModelName = (string)ComboPowerModel.SelectedItem;
                 if (CurMode == Mode.New)
                     DroneList?.Add(d);
                 EditPanel.Visible = false;
                 ok = true;
             }
-            SetSettingsDirty(true);
+            SetSettingsDirty();
             return ok;
         }
         #endregion
@@ -197,6 +193,11 @@ namespace Diva.Controls
             get => LabelStreamURIText.Text;
             set => LabelStreamURIText.Text = value;
 		}
+        public string PowerModelName
+        {
+            get => PowerModel.GetModel(LabelPowerModelText.Text).ModelName;
+            set => LabelPowerModelText.Text = PowerModel.GetModel(value).ModelName;
+        }
         public bool Checked
         {
             get => ChkDroneNameText.Checked;
@@ -222,6 +223,8 @@ namespace Diva.Controls
             Removed += DefaultRemoved;
             CurMode = Mode.Empty;
             NoTrigger = false;
+            ComboPowerModel.Items.AddRange(PowerModel.GetPowerModelNames().ToArray());
+            PowerModelName = PowerModel.PowerModelNone.ModelName;
         }
 
         public static DroneSettingInput FromSetting(DroneSetting s)
@@ -233,12 +236,13 @@ namespace Diva.Controls
                 PortNumber = s.PortNumber,
                 Baudrate = s.Baudrate,
                 StreamURI = s.StreamURI,
-                Checked = s.Checked
+                Checked = s.Checked,
             };
             input.CurMode = s.Name == "" ? Mode.Empty : Mode.Normal;
             bool isUdp = s.PortName.Equals("udp", StringComparison.InvariantCultureIgnoreCase);
             input.LabelPortNumber.Visible = input.LabelPortNumberText.Visible = isUdp;
             input.LabelBaudrate.Visible = input.LabelBaudrateText.Visible = !isUdp;
+            input.PowerModelName = s.PowerModel;
             return input;
         }
 
@@ -264,7 +268,7 @@ namespace Diva.Controls
                     if (ApplyEdit())
                     {
                         CurMode = Mode.Normal;
-                        Modified?.Invoke(this, null);
+                        SetSettingsDirty();
                     }
                     break;
             }
@@ -305,7 +309,12 @@ namespace Diva.Controls
         {
             var d = DroneList?.Find(n => n.Name == DroneName);
             if (d != null) d.Checked = Checked;
-            SetSettingsDirty(true);
+            SetSettingsDirty();
+        }
+
+        private void BtnNewModel_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
     }

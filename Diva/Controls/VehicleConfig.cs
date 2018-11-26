@@ -19,10 +19,11 @@ namespace Diva.Controls
                     System.Drawing.Color.White : System.Drawing.Color.Gray;*/
                 VConfBtnsPanel.Enabled = true;
             }
+            get => BtnVConfApply.Enabled;
         }
-        public void FreezeVConfPanel()
+        public void FreezeVConfPanel(bool freeze)
         {
-            VConfBtnsPanel.Enabled = false;
+            VConfBtnsPanel.Enabled = !freeze;
         }
 
         private void InitVehicleSettings(List<DroneSetting> droneSettings = null)

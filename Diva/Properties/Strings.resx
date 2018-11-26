@@ -450,4 +450,13 @@
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>Rotation mission have executing</value>
   </data>
+  <data name="DroneSettingInput.LabelPowerModel.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
+    <value>(None)</value>
+  </data>
+  <data name="DroneSettingInput.BtnNewModel.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
 </root>

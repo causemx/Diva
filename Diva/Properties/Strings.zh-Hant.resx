@@ -310,7 +310,7 @@
     <value>新增</value>
   </data>
   <data name="DroneSettingInput.EditBtn.Text" xml:space="preserve">
-    <value>編輯</value>
+    <value>新建</value>
   </data>
   <data name="DroneSettingInput.RemoveBtn.Text" xml:space="preserve">
     <value>移除</value>
@@ -450,5 +450,14 @@
   </data>
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>輪值執行中</value>
+  </data>
+  <data name="DroneSettingInput.LabelPowerModel.Text" xml:space="preserve">
+    <value>能耗模式</value>
+  </data>
+  <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
+    <value>(無)</value>
+  </data>
+  <data name="DroneSettingInput.BtnNewModel.Text" xml:space="preserve">
+    <value>新建</value>
   </data>
 </root>
