@@ -43,7 +43,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Noto Sans", 11.25F);
 			this.label1.ForeColor = System.Drawing.Color.White;
-			this.label1.Location = new System.Drawing.Point(10, 42);
+			this.label1.Location = new System.Drawing.Point(10, 48);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(152, 20);
 			this.label1.TabIndex = 0;
@@ -54,7 +54,7 @@
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Noto Sans", 9F);
 			this.label2.ForeColor = System.Drawing.Color.White;
-			this.label2.Location = new System.Drawing.Point(271, 44);
+			this.label2.Location = new System.Drawing.Point(271, 50);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(34, 17);
 			this.label2.TabIndex = 1;
@@ -62,7 +62,7 @@
 			// 
 			// LBLConsumption
 			// 
-			this.LBLConsumption.Location = new System.Drawing.Point(164, 41);
+			this.LBLConsumption.Location = new System.Drawing.Point(164, 47);
 			this.LBLConsumption.Name = "LBLConsumption";
 			this.LBLConsumption.Size = new System.Drawing.Size(100, 22);
 			this.LBLConsumption.TabIndex = 2;
@@ -72,7 +72,7 @@
 			this.LBLDescription.AutoSize = true;
 			this.LBLDescription.Font = new System.Drawing.Font("Noto Sans", 11.25F);
 			this.LBLDescription.ForeColor = System.Drawing.Color.White;
-			this.LBLDescription.Location = new System.Drawing.Point(91, 76);
+			this.LBLDescription.Location = new System.Drawing.Point(120, 91);
 			this.LBLDescription.Name = "LBLDescription";
 			this.LBLDescription.Size = new System.Drawing.Size(21, 20);
 			this.LBLDescription.TabIndex = 4;
@@ -81,7 +81,7 @@
 			// PBHint
 			// 
 			this.PBHint.Image = global::Diva.Properties.Resources.icon_warn;
-			this.PBHint.Location = new System.Drawing.Point(53, 70);
+			this.PBHint.Location = new System.Drawing.Point(66, 85);
 			this.PBHint.Name = "PBHint";
 			this.PBHint.Size = new System.Drawing.Size(32, 32);
 			this.PBHint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -107,8 +107,8 @@
 			// 
 			this.LBLDescriptionTip.AutoSize = true;
 			this.LBLDescriptionTip.Font = new System.Drawing.Font("Noto Sans", 11.25F);
-			this.LBLDescriptionTip.ForeColor = System.Drawing.Color.White;
-			this.LBLDescriptionTip.Location = new System.Drawing.Point(144, 76);
+			this.LBLDescriptionTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.LBLDescriptionTip.Location = new System.Drawing.Point(66, 133);
 			this.LBLDescriptionTip.Name = "LBLDescriptionTip";
 			this.LBLDescriptionTip.Size = new System.Drawing.Size(21, 20);
 			this.LBLDescriptionTip.TabIndex = 6;
@@ -126,7 +126,7 @@
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Name = "PowerModelInfo";
-			this.Size = new System.Drawing.Size(340, 119);
+			this.Size = new System.Drawing.Size(340, 172);
 			((System.ComponentModel.ISupportInitialize)(this.PBHint)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

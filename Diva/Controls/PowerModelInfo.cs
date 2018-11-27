@@ -15,19 +15,21 @@ namespace Diva.Controls
 			InitializeComponent();
 		}
 
-		public double EstimatedPower { get => estimatedPower;
+		public double EstimatedPower
+		{
+			get => estimatedPower;
 			set
 			{
-
+	
 				LBLConsumption.Text = value.ToString();
 				estimatedPower = value;
+				
+				double tmp = (estimatedPower / availableCapacity)*100;
 
 				if (estimatedPower <= availableCapacity * 0.8)
 				{
 					PBHint.Image = Resources.icon_power_full_32;
 					LBLDescription.Text = "Power Level: Full";
-					
-					
 				}
 				else if (estimatedPower > availableCapacity * 0.8 && estimatedPower < availableCapacity)
 				{
@@ -40,7 +42,7 @@ namespace Diva.Controls
 					LBLDescription.Text = "Power Level: Low";
 				}
 
-				LBLDescriptionTip.Text = "Consumption: " + ((estimatedPower / availableCapacity) / 100).ToString("F2") + "%";
+				LBLDescriptionTip.Text = tmp.ToString("F2") + "% Energy you needed";
 			}
 		}
 
