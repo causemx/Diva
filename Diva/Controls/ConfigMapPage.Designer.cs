@@ -30,6 +30,11 @@
         {
             this.BtnMapConfigReset = new System.Windows.Forms.Button();
             this.BtnMapConfigApply = new System.Windows.Forms.Button();
+            this.PanelIndoorMapControls = new System.Windows.Forms.Panel();
+            this.LabelImageMapLocation = new System.Windows.Forms.Label();
+            this.TBoxIndoorMapLocation = new System.Windows.Forms.TextBox();
+            this.BtnBrowseIndoorMap = new System.Windows.Forms.Button();
+            this.RBtnIndoorMap = new System.Windows.Forms.RadioButton();
             this.PanelGlobalMapControls = new System.Windows.Forms.Panel();
             this.TBoxProxyPort = new System.Windows.Forms.TextBox();
             this.LabelProxyPort = new System.Windows.Forms.Label();
@@ -48,6 +53,7 @@
             this.TBoxMapCacheLocation = new System.Windows.Forms.TextBox();
             this.BtnBrowseMapLocation = new System.Windows.Forms.Button();
             this.RBtnGlobalMap = new System.Windows.Forms.RadioButton();
+            this.PanelIndoorMapControls.SuspendLayout();
             this.PanelGlobalMapControls.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +85,62 @@
             this.BtnMapConfigApply.UseVisualStyleBackColor = true;
             this.BtnMapConfigApply.Click += new System.EventHandler(this.BtnMapConfigApply_Click);
             // 
+            // PanelIndoorMapControls
+            // 
+            this.PanelIndoorMapControls.Controls.Add(this.LabelImageMapLocation);
+            this.PanelIndoorMapControls.Controls.Add(this.TBoxIndoorMapLocation);
+            this.PanelIndoorMapControls.Controls.Add(this.BtnBrowseIndoorMap);
+            this.PanelIndoorMapControls.Location = new System.Drawing.Point(40, 360);
+            this.PanelIndoorMapControls.Name = "PanelIndoorMapControls";
+            this.PanelIndoorMapControls.Size = new System.Drawing.Size(720, 60);
+            this.PanelIndoorMapControls.TabIndex = 20;
+            // 
+            // LabelImageMapLocation
+            // 
+            this.LabelImageMapLocation.AutoSize = true;
+            this.LabelImageMapLocation.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelImageMapLocation.ForeColor = System.Drawing.Color.White;
+            this.LabelImageMapLocation.Location = new System.Drawing.Point(0, 0);
+            this.LabelImageMapLocation.Name = "LabelImageMapLocation";
+            this.LabelImageMapLocation.Size = new System.Drawing.Size(162, 18);
+            this.LabelImageMapLocation.TabIndex = 8;
+            this.LabelImageMapLocation.Text = "Indoor map image file:";
+            // 
+            // TBoxIndoorMapLocation
+            // 
+            this.TBoxIndoorMapLocation.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBoxIndoorMapLocation.Location = new System.Drawing.Point(0, 30);
+            this.TBoxIndoorMapLocation.Name = "TBoxIndoorMapLocation";
+            this.TBoxIndoorMapLocation.Size = new System.Drawing.Size(560, 23);
+            this.TBoxIndoorMapLocation.TabIndex = 9;
+            this.TBoxIndoorMapLocation.TextChanged += new System.EventHandler(this.MapConfigChanged);
+            // 
+            // BtnBrowseIndoorMap
+            // 
+            this.BtnBrowseIndoorMap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnBrowseIndoorMap.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnBrowseIndoorMap.ForeColor = System.Drawing.Color.White;
+            this.BtnBrowseIndoorMap.Location = new System.Drawing.Point(580, 20);
+            this.BtnBrowseIndoorMap.Name = "BtnBrowseIndoorMap";
+            this.BtnBrowseIndoorMap.Size = new System.Drawing.Size(120, 40);
+            this.BtnBrowseIndoorMap.TabIndex = 10;
+            this.BtnBrowseIndoorMap.Text = "Browse";
+            this.BtnBrowseIndoorMap.UseVisualStyleBackColor = true;
+            this.BtnBrowseIndoorMap.Click += new System.EventHandler(this.BtnBrowseIndoorMap_Click);
+            // 
+            // RBtnIndoorMap
+            // 
+            this.RBtnIndoorMap.AutoSize = true;
+            this.RBtnIndoorMap.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RBtnIndoorMap.ForeColor = System.Drawing.Color.White;
+            this.RBtnIndoorMap.Location = new System.Drawing.Point(20, 320);
+            this.RBtnIndoorMap.Name = "RBtnIndoorMap";
+            this.RBtnIndoorMap.Size = new System.Drawing.Size(106, 22);
+            this.RBtnIndoorMap.TabIndex = 19;
+            this.RBtnIndoorMap.Text = "Indoor Map";
+            this.RBtnIndoorMap.UseVisualStyleBackColor = true;
+            this.RBtnIndoorMap.CheckedChanged += new System.EventHandler(this.MapControl_RadioCheckedChanged);
+            // 
             // PanelGlobalMapControls
             // 
             this.PanelGlobalMapControls.Controls.Add(this.TBoxProxyPort);
@@ -98,9 +160,9 @@
             this.PanelGlobalMapControls.Controls.Add(this.TBoxMapCacheLocation);
             this.PanelGlobalMapControls.Controls.Add(this.BtnBrowseMapLocation);
             this.PanelGlobalMapControls.ForeColor = System.Drawing.Color.Transparent;
-            this.PanelGlobalMapControls.Location = new System.Drawing.Point(20, 80);
+            this.PanelGlobalMapControls.Location = new System.Drawing.Point(40, 60);
             this.PanelGlobalMapControls.Name = "PanelGlobalMapControls";
-            this.PanelGlobalMapControls.Size = new System.Drawing.Size(760, 240);
+            this.PanelGlobalMapControls.Size = new System.Drawing.Size(720, 240);
             this.PanelGlobalMapControls.TabIndex = 18;
             // 
             // TBoxProxyPort
@@ -184,7 +246,7 @@
             // TBoxInitialZoom
             // 
             this.TBoxInitialZoom.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBoxInitialZoom.Location = new System.Drawing.Point(310, 130);
+            this.TBoxInitialZoom.Location = new System.Drawing.Point(300, 130);
             this.TBoxInitialZoom.Name = "TBoxInitialZoom";
             this.TBoxInitialZoom.Size = new System.Drawing.Size(80, 23);
             this.TBoxInitialZoom.TabIndex = 17;
@@ -194,7 +256,7 @@
             // 
             this.LabelInitialZoom.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelInitialZoom.ForeColor = System.Drawing.Color.White;
-            this.LabelInitialZoom.Location = new System.Drawing.Point(100, 130);
+            this.LabelInitialZoom.Location = new System.Drawing.Point(80, 130);
             this.LabelInitialZoom.Name = "LabelInitialZoom";
             this.LabelInitialZoom.Size = new System.Drawing.Size(200, 23);
             this.LabelInitialZoom.TabIndex = 16;
@@ -205,7 +267,7 @@
             // 
             this.LabelIPLongtitude.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelIPLongtitude.ForeColor = System.Drawing.Color.White;
-            this.LabelIPLongtitude.Location = new System.Drawing.Point(450, 90);
+            this.LabelIPLongtitude.Location = new System.Drawing.Point(430, 90);
             this.LabelIPLongtitude.Name = "LabelIPLongtitude";
             this.LabelIPLongtitude.Size = new System.Drawing.Size(140, 23);
             this.LabelIPLongtitude.TabIndex = 15;
@@ -215,9 +277,9 @@
             // TBoxIPLongitude
             // 
             this.TBoxIPLongitude.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBoxIPLongitude.Location = new System.Drawing.Point(600, 90);
+            this.TBoxIPLongitude.Location = new System.Drawing.Point(580, 90);
             this.TBoxIPLongitude.Name = "TBoxIPLongitude";
-            this.TBoxIPLongitude.Size = new System.Drawing.Size(150, 23);
+            this.TBoxIPLongitude.Size = new System.Drawing.Size(140, 23);
             this.TBoxIPLongitude.TabIndex = 14;
             this.TBoxIPLongitude.TextChanged += new System.EventHandler(this.MapConfigChanged);
             // 
@@ -225,7 +287,7 @@
             // 
             this.LabelIPLatitude.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelIPLatitude.ForeColor = System.Drawing.Color.White;
-            this.LabelIPLatitude.Location = new System.Drawing.Point(160, 90);
+            this.LabelIPLatitude.Location = new System.Drawing.Point(150, 90);
             this.LabelIPLatitude.Name = "LabelIPLatitude";
             this.LabelIPLatitude.Size = new System.Drawing.Size(140, 23);
             this.LabelIPLatitude.TabIndex = 13;
@@ -235,9 +297,9 @@
             // TBoxIPLatitude
             // 
             this.TBoxIPLatitude.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBoxIPLatitude.Location = new System.Drawing.Point(310, 90);
+            this.TBoxIPLatitude.Location = new System.Drawing.Point(300, 90);
             this.TBoxIPLatitude.Name = "TBoxIPLatitude";
-            this.TBoxIPLatitude.Size = new System.Drawing.Size(150, 23);
+            this.TBoxIPLatitude.Size = new System.Drawing.Size(140, 23);
             this.TBoxIPLatitude.TabIndex = 12;
             this.TBoxIPLatitude.TextChanged += new System.EventHandler(this.MapConfigChanged);
             // 
@@ -257,7 +319,7 @@
             this.TBoxMapCacheLocation.Font = new System.Drawing.Font("Georgia", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBoxMapCacheLocation.Location = new System.Drawing.Point(0, 40);
             this.TBoxMapCacheLocation.Name = "TBoxMapCacheLocation";
-            this.TBoxMapCacheLocation.Size = new System.Drawing.Size(600, 23);
+            this.TBoxMapCacheLocation.Size = new System.Drawing.Size(560, 23);
             this.TBoxMapCacheLocation.TabIndex = 9;
             this.TBoxMapCacheLocation.TextChanged += new System.EventHandler(this.MapConfigChanged);
             // 
@@ -266,7 +328,7 @@
             this.BtnBrowseMapLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBrowseMapLocation.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnBrowseMapLocation.ForeColor = System.Drawing.Color.White;
-            this.BtnBrowseMapLocation.Location = new System.Drawing.Point(620, 30);
+            this.BtnBrowseMapLocation.Location = new System.Drawing.Point(580, 30);
             this.BtnBrowseMapLocation.Name = "BtnBrowseMapLocation";
             this.BtnBrowseMapLocation.Size = new System.Drawing.Size(120, 40);
             this.BtnBrowseMapLocation.TabIndex = 10;
@@ -280,14 +342,13 @@
             this.RBtnGlobalMap.Checked = true;
             this.RBtnGlobalMap.Font = new System.Drawing.Font("Georgia", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RBtnGlobalMap.ForeColor = System.Drawing.Color.White;
-            this.RBtnGlobalMap.Location = new System.Drawing.Point(40, 40);
+            this.RBtnGlobalMap.Location = new System.Drawing.Point(20, 20);
             this.RBtnGlobalMap.Name = "RBtnGlobalMap";
             this.RBtnGlobalMap.Size = new System.Drawing.Size(104, 22);
             this.RBtnGlobalMap.TabIndex = 17;
             this.RBtnGlobalMap.TabStop = true;
             this.RBtnGlobalMap.Text = "Global Map";
             this.RBtnGlobalMap.UseVisualStyleBackColor = true;
-            this.RBtnGlobalMap.Visible = false;
             this.RBtnGlobalMap.CheckedChanged += new System.EventHandler(this.MapControl_RadioCheckedChanged);
             // 
             // ConfigMapPage
@@ -296,12 +357,15 @@
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.BtnMapConfigReset);
             this.Controls.Add(this.BtnMapConfigApply);
+            this.Controls.Add(this.PanelIndoorMapControls);
+            this.Controls.Add(this.RBtnIndoorMap);
             this.Controls.Add(this.PanelGlobalMapControls);
             this.Controls.Add(this.RBtnGlobalMap);
-            this.Font = new System.Drawing.Font("Georgia", 10.2F);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "ConfigMapPage";
             this.Size = new System.Drawing.Size(784, 560);
+            this.PanelIndoorMapControls.ResumeLayout(false);
+            this.PanelIndoorMapControls.PerformLayout();
             this.PanelGlobalMapControls.ResumeLayout(false);
             this.PanelGlobalMapControls.PerformLayout();
             this.ResumeLayout(false);
@@ -313,6 +377,11 @@
 
         private System.Windows.Forms.Button BtnMapConfigReset;
         private System.Windows.Forms.Button BtnMapConfigApply;
+        private System.Windows.Forms.Panel PanelIndoorMapControls;
+        private System.Windows.Forms.Label LabelImageMapLocation;
+        private System.Windows.Forms.TextBox TBoxIndoorMapLocation;
+        private System.Windows.Forms.Button BtnBrowseIndoorMap;
+        private System.Windows.Forms.RadioButton RBtnIndoorMap;
         private System.Windows.Forms.Panel PanelGlobalMapControls;
         private System.Windows.Forms.Label LabelInitialPosition;
         private System.Windows.Forms.TextBox TBoxInitialZoom;

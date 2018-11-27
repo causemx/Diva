@@ -763,6 +763,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is not a valid power model name..
+        /// </summary>
+        public static string MsgInvalidPowerModelName {
+            get {
+                return ResourceManager.GetString("MsgInvalidPowerModelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Waypoint file.
         /// </summary>
         public static string MsgInvalidWaypointFile {
@@ -858,6 +867,15 @@ namespace Diva.Properties {
         public static string MsgNoRallyPoint {
             get {
                 return ResourceManager.GetString("MsgNoRallyPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power log file does not exist..
+        /// </summary>
+        public static string MsgPowerLogFileNotFound {
+            get {
+                return ResourceManager.GetString("MsgPowerLogFileNotFound", resourceCulture);
             }
         }
         
@@ -1006,11 +1024,20 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;XML files|*.xml|All files|*.*&quot;.
+        ///   Looks up a localized string similar to XML files|*.xml|All files|*.*.
         /// </summary>
         public static string StrDroneSettingsFileExtensionFilter {
             get {
                 return ResourceManager.GetString("StrDroneSettingsFileExtensionFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All files|*.*.
+        /// </summary>
+        public static string StrFileFilterAllFiles {
+            get {
+                return ResourceManager.GetString("StrFileFilterAllFiles", resourceCulture);
             }
         }
         

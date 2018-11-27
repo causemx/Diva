@@ -146,6 +146,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\NewPowerModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\NewPowerModelForm.Designer.cs">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\Account.cs" />
     <Compile Include="Comms\CommsSerialPort.cs">
       <SubType>Component</SubType>
@@ -361,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NewPowerModelForm.resx">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PowerModelInfo.resx">
       <DependentUpon>PowerModelInfo.cs</DependentUpon>

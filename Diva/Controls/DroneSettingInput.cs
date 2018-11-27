@@ -314,7 +314,18 @@ namespace Diva.Controls
 
         private void BtnNewModel_Click(object sender, EventArgs e)
         {
-
+            var dlg = new NewPowerModelForm();
+            if (dlg.ShowDialog() == DialogResult.Yes)
+            {
+                ComboPowerModel.SelectedItem = dlg.NewPowerModelName;
+                foreach (var dsi in Parent.Controls.OfType<DroneSettingInput>())
+                {
+                    string pm = (string)dsi.ComboPowerModel.SelectedItem;
+                    dsi.ComboPowerModel.Items.Clear();
+                    dsi.ComboPowerModel.Items.AddRange(PowerModel.GetPowerModelNames().ToArray());
+                    dsi.ComboPowerModel.SelectedItem = pm;
+                }
+            }
         }
         #endregion
     }

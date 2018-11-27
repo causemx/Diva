@@ -15,8 +15,6 @@ namespace Diva.Controls
             {
                 SetEnabled(BtnVConfApply, value);
                 SetEnabled(BtnVConfReset, value);
-/*                BtnVConfApply.ForeColor = BtnVConfReset.ForeColor = value ?
-                    System.Drawing.Color.White : System.Drawing.Color.Gray;*/
                 VConfBtnsPanel.Enabled = true;
             }
             get => BtnVConfApply.Enabled;
