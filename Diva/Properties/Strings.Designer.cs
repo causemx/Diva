@@ -1033,11 +1033,11 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All files|*.*.
+        ///   Looks up a localized string similar to Log files|*.log|All files|*.*.
         /// </summary>
-        public static string StrFileFilterAllFiles {
+        public static string StrPowerLogFileFilter {
             get {
-                return ResourceManager.GetString("StrFileFilterAllFiles", resourceCulture);
+                return ResourceManager.GetString("StrPowerLogFileFilter", resourceCulture);
             }
         }
         

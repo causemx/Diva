@@ -50,7 +50,7 @@ namespace Diva.Controls
                         return;
                     }
                     // generate power model here
-
+                    PowerModelTools.Trainer.Start(TBoxLogFileLocation.Text, name);
                     PowerModel.RefreshPowerModelsList();
                     if (PowerModel.GetModel(name) != PowerModel.PowerModelNone)
                     {
@@ -76,7 +76,7 @@ namespace Diva.Controls
         {
             using (var dlg = new OpenFileDialog())
             {
-                dlg.Filter = Properties.Strings.StrFileFilterAllFiles;
+                dlg.Filter = Properties.Strings.StrPowerLogFileFilter;
                 dlg.InitialDirectory = TBoxLogFileLocation.Text;
                 if (dlg.ShowDialog() == DialogResult.OK)
                     TBoxLogFileLocation.Text = dlg.FileName;

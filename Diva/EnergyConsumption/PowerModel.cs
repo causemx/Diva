@@ -9,7 +9,7 @@ namespace Diva.EnergyConsumption
 {
     public class PowerModel
     {
-        private static readonly string PowerModelRootPath =
+        static readonly string PowerModelRootPath =
             AppDomain.CurrentDomain.BaseDirectory + "Power Models\\";
         private static Dictionary<string, PowerModel> pmAvailable =
             new Dictionary<string, PowerModel>();
@@ -31,6 +31,8 @@ namespace Diva.EnergyConsumption
                 if (!di.Exists) di.Create();
                 di.GetDirectories().ToList().ForEach(d => CreateModel(d, newdict));
                 pmAvailable = newdict;
+                powerModelNames = new List<string>(pmAvailable.Keys)
+                    { Properties.Strings.MsgDroneSettingNoPowerModel };
             }
             catch (Exception e)
             {
@@ -48,8 +50,8 @@ namespace Diva.EnergyConsumption
         public static PowerModel GetModel(string name) =>
             pmAvailable.ContainsKey(name) ? pmAvailable[name] : pmNone;
 
-        public static List<string> GetPowerModelNames() =>
-            new List<string>(pmAvailable.Keys) { Properties.Strings.MsgDroneSettingNoPowerModel };
+        private static List<string> powerModelNames;
+        public static List<string> GetPowerModelNames() => powerModelNames;
 
         private static bool CreateModel(DirectoryInfo dir, Dictionary<string, PowerModel> dict)
         {

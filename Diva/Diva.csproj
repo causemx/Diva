@@ -275,6 +275,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\DataManager.cs" />
+    <Compile Include="EnergyConsumption\PowerModelTools.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
