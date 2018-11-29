@@ -3527,6 +3527,7 @@ namespace Diva
 		{
 			try
 			{
+				
 				Locationwp home = new Locationwp()
 				{
 					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
@@ -3538,10 +3539,10 @@ namespace Diva
 				FileUtility fu = new FileUtility(ActiveDrone, GetCommandList(), home);
 				fu.Write();
 
-				/*
+				
 				string cmd = @"C:\Users\user\Projects\mpm\Predict.py";
 				string args = "param.txt foo.waypoints";
-				run_cmd(cmd, args);*/
+				run_cmd(cmd, args);
 
 			}
 			catch (Exception) { }
@@ -3552,6 +3553,7 @@ namespace Diva
 		{
 			ProcessStartInfo start = new ProcessStartInfo();
 			start.FileName = @"C:\Python36\python.exe";
+			start.WorkingDirectory = @"C:\Users\user\Projects\mpm\";
 			start.Arguments = string.Format("{0} {1}", cmd, args);
 			start.UseShellExecute = false;
 			start.RedirectStandardOutput = true;
