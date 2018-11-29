@@ -52,7 +52,7 @@ namespace Diva.Controls
 		{
 			// get the waypoint speed, default unit is mile/second
 			// TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
-			TxtAssumeTime.Text = (missionDistance / 0.3).ToString("f1") + "m";
+			TxtAssumeTime.Text = (missionDistance / 0.72).ToString("f1") + "m";
 		}
 
 		public void ResetAssumeTime()
@@ -70,19 +70,6 @@ namespace Diva.Controls
 		private void BtnClose_Click(object sender, EventArgs e)
 		{
 			CloseButtonClicked?.Invoke(this, e) ;
-		}
-
-		private void BtnPowerModel_Click(object sender, EventArgs e)
-		{
-			DialogInputPowerModel dp = new DialogInputPowerModel();
-			dp.ShowDialog();
-			dp.DroneID = (Drone.Status.sysid).ToString();
-			dp.DoClickEvent += (s, e1) =>
-			{
-				PictureBox pb = new PictureBox();
-				Label lb = new Label();
-				PanelConsumptionPower.Controls.Add(pb);
-			};
 		}
 	}
 }

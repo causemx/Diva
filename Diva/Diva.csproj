@@ -191,12 +191,6 @@
     <Compile Include="Controls\ConfigureForm.Designer.cs">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DialogInputPowerModel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\DialogInputPowerModel.Designer.cs">
-      <DependentUpon>DialogInputPowerModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -334,9 +328,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigureForm.zh-Hant.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\DialogInputPowerModel.resx">
-      <DependentUpon>DialogInputPowerModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfo.resx">
       <DependentUpon>DroneInfo.cs</DependentUpon>

@@ -103,7 +103,6 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.BUT_PowerConsume = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -336,8 +335,7 @@ namespace Diva
             this.TSBtnTagging,
             this.TSBtnSaveMission,
             this.TSBtnReadMission,
-            this.TSBtnCusOverlay,
-            this.BUT_PowerConsume});
+            this.TSBtnCusOverlay});
 			this.TSMainPanel.Name = "TSMainPanel";
 			// 
 			// TSBtnConnect
@@ -819,14 +817,6 @@ namespace Diva
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
-			// BUT_PowerConsume
-			// 
-			resources.ApplyResources(this.BUT_PowerConsume, "BUT_PowerConsume");
-			this.BUT_PowerConsume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.BUT_PowerConsume.ForeColor = System.Drawing.Color.White;
-			this.BUT_PowerConsume.Name = "BUT_PowerConsume";
-			this.BUT_PowerConsume.Click += new System.EventHandler(this.BUT_PowerConsume_Click);
-			// 
 			// Planner
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -920,6 +910,5 @@ namespace Diva
         private DroneInfoPanel DroneInfoPanel;
 		private ToolStripButton But_MapFocus;
 		private FlowLayoutPanel RotationInfoPanel;
-		private ToolStripButton BUT_PowerConsume;
 	}
 }
