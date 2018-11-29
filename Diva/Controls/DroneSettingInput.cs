@@ -317,7 +317,6 @@ namespace Diva.Controls
             var dlg = new NewPowerModelForm();
             if (dlg.ShowDialog() == DialogResult.Yes)
             {
-                ComboPowerModel.SelectedItem = dlg.NewPowerModelName;
                 foreach (var dsi in Parent.Controls.OfType<DroneSettingInput>())
                 {
                     string pm = (string)dsi.ComboPowerModel.SelectedItem;
@@ -325,6 +324,7 @@ namespace Diva.Controls
                     dsi.ComboPowerModel.Items.AddRange(PowerModel.GetPowerModelNames().ToArray());
                     dsi.ComboPowerModel.SelectedItem = pm;
                 }
+                ComboPowerModel.SelectedItem = dlg.NewPowerModelName;
             }
         }
         #endregion

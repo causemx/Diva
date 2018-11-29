@@ -9,7 +9,7 @@ namespace Diva.EnergyConsumption
 {
     public class PowerModel
     {
-        static readonly string PowerModelRootPath =
+        public static readonly string PowerModelRootPath =
             AppDomain.CurrentDomain.BaseDirectory + "Power Models\\";
         private static Dictionary<string, PowerModel> pmAvailable =
             new Dictionary<string, PowerModel>();

@@ -8,9 +8,9 @@ using System.Diagnostics;
 
 namespace Diva.EnergyConsumption
 {
-    class PowerModelTools
+    public class PowerModelTools
     {
-        static readonly string PowerModelUtilitiesRootPath = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string PowerModelUtilitiesRootPath = AppDomain.CurrentDomain.BaseDirectory;
         private ProcessStartInfo startInfo;
         private Action<string> SetupInput;
         private Action<string> SetupOutput;
@@ -53,7 +53,7 @@ namespace Diva.EnergyConsumption
                 {
                     try
                     {
-                        new DirectoryInfo("Trained_Model").MoveTo(o);
+                        new DirectoryInfo("Trained_Model").MoveTo(PowerModel.PowerModelRootPath + o);
                     } catch { }
                 }
             };
@@ -67,7 +67,9 @@ namespace Diva.EnergyConsumption
         public void Start(string input, string output)
         {
             Process proc = new Process { StartInfo = startInfo };
+            SetupInput(input);
             proc.Start();
+            SetupOutput(output);
             StdErr = proc.StandardError;
             StdIn = proc.StandardInput;
             StdOut = proc.StandardOutput;
@@ -77,21 +79,20 @@ namespace Diva.EnergyConsumption
         public Task StartAsync(string input, string output)
         {
             var tcs = new TaskCompletionSource<int>();
-            Process proc = new Process
-            {
-                EnableRaisingEvents = true,
-                StartInfo = startInfo
-            };
+            Process proc = new Process();
+            proc.EnableRaisingEvents = true;
+            proc.StartInfo = startInfo;
             proc.Exited += (o, a) =>
             {
+                SetupOutput(output);
                 tcs.TrySetResult(proc.ExitCode);
                 Done?.Invoke(proc, a);
             };
-            proc.Start();
+            SetupInput(input);
             StdErr = proc.StandardError;
             StdIn = proc.StandardInput;
             StdOut = proc.StandardOutput;
-            proc.Dispose();
+            proc.Start();
             return tcs.Task;
         }
     }
