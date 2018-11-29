@@ -51,6 +51,7 @@ namespace Diva.Controls
                     }
                     // generate power model here
                     PowerModelTools.Trainer.Start(TBoxLogFileLocation.Text, name);
+                    //PowerModelTools.Predictor.RunAsTask(TBoxLogFileLocation.Text + '|' + name, null);
                     PowerModel.RefreshPowerModelsList();
                     if (PowerModel.GetModel(name) != PowerModel.PowerModelNone)
                     {
