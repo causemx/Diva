@@ -349,7 +349,7 @@
     <value>Invalid value</value>
   </data>
   <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
-    <value>"XML files|*.xml|All files|*.*"</value>
+    <value>XML files|*.xml|All files|*.*</value>
   </data>
   <data name="MsgConnectFirst" xml:space="preserve">
     <value>Please Connect First!</value>
@@ -449,5 +449,23 @@
   </data>
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>Rotation mission have executing</value>
+  </data>
+  <data name="DroneSettingInput.LabelPowerModel.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
+    <value>(None)</value>
+  </data>
+  <data name="DroneSettingInput.BtnNewModel.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="StrPowerLogFileFilter" xml:space="preserve">
+    <value>Log files|*.log|All files|*.*</value>
+  </data>
+  <data name="MsgInvalidPowerModelName" xml:space="preserve">
+    <value>'{0}' is not a valid power model name.</value>
+  </data>
+  <data name="MsgPowerLogFileNotFound" xml:space="preserve">
+    <value>Power log file does not exist.</value>
   </data>
 </root>

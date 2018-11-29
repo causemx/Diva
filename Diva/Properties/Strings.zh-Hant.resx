@@ -310,7 +310,7 @@
     <value>新增</value>
   </data>
   <data name="DroneSettingInput.EditBtn.Text" xml:space="preserve">
-    <value>編輯</value>
+    <value>新建</value>
   </data>
   <data name="DroneSettingInput.RemoveBtn.Text" xml:space="preserve">
     <value>移除</value>
@@ -349,7 +349,7 @@
     <value>數值不正確</value>
   </data>
   <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
-    <value>"XML檔案|*.xml|所有檔案|*.*"</value>
+    <value>XML檔案|*.xml|所有檔案|*.*</value>
   </data>
   <data name="MsgConnectFirst" xml:space="preserve">
     <value>尚未連線</value>
@@ -450,5 +450,23 @@
   </data>
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>輪值執行中</value>
+  </data>
+  <data name="DroneSettingInput.LabelPowerModel.Text" xml:space="preserve">
+    <value>能耗模式</value>
+  </data>
+  <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
+    <value>(無)</value>
+  </data>
+  <data name="DroneSettingInput.BtnNewModel.Text" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="StrPowerLogFileFilter" xml:space="preserve">
+    <value>紀錄檔|*.log|所有檔案|*.*</value>
+  </data>
+  <data name="MsgInvalidPowerModelName" xml:space="preserve">
+    <value>'{0}'不是合法的能耗模型名稱</value>
+  </data>
+  <data name="MsgPowerLogFileNotFound" xml:space="preserve">
+    <value>指定的紀錄檔不存在</value>
   </data>
 </root>

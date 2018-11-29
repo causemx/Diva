@@ -15,13 +15,15 @@ namespace Diva.Controls
 	public partial class DroneInfoPanel : UserControl
 	{
 		private DroneInfo activeDrone = null;
+        [Browsable(true)]
+        public event EventHandler ActiveDroneChanged;
 		public DroneInfo ActiveDroneInfo
 		{
 			get => activeDrone;
 			set
 			{
 				if (activeDrone != value &&
-					(value == null || ThePanel.Controls.IndexOf(value) >= 0))
+                    ThePanel.Controls.IndexOf(value) >= 0)
 				{
 					if (activeDrone != null)
 					{
@@ -33,18 +35,14 @@ namespace Diva.Controls
 					{
 						activeDrone.Activate();
 						DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
-						ActiveDroneChanged?.Invoke(activeDrone, null);
 					}
 					TelemetryData.Visible = false;
+                    ActiveDroneChanged?.Invoke(value, null);
 				}
 			}
 		}
 		[Browsable(true)]
 		public event EventHandler DroneClosed;
-
-		[Browsable(true)]
-		public event EventHandler ActiveDroneChanged;
-
 
 		public DroneInfoPanel()
 		{
@@ -67,7 +65,10 @@ namespace Diva.Controls
 			{
 				ThePanel.Controls.Remove(s as Control);
 				if (s == ActiveDroneInfo)
+                {
 					ActiveDroneInfo = null;
+                    TelemetryData.Visible = false;
+                }
 				drone.Disconnect();
 				DroneClosed?.Invoke(s, e);
 			};
@@ -77,10 +78,14 @@ namespace Diva.Controls
 				if (d != null)
 				{
 					if (d != ActiveDroneInfo)
+                    {
 						ActiveDroneInfo = d;
+                    }
 					else
+                    {
 						TelemetryData.Visible = !TelemetryData.Visible;
-				}
+					}
+                }
 			};
 
 			dinfo.RaiseEvent += (s, pi) =>

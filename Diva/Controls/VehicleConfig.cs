@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -8,42 +9,49 @@ namespace Diva.Controls
     {
         private List<DroneSetting> drones;
         public List<DroneSetting> EditingDroneList => drones;
-        private bool Dirty
+        public bool DroneSettingDirty
         {
             set
             {
                 SetEnabled(BtnVConfApply, value);
                 SetEnabled(BtnVConfReset, value);
+                VConfBtnsPanel.Enabled = true;
             }
+            get => BtnVConfApply.Enabled;
+        }
+        public void FreezeVConfPanel(bool freeze)
+        {
+            VConfBtnsPanel.Enabled = !freeze;
         }
 
         private void InitVehicleSettings(List<DroneSetting> droneSettings = null)
         {
             VehicleSettingsPanel.Controls.Clear();
-            drones = droneSettings ?? ConfigData.GetTypeList<DroneSetting>();
+            drones = droneSettings ?? new List<DroneSetting>(
+                ConfigData.GetTypeList<DroneSetting>().Select(d => d.GetCopy()));
             DroneSettingInput.SetDefaultHandlers(DroneAdded, DroneModified, DroneRemoved);
             foreach (var d in drones)
                 VehicleSettingsPanel.Controls.Add(DroneSettingInput.FromSetting(d));
             VehicleSettingsPanel.Controls.Add(new DroneSettingInput());
-            Dirty = false;
+            DroneSettingDirty = false;
             Disposed += delegate { DroneSettingInput.SetDefaultHandlers(null, null, null); };
         }
 
         private void DroneAdded(object sender, EventArgs e)
         {
             VehicleSettingsPanel.Controls.Add(new DroneSettingInput());
-            Dirty = true;
+            DroneSettingDirty = true;
         }
 
         private void DroneModified(object sender, EventArgs e)
         {
-            Dirty = true;
+            DroneSettingDirty = true;
         }
 
         private void DroneRemoved(object sender, EventArgs e)
         {
             VehicleSettingsPanel.Controls.Remove(sender as Control);
-            Dirty = true;
+            DroneSettingDirty = true;
         }
 
         private void BtnVConfImport_Click(object sender, EventArgs e)
@@ -56,7 +64,7 @@ namespace Diva.Controls
                 try
                 {
                     InitVehicleSettings(DroneSetting.ImportXML(fd.FileName));
-                    Dirty = true;
+                    DroneSettingDirty = true;
                 }
                 catch (Exception)
                 {
@@ -82,14 +90,14 @@ namespace Diva.Controls
 
         private void BtnVConfApply_Click(object sender, EventArgs e)
         {
-            ConfigData.UpdateList(EditingDroneList);
-            Dirty = false;
+            ConfigData.UpdateList(new List<DroneSetting>(EditingDroneList.Select(d => d.GetCopy())));
+            DroneSettingDirty = false;
         }
 
         private void BtnVConfReset_Click(object sender, EventArgs e)
         {
             InitVehicleSettings();
-            Dirty = false;
+            DroneSettingDirty = false;
         }
     }
 }
