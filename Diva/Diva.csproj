@@ -1400,6 +1400,9 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon_power_medium_32.png" />
+    <None Include="Resources\icon_power_low_32.png" />
+    <None Include="Resources\icon_power_full_32.png" />
     <None Include="Resources\icon_close_24.png" />
     <None Include="Resources\icon_lighting_24.png" />
     <None Include="Resources\ParameterMetaData.xml" />

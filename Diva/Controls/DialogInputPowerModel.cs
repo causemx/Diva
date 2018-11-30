@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,10 @@ namespace Diva.Controls
 {
 	public partial class DialogInputPowerModel : Form
 	{
-
+		private string modelFile = null;
 		private string droneID;
 		private double batteryCapacity;
-		private double availableCapacity;
+		private int availablePercentage;
 
 		public event EventHandler DoClick;
 
@@ -34,14 +35,16 @@ namespace Diva.Controls
 				TXTBatteryCapacity.Text = batteryCapacity.ToString();
 			}
 		}
-		public double AvailableCapacity {
-			get => double.Parse(TXTAvailableCapacity.Text);
+		public int AvailablePercentage {
+			get => int.Parse(TXTAvailablePercentage.Text);
 			set
 			{
-				availableCapacity = value;
-				TXTAvailableCapacity.Text = AvailableCapacity.ToString();
+				availablePercentage = value;
+				TXTAvailablePercentage.Text = AvailablePercentage.ToString();
 			}
 		}
+
+		public double PredictedOutput { get; set; } = 0.0d;
 
 		public DialogInputPowerModel()
 		{
@@ -50,6 +53,11 @@ namespace Diva.Controls
 
 		private void BTNConfirm_Click(object sender, EventArgs e)
 		{
+			if (string.IsNullOrEmpty(modelFile))
+			{
+				MessageBox.Show("Please Pick a model first");
+				return;
+			}
 			DoClick?.Invoke(sender, e);
 		}
 
@@ -57,5 +65,35 @@ namespace Diva.Controls
 		{
 			this.Dispose();
 		}
+
+		private void BTNBrowseModel_Click(object sender, EventArgs e)
+		{
+			using (OpenFileDialog fd = new OpenFileDialog())
+			{
+				fd.Filter = "Prediction model |*.model";
+				DialogResult result = fd.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					try
+					{
+						modelFile = fd.FileName;
+						LBLModelPath.Text = Path.GetFullPath(modelFile);
+
+						string output = "";
+						var sr = new StreamReader(File.OpenRead(modelFile));
+						output = sr.ReadToEnd();
+						PredictedOutput = double.Parse(output.Split(new char[0])[0]);
+						sr.Close();
+
+					}
+					catch (Exception exception)
+					{
+						Planner.log.Error(exception.ToString());
+					}
+				}
+			}
+		}
+
+
 	}
 }

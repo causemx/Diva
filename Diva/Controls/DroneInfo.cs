@@ -72,7 +72,7 @@ namespace Diva.Controls
 			CloseButtonClicked?.Invoke(this, e) ;
 		}
 
-		public event EventHandler<PowerInfo> RaiseEvent;
+		public event EventHandler<PowerInfoArgs> RaiseEvent;
 
 		private void BtnPowerModel_Click(object sender, EventArgs e)
 		{
@@ -85,7 +85,7 @@ namespace Diva.Controls
 			dp.DoClick += (s, e1) =>
 			{
 				Planner.log.Info(dp.BatteryCapacity);
-				PowerInfo pi = new PowerInfo(dp.BatteryCapacity, dp.AvailableCapacity);
+				PowerInfoArgs pi = new PowerInfoArgs(dp.BatteryCapacity, dp.AvailablePercentage, dp.PredictedOutput);
 				RaiseEvent?.Invoke(sender, pi);
 				dp.Close();
 			};
@@ -93,15 +93,17 @@ namespace Diva.Controls
 		}
 
 
-		public class PowerInfo : EventArgs
+		public class PowerInfoArgs : EventArgs
 		{
 			public double BattCapacity { get; set; }
-			public double AvaiCapacity { get; set; }
+			public int AvaiPercentage { get; set; }
+			public double Prediction { get; set; }
 
-			public PowerInfo(double _capacity, double _consumption)
+			public PowerInfoArgs(double _battCapacity, int _avaiPercentage, double _prediction)
 			{
-				BattCapacity = _capacity;
-				AvaiCapacity = _consumption;
+				BattCapacity = _battCapacity;
+				AvaiPercentage = _avaiPercentage;
+				Prediction = _prediction;
 			}
 		}
 	

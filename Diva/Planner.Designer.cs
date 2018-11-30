@@ -39,6 +39,7 @@ namespace Diva
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.splitContainer = new System.Windows.Forms.SplitContainer();
+			this.PanelPowerConsumption = new System.Windows.Forms.FlowLayoutPanel();
 			this.PanelRotationInfo = new System.Windows.Forms.FlowLayoutPanel();
 			this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
 			this.TSZoomPanel = new System.Windows.Forms.ToolStrip();
@@ -61,7 +62,6 @@ namespace Diva
 			this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
 			this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
-			this.BUT_PowerConsume = new System.Windows.Forms.ToolStripButton();
 			this.myMap = new Diva.Controls.MyGMap();
 			this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,6 +80,8 @@ namespace Diva
 			this.miClearMission = new System.Windows.Forms.ToolStripMenuItem();
 			this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
 			this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.powerConsumptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dgvWayPoints = new System.Windows.Forms.DataGridView();
 			this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,7 +106,6 @@ namespace Diva
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
-			this.PanelPowerConsumption = new System.Windows.Forms.FlowLayoutPanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -123,6 +124,7 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
+			resources.ApplyResources(this.splitContainer.Panel1, "splitContainer.Panel1");
 			this.splitContainer.Panel1.Controls.Add(this.PanelPowerConsumption);
 			this.splitContainer.Panel1.Controls.Add(this.PanelRotationInfo);
 			this.splitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
@@ -140,8 +142,14 @@ namespace Diva
 			// 
 			// splitContainer.Panel2
 			// 
+			resources.ApplyResources(this.splitContainer.Panel2, "splitContainer.Panel2");
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
+			// 
+			// PanelPowerConsumption
+			// 
+			resources.ApplyResources(this.PanelPowerConsumption, "PanelPowerConsumption");
+			this.PanelPowerConsumption.Name = "PanelPowerConsumption";
 			// 
 			// PanelRotationInfo
 			// 
@@ -150,8 +158,8 @@ namespace Diva
 			// 
 			// DroneInfoPanel
 			// 
-			this.DroneInfoPanel.ActiveDroneInfo = null;
 			resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
+			this.DroneInfoPanel.ActiveDroneInfo = null;
 			this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
 			this.DroneInfoPanel.Name = "DroneInfoPanel";
 			this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
@@ -159,8 +167,8 @@ namespace Diva
 			// 
 			// TSZoomPanel
 			// 
-			this.TSZoomPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			resources.ApplyResources(this.TSZoomPanel, "TSZoomPanel");
+			this.TSZoomPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.TSZoomPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.TSZoomPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.But_MapFocus,
@@ -171,39 +179,39 @@ namespace Diva
 			// 
 			// But_MapFocus
 			// 
+			resources.ApplyResources(this.But_MapFocus, "But_MapFocus");
 			this.But_MapFocus.CheckOnClick = true;
 			this.But_MapFocus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.But_MapFocus.Image = global::Diva.Properties.Resources.icon_location;
-			resources.ApplyResources(this.But_MapFocus, "But_MapFocus");
 			this.But_MapFocus.Name = "But_MapFocus";
 			this.But_MapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
 			// 
 			// But_ZoomIn
 			// 
+			resources.ApplyResources(this.But_ZoomIn, "But_ZoomIn");
 			this.But_ZoomIn.BackColor = System.Drawing.Color.Transparent;
 			this.But_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.But_ZoomIn.Image = global::Diva.Properties.Resources.icon_4_zoomin;
-			resources.ApplyResources(this.But_ZoomIn, "But_ZoomIn");
 			this.But_ZoomIn.Name = "But_ZoomIn";
 			this.But_ZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
 			// 
 			// But_ZoomOut
 			// 
+			resources.ApplyResources(this.But_ZoomOut, "But_ZoomOut");
 			this.But_ZoomOut.BackColor = System.Drawing.Color.Transparent;
 			this.But_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.But_ZoomOut.Image = global::Diva.Properties.Resources.icon_4_zoomout;
-			resources.ApplyResources(this.But_ZoomOut, "But_ZoomOut");
 			this.But_ZoomOut.Name = "But_ZoomOut";
 			this.But_ZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
 			// 
 			// BtnRTL
 			// 
+			resources.ApplyResources(this.BtnRTL, "BtnRTL");
 			this.BtnRTL.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnRTL.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnRTL.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnRTL.ClickImage = null;
 			this.BtnRTL.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnRTL, "BtnRTL");
 			this.BtnRTL.ForeColor = System.Drawing.Color.White;
 			this.BtnRTL.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnRTL.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -214,12 +222,12 @@ namespace Diva
 			// 
 			// BtnLand
 			// 
+			resources.ApplyResources(this.BtnLand, "BtnLand");
 			this.BtnLand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnLand.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnLand.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnLand.ClickImage = null;
 			this.BtnLand.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnLand, "BtnLand");
 			this.BtnLand.ForeColor = System.Drawing.Color.White;
 			this.BtnLand.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnLand.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -230,12 +238,12 @@ namespace Diva
 			// 
 			// BtnVideo
 			// 
+			resources.ApplyResources(this.BtnVideo, "BtnVideo");
 			this.BtnVideo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnVideo.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnVideo.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnVideo.ClickImage = null;
 			this.BtnVideo.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnVideo, "BtnVideo");
 			this.BtnVideo.ForeColor = System.Drawing.Color.White;
 			this.BtnVideo.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnVideo.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -246,12 +254,12 @@ namespace Diva
 			// 
 			// BtnAuto
 			// 
+			resources.ApplyResources(this.BtnAuto, "BtnAuto");
 			this.BtnAuto.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnAuto.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnAuto.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnAuto.ClickImage = null;
 			this.BtnAuto.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnAuto, "BtnAuto");
 			this.BtnAuto.ForeColor = System.Drawing.Color.White;
 			this.BtnAuto.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnAuto.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -262,12 +270,12 @@ namespace Diva
 			// 
 			// BtnArm
 			// 
+			resources.ApplyResources(this.BtnArm, "BtnArm");
 			this.BtnArm.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnArm.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnArm.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnArm.ClickImage = null;
 			this.BtnArm.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnArm, "BtnArm");
 			this.BtnArm.ForeColor = System.Drawing.Color.White;
 			this.BtnArm.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnArm.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -278,12 +286,12 @@ namespace Diva
 			// 
 			// BtnReadWPs
 			// 
+			resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
 			this.BtnReadWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnReadWPs.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.ClickImage = null;
 			this.BtnReadWPs.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
 			this.BtnReadWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnReadWPs.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnReadWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -294,12 +302,12 @@ namespace Diva
 			// 
 			// BtnTakeOff
 			// 
+			resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
 			this.BtnTakeOff.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnTakeOff.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.ClickImage = null;
 			this.BtnTakeOff.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
 			this.BtnTakeOff.ForeColor = System.Drawing.Color.White;
 			this.BtnTakeOff.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnTakeOff.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -310,12 +318,12 @@ namespace Diva
 			// 
 			// BtnWriteWPs
 			// 
+			resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
 			this.BtnWriteWPs.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnWriteWPs.ClickBackColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.ClickForeColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.ClickImage = null;
 			this.BtnWriteWPs.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
 			this.BtnWriteWPs.ForeColor = System.Drawing.Color.White;
 			this.BtnWriteWPs.HoverBackColor = System.Drawing.Color.Empty;
 			this.BtnWriteWPs.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
@@ -326,8 +334,8 @@ namespace Diva
 			// 
 			// TSMainPanel
 			// 
-			this.TSMainPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			resources.ApplyResources(this.TSMainPanel, "TSMainPanel");
+			this.TSMainPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.TSMainPanel.GripMargin = new System.Windows.Forms.Padding(0);
 			this.TSMainPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.TSMainPanel.ImageScalingSize = new System.Drawing.Size(0, 0);
@@ -338,8 +346,7 @@ namespace Diva
             this.TSBtnTagging,
             this.TSBtnSaveMission,
             this.TSBtnReadMission,
-            this.TSBtnCusOverlay,
-            this.BUT_PowerConsume});
+            this.TSBtnCusOverlay});
 			this.TSMainPanel.Name = "TSMainPanel";
 			// 
 			// TSBtnConnect
@@ -437,22 +444,14 @@ namespace Diva
 			this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
 			this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
 			// 
-			// BUT_PowerConsume
-			// 
-			resources.ApplyResources(this.BUT_PowerConsume, "BUT_PowerConsume");
-			this.BUT_PowerConsume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.BUT_PowerConsume.ForeColor = System.Drawing.Color.White;
-			this.BUT_PowerConsume.Name = "BUT_PowerConsume";
-			this.BUT_PowerConsume.Click += new System.EventHandler(this.BUT_PowerConsume_Click);
-			// 
 			// myMap
 			// 
+			resources.ApplyResources(this.myMap, "myMap");
 			this.myMap.BackColor = System.Drawing.SystemColors.Control;
 			this.myMap.Bearing = 0F;
 			this.myMap.CanDragMap = true;
 			this.myMap.ContextMenuStrip = this.cmMap;
 			this.myMap.DebugMapLocation = true;
-			resources.ApplyResources(this.myMap, "myMap");
 			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
 			this.myMap.GrayScaleMode = false;
 			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
@@ -481,6 +480,7 @@ namespace Diva
 			// 
 			// cmMap
 			// 
+			resources.ApplyResources(this.cmMap, "cmMap");
 			this.cmMap.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.cmMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.drawPolygonToolStripMenuItem,
@@ -488,12 +488,14 @@ namespace Diva
             this.toolStripSeparator1,
             this.miClearMission,
             this.miSetHomeHere,
-            this.miClearAllMissions});
+            this.miClearAllMissions,
+            this.toolStripSeparator2,
+            this.powerConsumptionToolStripMenuItem});
 			this.cmMap.Name = "contextMenuStrip1";
-			resources.ApplyResources(this.cmMap, "cmMap");
 			// 
 			// drawPolygonToolStripMenuItem
 			// 
+			resources.ApplyResources(this.drawPolygonToolStripMenuItem, "drawPolygonToolStripMenuItem");
 			this.drawPolygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPolygonPointToolStripMenuItem,
             this.clearPolygonToolStripMenuItem,
@@ -501,39 +503,39 @@ namespace Diva
             this.loadPolygonToolStripMenuItem,
             this.areaToolStripMenuItem});
 			this.drawPolygonToolStripMenuItem.Name = "drawPolygonToolStripMenuItem";
-			resources.ApplyResources(this.drawPolygonToolStripMenuItem, "drawPolygonToolStripMenuItem");
 			// 
 			// addPolygonPointToolStripMenuItem
 			// 
-			this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
 			resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
+			this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
 			this.addPolygonPointToolStripMenuItem.Click += new System.EventHandler(this.addPolygonPointToolStripMenuItem_Click);
 			// 
 			// clearPolygonToolStripMenuItem
 			// 
-			this.clearPolygonToolStripMenuItem.Name = "clearPolygonToolStripMenuItem";
 			resources.ApplyResources(this.clearPolygonToolStripMenuItem, "clearPolygonToolStripMenuItem");
+			this.clearPolygonToolStripMenuItem.Name = "clearPolygonToolStripMenuItem";
 			this.clearPolygonToolStripMenuItem.Click += new System.EventHandler(this.clearPolygonToolStripMenuItem_Click);
 			// 
 			// savePolygonToolStripMenuItem
 			// 
-			this.savePolygonToolStripMenuItem.Name = "savePolygonToolStripMenuItem";
 			resources.ApplyResources(this.savePolygonToolStripMenuItem, "savePolygonToolStripMenuItem");
+			this.savePolygonToolStripMenuItem.Name = "savePolygonToolStripMenuItem";
 			this.savePolygonToolStripMenuItem.Click += new System.EventHandler(this.savePolygonToolStripMenuItem_Click);
 			// 
 			// loadPolygonToolStripMenuItem
 			// 
-			this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
 			resources.ApplyResources(this.loadPolygonToolStripMenuItem, "loadPolygonToolStripMenuItem");
+			this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
 			this.loadPolygonToolStripMenuItem.Click += new System.EventHandler(this.loadPolygonToolStripMenuItem_Click);
 			// 
 			// areaToolStripMenuItem
 			// 
-			this.areaToolStripMenuItem.Name = "areaToolStripMenuItem";
 			resources.ApplyResources(this.areaToolStripMenuItem, "areaToolStripMenuItem");
+			this.areaToolStripMenuItem.Name = "areaToolStripMenuItem";
 			// 
 			// noFlyZoneToolStripMenuItem
 			// 
+			resources.ApplyResources(this.noFlyZoneToolStripMenuItem, "noFlyZoneToolStripMenuItem");
 			this.noFlyZoneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uploadToolStripMenuItem,
             this.setReturnLocationToolStripMenuItem,
@@ -541,63 +543,74 @@ namespace Diva
             this.saveToFileToolStripMenuItem,
             this.clearToolStripMenuItem});
 			this.noFlyZoneToolStripMenuItem.Name = "noFlyZoneToolStripMenuItem";
-			resources.ApplyResources(this.noFlyZoneToolStripMenuItem, "noFlyZoneToolStripMenuItem");
 			// 
 			// uploadToolStripMenuItem
 			// 
-			this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
 			resources.ApplyResources(this.uploadToolStripMenuItem, "uploadToolStripMenuItem");
+			this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
 			this.uploadToolStripMenuItem.Click += new System.EventHandler(this.GeoFenceuploadToolStripMenuItem_Click);
 			// 
 			// setReturnLocationToolStripMenuItem
 			// 
-			this.setReturnLocationToolStripMenuItem.Name = "setReturnLocationToolStripMenuItem";
 			resources.ApplyResources(this.setReturnLocationToolStripMenuItem, "setReturnLocationToolStripMenuItem");
+			this.setReturnLocationToolStripMenuItem.Name = "setReturnLocationToolStripMenuItem";
 			this.setReturnLocationToolStripMenuItem.Click += new System.EventHandler(this.setReturnLocationToolStripMenuItem_Click);
 			// 
 			// loadFromFileToolStripMenuItem
 			// 
-			this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
 			resources.ApplyResources(this.loadFromFileToolStripMenuItem, "loadFromFileToolStripMenuItem");
+			this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
 			this.loadFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileToolStripMenuItem_Click);
 			// 
 			// saveToFileToolStripMenuItem
 			// 
-			this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
 			resources.ApplyResources(this.saveToFileToolStripMenuItem, "saveToFileToolStripMenuItem");
+			this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
 			this.saveToFileToolStripMenuItem.Click += new System.EventHandler(this.saveToFileToolStripMenuItem_Click);
 			// 
 			// clearToolStripMenuItem
 			// 
-			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
 			resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
+			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
 			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			// 
 			// miClearMission
 			// 
-			this.miClearMission.Name = "miClearMission";
 			resources.ApplyResources(this.miClearMission, "miClearMission");
+			this.miClearMission.Name = "miClearMission";
 			this.miClearMission.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
 			// 
 			// miSetHomeHere
 			// 
-			this.miSetHomeHere.Name = "miSetHomeHere";
 			resources.ApplyResources(this.miSetHomeHere, "miSetHomeHere");
+			this.miSetHomeHere.Name = "miSetHomeHere";
 			this.miSetHomeHere.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
 			// 
 			// miClearAllMissions
 			// 
-			this.miClearAllMissions.Name = "miClearAllMissions";
 			resources.ApplyResources(this.miClearAllMissions, "miClearAllMissions");
+			this.miClearAllMissions.Name = "miClearAllMissions";
 			this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			// 
+			// powerConsumptionToolStripMenuItem
+			// 
+			resources.ApplyResources(this.powerConsumptionToolStripMenuItem, "powerConsumptionToolStripMenuItem");
+			this.powerConsumptionToolStripMenuItem.Name = "powerConsumptionToolStripMenuItem";
+			this.powerConsumptionToolStripMenuItem.Click += new System.EventHandler(this.powerConsumptionToolStripMenuItem_Click);
 			// 
 			// dgvWayPoints
 			// 
+			resources.ApplyResources(this.dgvWayPoints, "dgvWayPoints");
 			this.dgvWayPoints.AllowUserToAddRows = false;
 			this.dgvWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
 			this.dgvWayPoints.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -613,7 +626,6 @@ namespace Diva
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-			resources.ApplyResources(this.dgvWayPoints, "dgvWayPoints");
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
             this.colParam1,
@@ -736,6 +748,7 @@ namespace Diva
 			// 
 			// panelDroneInfo
 			// 
+			resources.ApplyResources(this.panelDroneInfo, "panelDroneInfo");
 			this.panelDroneInfo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.panelDroneInfo.Controls.Add(this.TxtHomeLongitude);
 			this.panelDroneInfo.Controls.Add(this.TxtHomeLatitude);
@@ -748,43 +761,42 @@ namespace Diva
 			this.panelDroneInfo.Controls.Add(this.BtnAltitude);
 			this.panelDroneInfo.Controls.Add(this.BtnHomeLand);
 			this.panelDroneInfo.Controls.Add(this.TxtAltitudeValue);
-			resources.ApplyResources(this.panelDroneInfo, "panelDroneInfo");
 			this.panelDroneInfo.Name = "panelDroneInfo";
 			// 
 			// TxtHomeLongitude
 			// 
-			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtHomeLongitude, "TxtHomeLongitude");
+			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
 			// 
 			// TxtHomeLatitude
 			// 
-			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtHomeLatitude, "TxtHomeLatitude");
+			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
 			// 
 			// TxtHomeAltitude
 			// 
-			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtHomeAltitude, "TxtHomeAltitude");
+			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
 			// 
 			// LabelLongitude
 			// 
-			this.LabelLongitude.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.LabelLongitude, "LabelLongitude");
+			this.LabelLongitude.ForeColor = System.Drawing.Color.White;
 			this.LabelLongitude.Name = "LabelLongitude";
 			// 
 			// LabelLatitude
 			// 
-			this.LabelLatitude.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.LabelLatitude, "LabelLatitude");
+			this.LabelLatitude.ForeColor = System.Drawing.Color.White;
 			this.LabelLatitude.Name = "LabelLatitude";
 			// 
 			// LabelAltitude
 			// 
-			this.LabelAltitude.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.LabelAltitude, "LabelAltitude");
+			this.LabelAltitude.ForeColor = System.Drawing.Color.White;
 			this.LabelAltitude.Name = "LabelAltitude";
 			// 
 			// TxtDroneMode
@@ -795,9 +807,9 @@ namespace Diva
 			// 
 			// BtnDroneMode
 			// 
+			resources.ApplyResources(this.BtnDroneMode, "BtnDroneMode");
 			this.BtnDroneMode.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.BtnDroneMode.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnDroneMode, "BtnDroneMode");
 			this.BtnDroneMode.ForeColor = System.Drawing.Color.White;
 			this.BtnDroneMode.Image = global::Diva.Properties.Resources.icon_airplane_32;
 			this.BtnDroneMode.Name = "BtnDroneMode";
@@ -825,19 +837,14 @@ namespace Diva
 			// 
 			// TxtAltitudeValue
 			// 
-			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
+			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
-			// 
-			// PanelPowerConsumption
-			// 
-			resources.ApplyResources(this.PanelPowerConsumption, "PanelPowerConsumption");
-			this.PanelPowerConsumption.Name = "PanelPowerConsumption";
 			// 
 			// Planner
 			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			resources.ApplyResources(this, "$this");
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "Planner";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Planner_FormClosing);
@@ -927,7 +934,8 @@ namespace Diva
         private DroneInfoPanel DroneInfoPanel;
 		private ToolStripButton But_MapFocus;
 		private FlowLayoutPanel PanelRotationInfo;
-		private ToolStripButton BUT_PowerConsume;
 		private FlowLayoutPanel PanelPowerConsumption;
+		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripMenuItem powerConsumptionToolStripMenuItem;
 	}
 }
