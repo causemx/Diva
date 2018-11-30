@@ -51,7 +51,7 @@ namespace Diva.Controls
                     }
                     // generate power model here
                     PowerModelTools.Trainer.Start(TBoxLogFileLocation.Text, name);
-                    //PowerModelTools.Predictor.RunAsTask(TBoxLogFileLocation.Text + '|' + name, null);
+                    //PowerModelTools.Predictor.StartBackground(TBoxLogFileLocation.Text + '|' + name, null);
                     PowerModel.RefreshPowerModelsList();
                     if (PowerModel.GetModel(name) != PowerModel.PowerModelNone)
                     {
@@ -67,7 +67,9 @@ namespace Diva.Controls
                     var planner = Planner.GetPlannerInstance();
                     planner.ClearMission();
                     PowerModelTools.MissionGenerator.Start(planner.HomeLocation, null);
-                    planner.processToScreen(Diva.Utilities.KMLFileUtility.ReadKMLMission());
+                    planner.processToScreen(
+                        Diva.Utilities.KMLFileUtility.ReadKMLMissionFile(
+                            PowerModelTools.PowerModelToolsRootPath + "output.kml"));
                     planner.writeKMLV2();
                     DialogResult = DialogResult.OK;
                 }

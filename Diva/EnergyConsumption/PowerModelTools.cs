@@ -10,7 +10,7 @@ namespace Diva.EnergyConsumption
 {
     public class PowerModelTools
     {
-        private static readonly string PowerModelToolsRootPath = AppDomain.CurrentDomain.BaseDirectory + "Power Model Tools\\";
+        public static readonly string PowerModelToolsRootPath = AppDomain.CurrentDomain.BaseDirectory + "Power Model Tools\\";
         private static readonly string[] PowerModelFiles = new string[]
             { "r_axy", "r_dxy", "r_dz_neg", "r_dz_pos", "r_h", "r_mvxy", "r_mvz_neg", "r_mvz_pos" };
         private static readonly DirectoryInfo TrainedModelDirectory =
@@ -112,7 +112,7 @@ namespace Diva.EnergyConsumption
             proc.Dispose();
         }
 
-        public Task RunAsTask(string input, string output)
+        public Task StartBackground(string input, string output)
         {
             Task task = Task.Run(() =>
             {
