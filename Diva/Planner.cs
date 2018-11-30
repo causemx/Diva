@@ -161,6 +161,8 @@ namespace Diva
 		}
 
 		internal MyGMap GMapControl => myMap;
+        internal string HomeLocation =>
+            TxtHomeLatitude.Text + "," + TxtHomeLongitude.Text;
 
 		public Planner()
 		{
@@ -2308,7 +2310,7 @@ namespace Diva
 		/// <summary>
 		/// Processes a loaded EEPROM to the map and datagrid
 		/// </summary>
-		void processToScreen(List<Locationwp> cmds, bool append = false)
+		public void processToScreen(List<Locationwp> cmds, bool append = false)
 		{
 			quickadd = true;
 
@@ -2473,8 +2475,9 @@ namespace Diva
 			myMap.Invalidate();
 		}
 
+        internal void ClearMission() => clearMissionToolStripMenuItem_Click(null, null);
 
-		private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			quickadd = true;
 
@@ -3037,8 +3040,6 @@ namespace Diva
 
 		private void BtnSaveMission_Click(object sender, EventArgs e)
 		{
-			KMLFileUtility kUtility = new KMLFileUtility();
-
 			Locationwp home = new Locationwp()
 			{
 				id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
@@ -3047,7 +3048,7 @@ namespace Diva
 				alt = (float.Parse(TxtHomeAltitude.Text)),
 			};
 
-			kUtility.SaveKMLMission(GetCommandList(), home);
+            KMLFileUtility.SaveKMLMission(GetCommandList(), home);
 
 			writeKMLV2();
 		}
@@ -3056,8 +3057,7 @@ namespace Diva
 		{
 			try
 			{
-				KMLFileUtility kUtility = new KMLFileUtility();
-				List<Locationwp> cmds = kUtility.ReadKMLMission();
+				List<Locationwp> cmds = KMLFileUtility.ReadKMLMission();
 				processToScreen(cmds, false);
 				writeKMLV2();
 				myMap.ZoomAndCenterMarkers("objects");

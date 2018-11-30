@@ -24,6 +24,7 @@ namespace Diva.EnergyConsumption
         public StreamReader StdErr;
         public EventHandler Done;
 
+        public static PowerModelTools MissionGenerator;
         public static PowerModelTools Trainer;
         public static PowerModelTools Predictor;
 
@@ -44,6 +45,15 @@ namespace Diva.EnergyConsumption
 
         static PowerModelTools()
         {
+            MissionGenerator = new PowerModelTools("", "")
+            {
+                SetupInput = (i) =>
+                {
+                },
+                SetupOutput = (o) =>
+                {
+                }
+            };
             Trainer = new PowerModelTools("Training.exe", "input.log 1")
             {
                 SetupInput = (i) =>

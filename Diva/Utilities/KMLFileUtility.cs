@@ -15,19 +15,9 @@ namespace Diva.Utilities
 {
 	public class KMLFileUtility
 	{
-		private List<Locationwp> cmds = null;
-		internal string wpfilename;
-
-		public KMLFileUtility()
+		public static List<Locationwp> ReadKMLMission()
 		{
-			this.cmds = new List<Locationwp>();
-		}
-
-		public List<Locationwp> ReadKMLMission()
-		{
-			cmds.Clear();
-
-			using (OpenFileDialog fd = new OpenFileDialog())
+            using (OpenFileDialog fd = new OpenFileDialog())
 			{
 				fd.Filter = "Google Earth KML |*.kml";
 				DialogResult result = fd.ShowDialog();
@@ -35,28 +25,11 @@ namespace Diva.Utilities
 				{
 					try
 					{
-						string file = fd.FileName;
 						try
-						{
-							string kml = "";
-							string tempdir = "";
-
-							var sr = new StreamReader(File.OpenRead(file));
-							kml = sr.ReadToEnd();
-							sr.Close();
-
-							// cleanup after out
-							if (tempdir != "")
-								Directory.Delete(tempdir, true);
-
-							kml = kml.Replace("<Snippet/>", "");
-
-							var parser = new Parser();
-
-							parser.ElementAdded += ProcessKMLReadMission;
-							parser.ParseString(kml, false);
-						}
-						catch (Exception e1)
+                        {
+                            return ReadKMLMissionFile(fd.FileName);
+                        }
+                        catch (Exception e1)
 						{
 							Planner.log.Error("Bad kml error" + e1);
 						}
@@ -65,19 +38,43 @@ namespace Diva.Utilities
 					{
 						Planner.log.Error("Can not find the file" + e2);
 					}
-					return cmds;
 				}
 				else
 				{
 					throw new Exception("no wapoints readed");
 				}
-				
 			}
+            return null;
 		}
 
-		private void ProcessKMLReadMission(object sender, ElementEventArgs e)
+        public static List<Locationwp> ReadKMLMissionFile(string file)
+        {
+            List<Locationwp> cmds = new List<Locationwp>();
+            string kml = "";
+            string tempdir = "";
+
+            var sr = new StreamReader(File.OpenRead(file));
+            kml = sr.ReadToEnd();
+            sr.Close();
+
+            // cleanup after out
+            if (tempdir != "")
+                Directory.Delete(tempdir, true);
+
+            kml = kml.Replace("<Snippet/>", "");
+
+            var parser = new Parser();
+
+            parser.ElementAdded += (o, a) => ProcessKMLReadMission(cmds, a);
+            parser.ParseString(kml, false);
+
+            return cmds;
+        }
+
+        private static void ProcessKMLReadMission(object sender, ElementEventArgs e)
 		{
-			Element element = e.Element;
+            List<Locationwp> cmds = sender as List<Locationwp>;
+            Element element = e.Element;
 			Document doc = element as Document;
 			Placemark pm = element as Placemark;
 
@@ -118,15 +115,13 @@ namespace Diva.Utilities
 			}
 		}
 
-
-		public void SaveKMLMission(List<Locationwp> _cmds, Locationwp home)
+		public static void SaveKMLMission(List<Locationwp> _cmds, Locationwp home)
 		{
 			using (SaveFileDialog fd = new SaveFileDialog())
 			{
-				wpCount = 0;
+				int wpCount = 0;
 				fd.Filter = "Google Earth KML |*.kml";
 				fd.DefaultExt = ".kml";
-				fd.FileName = wpfilename;
 				DialogResult result = fd.ShowDialog();
 
 				if (result == DialogResult.OK)
@@ -142,11 +137,11 @@ namespace Diva.Utilities
 							Kml kml = new Kml();
 							Document document = new Document();
 
-							document.AddFeature(ProcessKMLSaveMission(home, true));
+							document.AddFeature(ProcessKMLSaveMission(home, true, wpCount++));
 
 							foreach (Locationwp wp in _cmds)
 							{
-								document.AddFeature(ProcessKMLSaveMission(wp, false));
+								document.AddFeature(ProcessKMLSaveMission(wp, false, wpCount++));
 							}
 
 							kml.Feature = document;
@@ -169,9 +164,7 @@ namespace Diva.Utilities
 			}
 		}
 
-		private int wpCount;
-
-		private Placemark ProcessKMLSaveMission(Locationwp wp, bool isHome)
+		private static Placemark ProcessKMLSaveMission(Locationwp wp, bool isHome, int wpCount)
 		{
 
 			Point point = new Point();
@@ -197,10 +190,7 @@ namespace Diva.Utilities
 			extendedData.AddSchemaData(schemaData);
 			placemark.ExtendedData = extendedData;
 
-			wpCount = wpCount + 1;
-
 			return placemark;
-
 		}
 	}
 }

@@ -64,6 +64,11 @@ namespace Diva.Controls
                 } else
                 {
                     // generate training mission here
+                    var planner = Planner.GetPlannerInstance();
+                    planner.ClearMission();
+                    PowerModelTools.MissionGenerator.Start(planner.HomeLocation, null);
+                    planner.processToScreen(Diva.Utilities.KMLFileUtility.ReadKMLMission());
+                    planner.writeKMLV2();
                     DialogResult = DialogResult.OK;
                 }
             } else
