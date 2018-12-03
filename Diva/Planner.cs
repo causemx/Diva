@@ -408,7 +408,7 @@ namespace Diva
 				cmds.Add(item);
 			}
 
-			// cmds.Add("UNKNOWN");
+			cmds.Add("UNKNOWN");
 
 			colCommand.DataSource = cmds;
 		}
