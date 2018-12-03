@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.EnergyConsumption;
 
 namespace Diva.Controls
 {
@@ -68,7 +69,7 @@ namespace Diva.Controls
 
 		private void BTNBrowseModel_Click(object sender, EventArgs e)
 		{
-			using (OpenFileDialog fd = new OpenFileDialog())
+            using (OpenFileDialog fd = new OpenFileDialog())
 			{
 				fd.Filter = "Prediction model |*.model";
 				DialogResult result = fd.ShowDialog();
@@ -92,8 +93,6 @@ namespace Diva.Controls
 					}
 				}
 			}
-		}
-
-
+        }
 	}
 }

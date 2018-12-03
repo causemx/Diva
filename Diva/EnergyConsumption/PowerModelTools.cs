@@ -94,14 +94,21 @@ namespace Diva.EnergyConsumption
                 },
                 SetupOutput = (o) =>
                 {
-                    var errmsg = Predictor.StdErr.ReadToEnd();
-                    System.Windows.Forms.MessageBox.Show(errmsg != "" ?
-                        errmsg : Predictor.StdOut.ReadToEnd());
+                    try
+                    {
+                        var errmsg = Predictor.StdErr.ReadToEnd();
+                        System.Windows.Forms.MessageBox.Show(errmsg != "" ?
+                            errmsg : Predictor.StdOut.ReadToEnd());
+                        var output = Predictor.StdOut.ReadToEnd();
+                        double.TryParse(output.Split(new char[] { ' ' })[1], out var power);
+                        Predictor.Output = power;
+                    }
+                    catch { }
                 }
             };
         }
 
-        public void Start(string input, string output)
+        public object Start(string input, string output)
         {
             Process proc = new Process { StartInfo = startInfo };
             SetupInput(input);
@@ -111,6 +118,7 @@ namespace Diva.EnergyConsumption
             StdOut = proc.StandardOutput;
             SetupOutput(output);
             proc.Dispose();
+            return Output;
         }
 
         public Task StartBackground(string input, string output)

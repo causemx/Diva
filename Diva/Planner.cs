@@ -38,7 +38,7 @@ namespace Diva
         private static Planner Instance = null;
         internal static Planner GetPlannerInstance() => Instance;
         internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
-        internal static DroneSetting GetActiveDroneSetting() => Instance.DroneInfoPanel.ActiveDroneInfo.Drone.Setting;
+        internal static DroneSetting GetActiveDroneSetting() => Instance.DroneInfoPanel?.ActiveDroneInfo?.Drone.Setting;
 
         private MavlinkInterface ActiveDrone = new MavlinkInterface();
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
