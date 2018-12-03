@@ -23,6 +23,7 @@ namespace Diva.EnergyConsumption
         public StreamReader StdOut;
         public StreamReader StdErr;
         public EventHandler Done;
+        public object Output;
 
         public static PowerModelTools MissionGenerator;
         public static PowerModelTools Trainer;

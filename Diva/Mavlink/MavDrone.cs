@@ -20,6 +20,7 @@ namespace Diva.Mavlink
         private DroneSetting setting;
         public bool IsOpen => mav.BaseStream.IsOpen;
         public MavStatus Status => mav.Status;
+        public DroneSetting Setting => setting;
 
 		public bool IsRotationStandby = true; 
 
