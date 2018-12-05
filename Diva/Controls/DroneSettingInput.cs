@@ -91,6 +91,8 @@ namespace Diva.Controls
                 }
                 TBoxStreamURI.Text = StreamURI;
                 ComboPowerModel.SelectedItem = PowerModelName;
+                TBoxBatteryCapacity.Text = BatteryCapacity;
+                TboxBatteryAvailability.Text = BatteryAvailability;
                 NoTrigger = false;
             } else
             {
