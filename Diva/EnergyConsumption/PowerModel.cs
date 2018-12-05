@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Diva.Utilities;
+using Diva.Mavlink;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Diva.EnergyConsumption
@@ -13,8 +14,7 @@ namespace Diva.EnergyConsumption
             AppDomain.CurrentDomain.BaseDirectory + "Power Models\\";
         private static Dictionary<string, PowerModel> pmAvailable =
             new Dictionary<string, PowerModel>();
-        private static readonly PowerModel pmNone =
-            new PowerModel(Properties.Strings.MsgDroneSettingNoPowerModel);
+        private static readonly PowerModel pmNone = new PowerModel(null);
 
         public static bool IsValidModelName(string name)
         {
@@ -29,7 +29,7 @@ namespace Diva.EnergyConsumption
             {
                 var di = new DirectoryInfo(PowerModelRootPath);
                 if (!di.Exists) di.Create();
-                di.GetDirectories().ToList().ForEach(d => CreateModel(d, newdict));
+                di.GetDirectories().ToList().ForEach(d => LoadModel(d, newdict));
                 pmAvailable = newdict;
                 powerModelNames = new List<string>(pmAvailable.Keys)
                     { Properties.Strings.MsgDroneSettingNoPowerModel };
@@ -48,12 +48,12 @@ namespace Diva.EnergyConsumption
 
         public static PowerModel PowerModelNone => pmNone;
         public static PowerModel GetModel(string name) =>
-            pmAvailable.ContainsKey(name) ? pmAvailable[name] : pmNone;
+            name != null && pmAvailable.ContainsKey(name) ? pmAvailable[name] : pmNone;
 
         private static List<string> powerModelNames;
         public static List<string> GetPowerModelNames() => powerModelNames;
 
-        private static bool CreateModel(DirectoryInfo dir, Dictionary<string, PowerModel> dict)
+        private static bool LoadModel(DirectoryInfo dir, Dictionary<string, PowerModel> dict)
         {
             bool ok = false;
             // reuse old object in case already referenced
@@ -70,12 +70,53 @@ namespace Diva.EnergyConsumption
             return ok;
         }
 
+        public static List<Locationwp> GenerateTrainingMission(Locationwp home) =>
+            QGCWaypointFileUtlity.ImportWaypoints(
+                (string)AlexModelTools.MissionGenerator.Start(
+                    home.lat.ToString() + "," + home.lng.ToString(), null),
+                out var newhome);
+
+        public static PowerModel TrainNewModel(string file, string name)
+        {
+            AlexModelTools.Trainer.Start(file, name);
+            RefreshPowerModelsList();
+            return GetModel(name);
+        }
+
         public string ModelName { get; private set; }
-        private string ModelPath => PowerModelRootPath + ModelName;
+        public  string ModelPath => PowerModelRootPath + ModelName;
+        public string ModelType { get; private set; }
+        public object ModelObject { get; private set; }
 
-        private PowerModel(string name) { ModelName = name; }
+        private PowerModel(string name)
+        {
+            if (name == null)
+            {
+                // PowerModelNone
+                ModelName = Properties.Strings.MsgDroneSettingNoPowerModel;
+                return;
+            }
+            ModelName = name;
+            // do model type check here
+            {
+                ModelType = "Alex";
+            }
+        }
 
-        public double CalculateEnergyConsumption(List<Utilities.Locationwp> wps) =>
-            throw new NotImplementedException();
+        public double CalculateEnergyConsumption(MavDrone drone, List<Locationwp> wps, Locationwp home)
+        {
+            if (this == PowerModelNone)
+                throw new NotImplementedException();
+            AlexModelTools.Predictor.Start(ModelName, null);
+            return (double)AlexModelTools.Predictor.Start(ModelName, null);
+        }
+
+        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<Locationwp> wps, Locationwp home, Action<double> cb)
+        {
+            if (this == PowerModelNone)
+                throw new NotImplementedException();
+            Task task = Task.Run(() => cb(CalculateEnergyConsumption(drone, wps, home)));
+            return task;
+        }
     }
 }

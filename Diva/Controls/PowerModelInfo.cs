@@ -51,7 +51,6 @@ namespace Diva.Controls
 			this.availableCapacity = batteryCapacity * availablePercentage / 100;
 		}
 
-
 		private void BTNClose_Click(object sender, EventArgs e)
 		{
 			this.Visible = !this.Visible;

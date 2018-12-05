@@ -49,31 +49,28 @@ namespace Diva.Controls
                         MessageBox.Show(Properties.Strings.MsgPowerLogFileNotFound);
                         return;
                     }
-                    // generate power model here
-                    PowerModelTools.Trainer.Start(TBoxLogFileLocation.Text, name);
-                    //PowerModelTools.Predictor.StartBackground(TBoxLogFileLocation.Text + '|' + name, null);
-                    PowerModel.RefreshPowerModelsList();
-                    if (PowerModel.GetModel(name) != PowerModel.PowerModelNone)
+                    if (PowerModel.TrainNewModel(TBoxLogFileLocation.Text, name) != PowerModel.PowerModelNone)
                     {
                         NewPowerModelName = name;
                         DialogResult = DialogResult.Yes;
-                    } else
+                    }
+                    else
                     {
                         DialogResult = DialogResult.Abort;
                     }
-                } else
+                }
+                else
                 {
                     // generate training mission here
                     var planner = Planner.GetPlannerInstance();
                     planner.ClearMission();
-                    PowerModelTools.MissionGenerator.Start(planner.HomeLocation, null);
                     planner.processToScreen(
-                        Diva.Utilities.KMLFileUtility.ReadKMLMissionFile(
-                            PowerModelTools.PowerModelToolsRootPath + "output.kml"));
+                        PowerModel.GenerateTrainingMission(planner.GetHomeLocationwp()));
                     planner.writeKMLV2();
                     DialogResult = DialogResult.OK;
                 }
-            } else
+            }
+            else
             {
                 DialogResult = DialogResult.Cancel;
             }

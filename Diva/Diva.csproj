@@ -275,7 +275,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\DataManager.cs" />
-    <Compile Include="EnergyConsumption\PowerModelTools.cs" />
+    <Compile Include="EnergyConsumption\AlexModelTools.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
@@ -311,8 +311,7 @@
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\Demux.cs" />
-    <Compile Include="Utilities\FileUtility.cs" />
-    <Compile Include="Utilities\IFileUtility.cs" />
+    <Compile Include="Utilities\QGCWaypointFileUtlity.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
     <Compile Include="Utilities\IOverlayUtility.cs" />
     <Compile Include="Utilities\Locationwp.cs" />

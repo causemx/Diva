@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Diva.EnergyConsumption;
 using ResStrings = Diva.Properties.Strings;
 
 namespace Diva
@@ -38,7 +39,7 @@ namespace Diva
         private static Planner Instance = null;
         internal static Planner GetPlannerInstance() => Instance;
         internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
-        internal static DroneSetting GetActiveDroneSetting() => Instance.DroneInfoPanel?.ActiveDroneInfo?.Drone.Setting;
+        internal static DroneInfo GetActiveDroneInfo() => Instance.DroneInfoPanel?.ActiveDroneInfo;
 
         private MavlinkInterface ActiveDrone = new MavlinkInterface();
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
@@ -163,8 +164,13 @@ namespace Diva
 		}
 
 		internal MyGMap GMapControl => myMap;
-        internal string HomeLocation =>
-            TxtHomeLatitude.Text + "," + TxtHomeLongitude.Text;
+        internal Locationwp GetHomeLocationwp() => new Locationwp
+        {
+            id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+            lat = (double.Parse(TxtHomeLatitude.Text)),
+            lng = (double.Parse(TxtHomeLongitude.Text)),
+            alt = (float.Parse(TxtHomeAltitude.Text)),
+        };
 
 		public Planner()
 		{
@@ -1367,7 +1373,7 @@ namespace Diva
 			}
 		}
 
-		private List<Locationwp> GetCommandList()
+		public List<Locationwp> GetCommandList()
 		{
 			List<Locationwp> commands = new List<Locationwp>();
 
@@ -1795,13 +1801,10 @@ namespace Diva
 			ActiveDrone.setWPTotal(totalwpcountforupload);
 
 			// define the home point
-			Locationwp home = new Locationwp();
+			Locationwp home;
 			try
 			{
-				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TxtHomeLatitude.Text));
-				home.lng = (double.Parse(TxtHomeLongitude.Text));
-				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+                home = GetHomeLocationwp();
 			}
 			catch
 			{
@@ -1969,10 +1972,7 @@ namespace Diva
 				Locationwp home = new Locationwp();
 				try
 				{
-					home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-					home.lat = (double.Parse(TxtHomeLatitude.Text));
-					home.lng = (double.Parse(TxtHomeLongitude.Text));
-					home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+                    home = GetHomeLocationwp();
 				}
 				catch
 				{
@@ -2536,15 +2536,15 @@ namespace Diva
 			_dialog.DoClick += (s2, e2) => targetHeight = float.Parse(_dialog.Value);
 			_dialog.ShowDialog();
 
-			Locationwp gotohere = new Locationwp();
+            Locationwp gotohere = new Locationwp
+            {
+                id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                alt = targetHeight, // back to m
+                lat = (MouseDownStart.Lat),
+                lng = (MouseDownStart.Lng)
+            };
 
-			gotohere.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-			gotohere.alt = targetHeight; // back to m
-			gotohere.lat = (MouseDownStart.Lat);
-			gotohere.lng = (MouseDownStart.Lng);
-			
-
-			try
+            try
 			{
 				ActiveDrone.setGuidedModeWP(gotohere);
 			}
@@ -2800,13 +2800,10 @@ namespace Diva
 			}
 
 			// check home
-			Locationwp home = new Locationwp();
+			Locationwp home;
 			try
 			{
-				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TxtHomeLatitude.Text));
-				home.lng = (double.Parse(TxtHomeLongitude.Text));
-				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+                home = GetHomeLocationwp();
 			}
 			catch
 			{
@@ -3011,7 +3008,7 @@ namespace Diva
 
 		private void BtnSaveMission_Click(object sender, EventArgs e)
 		{
-			Locationwp home = new Locationwp()
+			Locationwp home = new Locationwp
 			{
 				id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
 				lat = (double.Parse(TxtHomeLatitude.Text)),
@@ -3526,7 +3523,7 @@ namespace Diva
 
 		private void powerConsumptionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			try
+            /*try
 			{
 				
 				Locationwp home = new Locationwp()
@@ -3537,7 +3534,7 @@ namespace Diva
 					alt = (float.Parse(TxtHomeAltitude.Text)),
 				};
 
-				FileUtility fu = new FileUtility(ActiveDrone, GetCommandList(), home);
+				QGCWaypointFileUtlity fu = new QGCWaypointFileUtlity(ActiveDrone, GetCommandList(), home);
 				fu.Write();
 
 				
@@ -3546,11 +3543,17 @@ namespace Diva
 				run_cmd(cmd, args);
 
 			}
-			catch (Exception) { }
+			catch (Exception) { }*/
+            var cmds = GetCommandList();
+            if (cmds.Count == 0)
+            {
+                return;
+            }
+            string toolpath = AlexModelTools.AlexModelToolsRoot;
+            Locationwp home = GetHomeLocationwp();
+        }
 
-		}
-
-		private void run_cmd(string cmd, string args)
+		/*private void run_cmd(string cmd, string args)
 		{
 			ProcessStartInfo start = new ProcessStartInfo();
 			start.FileName = @"C:\Python36\python.exe";
@@ -3566,7 +3569,7 @@ namespace Diva
 					Console.Write(result);
 				}
 			}
-		}
+		}*/
 
 		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{

@@ -50,7 +50,9 @@ namespace Diva.Controls
 		public DialogInputPowerModel()
 		{
 			InitializeComponent();
-		}
+            modelFile = Planner.GetActiveDroneInfo()?.Drone.Setting.PowerModel;
+            LBLModelPath.Text = modelFile ?? PowerModel.PowerModelNone.ModelName;
+        }
 
 		private void BTNConfirm_Click(object sender, EventArgs e)
 		{
@@ -69,30 +71,16 @@ namespace Diva.Controls
 
 		private void BTNBrowseModel_Click(object sender, EventArgs e)
 		{
-            using (OpenFileDialog fd = new OpenFileDialog())
-			{
-				fd.Filter = "Prediction model |*.model";
-				DialogResult result = fd.ShowDialog();
-				if (result == DialogResult.OK)
-				{
-					try
-					{
-						modelFile = fd.FileName;
-						LBLModelPath.Text = Path.GetFullPath(modelFile);
-
-						string output = "";
-						var sr = new StreamReader(File.OpenRead(modelFile));
-						output = sr.ReadToEnd();
-						PredictedOutput = double.Parse(output.Split(new char[0])[0]);
-						sr.Close();
-
-					}
-					catch (Exception exception)
-					{
-						Planner.log.Error(exception.ToString());
-					}
-				}
-			}
+            var planner = Planner.GetPlannerInstance();
+            var waypoints = planner.GetCommandList();
+            var drone = Planner.GetActiveDroneInfo()?.Drone;
+            var model = PowerModel.GetModel(drone?.Setting.PowerModel);
+            if (waypoints.Count == 0 || model == PowerModel.PowerModelNone)
+            {
+                // error
+                return;
+            }
+            PredictedOutput = model.CalculateEnergyConsumption(drone, waypoints, planner.GetHomeLocationwp());
         }
 	}
 }
