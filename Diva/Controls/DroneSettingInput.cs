@@ -224,7 +224,7 @@ namespace Diva.Controls
             CurMode = Mode.Empty;
             NoTrigger = false;
             ComboPowerModel.Items.AddRange(PowerModel.GetPowerModelNames().ToArray());
-            PowerModelName = PowerModel.PowerModelNone.ModelName;
+            ComboPowerModel.SelectedItem = PowerModelName = PowerModel.PowerModelNone.ModelName;
         }
 
         public static DroneSettingInput FromSetting(DroneSetting s)

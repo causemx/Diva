@@ -321,24 +321,6 @@
   <data name="DroneSettingInput.DiscardBtn.Text" xml:space="preserve">
     <value>Discard</value>
   </data>
-  <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.FontFamily" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
-    <value />
-  </data>
   <data name="DroneSetting_MsgNoName" xml:space="preserve">
     <value>No name assigned.</value>
   </data>
@@ -450,14 +432,8 @@
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>Rotation mission have executing</value>
   </data>
-  <data name="DroneSettingInput.LabelPowerModel.Text" xml:space="preserve">
-    <value></value>
-  </data>
   <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
     <value>(None)</value>
-  </data>
-  <data name="DroneSettingInput.BtnNewModel.Text" xml:space="preserve">
-    <value>New</value>
   </data>
   <data name="StrPowerLogFileFilter" xml:space="preserve">
     <value>Log files|*.log|All files|*.*</value>

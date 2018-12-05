@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="LabelPowerModel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelPowerModel.Text" xml:space="preserve">
+    <value>能耗模式</value>
+  </data>
+  <data name="LabelStreamURIText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelBaudrateText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelPortNumberText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelPortNameText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelStreamURI.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelStreamURI.Text" xml:space="preserve">
+    <value>影像串流</value>
+  </data>
+  <data name="LabelBaudrate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelBaudrate.Text" xml:space="preserve">
+    <value>傳輸率</value>
+  </data>
+  <data name="LabelPortNumber.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelPortNumber.Text" xml:space="preserve">
+    <value>埠號</value>
+  </data>
+  <data name="LabelPortName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="LabelPortName.Text" xml:space="preserve">
+    <value>連線名</value>
+  </data>
+  <data name="PBDronePhoto.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        qtEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="LabelPowerModelText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="TBoxDroneName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="TBoxDroneName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 23</value>
+  </data>
+  <data name="BtnDeaction.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="BtnAction.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="ChkDroneNameText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="BtnNewModel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="BtnNewModel.Text" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="ComboPowerModel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="TBoxComNo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="TBoxComNo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 23</value>
+  </data>
+  <data name="TBoxStreamURI.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="TBoxStreamURI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 23</value>
+  </data>
+  <data name="TBoxPortValue.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="TBoxPortValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 23</value>
+  </data>
+  <data name="RBSerial.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+  <data name="RBSerial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 19</value>
+  </data>
+  <data name="RBUdp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 9pt</value>
+  </data>
+</root>

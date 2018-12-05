@@ -310,7 +310,7 @@
     <value>新增</value>
   </data>
   <data name="DroneSettingInput.EditBtn.Text" xml:space="preserve">
-    <value>新建</value>
+    <value>修改</value>
   </data>
   <data name="DroneSettingInput.RemoveBtn.Text" xml:space="preserve">
     <value>移除</value>
@@ -320,24 +320,6 @@
   </data>
   <data name="DroneSettingInput.DiscardBtn.Text" xml:space="preserve">
     <value>放棄</value>
-  </data>
-  <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
-    <value>連線名</value>
-  </data>
-  <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
-    <value>埠號</value>
-  </data>
-  <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
-    <value>傳輸率</value>
-  </data>
-  <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
-    <value>影像串流</value>
-  </data>
-  <data name="DroneSettingInput.FontFamily" xml:space="preserve">
-    <value>Microsoft JhengHei UI</value>
-  </data>
-  <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
-    <value>1.0</value>
   </data>
   <data name="DroneSetting_MsgNoName" xml:space="preserve">
     <value>未命名</value>
@@ -451,14 +433,8 @@
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>輪值執行中</value>
   </data>
-  <data name="DroneSettingInput.LabelPowerModel.Text" xml:space="preserve">
-    <value>能耗模式</value>
-  </data>
   <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
     <value>(無)</value>
-  </data>
-  <data name="DroneSettingInput.BtnNewModel.Text" xml:space="preserve">
-    <value>新建</value>
   </data>
   <data name="StrPowerLogFileFilter" xml:space="preserve">
     <value>紀錄檔|*.log|所有檔案|*.*</value>

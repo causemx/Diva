@@ -359,6 +359,9 @@
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DroneSettingInput.zh-Hant.resx">
+      <DependentUpon>DroneSettingInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\InputDataDialog.resx">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </EmbeddedResource>

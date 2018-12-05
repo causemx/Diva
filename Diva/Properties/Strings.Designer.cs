@@ -376,15 +376,6 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New.
-        /// </summary>
-        public static string DroneSettingInput_BtnNewModel_Text {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.BtnNewModel.Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Discard.
         /// </summary>
         public static string DroneSettingInput_DiscardBtn_Text {
@@ -399,69 +390,6 @@ namespace Diva.Properties {
         public static string DroneSettingInput_EditBtn_Text {
             get {
                 return ResourceManager.GetString("DroneSettingInput.EditBtn.Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_FontFamily {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.FontFamily", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_FontSizeAdjust {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.FontSizeAdjust", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_LabelBaudrate_Text {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.LabelBaudrate.Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_LabelPortName_Text {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.LabelPortName.Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_LabelPortNumber_Text {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.LabelPortNumber.Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_LabelPowerModel_Text {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.LabelPowerModel.Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string DroneSettingInput_LabelStreamURI_Text {
-            get {
-                return ResourceManager.GetString("DroneSettingInput.LabelStreamURI.Text", resourceCulture);
             }
         }
         
