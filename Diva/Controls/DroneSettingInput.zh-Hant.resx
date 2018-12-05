@@ -119,43 +119,55 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="LabelPowerModel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="LabelPowerModel.Text" xml:space="preserve">
     <value>能耗模式</value>
   </data>
   <data name="LabelStreamURIText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="LabelStreamURIText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 18</value>
   </data>
   <data name="LabelBaudrateText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="LabelBaudrateText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 18</value>
   </data>
   <data name="LabelPortNumberText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="LabelPortNumberText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 18</value>
   </data>
   <data name="LabelPortNameText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="LabelPortNameText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 18</value>
   </data>
   <data name="LabelStreamURI.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="LabelStreamURI.Text" xml:space="preserve">
     <value>影像串流</value>
   </data>
   <data name="LabelBaudrate.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="LabelBaudrate.Text" xml:space="preserve">
     <value>傳輸率</value>
   </data>
   <data name="LabelPortNumber.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="LabelPortNumber.Text" xml:space="preserve">
     <value>埠號</value>
   </data>
   <data name="LabelPortName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="LabelPortName.Text" xml:space="preserve">
     <value>連線名</value>
@@ -210,57 +222,66 @@
 </value>
   </data>
   <data name="LabelPowerModelText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="LabelPowerModelText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 18</value>
   </data>
   <data name="TBoxDroneName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="TBoxDroneName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 23</value>
+    <value>121, 24</value>
   </data>
   <data name="BtnDeaction.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="BtnAction.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="ChkDroneNameText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="BtnNewModel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="BtnNewModel.Text" xml:space="preserve">
     <value>新建</value>
   </data>
   <data name="ComboPowerModel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="ComboPowerModel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 25</value>
   </data>
   <data name="TBoxComNo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="TBoxComNo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 23</value>
+    <value>46, 24</value>
   </data>
   <data name="TBoxStreamURI.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="TBoxStreamURI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 23</value>
+    <value>91, 24</value>
   </data>
   <data name="TBoxPortValue.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="TBoxPortValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 23</value>
+    <value>91, 24</value>
   </data>
   <data name="RBSerial.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
   </data>
   <data name="RBSerial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 19</value>
+    <value>60, 22</value>
   </data>
   <data name="RBUdp.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 9pt</value>
+    <value>Microsoft JhengHei UI, 10pt</value>
+  </data>
+  <data name="RBUdp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
   </data>
 </root>

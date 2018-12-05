@@ -148,6 +148,8 @@ namespace Diva.Controls
                 d.PortName = PortName;
                 StreamURI = d.StreamURI = TBoxStreamURI.Text;
                 d.PowerModel = PowerModelName = (string)ComboPowerModel.SelectedItem;
+                BatteryCapacity = d.BatteryCapacity = TBoxBatteryCapacity.Text;
+                BatteryAvailability = d.BatteryAvailability = TboxBatteryAvailability.Text;
                 if (CurMode == Mode.New)
                     DroneList?.Add(d);
                 EditPanel.Visible = false;
@@ -198,6 +200,16 @@ namespace Diva.Controls
             get => PowerModel.GetModel(LabelPowerModelText.Text).ModelName;
             set => LabelPowerModelText.Text = PowerModel.GetModel(value).ModelName;
         }
+        public string BatteryCapacity
+        {
+            get => LabelBatteryCapacityText.Text;
+            set => LabelBatteryCapacityText.Text = value;
+        }
+        public string BatteryAvailability
+        {
+            get => LabelBatteryAvailabilityText.Text;
+            set => LabelBatteryAvailabilityText.Text = value;
+        }
         public bool Checked
         {
             get => ChkDroneNameText.Checked;
@@ -236,13 +248,15 @@ namespace Diva.Controls
                 PortNumber = s.PortNumber,
                 Baudrate = s.Baudrate,
                 StreamURI = s.StreamURI,
+                PowerModelName = s.PowerModel,
+                BatteryCapacity = s.BatteryCapacity,
+                BatteryAvailability = s.BatteryAvailability,
                 Checked = s.Checked,
             };
-            input.CurMode = s.Name == "" ? Mode.Empty : Mode.Normal;
+            input.CurMode = Mode.Normal;
             bool isUdp = s.PortName.Equals("udp", StringComparison.InvariantCultureIgnoreCase);
             input.LabelPortNumber.Visible = input.LabelPortNumberText.Visible = isUdp;
             input.LabelBaudrate.Visible = input.LabelBaudrateText.Visible = !isUdp;
-            input.PowerModelName = s.PowerModel;
             return input;
         }
 

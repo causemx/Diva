@@ -54,6 +54,12 @@
             this.TBoxPortValue = new System.Windows.Forms.TextBox();
             this.RBSerial = new System.Windows.Forms.RadioButton();
             this.RBUdp = new System.Windows.Forms.RadioButton();
+            this.LabelBatteryCapacity = new System.Windows.Forms.Label();
+            this.LabelBatteryAvailability = new System.Windows.Forms.Label();
+            this.LabelBatteryCapacityText = new System.Windows.Forms.Label();
+            this.LabelBatteryAvailabilityText = new System.Windows.Forms.Label();
+            this.TBoxBatteryCapacity = new System.Windows.Forms.TextBox();
+            this.TboxBatteryAvailability = new System.Windows.Forms.TextBox();
             this.BottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PBDronePhoto)).BeginInit();
             this.TopPanel.SuspendLayout();
@@ -62,9 +68,12 @@
             // 
             // BottomPanel
             // 
-            resources.ApplyResources(this.BottomPanel, "BottomPanel");
             this.BottomPanel.BackColor = System.Drawing.Color.Black;
             this.BottomPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BottomPanel.Controls.Add(this.LabelBatteryAvailabilityText);
+            this.BottomPanel.Controls.Add(this.LabelBatteryCapacityText);
+            this.BottomPanel.Controls.Add(this.LabelBatteryAvailability);
+            this.BottomPanel.Controls.Add(this.LabelBatteryCapacity);
             this.BottomPanel.Controls.Add(this.LabelPowerModel);
             this.BottomPanel.Controls.Add(this.LabelStreamURIText);
             this.BottomPanel.Controls.Add(this.LabelBaudrateText);
@@ -76,6 +85,7 @@
             this.BottomPanel.Controls.Add(this.LabelPortName);
             this.BottomPanel.Controls.Add(this.PBDronePhoto);
             this.BottomPanel.Controls.Add(this.LabelPowerModelText);
+            resources.ApplyResources(this.BottomPanel, "BottomPanel");
             this.BottomPanel.Name = "BottomPanel";
             // 
             // LabelPowerModel
@@ -92,15 +102,15 @@
             // 
             // LabelBaudrateText
             // 
-            resources.ApplyResources(this.LabelBaudrateText, "LabelBaudrateText");
             this.LabelBaudrateText.AutoEllipsis = true;
+            resources.ApplyResources(this.LabelBaudrateText, "LabelBaudrateText");
             this.LabelBaudrateText.ForeColor = System.Drawing.Color.White;
             this.LabelBaudrateText.Name = "LabelBaudrateText";
             // 
             // LabelPortNumberText
             // 
-            resources.ApplyResources(this.LabelPortNumberText, "LabelPortNumberText");
             this.LabelPortNumberText.AutoEllipsis = true;
+            resources.ApplyResources(this.LabelPortNumberText, "LabelPortNumberText");
             this.LabelPortNumberText.ForeColor = System.Drawing.Color.White;
             this.LabelPortNumberText.Name = "LabelPortNumberText";
             // 
@@ -136,26 +146,26 @@
             // 
             // PBDronePhoto
             // 
-            resources.ApplyResources(this.PBDronePhoto, "PBDronePhoto");
             this.PBDronePhoto.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.PBDronePhoto, "PBDronePhoto");
             this.PBDronePhoto.Name = "PBDronePhoto";
             this.PBDronePhoto.TabStop = false;
             // 
             // LabelPowerModelText
             // 
-            resources.ApplyResources(this.LabelPowerModelText, "LabelPowerModelText");
             this.LabelPowerModelText.AutoEllipsis = true;
+            resources.ApplyResources(this.LabelPowerModelText, "LabelPowerModelText");
             this.LabelPowerModelText.ForeColor = System.Drawing.Color.White;
             this.LabelPowerModelText.Name = "LabelPowerModelText";
             // 
             // TopPanel
             // 
-            resources.ApplyResources(this.TopPanel, "TopPanel");
             this.TopPanel.BackColor = System.Drawing.Color.Black;
             this.TopPanel.Controls.Add(this.TBoxDroneName);
             this.TopPanel.Controls.Add(this.BtnDeaction);
             this.TopPanel.Controls.Add(this.BtnAction);
             this.TopPanel.Controls.Add(this.ChkDroneNameText);
+            resources.ApplyResources(this.TopPanel, "TopPanel");
             this.TopPanel.Name = "TopPanel";
             // 
             // TBoxDroneName
@@ -165,8 +175,8 @@
             // 
             // BtnDeaction
             // 
-            resources.ApplyResources(this.BtnDeaction, "BtnDeaction");
             this.BtnDeaction.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.BtnDeaction, "BtnDeaction");
             this.BtnDeaction.ForeColor = System.Drawing.Color.White;
             this.BtnDeaction.Name = "BtnDeaction";
             this.BtnDeaction.UseVisualStyleBackColor = false;
@@ -174,8 +184,8 @@
             // 
             // BtnAction
             // 
-            resources.ApplyResources(this.BtnAction, "BtnAction");
             this.BtnAction.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.BtnAction, "BtnAction");
             this.BtnAction.ForeColor = System.Drawing.Color.White;
             this.BtnAction.Name = "BtnAction";
             this.BtnAction.UseVisualStyleBackColor = false;
@@ -183,9 +193,9 @@
             // 
             // ChkDroneNameText
             // 
-            resources.ApplyResources(this.ChkDroneNameText, "ChkDroneNameText");
             this.ChkDroneNameText.Checked = true;
             this.ChkDroneNameText.CheckState = System.Windows.Forms.CheckState.Checked;
+            resources.ApplyResources(this.ChkDroneNameText, "ChkDroneNameText");
             this.ChkDroneNameText.ForeColor = System.Drawing.Color.White;
             this.ChkDroneNameText.Name = "ChkDroneNameText";
             this.ChkDroneNameText.UseVisualStyleBackColor = true;
@@ -193,8 +203,9 @@
             // 
             // EditPanel
             // 
-            resources.ApplyResources(this.EditPanel, "EditPanel");
             this.EditPanel.BackColor = System.Drawing.Color.Black;
+            this.EditPanel.Controls.Add(this.TboxBatteryAvailability);
+            this.EditPanel.Controls.Add(this.TBoxBatteryCapacity);
             this.EditPanel.Controls.Add(this.BtnNewModel);
             this.EditPanel.Controls.Add(this.ComboPowerModel);
             this.EditPanel.Controls.Add(this.TBoxComNo);
@@ -203,12 +214,13 @@
             this.EditPanel.Controls.Add(this.RBSerial);
             this.EditPanel.Controls.Add(this.RBUdp);
             this.EditPanel.ForeColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.EditPanel, "EditPanel");
             this.EditPanel.Name = "EditPanel";
             // 
             // BtnNewModel
             // 
-            resources.ApplyResources(this.BtnNewModel, "BtnNewModel");
             this.BtnNewModel.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.BtnNewModel, "BtnNewModel");
             this.BtnNewModel.ForeColor = System.Drawing.Color.White;
             this.BtnNewModel.Name = "BtnNewModel";
             this.BtnNewModel.UseVisualStyleBackColor = false;
@@ -216,8 +228,8 @@
             // 
             // ComboPowerModel
             // 
-            resources.ApplyResources(this.ComboPowerModel, "ComboPowerModel");
             this.ComboPowerModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.ComboPowerModel, "ComboPowerModel");
             this.ComboPowerModel.FormattingEnabled = true;
             this.ComboPowerModel.Name = "ComboPowerModel";
             // 
@@ -251,6 +263,42 @@
             this.RBUdp.TabStop = true;
             this.RBUdp.UseVisualStyleBackColor = true;
             this.RBUdp.CheckedChanged += new System.EventHandler(this.RBPortType_CheckedChanged);
+            // 
+            // LabelBatteryCapacity
+            // 
+            resources.ApplyResources(this.LabelBatteryCapacity, "LabelBatteryCapacity");
+            this.LabelBatteryCapacity.ForeColor = System.Drawing.Color.White;
+            this.LabelBatteryCapacity.Name = "LabelBatteryCapacity";
+            // 
+            // LabelBatteryAvailability
+            // 
+            resources.ApplyResources(this.LabelBatteryAvailability, "LabelBatteryAvailability");
+            this.LabelBatteryAvailability.ForeColor = System.Drawing.Color.White;
+            this.LabelBatteryAvailability.Name = "LabelBatteryAvailability";
+            // 
+            // LabelBatteryCapacityText
+            // 
+            this.LabelBatteryCapacityText.AutoEllipsis = true;
+            resources.ApplyResources(this.LabelBatteryCapacityText, "LabelBatteryCapacityText");
+            this.LabelBatteryCapacityText.ForeColor = System.Drawing.Color.White;
+            this.LabelBatteryCapacityText.Name = "LabelBatteryCapacityText";
+            // 
+            // LabelBatteryAvailabilityText
+            // 
+            this.LabelBatteryAvailabilityText.AutoEllipsis = true;
+            resources.ApplyResources(this.LabelBatteryAvailabilityText, "LabelBatteryAvailabilityText");
+            this.LabelBatteryAvailabilityText.ForeColor = System.Drawing.Color.White;
+            this.LabelBatteryAvailabilityText.Name = "LabelBatteryAvailabilityText";
+            // 
+            // TBoxBatteryCapacity
+            // 
+            resources.ApplyResources(this.TBoxBatteryCapacity, "TBoxBatteryCapacity");
+            this.TBoxBatteryCapacity.Name = "TBoxBatteryCapacity";
+            // 
+            // TboxBatteryAvailability
+            // 
+            resources.ApplyResources(this.TboxBatteryAvailability, "TboxBatteryAvailability");
+            this.TboxBatteryAvailability.Name = "TboxBatteryAvailability";
             // 
             // DroneSettingInput
             // 
@@ -298,5 +346,11 @@
         private System.Windows.Forms.Label LabelPowerModelText;
         private System.Windows.Forms.ComboBox ComboPowerModel;
         private System.Windows.Forms.Button BtnNewModel;
+        private System.Windows.Forms.Label LabelBatteryCapacity;
+        private System.Windows.Forms.Label LabelBatteryAvailability;
+        private System.Windows.Forms.Label LabelBatteryAvailabilityText;
+        private System.Windows.Forms.Label LabelBatteryCapacityText;
+        private System.Windows.Forms.TextBox TBoxBatteryCapacity;
+        private System.Windows.Forms.TextBox TboxBatteryAvailability;
     }
 }
