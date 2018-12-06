@@ -459,4 +459,16 @@
   <data name="MsgFailedToSendNewFencePoints" xml:space="preserve">
     <value>Failed to send new fence points </value>
   </data>
+  <data name="StrEstimatedEnergy" xml:space="preserve">
+    <value>Estimated energy: {0} mAh</value>
+  </data>
+  <data name="StrNoMissionPointAvailable" xml:space="preserve">
+    <value>No mission point available.</value>
+  </data>
+  <data name="StrEnergyConsumptionEstimationFailed" xml:space="preserve">
+    <value>Energy consumption estimation failed.</value>
+  </data>
+  <data name="StrRecalculatingEstimatedEnergyConsumption" xml:space="preserve">
+    <value>Recalculating estimated energy consumption...</value>
+  </data>
 </root>

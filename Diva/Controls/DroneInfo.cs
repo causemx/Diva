@@ -7,19 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.EnergyConsumption;
 using Diva.Mavlink;
+using Diva.Properties;
 
 namespace Diva.Controls
 {
 	public partial class DroneInfo : UserControl
 	{
 		private bool isActive = false;
+        private bool isEnergyPanelVisible = false;
         public bool IsActive
 		{
             get => isActive;
 			private set
 			{
 				isActive = value;
+                SetEnergyConsumptionInfoPanelVisibility(value && isEnergyPanelVisible);
                 BackColor = isActive ? Color.FromArgb(67, 78, 84) : Color.FromArgb(128, 128, 128);
 				Parent?.Invalidate(Bounds, true);
 			}
@@ -65,47 +69,92 @@ namespace Diva.Controls
 			TxtBatteryHealth.ForeColor = isLowVoltage ? Color.Red : Color.White;
 		}
 
+        private double effectiveBatteryCapacity = 0.0;
+        private int tokenSerialNumber = 0;
+
+        public void UpdateEstimatedFlightEnergy(double en)
+        {
+            if (!IsActive || !isEnergyPanelVisible) return;
+            if (en == double.NaN)
+            {
+                IconEnergyConsumption.Image = Resources.icon_error;
+                LabelEstimatedEnergyConsumptionText.Text = Strings.StrEnergyConsumptionEstimationFailed;
+            }
+            else
+            {
+                IconEnergyConsumption.Image =
+                    en < effectiveBatteryCapacity * 0.8 ? Resources.icon_power_full_32 :
+                    en < effectiveBatteryCapacity ? Resources.icon_power_medium_32 :
+                    Resources.icon_power_low_32;
+                LabelEstimatedEnergyConsumptionText.Text = Strings.StrEstimatedEnergy.FormatWith(en);
+            }
+        }
+
+        private void CalculateEnergyConsumptionCallback(double value, object token)
+        {
+            if ((int)token != tokenSerialNumber) return;
+            if (InvokeRequired)
+                Invoke((Action) delegate { UpdateEstimatedFlightEnergy(value); });
+            else
+                UpdateEstimatedFlightEnergy(value);
+        }
+
+        private void TriggerEstimatedEnergyRecalculation(object sender, EventArgs e)
+        {
+            var planner = Planner.GetPlannerInstance();
+            if (planner.MissionListItemCount == 0)
+            {
+                IconEnergyConsumption.Image = Resources.icon_error;
+                LabelEstimatedEnergyConsumptionText.Text = Strings.StrNoMissionPointAvailable;
+                return;
+            }
+            IconEnergyConsumption.Image = Resources.icon_loading;
+            LabelEstimatedEnergyConsumptionText.Text = Strings.StrRecalculatingEstimatedEnergyConsumption;
+            PowerModel.GetModel(Drone.Setting.PowerModel).CalculateEnergyConsumptionBackground
+                (Drone, planner.GetCommandList(), planner.GetHomeLocationwp(),
+                    CalculateEnergyConsumptionCallback, ++tokenSerialNumber);
+        }
+
         [Browsable(true)]
 		public event EventHandler CloseButtonClicked;
-		private void BtnClose_Click(object sender, EventArgs e)
-		{
-			CloseButtonClicked?.Invoke(this, e) ;
-		}
-
-		public event EventHandler<PowerInfoArgs> RaiseEvent;
+		private void BtnClose_Click(object sender, EventArgs e) =>
+            CloseButtonClicked?.Invoke(this, e) ;
 
 		private void BtnPowerModel_Click(object sender, EventArgs e)
-		{
-			DialogInputPowerModel dp = new DialogInputPowerModel()
-			{
-				StartPosition = FormStartPosition.CenterScreen,
-			};
-			
-			dp.DroneID = (Drone.Status.sysid).ToString();
-			dp.DoClick += (s, e1) =>
-			{
-				Planner.log.Info(dp.BatteryCapacity);
-				PowerInfoArgs pi = new PowerInfoArgs(dp.BatteryCapacity, dp.AvailablePercentage, dp.PredictedOutput);
-				RaiseEvent?.Invoke(sender, pi);
-				dp.Close();
-			};
-			dp.ShowDialog();
-		}
+        {
+            if (IsActive)
+            {
+                bool newVisible = !isEnergyPanelVisible;
+                SetEnergyConsumptionInfoPanelVisibility(newVisible);
+                isEnergyPanelVisible = newVisible;
+            }
+        }
 
-
-		public class PowerInfoArgs : EventArgs
-		{
-			public double BattCapacity { get; set; }
-			public int AvaiPercentage { get; set; }
-			public double Prediction { get; set; }
-
-			public PowerInfoArgs(double _battCapacity, int _avaiPercentage, double _prediction)
-			{
-				BattCapacity = _battCapacity;
-				AvaiPercentage = _avaiPercentage;
-				Prediction = _prediction;
-			}
-		}
-	
-	}
+        private void SetEnergyConsumptionInfoPanelVisibility(bool visible)
+        {
+            if (visible == isEnergyPanelVisible && IsActive) return;
+            if (visible)
+            {
+                if (effectiveBatteryCapacity == 0.0)
+                {
+                    var setting = Drone.Setting;
+                    double.TryParse(setting.BatteryCapacity, out double cap);
+                    double.TryParse(setting.BatteryAvailability, out double avail);
+                    if (cap <= 0 || avail <= 0 || avail > 100 ||
+                        setting.PowerModel == PowerModel.PowerModelNone.ModelName)
+                    {
+                        MessageBox.Show(Strings.MsgInvalidPowerModelAndOrBatterySetting);
+                        return;
+                    }
+                    effectiveBatteryCapacity = cap * (avail / 100.0);
+                }
+                Height = PanelEnergyConsumptionInfo.Bottom;
+                TriggerEstimatedEnergyRecalculation(null, null);
+            }
+            else
+            {
+                Height = PanelEnergyConsumptionInfo.Top;
+            }
+        }
+    }
 }

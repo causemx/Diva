@@ -460,4 +460,16 @@
   <data name="MsgFailedToSendNewFencePoints" xml:space="preserve">
     <value>無法傳送新圍籬座標點：</value>
   </data>
+  <data name="StrEstimatedEnergy" xml:space="preserve">
+    <value>預測所需能耗：{0} mAh</value>
+  </data>
+  <data name="StrNoMissionPointAvailable" xml:space="preserve">
+    <value>目前無任務點</value>
+  </data>
+  <data name="StrEnergyConsumptionEstimationFailed" xml:space="preserve">
+    <value>計算能耗失敗</value>
+  </data>
+  <data name="StrRecalculatingEstimatedEnergyConsumption" xml:space="preserve">
+    <value>重新計算能耗中…</value>
+  </data>
 </root>

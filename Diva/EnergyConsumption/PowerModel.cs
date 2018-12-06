@@ -84,9 +84,8 @@ namespace Diva.EnergyConsumption
         }
 
         public string ModelName { get; private set; }
-        public  string ModelPath => PowerModelRootPath + ModelName;
+        public string ModelPath => PowerModelRootPath + ModelName;
         public string ModelType { get; private set; }
-        public object ModelObject { get; private set; }
 
         private PowerModel(string name)
         {
@@ -100,22 +99,20 @@ namespace Diva.EnergyConsumption
             // do model type check here
             {
                 ModelType = "Alex";
+                calcEnergy = this.PredictByAlexModel;
             }
         }
 
-        public double CalculateEnergyConsumption(MavDrone drone, List<Locationwp> wps, Locationwp home)
-        {
-            if (this == PowerModelNone)
-                throw new NotImplementedException();
-            AlexModelTools.Predictor.Start(ModelName, null);
-            return (double)AlexModelTools.Predictor.Start(ModelName, null);
-        }
+        private Func<MavDrone, List<Locationwp>, Locationwp, double> calcEnergy;
 
-        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<Locationwp> wps, Locationwp home, Action<double> cb)
+        public double CalculateEnergyConsumption(MavDrone drone, List<Locationwp> wps, Locationwp home)
+            => calcEnergy?.Invoke(drone, wps, home) ?? double.NaN;
+
+        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<Locationwp> wps, Locationwp home, Action<double, object> cb, object token)
         {
             if (this == PowerModelNone)
                 throw new NotImplementedException();
-            Task task = Task.Run(() => cb(CalculateEnergyConsumption(drone, wps, home)));
+            Task task = Task.Run(() => cb(CalculateEnergyConsumption(drone, wps, home), token));
             return task;
         }
     }

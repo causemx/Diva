@@ -1006,6 +1006,33 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Energy consumption estimation failed..
+        /// </summary>
+        public static string StrEnergyConsumptionEstimationFailed {
+            get {
+                return ResourceManager.GetString("StrEnergyConsumptionEstimationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estimated energy: {0} mAh.
+        /// </summary>
+        public static string StrEstimatedEnergy {
+            get {
+                return ResourceManager.GetString("StrEstimatedEnergy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No mission point available..
+        /// </summary>
+        public static string StrNoMissionPointAvailable {
+            get {
+                return ResourceManager.GetString("StrNoMissionPointAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log files|*.log|All files|*.*.
         /// </summary>
         public static string StrPowerLogFileFilter {
@@ -1020,6 +1047,15 @@ namespace Diva.Properties {
         public static string StrRallyPointToolTipText {
             get {
                 return ResourceManager.GetString("StrRallyPointToolTipText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recalculating estimated energy consumption....
+        /// </summary>
+        public static string StrRecalculatingEstimatedEnergyConsumption {
+            get {
+                return ResourceManager.GetString("StrRecalculatingEstimatedEnergyConsumption", resourceCulture);
             }
         }
         

@@ -81,10 +81,7 @@ namespace Diva.EnergyConsumption
                 {
                     try
                     {
-                        //var a = i.Split(new char[] { '|' });
-                        //File.Copy(a[0], PowerModelToolsRootPath + "input.waypoints", true);
-                        //DirectoryInfo src = new DirectoryInfo(PowerModel.PowerModelRootPath + a[1]);
-                        DirectoryInfo src = new DirectoryInfo(PowerModel.PowerModelRootPath + i);
+                        DirectoryInfo src = new DirectoryInfo(i);
                         foreach (var fi in src.GetFiles())
                             fi.CopyTo(TrainedModelDirectory + fi.Name, true);
                     }
@@ -117,6 +114,16 @@ namespace Diva.EnergyConsumption
             SetupOutput(output);
             proc.Dispose();
             return Output;
+        }
+    }
+
+    public static class AlexModelToolsExtension
+    {
+        public static double PredictByAlexModel(this PowerModel model, Mavlink.MavDrone drone, List<Locationwp> wps, Locationwp home)
+        {
+            QGCWaypointFileUtlity.ExportParams(AlexModelTools.AlexModelToolsRoot + "Param.txt", drone);
+            QGCWaypointFileUtlity.ExportWaypoints(AlexModelTools.AlexModelToolsRoot + "input.waypoints", wps, home);
+            return (double)AlexModelTools.Predictor.Start(model.ModelPath, null);
         }
     }
 }

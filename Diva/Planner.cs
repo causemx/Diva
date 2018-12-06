@@ -39,6 +39,7 @@ namespace Diva
         internal static Planner GetPlannerInstance() => Instance;
         internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
         internal static DroneInfo GetActiveDroneInfo() => Instance.DroneInfoPanel?.ActiveDroneInfo;
+        internal int MissionListItemCount => dgvWayPoints.Rows.Count;
 
         private MavlinkInterface ActiveDrone = new MavlinkInterface();
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
@@ -100,7 +101,6 @@ namespace Diva
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
-
 
 		// Thread setup
 		private Thread mainThread = null;

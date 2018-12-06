@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Diva.Mavlink;
+using Diva.Properties;
 using Diva.Utilities;
 
 namespace Diva.Controls
@@ -28,13 +29,13 @@ namespace Diva.Controls
 					if (activeDrone != null)
 					{
 						activeDrone.Deactivate();
-						DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
+						DroneInfoTip.SetToolTip(activeDrone, Strings.StrActivateDrone);
 					}
 					activeDrone = value;
 					if (activeDrone != null)
 					{
 						activeDrone.Activate();
-						DroneInfoTip.SetToolTip(activeDrone, Properties.Strings.strActivateDrone);
+						DroneInfoTip.SetToolTip(activeDrone, Strings.StrActivateDrone);
 					}
 					TelemetryData.Visible = false;
                     ActiveDroneChanged?.Invoke(value, null);
@@ -88,13 +89,13 @@ namespace Diva.Controls
                 }
 			};
 
-			dinfo.RaiseEvent += (s, pi) =>
+			/*dinfo.RaiseEvent += (s, pi) =>
 			{
 				// TODO: Fill information into pinfo here.
 				if (!pinfo.Visible) pinfo.Visible = true;
 				pinfo.UpdateConsumption(pi.BattCapacity, pi.AvaiPercentage);
 				pinfo.EstimatedPower = pi.Prediction;
-			};			
+			};*/
 
 			battNotification = new NotificationManager.BatteryNotification(dinfo);
 
