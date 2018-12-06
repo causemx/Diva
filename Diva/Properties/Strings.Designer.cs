@@ -1015,7 +1015,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Estimated energy: {0} mAh.
+        ///   Looks up a localized string similar to Estimated energy: {0:F2} mAh.
         /// </summary>
         public static string StrEstimatedEnergy {
             get {
@@ -1051,11 +1051,11 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recalculating estimated energy consumption....
+        ///   Looks up a localized string similar to Recalculating....
         /// </summary>
-        public static string StrRecalculatingEstimatedEnergyConsumption {
+        public static string StrRecalculating {
             get {
-                return ResourceManager.GetString("StrRecalculatingEstimatedEnergyConsumption", resourceCulture);
+                return ResourceManager.GetString("StrRecalculating", resourceCulture);
             }
         }
         

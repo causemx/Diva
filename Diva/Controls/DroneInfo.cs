@@ -72,6 +72,10 @@ namespace Diva.Controls
         private double effectiveBatteryCapacity = 0.0;
         private int tokenSerialNumber = 0;
 
+        public readonly Color EC_ColorNormal = Color.White;
+        public readonly Color EC_ColorWarning = Color.Orange;
+        public readonly Color EC_ColorError = Color.Red;
+
         public void UpdateEstimatedFlightEnergy(double en)
         {
             if (!IsActive || !isEnergyPanelVisible) return;
@@ -79,13 +83,25 @@ namespace Diva.Controls
             {
                 IconEnergyConsumption.Image = Resources.icon_error;
                 LabelEstimatedEnergyConsumptionText.Text = Strings.StrEnergyConsumptionEstimationFailed;
+                LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorError;
             }
             else
             {
-                IconEnergyConsumption.Image =
-                    en < effectiveBatteryCapacity * 0.8 ? Resources.icon_power_full_32 :
-                    en < effectiveBatteryCapacity ? Resources.icon_power_medium_32 :
-                    Resources.icon_power_low_32;
+                if (en < effectiveBatteryCapacity * 0.8)
+                {
+                    IconEnergyConsumption.Image = Resources.icon_power_full_32;
+                    LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorNormal;
+                }
+                else if (en < effectiveBatteryCapacity)
+                {
+                    IconEnergyConsumption.Image = Resources.icon_power_medium_32;
+                    LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorWarning;
+                }
+                else
+                {
+                    IconEnergyConsumption.Image = Resources.icon_power_low_32;
+                    LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorError;
+                }
                 LabelEstimatedEnergyConsumptionText.Text = Strings.StrEstimatedEnergy.FormatWith(en);
             }
         }
@@ -106,10 +122,12 @@ namespace Diva.Controls
             {
                 IconEnergyConsumption.Image = Resources.icon_error;
                 LabelEstimatedEnergyConsumptionText.Text = Strings.StrNoMissionPointAvailable;
+                LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorError;
                 return;
             }
             IconEnergyConsumption.Image = Resources.icon_loading;
-            LabelEstimatedEnergyConsumptionText.Text = Strings.StrRecalculatingEstimatedEnergyConsumption;
+            LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorWarning;
+            LabelEstimatedEnergyConsumptionText.Text = Strings.StrRecalculating;
             PowerModel.GetModel(Drone.Setting.PowerModel).CalculateEnergyConsumptionBackground
                 (Drone, planner.GetCommandList(), planner.GetHomeLocationwp(),
                     CalculateEnergyConsumptionCallback, ++tokenSerialNumber);

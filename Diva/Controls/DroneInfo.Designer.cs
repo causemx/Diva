@@ -199,7 +199,7 @@
             this.LabelEstimatedEnergyConsumptionText.AutoSize = true;
             this.LabelEstimatedEnergyConsumptionText.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LabelEstimatedEnergyConsumptionText.ForeColor = System.Drawing.Color.White;
-            this.LabelEstimatedEnergyConsumptionText.Location = new System.Drawing.Point(111, 3);
+            this.LabelEstimatedEnergyConsumptionText.Location = new System.Drawing.Point(111, 5);
             this.LabelEstimatedEnergyConsumptionText.Name = "LabelEstimatedEnergyConsumptionText";
             this.LabelEstimatedEnergyConsumptionText.Size = new System.Drawing.Size(0, 15);
             this.LabelEstimatedEnergyConsumptionText.TabIndex = 13;
