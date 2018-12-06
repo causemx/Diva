@@ -372,7 +372,7 @@
   <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
     <value></value>
   </data>
-  <data name="strActivateDrone" xml:space="preserve">
+  <data name="StrActivateDrone" xml:space="preserve">
     <value>Click to activate drone</value>
   </data>
   <data name="MsgCustomizeOverlayImport" xml:space="preserve">
@@ -443,5 +443,20 @@
   </data>
   <data name="MsgPowerLogFileNotFound" xml:space="preserve">
     <value>Power log file does not exist.</value>
+  </data>
+  <data name="MsgInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
+    <value>Invalid power model and/or battery setting.</value>
+  </data>
+  <data name="MsgConnectionFailed" xml:space="preserve">
+    <value>Connection failed.</value>
+  </data>
+  <data name="MsgOnlyOneHBReceived" xml:space="preserve">
+    <value>Only one heartbeat received.</value>
+  </data>
+  <data name="DialogTitleError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MsgFailedToSendNewFencePoints" xml:space="preserve">
+    <value>Failed to send new fence points </value>
   </data>
 </root>

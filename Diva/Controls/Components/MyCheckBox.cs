@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.Properties;
 
 namespace Diva.Controls.Components
 {
@@ -121,11 +122,11 @@ namespace Diva.Controls.Components
 				{
 					bool ans = Planner.GetActiveDrone().setParam(ParamName, OnValue);
 					if (ans == false)
-						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+						MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 				catch
 				{
-					MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+					MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 			}
 			else
@@ -135,11 +136,11 @@ namespace Diva.Controls.Components
 				{
 					bool ans = Planner.GetActiveDrone().setParam(ParamName, OffValue);
 					if (ans == false)
-						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+						MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 				catch
 				{
-					MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+					MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 			}
 

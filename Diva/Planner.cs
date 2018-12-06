@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Diva.EnergyConsumption;
-using ResStrings = Diva.Properties.Strings;
 
 namespace Diva
 {
@@ -264,7 +263,7 @@ namespace Diva
 		{
 			FlightRecorder recorder = new FlightRecorder()
 			{
-				UserName = ResStrings.StrAnonymousAccount,
+				UserName = Strings.StrAnonymousAccount,
 				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
 				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
 				TotalDistance = 0.0d,
@@ -1166,7 +1165,7 @@ namespace Diva
 			}
 			catch (Exception)
 			{
-				MessageBox.Show(ResStrings.MsgRowError);
+				MessageBox.Show(Strings.MsgRowError);
 			}
 		}
 
@@ -1213,7 +1212,7 @@ namespace Diva
 		{
 			if (selectedrow > dgvWayPoints.RowCount)
 			{
-				MessageBox.Show(ResStrings.MsgInvalidCoordinate);
+				MessageBox.Show(Strings.MsgInvalidCoordinate);
 				return;
 			}
 
@@ -1226,7 +1225,7 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ResStrings.MsgInvalidEntry.FormatWith(ex.Message));
+				MessageBox.Show(Strings.MsgInvalidEntry.FormatWith(ex.Message));
 			}
 
 			// remove more than 20 revisions
@@ -1263,21 +1262,21 @@ namespace Diva
 
 						string homealt = "10";
 						//if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
-						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgHomeAltitudeRequired, homealt, ref homealt))
+						if (DialogResult.Cancel == InputBox.Show(Strings.MsgHomeAltitudeRequired, homealt, ref homealt))
 							return;
 						TxtHomeAltitude.Text = homealt;
 					}
 					int results1;
 					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
 					{
-						MessageBox.Show(ResStrings.MsgDefaultAltitudeInvalid);
+						MessageBox.Show(Strings.MsgDefaultAltitudeInvalid);
 						return;
 					}
 
 					if (results1 == 0)
 					{
 						string defalt = "10";
-						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgDefaultAltitudeRequired, defalt, ref defalt))
+						if (DialogResult.Cancel == InputBox.Show(Strings.MsgDefaultAltitudeRequired, defalt, ref defalt))
 							return;
 						TxtAltitudeValue.Text = defalt;
 					}
@@ -1299,7 +1298,7 @@ namespace Diva
 				}
 				else
 				{
-					MessageBox.Show(ResStrings.MsgInvalidHomeOrWPAltitide);
+					MessageBox.Show(Strings.MsgInvalidHomeOrWPAltitide);
 					cell.Style.BackColor = Color.Red;
 				}
 			}
@@ -1329,7 +1328,7 @@ namespace Diva
 			// check home point setup.
 			if (IsHomeEmpty())
 			{
-				MessageBox.Show(ResStrings.MsgSetHomeFirst);
+				MessageBox.Show(Strings.MsgSetHomeFirst);
 				return;
 			}
 
@@ -1797,7 +1796,7 @@ namespace Diva
 					return true;
 				});
 
-			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetTotalWps);
+			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetTotalWps);
 			ActiveDrone.setWPTotal(totalwpcountforupload);
 
 			// define the home point
@@ -1941,7 +1940,7 @@ namespace Diva
 
 				req.seq = (ushort)a;
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetWp + a);
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetWp + a);
 				log.Info("WP no " + a);
 
 				ActiveDrone.sendPacket(req, ActiveDrone.Status.sysid, ActiveDrone.Status.compid);
@@ -1961,7 +1960,7 @@ namespace Diva
                 if (!ActiveDrone.BaseStream.IsOpen)
                 {
                     throw new Exception("Please connect first!");
-                    // MessageBox.Show(ResStrings.MsgConnectFirst);
+                    // MessageBox.Show(Strings.MsgConnectFirst);
                  
                 }
 
@@ -2026,7 +2025,7 @@ namespace Diva
 				bool use_int = (capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
 
 				// set wp total
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetTotalWps);
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetTotalWps);
 
 				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
 
@@ -2041,7 +2040,7 @@ namespace Diva
 				}
 				catch (TimeoutException)
 				{
-					MessageBox.Show(ResStrings.MsgSaveWPTimeout);
+					MessageBox.Show(Strings.MsgSaveWPTimeout);
 				}
 				 // + home
 
@@ -2060,7 +2059,7 @@ namespace Diva
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
 							{
-								MessageBox.Show(ResStrings.MsgSaveWPRejected.FormatWith(1));
+								MessageBox.Show(Strings.MsgSaveWPRejected.FormatWith(1));
 								return;
 							}
 						}
@@ -2076,7 +2075,7 @@ namespace Diva
 						{
 							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
 							{
-								MessageBox.Show(ResStrings.MsgSaveWPRejected.FormatWith(2));
+								MessageBox.Show(Strings.MsgSaveWPRejected.FormatWith(2));
 								return;
 							}
 						}
@@ -2099,7 +2098,7 @@ namespace Diva
 				{
 					var temp = commandlist[a - 1];
 
-					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetWp + a);
+					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetWp + a);
 
 					// make sure we are using the correct frame for these commands
 					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
@@ -2139,14 +2138,14 @@ namespace Diva
 
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
 					{
-						MessageBox.Show(ResStrings.MsgMissionRejectedTooManyWaypoints);
+						MessageBox.Show(Strings.MsgMissionRejectedTooManyWaypoints);
 						log.Error("Upload failed, please reduce the number of wp's");
 						return;
 					}
 					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
 					{
 
-						MessageBox.Show(ResStrings.MsgMissionRejectedBadWP.FormatWith(a, ans));
+						MessageBox.Show(Strings.MsgMissionRejectedBadWP.FormatWith(a, ans));
 						log.Error("Upload failed, mission was rejected byt the Mav,\n " +
 							"item had a bad option wp# " + a + " " +
 							ans);
@@ -2167,7 +2166,7 @@ namespace Diva
 					if (ans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
 					{
 
-						MessageBox.Show(ResStrings.MsgMissionRejectedGeneral.FormatWith(
+						MessageBox.Show(Strings.MsgMissionRejectedGeneral.FormatWith(
 							Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()),
 							Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString())));
 						log.Error("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
@@ -2178,7 +2177,7 @@ namespace Diva
 
 				ActiveDrone.setWPACK();
 				
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetParams);
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetParams);
 
 				// m
 				ActiveDrone.setParam("WP_RADIUS", float.Parse("30") / 1);
@@ -2187,7 +2186,7 @@ namespace Diva
 				ActiveDrone.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
 
 				// Remind the user after uploading the mission into firmware.
-				MessageBox.Show(ResStrings.MsgMissionAcceptWP.FormatWith(a));
+				MessageBox.Show(Strings.MsgMissionAcceptWP.FormatWith(a));
 				
 				try
 				{
@@ -2198,7 +2197,7 @@ namespace Diva
 				{
 				}
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogDone);
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
 			}
 			catch (Exception ex)
 			{
@@ -2222,7 +2221,7 @@ namespace Diva
                 {
                     // prevent application termination
                     //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
-                    MessageBox.Show(ResStrings.MsgConnectFirst);
+                    MessageBox.Show(Strings.MsgConnectFirst);
                     return;
                 }
 
@@ -2253,7 +2252,7 @@ namespace Diva
 
 				ActiveDrone.setWPACK();
 
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogDone);
+				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
 
 				log.Info("Done");
 			}
@@ -2399,8 +2398,8 @@ namespace Diva
 				{
 					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
-						DialogResult dr = MessageBox.Show(ResStrings.MsgResetHomeCoordinate,
-							ResStrings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
+						DialogResult dr = MessageBox.Show(Strings.MsgResetHomeCoordinate,
+							Strings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
 
 						if (dr == DialogResult.Yes)
 						{
@@ -2439,13 +2438,13 @@ namespace Diva
 		{
 			if (ActiveDrone.Status.param["RALLY_TOTAL"] == null)
 			{
-				MessageBox.Show(ResStrings.MsgUnsupported);
+				MessageBox.Show(Strings.MsgUnsupported);
 				return;
 			}
 
 			if (int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) < 1)
 			{
-				MessageBox.Show(ResStrings.MsgNoRallyPoint);
+				MessageBox.Show(Strings.MsgNoRallyPoint);
 				return;
 			}
 
@@ -2462,7 +2461,7 @@ namespace Diva
 					{
 						Alt = (int)plla.Alt,
 						ToolTipMode = MarkerTooltipMode.OnMouseOver,
-						ToolTipText = ResStrings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
+						ToolTipText = Strings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
 					});
 				}
 				catch
@@ -2499,7 +2498,7 @@ namespace Diva
 			if (!ActiveDrone.BaseStream.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
-				MessageBox.Show(ResStrings.MsgNoConnection);
+				MessageBox.Show(Strings.MsgNoConnection);
 				return;
 			}
 
@@ -2521,7 +2520,7 @@ namespace Diva
 
 			if (ActiveDrone.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
 			{
-				DialogResult dr = MessageBox.Show(ResStrings.MsgWarnDroneMustActive, ResStrings.DialogTitleWarning, MessageBoxButtons.OK);
+				DialogResult dr = MessageBox.Show(Strings.MsgWarnDroneMustActive, Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				if (dr == DialogResult.OK) return;
 			}
 
@@ -2529,7 +2528,7 @@ namespace Diva
 			float targetHeight = 0.0f;
 			InputDataDialog _dialog = new InputDataDialog()
 			{
-				Hint = ResStrings.MsgInputDialogHeightHint,
+				Hint = Strings.MsgInputDialogHeightHint,
 				Unit = "m",
 			};
 			
@@ -2653,7 +2652,7 @@ namespace Diva
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ResStrings.MsgCannotEstablishConnection
+                        MessageBox.Show(Strings.MsgCannotEstablishConnection
                             .FormatWith(ex.Message));
                         drone?.Disconnect();
                         drone = null;
@@ -2703,7 +2702,7 @@ namespace Diva
 
 			InputDataDialog _dialog = new InputDataDialog()
 			{
-				Hint = ResStrings.MsgInputDialogHeightHint,
+				Hint = Strings.MsgInputDialogHeightHint,
 				Unit = "m",
 			};
 
@@ -2766,8 +2765,8 @@ namespace Diva
 			if (dgvWayPoints.Rows.Count > 0)
 			{
 				
-				if (MessageBox.Show(ResStrings.MsgConfirmClearExistingMission,
-					ResStrings.MsgConfirmTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
+				if (MessageBox.Show(Strings.MsgConfirmClearExistingMission,
+					Strings.MsgConfirmTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
 				{
 					return;
 				}
@@ -2778,7 +2777,7 @@ namespace Diva
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_info,
-				Text = ResStrings.MsgDialogDownloadWps,
+				Text = Strings.MsgDialogDownloadWps,
 			};
 
 			downloadWPReporter.DoWork += getWPs;
@@ -2807,7 +2806,7 @@ namespace Diva
 			}
 			catch
 			{
-				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
+				MessageBox.Show(Strings.MsgHomeLocationInvalid);
 				return;
 			}
 
@@ -2821,7 +2820,7 @@ namespace Diva
 					{
 						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
 						{
-							MessageBox.Show(ResStrings.MsgMissionError);
+							MessageBox.Show(Strings.MsgMissionError);
 							return;
 						}
 					}
@@ -2845,7 +2844,7 @@ namespace Diva
                             cmd != (ushort)MAVLink.MAV_CMD.DELAY &&
 							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
 						{
-							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
+							MessageBox.Show(Strings.MsgWarnWPAltitiude.FormatWith(a + 1));
 							return;
 						}
 					}
@@ -2856,7 +2855,7 @@ namespace Diva
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_info,
-				Text = ResStrings.MsgDialogUploadWps,
+				Text = Strings.MsgDialogUploadWps,
 			};
 
 			uploadWPReporter.DoWork += saveWPs;
@@ -2887,7 +2886,7 @@ namespace Diva
 			try
 			{
 				if (rotationMission.IsActived()) {
-					MessageBox.Show(ResStrings.MsgWarnRotationExcuteing);
+					MessageBox.Show(Strings.MsgWarnRotationExcuteing);
 					return;
 				}
 				rotationMission.ShowDialog();
@@ -2983,7 +2982,7 @@ namespace Diva
 
 		private void VideoDemo_Click(object sender, EventArgs e)
 		{
-			// string uri = Microsoft.VisualBasic.Interaction.InputBox(ResStrings.MsgSpecifyVideoURI);
+			// string uri = Microsoft.VisualBasic.Interaction.InputBox(Strings.MsgSpecifyVideoURI);
 
 			var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
 			string streamUri = dsetting.StreamURI;
@@ -3385,7 +3384,7 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Failed to send new fence points " + ex, Strings.ERROR);
+				MessageBox.Show(Strings.MsgFailedToSendNewFencePoints + ex, Strings.DialogTitleError);
 			}
 		}
 	
@@ -3673,11 +3672,11 @@ namespace Diva
 		
 				// myMap.ZoomAndCenterMarkers("objects");
 				string filename = (Path.GetFileName(file)).Split('.')[0];
-				MessageBox.Show(ResStrings.MsgCustomizeOverlayImport.FormatWith(filename));
+				MessageBox.Show(Strings.MsgCustomizeOverlayImport.FormatWith(filename));
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ResStrings.MsgCantOpenFile.FormatWith(ex.Message));
+				MessageBox.Show(Strings.MsgCantOpenFile.FormatWith(ex.Message));
 			}
 		}
 

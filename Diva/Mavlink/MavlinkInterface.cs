@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Diva.Planner;
+using Diva.Properties;
 using Timer = System.Timers.Timer;
 
 namespace Diva.Mavlink
@@ -651,13 +652,13 @@ namespace Diva.Mavlink
 
 						if (hbseen)
 						{
-							progressWorkerEventArgs.ErrorMessage = Strings.Only1Hb;
-							throw new Exception(Strings.Only1HbD);
+							progressWorkerEventArgs.ErrorMessage = Strings.MsgOnlyOneHBReceived;
+							throw new Exception(Strings.MsgOnlyOneHBReceived);
 						}
 						else
 						{
-							progressWorkerEventArgs.ErrorMessage = Strings.Only1Hb;
-							throw new Exception("Can not establish a connection\n");
+							progressWorkerEventArgs.ErrorMessage = Strings.MsgConnectionFailed;
+							throw new Exception(Strings.MsgConnectionFailed);
 						}
 					}
 
@@ -760,7 +761,7 @@ namespace Diva.Mavlink
 				catch {	}
 				giveComport = false;
 				if (string.IsNullOrEmpty(progressWorkerEventArgs.ErrorMessage))
-					progressWorkerEventArgs.ErrorMessage = Strings.ConnectFailed;
+					progressWorkerEventArgs.ErrorMessage = Strings.MsgConnectionFailed;
 				log.Error(e);
 				throw;
 			}

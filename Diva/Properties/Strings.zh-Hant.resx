@@ -373,7 +373,7 @@
   <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
     <value>位址</value>
   </data>
-  <data name="strActivateDrone" xml:space="preserve">
+  <data name="StrActivateDrone" xml:space="preserve">
     <value>點擊設為使用中</value>
   </data>
   <data name="MsgCustomizeOverlayImport" xml:space="preserve">
@@ -444,5 +444,20 @@
   </data>
   <data name="MsgPowerLogFileNotFound" xml:space="preserve">
     <value>指定的紀錄檔不存在</value>
+  </data>
+  <data name="MsgInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
+    <value>無效的能耗模型或電池容量設定。</value>
+  </data>
+  <data name="MsgConnectionFailed" xml:space="preserve">
+    <value>連線失敗</value>
+  </data>
+  <data name="MsgOnlyOneHBReceived" xml:space="preserve">
+    <value>只收到一次Heartbeat</value>
+  </data>
+  <data name="DialogTitleError" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="MsgFailedToSendNewFencePoints" xml:space="preserve">
+    <value>無法傳送新圍籬座標點：</value>
   </data>
 </root>

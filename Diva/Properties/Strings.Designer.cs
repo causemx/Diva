@@ -331,6 +331,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string DialogTitleError {
+            get {
+                return ResourceManager.GetString("DialogTitleError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
         public static string DialogTitleWarning {
@@ -484,6 +493,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection failed..
+        /// </summary>
+        public static string MsgConnectionFailed {
+            get {
+                return ResourceManager.GetString("MsgConnectionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} overlay has been imported.
         /// </summary>
         public static string MsgCustomizeOverlayImport {
@@ -619,6 +637,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to send new fence points .
+        /// </summary>
+        public static string MsgFailedToSendNewFencePoints {
+            get {
+                return ResourceManager.GetString("MsgFailedToSendNewFencePoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loaded {0}.
         /// </summary>
         public static string MsgFileLoaded {
@@ -687,6 +714,15 @@ namespace Diva.Properties {
         public static string MsgInvalidHomeOrWPAltitide {
             get {
                 return ResourceManager.GetString("MsgInvalidHomeOrWPAltitide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid power model and/or battery setting..
+        /// </summary>
+        public static string MsgInvalidPowerModelAndOrBatterySetting {
+            get {
+                return ResourceManager.GetString("MsgInvalidPowerModelAndOrBatterySetting", resourceCulture);
             }
         }
         
@@ -795,6 +831,15 @@ namespace Diva.Properties {
         public static string MsgNoRallyPoint {
             get {
                 return ResourceManager.GetString("MsgNoRallyPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only one heartbeat received..
+        /// </summary>
+        public static string MsgOnlyOneHBReceived {
+            get {
+                return ResourceManager.GetString("MsgOnlyOneHBReceived", resourceCulture);
             }
         }
         
@@ -936,9 +981,9 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Click to activate drone.
         /// </summary>
-        public static string strActivateDrone {
+        public static string StrActivateDrone {
             get {
-                return ResourceManager.GetString("strActivateDrone", resourceCulture);
+                return ResourceManager.GetString("StrActivateDrone", resourceCulture);
             }
         }
         
