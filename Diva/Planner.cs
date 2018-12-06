@@ -1160,9 +1160,10 @@ namespace Diva
 					dgvWayPoints.Rows.RemoveAt(e.RowIndex);
 					quickadd = false;
 					writeKMLV2();
-				}			
-				// setgradanddistandaz();
-			}
+                    DroneInfoPanel.NotifyMissionChanged();
+                }
+                // setgradanddistandaz();
+            }
 			catch (Exception)
 			{
 				MessageBox.Show(Strings.MsgRowError);
@@ -1341,9 +1342,10 @@ namespace Diva
 			
 
 			setfromMap(lat, lng, alt);
-		}
+            DroneInfoPanel.NotifyMissionChanged();
+        }
 
-		private bool IsHomeEmpty()
+        private bool IsHomeEmpty()
 		{
 			/*if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
 				return false;
@@ -2274,12 +2276,12 @@ namespace Diva
 					{
 						Console.WriteLine("Process " + cmds.Count);
 						processToScreen(cmds);
+                        DroneInfoPanel.NotifyMissionChanged();
 					}
 					catch (Exception exx)
 					{
 						Console.WriteLine(exx.ToString());
 					}
-
 					
 					try
 					{
@@ -2490,9 +2492,10 @@ namespace Diva
 			selectedrow = 0;
 			quickadd = false;
 			writeKMLV2();
-		}
+            DroneInfoPanel.NotifyMissionChanged();
+        }
 
-		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
+        private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 			if (!ActiveDrone.BaseStream.IsOpen)
@@ -3522,55 +3525,10 @@ namespace Diva
 
 		private void powerConsumptionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            /*try
-			{
-				
-				Locationwp home = new Locationwp()
-				{
-					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-					lat = (double.Parse(TxtHomeLatitude.Text)),
-					lng = (double.Parse(TxtHomeLongitude.Text)),
-					alt = (float.Parse(TxtHomeAltitude.Text)),
-				};
-
-				QGCWaypointFileUtlity fu = new QGCWaypointFileUtlity(ActiveDrone, GetCommandList(), home);
-				fu.Write();
-
-				
-				string cmd = @"C:\Users\user\Projects\mpm\Predict.py";
-				string args = "param.txt foo.waypoints";
-				run_cmd(cmd, args);
-
-			}
-			catch (Exception) { }*/
-            var cmds = GetCommandList();
-            if (cmds.Count == 0)
-            {
-                return;
-            }
-            string toolpath = AlexModelTools.AlexModelToolsRoot;
-            Locationwp home = GetHomeLocationwp();
+            DroneInfoPanel.NotifyMissionChanged();
         }
 
-		/*private void run_cmd(string cmd, string args)
-		{
-			ProcessStartInfo start = new ProcessStartInfo();
-			start.FileName = @"C:\Python36\python.exe";
-			start.WorkingDirectory = @"C:\Users\user\Projects\mpm\";
-			start.Arguments = string.Format("{0} {1}", cmd, args);
-			start.UseShellExecute = false;
-			start.RedirectStandardOutput = true;
-			using (Process process = Process.Start(start))
-			{
-				using (StreamReader reader = process.StandardOutput)
-				{
-					string result = reader.ReadToEnd();
-					Console.Write(result);
-				}
-			}
-		}*/
-
-		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//FENCE_ENABLE ON COPTER
 			//FENCE_ACTION ON PLANE

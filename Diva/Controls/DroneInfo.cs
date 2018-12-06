@@ -115,6 +115,8 @@ namespace Diva.Controls
                     CalculateEnergyConsumptionCallback, ++tokenSerialNumber);
         }
 
+        public void NotifyMissionChanged() => TriggerEstimatedEnergyRecalculation(null, null);
+
         [Browsable(true)]
 		public event EventHandler CloseButtonClicked;
 		private void BtnClose_Click(object sender, EventArgs e) =>
@@ -149,7 +151,7 @@ namespace Diva.Controls
                     effectiveBatteryCapacity = cap * (avail / 100.0);
                 }
                 Height = PanelEnergyConsumptionInfo.Bottom;
-                TriggerEstimatedEnergyRecalculation(null, null);
+                NotifyMissionChanged();
             }
             else
             {

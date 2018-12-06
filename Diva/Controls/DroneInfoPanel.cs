@@ -56,10 +56,6 @@ namespace Diva.Controls
 		public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
 		{
 			var dinfo = new DroneInfo(drone, drone.Name);
-			var pinfo = new PowerModelInfo()
-			{
-				Visible = false,
-			};
 
 			dinfo.Click += (s, e) => ActiveDroneInfo = s as DroneInfo;
 			dinfo.DoubleClick += (s, e) =>
@@ -89,19 +85,10 @@ namespace Diva.Controls
                 }
 			};
 
-			/*dinfo.RaiseEvent += (s, pi) =>
-			{
-				// TODO: Fill information into pinfo here.
-				if (!pinfo.Visible) pinfo.Visible = true;
-				pinfo.UpdateConsumption(pi.BattCapacity, pi.AvaiPercentage);
-				pinfo.EstimatedPower = pi.Prediction;
-			};*/
-
 			battNotification = new NotificationManager.BatteryNotification(dinfo);
 
 			ThePanel.Controls.Remove(TelemetryData);
 			ThePanel.Controls.Add(dinfo);
-			ThePanel.Controls.Add(pinfo);
 			ThePanel.Controls.Add(TelemetryData);
 			if (setActive) ActiveDroneInfo = dinfo;
 
@@ -130,7 +117,6 @@ namespace Diva.Controls
 {getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
 {getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}");
 
-
 				battNotification.Notify();
 
 				MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.param;
@@ -138,11 +124,13 @@ namespace Diva.Controls
 			}
 		}
 
-
 		public void UpdateAssumeTime(double missionDistance) =>
             ActiveDroneInfo?.UpdateAssumeTime(missionDistance);
 
 		public void ResetAssumeTime() =>
 			ActiveDroneInfo?.ResetAssumeTime();
-	}
+
+        public void NotifyMissionChanged() => ActiveDroneInfo?.NotifyMissionChanged();
+
+    }
 }

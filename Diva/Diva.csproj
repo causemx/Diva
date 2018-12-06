@@ -215,12 +215,6 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PowerModelInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\PowerModelInfo.Designer.cs">
-      <DependentUpon>PowerModelInfo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RotationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -363,9 +357,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewPowerModelForm.resx">
       <DependentUpon>NewPowerModelForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PowerModelInfo.resx">
-      <DependentUpon>PowerModelInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
