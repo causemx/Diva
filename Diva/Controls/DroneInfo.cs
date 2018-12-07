@@ -16,20 +16,19 @@ namespace Diva.Controls
 	public partial class DroneInfo : UserControl
 	{
 		private bool isActive = false;
-        private bool isEnergyPanelVisible = false;
         public bool IsActive
 		{
             get => isActive;
 			private set
 			{
 				isActive = value;
-                SetEnergyConsumptionInfoPanelVisibility(value && isEnergyPanelVisible);
+                SetEnergyConsumptionInfoPanelVisibility(false);
+                ChkBtnTelemetryInfo.Checked = false;
                 BackColor = isActive ? Color.FromArgb(67, 78, 84) : Color.FromArgb(128, 128, 128);
 				Parent?.Invalidate(Bounds, true);
 			}
 		}
         public MavDrone Drone { get; private set; }
-        public string droneName => TxtDroneName.Text;
 
 		public DroneInfo(MavDrone m, string name)
 		{
@@ -69,16 +68,16 @@ namespace Diva.Controls
 			TxtBatteryHealth.ForeColor = isLowVoltage ? Color.Red : Color.White;
 		}
 
+        private readonly Color EC_ColorNormal = Color.White;
+        private readonly Color EC_ColorWarning = Color.Orange;
+        private readonly Color EC_ColorError = Color.Red;
+
         private double effectiveBatteryCapacity = 0.0;
         private int tokenSerialNumber = 0;
 
-        public readonly Color EC_ColorNormal = Color.White;
-        public readonly Color EC_ColorWarning = Color.Orange;
-        public readonly Color EC_ColorError = Color.Red;
-
         public void UpdateEstimatedFlightEnergy(double en)
         {
-            if (!IsActive || !isEnergyPanelVisible) return;
+            if (!IsActive || !ChkBtnPowerModel.Checked) return;
             if (en == double.NaN)
             {
                 IconEnergyConsumption.Image = Resources.icon_error;
@@ -117,6 +116,7 @@ namespace Diva.Controls
 
         private void TriggerEstimatedEnergyRecalculation(object sender, EventArgs e)
         {
+            if (!IsActive || !ChkBtnPowerModel.Checked) return;
             var planner = Planner.GetPlannerInstance();
             if (planner.MissionListItemCount == 0)
             {
@@ -136,23 +136,23 @@ namespace Diva.Controls
         public void NotifyMissionChanged() => TriggerEstimatedEnergyRecalculation(null, null);
 
         [Browsable(true)]
-		public event EventHandler CloseButtonClicked;
-		private void BtnClose_Click(object sender, EventArgs e) =>
-            CloseButtonClicked?.Invoke(this, e) ;
+		public event EventHandler ToggleTelemetryInfoTriggered;
+		private void BtnTelemetryInfo_Click(object sender, EventArgs e)
+        {
+            ChkBtnTelemetryInfo.Checked = !ChkBtnTelemetryInfo.Checked;
+            ToggleTelemetryInfoTriggered?.Invoke(this, e);
+        }
 
 		private void BtnPowerModel_Click(object sender, EventArgs e)
         {
             if (IsActive)
-            {
-                bool newVisible = !isEnergyPanelVisible;
-                SetEnergyConsumptionInfoPanelVisibility(newVisible);
-                isEnergyPanelVisible = newVisible;
-            }
+                SetEnergyConsumptionInfoPanelVisibility(!ChkBtnPowerModel.Checked);
         }
 
         private void SetEnergyConsumptionInfoPanelVisibility(bool visible)
         {
-            if (visible == isEnergyPanelVisible && IsActive) return;
+            if (visible == ChkBtnPowerModel.Checked) return;
+            ChkBtnPowerModel.Checked = visible;
             if (visible)
             {
                 if (effectiveBatteryCapacity == 0.0)

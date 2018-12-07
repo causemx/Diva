@@ -37,11 +37,11 @@
             this.TxtBatteryHealth = new System.Windows.Forms.Label();
             this.TxtSatelliteCount = new System.Windows.Forms.Label();
             this.TxtSystemID = new System.Windows.Forms.Label();
-            this.BtnClose = new System.Windows.Forms.Button();
-            this.BtnPowerModel = new System.Windows.Forms.Button();
             this.PanelEnergyConsumptionInfo = new System.Windows.Forms.Panel();
             this.IconEnergyConsumption = new System.Windows.Forms.PictureBox();
             this.LabelEstimatedEnergyConsumptionText = new System.Windows.Forms.Label();
+            this.ChkBtnPowerModel = new System.Windows.Forms.CheckBox();
+            this.ChkBtnTelemetryInfo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconFlightTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconBattery)).BeginInit();
@@ -146,32 +146,6 @@
             this.TxtSystemID.TabIndex = 8;
             this.TxtSystemID.Text = "00";
             // 
-            // BtnClose
-            // 
-            this.BtnClose.AutoSize = true;
-            this.BtnClose.FlatAppearance.BorderSize = 0;
-            this.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnClose.Image = global::Diva.Properties.Resources.icon_zoomin1;
-            this.BtnClose.Location = new System.Drawing.Point(305, 3);
-            this.BtnClose.Name = "BtnClose";
-            this.BtnClose.Size = new System.Drawing.Size(36, 30);
-            this.BtnClose.TabIndex = 9;
-            this.BtnClose.UseVisualStyleBackColor = true;
-            this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
-            // 
-            // BtnPowerModel
-            // 
-            this.BtnPowerModel.AutoSize = true;
-            this.BtnPowerModel.FlatAppearance.BorderSize = 0;
-            this.BtnPowerModel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnPowerModel.Image = global::Diva.Properties.Resources.icon_lighting_24;
-            this.BtnPowerModel.Location = new System.Drawing.Point(263, 3);
-            this.BtnPowerModel.Name = "BtnPowerModel";
-            this.BtnPowerModel.Size = new System.Drawing.Size(36, 30);
-            this.BtnPowerModel.TabIndex = 10;
-            this.BtnPowerModel.UseVisualStyleBackColor = true;
-            this.BtnPowerModel.Click += new System.EventHandler(this.BtnPowerModel_Click);
-            // 
             // PanelEnergyConsumptionInfo
             // 
             this.PanelEnergyConsumptionInfo.Controls.Add(this.IconEnergyConsumption);
@@ -205,13 +179,45 @@
             this.LabelEstimatedEnergyConsumptionText.TabIndex = 13;
             this.LabelEstimatedEnergyConsumptionText.DoubleClick += new System.EventHandler(this.TriggerEstimatedEnergyRecalculation);
             // 
+            // ChkBtnPowerModel
+            // 
+            this.ChkBtnPowerModel.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ChkBtnPowerModel.AutoCheck = false;
+            this.ChkBtnPowerModel.AutoSize = true;
+            this.ChkBtnPowerModel.FlatAppearance.BorderSize = 0;
+            this.ChkBtnPowerModel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChkBtnPowerModel.Image = global::Diva.Properties.Resources.icon_lighting_24;
+            this.ChkBtnPowerModel.Location = new System.Drawing.Point(270, 3);
+            this.ChkBtnPowerModel.Name = "ChkBtnPowerModel";
+            this.ChkBtnPowerModel.Size = new System.Drawing.Size(30, 30);
+            this.ChkBtnPowerModel.TabIndex = 12;
+            this.ChkBtnPowerModel.UseVisualStyleBackColor = true;
+            this.ChkBtnPowerModel.Click += new System.EventHandler(this.BtnPowerModel_Click);
+            // 
+            // ChkBtnTelemetryInfo
+            // 
+            this.ChkBtnTelemetryInfo.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ChkBtnTelemetryInfo.AutoCheck = false;
+            this.ChkBtnTelemetryInfo.AutoSize = true;
+            this.ChkBtnTelemetryInfo.FlatAppearance.BorderSize = 0;
+            this.ChkBtnTelemetryInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChkBtnTelemetryInfo.Image = global::Diva.Properties.Resources.icon_zoomin1;
+            this.ChkBtnTelemetryInfo.Location = new System.Drawing.Point(303, 3);
+            this.ChkBtnTelemetryInfo.MaximumSize = new System.Drawing.Size(30, 30);
+            this.ChkBtnTelemetryInfo.MinimumSize = new System.Drawing.Size(30, 30);
+            this.ChkBtnTelemetryInfo.Name = "ChkBtnTelemetryInfo";
+            this.ChkBtnTelemetryInfo.Size = new System.Drawing.Size(30, 30);
+            this.ChkBtnTelemetryInfo.TabIndex = 13;
+            this.ChkBtnTelemetryInfo.UseVisualStyleBackColor = true;
+            this.ChkBtnTelemetryInfo.Click += new System.EventHandler(this.BtnTelemetryInfo_Click);
+            // 
             // DroneInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.ChkBtnTelemetryInfo);
+            this.Controls.Add(this.ChkBtnPowerModel);
             this.Controls.Add(this.PanelEnergyConsumptionInfo);
-            this.Controls.Add(this.BtnPowerModel);
-            this.Controls.Add(this.BtnClose);
             this.Controls.Add(this.TxtSystemID);
             this.Controls.Add(this.TxtSatelliteCount);
             this.Controls.Add(this.TxtBatteryHealth);
@@ -246,10 +252,10 @@
 		private System.Windows.Forms.Label TxtBatteryHealth;
 		private System.Windows.Forms.Label TxtSatelliteCount;
 		private System.Windows.Forms.Label TxtSystemID;
-		private System.Windows.Forms.Button BtnClose;
-		private System.Windows.Forms.Button BtnPowerModel;
 		private System.Windows.Forms.Panel PanelEnergyConsumptionInfo;
         private System.Windows.Forms.PictureBox IconEnergyConsumption;
         private System.Windows.Forms.Label LabelEstimatedEnergyConsumptionText;
+        private System.Windows.Forms.CheckBox ChkBtnPowerModel;
+        private System.Windows.Forms.CheckBox ChkBtnTelemetryInfo;
     }
 }

@@ -69,19 +69,13 @@ namespace Diva.Controls
 				drone.Disconnect();
 				DroneClosed?.Invoke(s, e);
 			};
-			dinfo.CloseButtonClicked += (s, e) =>
+			dinfo.ToggleTelemetryInfoTriggered += (s, e) =>
 			{
 				var d = s as DroneInfo;
 				if (d != null)
 				{
-					if (d != ActiveDroneInfo)
-                    {
-						ActiveDroneInfo = d;
-                    }
-					else
-                    {
-						TelemetryData.Visible = !TelemetryData.Visible;
-					}
+					ActiveDroneInfo = d;
+					TelemetryData.Visible = !TelemetryData.Visible;
                 }
 			};
 
