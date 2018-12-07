@@ -52,7 +52,6 @@ namespace Diva
                 }
                 processControls(userControl);
             }
-
         }
     }
 }

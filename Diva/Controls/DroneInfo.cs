@@ -128,8 +128,9 @@ namespace Diva.Controls
             IconEnergyConsumption.Image = Resources.icon_loading;
             LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorWarning;
             LabelEstimatedEnergyConsumptionText.Text = Strings.StrRecalculating;
-            PowerModel.GetModel(Drone.Setting.PowerModel).CalculateEnergyConsumptionBackground
-                (Drone, planner.GetCommandList(), planner.GetHomeLocationwp(),
+            PowerModelManager.GetModel(Drone.Setting.PowerModel).
+                CalculateEnergyConsumptionBackground(Drone,
+                    planner.GetCommandList(), planner.GetHomeLocationwp(),
                     CalculateEnergyConsumptionCallback, ++tokenSerialNumber);
         }
 
@@ -161,10 +162,11 @@ namespace Diva.Controls
                     double.TryParse(setting.BatteryCapacity, out double cap);
                     double.TryParse(setting.BatteryAvailability, out double avail);
                     if (cap <= 0 || avail <= 0 || avail > 100 ||
-                        setting.PowerModel == PowerModel.PowerModelNone.ModelName)
+                        setting.PowerModel == PowerModelManager.PowerModelNone.ModelName)
                     {
-                        MessageBox.Show(Strings.MsgInvalidPowerModelAndOrBatterySetting);
-                        return;
+                        IconEnergyConsumption.Image = Resources.icon_error;
+                        LabelEstimatedEnergyConsumptionText.Text = Strings.StrInvalidPowerModelAndOrBatterySetting;
+                        LabelEstimatedEnergyConsumptionText.ForeColor = EC_ColorError;
                     }
                     effectiveBatteryCapacity = cap * (avail / 100.0);
                 }

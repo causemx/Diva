@@ -235,12 +235,6 @@
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\MyListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\MyListView.Designer.cs">
-      <DependentUpon>MyListView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\MyVideoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,7 +257,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\DataManager.cs" />
-    <Compile Include="EnergyConsumption\AlexModelTools.cs" />
+    <Compile Include="EnergyConsumption\AlexModel.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavlinkInterface.cs" />
@@ -297,7 +291,6 @@
     </Compile>
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
-    <Compile Include="Utilities\Demux.cs" />
     <Compile Include="Utilities\QGCWaypointFileUtlity.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
     <Compile Include="Utilities\IOverlayUtility.cs" />
@@ -310,7 +303,6 @@
     <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\ResourceStringHelper.cs" />
-    <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\Utility.cs" />
     <EmbeddedResource Include="Controls\Components\MyNumericUpDown.resx">
       <DependentUpon>MyNumericUpDown.cs</DependentUpon>

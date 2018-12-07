@@ -718,15 +718,6 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid power model and/or battery setting..
-        /// </summary>
-        public static string MsgInvalidPowerModelAndOrBatterySetting {
-            get {
-                return ResourceManager.GetString("MsgInvalidPowerModelAndOrBatterySetting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is not a valid power model name..
         /// </summary>
         public static string MsgInvalidPowerModelName {
@@ -1020,6 +1011,15 @@ namespace Diva.Properties {
         public static string StrEstimatedEnergy {
             get {
                 return ResourceManager.GetString("StrEstimatedEnergy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid power model and/or battery setting..
+        /// </summary>
+        public static string StrInvalidPowerModelAndOrBatterySetting {
+            get {
+                return ResourceManager.GetString("StrInvalidPowerModelAndOrBatterySetting", resourceCulture);
             }
         }
         

@@ -445,7 +445,7 @@
   <data name="MsgPowerLogFileNotFound" xml:space="preserve">
     <value>指定的紀錄檔不存在</value>
   </data>
-  <data name="MsgInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
+  <data name="StrInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
     <value>無效的能耗模型或電池容量設定。</value>
   </data>
   <data name="MsgConnectionFailed" xml:space="preserve">

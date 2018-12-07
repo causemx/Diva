@@ -444,7 +444,7 @@
   <data name="MsgPowerLogFileNotFound" xml:space="preserve">
     <value>Power log file does not exist.</value>
   </data>
-  <data name="MsgInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
+  <data name="StrInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
     <value>Invalid power model and/or battery setting.</value>
   </data>
   <data name="MsgConnectionFailed" xml:space="preserve">

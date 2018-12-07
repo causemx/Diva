@@ -34,7 +34,7 @@ namespace Diva.Controls
                 if (BtnDataAnalysisTab.Checked)
                 {
                     string name = TBoxModelName.Text;
-                    if (!PowerModel.IsValidModelName(name))
+                    if (!PowerModelManager.IsValidModelName(name))
                     {
                         MessageBox.Show(Properties.Strings.MsgInvalidPowerModelName.FormatWith(name));
                         return;
@@ -49,15 +49,14 @@ namespace Diva.Controls
                         MessageBox.Show(Properties.Strings.MsgPowerLogFileNotFound);
                         return;
                     }
-                    if (PowerModel.TrainNewModel(TBoxLogFileLocation.Text, name) != PowerModel.PowerModelNone)
+                    if (PowerModelManager.TrainNewModel<AlexModel>(TBoxLogFileLocation.Text, name)
+                        != PowerModelManager.PowerModelNone)
                     {
                         NewPowerModelName = name;
                         DialogResult = DialogResult.Yes;
                     }
                     else
-                    {
                         DialogResult = DialogResult.Abort;
-                    }
                 }
                 else
                 {
@@ -65,15 +64,13 @@ namespace Diva.Controls
                     var planner = Planner.GetPlannerInstance();
                     planner.ClearMission();
                     planner.processToScreen(
-                        PowerModel.GenerateTrainingMission(planner.GetHomeLocationwp()));
+                        PowerModelManager.GenerateTrainingMission<AlexModel>(planner.GetHomeLocationwp()));
                     planner.writeKMLV2();
                     DialogResult = DialogResult.OK;
                 }
             }
             else
-            {
                 DialogResult = DialogResult.Cancel;
-            }
             Close();
         }
 

@@ -1505,41 +1505,6 @@ namespace Diva
 			myMap.Refresh();
         }
 
-
-		/// <summary>
-		/// Format distance according to prefer distance unit
-		/// </summary>
-		/// <param name="distInKM">distance in kilometers</param>
-		/// <param name="toMeterOrFeet">convert distance to meter or feet if true, covert to km or miles if false</param>
-		/// <returns>formatted distance with unit</returns>
-		private string FormatDistance(double distInKM, bool toMeterOrFeet)
-		{
-			string sunits = Utilities.Settings.Instance["distunits"];
-			Utility.distances units = Utility.distances.Meters;
-
-			if (sunits != null)
-				try
-				{
-					units = (Utility.distances)Enum.Parse(typeof(Utility.distances), sunits);
-				}
-				catch (Exception)
-				{
-				}
-
-			switch (units)
-			{
-				case Utility.distances.Feet:
-					return toMeterOrFeet
-						? string.Format((distInKM * 3280.8399).ToString("0.00 ft"))
-						: string.Format((distInKM * 0.621371).ToString("0.0000 miles"));
-				case Utility.distances.Meters:
-				default:
-					return toMeterOrFeet
-						? string.Format((distInKM * 1000).ToString("0.00 m"))
-						: string.Format(distInKM.ToString("0.0000 km"));
-			}
-		}
-
 		private double find_angle(List<PointLatLngAlt> points)
 		{
 			log.Info("find_angle");
@@ -2915,22 +2880,6 @@ namespace Diva
 						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
 						custom_mode = (uint)9,
 					});
-			}
-		}
-
-
-		private Demux demultiplexer = new Demux();
-		private bool isDeplexClicked = false;
-		private void BUT_Deplex_Click(object sender, EventArgs e)
-		{
-			isDeplexClicked = !isDeplexClicked;
-			if (isDeplexClicked)
-			{
-				demultiplexer.Active();
-			}
-			else
-			{
-				demultiplexer.Deactive();
 			}
 		}
 

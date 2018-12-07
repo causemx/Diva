@@ -199,8 +199,8 @@ namespace Diva.Controls
 		}
         public string PowerModelName
         {
-            get => PowerModel.GetModel(LabelPowerModelText.Text).ModelName;
-            set => LabelPowerModelText.Text = PowerModel.GetModel(value).ModelName;
+            get => PowerModelManager.GetModel(LabelPowerModelText.Text).ModelName;
+            set => LabelPowerModelText.Text = PowerModelManager.GetModel(value).ModelName;
         }
         public string BatteryCapacity
         {
@@ -237,8 +237,8 @@ namespace Diva.Controls
             Removed += DefaultRemoved;
             CurMode = Mode.Empty;
             NoTrigger = false;
-            ComboPowerModel.Items.AddRange(PowerModel.GetPowerModelNames().ToArray());
-            ComboPowerModel.SelectedItem = PowerModelName = PowerModel.PowerModelNone.ModelName;
+            ComboPowerModel.Items.AddRange(PowerModelManager.GetPowerModelNames().ToArray());
+            ComboPowerModel.SelectedItem = PowerModelName = PowerModelManager.PowerModelNone.ModelName;
         }
 
         public static DroneSettingInput FromSetting(DroneSetting s)
@@ -337,7 +337,7 @@ namespace Diva.Controls
                 {
                     string pm = (string)dsi.ComboPowerModel.SelectedItem;
                     dsi.ComboPowerModel.Items.Clear();
-                    dsi.ComboPowerModel.Items.AddRange(PowerModel.GetPowerModelNames().ToArray());
+                    dsi.ComboPowerModel.Items.AddRange(PowerModelManager.GetPowerModelNames().ToArray());
                     dsi.ComboPowerModel.SelectedItem = pm;
                 }
                 ComboPowerModel.SelectedItem = dlg.NewPowerModelName;

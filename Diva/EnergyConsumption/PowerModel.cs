@@ -12,9 +12,40 @@ namespace Diva.EnergyConsumption
     {
         public static readonly string PowerModelRootPath =
             AppDomain.CurrentDomain.BaseDirectory + "Power Models\\";
+
+        public string ModelName { get; protected set; }
+        public string ModelPath => PowerModelRootPath + ModelName;
+
+        public PowerModel()
+        {
+            ModelName = Properties.Strings.MsgDroneSettingNoPowerModel;
+        }
+
+        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<Locationwp> wps, Locationwp home, Action<double, object> cb, object token)
+        {
+            if (GetType() == typeof(PowerModel))
+                throw new NotImplementedException();
+            Task task = Task.Run(() => cb(CalculateEnergyConsumption(drone, wps, home), token));
+            return task;
+        }
+
+        public static bool ContainsModel(string path) => false;
+
+        public virtual double CalculateEnergyConsumption(MavDrone drone, List<Locationwp> wps, Locationwp home) => double.NaN;
+    }
+
+    public static class PowerModelManager
+    {
+        public static readonly Type[] AvailableModelTypes = { typeof(AlexModel) };
         private static Dictionary<string, PowerModel> pmAvailable =
             new Dictionary<string, PowerModel>();
-        private static readonly PowerModel pmNone = new PowerModel(null);
+        private static List<string> powerModelNames;
+        public static List<string> GetPowerModelNames() => powerModelNames;
+        public static PowerModel GetModel(string name) =>
+            name != null && pmAvailable.ContainsKey(name) ? pmAvailable[name] : pmNone;
+
+        private static readonly PowerModel pmNone = new PowerModel();
+        public static PowerModel PowerModelNone => pmNone;
 
         public static bool IsValidModelName(string name)
         {
@@ -22,12 +53,38 @@ namespace Diva.EnergyConsumption
                 !new System.Text.RegularExpressions.Regex("[^A-Za-z0-9\\._ ]").IsMatch(name);
         }
 
+        private static bool LoadModel(DirectoryInfo dir, Dictionary<string, PowerModel> dict)
+        {
+            bool ok = false;
+            string name = dir.Name;
+            // reuse old object in case already referenced
+            if (pmAvailable.ContainsKey(name))
+            {
+                dict.Add(name, pmAvailable[name]);
+                ok = true;
+            }
+            else if (IsValidModelName(name))
+            {
+                // more checks here, or throw exception if dir does not contains valid power model
+                var model = AvailableModelTypes.Where(t =>
+                        (bool)t.GetMethod("ContainsModel").Invoke(null, new object[] { dir.FullName }))
+                    .FirstOrDefault();
+                if (model != null)
+                    dict.Add(dir.Name, model.GetConstructor(new Type[] { typeof(string) })
+                        .Invoke(new object[] { name }) as PowerModel);
+                ok = true;
+            }
+            return ok;
+        }
+
+        static PowerModelManager() => RefreshPowerModelsList();
+
         public static void RefreshPowerModelsList()
         {
             var newdict = new Dictionary<string, PowerModel>();
             try
             {
-                var di = new DirectoryInfo(PowerModelRootPath);
+                var di = new DirectoryInfo(PowerModel.PowerModelRootPath);
                 if (!di.Exists) di.Create();
                 di.GetDirectories().ToList().ForEach(d => LoadModel(d, newdict));
                 pmAvailable = newdict;
@@ -40,80 +97,14 @@ namespace Diva.EnergyConsumption
             }
         }
 
-        static PowerModel()
+        public static List<Locationwp> GenerateTrainingMission<T>(Locationwp home) =>
+            (List<Locationwp>)typeof(T).GetMethod("GenerateTrainingMission")?.Invoke(null, new object[] { home });
+
+        public static PowerModel TrainNewModel<T>(string file, string name)
         {
-            RefreshPowerModelsList();
-            //GetPowerModelNames().ForEach(pm => Console.WriteLine(pm));
-        }
-
-        public static PowerModel PowerModelNone => pmNone;
-        public static PowerModel GetModel(string name) =>
-            name != null && pmAvailable.ContainsKey(name) ? pmAvailable[name] : pmNone;
-
-        private static List<string> powerModelNames;
-        public static List<string> GetPowerModelNames() => powerModelNames;
-
-        private static bool LoadModel(DirectoryInfo dir, Dictionary<string, PowerModel> dict)
-        {
-            bool ok = false;
-            // reuse old object in case already referenced
-            if (pmAvailable.ContainsKey(dir.Name))
-            {
-                dict.Add(dir.Name, pmAvailable[dir.Name]);
-                ok = true;
-            } else if (IsValidModelName(dir.Name))
-            {
-                // more checks here, or throw exception if dir does not contains valid power model
-                dict.Add(dir.Name, new PowerModel(dir.Name));
-                ok = true;
-            }
-            return ok;
-        }
-
-        public static List<Locationwp> GenerateTrainingMission(Locationwp home) =>
-            QGCWaypointFileUtlity.ImportWaypoints(
-                (string)AlexModelTools.MissionGenerator.Start(
-                    home.lat.ToString() + "," + home.lng.ToString(), null),
-                out var newhome);
-
-        public static PowerModel TrainNewModel(string file, string name)
-        {
-            AlexModelTools.Trainer.Start(file, name);
+            typeof(T).GetMethod("TrainNewModel")?.Invoke(null, new object[] { file, name });
             RefreshPowerModelsList();
             return GetModel(name);
-        }
-
-        public string ModelName { get; private set; }
-        public string ModelPath => PowerModelRootPath + ModelName;
-        public string ModelType { get; private set; }
-
-        private PowerModel(string name)
-        {
-            if (name == null)
-            {
-                // PowerModelNone
-                ModelName = Properties.Strings.MsgDroneSettingNoPowerModel;
-                return;
-            }
-            ModelName = name;
-            // do model type check here
-            {
-                ModelType = "Alex";
-                calcEnergy = this.PredictByAlexModel;
-            }
-        }
-
-        private Func<MavDrone, List<Locationwp>, Locationwp, double> calcEnergy;
-
-        public double CalculateEnergyConsumption(MavDrone drone, List<Locationwp> wps, Locationwp home)
-            => calcEnergy?.Invoke(drone, wps, home) ?? double.NaN;
-
-        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<Locationwp> wps, Locationwp home, Action<double, object> cb, object token)
-        {
-            if (this == PowerModelNone)
-                throw new NotImplementedException();
-            Task task = Task.Run(() => cb(CalculateEnergyConsumption(drone, wps, home), token));
-            return task;
         }
     }
 }
