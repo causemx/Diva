@@ -14,40 +14,32 @@ namespace Diva.Utilities
 	{
         private static string QGCWaypointFileMagic = "QGC WPL 110";
 
-        public static List<Locationwp> ImportWaypoints(string file, out Locationwp home)
+        public static List<Locationwp> ImportWaypoints(string file)
         {
             List<Locationwp> cmds = new List<Locationwp>();
-            home = new Locationwp();
             try
             {
-                bool validLine(string[] cols, bool isHome = false)
+                bool validLine(int l, string[] c)
                 {
-                    bool ok = cols.Length == 12 && cols[11] == "1" &&
+                    bool f(string s) => float.TryParse(s, out var o);
+                    bool d(string s) => float.TryParse(s, out var o);
+                    return c.Length == 12 && c[0] == l.ToString() &&
                         // we may have more than waypoint command in mission
-                        cols[3] == MAVLink.MAV_CMD.WAYPOINT.ToString() &&
-                        cols[4] == "0" && cols[5] == "0" && cols[6] == "0" && cols[7] == "0" &&
-                        cols[8].Contains(".") && cols[9].Contains(".") && cols[10].Contains(".");
-                    if (isHome)
-                        ok &= cols[0] == "0"  && cols[1] == "1" && cols[2] == "0";
-                    else
-                        ok &= cols[1] == "0" && cols[2] == "RELATIVE";
-                    return ok;
+                        (Enum.TryParse<MAVLink.MAV_CMD>(c[3], out var res) ||
+                            int.TryParse(c[3], out int cmd) &&
+                            Enum.IsDefined(typeof(MAVLink.MAV_CMD), cmd)) &&
+                        f(c[4]) && f(c[5]) && f(c[6]) && f(c[7]) &&
+                        d(c[8]) && d(c[9]) && f(c[10]) && c[11] == "1";
                 }
                 using (StreamReader reader = new StreamReader(file))
                 {
                     if (reader.ReadLine() != QGCWaypointFileMagic)
                         throw new FileFormatException(file);
-                    string[] cols = reader.ReadLine().Split(new char[] { '\t' });
-                    if (!validLine(cols, true))
-                        throw new FileFormatException(file);
-                    double.TryParse(cols[8], out home.lat);
-                    double.TryParse(cols[9], out home.lng);
-                    float.TryParse(cols[10], out home.alt);
                     string line;
-                    for (int count = 1; (line = reader.ReadLine()) != null; count++)
+                    for (int lineno = 0; (line = reader.ReadLine()) != null; lineno++)
                     {
-                        cols = line.Split(new char[] { '\t' });
-                        if (!validLine(cols) || cols[0] != count.ToString())
+                        var cols = line.Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (!validLine(lineno, cols))
                             throw new FileFormatException(file);
                         cmds.Add(new Locationwp
                         {

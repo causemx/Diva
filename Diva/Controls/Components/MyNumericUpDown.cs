@@ -47,7 +47,7 @@ namespace Diva.Controls.Components
 		public void setup(float Min, float Max, float Scale, float Increment, string paramname,
 		   MAVLink.MAVLinkParamList paramlist, Control enabledisable = null)
 		{
-			setup(Min, Max, Scale, Increment, new string[] { paramname }, paramlist, enabledisable);
+			setup(Min, Max, Scale, Increment, new [] { paramname }, paramlist, enabledisable);
 		}
 
 		public void setup(float Min, float Max, float Scale, float Increment, string[] paramname,

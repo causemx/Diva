@@ -303,9 +303,9 @@ namespace Diva
                                     && m.IsGenericMethodDefinition
                                     && m.GetParameters().Length == 1
                                     && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
-                            var list = deserializeMethod.Invoke(null, new object[] { jstr });
+                            var list = deserializeMethod.Invoke(null, new [] { jstr });
                             var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
-                            updateListMethod.Invoke(lazy.Value, new object[] { list, false });
+                            updateListMethod.Invoke(lazy.Value, new [] { list, false });
                         }
                         else
                             Console.WriteLine($"Unable to resolve type '{s}'.");

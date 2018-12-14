@@ -35,16 +35,18 @@
             this.BtnActionCancel = new System.Windows.Forms.Button();
             this.BtnActionOk = new System.Windows.Forms.Button();
             this.PanelAnalysis = new System.Windows.Forms.Panel();
-            this.PanelCollection = new System.Windows.Forms.Panel();
-            this.PanelSeparator = new System.Windows.Forms.Panel();
-            this.TBoxDataCollectionDescription = new System.Windows.Forms.TextBox();
-            this.TBoxDatCollectionSteps = new System.Windows.Forms.TextBox();
-            this.LabelLogFileLocation = new System.Windows.Forms.Label();
-            this.TBoxLogFileLocation = new System.Windows.Forms.TextBox();
-            this.BtnLogFileBrowse = new System.Windows.Forms.Button();
+            this.LabelModelNameRules = new System.Windows.Forms.Label();
             this.TBoxModelName = new System.Windows.Forms.TextBox();
             this.LabelModelName = new System.Windows.Forms.Label();
-            this.LabelModelNameRules = new System.Windows.Forms.Label();
+            this.BtnLogFileBrowse = new System.Windows.Forms.Button();
+            this.TBoxLogFileLocation = new System.Windows.Forms.TextBox();
+            this.LabelLogFileLocation = new System.Windows.Forms.Label();
+            this.PanelCollection = new System.Windows.Forms.Panel();
+            this.TBoxMissionAngle = new System.Windows.Forms.TextBox();
+            this.LabelMissionAngle = new System.Windows.Forms.Label();
+            this.TBoxDatCollectionSteps = new System.Windows.Forms.TextBox();
+            this.TBoxDataCollectionDescription = new System.Windows.Forms.TextBox();
+            this.PanelSeparator = new System.Windows.Forms.Panel();
             this.PanelActionButtons.SuspendLayout();
             this.PanelAnalysis.SuspendLayout();
             this.PanelCollection.SuspendLayout();
@@ -52,12 +54,12 @@
             // 
             // PanelActionButtons
             // 
+            resources.ApplyResources(this.PanelActionButtons, "PanelActionButtons");
             this.PanelActionButtons.BackColor = System.Drawing.Color.Black;
             this.PanelActionButtons.Controls.Add(this.BtnDataAnalysisTab);
             this.PanelActionButtons.Controls.Add(this.BtnDataCollectionTab);
             this.PanelActionButtons.Controls.Add(this.BtnActionCancel);
             this.PanelActionButtons.Controls.Add(this.BtnActionOk);
-            resources.ApplyResources(this.PanelActionButtons, "PanelActionButtons");
             this.PanelActionButtons.Name = "PanelActionButtons";
             // 
             // BtnDataAnalysisTab
@@ -92,6 +94,7 @@
             // 
             // PanelAnalysis
             // 
+            resources.ApplyResources(this.PanelAnalysis, "PanelAnalysis");
             this.PanelAnalysis.BackColor = System.Drawing.Color.Black;
             this.PanelAnalysis.Controls.Add(this.LabelModelNameRules);
             this.PanelAnalysis.Controls.Add(this.TBoxModelName);
@@ -99,57 +102,12 @@
             this.PanelAnalysis.Controls.Add(this.BtnLogFileBrowse);
             this.PanelAnalysis.Controls.Add(this.TBoxLogFileLocation);
             this.PanelAnalysis.Controls.Add(this.LabelLogFileLocation);
-            resources.ApplyResources(this.PanelAnalysis, "PanelAnalysis");
             this.PanelAnalysis.Name = "PanelAnalysis";
             // 
-            // PanelCollection
+            // LabelModelNameRules
             // 
-            this.PanelCollection.BackColor = System.Drawing.Color.Black;
-            this.PanelCollection.Controls.Add(this.TBoxDatCollectionSteps);
-            this.PanelCollection.Controls.Add(this.TBoxDataCollectionDescription);
-            resources.ApplyResources(this.PanelCollection, "PanelCollection");
-            this.PanelCollection.Name = "PanelCollection";
-            // 
-            // PanelSeparator
-            // 
-            this.PanelSeparator.BackColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.PanelSeparator, "PanelSeparator");
-            this.PanelSeparator.Name = "PanelSeparator";
-            // 
-            // TBoxDataCollectionDescription
-            // 
-            this.TBoxDataCollectionDescription.BackColor = System.Drawing.Color.Black;
-            this.TBoxDataCollectionDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.TBoxDataCollectionDescription, "TBoxDataCollectionDescription");
-            this.TBoxDataCollectionDescription.ForeColor = System.Drawing.Color.White;
-            this.TBoxDataCollectionDescription.Name = "TBoxDataCollectionDescription";
-            this.TBoxDataCollectionDescription.ReadOnly = true;
-            // 
-            // TBoxDatCollectionSteps
-            // 
-            this.TBoxDatCollectionSteps.BackColor = System.Drawing.Color.Black;
-            this.TBoxDatCollectionSteps.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.TBoxDatCollectionSteps, "TBoxDatCollectionSteps");
-            this.TBoxDatCollectionSteps.ForeColor = System.Drawing.Color.White;
-            this.TBoxDatCollectionSteps.Name = "TBoxDatCollectionSteps";
-            this.TBoxDatCollectionSteps.ReadOnly = true;
-            // 
-            // LabelLogFileLocation
-            // 
-            resources.ApplyResources(this.LabelLogFileLocation, "LabelLogFileLocation");
-            this.LabelLogFileLocation.Name = "LabelLogFileLocation";
-            // 
-            // TBoxLogFileLocation
-            // 
-            resources.ApplyResources(this.TBoxLogFileLocation, "TBoxLogFileLocation");
-            this.TBoxLogFileLocation.Name = "TBoxLogFileLocation";
-            // 
-            // BtnLogFileBrowse
-            // 
-            resources.ApplyResources(this.BtnLogFileBrowse, "BtnLogFileBrowse");
-            this.BtnLogFileBrowse.Name = "BtnLogFileBrowse";
-            this.BtnLogFileBrowse.UseVisualStyleBackColor = true;
-            this.BtnLogFileBrowse.Click += new System.EventHandler(this.BtnLogFileBrowse_Click);
+            resources.ApplyResources(this.LabelModelNameRules, "LabelModelNameRules");
+            this.LabelModelNameRules.Name = "LabelModelNameRules";
             // 
             // TBoxModelName
             // 
@@ -161,18 +119,74 @@
             resources.ApplyResources(this.LabelModelName, "LabelModelName");
             this.LabelModelName.Name = "LabelModelName";
             // 
-            // LabelModelNameRules
+            // BtnLogFileBrowse
             // 
-            resources.ApplyResources(this.LabelModelNameRules, "LabelModelNameRules");
-            this.LabelModelNameRules.Name = "LabelModelNameRules";
+            resources.ApplyResources(this.BtnLogFileBrowse, "BtnLogFileBrowse");
+            this.BtnLogFileBrowse.Name = "BtnLogFileBrowse";
+            this.BtnLogFileBrowse.UseVisualStyleBackColor = true;
+            this.BtnLogFileBrowse.Click += new System.EventHandler(this.BtnLogFileBrowse_Click);
+            // 
+            // TBoxLogFileLocation
+            // 
+            resources.ApplyResources(this.TBoxLogFileLocation, "TBoxLogFileLocation");
+            this.TBoxLogFileLocation.Name = "TBoxLogFileLocation";
+            // 
+            // LabelLogFileLocation
+            // 
+            resources.ApplyResources(this.LabelLogFileLocation, "LabelLogFileLocation");
+            this.LabelLogFileLocation.Name = "LabelLogFileLocation";
+            // 
+            // PanelCollection
+            // 
+            resources.ApplyResources(this.PanelCollection, "PanelCollection");
+            this.PanelCollection.BackColor = System.Drawing.Color.Black;
+            this.PanelCollection.Controls.Add(this.TBoxMissionAngle);
+            this.PanelCollection.Controls.Add(this.LabelMissionAngle);
+            this.PanelCollection.Controls.Add(this.TBoxDatCollectionSteps);
+            this.PanelCollection.Controls.Add(this.TBoxDataCollectionDescription);
+            this.PanelCollection.Name = "PanelCollection";
+            // 
+            // TBoxMissionAngle
+            // 
+            resources.ApplyResources(this.TBoxMissionAngle, "TBoxMissionAngle");
+            this.TBoxMissionAngle.Name = "TBoxMissionAngle";
+            // 
+            // LabelMissionAngle
+            // 
+            resources.ApplyResources(this.LabelMissionAngle, "LabelMissionAngle");
+            this.LabelMissionAngle.Name = "LabelMissionAngle";
+            // 
+            // TBoxDatCollectionSteps
+            // 
+            resources.ApplyResources(this.TBoxDatCollectionSteps, "TBoxDatCollectionSteps");
+            this.TBoxDatCollectionSteps.BackColor = System.Drawing.Color.Black;
+            this.TBoxDatCollectionSteps.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBoxDatCollectionSteps.ForeColor = System.Drawing.Color.White;
+            this.TBoxDatCollectionSteps.Name = "TBoxDatCollectionSteps";
+            this.TBoxDatCollectionSteps.ReadOnly = true;
+            // 
+            // TBoxDataCollectionDescription
+            // 
+            resources.ApplyResources(this.TBoxDataCollectionDescription, "TBoxDataCollectionDescription");
+            this.TBoxDataCollectionDescription.BackColor = System.Drawing.Color.Black;
+            this.TBoxDataCollectionDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBoxDataCollectionDescription.ForeColor = System.Drawing.Color.White;
+            this.TBoxDataCollectionDescription.Name = "TBoxDataCollectionDescription";
+            this.TBoxDataCollectionDescription.ReadOnly = true;
+            // 
+            // PanelSeparator
+            // 
+            resources.ApplyResources(this.PanelSeparator, "PanelSeparator");
+            this.PanelSeparator.BackColor = System.Drawing.Color.White;
+            this.PanelSeparator.Name = "PanelSeparator";
             // 
             // NewPowerModelForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.PanelAnalysis);
             this.Controls.Add(this.PanelCollection);
+            this.Controls.Add(this.PanelAnalysis);
             this.Controls.Add(this.PanelSeparator);
             this.Controls.Add(this.PanelActionButtons);
             this.ForeColor = System.Drawing.Color.White;
@@ -209,5 +223,7 @@
         private System.Windows.Forms.TextBox TBoxModelName;
         private System.Windows.Forms.Label LabelModelName;
         private System.Windows.Forms.Label LabelModelNameRules;
+        private System.Windows.Forms.Label LabelMissionAngle;
+        private System.Windows.Forms.TextBox TBoxMissionAngle;
     }
 }

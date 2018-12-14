@@ -14,15 +14,15 @@ namespace Diva.EnergyConsumption
         private class AlexModelTools
         {
             public static readonly string AlexModelToolsRoot = AppDomain.CurrentDomain.BaseDirectory + "Power Model Tools\\";
-            public static readonly string[] PowerModelFiles = new string[]
+            public static readonly string[] PowerModelFiles =
                 { "r_axy", "r_dxy", "r_dz_neg", "r_dz_pos", "r_h", "r_mvxy", "r_mvz_neg", "r_mvz_pos" };
+            public static readonly string TrainingMissionOutputFile = AlexModelToolsRoot + "new_training_pattern.txt";
             private static readonly DirectoryInfo TrainedModelDirectory =
                 new DirectoryInfo(AlexModelToolsRoot + "Trained_Model\\");
             private ProcessStartInfo startInfo;
             private Action<string> SetupInput;
             private Action<string> SetupOutput;
 
-            public StreamWriter StdIn;
             public StreamReader StdOut;
             public StreamReader StdErr;
             public object Output;
@@ -50,8 +50,18 @@ namespace Diva.EnergyConsumption
             {
                 MissionGenerator = new AlexModelTools("Training_Pattern.exe", "")
                 {
-                    SetupInput = (i) => { MissionGenerator.startInfo.Arguments = i; },
-                    SetupOutput = (o) => { MissionGenerator.Output = AlexModelToolsRoot + "new_training_pattern.txt"; }
+                    SetupInput = (i) =>
+                    {
+                        MissionGenerator.startInfo.Arguments = i;
+                        try { File.Delete(TrainingMissionOutputFile); } catch { }
+                    },
+                    SetupOutput = (o) =>
+                    {
+                        MissionGenerator.Output = TrainingMissionOutputFile;
+                        for (int retries = 10;
+                            !File.Exists(TrainingMissionOutputFile) || --retries > 0;
+                            System.Threading.Thread.Sleep(300));
+                    }
                 };
                 Trainer = new AlexModelTools("Training.exe", "input.log 1")
                 {
@@ -110,7 +120,6 @@ namespace Diva.EnergyConsumption
                 SetupInput(input);
                 proc.Start();
                 StdErr = proc.StandardError;
-                StdIn = proc.StandardInput;
                 StdOut = proc.StandardOutput;
                 SetupOutput(output);
                 proc.Dispose();
@@ -123,11 +132,9 @@ namespace Diva.EnergyConsumption
             ModelName = name;
         }
 
-        public static List<Locationwp> GenerateTrainingMission(Locationwp home) =>
+        public static List<Locationwp> GenerateTrainingMission(double lat, double lng, double ang) =>
             QGCWaypointFileUtlity.ImportWaypoints(
-                (string)AlexModelTools.MissionGenerator.Start(
-                home.lat.ToString() + "," + home.lng.ToString(), null),
-                out var newhome);
+                (string)AlexModelTools.MissionGenerator.Start($"{lat} {lng} {ang}", null));
 
         public static void TrainNewModel(string file, string name) =>
             AlexModelTools.Trainer.Start(file, name);

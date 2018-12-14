@@ -67,11 +67,11 @@ namespace Diva.EnergyConsumption
             {
                 // more checks here, or throw exception if dir does not contains valid power model
                 var model = AvailableModelTypes.Where(t =>
-                        (bool)t.GetMethod("ContainsModel").Invoke(null, new object[] { dir.FullName }))
+                        (bool)t.GetMethod("ContainsModel").Invoke(null, new [] { dir.FullName }))
                     .FirstOrDefault();
                 if (model != null)
                     dict.Add(dir.Name, model.GetConstructor(new Type[] { typeof(string) })
-                        .Invoke(new object[] { name }) as PowerModel);
+                        .Invoke(new [] { name }) as PowerModel);
                 ok = true;
             }
             return ok;
@@ -97,12 +97,12 @@ namespace Diva.EnergyConsumption
             }
         }
 
-        public static List<Locationwp> GenerateTrainingMission<T>(Locationwp home) =>
-            (List<Locationwp>)typeof(T).GetMethod("GenerateTrainingMission")?.Invoke(null, new object[] { home });
+        public static List<Locationwp> GenerateTrainingMission<T>(double homelat, double homelng, double angle) =>
+            (List<Locationwp>)typeof(T).GetMethod("GenerateTrainingMission")?.Invoke(null, new object[] { homelat, homelng, angle });
 
         public static PowerModel TrainNewModel<T>(string file, string name)
         {
-            typeof(T).GetMethod("TrainNewModel")?.Invoke(null, new object[] { file, name });
+            typeof(T).GetMethod("TrainNewModel")?.Invoke(null, new [] { file, name });
             RefreshPowerModelsList();
             return GetModel(name);
         }

@@ -58,15 +58,21 @@ namespace Diva.Controls
                     else
                         DialogResult = DialogResult.Abort;
                 }
-                else
+                else if (double.TryParse(TBoxMissionAngle.Text, out var angle))
                 {
                     // generate training mission here
                     var planner = Planner.GetPlannerInstance();
+                    var homeloc = planner.GetHomeLocationwp();
                     planner.ClearMission();
                     planner.processToScreen(
-                        PowerModelManager.GenerateTrainingMission<AlexModel>(planner.GetHomeLocationwp()));
+                        PowerModelManager.GenerateTrainingMission<AlexModel>(
+                            homeloc.lat, homeloc.lng, angle));
                     planner.writeKMLV2();
                     DialogResult = DialogResult.OK;
+                } else
+                {
+                    MessageBox.Show(Properties.Strings.DroneSetting_MsgValueInvalid);
+                    return;
                 }
             }
             else

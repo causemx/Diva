@@ -117,495 +117,547 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BtnDataAnalysisTab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="BtnDataAnalysisTab.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
-    <value>Button</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BtnDataAnalysisTab.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="BtnDataAnalysisTab.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnDataAnalysisTab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnDataAnalysisTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>125, 14</value>
-  </data>
-  <data name="BtnDataAnalysisTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 27</value>
-  </data>
-  <data name="BtnDataAnalysisTab.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
   <data name="BtnDataAnalysisTab.Text" xml:space="preserve">
     <value>Data Analysis</value>
   </data>
-  <data name="&gt;&gt;BtnDataAnalysisTab.Name" xml:space="preserve">
-    <value>BtnDataAnalysisTab</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="BtnLogFileBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 23</value>
   </data>
-  <data name="&gt;&gt;BtnDataAnalysisTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LabelModelName.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
-  <data name="&gt;&gt;BtnDataAnalysisTab.Parent" xml:space="preserve">
-    <value>PanelActionButtons</value>
-  </data>
-  <data name="&gt;&gt;BtnDataAnalysisTab.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="BtnDataCollectionTab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="BtnDataCollectionTab.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
-    <value>Button</value>
-  </data>
-  <data name="BtnDataCollectionTab.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="BtnDataCollectionTab.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnDataCollectionTab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnDataCollectionTab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 14</value>
-  </data>
-  <data name="BtnDataCollectionTab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 27</value>
-  </data>
-  <data name="BtnDataCollectionTab.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="BtnDataCollectionTab.Text" xml:space="preserve">
-    <value>Data Collection</value>
-  </data>
-  <data name="&gt;&gt;BtnDataCollectionTab.Name" xml:space="preserve">
-    <value>BtnDataCollectionTab</value>
-  </data>
-  <data name="&gt;&gt;BtnDataCollectionTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnDataCollectionTab.Parent" xml:space="preserve">
-    <value>PanelActionButtons</value>
-  </data>
-  <data name="&gt;&gt;BtnDataCollectionTab.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="BtnActionCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnActionCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnActionCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>393, 11</value>
-  </data>
-  <data name="BtnActionCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="BtnActionCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="BtnActionCancel.Text" xml:space="preserve">
-    <value>Later</value>
-  </data>
-  <data name="&gt;&gt;BtnActionCancel.Name" xml:space="preserve">
-    <value>BtnActionCancel</value>
-  </data>
-  <data name="&gt;&gt;BtnActionCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnActionCancel.Parent" xml:space="preserve">
-    <value>PanelActionButtons</value>
-  </data>
-  <data name="&gt;&gt;BtnActionCancel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="BtnActionOk.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnActionOk.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnActionOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>313, 11</value>
-  </data>
-  <data name="BtnActionOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="BtnActionOk.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="BtnActionOk.Text" xml:space="preserve">
-    <value>Do It Now</value>
-  </data>
-  <data name="&gt;&gt;BtnActionOk.Name" xml:space="preserve">
-    <value>BtnActionOk</value>
-  </data>
-  <data name="&gt;&gt;BtnActionOk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnActionOk.Parent" xml:space="preserve">
-    <value>PanelActionButtons</value>
-  </data>
-  <data name="&gt;&gt;BtnActionOk.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="PanelActionButtons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="TBoxDataCollectionDescription.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="PanelActionButtons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
+  <data name="&gt;&gt;TBoxMissionAngle.Name" xml:space="preserve">
+    <value>TBoxMissionAngle</value>
   </data>
-  <data name="PanelActionButtons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>476, 40</value>
+  <data name="LabelMissionAngle.Text" xml:space="preserve">
+    <value>Rotate mission angle (in degree):</value>
   </data>
-  <data name="PanelActionButtons.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;PanelActionButtons.Name" xml:space="preserve">
-    <value>PanelActionButtons</value>
-  </data>
-  <data name="&gt;&gt;PanelActionButtons.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelActionButtons.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;PanelActionButtons.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LabelModelNameRules.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LabelModelNameRules.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 94</value>
-  </data>
-  <data name="LabelModelNameRules.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>400, 0</value>
-  </data>
-  <data name="LabelModelNameRules.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 45</value>
-  </data>
-  <data name="LabelModelNameRules.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="LabelModelNameRules.Text" xml:space="preserve">
-    <value>*Model name must contains at least 3 characters, starts with a letter or digit, and consists of only letters, digits, dot, underscore and space characters.</value>
-  </data>
-  <data name="&gt;&gt;LabelModelNameRules.Name" xml:space="preserve">
-    <value>LabelModelNameRules</value>
-  </data>
-  <data name="&gt;&gt;LabelModelNameRules.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelModelNameRules.Parent" xml:space="preserve">
-    <value>PanelAnalysis</value>
-  </data>
-  <data name="&gt;&gt;LabelModelNameRules.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PanelCollection.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="TBoxModelName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>102, 53</value>
-  </data>
-  <data name="TBoxModelName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 21</value>
-  </data>
-  <data name="TBoxModelName.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;TBoxModelName.Name" xml:space="preserve">
-    <value>TBoxModelName</value>
-  </data>
-  <data name="&gt;&gt;TBoxModelName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TBoxModelName.Parent" xml:space="preserve">
-    <value>PanelAnalysis</value>
-  </data>
-  <data name="&gt;&gt;TBoxModelName.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PanelAnalysis.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="LabelModelName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LabelModelName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="LabelModelName.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 56</value>
   </data>
-  <data name="LabelModelName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 15</value>
+  <data name="LabelModelName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="LabelModelName.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;LabelLogFileLocation.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="LabelModelName.Text" xml:space="preserve">
-    <value>Model Name:</value>
+  <data name="BtnDataAnalysisTab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;LabelModelName.Name" xml:space="preserve">
-    <value>LabelModelName</value>
+  <data name="LabelMissionAngle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="&gt;&gt;LabelModelName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TBoxMissionAngle.MaxLength" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
-  <data name="&gt;&gt;LabelModelName.Parent" xml:space="preserve">
-    <value>PanelAnalysis</value>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
-  <data name="&gt;&gt;LabelModelName.ZOrder" xml:space="preserve">
+  <data name="BtnActionOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;TBoxMissionAngle.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="LabelModelNameRules.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="PanelSeparator.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="BtnDataCollectionTab.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="BtnLogFileBrowse.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="BtnActionCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>393, 11</value>
   </data>
   <data name="BtnLogFileBrowse.Location" type="System.Drawing.Point, System.Drawing">
     <value>342, 13</value>
   </data>
-  <data name="BtnLogFileBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 23</value>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="BtnLogFileBrowse.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="TBoxDataCollectionDescription.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="BtnLogFileBrowse.Text" xml:space="preserve">
-    <value>Browse</value>
+  <data name="&gt;&gt;LabelModelNameRules.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;BtnLogFileBrowse.Name" xml:space="preserve">
-    <value>BtnLogFileBrowse</value>
+  <data name="BtnDataCollectionTab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="&gt;&gt;BtnLogFileBrowse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TBoxDatCollectionSteps.Text" xml:space="preserve">
+    <value>1. Make sure that the flight path on the mission is clear.
+        Otherwise, adjust home location or mission angle
+     and generate the mission again.
+2. Connect to target drone of desired model
+3. Write the mission to the drone, and fly the mission.
+4. Continue with the Data Analysis step.</value>
   </data>
-  <data name="&gt;&gt;BtnLogFileBrowse.Parent" xml:space="preserve">
-    <value>PanelAnalysis</value>
+  <data name="BtnActionCancel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
-  <data name="&gt;&gt;BtnLogFileBrowse.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;BtnDataAnalysisTab.Name" xml:space="preserve">
+    <value>BtnDataAnalysisTab</value>
+  </data>
+  <data name="BtnActionOk.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="PanelActionButtons.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelActionButtons.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="TBoxLogFileLocation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 15</value>
+  <data name="&gt;&gt;LabelModelNameRules.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TBoxLogFileLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>240, 21</value>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
   </data>
-  <data name="TBoxLogFileLocation.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>NewPowerModelForm</value>
+  </data>
+  <data name="&gt;&gt;BtnDataCollectionTab.Parent" xml:space="preserve">
+    <value>PanelActionButtons</value>
+  </data>
+  <data name="&gt;&gt;TBoxMissionAngle.Parent" xml:space="preserve">
+    <value>PanelCollection</value>
   </data>
   <data name="&gt;&gt;TBoxLogFileLocation.Name" xml:space="preserve">
     <value>TBoxLogFileLocation</value>
   </data>
-  <data name="&gt;&gt;TBoxLogFileLocation.Type" xml:space="preserve">
+  <data name="&gt;&gt;BtnLogFileBrowse.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TBoxDataCollectionDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnActionCancel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;TBoxDataCollectionDescription.Name" xml:space="preserve">
+    <value>TBoxDataCollectionDescription</value>
+  </data>
+  <data name="PanelSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 1</value>
+  </data>
+  <data name="TBoxDatCollectionSteps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>429, 91</value>
+  </data>
+  <data name="BtnDataCollectionTab.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="PanelAnalysis.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 15</value>
+  </data>
+  <data name="PanelCollection.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="PanelActionButtons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 2</value>
+  </data>
+  <data name="PanelAnalysis.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 43</value>
+  </data>
+  <data name="&gt;&gt;PanelCollection.Name" xml:space="preserve">
+    <value>PanelCollection</value>
+  </data>
+  <data name="BtnDataCollectionTab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="TBoxDatCollectionSteps.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="TBoxLogFileLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>240, 21</value>
+  </data>
+  <data name="&gt;&gt;PanelCollection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TBoxMissionAngle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 21</value>
+  </data>
+  <data name="&gt;&gt;PanelSeparator.Name" xml:space="preserve">
+    <value>PanelSeparator</value>
+  </data>
+  <data name="&gt;&gt;TBoxDatCollectionSteps.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelModelNameRules.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="PanelSeparator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 42</value>
+  </data>
+  <data name="TBoxDatCollectionSteps.Location" type="System.Drawing.Point, System.Drawing">
+    <value>37, 73</value>
+  </data>
+  <data name="LabelLogFileLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 18</value>
+  </data>
+  <data name="LabelModelNameRules.Text" xml:space="preserve">
+    <value>*Model name must contains at least 3 characters, starts with a letter or digit, and consists of only letters, digits, dot, underscore and space characters.</value>
+  </data>
+  <data name="BtnLogFileBrowse.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;PanelAnalysis.Name" xml:space="preserve">
+    <value>PanelAnalysis</value>
+  </data>
+  <data name="PanelActionButtons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 40</value>
+  </data>
+  <data name="BtnDataAnalysisTab.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="LabelModelNameRules.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 94</value>
+  </data>
+  <data name="&gt;&gt;LabelModelName.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TBoxLogFileLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="BtnDataCollectionTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 14</value>
+  </data>
+  <data name="BtnDataCollectionTab.Text" xml:space="preserve">
+    <value>Data Collection</value>
+  </data>
+  <data name="LabelMissionAngle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 15</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>NewPowerModelForm</value>
+  </data>
+  <data name="PanelCollection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 195</value>
+  </data>
+  <data name="&gt;&gt;BtnLogFileBrowse.Parent" xml:space="preserve">
+    <value>PanelAnalysis</value>
+  </data>
+  <data name="&gt;&gt;LabelLogFileLocation.Name" xml:space="preserve">
+    <value>LabelLogFileLocation</value>
+  </data>
+  <data name="&gt;&gt;BtnActionOk.Parent" xml:space="preserve">
+    <value>PanelActionButtons</value>
+  </data>
+  <data name="BtnDataAnalysisTab.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TBoxMissionAngle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDataCollectionTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnDataAnalysisTab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="TBoxDataCollectionDescription.Text" xml:space="preserve">
+    <value>    Press the "Do It Now" button to generate flight misson for energy consumption data collection. The mission will be generated based on currently set home location. (Note: current mission on map will be overwrited.)
+    After mission generated, close configure form and do the following:</value>
+  </data>
+  <data name="&gt;&gt;LabelModelNameRules.Name" xml:space="preserve">
+    <value>LabelModelNameRules</value>
+  </data>
+  <data name="&gt;&gt;BtnDataCollectionTab.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;TBoxDataCollectionDescription.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;LabelMissionAngle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDataAnalysisTab.Parent" xml:space="preserve">
+    <value>PanelActionButtons</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;PanelSeparator.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;LabelMissionAngle.Name" xml:space="preserve">
+    <value>LabelMissionAngle</value>
+  </data>
+  <data name="&gt;&gt;TBoxModelName.Name" xml:space="preserve">
+    <value>TBoxModelName</value>
+  </data>
+  <data name="&gt;&gt;TBoxDatCollectionSteps.Parent" xml:space="preserve">
+    <value>PanelCollection</value>
+  </data>
+  <data name="BtnDataAnalysisTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="TBoxMissionAngle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 168</value>
+  </data>
+  <data name="&gt;&gt;TBoxModelName.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BtnDataAnalysisTab.Appearance" type="System.Windows.Forms.Appearance, System.Windows.Forms">
+    <value>Button</value>
+  </data>
+  <data name="TBoxModelName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 21</value>
+  </data>
+  <data name="LabelMissionAngle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 170</value>
+  </data>
+  <data name="LabelModelName.Text" xml:space="preserve">
+    <value>Model Name:</value>
+  </data>
+  <data name="BtnDataCollectionTab.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnDataCollectionTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 27</value>
+  </data>
+  <data name="&gt;&gt;BtnActionCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelModelName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 15</value>
+  </data>
+  <data name="LabelLogFileLocation.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;LabelModelName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDataCollectionTab.Name" xml:space="preserve">
+    <value>BtnDataCollectionTab</value>
+  </data>
+  <data name="LabelModelNameRules.Size" type="System.Drawing.Size, System.Drawing">
+    <value>380, 45</value>
+  </data>
+  <data name="&gt;&gt;LabelMissionAngle.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;LabelLogFileLocation.Parent" xml:space="preserve">
+    <value>PanelAnalysis</value>
+  </data>
+  <data name="PanelActionButtons.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="&gt;&gt;LabelModelName.Parent" xml:space="preserve">
+    <value>PanelAnalysis</value>
+  </data>
+  <data name="TBoxLogFileLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 15</value>
+  </data>
+  <data name="LabelLogFileLocation.Text" xml:space="preserve">
+    <value>Log File: </value>
+  </data>
+  <data name="LabelModelNameRules.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>400, 0</value>
+  </data>
+  <data name="&gt;&gt;PanelSeparator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelModelName.Name" xml:space="preserve">
+    <value>LabelModelName</value>
+  </data>
+  <data name="PanelSeparator.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;BtnDataAnalysisTab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TBoxModelName.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="BtnLogFileBrowse.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;TBoxModelName.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TBoxLogFileLocation.Parent" xml:space="preserve">
     <value>PanelAnalysis</value>
   </data>
-  <data name="&gt;&gt;TBoxLogFileLocation.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="BtnActionOk.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="LabelLogFileLocation.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LabelLogFileLocation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 18</value>
-  </data>
-  <data name="LabelLogFileLocation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 15</value>
-  </data>
-  <data name="LabelLogFileLocation.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="LabelLogFileLocation.Text" xml:space="preserve">
-    <value>Log File: </value>
-  </data>
-  <data name="&gt;&gt;LabelLogFileLocation.Name" xml:space="preserve">
-    <value>LabelLogFileLocation</value>
-  </data>
-  <data name="&gt;&gt;LabelLogFileLocation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelLogFileLocation.Parent" xml:space="preserve">
-    <value>PanelAnalysis</value>
-  </data>
-  <data name="&gt;&gt;LabelLogFileLocation.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="PanelAnalysis.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelAnalysis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 43</value>
-  </data>
-  <data name="PanelAnalysis.Size" type="System.Drawing.Size, System.Drawing">
-    <value>476, 195</value>
-  </data>
-  <data name="PanelAnalysis.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;PanelAnalysis.Name" xml:space="preserve">
-    <value>PanelAnalysis</value>
-  </data>
-  <data name="&gt;&gt;PanelAnalysis.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="BtnDataAnalysisTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 14</value>
   </data>
   <data name="&gt;&gt;PanelAnalysis.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;PanelAnalysis.ZOrder" xml:space="preserve">
+  <data name="TBoxMissionAngle.Text" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="TBoxDatCollectionSteps.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="TBoxDatCollectionSteps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 73</value>
-  </data>
-  <data name="TBoxDatCollectionSteps.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="TBoxDatCollectionSteps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>429, 112</value>
-  </data>
-  <data name="TBoxDatCollectionSteps.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="TBoxDatCollectionSteps.Text" xml:space="preserve">
-    <value>1. Make sure that the flight path on the mission is clear.
-     Otherwise, move the home location and generate the mission again.
-2. Connect to target drone of desired model
-3. Write the mission to the drone, and fly the mission.
-4. Continue with the Data Analysis step.</value>
-  </data>
-  <data name="&gt;&gt;TBoxDatCollectionSteps.Name" xml:space="preserve">
-    <value>TBoxDatCollectionSteps</value>
-  </data>
-  <data name="&gt;&gt;TBoxDatCollectionSteps.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TBoxDatCollectionSteps.Parent" xml:space="preserve">
-    <value>PanelCollection</value>
-  </data>
-  <data name="&gt;&gt;TBoxDatCollectionSteps.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TBoxDataCollectionDescription.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="TBoxDataCollectionDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 10</value>
-  </data>
-  <data name="TBoxDataCollectionDescription.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="TBoxDataCollectionDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 63</value>
-  </data>
-  <data name="TBoxDataCollectionDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="TBoxDataCollectionDescription.Text" xml:space="preserve">
-    <value>    Press the "Do It Now" button to generate flight misson for energy consumption data collection. The mission will be generated based on currently set home location. (Note: current mission on map will be overwrited.)
-    After data collection mission is generated, close configure form and do the following:</value>
-  </data>
-  <data name="&gt;&gt;TBoxDataCollectionDescription.Name" xml:space="preserve">
-    <value>TBoxDataCollectionDescription</value>
-  </data>
-  <data name="&gt;&gt;TBoxDataCollectionDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TBoxDataCollectionDescription.Parent" xml:space="preserve">
-    <value>PanelCollection</value>
-  </data>
-  <data name="&gt;&gt;TBoxDataCollectionDescription.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PanelCollection.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PanelCollection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 43</value>
-  </data>
-  <data name="PanelCollection.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>10, 10, 10, 10</value>
-  </data>
-  <data name="PanelCollection.Size" type="System.Drawing.Size, System.Drawing">
-    <value>476, 195</value>
-  </data>
-  <data name="PanelCollection.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;PanelCollection.Name" xml:space="preserve">
-    <value>PanelCollection</value>
-  </data>
-  <data name="&gt;&gt;PanelCollection.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;PanelCollection.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;PanelCollection.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PanelSeparator.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="PanelSeparator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 42</value>
-  </data>
-  <data name="PanelSeparator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>476, 1</value>
-  </data>
-  <data name="PanelSeparator.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PanelSeparator.Name" xml:space="preserve">
-    <value>PanelSeparator</value>
-  </data>
-  <data name="&gt;&gt;PanelSeparator.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PanelSeparator.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;PanelSeparator.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 15</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>480, 240</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>NewPowerModelForm</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>NewPowerModelForm</value>
+  <data name="&gt;&gt;BtnActionOk.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;BtnLogFileBrowse.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDataAnalysisTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnActionOk.Name" xml:space="preserve">
+    <value>BtnActionOk</value>
+  </data>
+  <data name="&gt;&gt;BtnActionCancel.Name" xml:space="preserve">
+    <value>BtnActionCancel</value>
+  </data>
+  <data name="BtnActionCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnActionOk.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="LabelLogFileLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 15</value>
+  </data>
+  <data name="BtnActionOk.Text" xml:space="preserve">
+    <value>Do It Now</value>
+  </data>
+  <data name="&gt;&gt;BtnActionCancel.Parent" xml:space="preserve">
+    <value>PanelActionButtons</value>
+  </data>
+  <data name="&gt;&gt;PanelSeparator.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="PanelAnalysis.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TBoxDatCollectionSteps.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BtnDataAnalysisTab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;TBoxDataCollectionDescription.Parent" xml:space="preserve">
+    <value>PanelCollection</value>
+  </data>
+  <data name="PanelCollection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 43</value>
+  </data>
+  <data name="&gt;&gt;TBoxDatCollectionSteps.Name" xml:space="preserve">
+    <value>TBoxDatCollectionSteps</value>
+  </data>
+  <data name="&gt;&gt;LabelMissionAngle.Parent" xml:space="preserve">
+    <value>PanelCollection</value>
+  </data>
+  <data name="BtnActionCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="BtnLogFileBrowse.Text" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="BtnActionCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="PanelAnalysis.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 195</value>
+  </data>
+  <data name="TBoxDataCollectionDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>456, 63</value>
+  </data>
+  <data name="PanelCollection.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="BtnActionOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>313, 11</value>
+  </data>
+  <data name="&gt;&gt;PanelAnalysis.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnLogFileBrowse.Name" xml:space="preserve">
+    <value>BtnLogFileBrowse</value>
+  </data>
+  <data name="TBoxMissionAngle.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>480, 240</value>
+  </data>
+  <data name="LabelLogFileLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;LabelLogFileLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TBoxLogFileLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnDataCollectionTab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;TBoxLogFileLocation.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;BtnActionOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PanelCollection.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;PanelActionButtons.Name" xml:space="preserve">
+    <value>PanelActionButtons</value>
+  </data>
+  <data name="TBoxDatCollectionSteps.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;TBoxModelName.Parent" xml:space="preserve">
+    <value>PanelAnalysis</value>
+  </data>
+  <data name="BtnActionCancel.Text" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="&gt;&gt;PanelActionButtons.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelModelNameRules.Parent" xml:space="preserve">
+    <value>PanelAnalysis</value>
+  </data>
+  <data name="&gt;&gt;PanelActionButtons.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LabelMissionAngle.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="TBoxDataCollectionDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 10</value>
+  </data>
+  <data name="TBoxModelName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 53</value>
+  </data>
+  <data name="LabelModelName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="TBoxDataCollectionDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

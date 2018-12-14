@@ -350,6 +350,9 @@
     <EmbeddedResource Include="Controls\NewPowerModelForm.resx">
       <DependentUpon>NewPowerModelForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NewPowerModelForm.zh-Hant.resx">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </EmbeddedResource>
