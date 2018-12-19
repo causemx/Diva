@@ -420,6 +420,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EnergyConsumption\Power Model Tools.exe" />
     <Content Include="if_seo3_65_417793.ico" />
     <Content Include="LibVlc\libvlc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
