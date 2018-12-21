@@ -13,11 +13,11 @@ namespace Diva.Mavlink
 
 		private Dictionary<int, MavStatus> hiddenlist = new Dictionary<int, MavStatus>();
 
-		public MavlinkInterface parent;
+		public MavCore parent;
 
 		object locker = new object();
 
-		public MavList(MavlinkInterface mavLinkInterface)
+		public MavList(MavCore mavLinkInterface)
 		{
 			parent = mavLinkInterface;
 			// add blank item
