@@ -1,5 +1,6 @@
 ﻿using Diva.Comms;
 using Diva.Controls;
+using Diva.Data;
 using Diva.Properties;
 using Diva.Utilities;
 using log4net;
@@ -3652,6 +3653,12 @@ namespace Diva.Mavlink
 				}
 			}
 		}
+
+		public WPsDataManager wpsManager = new WPsDataManager();
+
+		public void SaveWpsTemp(List<Locationwp> temp) => wpsManager.Set(temp);
+
+		public List<Locationwp> LoadWpsTemp() => wpsManager.Get();
 
 	}
 }

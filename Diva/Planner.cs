@@ -96,8 +96,6 @@ namespace Diva
 		private List<List<Locationwp>> history = new List<List<Locationwp>>();
 		private List<int> groupmarkers = new List<int>();
 		private Object thisLock = new Object();
-		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
-		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
 
 		// Thread setup
@@ -188,13 +186,7 @@ namespace Diva
 			// RegeneratePolygon();
 			updateCMDParams();
 
-			foreach (DataGridViewColumn commandsColumn in dgvWayPoints.Columns)
-			{
-				if (commandsColumn is DataGridViewTextBoxColumn)
-					commandsColumn.CellTemplate.Value = "0";
-			}
-
-			dgvWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
+			DataGridView_Initialize();
 
 			//setup push toolstripbutton
 			TSBtnTagging.CheckOnClick = true;
@@ -248,6 +240,17 @@ namespace Diva
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
 
+		}
+
+		private void DataGridView_Initialize()
+		{
+			foreach (DataGridViewColumn commandsColumn in dgvWayPoints.Columns)
+			{
+				if (commandsColumn is DataGridViewTextBoxColumn)
+					commandsColumn.CellTemplate.Value = "0";
+			}
+
+			dgvWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
 		}
 	
 		private void Planner_Load(object sender, EventArgs e)
@@ -1027,53 +1030,6 @@ namespace Diva
 		}
 		#endregion
 
-		/// <summary>
-		/// used to add a marker to the map display
-		/// </summary>
-		/// <param name="tag"></param>
-		/// <param name="lng"></param>
-		/// <param name="lat"></param>
-		/// <param name="alt"></param>
-		private void addpolygonmarker(string tag, double lng, double lat, double alt, Color? color)
-		{
-			try
-			{
-				PointLatLng point = new PointLatLng(lat, lng);
-				GMapMarkerWP m = new GMapMarkerWP(point, tag);
-
-				m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-				m.ToolTipText = colAltitude.HeaderText + ": " + alt.ToString("0");
-				m.Tag = tag;
-
-				int wpno = -1;
-				if (int.TryParse(tag, out wpno))
-				{
-					// preselect groupmarker
-					if (groupmarkers.Contains(wpno))
-						m.selected = true;
-				}
-
-				//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-				GMapMarkerRect mBorders = new GMapMarkerRect(point);
-				{
-					mBorders.InnerMarker = m;
-					mBorders.Tag = tag;
-					// mBorders.wprad = (int)(float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist);
-					mBorders.wprad = (int)(30 / 1);
-					if (color.HasValue)
-					{
-						mBorders.Color = color.Value;
-					}
-				}
-
-				overlays.objects.Markers.Add(m);
-				overlays.objects.Markers.Add(mBorders);
-			}
-			catch (Exception)
-			{
-			}
-		}
-
 		private void addpolygonmarker(string tag, double lng, double lat, int alt, Color? color, GMapOverlay overlay)
 		{
 			try
@@ -1489,7 +1445,6 @@ namespace Diva
 				// myMap_OnMapZoomChanged();
 			}
 
-            pointlist = overlay.pointlist;
 
 			myMap.Refresh();
         }
@@ -1548,99 +1503,6 @@ namespace Diva
 			}
 
 			return 0;
-		}
-
-		private void RegenerateWPRoute(List<PointLatLngAlt> fullpointlist)
-		{
-			route.Clear();
-			homeroute.Clear();
-
-			overlays.polygons.Routes.Clear();
-
-			PointLatLngAlt lastpnt = fullpointlist[0];
-			PointLatLngAlt lastpnt2 = fullpointlist[0];
-			PointLatLngAlt lastnonspline = fullpointlist[0];
-			List<PointLatLngAlt> splinepnts = new List<PointLatLngAlt>();
-			List<PointLatLngAlt> wproute = new List<PointLatLngAlt>();
-
-
-			// add home - this causeszx the spline to always have a straight finish
-			fullpointlist.Add(fullpointlist[0]);
-
-			for (int a = 0; a < fullpointlist.Count; a++)
-			{
-				if (fullpointlist[a] == null)
-					continue;
-
-				if (fullpointlist[a].Tag2 == "spline")
-				{
-					if (splinepnts.Count == 0)
-						splinepnts.Add(lastpnt);
-
-					splinepnts.Add(fullpointlist[a]);
-				}
-				else
-				{
-					wproute.Add(fullpointlist[a]);
-
-					lastpnt2 = lastpnt;
-					lastpnt = fullpointlist[a];
-				}
-			}
-
-			/**
-			List<PointLatLng> list = new List<PointLatLng>();
-			fullpointlist.ForEach(x => { list.Add(x); });
-			route.Points.AddRange(list); */
-
-			// route is full need to get 1, 2 and last point as "HOME" route
-
-			int count = wproute.Count;
-			int counter = 0;
-			PointLatLngAlt homepoint = new PointLatLngAlt();
-			PointLatLngAlt firstpoint = new PointLatLngAlt();
-			PointLatLngAlt lastpoint = new PointLatLngAlt();
-
-			if (count > 2)
-			{
-				// homeroute = last, home, first
-				wproute.ForEach(x =>
-				{
-					counter++;
-					if (counter == 1)
-					{
-						homepoint = x;
-						return;
-					}
-					if (counter == 2)
-					{
-						firstpoint = x;
-					}
-					if (counter == count - 1)
-					{
-						lastpoint = x;
-					}
-					if (counter == count)
-					{
-						homeroute.Points.Add(lastpoint);
-						homeroute.Points.Add(homepoint);
-						homeroute.Points.Add(firstpoint);
-						return;
-					}
-					route.Points.Add(x);
-				});
-
-				homeroute.Stroke = new Pen(Color.Yellow, 2);
-				// if we have a large distance between home and the first/last point, it hangs on the draw of a the dashed line.
-				if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
-					homeroute.Stroke.DashStyle = DashStyle.Dash;
-
-				overlays.polygons.Routes.Add(homeroute);
-
-				route.Stroke = new Pen(Color.Yellow, 4);
-				route.Stroke.DashStyle = DashStyle.Custom;
-				overlays.polygons.Routes.Add(route);
-			}
 		}
 
 		private void Commands_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -3722,7 +3584,16 @@ namespace Diva
 
         private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
         {
-            ActiveDrone = (sender as DroneInfo)?.Drone;
+			// save cmds for temp
+			var lastDrone = ActiveDrone;
+			lastDrone.SaveWpsTemp(GetCommandList());
+
+			// clear datagridview data
+			dgvWayPoints.Rows.Clear();
+			dgvWayPoints.Refresh();
+
+			ActiveDrone = (sender as DroneInfo)?.Drone;
+			
         }
 
 		
