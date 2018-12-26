@@ -95,6 +95,7 @@ namespace Diva.Controls
                 TBoxProxyHost.Text = TBoxProxyPort.Text = "";
             }
 
+            TBoxIndoorMapLocation.Text = ConfigData.GetOption(ConfigData.OptionName.ImageMapSource);
             (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)
                 ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
             mapConfigDirtyUpdate = true;
@@ -138,8 +139,7 @@ namespace Diva.Controls
             ConfigData.SetOption(ConfigData.OptionName.ImageMapSource, TBoxIndoorMapLocation.Text);
             bool imagemap = RBtnIndoorMap.Checked;
             ConfigData.SetOption(ConfigData.OptionName.UseImageMap, imagemap.ToString());
-            if (gmap != null && (imagemap || gmap.MapProvider
-                    != GMap.NET.MapProviders.GoogleSatelliteMapProvider.Instance))
+            if (gmap != null && (imagemap || gmap.MapProvider != gmap.GlobalMapProvider))
                 gmap.ResetMapProvider();
         }
 
