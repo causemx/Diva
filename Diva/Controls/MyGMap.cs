@@ -14,7 +14,8 @@ namespace Diva.Controls
 {
 	public class MyGMap : GMapControl
 	{
-		public bool inOnPaint = false;
+        public readonly GMapProvider GlobalMapProvider = BingSatelliteMapProvider.Instance;
+        public bool inOnPaint = false;
         public bool DebugMapLocation { get; set; }
         public bool IndoorMode { get; private set; }
 		string otherthread = "";
@@ -55,7 +56,23 @@ namespace Diva.Controls
 
         public void ResetMapProvider()
         {
-            IndoorMode = false;
+            IndoorMode = ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap);
+            if (IndoorMode)
+            {
+                var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
+                if (p != null)
+                {
+                    MapProvider = p;
+                    MaxZoom = p.MaxZoom ?? MaxZoom;
+                    MinZoom = p.MinZoom;
+                    if (Zoom > MaxZoom) Zoom = MaxZoom;
+                    if (Zoom < MinZoom) Zoom = MinZoom;
+                    if (p.Area != null)
+                        Position = ((RectLatLng)p.Area).LocationMiddle;
+                    return;
+                }
+                ConfigData.SetOption(ConfigData.OptionName.UseImageMap, false.ToString());
+            }
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
             string[] prox = proxy.Split(':');
@@ -72,7 +89,7 @@ namespace Diva.Controls
                 }
             }
             GMapProvider.WebProxy = webproxy;
-            MapProvider = BingSatelliteMapProvider.Instance;
+            MapProvider = GlobalMapProvider;
             MinZoom = 0;
             MaxZoom = 24;
             Zoom = 15;
