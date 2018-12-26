@@ -15,18 +15,13 @@ namespace Diva.Mavlink
 	{
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-		public MavCore parent;
-
 		public MavStatus(MavCore mavLinkInterface, byte sysid, byte compid)
 		{
-			this.parent = mavLinkInterface;
 			this.sysid = sysid;
 			this.compid = compid;
 			this.packetspersecond = new Dictionary<uint, double>();
 			this.packetspersecondbuild = new Dictionary<uint, DateTime>();
 			this.lastvalidpacket = DateTime.MinValue;
-			sendlinkid = (byte)(new Random().Next(256));
-			signing = false;
 			this.param = new MAVLinkParamList();
 			this.packets = new Dictionary<uint, MAVLinkMessage>();
 			this.aptype = 0;
@@ -40,8 +35,6 @@ namespace Diva.Mavlink
 
 			camerapoints.Clear();
 
-			// GMapMarkerOverlapCount.Clear();
-
 			this.packetslost = 0f;
 			this.packetsnotlost = 0f;
 			this.packetlosttimer = DateTime.MinValue;
@@ -52,10 +45,7 @@ namespace Diva.Mavlink
 		public DateTime packetlosttimer = DateTime.MinValue;
 		public float synclost = 0;
 
-		// for flight recorder
 		public PointLatLng HomeLocation { get; set; }
-		public string SystemStartTime { get; set; }
-		public string SystemStopTime { get; set; }
 		
 		// all
 		public string VersionString { get; set; }
@@ -65,8 +55,6 @@ namespace Diva.Mavlink
 		public string SerialString { get; set; }
 		// AC frame type
 		public string FrameString { get; set; }
-
-		public string Guid { get; set; }
 
 		public double current_lat { get; set; }
 
@@ -123,7 +111,7 @@ namespace Diva.Mavlink
 
 		DateTime lastalt = DateTime.MinValue;
 
-		private float _alt = 0;
+		private volatile float _alt = 0;
 		float oldalt = 0;
 
 		public double battery_voltage
@@ -199,21 +187,12 @@ namespace Diva.Mavlink
 
 		public byte linkid { get; set; }
 
-		public byte sendlinkid { get; internal set; }
-
 		public byte sys_status { get; set; }
 
 		public UInt64 timestamp { get; set; }
 
 
 		public bool armed { get; set; }
-
-		internal byte[] signingKey;
-
-		/// <summary>
-		/// are we signing outgoing packets, and checking incomming packet signatures
-		/// </summary>
-		public bool signing { get; set; }
 
 		/// <summary>
 		/// ignore the incomming signature

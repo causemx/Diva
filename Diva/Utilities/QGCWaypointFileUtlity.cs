@@ -114,7 +114,7 @@ namespace Diva.Utilities
             }
         }
 
-        public static void ExportParams(string file, MavlinkInterface activeDrone)
+        public static void ExportParams(string file, MavDrone activeDrone)
         {
             try
             {

@@ -21,8 +21,7 @@ namespace Diva.Utilities
 		{
 			bool isShowing = false;
 			DroneInfo dinfo;
-			MavlinkInterface activeDrone = null;
-			
+			MavDrone activeDrone = null;
 
 			public BatteryNotification(DroneInfo info)
 			{
@@ -60,9 +59,6 @@ namespace Diva.Utilities
 					Planner.log.Error(e.ToString());
 				}
 			}
-
-			
 		}
-
 	}
 }

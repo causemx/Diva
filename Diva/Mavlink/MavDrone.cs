@@ -15,22 +15,20 @@ namespace Diva.Mavlink
 
         private MavCore mav => this as MavCore;
         private DroneSetting setting;
+        public DroneSetting Setting => setting;
         public bool IsOpen => BaseStream?.IsOpen ?? false;
-        public byte SysId => (byte)sysidcurrent;
-        public byte CompId => (byte)compidcurrent;
+        public bool IsRotationStandby = true;
 
         public MavDrone(DroneSetting setting = null)
         {
             this.setting = setting;
             RegisterMavMessageHandler(MAVLINK_MSG_ID.MISSION_CURRENT, MissionCurrentPacketHandler);
-
-            // NAV_CONTROLLER_OUTPUT is for fixed wing
-            //RegisterMavMessageHandler(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, NavControllerOutputPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, NavControllerOutputPacketHandler);
         }
 
         public bool Connect()
         {
-            BaseStream = MavBaseStream.CreateStream(setting);
+            BaseStream = MavStream.CreateStream(setting);
             try
             {
                 DateTime connecttime = DateTime.Now;
@@ -59,34 +57,29 @@ namespace Diva.Mavlink
         {
             var wpCur = packet.ToStructure<mavlink_mission_current_t>();
 
-            int wpno = 0;
+            int wpno = wpCur.seq;
             int lastautowp = 0;
 
-            int oldwp = (int)wpno;
-
-            wpno = wpCur.seq;
-
-            if (Status.mode == 4 && wpno != 0)
+            if (Status.mode == (int)MavUtlities.FlightMode.GUIDED && wpno != 0)
             {
                 lastautowp = (int)wpno;
             }
         }
 
-        /*private void NavControllerOutputPacketHandler(MAVLinkMessage packet)
+        private void NavControllerOutputPacketHandler(MAVLinkMessage packet)
         {
             var nav = packet.ToStructure<mavlink_nav_controller_output_t>();
 
-            float nav_roll = nav.nav_roll;
-            float nav_pitch = nav.nav_pitch;
-            short nav_bearing = nav.nav_bearing;
-            short target_bearing = nav.target_bearing;
-            ushort wp_dist = nav.wp_dist;
-            float alt_error = nav.alt_error;
-            float aspd_error = nav.aspd_error / 100.0f;
-            float xtrack_error = nav.xtrack_error;
+            //float nav_roll = nav.nav_roll;
+            //float nav_pitch = nav.nav_pitch;
+            //short target_bearing = nav.target_bearing;
+            //ushort wp_dist = nav.wp_dist;
+            //float alt_error = nav.alt_error;
+            //float aspd_error = nav.aspd_error / 100.0f;
+            //float xtrack_error = nav.xtrack_error;
 
-            Status.nav_bearing = nav_bearing;
-        }*/
+            Status.nav_bearing = nav.nav_bearing;
+        }
         #endregion Message packet handlers
 
         #region Drone modes

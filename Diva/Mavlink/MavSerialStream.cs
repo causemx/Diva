@@ -3,7 +3,7 @@ using System.IO.Ports;
 
 namespace Diva.Mavlink
 {
-    class MavSerialStream : MavBaseStream, IDisposable
+    class MavSerialStream : MavStream, IDisposable
     {
         internal MavSerialStream(DroneSetting setting) : base(setting)
         {

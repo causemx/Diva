@@ -146,7 +146,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
     <Compile Include="Controls\AboutBoxPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,12 +203,19 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NewPowerModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\NewPowerModelForm.Designer.cs">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RotationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\RotationInfo.Designer.cs">
       <DependentUpon>RotationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Account.cs" />
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
       <SubType>UserControl</SubType>
@@ -248,7 +254,7 @@
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="EnergyConsumption\AlexModel.cs" />
     <Compile Include="FlightRecorder.cs" />
-    <Compile Include="Mavlink\MavBaseStream.cs" />
+    <Compile Include="Mavlink\MavStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavCore.cs" />
     <Compile Include="Mavlink\MavList.cs" />
@@ -257,7 +263,6 @@
     <Compile Include="Mavlink\MavUdpStream.cs" />
     <Compile Include="Mavlink\MavUtlities.cs" />
     <Compile Include="Mavlink\MavWaypoint.cs" />
-    <Compile Include="Mavlink\MavWrapper.cs" />
     <Compile Include="Mission\Rotation.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>

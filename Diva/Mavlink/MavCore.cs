@@ -6,14 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive.Subjects;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Diva.Planner;
 using Timer = System.Timers.Timer;
 
 namespace Diva.Mavlink
@@ -26,15 +23,10 @@ namespace Diva.Mavlink
         private const int GROUNDCONTROLSTATION_SYSTEM_ID = 255;
         #endregion Constants
 
-        private volatile bool occupied = false;
-        public bool PortInUse
-		{
-			get { return occupied; }
-			set { occupied = value; }
-		}
+        public bool PortInUse { get; set; } = false;
 
-        private MavBaseStream baseStream;
-        public MavBaseStream BaseStream
+        private MavStream baseStream;
+        public MavStream BaseStream
         {
             get => baseStream;
             set
@@ -55,7 +47,10 @@ namespace Diva.Mavlink
 		public event EventHandler ParamListChanged;
 		public event EventHandler MavChanged;
 
-		int _sysidcurrent = 0;
+        public byte SysId => (byte)sysidcurrent;
+        public byte CompId => (byte)compidcurrent;
+
+        int _sysidcurrent = 0;
 		public int sysidcurrent
 		{
 			get { return _sysidcurrent; }
@@ -81,18 +76,13 @@ namespace Diva.Mavlink
             }
         }
 
-		public BufferedStream logfile { get; set; }
-		public BufferedStream rawlogfile { get; set; }
-
-		List<KeyValuePair<MAVLINK_MSG_ID, Func<MAVLinkMessage, bool>>> Subscriptions =
-			new List<KeyValuePair<MAVLINK_MSG_ID, Func<MAVLinkMessage, bool>>>();
+		public BufferedStream LogFile { get; set; }
+		public BufferedStream RawLogFile { get; set; }
 
 		internal string plaintxtline = "";
 
 		protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private volatile object objlock = new object();
-		private readonly Subject<int> _bytesReceivedSubj = new Subject<int>();
-		private readonly Subject<int> _bytesSentSubj = new Subject<int>();
 		private volatile object readlock = new object();
 		private int pacCount = 0;
 		private string buildplaintxtline = "";
@@ -194,12 +184,12 @@ namespace Diva.Mavlink
                             BaseStream.Close();
 						if (hbseen)
 						{
-							progressWorkerEventArgs.ErrorMessage = Strings.Only1Hb;
-							throw new Exception(Strings.Only1HbD);
+							progressWorkerEventArgs.ErrorMessage = Strings.MsgOnlyOneHBReceived;
+							throw new Exception(Strings.MsgOnlyOneHBReceived);
 						}
 						else
 						{
-							progressWorkerEventArgs.ErrorMessage = Strings.Only1Hb;
+							progressWorkerEventArgs.ErrorMessage = Strings.MsgOnlyOneHBReceived;
 							throw new Exception("Can not establish a connection\n");
 						}
 					}
@@ -258,7 +248,7 @@ namespace Diva.Mavlink
 
 				GetHeartBeat();
 
-				getVersion();
+				GetVersion();
 
 				frmProgressReporter.UpdateProgressAndStatus(0,
 					"Getting Params.. (sysid " + Status.sysid + " compid " + Status.compid + ") ");
@@ -281,7 +271,7 @@ namespace Diva.Mavlink
 				catch {	}
 				PortInUse = false;
 				if (string.IsNullOrEmpty(progressWorkerEventArgs.ErrorMessage))
-					progressWorkerEventArgs.ErrorMessage = Strings.ConnectFailed;
+					progressWorkerEventArgs.ErrorMessage = Strings.MsgConnectionFailed;
 				log.Error(e);
 				throw;
 			}
@@ -333,8 +323,8 @@ namespace Diva.Mavlink
 						if (BaseStream.IsOpen)
 						{
 							BaseStream.Read(buffer, count, 1);
-							if (rawlogfile != null && rawlogfile.CanWrite)
-								rawlogfile.WriteByte(buffer[count]);
+							if (RawLogFile != null && RawLogFile.CanWrite)
+								RawLogFile.WriteByte(buffer[count]);
 						}
 					}
 					catch (Exception e)
@@ -362,7 +352,6 @@ namespace Diva.Mavlink
 						
 							buildplaintxtline += (char)buffer[0];
 						}
-						_bytesReceivedSubj.OnNext(1);
 						count = 0;
 						buffer[1] = 0;
 						continue;
@@ -393,8 +382,8 @@ namespace Diva.Mavlink
 							}
 							int read = BaseStream.Read(buffer, 1, headerlength);
 							count = read;
-							if (rawlogfile != null && rawlogfile.CanWrite)
-								rawlogfile.Write(buffer, 1, read);
+							if (RawLogFile != null && RawLogFile.CanWrite)
+								RawLogFile.Write(buffer, 1, read);
 						}
 
 						// packet length
@@ -433,10 +422,10 @@ namespace Diva.Mavlink
 									if (read != (length - headerlengthstx))
 										log.InfoFormat("MAVLINK: bad read {0}, {1}, {2}", headerlengthstx, length,
 											count);
-									if (rawlogfile != null && rawlogfile.CanWrite)
+									if (RawLogFile != null && RawLogFile.CanWrite)
 									{
 										// write only what we read, temp is the whole packet, so 6-end
-										rawlogfile.Write(buffer, headerlengthstx, read);
+										RawLogFile.Write(buffer, headerlengthstx, read);
 									}
 								}
 								count = length;
@@ -457,9 +446,6 @@ namespace Diva.Mavlink
 
 			// resize the packet to the correct length
 			Array.Resize(ref buffer, count);
-
-			// add byte count
-			_bytesReceivedSubj.OnNext(buffer.Length);
 
 			if (buffer.Length == 0)
 				return MAVLinkMessage.Invalid;
@@ -525,7 +511,7 @@ namespace Diva.Mavlink
 
 			if (buffer.Length >= 5)
 			{
-				getInfoFromStream(ref message, sysid, compid);
+				GetInfoFromStream(ref message, sysid, compid);
 			}
 
 			// if its a gcs packet - dont process further
@@ -640,7 +626,7 @@ namespace Diva.Mavlink
 								MAVlist.Create(sysid, compid);
 								MAVlist[sysid, compid].aptype = (MAV_TYPE)hb.type;
 								MAVlist[sysid, compid].apname = (MAV_AUTOPILOT)hb.autopilot;
-								setAPType(sysid, compid);
+								SetAPType(sysid, compid);
 							}
 
 							// attach to the only remote device. / default to first device seen
@@ -654,27 +640,27 @@ namespace Diva.Mavlink
 					}
 
 					// only process for active mav
-					if (sysidcurrent == sysid && compidcurrent == compid)
-						PacketReceived(message);
+					//if (sysidcurrent == sysid && compidcurrent == compid)
+						//PacketReceived(message);
 
 					try
 					{
-						if (logfile != null && logfile.CanWrite)
+						if (LogFile != null && LogFile.CanWrite)
 						{
-							lock (logfile)
+							lock (LogFile)
 							{
 								byte[] datearray =
 									BitConverter.GetBytes(
 										(UInt64)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds * 1000));
 								Array.Reverse(datearray);
-								logfile.Write(datearray, 0, datearray.Length);
-								logfile.Write(buffer, 0, buffer.Length);
+								LogFile.Write(datearray, 0, datearray.Length);
+								LogFile.Write(buffer, 0, buffer.Length);
 
 								if (msgid == 0)
 								{
 									// flush on heartbeat - 1 seconds
-									logfile.Flush();
-									rawlogfile.Flush();
+									LogFile.Flush();
+									RawLogFile.Flush();
 								}
 							}
 						}
@@ -769,7 +755,8 @@ namespace Diva.Mavlink
 			}
 		}
 
-        protected void RegisterMavMessageHandler(MAVLINK_MSG_ID msgid, Action<MAVLinkMessage> handler) => msgMap[(uint)msgid] = handler;
+        protected void RegisterMavMessageHandler(MAVLINK_MSG_ID msgid, Action<MAVLinkMessage> handler)
+            => msgMap[(uint)msgid] = handler;
 
         protected void HandleMavLinkMessage(MAVLinkMessage message)
         {
@@ -790,9 +777,7 @@ namespace Diva.Mavlink
             else
             {
                 Status.armed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
-                Status.landed = hb.system_status == (byte)MAV_STATE.STANDBY;
-                Status.actived = hb.system_status == (byte)MAV_STATE.ACTIVE;
-                Status.failsafe = hb.system_status == (byte)MAV_STATE.CRITICAL;
+                Status.sys_status = hb.system_status;
             }
         }
 
@@ -1064,12 +1049,13 @@ namespace Diva.Mavlink
 			PortInUse = true;
 			List<int> indexsreceived = new List<int>();
 			MAVLinkParamList newparamlist = new MAVLinkParamList();
-            mavlink_param_request_list_t req = new mavlink_param_request_list_t();
+            mavlink_param_request_list_t req = new mavlink_param_request_list_t
+            {
+                target_system = Status.sysid,
+                target_component = Status.compid
+            };
 
-			req.target_system = Status.sysid;
-			req.target_component = Status.compid;
-
-			SendPacket(MAVLINK_MSG_ID.PARAM_REQUEST_LIST, req);
+            SendPacket(MAVLINK_MSG_ID.PARAM_REQUEST_LIST, req);
 
 			DateTime start = DateTime.Now;
 			DateTime restart = DateTime.Now;
@@ -1287,30 +1273,7 @@ namespace Diva.Mavlink
 			}
 		}
 
-		private void PacketReceived(MAVLinkMessage buffer)
-		{
-			MAVLINK_MSG_ID type = (MAVLINK_MSG_ID)buffer.msgid;
-
-			lock (Subscriptions)
-			{
-				foreach (var item in Subscriptions.ToArray())
-				{
-					if (item.Key == type)
-					{
-						try
-						{
-							item.Value(buffer);
-						}
-						catch (Exception ex)
-						{
-							log.Error(ex);
-						}
-					}
-				}
-			}
-		}
-
-		private void getInfoFromStream(ref MAVLinkMessage buffer, byte sysid, byte compid)
+		private void GetInfoFromStream(ref MAVLinkMessage buffer, byte sysid, byte compid)
 		{
 			if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
 			{
@@ -1465,7 +1428,7 @@ namespace Diva.Mavlink
 			}
 		}
 
-		public void setAPType(byte sysid, byte compid)
+		public void SetAPType(byte sysid, byte compid)
 		{
 			MAVlist[sysid, compid].sysid = sysid;
 			MAVlist[sysid, compid].compid = compid;
@@ -1537,7 +1500,7 @@ namespace Diva.Mavlink
 			}
 		}
 
-		public bool getVersion()
+		public bool GetVersion()
 		{
 			mavlink_autopilot_version_request_t req = new mavlink_autopilot_version_request_t();
 
@@ -1579,10 +1542,9 @@ namespace Diva.Mavlink
 			}
 		}
 
-		public void SendPacket(MAVLINK_MSG_ID msgid, object indata) => SendPacket((byte)msgid, indata, Status.sysid, Status.compid);
-
-		protected void SendPacket(int messageType, object indata, byte sysid, byte compid)
+		public void SendPacket(MAVLINK_MSG_ID msgid, object indata)
 		{
+            int messageType = (byte)msgid;
 			byte[] data = MavlinkUtil.StructureToByteArray(indata);
 			var info = MAVLINK_MESSAGE_INFOS.SingleOrDefault(p => p.msgid == messageType);
 			if (data.Length != info.minlength) Array.Resize(ref data, (int)info.minlength);
@@ -1621,7 +1583,7 @@ namespace Diva.Mavlink
                 param7 = p7
             };
 
-			log.InfoFormat("doCommand cmd {0} {1} {2} {3} {4} {5} {6} {7}", actionid.ToString(), p1, p2, p3, p4, p5, p6,
+			log.InfoFormat("DoCommand cmd {0} {1} {2} {3} {4} {5} {6} {7}", actionid.ToString(), p1, p2, p3, p4, p5, p6,
 				p7);
 
 			SendPacket(MAVLINK_MSG_ID.COMMAND_LONG, req);
@@ -1687,29 +1649,6 @@ namespace Diva.Mavlink
 			// send each one twice.
 			SendPacket(MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req);
 			SendPacket(MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req);
-		}
-
-		public KeyValuePair<MAVLINK_MSG_ID, Func<MAVLinkMessage, bool>>
-            SubscribeToPacketType(MAVLINK_MSG_ID type, Func<MAVLinkMessage, bool> function)
-		{
-			var item = new KeyValuePair<MAVLINK_MSG_ID, Func<MAVLinkMessage, bool>>(type, function);
-
-			lock (Subscriptions)
-			{
-				log.Info("SubscribeToPacketType " + item.Key + " " + item.Value);
-				Subscriptions.Add(item);
-			}
-
-			return item;
-		}
-
-		public void UnSubscribeToPacketType(KeyValuePair<MAVLINK_MSG_ID, Func<MAVLinkMessage, bool>> item)
-		{
-			lock (Subscriptions)
-			{
-				log.Info("UnSubscribeToPacketType " + item.Key + " " + item.Value);
-				Subscriptions.Remove(item);
-			}
 		}
 	}
 }

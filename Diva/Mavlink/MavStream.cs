@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Diva.Mavlink
 {
-    public abstract class MavBaseStream : IDisposable
+    public abstract class MavStream : IDisposable
     {
         protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        protected MavBaseStream(DroneSetting setting) { }
+        protected MavStream(DroneSetting setting) { }
 
-        public static MavBaseStream CreateStream(DroneSetting setting)
+        public static MavStream CreateStream(DroneSetting setting)
         {
             return (setting.PortName.ToLower() == "udp") ?
-                new MavUdpStream(setting) as MavBaseStream :
-                new MavSerialStream(setting) as MavBaseStream;
+                new MavUdpStream(setting) as MavStream :
+                new MavSerialStream(setting) as MavStream;
         }
 
         // stream status property

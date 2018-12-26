@@ -107,13 +107,13 @@ namespace Diva.Mission
 			{
 				LockDrone(index);
 				MavDrone drone = drones[index];
-				var mav = (MavlinkInterface)drone;
+				var mav = (MavCore)drone;
 
 				if (!drone.IsRotationStandby && mav.Status.sys_status == (byte)MAVLink.MAV_STATE.STANDBY)
 				{
 					try
 					{
-						if (!mav.BaseStream.IsOpen)
+						if (!drone.IsOpen)
 							throw new Exception();
 					}
 					catch (Exception e)
@@ -130,8 +130,8 @@ namespace Diva.Mission
 					while (!mav.Status.armed)
 					{
 						manualResetEvent.WaitOne(1000);
-						mav.doARM(true);
-						mav.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+                        drone.DoArm(true);
+                        drone.DoCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 					}
 
 					while (mav.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
@@ -139,8 +139,8 @@ namespace Diva.Mission
 						manualResetEvent.WaitOne(1000);
 					}
 
-					// switch mode to AUTO
-					mav.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
+                    // switch mode to AUTO
+                    drone.DoCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 
 					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationExecute, index));
 

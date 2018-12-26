@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace Diva.Mavlink
 {
-    class MavUdpStream : MavBaseStream, IDisposable
+    class MavUdpStream : MavStream, IDisposable
     {
         internal MavUdpStream(DroneSetting setting) : base(setting)
         {
