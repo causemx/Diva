@@ -100,7 +100,7 @@ namespace Diva.Controls
 
 		public void UpdateDisplayInfo()
 		{
-			if (ActiveDroneInfo != null)
+			if (ActiveDroneInfo != null) try
 			{
 				MavStatus status = ActiveDroneInfo.Drone.Status;
 				ActiveDroneInfo.UpdateTelemetryData(status.sysid, status.battery_voltage, status.satcount);
@@ -114,8 +114,10 @@ namespace Diva.Controls
 				battNotification.Notify();
 
 				MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.param;
-				TelemetryData.UpdateStatusChecker(true, paramList["FENCE_ENABLE"].Value == 1 ? true : false);
+                if (paramList["FENCE_ENABLE"] != null)
+    				TelemetryData.UpdateStatusChecker(true, paramList["FENCE_ENABLE"].Value == 1 ? true : false);
 			}
+            catch { }
 		}
 
 		public void UpdateAssumeTime(double missionDistance) =>

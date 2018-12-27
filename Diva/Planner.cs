@@ -264,28 +264,32 @@ namespace Diva
             DateTime mapUpdateTime = DateTime.Now.AddMilliseconds(500);
 			while (!token.IsCancellationRequested)
 			{
-				if (ActiveDrone.IsOpen)
-				{
-					Invoke((MethodInvoker)delegate
-					{
-                        string mode = MavUtlities.GetFlightModeName(ActiveDrone.Status.mode);
-                        if (mode != null)
-                            TxtDroneMode.Text = mode;
-                        DroneInfoPanel.UpdateDisplayInfo();
-                    });
-
-					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
-					
-					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
-					{
-						UpdateMapPosition(currentloc);
-					}
-				}
-                if (DateTime.Now > mapUpdateTime)
+                try
                 {
-                    mapUpdateTime = DateTime.Now.AddMilliseconds(500);
-                    UpdateMapItems();
+                    if (ActiveDrone.IsOpen)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            string mode = MavUtlities.GetFlightModeName(ActiveDrone.Status.mode);
+                            if (mode != null)
+                                TxtDroneMode.Text = mode;
+                            DroneInfoPanel.UpdateDisplayInfo();
+                        });
+
+                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
+
+                        if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
+                        {
+                            UpdateMapPosition(currentloc);
+                        }
+                    }
+                    if (DateTime.Now > mapUpdateTime)
+                    {
+                        mapUpdateTime = DateTime.Now.AddMilliseconds(500);
+                        UpdateMapItems();
+                    }
                 }
+                catch { }
                 Thread.Sleep(20);
             }
             Invoke((MethodInvoker)(() => Close()));
@@ -294,7 +298,6 @@ namespace Diva
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
-
 			if (!isMapFocusing) return;
 
 			Invoke((MethodInvoker)delegate
@@ -307,13 +310,10 @@ namespace Diva
 						{
 							myMap.Position = currentloc;
 						}
-
 						lastmapposchange = DateTime.Now;
 					}
 				}
-				catch
-				{
-				}
+				catch { }
 			});
 		}
 

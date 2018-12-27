@@ -62,6 +62,8 @@ namespace Diva.Controls
                 var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
                 if (p != null)
                 {
+                    GMaps.Instance.Mode = AccessMode.ServerOnly;
+                    GMaps.Instance.MemoryCache.Clear();
                     MapProvider = p;
                     MaxZoom = p.MaxZoom ?? MaxZoom;
                     MinZoom = p.MinZoom;
