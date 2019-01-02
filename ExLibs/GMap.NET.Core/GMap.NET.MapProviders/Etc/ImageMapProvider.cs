@@ -41,6 +41,7 @@ namespace GMap.NET.MapProviders
                 var rb = Projection.FromPixelToLatLng(Projection.FromTileXYToPixel(
                     new GPoint(tile_left + tiles_width, tile_top + tiles_height)), OriginalZoom);
                 Area = RectLatLng.FromLTRB(lt.Lng, lt.Lat, rb.Lng, rb.Lat);
+                //Console.WriteLine($"Load Image Map {filename}: {tiles_width}x{tiles_height} tiles.");
             }
             catch { }
         }
@@ -88,13 +89,14 @@ namespace GMap.NET.MapProviders
             if (src == null)
                 return TileImageProxy.GenerateDebugTile("Error loading image", x, y, zoom);
 
+            //Console.WriteLine($"Generate tile {x},{y},{zoom} using left top {l},{t} of size {w} in image.");
             using (var dest = new Bitmap(256, 256))
             using (var g = Graphics.FromImage(dest))
             using (var wrap = new System.Drawing.Imaging.ImageAttributes())
             {
                 float scale = (float)Math.Pow(2, zoom - OriginalZoom);
-                dest.SetResolution(image.HorizontalResolution * scale,
-                    image.VerticalResolution * scale);
+                dest.SetResolution(src.HorizontalResolution * scale,
+                    src.VerticalResolution * scale);
 
                 g.CompositingMode = CompositingMode.SourceCopy;
                 g.CompositingQuality = CompositingQuality.HighQuality;
@@ -103,7 +105,7 @@ namespace GMap.NET.MapProviders
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 wrap.SetWrapMode(WrapMode.TileFlipXY);
 
-                g.DrawImage(image, new Rectangle(0, 0, 256, 256), l, t, w, h, GraphicsUnit.Pixel, wrap);
+                g.DrawImage(src, new Rectangle(0, 0, 256, 256), l, t, w, h, GraphicsUnit.Pixel, wrap);
                 ret = TileImageProxy.FromImage(dest);
             }
             src.Dispose();
