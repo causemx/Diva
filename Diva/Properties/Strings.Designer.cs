@@ -1024,6 +1024,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map Images|*.bmp;*.jpg;*.png.
+        /// </summary>
+        public static string StrMapImageFileExternsionFilter {
+            get {
+                return ResourceManager.GetString("StrMapImageFileExternsionFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No mission point available..
         /// </summary>
         public static string StrNoMissionPointAvailable {

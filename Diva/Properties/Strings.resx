@@ -471,4 +471,7 @@
   <data name="StrRecalculating" xml:space="preserve">
     <value>Recalculating...</value>
   </data>
+  <data name="StrMapImageFileExternsionFilter" xml:space="preserve">
+    <value>Map Images|*.bmp;*.jpg;*.png</value>
+  </data>
 </root>

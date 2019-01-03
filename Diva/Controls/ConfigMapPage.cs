@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using ResStrings = Diva.Properties.Strings;
 
 namespace Diva.Controls
 {
@@ -160,6 +159,7 @@ namespace Diva.Controls
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.CheckFileExists = true;
+                dlg.Filter = Properties.Strings.StrMapImageFileExternsionFilter;
                 var result = dlg.ShowDialog();
                 if (result == DialogResult.OK)
                     TBoxIndoorMapLocation.Text = dlg.FileName;

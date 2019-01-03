@@ -305,9 +305,6 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\ResourceStringHelper.cs" />
     <Compile Include="Utilities\Utility.cs" />
-    <EmbeddedResource Include="Controls\Components\MyNumericUpDown.resx">
-      <DependentUpon>MyNumericUpDown.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigAccountPage.resx">
       <DependentUpon>ConfigAccountPage.cs</DependentUpon>
     </EmbeddedResource>

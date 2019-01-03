@@ -5,7 +5,7 @@ using System.IO;
 
 namespace GMap.NET.MapProviders
 {
-    public class ImageMapProvider : GMapProvider
+    public class ImageMapProvider : GMapProvider, IDisposable
     {
         Guid id = Guid.NewGuid();
         string name;
@@ -33,7 +33,11 @@ namespace GMap.NET.MapProviders
                 image = Image.FromFile(filename);
                 tiles_width = (image.Width - 1) / 256 + 1;
                 tiles_height = (image.Height - 1) / 256 + 1;
-                int shrink = (int)Math.Log(Math.Min(tiles_width, tiles_height), 2);
+                int shrink = int.MaxValue;
+                foreach (var value in new int[] { tile_left, tile_top, tiles_width, tiles_height })
+                    shrink = Math.Min(shrink, value & -value);
+                shrink = (int)Math.Log(shrink, 2);
+                //int shrink = (int)Math.Log(Math.Min(tiles_width, tiles_height), 2);
                 MaxZoom = OriginalZoom + 4;
                 MinZoom = OriginalZoom - shrink;
                 var lt = Projection.FromPixelToLatLng(Projection.FromTileXYToPixel(
@@ -41,7 +45,7 @@ namespace GMap.NET.MapProviders
                 var rb = Projection.FromPixelToLatLng(Projection.FromTileXYToPixel(
                     new GPoint(tile_left + tiles_width, tile_top + tiles_height)), OriginalZoom);
                 Area = RectLatLng.FromLTRB(lt.Lng, lt.Lat, rb.Lng, rb.Lat);
-                //Console.WriteLine($"Load Image Map {filename}: {tiles_width}x{tiles_height} tiles.");
+                //Console.WriteLine($"Load Image Map {filename}: {tiles_width}x{tiles_height} tiles, max shrink {shrink} level.");
             }
             catch { }
         }
@@ -112,5 +116,7 @@ namespace GMap.NET.MapProviders
             return ret;
         }
         #endregion
+
+        public void Dispose() { image?.Dispose(); }
     }
 }

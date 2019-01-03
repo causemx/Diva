@@ -472,4 +472,7 @@
   <data name="StrRecalculating" xml:space="preserve">
     <value>重新計算中…</value>
   </data>
+  <data name="StrMapImageFileExternsionFilter" xml:space="preserve">
+    <value>地圖影像|*.bmp;*.jpg;*.png</value>
+  </data>
 </root>
