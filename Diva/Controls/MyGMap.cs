@@ -56,6 +56,7 @@ namespace Diva.Controls
 
         public void ResetMapProvider()
         {
+            (MapProvider as ImageMapProvider)?.Dispose();
             IndoorMode = ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap);
             if (IndoorMode)
             {

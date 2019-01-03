@@ -131,7 +131,7 @@ namespace Diva.Controls
             double.TryParse(TBoxIPLongitude.Text, out lng);
             double.TryParse(TBoxInitialZoom.Text, out zoom);
             ConfigData.SetOption(ConfigData.OptionName.MapInitialLocation,
-                $"{lat},{lng},{zoom}");
+                $"{lat}|{lng}|{zoom}");
             int.TryParse(TBoxProxyPort.Text, out int port);
             ConfigData.SetOption(ConfigData.OptionName.MapProxy,
                 RBtnProxySystem.Checked ? "System" : $"{TBoxProxyHost.Text}:{port}");

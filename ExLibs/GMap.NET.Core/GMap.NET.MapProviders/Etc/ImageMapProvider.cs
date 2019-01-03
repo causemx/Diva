@@ -30,7 +30,8 @@ namespace GMap.NET.MapProviders
                 tile_left = int.Parse(match.Groups[2].ToString());
                 tile_top = int.Parse(match.Groups[3].ToString());
                 OriginalZoom = int.Parse(match.Groups[4].ToString());
-                image = Image.FromFile(filename);
+                using (var tmp = Image.FromFile(filename))
+                    image = new Bitmap(tmp);
                 tiles_width = (image.Width - 1) / 256 + 1;
                 tiles_height = (image.Height - 1) / 256 + 1;
                 int shrink = int.MaxValue;
