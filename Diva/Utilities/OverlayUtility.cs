@@ -13,64 +13,70 @@ namespace Diva.Utilities
 {
     class OverlayUtility
     {
-        public class WPOverlay : IOverlayUtility
-        {
+		public class WPOverlay : IOverlayUtility
+		{
 
-            // public GMapOverlay overlay = new GMapOverlay("WPOverlay");
+			// public GMapOverlay overlay = new GMapOverlay("WPOverlay");
 
-            public WPOverlay(GMapOverlay _overlay) { overlay = _overlay; }
+			public WPOverlay(GMapOverlay _overlay) { overlay = _overlay; }
 
-            public GMapOverlay overlay = null;
-            public GMapRoute route = new GMapRoute("wp route");
-            public GMapRoute homeroute = new GMapRoute("home route");
-            /// list of points as per the mission
-            public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>();
-            /// list of point as per mission including jump repeats
-            public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
+			public GMapOverlay overlay = null;
+			public GMapRoute route = new GMapRoute("wp route");
+			public GMapRoute homeroute = new GMapRoute("home route");
+			/// list of points as per the mission
+			public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>();
+			/// list of point as per mission including jump repeats
+			public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
-            public void addpolygonmarker(string tag, double lng, double lat, double alt, Color? color, double wpradius)
-            {
-                try
-                {
-                    PointLatLng point = new PointLatLng(lat, lng);
-                    GMapMarkerWP m = new GMapMarkerWP(point, tag);
-                    m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                    m.ToolTipText = "Alt: " + alt.ToString("0");
-                    m.Tag = tag;
+			public Color color = Color.Black;
 
-                    int wpno = -1;
-                    if (int.TryParse(tag, out wpno))
-                    {
-                        // preselect groupmarker
-                        //if (groupmarkers.Contains(wpno))
-                        //m.selected = true;
-                    }
+			public void ConfigRouteColor(Color _color) => this.color = _color;
 
-                    //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-                    GMapMarkerRect mBorders = new GMapMarkerRect(point);
-                    {
-                        mBorders.InnerMarker = m;
-                        mBorders.Tag = tag;
-                        mBorders.wprad = (int)wpradius;
-                        if (color.HasValue)
-                        {
-                            mBorders.Color = color.Value;
-                        }
-                    }
+			public void addpolygonmarker(string tag, double lng, double lat, double alt, Color? color, double wpradius)
+			{
+				try
+				{
+					PointLatLng point = new PointLatLng(lat, lng);
+					GMapMarkerWP m = new GMapMarkerWP(point, tag);
+					m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+					m.ToolTipText = "Alt: " + alt.ToString("0");
+					m.Tag = tag;
 
-                    overlay.Markers.Add(m);
-                    overlay.Markers.Add(mBorders);
-                }
-                catch (Exception)
-                {
-                }
-            }
+					int wpno = -1;
+					if (int.TryParse(tag, out wpno))
+					{
+						// preselect groupmarker
+						//if (groupmarkers.Contains(wpno))
+						//m.selected = true;
+					}
+
+					//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
+					GMapMarkerRect mBorders = new GMapMarkerRect(point);
+					{
+						mBorders.InnerMarker = m;
+						mBorders.Tag = tag;
+						mBorders.wprad = (int)wpradius;
+						if (color.HasValue)
+						{
+							mBorders.Color = color.Value;
+						}
+					}
+
+					overlay.Markers.Add(m);
+					overlay.Markers.Add(mBorders);
+				}
+				catch (Exception)
+				{
+				}
+			}
+
+			
 
             public void CreateOverlay(PointLatLngAlt home, List<Locationwp> missionitems, double wpradius, double loiterradius)
             {
                 overlay.Clear();
 
-                double maxlat = -180;
+				double maxlat = -180;
                 double maxlong = -180;
                 double minlat = 180;
                 double minlong = 180;
@@ -283,16 +289,15 @@ namespace Diva.Utilities
 
 					// raise the fullpointslist outside
 					RaiseFullPointsEvent?.Invoke(this, new FullPointsEventArgs(fullpointlist));
-
-
-					homeroute.Stroke = new Pen(Color.BlanchedAlmond, 2);
+										
+					homeroute.Stroke = new Pen(color, 2);
                     // if we have a large distance between home and the first/last point, it hangs on the draw of a the dashed line.
                     if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
                         homeroute.Stroke.DashStyle = DashStyle.Dash;
 
                     overlay.Routes.Add(homeroute);
 
-                    route.Stroke = new Pen(Color.BlanchedAlmond, 4);
+                    route.Stroke = new Pen(color, 4);
                     route.Stroke.DashStyle = DashStyle.Custom;
                     overlay.Routes.Add(route);
                 }

@@ -102,6 +102,12 @@ namespace Diva.Utilities
 			else
 				throw new Exception("Bad Type " + input.GetType().ToString());
 		}
+
+		public static Color RandomColor()
+		{
+			Random rnd = new Random();
+			return Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+		}
 	}
 
 	public static class MathHelper

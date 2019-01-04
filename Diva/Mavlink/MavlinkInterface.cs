@@ -3,6 +3,7 @@ using Diva.Controls;
 using Diva.Data;
 using Diva.Properties;
 using Diva.Utilities;
+using GMap.NET.WindowsForms;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace Diva.Mavlink
 		{
 			get { return _logplaybackfile; }
 			set
+
 			{
 				_logplaybackfile = value;
 				if (_logplaybackfile != null && _logplaybackfile.BaseStream is FileStream)
@@ -152,6 +154,7 @@ namespace Diva.Mavlink
 		private int _bps2 = 0;
 		private bool useLocation = false;
 		private ProgressDialogV2 frmProgressReporter;
+		private GMapOverlay objectsOverlay;
 
 
 		// threading
@@ -170,7 +173,10 @@ namespace Diva.Mavlink
 			this.BaseStream = new SerialPort();
 			this.WhenPacketLost = new Subject<int>();
 			this.WhenPacketReceived = new Subject<int>();
+			this.objectsOverlay = new GMapOverlay("objects_" + new Random().Next(10));
 		}
+
+		public GMapOverlay ObjectsOverlay=> objectsOverlay;
 
 
 		private void SerialReader()
@@ -773,6 +779,7 @@ namespace Diva.Mavlink
 			Status.synclost = 0;
 		}
 
+		
 
 		public void getParamList()
 		{
