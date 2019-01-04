@@ -156,7 +156,6 @@ namespace Diva.Mavlink
 		private ProgressDialogV2 frmProgressReporter;
 		private GMapOverlay objectsOverlay;
 
-
 		// threading
 		private bool threadRunnable = false;
 		private Thread SerialReaderThread = null;
@@ -176,8 +175,8 @@ namespace Diva.Mavlink
 			this.objectsOverlay = new GMapOverlay("objects_" + new Random().Next(10));
 		}
 
-		public GMapOverlay ObjectsOverlay=> objectsOverlay;
-
+		public GMapOverlay ObjectsOverlay => objectsOverlay;
+		public List<Locationwp> LastCmds { get; set; } = new List<Locationwp>();
 
 		private void SerialReader()
 		{

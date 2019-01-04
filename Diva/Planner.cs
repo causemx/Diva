@@ -3563,17 +3563,31 @@ namespace Diva
 			dgvWayPoints.Refresh();
 		}
 
-		CommnadsManager cm = new CommnadsManager();
 
 		private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
 		{
-			ClearCommands();
-			ActiveDrone = (sender as DroneInfo)?.Drone;
-		}
+			List<Locationwp> wps = new List<Locationwp>();
 
-		public class CommnadsManager
-		{
-			public List<Locationwp> Commands { get; set; }
+			try
+			{
+				Locationwp home = new Locationwp()
+				{
+					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+					lat = (double.Parse(TxtHomeLatitude.Text)),
+					lng = (double.Parse(TxtHomeLongitude.Text)),
+					alt = (float.Parse(TxtHomeAltitude.Text))
+				};
+
+				wps.Add(home);
+				wps.AddRange(GetCommandList());
+			}
+			catch (Exception exception) { log.Error(exception.ToString()); }
+			
+
+			ActiveDrone.LastCmds = wps;
+			ActiveDrone = (sender as DroneInfo)?.Drone;
+			if (ActiveDrone.LastCmds.Count != 0) { WPtoScreen(ActiveDrone.LastCmds); }
 		}
+			
 	}
 }
