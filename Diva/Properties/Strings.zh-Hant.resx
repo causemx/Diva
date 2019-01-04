@@ -225,14 +225,8 @@
   <data name="MsgCantOpenFile" xml:space="preserve">
     <value>無法開啟檔案{0}</value>
   </data>
-  <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
-    <value>1.0</value>
-  </data>
   <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
     <value>1.0</value>
-  </data>
-  <data name="ConfigMapPage.FontFamily" xml:space="preserve">
-    <value>Microsoft JhengHei UI</value>
   </data>
   <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
     <value>Microsoft JhengHei UI</value>
@@ -240,35 +234,14 @@
   <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
     <value>刪除</value>
   </data>
-  <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
-    <value>回復</value>
-  </data>
-  <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
-    <value>套用</value>
-  </data>
-  <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
-    <value>室內地圖</value>
-  </data>
-  <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
-    <value>室內地圖圖檔路徑:</value>
-  </data>
   <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
     <value>密碼:</value>
   </data>
   <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
     <value>建立</value>
   </data>
-  <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
-    <value>戶外地圖</value>
-  </data>
   <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
     <value>新密碼:</value>
-  </data>
-  <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
-    <value>瀏覽</value>
-  </data>
-  <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
-    <value>瀏覽</value>
   </data>
   <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
     <value>目前登入帳號: </value>
@@ -276,23 +249,8 @@
   <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
     <value>確認密碼:</value>
   </data>
-  <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
-    <value>經度:</value>
-  </data>
-  <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
-    <value>緯度:</value>
-  </data>
   <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
     <value>變更密碼</value>
-  </data>
-  <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
-    <value>起始位置</value>
-  </data>
-  <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
-    <value>起始縮放階層:</value>
-  </data>
-  <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
-    <value>離線地圖快取路徑(將存放於TileDBv5\en目錄下)</value>
   </data>
   <data name="ConfigAccountPage.MsgDeleteAccount" xml:space="preserve">
     <value>刪除帳號{0}？</value>
@@ -359,19 +317,6 @@
   </data>
   <data name="MsgMissionAcceptWP" xml:space="preserve">
     <value>成功寫入航點</value>
-  </data>
-  <data name="ConfigMapPage.LabelProxySetting.Text" xml:space="preserve">
-    <value>代理伺服器
-(需重啟程式)</value>
-  </data>
-  <data name="ConfigMapPage.LabelProxyPort.Text" xml:space="preserve">
-    <value>連接埠</value>
-  </data>
-  <data name="ConfigMapPage.RBtnProxySystem.Text" xml:space="preserve">
-    <value>使用系統設定</value>
-  </data>
-  <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
-    <value>位址</value>
   </data>
   <data name="StrActivateDrone" xml:space="preserve">
     <value>點擊設為使用中</value>

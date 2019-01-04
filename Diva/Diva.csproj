@@ -318,6 +318,9 @@
     <EmbeddedResource Include="Controls\ConfigMapPage.resx">
       <DependentUpon>ConfigMapPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigMapPage.zh-Hant.resx">
+      <DependentUpon>ConfigMapPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>

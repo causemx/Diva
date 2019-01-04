@@ -117,4 +117,859 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="LabelProxyPort.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;LabelOriginGeolocation.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="LabelInitialPosition.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="TBoxProxyPort.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigReset.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelProxyPort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>510, 210</value>
+  </data>
+  <data name="TBoxIPLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="TBoxMapCacheLocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="&gt;&gt;RBtnGlobalMap.Name" xml:space="preserve">
+    <value>RBtnGlobalMap</value>
+  </data>
+  <data name="RBtnGlobalMap.Text" xml:space="preserve">
+    <value>Global Map</value>
+  </data>
+  <data name="&gt;&gt;PanelGlobalMapControls.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="TBoxProxyHost.Location" type="System.Drawing.Point, System.Drawing">
+    <value>300, 210</value>
+  </data>
+  <data name="&gt;&gt;TBoxIndoorMapLocation.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="BtnBrowseMapLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 40</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyHost.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLatitude.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxyCustom.Name" xml:space="preserve">
+    <value>RBtnProxyCustom</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BtnMapConfigApply.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="&gt;&gt;LabelMapCacheLocation.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="TBoxOGLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelOGLatitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelIPLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="LabelInitialZoom.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="RBtnProxySystem.Text" xml:space="preserve">
+    <value>Use system setting</value>
+  </data>
+  <data name="BtnMapConfigApply.Text" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="TBoxProxyHost.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 23</value>
+  </data>
+  <data name="RBtnProxySystem.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 170</value>
+  </data>
+  <data name="PanelIndoorMapControls.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="TBoxMapCacheLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>560, 23</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnMapConfigReset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 40</value>
+  </data>
+  <data name="BtnMapConfigReset.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLongtitude.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="BtnMapConfigReset.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="LabelInitialPosition.Text" xml:space="preserve">
+    <value>Initial map position</value>
+  </data>
+  <data name="TBoxOGLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigApply.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="PanelGlobalMapControls.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 60</value>
+  </data>
+  <data name="LabelOriginGeolocation.Text" xml:space="preserve">
+    <value>Geolocation of Origin</value>
+  </data>
+  <data name="&gt;&gt;RBtnGlobalMap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelImageMapLocation.Text" xml:space="preserve">
+    <value>Indoor map image file:</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLongitude.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="RBtnProxySystem.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;PanelIndoorMapControls.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>784, 560</value>
+  </data>
+  <data name="TBoxOGLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>580, 70</value>
+  </data>
+  <data name="TBoxIPLongitude.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="TBoxIPLongitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="LabelProxyPort.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseMapLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnBrowseMapLocation.Text" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="&gt;&gt;RBtnIndoorMap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelProxyPort.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLatitude.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="BtnBrowseIndoorMap.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="LabelProxySetting.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 170</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxySystem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RBtnGlobalMap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLongitude.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelMapCacheLocation.Text" xml:space="preserve">
+    <value>Offline map cache file: (will be created under 'TileDBv5\en' subdirectory)</value>
+  </data>
+  <data name="TBoxOGLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="TBoxProxyPort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>600, 210</value>
+  </data>
+  <data name="&gt;&gt;LabelImageMapLocation.Name" xml:space="preserve">
+    <value>LabelImageMapLocation</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigReset.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RBtnGlobalMap.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="BtnMapConfigReset.Location" type="System.Drawing.Point, System.Drawing">
+    <value>650, 500</value>
+  </data>
+  <data name="LabelIPLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="LabelOGLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLongitude.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="RBtnGlobalMap.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BtnBrowseIndoorMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 40</value>
+  </data>
+  <data name="BtnBrowseIndoorMap.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLatitude.Name" xml:space="preserve">
+    <value>LabelOGLatitude</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TBoxOGLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxySystem.Name" xml:space="preserve">
+    <value>RBtnProxySystem</value>
+  </data>
+  <data name="TBoxProxyHost.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxySystem.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="&gt;&gt;TBoxIndoorMapLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RBtnGlobalMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 22</value>
+  </data>
+  <data name="LabelIPLongtitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLongtitude.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigApply.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseIndoorMap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelOriginGeolocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="RBtnProxyCustom.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="LabelOriginGeolocation.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLongtitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialZoom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelOriginGeolocation.Name" xml:space="preserve">
+    <value>LabelOriginGeolocation</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLatitude.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelProxySetting.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;RBtnIndoorMap.Name" xml:space="preserve">
+    <value>RBtnIndoorMap</value>
+  </data>
+  <data name="&gt;&gt;TBoxIndoorMapLocation.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="LabelInitialZoom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 130</value>
+  </data>
+  <data name="BtnBrowseMapLocation.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;TBoxInitialZoom.Name" xml:space="preserve">
+    <value>TBoxInitialZoom</value>
+  </data>
+  <data name="LabelProxyPort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 23</value>
+  </data>
+  <data name="RBtnIndoorMap.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="BtnMapConfigApply.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ConfigMapPage</value>
+  </data>
+  <data name="LabelInitialZoom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 23</value>
+  </data>
+  <data name="BtnBrowseIndoorMap.Text" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="&gt;&gt;TBoxInitialZoom.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLongitude.Name" xml:space="preserve">
+    <value>TBoxIPLongitude</value>
+  </data>
+  <data name="RBtnIndoorMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="LabelImageMapLocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialPosition.Name" xml:space="preserve">
+    <value>LabelInitialPosition</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxyCustom.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelIPLongtitude.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="TBoxIndoorMapLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>560, 23</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxyCustom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyHost.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigReset.Name" xml:space="preserve">
+    <value>BtnMapConfigReset</value>
+  </data>
+  <data name="&gt;&gt;LabelProxySetting.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialPosition.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLatitude.Name" xml:space="preserve">
+    <value>LabelIPLatitude</value>
+  </data>
+  <data name="LabelProxySetting.Size" type="System.Drawing.Size, System.Drawing">
+    <value>199, 55</value>
+  </data>
+  <data name="TBoxProxyPort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 23</value>
+  </data>
+  <data name="&gt;&gt;TBoxMapCacheLocation.Name" xml:space="preserve">
+    <value>TBoxMapCacheLocation</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseIndoorMap.Name" xml:space="preserve">
+    <value>BtnBrowseIndoorMap</value>
+  </data>
+  <data name="LabelOGLongitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLongitude.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;PanelIndoorMapControls.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;LabelProxySetting.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseMapLocation.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="RBtnProxySystem.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;RBtnIndoorMap.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RBtnGlobalMap.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="TBoxProxyPort.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLatitude.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="&gt;&gt;TBoxMapCacheLocation.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="LabelInitialZoom.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLatitude.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="BtnBrowseMapLocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="LabelInitialPosition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 18</value>
+  </data>
+  <data name="TBoxProxyPort.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyPort.Name" xml:space="preserve">
+    <value>TBoxProxyPort</value>
+  </data>
+  <data name="&gt;&gt;LabelProxySetting.Name" xml:space="preserve">
+    <value>LabelProxySetting</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseMapLocation.Name" xml:space="preserve">
+    <value>BtnBrowseMapLocation</value>
+  </data>
+  <data name="BtnMapConfigReset.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLatitude.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="&gt;&gt;RBtnGlobalMap.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LabelOGLatitude.Text" xml:space="preserve">
+    <value>Latitude:</value>
+  </data>
+  <data name="LabelInitialPosition.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="PanelGlobalMapControls.Size" type="System.Drawing.Size, System.Drawing">
+    <value>720, 240</value>
+  </data>
+  <data name="LabelImageMapLocation.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LabelOGLongitude.Text" xml:space="preserve">
+    <value>Longitude:</value>
+  </data>
+  <data name="&gt;&gt;PanelIndoorMapControls.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RBtnGlobalMap.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyPort.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="LabelProxySetting.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="TBoxIndoorMapLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="TBoxIPLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;LabelOriginGeolocation.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialZoom.Name" xml:space="preserve">
+    <value>LabelInitialZoom</value>
+  </data>
+  <data name="RBtnProxyCustom.Text" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLongitude.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TBoxIPLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="&gt;&gt;LabelOriginGeolocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TBoxMapCacheLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="BtnMapConfigReset.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="LabelProxyPort.Text" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="&gt;&gt;PanelIndoorMapControls.Name" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="LabelProxySetting.Text" xml:space="preserve">
+    <value>Proxy (requires application restart)</value>
+  </data>
+  <data name="RBtnIndoorMap.Text" xml:space="preserve">
+    <value>Indoor Map</value>
+  </data>
+  <data name="LabelInitialZoom.Text" xml:space="preserve">
+    <value>Initial zoom level:</value>
+  </data>
+  <data name="BtnMapConfigApply.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="LabelImageMapLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 18</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLatitude.Name" xml:space="preserve">
+    <value>TBoxOGLatitude</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseIndoorMap.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="TBoxIPLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="&gt;&gt;LabelProxyPort.Name" xml:space="preserve">
+    <value>LabelProxyPort</value>
+  </data>
+  <data name="&gt;&gt;TBoxInitialZoom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelIPLatitude.Text" xml:space="preserve">
+    <value>Latitude:</value>
+  </data>
+  <data name="BtnMapConfigApply.Location" type="System.Drawing.Point, System.Drawing">
+    <value>500, 500</value>
+  </data>
+  <data name="TBoxProxyHost.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="PanelIndoorMapControls.Size" type="System.Drawing.Size, System.Drawing">
+    <value>720, 100</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLongitude.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;LabelMapCacheLocation.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelInitialPosition.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LabelMapCacheLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="RBtnProxySystem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 22</value>
+  </data>
+  <data name="LabelImageMapLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxyCustom.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BtnMapConfigApply.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 40</value>
+  </data>
+  <data name="BtnMapConfigApply.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="TBoxIndoorMapLocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="RBtnProxySystem.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RBtnProxyCustom.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TBoxInitialZoom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 23</value>
+  </data>
+  <data name="BtnBrowseIndoorMap.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLatitude.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigApply.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LabelIPLatitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="RBtnProxyCustom.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="RBtnProxyCustom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 22</value>
+  </data>
+  <data name="LabelIPLongtitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;LabelProxySetting.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RBtnIndoorMap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 320</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLatitude.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialZoom.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="PanelIndoorMapControls.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 360</value>
+  </data>
+  <data name="LabelMapCacheLocation.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="LabelOGLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 70</value>
+  </data>
+  <data name="TBoxInitialZoom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>300, 130</value>
+  </data>
+  <data name="TBoxInitialZoom.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="LabelIPLongtitude.Text" xml:space="preserve">
+    <value>Longitude:</value>
+  </data>
+  <data name="RBtnProxyCustom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 210</value>
+  </data>
+  <data name="TBoxIndoorMapLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 30</value>
+  </data>
+  <data name="TBoxIPLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>300, 90</value>
+  </data>
+  <data name="&gt;&gt;PanelGlobalMapControls.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseIndoorMap.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="&gt;&gt;LabelImageMapLocation.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;LabelImageMapLocation.Parent" xml:space="preserve">
+    <value>PanelIndoorMapControls</value>
+  </data>
+  <data name="LabelOriginGeolocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 70</value>
+  </data>
+  <data name="BtnMapConfigReset.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="TBoxMapCacheLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 40</value>
+  </data>
+  <data name="&gt;&gt;LabelIPLongtitude.Name" xml:space="preserve">
+    <value>LabelIPLongtitude</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialPosition.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="LabelMapCacheLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>493, 18</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyPort.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLongitude.Name" xml:space="preserve">
+    <value>LabelOGLongitude</value>
+  </data>
+  <data name="&gt;&gt;LabelImageMapLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelIPLongtitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;LabelOGLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TBoxInitialZoom.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="TBoxOGLongitude.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="LabelOGLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="LabelOGLongitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="&gt;&gt;LabelMapCacheLocation.Name" xml:space="preserve">
+    <value>LabelMapCacheLocation</value>
+  </data>
+  <data name="LabelOGLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="BtnBrowseMapLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>580, 30</value>
+  </data>
+  <data name="&gt;&gt;PanelGlobalMapControls.Name" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelInitialPosition.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 90</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TBoxOGLongitude.Name" xml:space="preserve">
+    <value>TBoxOGLongitude</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialZoom.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyHost.Name" xml:space="preserve">
+    <value>TBoxProxyHost</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RBtnProxySystem.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;TBoxIndoorMapLocation.Name" xml:space="preserve">
+    <value>TBoxIndoorMapLocation</value>
+  </data>
+  <data name="&gt;&gt;RBtnIndoorMap.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LabelProxyPort.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LabelOGLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>430, 70</value>
+  </data>
+  <data name="LabelOriginGeolocation.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="TBoxProxyHost.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LabelImageMapLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="TBoxOGLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>300, 70</value>
+  </data>
+  <data name="&gt;&gt;LabelMapCacheLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelMapCacheLocation.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;LabelProxyPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelOriginGeolocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 18</value>
+  </data>
+  <data name="&gt;&gt;TBoxMapCacheLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelMapCacheLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;TBoxIPLatitude.Name" xml:space="preserve">
+    <value>TBoxIPLatitude</value>
+  </data>
+  <data name="RBtnIndoorMap.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BtnBrowseMapLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigApply.Name" xml:space="preserve">
+    <value>BtnMapConfigApply</value>
+  </data>
+  <data name="LabelInitialZoom.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="TBoxIPLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>580, 90</value>
+  </data>
+  <data name="RBtnIndoorMap.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;BtnMapConfigReset.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TBoxProxyHost.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelIPLongtitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>430, 90</value>
+  </data>
+  <data name="LabelIPLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 90</value>
+  </data>
+  <data name="&gt;&gt;TBoxMapCacheLocation.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="LabelOGLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 23</value>
+  </data>
+  <data name="LabelIPLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="BtnBrowseIndoorMap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>580, 20</value>
+  </data>
+  <data name="&gt;&gt;LabelProxyPort.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="&gt;&gt;TBoxInitialZoom.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <data name="PanelGlobalMapControls.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;BtnBrowseMapLocation.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="TBoxOGLongitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.2pt</value>
+  </data>
+  <data name="&gt;&gt;PanelGlobalMapControls.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelOGLongitude.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;LabelInitialPosition.Parent" xml:space="preserve">
+    <value>PanelGlobalMapControls</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>zh-Hant</value>
+  </metadata>
 </root>
