@@ -94,6 +94,7 @@ namespace Diva
             public const string MapProxy = "MapProxy";
             public const string MapCacheLocation = "MapCacheLocation";
             public const string MapInitialLocation = "MapInitialLocation";
+            public const string OriginGeolocation = "OriginGeolocation";
             public const string Salt = "Salt";
             public const string SkipNoAccountAlert = "NoAccountAlert";
             public const string UseImageMap = "UseImageMap";
@@ -140,6 +141,7 @@ namespace Diva
                     }  },
                     { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
                     { "lang|Language=", v => setOpt(OptionName.Language, v) },
+                    { "o|Origin=", v => setOpt(OptionName.OriginGeolocation, v) },
                     { "p|proxy=", v => setOpt(OptionName.Language, v) },
                     { "s|Salt=", v => setOpt(OptionName.Salt, v) },
                     { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }

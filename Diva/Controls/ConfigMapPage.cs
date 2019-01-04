@@ -94,6 +94,19 @@ namespace Diva.Controls
                 TBoxProxyHost.Text = TBoxProxyPort.Text = "";
             }
 
+            loc = ConfigData.GetOption(ConfigData.OptionName.OriginGeolocation);
+            if (loc != "")
+            {
+                string[] locs = loc.Split('|');
+                if (locs.Length > 1)
+                {
+                    double.TryParse(locs[0], out lat);
+                    double.TryParse(locs[1], out lng);
+                }
+                TBoxOGLatitude.Text = lat.ToString(); ;
+                TBoxOGLongitude.Text = lng.ToString();
+            }
+
             TBoxIndoorMapLocation.Text = ConfigData.GetOption(ConfigData.OptionName.ImageMapSource);
             (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)
                 ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
@@ -132,6 +145,10 @@ namespace Diva.Controls
             double.TryParse(TBoxInitialZoom.Text, out zoom);
             ConfigData.SetOption(ConfigData.OptionName.MapInitialLocation,
                 $"{lat}|{lng}|{zoom}");
+            double.TryParse(TBoxOGLatitude.Text, out lat);
+            double.TryParse(TBoxOGLongitude.Text, out lng);
+            ConfigData.SetOption(ConfigData.OptionName.OriginGeolocation,
+                $"{lat}|{lng}");
             int.TryParse(TBoxProxyPort.Text, out int port);
             ConfigData.SetOption(ConfigData.OptionName.MapProxy,
                 RBtnProxySystem.Checked ? "System" : $"{TBoxProxyHost.Text}:{port}");
