@@ -108,6 +108,7 @@
             // 
             resources.ApplyResources(this.TBoxOGLongitude, "TBoxOGLongitude");
             this.TBoxOGLongitude.Name = "TBoxOGLongitude";
+            this.TBoxOGLongitude.TextChanged += new System.EventHandler(this.MapConfigChanged);
             // 
             // LabelOGLatitude
             // 
@@ -119,6 +120,7 @@
             // 
             resources.ApplyResources(this.TBoxOGLatitude, "TBoxOGLatitude");
             this.TBoxOGLatitude.Name = "TBoxOGLatitude";
+            this.TBoxOGLatitude.TextChanged += new System.EventHandler(this.MapConfigChanged);
             // 
             // LabelImageMapLocation
             // 

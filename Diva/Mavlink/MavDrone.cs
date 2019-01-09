@@ -22,6 +22,8 @@ namespace Diva.Mavlink
         public MavDrone(DroneSetting setting = null)
         {
             this.setting = setting;
+            Status.nav_bearing = float.NaN;
+            Status.groundcourse = float.NaN;
             RegisterMavMessageHandler(MAVLINK_MSG_ID.MISSION_CURRENT, MissionCurrentPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, NavControllerOutputPacketHandler);
         }

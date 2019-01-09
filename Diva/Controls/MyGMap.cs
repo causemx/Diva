@@ -29,7 +29,7 @@ namespace Diva.Controls
             ForceDoubleBuffer = false;
             DebugMapLocation = true;
 
-            OnSelectionChange += (s, z) =>
+            /*OnSelectionChange += (s, z) =>
             {
                 if (!IndoorMode && !s.IsEmpty)
                 {
@@ -44,7 +44,7 @@ namespace Diva.Controls
                     }
                 }
                 SelectedArea = new RectLatLng();
-            };
+            };*/
         }
 
         protected override void OnLoad(EventArgs e)
@@ -193,8 +193,9 @@ namespace Diva.Controls
             if (cache == null) return;
             RectLatLng sel = SelectedArea;
             if (sel.IsEmpty) return;
-            int zmax = MapProvider.MaxZoom ?? 20;
-            for (var z = MapProvider.MinZoom; z < zmax; z++)
+            //int zmax = MapProvider.MaxZoom ?? 20;
+            //for (var z = MapProvider.MinZoom; z < zmax; z++)
+            int z = 19;
             {
                 using (TilePrefetcher pf = new TilePrefetcher())
                 {
