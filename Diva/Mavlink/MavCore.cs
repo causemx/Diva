@@ -12,10 +12,11 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
+using static MAVLink;
 
 namespace Diva.Mavlink
 {
-	public class MavCore : MAVLink
+	public class MavCore
 	{
         #region Constants
         public static readonly double CONNECT_TIMEOUT_SECONDS = 30;
@@ -36,47 +37,22 @@ namespace Diva.Mavlink
             }
         }
 
-		public MavList MAVlist;
+        /*public MavList MAVlist;
 
 		public MavStatus Status
 		{
 			get { return MAVlist[sysidcurrent, compidcurrent]; }
 			set { MAVlist[sysidcurrent, compidcurrent] = value; }
-		}
+		}*/
+        public MavStatus Status;
 
 		public event EventHandler ParamListChanged;
-		public event EventHandler MavChanged;
+		//public event EventHandler MavChanged;
 
-        public byte SysId => (byte)sysidcurrent;
-        public byte CompId => (byte)compidcurrent;
+        public byte SysId => Status.sysid;
+        public byte CompId => Status.compid;
 
-        int _sysidcurrent = 0;
-		public int sysidcurrent
-		{
-			get { return _sysidcurrent; }
-			set
-			{
-				if (_sysidcurrent == value)
-					return;
-				_sysidcurrent = value;
-				MavChanged?.Invoke(this, null);
-			}
-		}
-
-		int _compidcurrent = 0;
-		public int compidcurrent
-		{
-			get { return _compidcurrent; }
-			set
-			{
-				if (_compidcurrent == value)
-					return;
-				_compidcurrent = value;
-                MavChanged?.Invoke(this, null);
-            }
-        }
-
-		public BufferedStream LogFile { get; set; }
+        public BufferedStream LogFile { get; set; }
 		public BufferedStream RawLogFile { get; set; }
 
 		internal string plaintxtline = "";
@@ -93,7 +69,7 @@ namespace Diva.Mavlink
         #region Core
         public MavCore()
 		{
-			MAVlist = new MavList(this);
+            Status = new MavStatus(this, 0, 0);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.HEARTBEAT, HeartBeatPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
@@ -109,8 +85,6 @@ namespace Diva.Mavlink
 
 		public void Open()
 		{
-			MAVlist.Clear();
-
 			frmProgressReporter = new ProgressDialogV2
 			{
 				StartPosition = FormStartPosition.CenterScreen,
@@ -496,18 +470,21 @@ namespace Diva.Mavlink
 			byte compid = message.compid;
 			byte packetSeqNo = message.seq;
 
-			// create a state for any sysid/compid includes gcs on log playback
-			if (!MAVlist.Contains(sysid, compid))
-			{
-				// create an item - hidden
-				MAVlist.AddHiddenList(sysid, compid);
-				// prevent packetloss counter on connect
-				MAVlist[sysid, compid].recvpacketcount = unchecked(packetSeqNo - (byte)1);
-			}
-
-			// once set it cannot be reverted
-			if (!MAVlist[sysid, compid].mavlinkv2)
-				MAVlist[sysid, compid].mavlinkv2 = message.buffer[0] == MAVLINK_STX ? true : false;
+            if (SysId == 0)
+            {
+                log.Info($"MavCore opened with (sysid, compid)=({sysid},{compid})");
+                Status = new MavStatus(this, sysid, compid);
+                Status.mavlinkv2 = message.buffer[0] == MAVLINK_STX ? true : false;
+            } else if (sysid != SysId)
+            {
+                log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({sysid},{compid}), dropped");
+                return MAVLinkMessage.Invalid;
+            } else if (compid != CompId)
+            {
+                // handle multi component here
+                log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({sysid},{compid}), dropped");
+                return MAVLinkMessage.Invalid;
+            }
 
 			if (buffer.Length >= 5)
 			{
@@ -521,11 +498,11 @@ namespace Diva.Mavlink
 			}
 
 			// update packet loss statistics
-			if (MAVlist[sysid, compid].packetlosttimer.AddSeconds(5) < DateTime.Now)
+			if (Status.packetlosttimer.AddSeconds(5) < DateTime.Now)
 			{
-				MAVlist[sysid, compid].packetlosttimer = DateTime.Now;
-				MAVlist[sysid, compid].packetslost = (MAVlist[sysid, compid].packetslost * 0.8f);
-				MAVlist[sysid, compid].packetsnotlost = (MAVlist[sysid, compid].packetsnotlost * 0.8f);
+                Status.packetlosttimer = DateTime.Now;
+                Status.packetslost = Status.packetslost * 0.8f;
+                Status.packetsnotlost = Status.packetsnotlost * 0.8f;
 			}
 
 			try
@@ -533,16 +510,16 @@ namespace Diva.Mavlink
 				if ((message.header == 'U' || message.header == 0xfe || message.header == 0xfd) && buffer.Length >= message.payloadlength)
 				{
 					// check if we lost pacakets based on seqno
-					int expectedPacketSeqNo = ((MAVlist[sysid, compid].recvpacketcount + 1) % 0x100);
+					int expectedPacketSeqNo = ((Status.recvpacketcount + 1) % 0x100);
 
 					{
 						// the second part is to work around a 3dr radio bug sending dup seqno's
-						if (packetSeqNo != expectedPacketSeqNo && packetSeqNo != MAVlist[sysid, compid].recvpacketcount)
+						if (packetSeqNo != expectedPacketSeqNo && packetSeqNo != Status.recvpacketcount)
 						{
-							MAVlist[sysid, compid].synclost++; // actualy sync loss's
+                            Status.synclost++; // actualy sync loss's
 							int numLost = 0;
 
-							if (packetSeqNo < ((MAVlist[sysid, compid].recvpacketcount + 1)))
+							if (packetSeqNo < ((Status.recvpacketcount + 1)))
 							// recvpacketcount = 255 then   10 < 256 = true if was % 0x100 this would fail
 							{
 								numLost = 0x100 - expectedPacketSeqNo + packetSeqNo;
@@ -552,42 +529,38 @@ namespace Diva.Mavlink
 								numLost = packetSeqNo - expectedPacketSeqNo;
 							}
 
-							MAVlist[sysid, compid].packetslost += numLost;
+                            Status.packetslost += numLost;
 						}
 
-						MAVlist[sysid, compid].packetsnotlost++;
+                        Status.packetsnotlost++;
 
-						//Console.WriteLine("{0} {1}", sysid, packetSeqNo);
+                        //Console.WriteLine("{0} {1}", sysid, packetSeqNo);
 
-						MAVlist[sysid, compid].recvpacketcount = packetSeqNo;
+                        Status.recvpacketcount = packetSeqNo;
 					}
 
 					// packet stats per mav
-					if (!MAVlist[sysid, compid].packetspersecond.ContainsKey(msgid) || double.IsInfinity(MAVlist[sysid, compid].packetspersecond[msgid]))
-						MAVlist[sysid, compid].packetspersecond[msgid] = 0;
-					if (!MAVlist[sysid, compid].packetspersecondbuild.ContainsKey(msgid))
-						MAVlist[sysid, compid].packetspersecondbuild[msgid] = DateTime.Now;
+					if (!Status.packetspersecond.ContainsKey(msgid) || double.IsInfinity(Status.packetspersecond[msgid]))
+                        Status.packetspersecond[msgid] = 0;
+					if (!Status.packetspersecondbuild.ContainsKey(msgid))
+                        Status.packetspersecondbuild[msgid] = DateTime.Now;
 
-					MAVlist[sysid, compid].packetspersecond[msgid] = (((1000 /
-																			((DateTime.Now -
-																			  MAVlist[sysid, compid]
-																				  .packetspersecondbuild[msgid])
-																				.TotalMilliseconds) +
-																			MAVlist[sysid, compid].packetspersecond[
-																				msgid]) / 2));
+                    Status.packetspersecond[msgid] = (((1000 /
+                        ((DateTime.Now - Status.packetspersecondbuild[msgid]).TotalMilliseconds) +
+                                                        Status.packetspersecond[msgid]) / 2));
 
-					MAVlist[sysid, compid].packetspersecondbuild[msgid] = DateTime.Now;
+                    Status.packetspersecondbuild[msgid] = DateTime.Now;
 
 					// store packet history
 					lock (objlock)
 					{
-						MAVlist[sysid, compid].addPacket(message);
+                        Status.addPacket(message);
 
 						// 3dr radio status packet are injected into the current mav
 						if (msgid == (byte)MAVLINK_MSG_ID.RADIO_STATUS ||
 							msgid == (byte)MAVLINK_MSG_ID.RADIO)
 						{
-							MAVlist[sysidcurrent, compidcurrent].addPacket(message);
+							Status.addPacket(message);
 						}
 
 
@@ -619,23 +592,9 @@ namespace Diva.Mavlink
 						// not a gcs
 						if (hb.type != (byte)MAV_TYPE.GCS)
 						{
-							// add a seen sysid
-							if (!MAVlist.Contains(sysid, compid, false))
-							{
-								// ensure its set from connect or log playback
-								MAVlist.Create(sysid, compid);
-								MAVlist[sysid, compid].aptype = (MAV_TYPE)hb.type;
-								MAVlist[sysid, compid].apname = (MAV_AUTOPILOT)hb.autopilot;
-								SetAPType(sysid, compid);
-							}
-
-							// attach to the only remote device. / default to first device seen
-							if (MAVlist.Count == 1)
-							{
-								// set it private as compidset will trigger new mavstate
-								_sysidcurrent = sysid;
-								compidcurrent = compid;
-							}
+                            if (Status.aptype != (MAV_TYPE)hb.type ||
+                                    Status.apname != (MAV_AUTOPILOT)hb.autopilot)
+    							SetAPType((MAV_TYPE)hb.type, (MAV_AUTOPILOT)hb.autopilot);
 						}
 					}
 
@@ -677,7 +636,7 @@ namespace Diva.Mavlink
 			}
 
 			// update last valid packet receive time
-			MAVlist[sysid, compid].lastvalidpacket = DateTime.Now;
+			Status.lastvalidpacket = DateTime.Now;
 
 			return message;
 		}
@@ -719,7 +678,7 @@ namespace Diva.Mavlink
 
         #region Retrieve packets from flight control.
         public const int MAX_MAVLINK_MSGID = 256;
-        private Action<MAVLinkMessage>[] msgMap = new Action<MAVLinkMessage>[MAX_MAVLINK_MSGID];
+        private readonly Action<MAVLinkMessage>[] msgMap = new Action<MAVLinkMessage>[MAX_MAVLINK_MSGID];
         private DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(50);
         private DateTime lastUpdatedTime = DateTime.MinValue;
 
@@ -847,13 +806,13 @@ namespace Diva.Mavlink
         #region Parameters
         public void GetParamList()
 		{
-			log.InfoFormat("getParamList {0} {1}", sysidcurrent, compidcurrent);
+			log.InfoFormat("getParamList {0} {1}", SysId, CompId);
 
 			frmProgressReporter = new ProgressDialogV2
 			{
 				StartPosition = FormStartPosition.CenterScreen,
-				Text = "Getting Params" + " " + sysidcurrent
-			};
+				Text = "Getting Params" + " " + SysId
+            };
 
 			frmProgressReporter.DoWork += (o, e, d) => GetParamListBG();
 			frmProgressReporter.UpdateProgressAndStatus(-1, "Get params SD");
@@ -869,12 +828,12 @@ namespace Diva.Mavlink
 		{
 			if (name == "") return 0;
 
-			log.Info("GetParam name: '" + name + "' " + Status.sysid + ":" + Status.compid);
+			log.Info("GetParam name: '" + name + "' " + SysId + ":" + CompId);
 
             mavlink_param_request_read_t req = new mavlink_param_request_read_t
             {
-                target_component = Status.compid,
-                target_system = Status.sysid,
+                target_component = CompId,
+                target_system = SysId,
                 param_id = ASCIIEncoding.ASCII.GetBytes(name),
                 param_index = -1
             };
@@ -926,18 +885,18 @@ namespace Diva.Mavlink
 						}
 
 						// update table
-						if (MAVlist[Status.sysid, Status.compid].apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+						if (Status.apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
 						{
 							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
-							MAVlist[Status.sysid, Status.compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
+                            Status.param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
 						}
 						else
 						{
 							var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
-							MAVlist[Status.sysid, Status.compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
+							Status.param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
 						}
 
-						MAVlist[Status.sysid, Status.compid].param_types[st] = (MAV_PARAM_TYPE)par.param_type;
+						Status.param_types[st] = (MAV_PARAM_TYPE)par.param_type;
 
 						log.Info(DateTime.Now.Millisecond + " got param " + (par.param_index) + " of " +
 								 (par.param_count) + " name: " + st);
@@ -950,13 +909,13 @@ namespace Diva.Mavlink
 
         public bool SetParam(string paramname, double value)
         {
-            if (!MAVlist[Status.sysid, Status.compid].param.ContainsKey(paramname))
+            if (!Status.param.ContainsKey(paramname))
             {
                 log.Warn("Trying to set Param that doesnt exist " + paramname + "=" + value);
                 return false;
             }
 
-            if (MAVlist[Status.sysid, Status.compid].param[paramname].Value == value)
+            if (Status.param[paramname].Value == value)
             {
                 log.Warn("setParam " + paramname + " not modified as same");
                 return true;
@@ -969,23 +928,23 @@ namespace Diva.Mavlink
             {
                 target_system = Status.sysid,
                 target_component = Status.compid,
-                param_type = (byte)MAVlist[Status.sysid, Status.compid].param_types[paramname]
+                param_type = (byte)Status.param_types[paramname]
             };
 
             byte[] temp = Encoding.ASCII.GetBytes(paramname);
 
             Array.Resize(ref temp, 16);
             req.param_id = temp;
-            if (MAVlist[Status.sysid, Status.compid].apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+            if (Status.apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
             {
                 req.param_value = new MAVLinkParam(paramname, value, (MAV_PARAM_TYPE.REAL32)).float_value;
             }
             else
             {
-                req.param_value = new MAVLinkParam(paramname, value, (MAV_PARAM_TYPE)MAVlist[Status.sysid, Status.compid].param_types[paramname]).float_value;
+                req.param_value = new MAVLinkParam(paramname, value, (MAV_PARAM_TYPE)Status.param_types[paramname]).float_value;
             }
 
-            int currentparamcount = MAVlist[Status.sysid, Status.compid].param.Count;
+            int currentparamcount = Status.param.Count;
             SendPacket(MAVLINK_MSG_ID.PARAM_SET, req);
             log.InfoFormat("setParam '{0}' = '{1}' sysid {2} compid {3}", paramname, value, Status.sysid,
                 Status.compid);
@@ -1024,17 +983,17 @@ namespace Diva.Mavlink
                             continue;
                         }
 
-                        if (MAVlist[Status.sysid, Status.compid].apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
+                        if (Status.apname == MAV_AUTOPILOT.ARDUPILOTMEGA)
                         {
                             var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
-                            MAVlist[Status.sysid, Status.compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
+                            Status.param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)par.param_type);
                         }
                         else
                         {
                             var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
-                            MAVlist[Status.sysid, Status.compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
+                            Status.param[st] = new MAVLinkParam(st, BitConverter.GetBytes(par.param_value), (MAV_PARAM_TYPE)par.param_type, (MAV_PARAM_TYPE)par.param_type);
                         }
-                        log.Info("setParam gotback " + st + " : " + MAVlist[Status.sysid, Status.compid].param[st]);
+                        log.Info("setParam gotback " + st + " : " + Status.param[st]);
                         PortInUse = false;
                         return true;
                     }
@@ -1229,15 +1188,13 @@ namespace Diva.Mavlink
 
 		void SetupMavConnect(MAVLinkMessage message, mavlink_heartbeat_t hb)
 		{
-			sysidcurrent = message.sysid;
-			compidcurrent = message.compid;
-
-			mavlinkversion = hb.mavlink_version;
+            /*if (SysId != message.sysid || CompId != message.compid)
+            {
+                log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({message.sysid},{message.compid}), dropped");
+            }*/
+            mavlinkversion = hb.mavlink_version;
 			Status.aptype = (MAV_TYPE)hb.type;
 			Status.apname = (MAV_AUTOPILOT)hb.autopilot;
-
-			Status.sysid = message.sysid;
-			Status.compid = message.compid;
 			Status.recvpacketcount = message.seq;
 		}
 
@@ -1275,7 +1232,13 @@ namespace Diva.Mavlink
 
 		private void GetInfoFromStream(ref MAVLinkMessage buffer, byte sysid, byte compid)
 		{
-			if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
+            // sanity check?
+            /*if (SysId != sysid || CompId != compid)
+            {
+                log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({sysid},{compid}), dropped");
+            }*/
+            // skip wp report, current processing scheme for getting all parameters may lost waypoint packets
+            /*if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
 			{
 				// clear old
 				mavlink_mission_count_t wp = buffer.ToStructure<mavlink_mission_count_t>();
@@ -1362,7 +1325,7 @@ namespace Diva.Mavlink
 
 				MAVlist[fencept.target_system, fencept.target_component].fencepoints[fencept.idx] = fencept;
 			}
-			else if (buffer.msgid == (byte)MAVLINK_MSG_ID.PARAM_VALUE)
+			else */if (buffer.msgid == (byte)MAVLINK_MSG_ID.PARAM_VALUE)
 			{
 				mavlink_param_value_t value = buffer.ToStructure<mavlink_param_value_t>();
 
@@ -1375,22 +1338,22 @@ namespace Diva.Mavlink
 					st = st.Substring(0, pos);
 				}
 
-				MAVlist[sysid, compid].param_types[st] = (MAV_PARAM_TYPE)value.param_type;
+				Status.param_types[st] = (MAV_PARAM_TYPE)value.param_type;
 
 				if (Status.apname == MAV_AUTOPILOT.ARDUPILOTMEGA && buffer.compid != (byte)MAV_COMPONENT.MAV_COMP_ID_UDP_BRIDGE)
 				{
 					var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
-					MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(value.param_value),
+                    Status.param[st] = new MAVLinkParam(st, BitConverter.GetBytes(value.param_value),
 						MAV_PARAM_TYPE.REAL32, (MAV_PARAM_TYPE)value.param_type);
 				}
 				else
 				{
 					var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
-					MAVlist[sysid, compid].param[st] = new MAVLinkParam(st, BitConverter.GetBytes(value.param_value),
+                    Status.param[st] = new MAVLinkParam(st, BitConverter.GetBytes(value.param_value),
 						(MAV_PARAM_TYPE)value.param_type, (MAV_PARAM_TYPE)value.param_type);
 				}
 
-				MAVlist[sysid, compid].param.TotalReported = value.param_count;
+                Status.param.TotalReported = value.param_count;
 			}
 			else if (buffer.msgid == (byte)MAVLINK_MSG_ID.TIMESYNC)
 			{
@@ -1411,89 +1374,88 @@ namespace Diva.Mavlink
 				else if (tsync.tc1 > 0)
 				{
 					Int64 offset_ns = (tsync.ts1 + now_ns - tsync.tc1 * 2) / 2;
-					Int64 dt = MAVlist[buffer.sysid, buffer.compid].time_offset_ns - offset_ns;
+					Int64 dt = Status.time_offset_ns - offset_ns;
 
 					if (Math.Abs(dt) > 10000000) // 10 millisecond skew
 					{
-						MAVlist[buffer.sysid, buffer.compid].time_offset_ns = offset_ns; // hard-set it.
+                        Status.time_offset_ns = offset_ns; // hard-set it.
 					}
 					else
 					{
 						var offset_avg_alpha = 0.6;
 						var avg = (offset_avg_alpha * offset_ns) +
-								  (1.0 - offset_avg_alpha) * MAVlist[buffer.sysid, buffer.compid].time_offset_ns;
-						MAVlist[buffer.sysid, buffer.compid].time_offset_ns = (long)avg;
+								  (1.0 - offset_avg_alpha) * Status.time_offset_ns;
+                        Status.time_offset_ns = (long)avg;
 					}
 				}
 			}
 		}
 
-		public void SetAPType(byte sysid, byte compid)
+		public void SetAPType(MAV_TYPE type, MAV_AUTOPILOT name)
 		{
-			MAVlist[sysid, compid].sysid = sysid;
-			MAVlist[sysid, compid].compid = compid;
-
-			switch (MAVlist[sysid, compid].apname)
+            Status.aptype = type;
+            Status.apname = name;
+			switch (name)
 			{
 				case MAV_AUTOPILOT.ARDUPILOTMEGA:
-					switch (MAVlist[sysid, compid].aptype)
+					switch (type)
 					{
 						case MAV_TYPE.FIXED_WING:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduPlane;
+                            Status.firmware = MavUtlities.Firmwares.ArduPlane;
 							break;
 						case MAV_TYPE.QUADROTOR:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.TRICOPTER:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.HEXAROTOR:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.OCTOROTOR:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.HELICOPTER:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.GROUND_ROVER:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduRover;
+                            Status.firmware = MavUtlities.Firmwares.ArduRover;
 							break;
 						case MAV_TYPE.SUBMARINE:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduSub;
+                            Status.firmware = MavUtlities.Firmwares.ArduSub;
 							break;
 						case MAV_TYPE.ANTENNA_TRACKER:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduTracker;
+                            Status.firmware = MavUtlities.Firmwares.ArduTracker;
 							break;
 						default:
-							log.Error(MAVlist[sysid, compid].aptype + " not registered as valid type");
+							log.Error(Status.aptype + " not registered as valid type");
 							break;
 					}
 					break;
 				case MAV_AUTOPILOT.UDB:
-					switch (MAVlist[sysid, compid].aptype)
+					switch (type)
 					{
 						case MAV_TYPE.FIXED_WING:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.ArduPlane;
+                            Status.firmware = MavUtlities.Firmwares.ArduPlane;
 							break;
 					}
 					break;
 				case MAV_AUTOPILOT.GENERIC:
-					switch (MAVlist[sysid, compid].aptype)
+					switch (type)
 					{
 						case MAV_TYPE.FIXED_WING:
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.Ateryx;
+                            Status.firmware = MavUtlities.Firmwares.Ateryx;
 							break;
 					}
 					break;
 				case MAV_AUTOPILOT.PX4:
-					MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.PX4;
+                    Status.firmware = MavUtlities.Firmwares.PX4;
 					break;
 				default:
-					switch (MAVlist[sysid, compid].aptype)
+					switch (type)
 					{
 						case MAV_TYPE.GIMBAL: // storm32 - name 83
-							MAVlist[sysid, compid].firmware = MavUtlities.Firmwares.Gymbal;
+                            Status.firmware = MavUtlities.Firmwares.Gymbal;
 							break;
 					}
 					break;

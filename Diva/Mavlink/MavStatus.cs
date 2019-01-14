@@ -2,20 +2,17 @@
 using GMap.NET;
 using log4net;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using static MAVLink;
 
 namespace Diva.Mavlink
 {
-	public class MavStatus : MAVLink, IDisposable
+	public class MavStatus : IDisposable
 	{
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-		public MavStatus(MavCore mavLinkInterface, byte sysid, byte compid)
+		public MavStatus(MavCore link, byte sysid, byte compid)
 		{
 			this.sysid = sysid;
 			this.compid = compid;
@@ -31,9 +28,6 @@ namespace Diva.Mavlink
 			this.SoftwareVersions = "";
 			this.SerialString = "";
 			this.FrameString = "";
-		
-
-			camerapoints.Clear();
 
 			this.packetslost = 0f;
 			this.packetsnotlost = 0f;
@@ -166,19 +160,9 @@ namespace Diva.Mavlink
 		private float _groundcourse = 0;
 
 		/// <summary>
-		/// the static global state of the currently connected MAV
-		/// </summary>
-		// public CurrentState cs = new CurrentState();
-
-		private byte _sysid;
-		/// <summary>
 		/// mavlink remote sysid
 		/// </summary>
-		public byte sysid
-		{
-			get { return _sysid; }
-			set { _sysid = value; }
-		}
+		public byte sysid { get; set; }
 
 		/// <summary>
 		/// mavlink remove compid
@@ -190,7 +174,6 @@ namespace Diva.Mavlink
 		public byte sys_status { get; set; }
 
 		public UInt64 timestamp { get; set; }
-
 
 		public bool armed { get; set; }
 
@@ -277,19 +260,6 @@ namespace Diva.Mavlink
 
 
 		/// <summary>
-		/// used as a snapshot of what is loaded on the ap atm. - derived from the stream
-		/// </summary>
-		public ConcurrentDictionary<int, mavlink_mission_item_t> wps = new ConcurrentDictionary<int, mavlink_mission_item_t>();
-
-		public ConcurrentDictionary<int, mavlink_rally_point_t> rallypoints = new ConcurrentDictionary<int, mavlink_rally_point_t>();
-
-		public ConcurrentDictionary<int, mavlink_fence_point_t> fencepoints = new ConcurrentDictionary<int, mavlink_fence_point_t>();
-
-		public List<mavlink_camera_feedback_t> camerapoints = new List<mavlink_camera_feedback_t>();
-
-		// public GMapMarkerOverlapCount GMapMarkerOverlapCount = new GMapMarkerOverlapCount(PointLatLng.Empty);
-
-		/// <summary>
 		/// Store the guided mode wp location
 		/// </summary>
 		public mavlink_mission_item_t GuidedMode = new mavlink_mission_item_t();
@@ -321,4 +291,12 @@ namespace Diva.Mavlink
 
 		
 	}
+
+    public class DroneStatus : MavStatus
+    {
+        public DroneStatus(MavCore link, byte sysid, byte compid) : base(link, sysid, compid)
+        {
+
+        }
+    }
 }

@@ -6,31 +6,27 @@ using System.Threading;
 using System.Windows.Forms;
 using log4net;
 using Diva.Utilities;
+using static MAVLink;
 
 namespace Diva.Mavlink
 {
     public class MavDrone : MavCore
     {
-        public string Name => setting?.Name;
-
-        private MavCore mav => this as MavCore;
-        private DroneSetting setting;
-        public DroneSetting Setting => setting;
+        public DroneSetting Setting { get; }
+        public string Name => Setting?.Name;
         public bool IsOpen => BaseStream?.IsOpen ?? false;
         public bool IsRotationStandby = true;
 
         public MavDrone(DroneSetting setting = null)
         {
-            this.setting = setting;
-            Status.nav_bearing = float.NaN;
-            Status.groundcourse = float.NaN;
+            Setting = setting;
             RegisterMavMessageHandler(MAVLINK_MSG_ID.MISSION_CURRENT, MissionCurrentPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, NavControllerOutputPacketHandler);
         }
 
         public bool Connect()
         {
-            BaseStream = MavStream.CreateStream(setting);
+            BaseStream = MavStream.CreateStream(Setting);
             try
             {
                 DateTime connecttime = DateTime.Now;
@@ -41,8 +37,6 @@ namespace Diva.Mavlink
                     Close();
                     return false;
                 }
-                sysidcurrent = MAVlist.First().sysid;
-                compidcurrent = MAVlist.First().compid;
             }
             catch (Exception e)
             {
@@ -462,10 +456,10 @@ namespace Diva.Mavlink
                 target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE;
 
             if (lat != 0)
-                MAVlist[Status.sysid, Status.compid].GuidedMode.x = (float)lat;
+                Status.GuidedMode.x = (float)lat;
             if (lng != 0)
-                MAVlist[Status.sysid, Status.compid].GuidedMode.y = (float)lng;
-            MAVlist[Status.sysid, Status.compid].GuidedMode.z = (float)alt;
+                Status.GuidedMode.y = (float)lng;
+            Status.GuidedMode.z = (float)alt;
 
             SendPacket(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target);
         }
@@ -482,7 +476,7 @@ namespace Diva.Mavlink
 
         public MAV_MISSION_RESULT SetWP(Locationwp loc, ushort index, MAV_FRAME frame, bool use_int = false)
         {
-            byte contmode = (byte)((MAVlist[Status.sysid, Status.compid].firmware == MavUtlities.Firmwares.ArduPlane) ? 2 : 1);
+            byte contmode = (byte)((Status.firmware == MavUtlities.Firmwares.ArduPlane) ? 2 : 1);
             object req;
             if (use_int)
             {
@@ -611,7 +605,7 @@ namespace Diva.Mavlink
                 target_component = Status.compid, // MSG_NAMES.MISSION_COUNT
                 count = wp_total
             };
-                        SendPacket(MAVLINK_MSG_ID.MISSION_COUNT, req);
+            SendPacket(MAVLINK_MSG_ID.MISSION_COUNT, req);
 
             DateTime start = DateTime.Now;
             int retrys = 3;
@@ -649,8 +643,6 @@ namespace Diva.Mavlink
                             if (Status.param["MIS_TOTAL"] != null)
                                 Status.param["MIS_TOTAL"].Value = wp_total - 1;
 
-                            Status.wps.Clear();
-
                             PortInUse = false;
                             return;
                         }
@@ -677,7 +669,7 @@ namespace Diva.Mavlink
                 // fix for followme change
                 SetMode("GUIDED");
                 log.InfoFormat("setGuidedModeWP {0}:{1} lat {2} lng {3} alt {4}", Status.sysid, Status.compid, gotohere.lat, gotohere.lng, gotohere.alt);
-                if (MAVlist[Status.sysid, Status.compid].firmware == MavUtlities.Firmwares.ArduPlane)
+                if (Status.firmware == MavUtlities.Firmwares.ArduPlane)
                 {
                     MAV_MISSION_RESULT ans = SetWP(gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT);
                     if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)

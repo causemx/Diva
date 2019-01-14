@@ -257,7 +257,6 @@
     <Compile Include="Mavlink\MavStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavCore.cs" />
-    <Compile Include="Mavlink\MavList.cs" />
     <Compile Include="Mavlink\MavSerialStream.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
     <Compile Include="Mavlink\MavUdpStream.cs" />

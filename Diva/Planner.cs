@@ -1700,47 +1700,7 @@ namespace Diva
 				}
 
 				// log
-				log.Info("wps values " + ActiveDrone.Status.wps.Values.Count);
 				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
-
-				// check for changes / future mod to send just changed wp's
-				if (ActiveDrone.Status.wps.Values.Count == (dgvWayPoints.Rows.Count + 1))
-				{
-					Hashtable wpstoupload = new Hashtable();
-
-					a = -1;
-					foreach (var item in ActiveDrone.Status.wps.Values)
-					{
-						// skip home
-						if (a == -1)
-						{
-							a++;
-							continue;
-						}
-
-						MAVLink.mavlink_mission_item_t temp = DataViewtoLocationwp(a);
-
-						if (temp.command == item.command &&
-							temp.x == item.x &&
-							temp.y == item.y &&
-							temp.z == item.z &&
-							temp.param1 == item.param1 &&
-							temp.param2 == item.param2 &&
-							temp.param3 == item.param3 &&
-							temp.param4 == item.param4
-							)
-						{
-							log.Info("wp match " + (a + 1));
-						}
-						else
-						{
-							log.Info("wp no match" + (a + 1));
-							wpstoupload[a] = "";
-						}
-
-						a++;
-					}
-				}
 
 				uint capabilities = (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FLOAT;
 				bool use_int = (capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
