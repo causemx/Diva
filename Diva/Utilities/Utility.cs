@@ -346,9 +346,8 @@ namespace Diva.Utilities
 			catch
 			{
 			}
-			//g.DrawLine(new Pen(Color.Green, 2), 0.0f, 0.0f, (float)Math.Cos((nav_bearing - 90) * MathHelper.deg2rad) * length, (float)Math.Sin((nav_bearing - 90) * MathHelper.deg2rad) * length);
-			//g.DrawLine(new Pen(Color.Black, 2), 0.0f, 0.0f, (float)Math.Cos((cog - 90) * MathHelper.deg2rad) * length,
-			//	(float)Math.Sin((cog - 90) * MathHelper.deg2rad) * length);
+			g.DrawLine(new Pen(Color.Green, 2), 0.0f, 0.0f, (float)Math.Cos((cog - 90) * MathHelper.deg2rad) * length,
+				(float)Math.Sin((cog - 90) * MathHelper.deg2rad) * length);
 			Pen dashpen = new Pen(Color.Orange, 2);
 			dashpen.DashStyle = DashStyle.Dash;
 

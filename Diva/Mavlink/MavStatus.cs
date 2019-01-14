@@ -60,9 +60,9 @@ namespace Diva.Mavlink
 
 		public uint mode{ get; set; }
 
-		// Copter parameter
+        // Copter parameter
 
-		public float nav_bearing { get; set; }
+        public float nav_bearing { get; set; } = float.NaN;
 
 		public MavUtlities.Firmwares firmware = MavUtlities.Firmwares.ArduCopter2;
 
@@ -157,7 +157,7 @@ namespace Diva.Mavlink
 			}
 		}
 
-		private float _groundcourse = 0;
+		private float _groundcourse = float.NaN;
 
 		/// <summary>
 		/// mavlink remote sysid
