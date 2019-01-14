@@ -12,10 +12,8 @@ namespace Diva.Mavlink
 	{
 		private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-		public MavStatus(MavCore link, byte sysid, byte compid)
+		public MavStatus()
 		{
-			this.sysid = sysid;
-			this.compid = compid;
 			this.packetspersecond = new Dictionary<uint, double>();
 			this.packetspersecondbuild = new Dictionary<uint, DateTime>();
 			this.lastvalidpacket = DateTime.MinValue;
@@ -159,17 +157,7 @@ namespace Diva.Mavlink
 
 		private float _groundcourse = float.NaN;
 
-		/// <summary>
-		/// mavlink remote sysid
-		/// </summary>
-		public byte sysid { get; set; }
-
-		/// <summary>
-		/// mavlink remove compid
-		/// </summary>
-		public byte compid { get; set; }
-
-		public byte linkid { get; set; }
+        public byte linkid { get; set; }
 
 		public byte sys_status { get; set; }
 
@@ -267,11 +255,6 @@ namespace Diva.Mavlink
 		internal int recvpacketcount = 0;
 		public Int64 time_offset_ns { get; set; }
 
-		public override string ToString()
-		{
-			return sysid.ToString();
-		}
-
 		public void Dispose()
 		{
 			throw new NotImplementedException();
@@ -294,7 +277,7 @@ namespace Diva.Mavlink
 
     public class DroneStatus : MavStatus
     {
-        public DroneStatus(MavCore link, byte sysid, byte compid) : base(link, sysid, compid)
+        public DroneStatus() : base()
         {
 
         }

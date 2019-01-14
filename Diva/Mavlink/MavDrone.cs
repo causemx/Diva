@@ -65,15 +65,6 @@ namespace Diva.Mavlink
         private void NavControllerOutputPacketHandler(MAVLinkMessage packet)
         {
             var nav = packet.ToStructure<mavlink_nav_controller_output_t>();
-
-            //float nav_roll = nav.nav_roll;
-            //float nav_pitch = nav.nav_pitch;
-            //short target_bearing = nav.target_bearing;
-            //ushort wp_dist = nav.wp_dist;
-            //float alt_error = nav.alt_error;
-            //float aspd_error = nav.aspd_error / 100.0f;
-            //float xtrack_error = nav.xtrack_error;
-
             Status.nav_bearing = nav.nav_bearing;
         }
         #endregion Message packet handlers
@@ -435,8 +426,8 @@ namespace Diva.Mavlink
 
             mavlink_set_position_target_global_int_t target = new mavlink_set_position_target_global_int_t
             {
-                target_system = Status.sysid,
-                target_component = Status.compid,
+                target_system = SysId,
+                target_component = CompId,
                 alt = (float)alt,
                 lat_int = (int)(lat * 1e7),
                 lon_int = (int)(lng * 1e7),
@@ -490,8 +481,8 @@ namespace Diva.Mavlink
 
                 req = new mavlink_mission_item_int_t
                 {
-                    target_component = Status.compid,
-                    target_system = Status.sysid,
+                    target_component = CompId,
+                    target_system = SysId,
                     command = loc.id,
                     current = 0,
                     autocontinue = contmode,
@@ -510,8 +501,8 @@ namespace Diva.Mavlink
             {
                 req = new mavlink_mission_item_t
                 {
-                    target_component = Status.compid,
-                    target_system = Status.sysid,
+                    target_component = CompId,
+                    target_system = SysId,
                     command = loc.id,
                     current = 0,
                     autocontinue = contmode,
@@ -587,8 +578,8 @@ namespace Diva.Mavlink
         {
             mavlink_mission_write_partial_list_t req = new mavlink_mission_write_partial_list_t();
 
-            req.target_system = Status.sysid;
-            req.target_component = Status.compid;
+            req.target_system = SysId;
+            req.target_component = CompId;
 
             req.start_index = (short)startwp;
             req.end_index = (short)endwp;
@@ -601,8 +592,8 @@ namespace Diva.Mavlink
             PortInUse = true;
             var req = new mavlink_mission_count_t
             {
-                target_system = Status.sysid,
-                target_component = Status.compid, // MSG_NAMES.MISSION_COUNT
+                target_system = SysId,
+                target_component = CompId, // MSG_NAMES.MISSION_COUNT
                 count = wp_total
             };
             SendPacket(MAVLINK_MSG_ID.MISSION_COUNT, req);
@@ -668,7 +659,8 @@ namespace Diva.Mavlink
                 // Must be Guided mode.s
                 // fix for followme change
                 SetMode("GUIDED");
-                log.InfoFormat("setGuidedModeWP {0}:{1} lat {2} lng {3} alt {4}", Status.sysid, Status.compid, gotohere.lat, gotohere.lng, gotohere.alt);
+                log.InfoFormat("setGuidedModeWP {0}:{1} lat {2} lng {3} alt {4}",
+                    SysId, CompId, gotohere.lat, gotohere.lng, gotohere.alt);
                 if (Status.firmware == MavUtlities.Firmwares.ArduPlane)
                 {
                     MAV_MISSION_RESULT ans = SetWP(gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT);

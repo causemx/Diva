@@ -37,20 +37,12 @@ namespace Diva.Mavlink
             }
         }
 
-        /*public MavList MAVlist;
-
-		public MavStatus Status
-		{
-			get { return MAVlist[sysidcurrent, compidcurrent]; }
-			set { MAVlist[sysidcurrent, compidcurrent] = value; }
-		}*/
         public MavStatus Status;
 
 		public event EventHandler ParamListChanged;
-		//public event EventHandler MavChanged;
 
-        public byte SysId => Status.sysid;
-        public byte CompId => Status.compid;
+        public byte SysId { get; private set; }
+        public byte CompId { get; private set; }
 
         public BufferedStream LogFile { get; set; }
 		public BufferedStream RawLogFile { get; set; }
@@ -69,7 +61,7 @@ namespace Diva.Mavlink
         #region Core
         public MavCore()
 		{
-            Status = new MavStatus(this, 0, 0);
+            Status = new MavStatus();
             RegisterMavMessageHandler(MAVLINK_MSG_ID.HEARTBEAT, HeartBeatPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
@@ -225,7 +217,7 @@ namespace Diva.Mavlink
 				GetVersion();
 
 				frmProgressReporter.UpdateProgressAndStatus(0,
-					"Getting Params.. (sysid " + Status.sysid + " compid " + Status.compid + ") ");
+					$"Getting Params.. (sysid {SysId} compid {CompId}) ");
 				GetParamListBG();
 
 				if (frmProgressReporter.doWorkArgs.CancelAcknowledged == true)
@@ -252,7 +244,7 @@ namespace Diva.Mavlink
 			//frmProgressReporter.Close();
 			PortInUse = false;
 			frmProgressReporter.UpdateProgressAndStatus(100, "done");
-			log.Info("Done open " + Status.sysid + " " + Status.compid);
+			log.Info($"Done open {SysId} {CompId}");
 			Status.packetslost = 0;
 			Status.synclost = 0;
 		}
@@ -473,7 +465,8 @@ namespace Diva.Mavlink
             if (SysId == 0)
             {
                 log.Info($"MavCore opened with (sysid, compid)=({sysid},{compid})");
-                Status = new MavStatus(this, sysid, compid);
+                SysId = sysid;
+                CompId = compid;
                 Status.mavlinkv2 = message.buffer[0] == MAVLINK_STX ? true : false;
             } else if (sysid != SysId)
             {
@@ -926,8 +919,8 @@ namespace Diva.Mavlink
             // param type is set here, however it is always sent over the air as a float 100int = 100f.
             var req = new mavlink_param_set_t
             {
-                target_system = Status.sysid,
-                target_component = Status.compid,
+                target_system = SysId,
+                target_component = CompId,
                 param_type = (byte)Status.param_types[paramname]
             };
 
@@ -946,8 +939,8 @@ namespace Diva.Mavlink
 
             int currentparamcount = Status.param.Count;
             SendPacket(MAVLINK_MSG_ID.PARAM_SET, req);
-            log.InfoFormat("setParam '{0}' = '{1}' sysid {2} compid {3}", paramname, value, Status.sysid,
-                Status.compid);
+            log.InfoFormat("setParam '{0}' = '{1}' sysid {2} compid {3}",
+                paramname, value, SysId, CompId);
 
             DateTime start = DateTime.Now;
             int retrys = 3;
@@ -1010,8 +1003,8 @@ namespace Diva.Mavlink
 			MAVLinkParamList newparamlist = new MAVLinkParamList();
             mavlink_param_request_list_t req = new mavlink_param_request_list_t
             {
-                target_system = Status.sysid,
-                target_component = Status.compid
+                target_system = SysId,
+                target_component = CompId
             };
 
             SendPacket(MAVLINK_MSG_ID.PARAM_REQUEST_LIST, req);
@@ -1065,8 +1058,8 @@ namespace Diva.Mavlink
 									queued++;
                                     mavlink_param_request_read_t req2 = new mavlink_param_request_read_t
                                     {
-                                        target_system = Status.sysid,
-                                        target_component = Status.compid,
+                                        target_system = SysId,
+                                        target_component = CompId,
                                         param_index = i,
                                         param_id = new byte[16]
                                     };
@@ -1466,8 +1459,8 @@ namespace Diva.Mavlink
 		{
 			mavlink_autopilot_version_request_t req = new mavlink_autopilot_version_request_t();
 
-			req.target_component = Status.compid;
-			req.target_system = Status.sysid;
+			req.target_component = CompId;
+			req.target_system = SysId;
 
 			// request point
 			SendPacket(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req);
@@ -1533,8 +1526,8 @@ namespace Diva.Mavlink
 			PortInUse = true;
 			mavlink_command_long_t req = new mavlink_command_long_t
             {
-                target_system = Status.sysid,
-                target_component = Status.compid,
+                target_system = SysId,
+                target_component = CompId,
                 command = (ushort)actionid,
                 param1 = p1,
                 param2 = p2,
@@ -1601,8 +1594,8 @@ namespace Diva.Mavlink
 		{
 			mavlink_request_data_stream_t req = new mavlink_request_data_stream_t
             {
-                target_component = Status.compid,
-                target_system = Status.sysid,
+                target_component = CompId,
+                target_system = SysId,
                 req_message_rate = hzrate,
                 start_stop = 1, //start
                 req_stream_id = (byte)id

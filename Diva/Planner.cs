@@ -3232,7 +3232,7 @@ namespace Diva
                 {
                     if (drone.Status.current_lat == 0 || drone.Status.current_lng == 0) { continue; }
                     var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.current_lat, drone.Status.current_lng),
-                        drone.Status.yaw, drone.Status.groundcourse, drone.Status.nav_bearing, drone.Status.sysid);
+                        drone.Status.yaw, drone.Status.groundcourse, drone.Status.nav_bearing, drone.SysId);
                     overlays.routes.Markers.Add(marker);
                 }
 

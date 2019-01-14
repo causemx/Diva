@@ -103,8 +103,10 @@ namespace Diva.Controls
 			if (ActiveDroneInfo != null) try
 			{
 				MavStatus status = ActiveDroneInfo.Drone.Status;
-				ActiveDroneInfo.UpdateTelemetryData(status.sysid, status.battery_voltage, status.satcount);
-				TelemetryData.UpdateTelemetryData(status.alt, status.verticalspeed, status.groundspeed);
+				ActiveDroneInfo.UpdateTelemetryData(activeDrone.Drone.SysId,
+                    status.battery_voltage, status.satcount);
+				TelemetryData.UpdateTelemetryData(status.alt,
+                    status.verticalspeed, status.groundspeed);
 				string getText(string name) =>
 					TelemetryData.Controls.Find(name, true)[0].Text;
 				DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
