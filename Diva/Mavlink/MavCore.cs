@@ -50,8 +50,8 @@ namespace Diva.Mavlink
 		internal string plaintxtline = "";
 
 		protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		private volatile object objlock = new object();
-		private volatile object readlock = new object();
+		private readonly object objlock = new object();
+		private readonly object readlock = new object();
 		private int pacCount = 0;
 		private string buildplaintxtline = "";
 		private byte mavlinkversion = 0;
@@ -681,15 +681,17 @@ namespace Diva.Mavlink
         protected static T GetMessage<T>(MAVLinkMessage packet, ref object h)
         {
             var mh = h as MessageHolder;
-            if (mh.Message != null) return (T)mh.Message;
-            return (T)(mh.Message = packet.ToStructure<T>());
+            return (T)(mh.Message ?? (mh.Message = packet.ToStructure<T>()));
         }
 
         public void UpdateCurrentSettings()
 		{
-			MAVLinkMessage packet = ReadPacket();
-			if (packet.Length == 0) return;
-            HandleMavLinkMessage(packet);
+            while (BaseStream.IsOpen && !PortInUse && BaseStream.BytesAvailable > 5)
+            {
+                MAVLinkMessage packet = ReadPacket();
+                if (packet.Length == 0) return;
+                HandleMavLinkMessage(packet);
+            }
 
             if (DateTime.Now > nextUpdateTime) lock (this)
 			{
@@ -723,10 +725,8 @@ namespace Diva.Mavlink
                 msgMap[message.msgid]?.Invoke(new MessageHolder(), message);
         }
 
-        private void HeartBeatPacketHandler(object holder, MAVLinkMessage packet)
-        {
+        private void HeartBeatPacketHandler(object holder, MAVLinkMessage packet) =>
             GetMessage<mavlink_heartbeat_t>(packet, ref holder);
-        }
 
         private void GPSPacketHandler(object holder, MAVLinkMessage packet)
         {

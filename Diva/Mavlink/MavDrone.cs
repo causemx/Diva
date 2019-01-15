@@ -86,14 +86,12 @@ namespace Diva.Mavlink
         private void GPSPacketHandler(object holder, MAVLinkMessage packet)
         {
             var loc = GetMessage<mavlink_global_position_int_t>(packet, ref holder);
-
             Status.Yaw = loc.hdg == UInt16.MaxValue ? float.NaN : loc.hdg / 100.0f;
         }
 
         private void GPSRawPacketHandler(object holder, MAVLinkMessage packet)
         {
             var gps = GetMessage<mavlink_gps_raw_int_t>(packet, ref holder);
-
             Status.GroundSpeed = gps.vel * 1.0e-2f;
             Status.GroundCourse = gps.cog * 1.0e-2f;
         }
@@ -141,7 +139,6 @@ namespace Diva.Mavlink
         {
             PortInUse = true;
 
-            MAVLinkMessage buffer;
             var req = new mavlink_rally_fetch_point_t
             {
                 idx = (byte)no,
@@ -168,7 +165,7 @@ namespace Diva.Mavlink
                     throw new TimeoutException("Timeout on read - getRallyPoint");
                 }
 
-                buffer = ReadPacket();
+                MAVLinkMessage buffer = ReadPacket();
                 if (buffer.Length > 5)
                 {
                     if (buffer.msgid == (byte)MAVLINK_MSG_ID.RALLY_POINT)
@@ -466,10 +463,9 @@ namespace Diva.Mavlink
                 vy = 0f,
                 vz = 0f,
                 yaw = 0f,
-                yaw_rate = 0f
+                yaw_rate = 0f,
+                type_mask = ushort.MaxValue
             };
-
-            target.type_mask = ushort.MaxValue;
 
             if (lat != 0 && lng != 0)
                 target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE;
@@ -487,12 +483,13 @@ namespace Diva.Mavlink
 
         public void SetWayPointAck()
         {
-            SendPacket(MAVLINK_MSG_ID.MISSION_ACK, new mavlink_mission_ack_t
-            {
-                target_component = CompId,
-                target_system = SysId,
-                type = 0
-            });
+            SendPacket(MAVLINK_MSG_ID.MISSION_ACK,
+                new mavlink_mission_ack_t
+                {
+                    target_component = CompId,
+                    target_system = SysId,
+                    type = 0
+                });
         }
 
         public MAV_MISSION_RESULT SetWP(Locationwp loc, ushort index, MAV_FRAME frame, bool use_int = false)
@@ -606,15 +603,14 @@ namespace Diva.Mavlink
 
         public void SetWPPartialUpdate(ushort startwp, ushort endwp)
         {
-            mavlink_mission_write_partial_list_t req = new mavlink_mission_write_partial_list_t();
-
-            req.target_system = SysId;
-            req.target_component = CompId;
-
-            req.start_index = (short)startwp;
-            req.end_index = (short)endwp;
-
-            SendPacket(MAVLINK_MSG_ID.MISSION_WRITE_PARTIAL_LIST, req);
+            SendPacket(MAVLINK_MSG_ID.MISSION_WRITE_PARTIAL_LIST,
+                new mavlink_mission_write_partial_list_t
+                {
+                    target_system = SysId,
+                    target_component = CompId,
+                    start_index = (short)startwp,
+                    end_index = (short)endwp
+                });
         }
 
         public void SetWPTotal(ushort wp_total)

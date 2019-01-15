@@ -17,7 +17,7 @@ namespace Diva.Mavlink
         public string SerialString { get; set; } = "";
         public string FrameString { get; set; } = "";
 
-        internal double batvolt;
+        private double batvolt;
         public double BatteryVoltage
         {
             get { return batvolt; }
@@ -32,7 +32,7 @@ namespace Diva.Mavlink
 
         public double Latitude { get; set; }
 		public double Longitude { get; set; }
-        public float Altitude { get; set; }
+        public virtual float Altitude { get; set; }
         public double AbsoluteAltitude { get; set; }
 
         public MavUtlities.Firmwares firmware = MavUtlities.Firmwares.ArduCopter2;
@@ -107,14 +107,13 @@ namespace Diva.Mavlink
         DateTime lastalt = DateTime.MinValue;
         private volatile float altitude = 0;
         float oldalt = 0;
-        public new float Altitude
+        public override float Altitude
         {
             get { return altitude; }
             set
             {
                 // check update rate, and ensure time hasnt gone backwards                
                 altitude = value;
-
                 if ((PacketTime - lastalt).TotalSeconds >= 0.2 && oldalt != Altitude || lastalt > PacketTime)
                 {
                     VerticalSpeed = (Altitude - oldalt) / (float)(PacketTime - lastalt).TotalSeconds;

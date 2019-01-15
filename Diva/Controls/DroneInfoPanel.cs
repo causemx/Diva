@@ -103,8 +103,7 @@ namespace Diva.Controls
 			if (ActiveDroneInfo != null) try
 			{
 				DroneStatus status = ActiveDroneInfo.Drone.Status;
-				ActiveDroneInfo.UpdateTelemetryData(activeDrone.Drone.SysId,
-                    status.BatteryVoltage, status.SatteliteCount);
+				ActiveDroneInfo.UpdateTelemetryData();
 				TelemetryData.UpdateTelemetryData(status.Altitude,
                     status.VerticalSpeed, status.GroundSpeed);
 				string getText(string name) =>

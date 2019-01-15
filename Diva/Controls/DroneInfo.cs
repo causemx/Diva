@@ -42,11 +42,11 @@ namespace Diva.Controls
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
 
-        public void UpdateTelemetryData(byte sysid, double battry_voltage, int satellite_count)
+        public void UpdateTelemetryData()
 		{
-			TxtSystemID.Text = sysid.ToString();
-			TxtBatteryHealth.Text = battry_voltage.ToString("F2");
-			TxtSatelliteCount.Text = satellite_count.ToString();
+			TxtSystemID.Text = Drone.SysId.ToString();
+			TxtBatteryHealth.Text = Drone.Status.BatteryVoltage.ToString("F2");
+			TxtSatelliteCount.Text = Drone.Status.SatteliteCount.ToString();
 		}
 
 		public void UpdateAssumeTime(double missionDistance)
