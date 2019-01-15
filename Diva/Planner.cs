@@ -270,15 +270,15 @@ namespace Diva
                     {
                         Invoke((MethodInvoker)delegate
                         {
-                            string mode = MavUtlities.GetFlightModeName(ActiveDrone.Status.mode);
+                            string mode = MavUtlities.GetFlightModeName(ActiveDrone.Status.FlightMode);
                             if (mode != null)
                                 TxtDroneMode.Text = mode;
                             DroneInfoPanel.UpdateDisplayInfo();
                         });
 
-                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
+                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
 
-                        if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
+                        if (ActiveDrone.Status.Latitude != 0 && ActiveDrone.Status.Longitude != 0)
                         {
                             UpdateMapPosition(currentloc);
                         }
@@ -1128,13 +1128,6 @@ namespace Diva
 				return;
 			}
 
-
-			if (pointno == "Tracker Home")
-			{
-				ActiveDrone.Status.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
-				return;
-			}
-
 			try
 			{
 				selectedrow = int.Parse(pointno) - 1;
@@ -1710,7 +1703,7 @@ namespace Diva
 
 				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
 
-				if (ActiveDrone.Status.apname == MAVLink.MAV_AUTOPILOT.PX4)
+				if (ActiveDrone.Status.APName == MAVLink.MAV_AUTOPILOT.PX4)
 				{
 					totalwpcountforupload--;
 				}
@@ -1731,7 +1724,7 @@ namespace Diva
 				// upload from wp0
 				a = 0;
 
-				if (ActiveDrone.Status.apname != MAVLink.MAV_AUTOPILOT.PX4)
+				if (ActiveDrone.Status.APName != MAVLink.MAV_AUTOPILOT.PX4)
 				{
 					try
 					{
@@ -1802,7 +1795,7 @@ namespace Diva
 
 					// handle current wp upload number
 					int uploadwpno = a;
-					if (ActiveDrone.Status.apname == MAVLink.MAV_AUTOPILOT.PX4)
+					if (ActiveDrone.Status.APName == MAVLink.MAV_AUTOPILOT.PX4)
 						uploadwpno--;
 
 					// try send the wp
@@ -1964,8 +1957,8 @@ namespace Diva
 					
 					try
 					{
-						if (withrally && ActiveDrone.Status.param.ContainsKey("RALLY_TOTAL") &&
-							int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) >= 1)
+						if (withrally && ActiveDrone.Status.Params.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString()) >= 1)
 						{
 							Console.WriteLine("get rally points");
 							getRallyPoints();
@@ -2117,13 +2110,13 @@ namespace Diva
 
 		public void getRallyPoints()
 		{
-			if (ActiveDrone.Status.param["RALLY_TOTAL"] == null)
+			if (ActiveDrone.Status.Params["RALLY_TOTAL"] == null)
 			{
 				MessageBox.Show(Strings.MsgUnsupported);
 				return;
 			}
 
-			if (int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) < 1)
+			if (int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString()) < 1)
 			{
 				MessageBox.Show(Strings.MsgNoRallyPoint);
 				return;
@@ -2131,7 +2124,7 @@ namespace Diva
 
 			overlays.rallypoints.Markers.Clear();
 
-			int count = int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString());
+			int count = int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString());
 
 			for (int a = 0; a < (count); a++)
 			{
@@ -2200,7 +2193,7 @@ namespace Diva
 			}
 
 
-			if (ActiveDrone.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
+			if (ActiveDrone.Status.State != (byte)MAVLink.MAV_STATE.ACTIVE)
 			{
 				DialogResult dr = MessageBox.Show(Strings.MsgWarnDroneMustActive, Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				if (dr == DialogResult.OK) return;
@@ -2362,8 +2355,8 @@ namespace Diva
 			// arm the MAV
 			try
 			{
-				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.armed);
-				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.armed);
+				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.IsArmed);
+				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.IsArmed);
 				if (ans == false)
 					log.Error("arm failed");
 			}
@@ -2629,7 +2622,7 @@ namespace Diva
 				// Do whatever cleanup you need to.
 				Console.WriteLine("ping timer");
 
-				AddWPToMap(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng, 10);
+				AddWPToMap(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude, 10);
 
 				// set the time span
 				await Task.Delay(System.TimeSpan.FromSeconds(5), _tokenSource.Token);
@@ -2868,7 +2861,7 @@ namespace Diva
 			// polygongridmode = false;
 			//FENCE_ENABLE ON COPTER
 			//FENCE_ACTION ON PLANE
-			if (!ActiveDrone.Status.param.ContainsKey("FENCE_ENABLE") && !ActiveDrone.Status.param.ContainsKey("FENCE_ACTION"))
+			if (!ActiveDrone.Status.Params.ContainsKey("FENCE_ENABLE") && !ActiveDrone.Status.Params.ContainsKey("FENCE_ACTION"))
 			{
 				MessageBox.Show("Not Supported");
 				return;
@@ -2907,10 +2900,10 @@ namespace Diva
 			int minalt = 0;
 			int maxalt = 0;
 
-			if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
+			if (ActiveDrone.Status.Params.ContainsKey("FENCE_MINALT"))
 			{
 				string minalts =
-					(int.Parse(ActiveDrone.Status.param["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+					(int.Parse(ActiveDrone.Status.Params["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
 						.ToString("0");
 				if (DialogResult.Cancel == InputBox.Show("Min Alt", "Box Minimum Altitude?", ref minalts))
 					return;
@@ -2922,10 +2915,10 @@ namespace Diva
 				}
 			}
 
-			if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
+			if (ActiveDrone.Status.Params.ContainsKey("FENCE_MAXALT"))
 			{
 				string maxalts =
-					(int.Parse(ActiveDrone.Status.param["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+					(int.Parse(ActiveDrone.Status.Params["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
 						.ToString(
 							"0");
 				if (DialogResult.Cancel == InputBox.Show("Max Alt", "Box Maximum Altitude?", ref maxalts))
@@ -2940,9 +2933,9 @@ namespace Diva
 
 			try
 			{
-				if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
+				if (ActiveDrone.Status.Params.ContainsKey("FENCE_MINALT"))
 					ActiveDrone.SetParam("FENCE_MINALT", minalt);
-				if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
+				if (ActiveDrone.Status.Params.ContainsKey("FENCE_MAXALT"))
 					ActiveDrone.SetParam("FENCE_MAXALT", maxalt);
 			}
 			catch (Exception ex)
@@ -2952,7 +2945,7 @@ namespace Diva
 				return;
 			}
 
-			float oldaction = (float)ActiveDrone.Status.param["FENCE_ACTION"];
+			float oldaction = (float)ActiveDrone.Status.Params["FENCE_ACTION"];
 
 			try
 			{
@@ -3230,9 +3223,9 @@ namespace Diva
                 Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
                 foreach (MavDrone drone in OnlineDrones)
                 {
-                    if (drone.Status.current_lat == 0 || drone.Status.current_lng == 0) { continue; }
-                    var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.current_lat, drone.Status.current_lng),
-                        drone.Status.yaw, drone.Status.groundcourse, drone.Status.nav_bearing, drone.SysId);
+                    if (drone.Status.Latitude == 0 || drone.Status.Longitude == 0) { continue; }
+                    var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.Latitude, drone.Status.Longitude),
+                        drone.Status.Yaw, drone.Status.GroundCourse, drone.Status.NAVBearing, drone.SysId);
                     overlays.routes.Markers.Add(marker);
                 }
 
@@ -3241,7 +3234,7 @@ namespace Diva
                 {
                     if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
                     {
-                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
+                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
                         UpdateMapPosition(currentloc);
                         mapupdate = DateTime.Now;
                     }

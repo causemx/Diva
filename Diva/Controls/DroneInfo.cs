@@ -42,7 +42,7 @@ namespace Diva.Controls
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
 
-        public void UpdateTelemetryData(byte sysid, double battry_voltage, float satellite_count)
+        public void UpdateTelemetryData(byte sysid, double battry_voltage, int satellite_count)
 		{
 			TxtSystemID.Text = sysid.ToString();
 			TxtBatteryHealth.Text = battry_voltage.ToString("F2");

@@ -10,7 +10,7 @@ using static MAVLink;
 
 namespace Diva.Mavlink
 {
-    public class MavDrone : MavCore
+    public class MavDrone : MavCore<DroneStatus>
     {
         public DroneSetting Setting { get; }
         public string Name => Setting?.Name;
@@ -22,6 +22,9 @@ namespace Diva.Mavlink
             Setting = setting;
             RegisterMavMessageHandler(MAVLINK_MSG_ID.MISSION_CURRENT, MissionCurrentPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, NavControllerOutputPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.HEARTBEAT, DroneHeartBeatPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
         }
 
         public bool Connect()
@@ -49,23 +52,50 @@ namespace Diva.Mavlink
         public void Disconnect() => Close();
 
         #region Message packet handlers
-        private void MissionCurrentPacketHandler(MAVLinkMessage packet)
+        private void MissionCurrentPacketHandler(object holder, MAVLinkMessage packet)
         {
-            var wpCur = packet.ToStructure<mavlink_mission_current_t>();
+            var wpCur = GetMessage<mavlink_mission_current_t>(packet, ref holder);
 
             int wpno = wpCur.seq;
             int lastautowp = 0;
 
-            if (Status.mode == (int)MavUtlities.FlightMode.GUIDED && wpno != 0)
+            if (Status.FlightMode == (int)MavUtlities.FlightMode.GUIDED && wpno != 0)
             {
                 lastautowp = (int)wpno;
             }
         }
 
-        private void NavControllerOutputPacketHandler(MAVLinkMessage packet)
+        private void NavControllerOutputPacketHandler(object holder, MAVLinkMessage packet)
         {
-            var nav = packet.ToStructure<mavlink_nav_controller_output_t>();
-            Status.nav_bearing = nav.nav_bearing;
+            var nav = GetMessage<mavlink_nav_controller_output_t>(packet, ref holder);
+            Status.NAVBearing = nav.nav_bearing;
+        }
+
+        private void DroneHeartBeatPacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var hb = GetMessage<mavlink_heartbeat_t>(packet, ref holder);
+            Status.FlightMode = hb.custom_mode;
+            Status.State = hb.system_status;
+            if (hb.type != (byte)MAV_TYPE.GCS)
+            {
+                Status.IsArmed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
+                Status.State = hb.system_status;
+            }
+        }
+
+        private void GPSPacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var loc = GetMessage<mavlink_global_position_int_t>(packet, ref holder);
+
+            Status.Yaw = loc.hdg == UInt16.MaxValue ? float.NaN : loc.hdg / 100.0f;
+        }
+
+        private void GPSRawPacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var gps = GetMessage<mavlink_gps_raw_int_t>(packet, ref holder);
+
+            Status.GroundSpeed = gps.vel * 1.0e-2f;
+            Status.GroundCourse = gps.cog * 1.0e-2f;
         }
         #endregion Message packet handlers
 
@@ -627,12 +657,12 @@ namespace Diva.Mavlink
 
                         if (request.seq == 0)
                         {
-                            if (Status.param["WP_TOTAL"] != null)
-                                Status.param["WP_TOTAL"].Value = wp_total - 1;
-                            if (Status.param["CMD_TOTAL"] != null)
-                                Status.param["CMD_TOTAL"].Value = wp_total - 1;
-                            if (Status.param["MIS_TOTAL"] != null)
-                                Status.param["MIS_TOTAL"].Value = wp_total - 1;
+                            if (Status.Params["WP_TOTAL"] != null)
+                                Status.Params["WP_TOTAL"].Value = wp_total - 1;
+                            if (Status.Params["CMD_TOTAL"] != null)
+                                Status.Params["CMD_TOTAL"].Value = wp_total - 1;
+                            if (Status.Params["MIS_TOTAL"] != null)
+                                Status.Params["MIS_TOTAL"].Value = wp_total - 1;
 
                             PortInUse = false;
                             return;

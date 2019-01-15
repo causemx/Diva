@@ -32,12 +32,12 @@ namespace Diva.Utilities
 			public void Notify()
 			{
 
-				if (activeDrone.Status.battery_voltage == 0.0d) return;
+				if (activeDrone.Status.BatteryVoltage == 0.0d) return;
 
 				try
 				{
 				
-					if (!isShowing && activeDrone.Status.battery_voltage < activeDrone.Status.low_voltage)
+					if (!isShowing && activeDrone.Status.BatteryVoltage < activeDrone.Status.BatteryLowVoltage)
 					{
 						Task.Factory.StartNew(() =>
 						{
@@ -46,7 +46,7 @@ namespace Diva.Utilities
 						});
 						isShowing = true;
 					}
-					else if (activeDrone.Status.battery_voltage > activeDrone.Status.low_voltage)
+					else if (activeDrone.Status.BatteryVoltage > activeDrone.Status.BatteryLowVoltage)
 					{
 						dinfo.LowVoltageWarning(false);
 						isShowing = false;

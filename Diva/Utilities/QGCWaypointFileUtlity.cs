@@ -119,15 +119,15 @@ namespace Diva.Utilities
             try
             {
                 StreamWriter sw = new StreamWriter(file);
-                sw.WriteLine(activeDrone.Status.param["WPNAV_SPEED"]);
-                sw.WriteLine(activeDrone.Status.param["WPNAV_SPEED_UP"]);
-                sw.WriteLine(activeDrone.Status.param["WPNAV_SPEED_DN"]);
-                sw.WriteLine(activeDrone.Status.param["LAND_SPEED"]);
-                sw.WriteLine(activeDrone.Status.param["LAND_SPEED_HIGH"]);
-                sw.WriteLine(activeDrone.Status.param["RTL_SPEED"]);
-                sw.WriteLine(activeDrone.Status.param["RTL_ALT"]);
-                sw.WriteLine(activeDrone.Status.param["WPNAV_ACCEL"]);
-                sw.WriteLine(activeDrone.Status.param["WPNAV_ACCEL_Z"]);
+                sw.WriteLine(activeDrone.Status.Params["WPNAV_SPEED"]);
+                sw.WriteLine(activeDrone.Status.Params["WPNAV_SPEED_UP"]);
+                sw.WriteLine(activeDrone.Status.Params["WPNAV_SPEED_DN"]);
+                sw.WriteLine(activeDrone.Status.Params["LAND_SPEED"]);
+                sw.WriteLine(activeDrone.Status.Params["LAND_SPEED_HIGH"]);
+                sw.WriteLine(activeDrone.Status.Params["RTL_SPEED"]);
+                sw.WriteLine(activeDrone.Status.Params["RTL_ALT"]);
+                sw.WriteLine(activeDrone.Status.Params["WPNAV_ACCEL"]);
+                sw.WriteLine(activeDrone.Status.Params["WPNAV_ACCEL_Z"]);
                 sw.Close();
                 sw.Dispose();
             }

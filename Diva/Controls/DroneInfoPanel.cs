@@ -102,11 +102,11 @@ namespace Diva.Controls
 		{
 			if (ActiveDroneInfo != null) try
 			{
-				MavStatus status = ActiveDroneInfo.Drone.Status;
+				DroneStatus status = ActiveDroneInfo.Drone.Status;
 				ActiveDroneInfo.UpdateTelemetryData(activeDrone.Drone.SysId,
-                    status.battery_voltage, status.satcount);
-				TelemetryData.UpdateTelemetryData(status.alt,
-                    status.verticalspeed, status.groundspeed);
+                    status.BatteryVoltage, status.SatteliteCount);
+				TelemetryData.UpdateTelemetryData(status.Altitude,
+                    status.VerticalSpeed, status.GroundSpeed);
 				string getText(string name) =>
 					TelemetryData.Controls.Find(name, true)[0].Text;
 				DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
@@ -115,7 +115,7 @@ namespace Diva.Controls
 
 				battNotification.Notify();
 
-				MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.param;
+				MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.Params;
                 if (paramList["FENCE_ENABLE"] != null)
     				TelemetryData.UpdateStatusChecker(true, paramList["FENCE_ENABLE"].Value == 1 ? true : false);
 			}

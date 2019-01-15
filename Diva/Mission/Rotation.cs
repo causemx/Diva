@@ -107,9 +107,8 @@ namespace Diva.Mission
 			{
 				LockDrone(index);
 				MavDrone drone = drones[index];
-				var mav = (MavCore)drone;
 
-				if (!drone.IsRotationStandby && mav.Status.sys_status == (byte)MAVLink.MAV_STATE.STANDBY)
+				if (!drone.IsRotationStandby && drone.Status.State == (byte)MAVLink.MAV_STATE.STANDBY)
 				{
 					try
 					{
@@ -127,14 +126,14 @@ namespace Diva.Mission
 					// **IMPORTANT**: If using the INF firmware, mark this line.
 					// mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
 
-					while (!mav.Status.armed)
+					while (!drone.Status.IsArmed)
 					{
 						manualResetEvent.WaitOne(1000);
                         drone.DoArm(true);
                         drone.DoCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
 					}
 
-					while (mav.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
+					while (drone.Status.State != (byte)MAVLink.MAV_STATE.ACTIVE)
 					{
 						manualResetEvent.WaitOne(1000);
 					}
@@ -144,14 +143,13 @@ namespace Diva.Mission
 
 					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationExecute, index));
 
-					while (mav.Status.sys_status == (byte)MAVLink.MAV_STATE.ACTIVE)
+					while (drone.Status.State == (byte)MAVLink.MAV_STATE.ACTIVE)
 					{
 						manualResetEvent.WaitOne(1000);
 					}
 
 					index = (index + 1) % drones.Count;
 				}
-				
 			}
 		}
 	}
