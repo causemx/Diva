@@ -2120,12 +2120,11 @@ namespace Diva
 				{
 					try
 					{
-						Console.WriteLine("Process " + cmds.Count);
 						processToScreen(cmds);
 					}
 					catch (Exception exx)
 					{
-						Console.WriteLine(exx.ToString());
+						log.Error(exx.ToString());
 					}
 
 
@@ -2134,7 +2133,6 @@ namespace Diva
 						if (withrally && ActiveDrone.Status.param.ContainsKey("RALLY_TOTAL") &&
 							int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) >= 1)
 						{
-							Console.WriteLine("get rally points");
 							getRallyPoints();
 						}
 
