@@ -506,8 +506,11 @@ namespace Diva
 
 		void groupmarkeradd(GMapMarker marker)
 		{
-			System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
-			groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+			log.Debug("add marker " + marker.Tag.ToString());
+			if (!marker.Tag.ToString().Equals("H"))
+			{
+				groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+			}
 			if (marker is GMapMarkerWP)
 			{
 				((GMapMarkerWP)marker).selected = true;
