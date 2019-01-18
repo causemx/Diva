@@ -302,8 +302,8 @@
     <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
     <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />
-    <Compile Include="Utilities\ResourceStringHelper.cs" />
-    <Compile Include="Utilities\Utility.cs" />
+    <Compile Include="Utilities\Utlities.cs" />
+    <Compile Include="Utilities\GMapMarkers.cs" />
     <EmbeddedResource Include="Controls\ConfigAccountPage.resx">
       <DependentUpon>ConfigAccountPage.cs</DependentUpon>
     </EmbeddedResource>

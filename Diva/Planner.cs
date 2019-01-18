@@ -452,7 +452,7 @@ namespace Diva
 
 		void groupmarkeradd(GMapMarker marker)
 		{
-			System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
+			Debug.WriteLine("add marker " + marker.Tag.ToString());
 			groupmarkers.Add(int.Parse(marker.Tag.ToString()));
 			if (marker is GMapMarkerWP)
 			{
@@ -2308,6 +2308,7 @@ namespace Diva
                     return;
                 OnlineDrones.Clear();
                 DroneInfoPanel.Clear();
+                overlays.routes.Markers.Clear();
             }
             var dsettings = ConfigData.GetTypeList<DroneSetting>().Where(d => d.Checked);
             if (!dsettings.Any())
@@ -2333,7 +2334,11 @@ namespace Diva
                         drone = null;
                     }
                     if (drone?.IsOpen ?? false)
-                        OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
+                    {
+                        DroneInfoPanel.AddDrone(drone);
+                        OnlineDrones.Add(drone);
+                        overlays.routes.Markers.Add(new GMapDroneMarker(drone));
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -3220,14 +3225,16 @@ namespace Diva
         {
             try
             {
-                Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
-                foreach (MavDrone drone in OnlineDrones)
+                /*var droneMarkers = overlays.routes.Markers.Select(m => (m as GMapDroneMarker).Drone);
+                if (droneMarkers.Except(OnlineDrones).Count() > 0 ||
+                    OnlineDrones.Except(droneMarkers).Count() > 0)
                 {
-                    if (drone.Status.Latitude == 0 || drone.Status.Longitude == 0) { continue; }
-                    var marker = new GMapMarkerQuad(new PointLatLng(drone.Status.Latitude, drone.Status.Longitude),
-                        drone.Status.Yaw, drone.Status.GroundCourse, drone.Status.NAVBearing, drone.SysId);
-                    overlays.routes.Markers.Add(marker);
-                }
+                    Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
+                    foreach (MavDrone drone in OnlineDrones)
+                    {
+                        overlays.routes.Markers.Add(new GMapDroneMarker(drone));
+                    }
+                }*/
 
                 //autopan
                 if (autopan)
@@ -3324,7 +3331,16 @@ namespace Diva
 
         private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
         {
-            OnlineDrones.Remove((sender as DroneInfo)?.Drone);
+            var drone = (sender as DroneInfo)?.Drone;
+            OnlineDrones.Remove(drone);
+            try
+            {
+                overlays.routes.Markers.Remove(overlays.routes.Markers.Single(
+                    x => (x as GMapDroneMarker).Drone == drone));
+            }
+            catch
+            {
+            }
         }
 
         private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)

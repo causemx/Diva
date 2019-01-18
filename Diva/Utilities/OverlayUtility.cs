@@ -114,7 +114,7 @@ namespace Diva.Utilities
                         {
                             pointlist.Add(new PointLatLngAlt(lat, lng,
                                 alt + gethomealt(lat, lng), "ROI" + (a + 1))
-                            { color = Color.Red });
+                            { Color = Color.Red });
                             // do set roi is not a nav command. so we dont route through it
                             //fullpointlist.Add(pointlist[pointlist.Count - 1]);
                             GMarkerGoogle m =
@@ -145,7 +145,7 @@ namespace Diva.Utilities
                             pointlist.Add(new PointLatLngAlt(lat, lng,
                                 alt + gethomealt(lat, lng), (a + 1).ToString())
                             {
-                                color = Color.LightBlue
+                                Color = Color.LightBlue
                             });
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
                             addpolygonmarker((a + 1).ToString(), lng, lat,

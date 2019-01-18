@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static Diva.Utilities.ResourceHelper;
 
 namespace Diva.Controls
 {

@@ -686,7 +686,9 @@ namespace Diva.Mavlink
 
         public void UpdateCurrentSettings()
 		{
-            while (BaseStream.IsOpen && !PortInUse && BaseStream.BytesAvailable > 5)
+            DateTime timeout = DateTime.Now.AddMilliseconds(10);
+            while (BaseStream.IsOpen && !PortInUse &&
+                DateTime.Now < timeout && BaseStream.BytesAvailable > 5)
             {
                 MAVLinkMessage packet = ReadPacket();
                 if (packet.Length == 0) return;
