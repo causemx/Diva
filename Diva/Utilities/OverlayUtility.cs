@@ -13,11 +13,8 @@ namespace Diva.Utilities
 {
     class OverlayUtility
     {
-        public class WPOverlay : IOverlayUtility
+        public class WPOverlay
         {
-
-            // public GMapOverlay overlay = new GMapOverlay("WPOverlay");
-
             public WPOverlay(GMapOverlay _overlay) { overlay = _overlay; }
 
             public GMapOverlay overlay = null;
@@ -33,29 +30,21 @@ namespace Diva.Utilities
                 try
                 {
                     PointLatLng point = new PointLatLng(lat, lng);
-                    GMapMarkerWP m = new GMapMarkerWP(point, tag);
-                    m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                    m.ToolTipText = "Alt: " + alt.ToString("0");
-                    m.Tag = tag;
-
-                    int wpno = -1;
-                    if (int.TryParse(tag, out wpno))
+                    GMapTaggedMarker m = new GMapTaggedMarker(point, tag)
                     {
-                        // preselect groupmarker
-                        //if (groupmarkers.Contains(wpno))
-                        //m.selected = true;
-                    }
+                        ToolTipMode = MarkerTooltipMode.OnMouseOver,
+                        ToolTipText = "Alt: " + alt.ToString("0"),
+                    };
 
-                    //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-                    GMapMarkerRect mBorders = new GMapMarkerRect(point);
+                    GMapRectMarker mBorders = new GMapRectMarker(point)
                     {
-                        mBorders.InnerMarker = m;
-                        mBorders.Tag = tag;
-                        mBorders.wprad = (int)wpradius;
-                        if (color.HasValue)
-                        {
-                            mBorders.Color = color.Value;
-                        }
+                        InnerMarker = m,
+                        Tag = tag,
+                        wprad = (int)wpradius
+                    };
+                    if (color.HasValue)
+                    {
+                        mBorders.Color = color.Value;
                     }
 
                     overlay.Markers.Add(m);
@@ -124,7 +113,7 @@ namespace Diva.Utilities
                             m.ToolTipText = (a + 1).ToString();
                             m.Tag = (a + 1).ToString();
 
-                            GMapMarkerRect mBorders = new GMapMarkerRect(m.Position);
+                            GMapRectMarker mBorders = new GMapRectMarker(m.Position);
                             {
                                 mBorders.InnerMarker = m;
                                 mBorders.Tag = "Dont draw line";
@@ -206,7 +195,6 @@ namespace Diva.Utilities
 
                 RegenerateWPRoute(fullpointlist, home);
             }
-
 
 			public event EventHandler<FullPointsEventArgs> RaiseFullPointsEvent;
 
@@ -313,7 +301,6 @@ namespace Diva.Utilities
 
                 return homealt;
             }
-
 
 			public class FullPointsEventArgs : EventArgs
 			{

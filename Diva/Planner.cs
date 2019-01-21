@@ -75,8 +75,8 @@ namespace Diva
 		}
 		private plannerOverlays overlays;
 
-		private GMapMarkerRect currentRectMarker;
-		private GMapMarkerRallyPt currentRallyPt;
+		private GMapRectMarker currentRectMarker;
+		private GMap3DPointMarker currentRallyPt;
 
 		private GMapMarker currentMarker;
 		private GMapMarker center = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
@@ -454,13 +454,13 @@ namespace Diva
 		{
 			Debug.WriteLine("add marker " + marker.Tag.ToString());
 			groupmarkers.Add(int.Parse(marker.Tag.ToString()));
-			if (marker is GMapMarkerWP)
+			if (marker is GMapTaggedMarker)
 			{
-				((GMapMarkerWP)marker).selected = true;
+				((GMapTaggedMarker)marker).Selected = true;
 			}
-			if (marker is GMapMarkerRect)
+			if (marker is GMapRectMarker)
 			{
-				((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
+				((GMapTaggedMarker)((GMapRectMarker)marker).InnerMarker).Selected = true;
 			}
 		}
 
@@ -867,9 +867,9 @@ namespace Diva
 
 			if (!isMouseDown)
 			{
-				if (item is GMapMarkerRect)
+				if (item is GMapRectMarker)
 				{
-					GMapMarkerRect rc = item as GMapMarkerRect;
+					GMapRectMarker rc = item as GMapRectMarker;
 					rc.Pen.Color = Color.Red;
 					myMap.Invalidate(false);
 
@@ -891,9 +891,9 @@ namespace Diva
 
 					currentRectMarker = rc;
 				}
-				if (item is GMapMarkerRallyPt)
+				if (item is GMap3DPointMarker)
 				{
-					currentRallyPt = item as GMapMarkerRallyPt;
+					currentRallyPt = item as GMap3DPointMarker;
 				}
 				/**if (item is GMapMarkerAirport)
 				{
@@ -904,7 +904,7 @@ namespace Diva
 				{
 					CurrentPOIMarker = item as GMapMarkerPOI;
 				}*/
-				if (item is GMapMarkerWP)
+				if (item is GMapTaggedMarker)
 				{
 					currentGMapMarker = item;
 				}
@@ -919,14 +919,14 @@ namespace Diva
 		{
 			if (!isMouseDown)
 			{
-				if (item is GMapMarkerRect)
+				if (item is GMapRectMarker)
 				{
 					currentRectMarker = null;
-					GMapMarkerRect rc = item as GMapMarkerRect;
+					GMapRectMarker rc = item as GMapRectMarker;
 					rc.ResetColor();
 					myMap.Invalidate(false);
 				}
-				if (item is GMapMarkerRallyPt)
+				if (item is GMap3DPointMarker)
 				{
 					currentRallyPt = null;
 				}
@@ -977,79 +977,23 @@ namespace Diva
 		}
 		#endregion
 
-		/// <summary>
-		/// used to add a marker to the map display
-		/// </summary>
-		/// <param name="tag"></param>
-		/// <param name="lng"></param>
-		/// <param name="lat"></param>
-		/// <param name="alt"></param>
-		private void addpolygonmarker(string tag, double lng, double lat, double alt, Color? color)
+		private void addpolygonmarker(string tag, double lng, double lat, int alt, Color color, GMapOverlay overlay)
 		{
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-				GMapMarkerWP m = new GMapMarkerWP(point, tag);
+                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot)
+                {
+                    ToolTipMode = MarkerTooltipMode.Always,
+                    ToolTipText = tag,
+                    Tag = tag
+                };
 
-				m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-				m.ToolTipText = colAltitude.HeaderText + ": " + alt.ToString("0");
-				m.Tag = tag;
-
-				int wpno = -1;
-				if (int.TryParse(tag, out wpno))
-				{
-					// preselect groupmarker
-					if (groupmarkers.Contains(wpno))
-						m.selected = true;
-				}
-
-				//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-				GMapMarkerRect mBorders = new GMapMarkerRect(point);
-				{
-					mBorders.InnerMarker = m;
-					mBorders.Tag = tag;
-					// mBorders.wprad = (int)(float.Parse(TXT_WPRad.Text) / CurrentState.multiplierdist);
-					mBorders.wprad = (int)(30 / 1);
-					if (color.HasValue)
-					{
-						mBorders.Color = color.Value;
-					}
-				}
-
-				overlays.objects.Markers.Add(m);
-				overlays.objects.Markers.Add(mBorders);
-			}
-			catch (Exception)
-			{
-			}
-		}
-
-		private void addpolygonmarker(string tag, double lng, double lat, int alt, Color? color, GMapOverlay overlay)
-		{
-			try
-			{
-				PointLatLng point = new PointLatLng(lat, lng);
-				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot);
-				m.ToolTipMode = MarkerTooltipMode.Always;
-				m.ToolTipText = tag;
-				m.Tag = tag;
-
-				GMapMarkerRect mBorders = new GMapMarkerRect(point);
-				{
-					mBorders.InnerMarker = m;
-					try
-					{
-						// mBorders.wprad = (int)(Settings.Instance.GetFloat("TXT_WPRad"));
-						mBorders.wprad = 30;
-					}
-					catch
-					{
-					}
-					if (color.HasValue)
-					{
-						mBorders.Color = color.Value;
-					}
-				}
+                GMapRectMarker mBorders = new GMapRectMarker(point)
+                {
+                    InnerMarker = m,
+                    Color = color
+                };
 
 				Invoke((MethodInvoker)delegate
 				{
@@ -1073,7 +1017,7 @@ namespace Diva
 				m.Tag = "grid" + tag;
 
 				//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-				GMapMarkerRect mBorders = new GMapMarkerRect(point);
+				GMapRectMarker mBorders = new GMapRectMarker(point);
 				{
 					mBorders.InnerMarker = m;
 				}
@@ -2131,9 +2075,8 @@ namespace Diva
 				try
 				{
 					PointLatLngAlt plla = ActiveDrone.GetRallyPoint(a, ref count);
-					overlays.rallypoints.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
+					overlays.rallypoints.Markers.Add(new GMap3DPointMarker(plla)
 					{
-						Alt = (int)plla.Alt,
 						ToolTipMode = MarkerTooltipMode.OnMouseOver,
 						ToolTipText = Strings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
 					});
@@ -3286,7 +3229,7 @@ namespace Diva
 			
 			// generate new polygon every time.
 			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
-			GMapCustomizedPolygon customizePolygon = new GMapCustomizedPolygon(polygonPointsCus, "customize", areaname);
+			GMapCustomizedPolygonMarker customizePolygon = new GMapCustomizedPolygonMarker(polygonPointsCus, "customize", areaname);
 			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
 			customizePolygon.Fill = Brushes.AliceBlue;
 		

@@ -37,13 +37,13 @@ namespace Diva.Utilities
     }
 
 	[Serializable]
-	public class GMapMarkerRect : GMapLineMarker
+	public class GMapRectMarker : GMapLineMarker
     {
 		public GMapMarker InnerMarker;
 
 		public int wprad = 0;
 
-        public GMapMarkerRect(PointLatLng p) : base(p, Brushes.White) { }
+        public GMapRectMarker(PointLatLng p) : base(p, Brushes.White) { }
 
 		public override void OnRender(Graphics g)
 		{
@@ -73,9 +73,9 @@ namespace Diva.Utilities
 	}
 
 	[Serializable]
-	public class GMapMarkerEllipse : GMapLineMarker
+	public class GMapEllipseMarker : GMapLineMarker
     {
-        public GMapMarkerEllipse(PointLatLng p) : base(p, Brushes.Black) { }
+        public GMapEllipseMarker(PointLatLng p) : base(p, Brushes.Black) { }
 
 		public override void OnRender(Graphics g)
 		{
@@ -88,7 +88,7 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapDroneMarker : GMapMarker
 	{
-		private readonly Bitmap icon = Resources.icon_drone_4axis;
+		public Bitmap Icon => Resources.icon_drone_4axis;
         public readonly MavDrone Drone;
 
 		float Yaw => Drone.Status.Yaw;
@@ -103,8 +103,8 @@ namespace Diva.Utilities
 			: base(new PointLatLng(drone.Status.Latitude, drone.Status.Longitude))
 		{
             Drone = drone;
-			Size = icon.Size;
-			icon.SetResolution(100, 100);
+			Size = Icon.Size;
+			Icon.SetResolution(100, 100);
 		}
 
 		public override void OnRender(Graphics g)
@@ -141,7 +141,7 @@ namespace Diva.Utilities
 			{
 			}
 
-			g.DrawImageUnscaled(icon, icon.Width / -2 + 2, icon.Height / -2);
+			g.DrawImageUnscaled(Icon, Icon.Width / -2 + 2, Icon.Height / -2);
 
 
 			// Show SYSID on the drone icon.
@@ -178,87 +178,79 @@ namespace Diva.Utilities
 		}
 	}
 
-    #region not done yet
     [Serializable]
-	public class GMapMarkerWP : GMarkerGoogle
+	public class GMapTaggedMarker : GMarkerGoogle
 	{
-		string wpno = "";
-		public bool selected = false;
-		SizeF txtsize = SizeF.Empty;
+		public bool Selected = false;
+        readonly int PosOffsetX;
+        readonly int PosOffsetY = 3;
 		static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
-		static Font font;
+		static Font font = SystemFonts.DefaultFont;
 
-		public GMapMarkerWP(PointLatLng p, string wpno)
+		public GMapTaggedMarker(PointLatLng p, string tag)
 			: base(p, new Bitmap(Resources.point_blue))
 		{
-			this.wpno = wpno;
-			if (font == null)
-				font = SystemFonts.DefaultFont;
-
-			if (!fontBitmaps.ContainsKey(wpno))
+            Tag = tag;
+            SizeF txtSize;
+			if (fontBitmaps.ContainsKey(tag))
+            {
+                using (Graphics g = Graphics.FromImage(fontBitmaps[tag]))
+                {
+                    txtSize = g.MeasureString(tag, font);
+                }
+            }
+            else
 			{
 				Bitmap temp = new Bitmap(100, 40, PixelFormat.Format32bppArgb);
 				
 				using (Graphics g = Graphics.FromImage(temp))
 				{
-					txtsize = g.MeasureString(wpno, font);
-
-					g.DrawString(wpno, font, Brushes.Black, new PointF(0, 0));
+                    txtSize = g.MeasureString(tag, font);
+					g.DrawString(tag, font, Brushes.Black, new PointF(0, 0));
 				}
-				fontBitmaps[wpno] = temp;
+				fontBitmaps[tag] = temp;
 			}
+            PosOffsetX = txtSize.Width > 15 ? 6 : 10;
 		}
 
 		public override void OnRender(Graphics g)
 		{
-			if (selected)
+			if (Selected)
 			{
-				g.FillEllipse(Brushes.Red, new Rectangle(this.LocalPosition, this.Size));
-				g.DrawArc(Pens.Red, new Rectangle(this.LocalPosition, this.Size), 0, 360);
+				g.FillEllipse(Brushes.Red, new Rectangle(LocalPosition, Size));
+				g.DrawArc(Pens.Red, new Rectangle(LocalPosition, Size), 0, 360);
 			}
 
 			base.OnRender(g);
 
-			var midw = LocalPosition.X + 10;
-			var midh = LocalPosition.Y + 3;
-
-			if (txtsize.Width > 15)
-				midw -= 4;
+			var midw = LocalPosition.X + PosOffsetX;
+			var midh = LocalPosition.Y + PosOffsetY;
 
 			if (Overlay.Control.Zoom > 16 || IsMouseOver)
-				g.DrawImageUnscaled(fontBitmaps[wpno], midw, midh);
+				g.DrawImageUnscaled(fontBitmaps[(string)Tag], midw, midh);
 		}
 	}
 
 	[Serializable]
-	public class GMapMarkerRallyPt : GMapMarker
+	public class GMap3DPointMarker : GMapMarker
 	{
-		public float? Bearing;
-
 		// TODO(causemx): add location icon here.
 		static readonly Size SizeSt = new Size(Resources.icon_live.Width,
 			Resources.icon_live.Height);
+        public static Bitmap Localcache2 => Resources.icon_live;
 
-		static Bitmap localcache2 = Resources.icon_live;
+        public new PointLatLngAlt Position;
+		public int Alt
+        {
+            get => (int)Position.Alt;
+            set => Position.Alt = value;
+        }
 
-		public int Alt { get; set; }
-
-		public GMapMarkerRallyPt(PointLatLng p)
+        public GMap3DPointMarker(PointLatLngAlt p)
 			: base(p)
 		{
 			Size = SizeSt;
 			Offset = new Point(-10, -40);
-		}
-
-		public GMapMarkerRallyPt(MAVLink.mavlink_rally_point_t mark)
-			: base(new PointLatLng(mark.lat / 1e7, mark.lng / 1e7))
-		{
-			Size = SizeSt;
-			Offset = new Point(-10, -40);
-			Alt = mark.alt;
-			Alt = (int)mark.alt;
-			ToolTipMode = MarkerTooltipMode.OnMouseOver;
-			ToolTipText = "Rally Point" + "\nAlt: " + mark.alt;
 		}
 
 		static readonly Point[] Arrow = new Point[]
@@ -266,24 +258,18 @@ namespace Diva.Utilities
 
 		public override void OnRender(Graphics g)
 		{
-#if !PocketPC
-			g.DrawImageUnscaled(localcache2, LocalPosition.X, LocalPosition.Y);
-
-#else
-	//    DrawImageUnscaled(g, Resources.shadow50, LocalPosition.X, LocalPosition.Y);
-			DrawImageUnscaled(g, Resources.marker, LocalPosition.X, LocalPosition.Y);
-#endif
+			g.DrawImageUnscaled(Localcache2, LocalPosition.X, LocalPosition.Y);
 		}
 	}
 
 	[Serializable]
-	public class GMapCustomizedPolygon : GMapPolygon
+	public class GMapCustomizedPolygonMarker : GMapPolygon
 	{
-		public string zoneName = "zone";
+		public string ZoneName { get; set; }
 
-		public GMapCustomizedPolygon(List<PointLatLng> points, string name, string zonename) : base(points, name)
+		public GMapCustomizedPolygonMarker(List<PointLatLng> points, string name, string zonename) : base(points, name)
 		{
-			this.zoneName = zonename;
+			ZoneName = zonename;
 		}
 
 		public override void OnRender(Graphics g)
@@ -296,7 +282,7 @@ namespace Diva.Utilities
 			// Measure the size of the text. 
 			// You might want to add some extra space around your text. 
 			// MeasureString is quite tricky...
-			SizeF textSize = g.MeasureString(this.zoneName, font);
+			SizeF textSize = g.MeasureString(this.ZoneName, font);
 
 			// Get LocalPoint (your LatLng coordinate in pixel)
 			Point localPosition = new Point(0, 0);
@@ -308,7 +294,7 @@ namespace Diva.Utilities
 
 			// Draw Background
 			g.FillRectangle(new SolidBrush(Color.Transparent), new RectangleF(p, textSize));
-			g.DrawString(this.zoneName, font, new SolidBrush(Color.Red), p);
+			g.DrawString(this.ZoneName, font, new SolidBrush(Color.Red), p);
 		}
 
 		public PointF GetCentroid(List<GPoint> poly)
@@ -333,5 +319,4 @@ namespace Diva.Utilities
 
 		}
 	}
-    #endregion
 }

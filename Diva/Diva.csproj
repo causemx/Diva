@@ -293,7 +293,6 @@
     <Compile Include="Utilities\DatabaseManager.cs" />
     <Compile Include="Utilities\QGCWaypointFileUtlity.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
-    <Compile Include="Utilities\IOverlayUtility.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
