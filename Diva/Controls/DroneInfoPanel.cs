@@ -51,7 +51,7 @@ namespace Diva.Controls
 			TelemetryData.Visible = false;
 		}
 
-		public NotificationManager.INotification battNotification;
+		public INotification battNotification;
 
 		public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
 		{
@@ -79,7 +79,7 @@ namespace Diva.Controls
                 }
 			};
 
-			battNotification = new NotificationManager.BatteryNotification(dinfo);
+			battNotification = new BatteryNotification(dinfo);
 
 			ThePanel.Controls.Remove(TelemetryData);
 			ThePanel.Controls.Add(dinfo);

@@ -297,9 +297,7 @@
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
     <Compile Include="Utilities\OverlayUtility.cs" />
-    <Compile Include="Utilities\ParameterMetaDataConstants.cs" />
-    <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
-    <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />
+    <Compile Include="Utilities\ParameterRepository.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Utlities.cs" />
     <Compile Include="Utilities\GMapMarkers.cs" />

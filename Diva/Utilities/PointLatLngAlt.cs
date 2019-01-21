@@ -64,35 +64,17 @@ namespace Diva.Utilities
             Tag2 = plla.Tag2;
 		}
 
-		public PointLatLng Point()
-		{
-			PointLatLng pnt = new PointLatLng(Lat, Lng);
-			return pnt;
-		}
-
 		public static implicit operator PointLatLngAlt(PointLatLng a)
-		{
-			return new PointLatLngAlt(a);
-		}
+            => new PointLatLngAlt(a);
 
 		public static implicit operator PointLatLng(PointLatLngAlt a)
-		{
-			return a.Point();
-		}
+            => new PointLatLng(a.Lat, a.Lng);
 
 		public static implicit operator double[] (PointLatLngAlt a)
-		{
-			return new double[] { a.Lng, a.Lat, a.Alt };
-		}
+		    => new double[] { a.Lng, a.Lat, a.Alt };
 
 		public static implicit operator PointLatLngAlt(double[] a)
-		{
-			if (a.Count() == 3)
-			{
-				return new PointLatLngAlt() { Lng = a[0], Lat = a[1], Alt = a[2] };
-			}
-			return new PointLatLngAlt() { Lng = a[0], Lat = a[1] };
-		}
+            => new PointLatLngAlt(a[0], a[1], a.Length > 2 ? a[2] : 0);
 
         public PointLatLngAlt OffsetAngleDistance(double bearing, double distance)
 		{
@@ -148,35 +130,6 @@ namespace Diva.Utilities
 			double num7 = Math.Pow(Math.Sin(num6 / 2.0), 2.0) + ((Math.Cos(d) * Math.Cos(num3)) * Math.Pow(Math.Sin(num5 / 2.0), 2.0));
 			double num8 = 2.0 * Math.Atan2(Math.Sqrt(num7), Math.Sqrt(1.0 - num7));
 			return (6371 * num8) * 1000.0; // M
-		}
-
-		public int CompareTo(object obj)
-		{
-			PointLatLngAlt pnt = obj as PointLatLngAlt;
-
-			if (pnt == null)
-				return 1;
-
-			double wpno = 0;
-			double wpnothis = 0;
-
-			if (!double.TryParse(this.Tag, out wpnothis))
-			{
-				return 0;
-			}
-
-			if (double.TryParse(pnt.Tag, out wpno))
-			{
-				if (wpno < wpnothis)
-					return 1;
-				if (wpno > wpnothis)
-					return -1;
-				return 0;
-			}
-			else
-			{
-				return 0;
-			}
 		}
 	}
 }

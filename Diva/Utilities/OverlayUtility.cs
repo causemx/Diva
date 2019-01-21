@@ -25,7 +25,7 @@ namespace Diva.Utilities
             /// list of point as per mission including jump repeats
             public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
-            public void addpolygonmarker(string tag, double lng, double lat, double alt, Color? color, double wpradius)
+            public void AddPolygonMarker(string tag, double lng, double lat, double alt, Color? color, double wpradius)
             {
                 try
                 {
@@ -71,7 +71,7 @@ namespace Diva.Utilities
 
                 pointlist.Add(home);
                 fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                addpolygonmarker("H", home.Lng, home.Lat, home.Alt, null, 0);
+                AddPolygonMarker("H", home.Lng, home.Lat, home.Alt, null, 0);
 
                 int a = 0;
                 foreach (var item in missionitems)
@@ -137,7 +137,7 @@ namespace Diva.Utilities
                                 Color = Color.LightBlue
                             });
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                            addpolygonmarker((a + 1).ToString(), lng, lat,
+                            AddPolygonMarker((a + 1).ToString(), lng, lat,
                                 alt, Color.LightBlue, loiterradius);
                         }
                         else if (command == (ushort)MAVLink.MAV_CMD.SPLINE_WAYPOINT)
@@ -146,7 +146,7 @@ namespace Diva.Utilities
                                 alt + gethomealt(lat, lng), (a + 1).ToString())
                             { Tag2 = "spline" });
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                            addpolygonmarker((a + 1).ToString(), lng, lat,
+                            AddPolygonMarker((a + 1).ToString(), lng, lat,
                                 alt, Color.Green, wpradius);
                         }
                         else
@@ -154,7 +154,7 @@ namespace Diva.Utilities
                             pointlist.Add(new PointLatLngAlt(lat, lng,
                                 alt + gethomealt(lat, lng), (a + 1).ToString()));
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                            addpolygonmarker((a + 1).ToString(), lng, lat,
+                            AddPolygonMarker((a + 1).ToString(), lng, lat,
                                 alt, null, wpradius);
                         }
 

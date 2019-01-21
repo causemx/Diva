@@ -23,12 +23,12 @@ namespace Diva.Controls
 			CheckBox_Enable.setup(1, 0, "FENCE_ENABLE", mav.Status.Params);
 
 			ComboBox_Fence_Type.setup(
-				ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_TYPE",
+				ParameterRepository.GetOptionsInt("FENCE_TYPE",
 					"ArduCopter2"), "FENCE_TYPE", mav.Status.Params);
 
 
 			ComboBox_Fence_Action.setup(
-				ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_ACTION",
+				ParameterRepository.GetOptionsInt("FENCE_ACTION",
 					"ArduCopter2"), "FENCE_ACTION", mav.Status.Params);
 
 
@@ -48,7 +48,7 @@ namespace Diva.Controls
 
 			// arducopter
 			ComboBox_Batt_Action.setup(
-				ParameterMetaDataRepository.GetParameterOptionsInt("FS_BATT_ENABLE",
+				ParameterRepository.GetOptionsInt("FS_BATT_ENABLE",
 					mav.Status.firmware.ToString()), "FS_BATT_ENABLE", mav.Status.Params);
 
 			// low battery
