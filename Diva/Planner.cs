@@ -101,7 +101,7 @@ namespace Diva
 		private int selectedrow = 0;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
-		private List<List<Locationwp>> history = new List<List<Locationwp>>();
+		private List<List<WayPoint>> history = new List<List<WayPoint>>();
 		private List<int> groupmarkers = new List<int>();
 		private Object thisLock = new Object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
@@ -130,12 +130,12 @@ namespace Diva
 		}
 
 		internal MyGMap GMapControl => myMap;
-        internal Locationwp GetHomeLocationwp() => new Locationwp
+        internal WayPoint GetHomeLocationwp() => new WayPoint
         {
-            id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-            lat = (double.Parse(TxtHomeLatitude.Text)),
-            lng = (double.Parse(TxtHomeLongitude.Text)),
-            alt = (float.Parse(TxtHomeAltitude.Text)),
+            Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+            Latitude = (double.Parse(TxtHomeLatitude.Text)),
+            Longitude = (double.Parse(TxtHomeLongitude.Text)),
+            Altitude = (float.Parse(TxtHomeAltitude.Text)),
         };
 
 		public Planner()
@@ -1252,9 +1252,9 @@ namespace Diva
 			}
 		}
 
-		public List<Locationwp> GetCommandList()
+		public List<WayPoint> GetCommandList()
 		{
-			List<Locationwp> commands = new List<Locationwp>();
+			List<WayPoint> commands = new List<WayPoint>();
 
 			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
 			{
@@ -1266,18 +1266,18 @@ namespace Diva
 			return commands;
 		}
 
-		private Locationwp DataViewtoLocationwp(int a)
+		private WayPoint DataViewtoLocationwp(int a)
 		{
 			try
 			{
-				Locationwp temp = new Locationwp();
+				WayPoint temp = new WayPoint();
 				if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 				{
-					temp.id = (ushort)dgvWayPoints.Rows[a].Cells[colCommand.Index].Tag;
+					temp.Id = (ushort)dgvWayPoints.Rows[a].Cells[colCommand.Index].Tag;
 				}
 				else
 				{
-					temp.id =
+					temp.Id =
 						(ushort)
 								Enum.Parse(typeof(MAVLink.MAV_CMD),
 									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
@@ -1286,16 +1286,16 @@ namespace Diva
 
 			// TODO: I don't know where currentstate come from..
 	
-				temp.alt =
+				temp.Altitude =
 					(float)
 						(double.Parse(dgvWayPoints.Rows[a].Cells[colAltitude.Index].Value.ToString()));
 			
-				temp.lat = (double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString()));
-				temp.lng = (double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString()));
-				temp.p1 = float.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString());
-				temp.p2 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString()));
-				temp.p3 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam3.Index].Value.ToString()));
-				temp.p4 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam4.Index].Value.ToString()));
+				temp.Latitude = (double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString()));
+				temp.Longitude = (double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString()));
+				temp.Param1 = float.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString());
+				temp.Param2 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString()));
+				temp.Param3 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam3.Index].Value.ToString()));
+				temp.Param4 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam4.Index].Value.ToString()));
 
 				temp.Tag = dgvWayPoints.Rows[a].Cells[colTagData.Index].Value;
 
@@ -1626,7 +1626,7 @@ namespace Diva
 				int a = 0;
 
 				// define the home point
-				Locationwp home = new Locationwp();
+				WayPoint home = new WayPoint();
 				try
 				{
                     home = GetHomeLocationwp();
@@ -1719,7 +1719,7 @@ namespace Diva
 					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetWp + a);
 
 					// make sure we are using the correct frame for these commands
-					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
+					if (temp.Id < (ushort)MAVLink.MAV_CMD.LAST || temp.Id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
 					{
 						var mode = AltitudeMode.Relative;
 
@@ -1785,9 +1785,9 @@ namespace Diva
 					{
 
 						MessageBox.Show(Strings.MsgMissionRejectedGeneral.FormatWith(
-							Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()),
+							Enum.Parse(typeof(MAVLink.MAV_CMD), temp.Id.ToString()),
 							Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString())));
-						log.Error("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
+						log.Error("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.Id.ToString()) +
 										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
 						return;
 					}
@@ -1830,7 +1830,7 @@ namespace Diva
 
 		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
 		{
-			List<Locationwp> cmds = new List<Locationwp>();
+			List<WayPoint> cmds = new List<WayPoint>();
 
 			try
 			{
@@ -1882,7 +1882,7 @@ namespace Diva
 			WPtoScreen(cmds);
 		}
 
-		public void WPtoScreen(List<Locationwp> cmds, bool withrally = true)
+		public void WPtoScreen(List<WayPoint> cmds, bool withrally = true)
 		{
 			try
 			{
@@ -1929,7 +1929,7 @@ namespace Diva
 		/// <summary>
 		/// Processes a loaded EEPROM to the map and datagrid
 		/// </summary>
-		public void processToScreen(List<Locationwp> cmds, bool append = false)
+		public void processToScreen(List<WayPoint> cmds, bool append = false)
 		{
 			quickadd = true;
 
@@ -1950,13 +1950,13 @@ namespace Diva
 			dgvWayPoints.Enabled = false;
 
 			int i = dgvWayPoints.Rows.Count - 1;
-			foreach (Locationwp temp in cmds)
+			foreach (WayPoint temp in cmds)
 			{
 				i++;
 				//Console.WriteLine("FP processToScreen " + i);
-				if (temp.id == 0 && i != 0) // 0 and not home
+				if (temp.Id == 0 && i != 0) // 0 and not home
 					break;
-				if (temp.id == 255 && i != 0) // bad record - never loaded any WP's - but have started the board up.
+				if (temp.Id == 255 && i != 0) // bad record - never loaded any WP's - but have started the board up.
 					break;
 				if (i == 0 && append) // we dont want to add home again.
 					continue;
@@ -1970,12 +1970,12 @@ namespace Diva
 				DataGridViewComboBoxCell cellcmd;
 				cellcmd = dgvWayPoints.Rows[i].Cells[colCommand.Index] as DataGridViewComboBoxCell;
 				cellcmd.Value = "UNKNOWN";
-				cellcmd.Tag = temp.id;
+				cellcmd.Tag = temp.Id;
 
 				foreach (object value in Enum.GetValues(typeof(MAVLink.MAV_CMD)))
 				{
 					
-					if ((ushort)value == temp.id)
+					if ((ushort)value == temp.Id)
 					{
 						cellcmd.Value = value.ToString();
 						break;
@@ -1983,20 +1983,20 @@ namespace Diva
 				}
 
 				cell = dgvWayPoints.Rows[i].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.alt;
+				cell.Value = temp.Altitude;
 				cell = dgvWayPoints.Rows[i].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.lat;
+				cell.Value = temp.Latitude;
 				cell = dgvWayPoints.Rows[i].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.lng;
+				cell.Value = temp.Longitude;
 
 				cell = dgvWayPoints.Rows[i].Cells[colParam1.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p1;
+				cell.Value = temp.Param1;
 				cell = dgvWayPoints.Rows[i].Cells[colParam2.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p2;
+				cell.Value = temp.Param2;
 				cell = dgvWayPoints.Rows[i].Cells[colParam3.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p3;
+				cell.Value = temp.Param3;
 				cell = dgvWayPoints.Rows[i].Cells[colParam4.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p4;
+				cell.Value = temp.Param4;
 
 				// convert to utm
 				// convertFromGeographic(temp.lat, temp.lng);
@@ -2153,12 +2153,12 @@ namespace Diva
 			_dialog.DoClick += (s2, e2) => targetHeight = float.Parse(_dialog.Value);
 			_dialog.ShowDialog();
 
-            Locationwp gotohere = new Locationwp
+            WayPoint gotohere = new WayPoint
             {
-                id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                alt = targetHeight, // back to m
-                lat = (MouseDownStart.Lat),
-                lng = (MouseDownStart.Lng)
+                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                Altitude = targetHeight, // back to m
+                Latitude = (MouseDownStart.Lat),
+                Longitude = (MouseDownStart.Lng)
             };
 
             try
@@ -2174,8 +2174,8 @@ namespace Diva
 
 			overlays.commons.Markers.Clear();
 			
-			addpolygonmarker("Click & GO", gotohere.lng,
-								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays.commons);
+			addpolygonmarker("Click & GO", gotohere.Longitude,
+								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, overlays.commons);
 
 
 		}
@@ -2420,7 +2420,7 @@ namespace Diva
 			}
 
 			// check home
-			Locationwp home;
+			WayPoint home;
 			try
 			{
                 home = GetHomeLocationwp();
@@ -2604,12 +2604,12 @@ namespace Diva
 
 		private void BtnSaveMission_Click(object sender, EventArgs e)
 		{
-			Locationwp home = new Locationwp
+			WayPoint home = new WayPoint
 			{
-				id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-				lat = (double.Parse(TxtHomeLatitude.Text)),
-				lng = (double.Parse(TxtHomeLongitude.Text)),
-				alt = (float.Parse(TxtHomeAltitude.Text)),
+				Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+				Latitude = (double.Parse(TxtHomeLatitude.Text)),
+				Longitude = (double.Parse(TxtHomeLongitude.Text)),
+				Altitude = (float.Parse(TxtHomeAltitude.Text)),
 			};
 
             KMLFileUtility.SaveKMLMission(GetCommandList(), home);
@@ -2621,7 +2621,7 @@ namespace Diva
 		{
 			try
 			{
-				List<Locationwp> cmds = KMLFileUtility.ReadKMLMission();
+				List<WayPoint> cmds = KMLFileUtility.ReadKMLMission();
 				processToScreen(cmds, false);
 				writeKMLV2();
 				myMap.ZoomAndCenterMarkers("objects");

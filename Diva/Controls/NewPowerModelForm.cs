@@ -60,7 +60,7 @@ namespace Diva.Controls
                     planner.ClearMission();
                     planner.processToScreen(
                         PowerModelManager.GenerateTrainingMission<AlexModel>(
-                            homeloc.lat, homeloc.lng, angle));
+                            homeloc.Latitude, homeloc.Longitude, angle));
                     planner.writeKMLV2();
                     DialogResult = DialogResult.OK;
                 } else

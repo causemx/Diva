@@ -55,7 +55,7 @@ namespace Diva.Utilities
                 }
             }
 
-            public void CreateOverlay(PointLatLngAlt home, List<Locationwp> missionitems, double wpradius, double loiterradius)
+            public void CreateOverlay(PointLatLngAlt home, List<WayPoint> missionitems, double wpradius, double loiterradius)
             {
                 overlay.Clear();
 
@@ -64,7 +64,8 @@ namespace Diva.Utilities
                 double minlat = 180;
                 double minlong = 180;
 
-                Func<double, double, double> gethomealt = (lat, lng) => GetHomeAlt(MAVLink.MAV_FRAME.GLOBAL_INT, home.Alt, lat, lng);
+                double gethomealt(double lat, double lng)
+                    => GetHomeAlt(MAVLink.MAV_FRAME.GLOBAL_INT, home.Alt, lat, lng);
 
                 home.Tag = "H";
                 // home.Tag2 = altmode.ToString();
@@ -76,7 +77,7 @@ namespace Diva.Utilities
                 int a = 0;
                 foreach (var item in missionitems)
                 {
-                    ushort command = item.id;
+                    ushort command = item.Id;
 
                     if (command < (ushort)MAVLink.MAV_CMD.LAST &&
                         command != (ushort)MAVLink.MAV_CMD.TAKEOFF && // doesnt have a position
@@ -87,13 +88,9 @@ namespace Diva.Utilities
                         command != (ushort)MAVLink.MAV_CMD.GUIDED_ENABLE
                         || command == (ushort)MAVLink.MAV_CMD.DO_SET_ROI)
                     {
-                        //string alt = Commands.Rows[a].Cells[Alt.Index].Value.ToString(); // alt
-                        //string lat = Commands.Rows[a].Cells[Lat.Index].Value.ToString(); // lat
-                        //string lng = Commands.Rows[a].Cells[Lon.Index].Value.ToString(); // lng
-
-                        var lat = item.lat;
-                        var lng = item.lng;
-                        var alt = item.alt;
+                        var lat = item.Latitude;
+                        var lng = item.Longitude;
+                        var alt = item.Altitude;
 
                         // land can be 0,0 or a lat,lng
                         if (command == (ushort)MAVLink.MAV_CMD.LAND && lat == 0 && lng == 0)
@@ -108,10 +105,12 @@ namespace Diva.Utilities
                             //fullpointlist.Add(pointlist[pointlist.Count - 1]);
                             GMarkerGoogle m =
                                 new GMarkerGoogle(new PointLatLng(lat, lng),
-                                    GMarkerGoogleType.red);
-                            m.ToolTipMode = MarkerTooltipMode.Always;
-                            m.ToolTipText = (a + 1).ToString();
-                            m.Tag = (a + 1).ToString();
+                                    GMarkerGoogleType.red)
+                                {
+                                    ToolTipMode = MarkerTooltipMode.Always,
+                                    ToolTipText = (a + 1).ToString(),
+                                    Tag = (a + 1).ToString()
+                                };
 
                             GMapRectMarker mBorders = new GMapRectMarker(m.Position);
                             {
@@ -167,8 +166,8 @@ namespace Diva.Utilities
                     {
                         pointlist.Add(null);
 
-                        int wpno = (int)item.p1;
-                        int repeat = (int)item.p2;
+                        int wpno = (int)item.Param1;
+                        int repeat = (int)item.Param2;
 
                         List<PointLatLngAlt> list = new List<PointLatLngAlt>();
 

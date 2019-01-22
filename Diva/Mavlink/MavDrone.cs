@@ -308,7 +308,7 @@ namespace Diva.Mavlink
             }
         }
 
-        public Locationwp GetWP(ushort index)
+        public WayPoint GetWP(ushort index)
         {
             while (PortInUse) Thread.Sleep(100);
 
@@ -335,7 +335,7 @@ namespace Diva.Mavlink
             }
             SendPacket(msgid, req);
             PortInUse = true;
-            Locationwp loc = new Locationwp();
+            WayPoint loc = new WayPoint();
 
             DateTime start = DateTime.Now;
             int retrys = 5;
@@ -366,20 +366,9 @@ namespace Diva.Mavlink
                             continue;
                         }
 
-                        loc.options = (byte)(wp.frame);
-                        loc.id = (ushort)(wp.command);
-                        loc.p1 = (wp.param1);
-                        loc.p2 = (wp.param2);
-                        loc.p3 = (wp.param3);
-                        loc.p4 = (wp.param4);
-
-                        loc.alt = ((wp.z));
-                        loc.lat = ((wp.x));
-                        loc.lng = ((wp.y));
-
-                        log.InfoFormat("getWP {0} {1} {2} {3} {4} opt {5}", loc.id, loc.p1, loc.alt, loc.lat, loc.lng,
-                            loc.options);
-
+                        loc = wp;
+                        log.InfoFormat("getWP {0} {1} {2} {3} {4} opt {5}", loc.Id, loc.Param1, loc.Altitude, loc.Latitude, loc.Longitude,
+                            loc.Option);
                         break;
                     }
                     else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM_INT)
@@ -391,24 +380,14 @@ namespace Diva.Mavlink
                             continue;
                         }
 
-                        loc.options = (byte)(wp.frame);
-                        loc.id = (ushort)(wp.command);
-                        loc.p1 = (wp.param1);
-                        loc.p2 = (wp.param2);
-                        loc.p3 = (wp.param3);
-                        loc.p4 = (wp.param4);
-
-                        loc.alt = ((wp.z));
-                        loc.lat = ((wp.x / 1.0e7));
-                        loc.lng = ((wp.y / 1.0e7));
-
-                        if (loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
+                        loc = wp;
+                        if (loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
                         {
-                            loc.lat = wp.x;
+                            loc.Latitude = wp.x;
                         }
 
-                        log.InfoFormat("getWPint {0} {1} {2} {3} {4} opt {5}", loc.id, loc.p1, loc.alt, loc.lat, loc.lng,
-                            loc.options);
+                        log.InfoFormat("getWPint {0} {1} {2} {3} {4} opt {5}", loc.Id, loc.Param1, loc.Altitude, loc.Latitude, loc.Longitude,
+                            loc.Option);
 
                         break;
                     }
@@ -492,15 +471,15 @@ namespace Diva.Mavlink
                 });
         }
 
-        public MAV_MISSION_RESULT SetWP(Locationwp loc, ushort index, MAV_FRAME frame, bool use_int = false)
+        public MAV_MISSION_RESULT SetWP(WayPoint loc, ushort index, MAV_FRAME frame, bool use_int = false)
         {
             byte contmode = (byte)((Status.firmware == MavUtlities.Firmwares.ArduPlane) ? 2 : 1);
             object req;
             if (use_int)
             {
-                bool camcon = loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE;
-                double x = loc.lat, y = loc.lng;
-                if (loc.id != (ushort)MAV_CMD.DO_DIGICAM_CONTROL && loc.id != (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
+                bool camcon = loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE;
+                double x = loc.Latitude, y = loc.Longitude;
+                if (loc.Id != (ushort)MAV_CMD.DO_DIGICAM_CONTROL && loc.Id != (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
                 {
                     x *= 1.0e7;
                     y *= 1.0e7;
@@ -510,17 +489,17 @@ namespace Diva.Mavlink
                 {
                     target_component = CompId,
                     target_system = SysId,
-                    command = loc.id,
+                    command = loc.Id,
                     current = 0,
                     autocontinue = contmode,
                     frame = (byte)frame,
                     x = (int)x,
                     y = (int)y,
-                    z = loc.alt,
-                    param1 = loc.p1,
-                    param2 = loc.p2,
-                    param3 = loc.p3,
-                    param4 = loc.p4,
+                    z = loc.Altitude,
+                    param1 = loc.Param1,
+                    param2 = loc.Param2,
+                    param3 = loc.Param3,
+                    param4 = loc.Param4,
                     seq = index
                 };
             }
@@ -530,17 +509,17 @@ namespace Diva.Mavlink
                 {
                     target_component = CompId,
                     target_system = SysId,
-                    command = loc.id,
+                    command = loc.Id,
                     current = 0,
                     autocontinue = contmode,
                     frame = (byte)frame,
-                    x = (float)loc.lat,
-                    y = (float)loc.lng,
-                    z = loc.alt,
-                    param1 = loc.p1,
-                    param2 = loc.p2,
-                    param3 = loc.p3,
-                    param4 = loc.p4,
+                    x = (float)loc.Latitude,
+                    y = (float)loc.Longitude,
+                    z = loc.Altitude,
+                    param1 = loc.Param1,
+                    param2 = loc.Param2,
+                    param3 = loc.Param3,
+                    param4 = loc.Param4,
                     seq = index
                 };
             }
@@ -672,21 +651,21 @@ namespace Diva.Mavlink
             }
         }
 
-        public void SetGuidedModeWP(Locationwp gotohere)
+        public void SetGuidedModeWP(WayPoint gotohere)
         {
-            if (gotohere.alt == 0 || gotohere.lat == 0 || gotohere.lng == 0)
+            if (gotohere.Altitude == 0 || gotohere.Latitude == 0 || gotohere.Longitude == 0)
                 return;
 
             PortInUse = true;
 
             try
             {
-                gotohere.id = (ushort)MAV_CMD.WAYPOINT;
+                gotohere.Id = (ushort)MAV_CMD.WAYPOINT;
                 // Must be Guided mode.s
                 // fix for followme change
                 SetMode("GUIDED");
                 log.InfoFormat("setGuidedModeWP {0}:{1} lat {2} lng {3} alt {4}",
-                    SysId, CompId, gotohere.lat, gotohere.lng, gotohere.alt);
+                    SysId, CompId, gotohere.Latitude, gotohere.Longitude, gotohere.Altitude);
                 if (Status.firmware == MavUtlities.Firmwares.ArduPlane)
                 {
                     MAV_MISSION_RESULT ans = SetWP(gotohere, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT);
@@ -696,7 +675,7 @@ namespace Diva.Mavlink
                 else
                 {
                     SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
-                        gotohere.lat, gotohere.lng, gotohere.alt);
+                        gotohere.Latitude, gotohere.Longitude, gotohere.Altitude);
                 }
             }
             catch (Exception ex)

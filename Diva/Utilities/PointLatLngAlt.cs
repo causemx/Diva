@@ -47,13 +47,6 @@ namespace Diva.Utilities
 			Alt = alt;
 		}
 
-		public PointLatLngAlt(Locationwp locwp)
-		{
-			Lat = locwp.lat;
-			Lng = locwp.lng;
-			Alt = locwp.alt;
-		}
-
 		public PointLatLngAlt(PointLatLngAlt plla)
 		{
 			Lat = plla.Lat;

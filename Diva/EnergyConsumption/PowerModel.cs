@@ -21,7 +21,7 @@ namespace Diva.EnergyConsumption
             ModelName = Properties.Strings.MsgDroneSettingNoPowerModel;
         }
 
-        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<Locationwp> wps, Locationwp home, Action<double, object> cb, object token)
+        public Task CalculateEnergyConsumptionBackground(MavDrone drone, List<WayPoint> wps, WayPoint home, Action<double, object> cb, object token)
         {
             if (GetType() == typeof(PowerModel))
                 throw new NotImplementedException();
@@ -31,7 +31,7 @@ namespace Diva.EnergyConsumption
 
         public static bool ContainsModel(string path) => false;
 
-        public virtual double CalculateEnergyConsumption(MavDrone drone, List<Locationwp> wps, Locationwp home) => double.NaN;
+        public virtual double CalculateEnergyConsumption(MavDrone drone, List<WayPoint> wps, WayPoint home) => double.NaN;
     }
 
     public static class PowerModelManager
@@ -97,8 +97,8 @@ namespace Diva.EnergyConsumption
             }
         }
 
-        public static List<Locationwp> GenerateTrainingMission<T>(double homelat, double homelng, double angle) =>
-            (List<Locationwp>)typeof(T).GetMethod("GenerateTrainingMission")?.Invoke(null, new object[] { homelat, homelng, angle });
+        public static List<WayPoint> GenerateTrainingMission<T>(double homelat, double homelng, double angle) =>
+            (List<WayPoint>)typeof(T).GetMethod("GenerateTrainingMission")?.Invoke(null, new object[] { homelat, homelng, angle });
 
         public static PowerModel TrainNewModel<T>(string file, string name)
         {

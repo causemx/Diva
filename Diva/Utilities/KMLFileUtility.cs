@@ -1,21 +1,18 @@
 ﻿using SharpKml.Base;
 using SharpKml.Dom;
-using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Diva.Utilities
 {
 	public class KMLFileUtility
 	{
-		public static List<Locationwp> ReadKMLMission()
+		public static List<WayPoint> ReadKMLMission()
 		{
             using (OpenFileDialog fd = new OpenFileDialog())
 			{
@@ -47,9 +44,9 @@ namespace Diva.Utilities
             return null;
 		}
 
-        public static List<Locationwp> ReadKMLMissionFile(string file)
+        public static List<WayPoint> ReadKMLMissionFile(string file)
         {
-            List<Locationwp> cmds = new List<Locationwp>();
+            List<WayPoint> cmds = new List<WayPoint>();
             string kml = "";
             string tempdir = "";
 
@@ -73,7 +70,7 @@ namespace Diva.Utilities
 
         private static void ProcessKMLReadMission(object sender, ElementEventArgs e)
 		{
-            List<Locationwp> cmds = sender as List<Locationwp>;
+            List<WayPoint> cmds = sender as List<WayPoint>;
             Element element = e.Element;
 			Document doc = element as Document;
 			Placemark pm = element as Placemark;
@@ -88,34 +85,34 @@ namespace Diva.Utilities
 			}
 			else if (pm != null)
 			{
-				if (pm.Geometry is SharpKml.Dom.Point)
+				if (pm.Geometry is Point)
 				{
-					var point = ((SharpKml.Dom.Point)pm.Geometry).Coordinate;
+					var point = ((Point)pm.Geometry).Coordinate;
 					SchemaData sdata = pm.ExtendedData.SchemaData.First();
 					SimpleData[] datas = (sdata.SimpleData).ToArray();
 
-					Locationwp temp = new Locationwp();
-					if (datas[2].Text == "3") { temp.options = 1; }
-					else if (datas[2].Text == "10") { temp.options = 8; }
-					else { temp.options = 0; }
+					WayPoint temp = new WayPoint();
+					if (datas[2].Text == "3") { temp.Option = 1; }
+					else if (datas[2].Text == "10") { temp.Option = 8; }
+					else { temp.Option = 0; }
 
-					temp.id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), datas[3].Text, false);
-					if (temp.id == 99) { temp.id = 0; }
+					temp.Id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), datas[3].Text, false);
+					if (temp.Id == 99) { temp.Id = 0; }
 
-					temp.p1 = float.Parse(datas[4].Text, new CultureInfo("en-US"));
-					temp.p2 = (float)(double.Parse(datas[5].Text, new CultureInfo("en-US")));
-					temp.p3 = (float)(double.Parse(datas[6].Text, new CultureInfo("en-US")));
-					temp.p4 = (float)(double.Parse(datas[7].Text, new CultureInfo("en-US")));
-					temp.lat = point.Latitude;
-					temp.lng = point.Longitude;
-					temp.alt = (float)point.Altitude;
+					temp.Param1 = float.Parse(datas[4].Text, new CultureInfo("en-US"));
+					temp.Param2 = (float)(double.Parse(datas[5].Text, new CultureInfo("en-US")));
+					temp.Param3 = (float)(double.Parse(datas[6].Text, new CultureInfo("en-US")));
+					temp.Param4 = (float)(double.Parse(datas[7].Text, new CultureInfo("en-US")));
+					temp.Latitude = point.Latitude;
+					temp.Longitude = point.Longitude;
+					temp.Altitude = (float)point.Altitude;
 
 					cmds.Add(temp);
 				}
 			}
 		}
 
-		public static void SaveKMLMission(List<Locationwp> _cmds, Locationwp home)
+		public static void SaveKMLMission(List<WayPoint> _cmds, WayPoint home)
 		{
 			using (SaveFileDialog fd = new SaveFileDialog())
 			{
@@ -139,7 +136,7 @@ namespace Diva.Utilities
 
 							document.AddFeature(ProcessKMLSaveMission(home, true, wpCount++));
 
-							foreach (Locationwp wp in _cmds)
+							foreach (WayPoint wp in _cmds)
 							{
 								document.AddFeature(ProcessKMLSaveMission(wp, false, wpCount++));
 							}
@@ -164,13 +161,13 @@ namespace Diva.Utilities
 			}
 		}
 
-		private static Placemark ProcessKMLSaveMission(Locationwp wp, bool isHome, int wpCount)
+		private static Placemark ProcessKMLSaveMission(WayPoint wp, bool isHome, int wpCount)
 		{
 
 			Point point = new Point();
 			Placemark placemark = new Placemark();
 
-			point.Coordinate = new Vector(wp.lat, wp.lng, wp.alt);
+			point.Coordinate = new Vector(wp.Latitude, wp.Longitude, wp.Altitude);
 			placemark.Name = isHome? "home" : "waypoint";
 			placemark.Geometry = point;
 
@@ -181,11 +178,11 @@ namespace Diva.Utilities
 			schemaData.AddData(new SimpleData() { Name = "p1", Text = wpCount.ToString() });
 			schemaData.AddData(new SimpleData() { Name = "p2", Text = isHome? "1" : "0" });
 			schemaData.AddData(new SimpleData() { Name = "p3", Text = isHome ? "0" : "3" });
-			schemaData.AddData(new SimpleData() { Name = "p4", Text = (wp.id).ToString() });
-			schemaData.AddData(new SimpleData() { Name = "p5", Text = (wp.p1).ToString() });
-			schemaData.AddData(new SimpleData() { Name = "p6", Text = (wp.p2).ToString() });
-			schemaData.AddData(new SimpleData() { Name = "p7", Text = (wp.p3).ToString() });
-			schemaData.AddData(new SimpleData() { Name = "p8", Text = (wp.p4).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p4", Text = (wp.Id).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p5", Text = (wp.Param1).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p6", Text = (wp.Param2).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p7", Text = (wp.Param3).ToString() });
+			schemaData.AddData(new SimpleData() { Name = "p8", Text = (wp.Param4).ToString() });
 			schemaData.AddData(new SimpleData() { Name = "wp_speed", Text = "6m/s" });
 			extendedData.AddSchemaData(schemaData);
 			placemark.ExtendedData = extendedData;

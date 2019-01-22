@@ -14,9 +14,9 @@ namespace Diva.Utilities
 	{
         private static string QGCWaypointFileMagic = "QGC WPL 110";
 
-        public static List<Locationwp> ImportWaypoints(string file)
+        public static List<WayPoint> ImportWaypoints(string file)
         {
-            List<Locationwp> cmds = new List<Locationwp>();
+            List<WayPoint> cmds = new List<WayPoint>();
             try
             {
                 bool validLine(int l, string[] c)
@@ -41,16 +41,16 @@ namespace Diva.Utilities
                         var cols = line.Split(new char[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         if (!validLine(lineno, cols))
                             throw new FileFormatException(file);
-                        cmds.Add(new Locationwp
+                        cmds.Add(new WayPoint
                         {
-                            id = ushort.Parse(cols[3]),
-                            p1 = float.Parse(cols[4]),
-                            p2 = float.Parse(cols[5]),
-                            p3 = float.Parse(cols[6]),
-                            p4 = float.Parse(cols[7]),
-                            lat = double.Parse(cols[8]),
-                            lng = double.Parse(cols[9]),
-                            alt = float.Parse(cols[10])
+                            Id = ushort.Parse(cols[3]),
+                            Param1 = float.Parse(cols[4]),
+                            Param2 = float.Parse(cols[5]),
+                            Param3 = float.Parse(cols[6]),
+                            Param4 = float.Parse(cols[7]),
+                            Latitude = double.Parse(cols[8]),
+                            Longitude = double.Parse(cols[9]),
+                            Altitude = float.Parse(cols[10])
                         });
                     }
                 }
@@ -62,7 +62,7 @@ namespace Diva.Utilities
             return cmds;
         }
 
-        public static void ExportWaypoints(string file, List<Locationwp> cmds, Locationwp home)
+        public static void ExportWaypoints(string file, List<WayPoint> cmds, WayPoint home)
         {
             string formatHomeCoordinate(double d) => d.ToString("0.000000", CultureInfo.InvariantCulture);
             try
@@ -73,9 +73,9 @@ namespace Diva.Utilities
                     try
                     {
                         sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
-                            formatHomeCoordinate(home.lat) + "\t" +
-                            formatHomeCoordinate(home.lng) + "\t" +
-                            formatHomeCoordinate(home.alt) + "\t1");
+                            formatHomeCoordinate(home.Latitude) + "\t" +
+                            formatHomeCoordinate(home.Longitude) + "\t" +
+                            formatHomeCoordinate(home.Altitude) + "\t1");
                     }
                     catch (Exception ex)
                     {
@@ -85,19 +85,19 @@ namespace Diva.Utilities
 
                     int count = 0;
 
-                    foreach (Locationwp wp in cmds)
+                    foreach (WayPoint wp in cmds)
                     {
                         sw.Write((count + 1)); // seq
                         sw.Write("\t" + 0); // current
                         sw.Write("\t" + "Relative"); //frame 
-                        sw.Write("\t" + wp.id);
-                        sw.Write("\t" + wp.p1);
-                        sw.Write("\t" + wp.p2);
-                        sw.Write("\t" + wp.p3);
-                        sw.Write("\t" + wp.p4);
-                        sw.Write("\t" + wp.lat);
-                        sw.Write("\t" + wp.lng);
-                        sw.Write("\t" + wp.alt);
+                        sw.Write("\t" + wp.Id);
+                        sw.Write("\t" + wp.Param1);
+                        sw.Write("\t" + wp.Param2);
+                        sw.Write("\t" + wp.Param3);
+                        sw.Write("\t" + wp.Param4);
+                        sw.Write("\t" + wp.Latitude);
+                        sw.Write("\t" + wp.Longitude);
+                        sw.Write("\t" + wp.Altitude);
                         sw.Write("\t" + 1);
                         sw.WriteLine("");
 

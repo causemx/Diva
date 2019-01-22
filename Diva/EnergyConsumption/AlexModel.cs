@@ -132,7 +132,7 @@ namespace Diva.EnergyConsumption
             ModelName = name;
         }
 
-        public static List<Locationwp> GenerateTrainingMission(double lat, double lng, double ang) =>
+        public static List<WayPoint> GenerateTrainingMission(double lat, double lng, double ang) =>
             QGCWaypointFileUtlity.ImportWaypoints(
                 (string)AlexModelTools.MissionGenerator.Start($"{lat} {lng} {ang}", null));
 
@@ -142,7 +142,7 @@ namespace Diva.EnergyConsumption
         public new static bool ContainsModel(string path) =>
             !AlexModelTools.PowerModelFiles.Where(f => !File.Exists(path + "\\" + f)).Any();
 
-        public override double CalculateEnergyConsumption(Mavlink.MavDrone drone, List<Locationwp> wps, Locationwp home)
+        public override double CalculateEnergyConsumption(Mavlink.MavDrone drone, List<WayPoint> wps, WayPoint home)
         {
             QGCWaypointFileUtlity.ExportParams(AlexModelTools.AlexModelToolsRoot + "Param.txt", drone);
             QGCWaypointFileUtlity.ExportWaypoints(AlexModelTools.AlexModelToolsRoot + "input.waypoints", wps, home);
