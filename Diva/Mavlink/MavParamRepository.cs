@@ -4,9 +4,9 @@ using System.Linq;
 using log4net;
 using System.Xml.Linq;
 
-namespace Diva.Utilities
+namespace Diva.Mavlink
 {
-    public static class ParameterRepository
+    public static class MavParamRepository
     {
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -26,7 +26,6 @@ namespace Diva.Utilities
                 try
                 {
                     var elts = xdoc.Element("Params").Elements(vechileType);
-
                     foreach (var el in elts)
                     {
                         if (el != null && el.HasElements)
@@ -43,41 +42,30 @@ namespace Diva.Utilities
                             }
                         }
                     }
-                }
-                catch
-                {
-                }
+                } catch { }
             }
             return res;
 		}
 
 		public static List<KeyValuePair<int, string>> GetOptionsInt(string nodeKey, string vechileType)
 		{
-			string availableValuesRaw = FromRepository(nodeKey, "Values", vechileType);
-			string[] availableValues = availableValuesRaw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			if (availableValues.Any())
+			string[] values = FromRepository(nodeKey, "Values", vechileType)
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var valuePairs = new List<KeyValuePair<int, string>>();
+			foreach (string val in values)
 			{
-				var splitValues = new List<KeyValuePair<int, string>>();
-				// Add the values to the ddl
-				foreach (string val in availableValues)
+				try
 				{
-					try
-					{
-						string[] valParts = val.Split(new[] { ':' });
-						splitValues.Add(new KeyValuePair<int, string>(int.Parse(valParts[0].Trim()),
-							(valParts.Length > 1) ? valParts[1].Trim() : valParts[0].Trim()));
-					}
-					catch
-					{
-						Console.WriteLine("Bad entry in param meta data: " + nodeKey);
-					}
+					string[] valParts = val.Split(new[] { ':' });
+					valuePairs.Add(new KeyValuePair<int, string>(int.Parse(valParts[0].Trim()),
+						valParts[valParts.Length > 1 ? 1 : 0].Trim()));
 				}
-				;
-
-				return splitValues;
+				catch
+				{
+					Console.WriteLine("Bad entry in param meta data: " + nodeKey);
+				}
 			}
-
-			return new List<KeyValuePair<int, string>>();
+			return valuePairs;
 		}
 	}
 }

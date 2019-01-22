@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
 using Diva.Controls.Components;
-using Diva.Utilities;
+using Diva.Mavlink;
 
 namespace Diva.Controls
 {
@@ -23,12 +23,12 @@ namespace Diva.Controls
 			CheckBox_Enable.setup(1, 0, "FENCE_ENABLE", mav.Status.Params);
 
 			ComboBox_Fence_Type.setup(
-				ParameterRepository.GetOptionsInt("FENCE_TYPE",
+				MavParamRepository.GetOptionsInt("FENCE_TYPE",
 					"ArduCopter2"), "FENCE_TYPE", mav.Status.Params);
 
 
 			ComboBox_Fence_Action.setup(
-				ParameterRepository.GetOptionsInt("FENCE_ACTION",
+				MavParamRepository.GetOptionsInt("FENCE_ACTION",
 					"ArduCopter2"), "FENCE_ACTION", mav.Status.Params);
 
 
@@ -48,7 +48,7 @@ namespace Diva.Controls
 
 			// arducopter
 			ComboBox_Batt_Action.setup(
-				ParameterRepository.GetOptionsInt("FS_BATT_ENABLE",
+				MavParamRepository.GetOptionsInt("FS_BATT_ENABLE",
 					mav.Status.firmware.ToString()), "FS_BATT_ENABLE", mav.Status.Params);
 
 			// low battery
