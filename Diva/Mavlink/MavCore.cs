@@ -4,6 +4,7 @@ using Diva.Utilities;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +25,32 @@ namespace Diva.Mavlink
         private const int GROUNDCONTROLSTATION_SYSTEM_ID = 255;
         #endregion Constants
 
-        public bool PortInUse { get; set; } = false;
+        private int portInUseLevel = 0;
+        private StackTrace portLockTracer;
+        private Timer portUnlockTimer;
+        public bool PortInUse
+        {
+            get => portInUseLevel > 0;
+            set
+            {
+                if (value)
+                {
+                    portInUseLevel++;
+                    if (!portUnlockTimer.Enabled)
+                    {
+                        portUnlockTimer.Start();
+                        portLockTracer = new StackTrace();
+                    }
+                }
+                else if (portInUseLevel > 0)
+                {
+                    if (--portInUseLevel == 0)
+                    {
+                        portUnlockTimer.Stop();
+                    }
+                }
+            }
+        }
 
         private MavStream baseStream;
         public MavStream BaseStream
@@ -50,17 +76,28 @@ namespace Diva.Mavlink
 		internal string plaintxtline = "";
 
 		protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		private readonly object objlock = new object();
-		private readonly object readlock = new object();
+		private readonly object writeLock = new object();
+		private readonly object readLock = new object();
 		private int pacCount = 0;
-		private string buildplaintxtline = "";
-		private byte mavlinkversion = 0;
+		private string plainTextLine = "";
+		private byte mavlinkVersion = 0;
 		private bool GPSLocationMode = false;
 		private ProgressDialogV2 frmProgressReporter;
 
         #region Core
         public MavCore()
 		{
+            portUnlockTimer = new Timer { Interval = 5000, AutoReset = false };
+            portUnlockTimer.Elapsed += (s, e) =>
+            {
+                if (PortInUse)
+                {
+                    Console.WriteLine($"MavCore: port locked too long (called from " +
+                        $"{portLockTracer.GetFrame(1).GetMethod().Name} from " +
+                        $"{portLockTracer.GetFrame(2).GetMethod().Name}), released.");
+                    portInUseLevel = 0;
+                }
+            };
             RegisterMavMessageHandler(MAVLINK_MSG_ID.HEARTBEAT, HeartBeatPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
@@ -102,7 +139,7 @@ namespace Diva.Mavlink
 			{
 				BaseStream.ReadBufferSize = 16 * 1024;
 
-				lock (objlock) // so we dont have random traffic
+				lock (writeLock) // so we dont have random traffic
 				{
 					log.Info("Open port with " + BaseStream.StreamDescription);
 
@@ -260,7 +297,7 @@ namespace Diva.Mavlink
 
 			DateTime start = DateTime.Now;
 
-			lock (readlock)
+			lock (readLock)
 			{
 				while (BaseStream.IsOpen)
 				{
@@ -309,15 +346,15 @@ namespace Diva.Mavlink
 							if (buffer[0] == '\r' || buffer[0] == '\n')
 							{
 								// check new line is valid
-								if (buildplaintxtline.Length > 3)
-									plaintxtline = buildplaintxtline;
+								if (plainTextLine.Length > 3)
+									plaintxtline = plainTextLine;
 
 								log.Info(plaintxtline);
 								// reset for next line
-								buildplaintxtline = "";
+								plainTextLine = "";
 							}
 						
-							buildplaintxtline += (char)buffer[0];
+							plainTextLine += (char)buffer[0];
 						}
 						count = 0;
 						buffer[1] = 0;
@@ -504,34 +541,27 @@ namespace Diva.Mavlink
 				if ((message.header == 'U' || message.header == 0xfe || message.header == 0xfd) && buffer.Length >= message.payloadlength)
 				{
 					// check if we lost pacakets based on seqno
-					int expectedPacketSeqNo = ((Status.recvpacketcount + 1) % 0x100);
+					int expectedSeqNo = ((Status.recvpacketcount + 1) % 0x100);
 
+					// the second part is to work around a 3dr radio bug sending dup seqno's
+					if (packetSeqNo != expectedSeqNo && packetSeqNo != Status.recvpacketcount)
 					{
-						// the second part is to work around a 3dr radio bug sending dup seqno's
-						if (packetSeqNo != expectedPacketSeqNo && packetSeqNo != Status.recvpacketcount)
+                        Status.SyncLost++; // actualy sync loss's
+						int numLost = 0;
+						if (packetSeqNo < ((Status.recvpacketcount + 1)))
+						// recvpacketcount = 255 then   10 < 256 = true if was % 0x100 this would fail
 						{
-                            Status.SyncLost++; // actualy sync loss's
-							int numLost = 0;
-
-							if (packetSeqNo < ((Status.recvpacketcount + 1)))
-							// recvpacketcount = 255 then   10 < 256 = true if was % 0x100 this would fail
-							{
-								numLost = 0x100 - expectedPacketSeqNo + packetSeqNo;
-							}
-							else
-							{
-								numLost = packetSeqNo - expectedPacketSeqNo;
-							}
-
-                            Status.PacketsLost += numLost;
+							numLost = 0x100 - expectedSeqNo + packetSeqNo;
 						}
-
-                        Status.PacketsNotLost++;
-
-                        //Console.WriteLine("{0} {1}", sysid, packetSeqNo);
-
-                        Status.recvpacketcount = packetSeqNo;
+						else
+						{
+							numLost = packetSeqNo - expectedSeqNo;
+						}
+                        Status.PacketsLost += numLost;
 					}
+                    Status.PacketsNotLost++;
+                    //Console.WriteLine("{0} {1}", sysid, packetSeqNo);
+                    Status.recvpacketcount = packetSeqNo;
 
 					// packet stats per mav
 					if (!Status.PacketsPerSecond.ContainsKey(msgid) || double.IsInfinity(Status.PacketsPerSecond[msgid]))
@@ -545,8 +575,9 @@ namespace Diva.Mavlink
 
                     Status.PacketsPerSecondBuild[msgid] = DateTime.Now;
 
-					// store packet history
-					lock (objlock)
+                    // store packet history
+                    Status.AddPacket(message);
+                    /*lock (writeLock)
 					{
                         Status.AddPacket(message);
 
@@ -561,25 +592,19 @@ namespace Diva.Mavlink
 						if (msgid == (byte)MAVLINK_MSG_ID.COLLISION)
 						{
 							var coll = message.ToStructure<mavlink_collision_t>();
-
 							var id = coll.id.ToString("X5");
-
 							var coll_type = (MAV_COLLISION_SRC)coll.src;
-
 							var action = (MAV_COLLISION_ACTION)coll.action;
-
 							if (action > MAV_COLLISION_ACTION.REPORT)
 							{
 								// we are reacting to a threat
 							}
-
 							var threat_level = (MAV_COLLISION_THREAT_LEVEL)coll.threat_level;
-
 						}
-					}
+					}*/
 
-					// set seens sysid's based on hb packet - this will hide 3dr radio packets
-					if (msgid == (byte)MAVLINK_MSG_ID.HEARTBEAT)
+                    // set seens sysid's based on hb packet - this will hide 3dr radio packets
+                    /*if (msgid == (byte)MAVLINK_MSG_ID.HEARTBEAT)
 					{
 						mavlink_heartbeat_t hb = message.ToStructure<mavlink_heartbeat_t>();
 
@@ -590,7 +615,7 @@ namespace Diva.Mavlink
                                     Status.APName != (MAV_AUTOPILOT)hb.autopilot)
     							SetAPType((MAV_TYPE)hb.type, (MAV_AUTOPILOT)hb.autopilot);
 						}
-					}
+					}*/
 
 					// only process for active mav
 					//if (sysidcurrent == sysid && compidcurrent == compid)
@@ -634,6 +659,31 @@ namespace Diva.Mavlink
 
 			return message;
 		}
+
+        public void SendPacket(MAVLINK_MSG_ID msgid, object indata)
+        {
+            int messageType = (byte)msgid;
+            byte[] data = MavlinkUtil.StructureToByteArray(indata);
+            var info = MAVLINK_MESSAGE_INFOS.SingleOrDefault(p => p.msgid == messageType);
+            if (data.Length != info.minlength) Array.Resize(ref data, (int)info.minlength);
+
+            byte[] packet = new byte[data.Length + 6 + 2];
+            packet[0] = MAVLINK_STX_MAVLINK1;
+            packet[1] = (byte)data.Length;
+            packet[2] = (byte)++pacCount;
+            packet[3] = GROUNDCONTROLSTATION_SYSTEM_ID;
+            packet[4] = (byte)MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER;
+            packet[5] = (byte)messageType;
+            Array.Copy(data, 0, packet, 6, data.Length);
+
+            ushort checksum = MavlinkCRC.crc_calculate(packet, packet[1] + 6);
+            checksum = MavlinkCRC.crc_accumulate(MAVLINK_MESSAGE_INFOS.GetMessageInfo((uint)messageType).crc, checksum);
+            packet[packet.Length - 2] = (byte)(checksum & 0xFF);
+            packet[packet.Length - 1] = (byte)(checksum >> 8);
+
+            lock (writeLock)
+                BaseStream.Write(packet, 0, packet.Length);
+        }
         #endregion Core
 
         #region Background Loop
@@ -1169,7 +1219,7 @@ namespace Diva.Mavlink
             {
                 log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({message.sysid},{message.compid}), dropped");
             }*/
-            mavlinkversion = hb.mavlink_version;
+            mavlinkVersion = hb.mavlink_version;
 			Status.APType = (MAV_TYPE)hb.type;
 			Status.APName = (MAV_AUTOPILOT)hb.autopilot;
 			Status.recvpacketcount = message.seq;
@@ -1348,13 +1398,15 @@ namespace Diva.Mavlink
 
 		public bool GetVersion()
 		{
-			mavlink_autopilot_version_request_t req = new mavlink_autopilot_version_request_t();
+            PortInUse = true;
+            var req = new mavlink_autopilot_version_request_t
+            {
+                target_component = CompId,
+                target_system = SysId
+            };
 
-			req.target_component = CompId;
-			req.target_system = SysId;
-
-			// request point
-			SendPacket(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req);
+            // request point
+            SendPacket(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST, req);
 
 			DateTime start = DateTime.Now;
 			int retrys = 3;
@@ -1381,35 +1433,10 @@ namespace Diva.Mavlink
 					if (buffer.msgid == (byte)MAVLINK_MSG_ID.AUTOPILOT_VERSION)
 					{
 						PortInUse = false;
-
 						return true;
 					}
 				}
 			}
-		}
-
-		public void SendPacket(MAVLINK_MSG_ID msgid, object indata)
-		{
-            int messageType = (byte)msgid;
-			byte[] data = MavlinkUtil.StructureToByteArray(indata);
-			var info = MAVLINK_MESSAGE_INFOS.SingleOrDefault(p => p.msgid == messageType);
-			if (data.Length != info.minlength) Array.Resize(ref data, (int)info.minlength);
-
-			byte[] packet = new byte[data.Length + 6 + 2];
-			packet[0] = MAVLINK_STX_MAVLINK1;
-			packet[1] = (byte)data.Length;
-			packet[2] = (byte)++pacCount;
-			packet[3] = GROUNDCONTROLSTATION_SYSTEM_ID;
-			packet[4] = (byte)MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER;
-			packet[5] = (byte)messageType;
-            Array.Copy(data, 0, packet, 6, data.Length);
-
-			ushort checksum = MavlinkCRC.crc_calculate(packet, packet[1] + 6);
-			checksum = MavlinkCRC.crc_accumulate(MAVLINK_MESSAGE_INFOS.GetMessageInfo((uint)messageType).crc, checksum);
-			packet[packet.Length - 2] = (byte)(checksum & 0xFF);
-			packet[packet.Length - 1] = (byte)(checksum >> 8);
-
-			BaseStream.Write(packet, 0, packet.Length);
 		}
 
 		public bool DoCommand(MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7)

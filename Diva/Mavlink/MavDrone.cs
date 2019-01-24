@@ -310,7 +310,7 @@ namespace Diva.Mavlink
 
         public WayPoint GetWP(ushort index)
         {
-            while (PortInUse) Thread.Sleep(100);
+            //while (PortInUse) Thread.Sleep(100);
 
             bool use_int = true;
             object req;
@@ -333,8 +333,8 @@ namespace Diva.Mavlink
                     seq = index
                 };
             }
-            SendPacket(msgid, req);
             PortInUse = true;
+            SendPacket(msgid, req);
             WayPoint loc = new WayPoint();
 
             DateTime start = DateTime.Now;
@@ -430,7 +430,7 @@ namespace Diva.Mavlink
             const ushort MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE = ((1 << 0) | (1 << 1) | (1 << 2));
             const ushort MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE = ((0 << 0) | (0 << 1) | (1 << 2));
 
-            mavlink_set_position_target_global_int_t target = new mavlink_set_position_target_global_int_t
+            var target = new mavlink_set_position_target_global_int_t
             {
                 target_system = SysId,
                 target_component = CompId,
@@ -563,7 +563,6 @@ namespace Diva.Mavlink
                         if (ans.seq == (index + 1))
                         {
                             log.Info("set wp doing " + index + " req " + ans.seq + " REQ 40 : " + buffer.msgid);
-                            PortInUse = false;
                             PortInUse = false;
                             return MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
                         }
