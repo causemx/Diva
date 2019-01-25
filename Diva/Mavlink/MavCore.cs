@@ -666,7 +666,6 @@ namespace Diva.Mavlink
             byte[] data = MavlinkUtil.StructureToByteArray(indata);
             var info = MAVLINK_MESSAGE_INFOS.SingleOrDefault(p => p.msgid == messageType);
             if (data.Length != info.minlength) Array.Resize(ref data, (int)info.minlength);
-
             byte[] packet = new byte[data.Length + 6 + 2];
             packet[0] = MAVLINK_STX_MAVLINK1;
             packet[1] = (byte)data.Length;
@@ -1439,7 +1438,36 @@ namespace Diva.Mavlink
 			}
 		}
 
-		public bool DoCommand(MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7)
+        public bool? GetAck(ushort ackcmd, int timeout)
+        {
+            bool? ret = null;
+            DateTime deadline = DateTime.Now.AddMilliseconds(timeout);
+            while (deadline > DateTime.Now && !ret.HasValue)
+            {
+                var buffer = ReadPacket();
+                if (buffer.Length > 5)
+                {
+                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.COMMAND_ACK &&
+                        buffer.sysid == SysId && buffer.compid == CompId)
+                    {
+                        var ack = buffer.ToStructure<mavlink_command_ack_t>();
+                        if (ack.command == ackcmd)
+                        {
+                            log.InfoFormat($"GetAck: ack {((MAV_CMD)ack.command).ToString()}({ack.command}) recieved," +
+                                $" result {((MAV_RESULT)ack.result).ToString()}({ack.result})");
+                            ret = ack.result == (byte)MAV_RESULT.ACCEPTED;
+                        }
+                        else
+                        {
+                            log.InfoFormat($"GetAck: ack {ack.command} does not match expected {ackcmd}");
+                        }
+                    }
+                }
+            }
+            return ret;
+        }
+
+        public bool DoCommand(MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7)
 		{
 			PortInUse = true;
 			mavlink_command_long_t req = new mavlink_command_long_t
@@ -1459,10 +1487,7 @@ namespace Diva.Mavlink
 			log.InfoFormat("DoCommand cmd {0} {1} {2} {3} {4} {5} {6} {7}", actionid.ToString(), p1, p2, p3, p4, p5, p6,
 				p7);
 
-			SendPacket(MAVLINK_MSG_ID.COMMAND_LONG, req);
-
-			DateTime start = DateTime.Now;
-			int retrys = 3;
+			int retries = 3;
 			int timeout = 2000;
 
 			// imu calib take a little while
@@ -1472,42 +1497,22 @@ namespace Diva.Mavlink
 				timeout = 10000;
 			}
 
-            while (true)
+            while (retries > 0)
             {
-                var buffer = ReadPacket();
-                if (buffer.Length > 5)
+                SendPacket(MAVLINK_MSG_ID.COMMAND_LONG, req);
+                var ack = GetAck(req.command, timeout);
+                if (ack.HasValue)
                 {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.COMMAND_ACK &&
-                        buffer.sysid == SysId && buffer.compid == CompId)
-                    {
-                        var ack = buffer.ToStructure<mavlink_command_ack_t>();
-                        log.InfoFormat($"DoCommand: ack {((MAV_CMD)ack.command).ToString()}({ack.command}) recieved," +
-                            $" result {((MAV_RESULT)ack.result).ToString()}({ack.result})");
-                        if (ack.command != req.command)
-                        {
-                            log.InfoFormat($"DoCommand: ack {ack.command} does not match cmd {req.command}");
-                            continue;
-                        }
-                        PortInUse = false;
-                        return ack.result == (byte)MAV_RESULT.ACCEPTED;
-                    }
-                }
-                if (start.AddMilliseconds(timeout) < DateTime.Now)
-                {
-                    if (retrys > 0)
-                    {
-                        log.Info("DoCommand retry countdown: " + retrys--);
-                        SendPacket(MAVLINK_MSG_ID.COMMAND_LONG, req);
-                        start = DateTime.Now;
-                        continue;
-                    }
                     PortInUse = false;
-                    throw new TimeoutException($"Timeout on waiting ack from DoCommand {req.command}");
+                    return ack.Value;
                 }
+                log.Info("DoCommand retry countdown: " + retries--);
             }
+            PortInUse = false;
+            throw new TimeoutException($"Timeout on waiting ack from DoCommand {req.command}");
         }
 
-		public void GetDataStream(MAV_DATA_STREAM id, byte hzrate)
+        public void GetDataStream(MAV_DATA_STREAM id, byte hzrate)
 		{
 			mavlink_request_data_stream_t req = new mavlink_request_data_stream_t
             {

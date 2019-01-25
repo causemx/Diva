@@ -125,9 +125,16 @@ namespace Diva.Mavlink
                     custom_mode = modeval
                 };
                 Console.WriteLine("mode switching");
+                PortInUse = true;
                 SendPacket(MAVLINK_MSG_ID.SET_MODE, mode);
-                Thread.Sleep(10);
-                SendPacket(MAVLINK_MSG_ID.SET_MODE, mode);
+                GetAck((ushort)MAVLINK_MSG_ID.SET_MODE, 10);
+                if (!(GetAck((ushort)MAVLINK_MSG_ID.SET_MODE, 10) ?? false))
+                {
+                    SendPacket(MAVLINK_MSG_ID.SET_MODE, mode);
+                    Console.WriteLine("SetMode retry ack: " + ((GetAck((ushort)MAVLINK_MSG_ID.SET_MODE, 10) ?? false) ? "ok" : "failed"));
+                } else
+                    Console.WriteLine("SetMode ack: ok");
+                PortInUse = false;
             }
             else
                 Console.WriteLine("No Mode Changed");
