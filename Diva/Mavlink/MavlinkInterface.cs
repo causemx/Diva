@@ -7,6 +7,7 @@ using GMap.NET.WindowsForms;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -154,7 +155,7 @@ namespace Diva.Mavlink
 		private int _bps2 = 0;
 		private bool useLocation = false;
 		private ProgressDialogV2 frmProgressReporter;
-		private GMapOverlay objectsOverlay;
+		private ObjectsOverlay objectsOverlay;
 
 		// threading
 		private bool threadRunnable = false;
@@ -172,11 +173,27 @@ namespace Diva.Mavlink
 			this.BaseStream = new SerialPort();
 			this.WhenPacketLost = new Subject<int>();
 			this.WhenPacketReceived = new Subject<int>();
-			this.objectsOverlay = new GMapOverlay("objects_" + new Random().Next(10));
+			this.objectsOverlay = new ObjectsOverlay();
 		}
 
-		public GMapOverlay ObjectsOverlay => objectsOverlay;
+		public ObjectsOverlay ObjOverlay => objectsOverlay;
 		public List<Locationwp> LastCmds { get; set; } = new List<Locationwp>();
+
+		public class ObjectsOverlay
+		{
+			public static readonly string OVERLAY_KEY = "objects";
+			public static readonly int RANDOM_MAXIMUM = 10;
+			private Random random = new Random(RANDOM_MAXIMUM);
+
+			public ObjectsOverlay()
+			{
+				this.Overlay = new GMapOverlay(OVERLAY_KEY + random.Next());
+			}
+
+			public GMapOverlay Overlay { get; }
+			public Color RoutingColor { get; } = Utility.RandomColor();
+
+		}
 
 		private void SerialReader()
 		{

@@ -18,9 +18,14 @@ namespace Diva.Utilities
 
 			// public GMapOverlay overlay = new GMapOverlay("WPOverlay");
 
-			public WPOverlay(GMapOverlay _overlay) { overlay = _overlay; }
+			public WPOverlay(GMapOverlay _overlay, Color _color)
+			{
+				overlay = _overlay;
+				routingPathColor = _color;
+			}
 
 			public GMapOverlay overlay = null;
+			public Color routingPathColor;
 			public GMapRoute route = new GMapRoute("wp route");
 			public GMapRoute homeroute = new GMapRoute("home route");
 			/// list of points as per the mission
@@ -290,14 +295,14 @@ namespace Diva.Utilities
 					// raise the fullpointslist outside
 					RaiseFullPointsEvent?.Invoke(this, new FullPointsEventArgs(fullpointlist));
 										
-					homeroute.Stroke = new Pen(color, 2);
+					homeroute.Stroke = new Pen(routingPathColor, 2);
                     // if we have a large distance between home and the first/last point, it hangs on the draw of a the dashed line.
                     if (homepoint.GetDistance(lastpoint) < 5000 && homepoint.GetDistance(firstpoint) < 5000)
                         homeroute.Stroke.DashStyle = DashStyle.Dash;
 
                     overlay.Routes.Add(homeroute);
 
-                    route.Stroke = new Pen(color, 4);
+                    route.Stroke = new Pen(routingPathColor, 4);
                     route.Stroke.DashStyle = DashStyle.Custom;
                     overlay.Routes.Add(route);
                 }

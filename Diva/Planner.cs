@@ -172,7 +172,7 @@ namespace Diva
 			overlays = new plannerOverlays(myMap);
 
 			// overlays.objects.Markers.Clear();
-			ActiveDrone.ObjectsOverlay.Markers.Clear();
+			ActiveDrone.ObjOverlay.Overlay.Markers.Clear();
 
 			// set current marker
 			currentMarker = new GMarkerGoogle(myMap.Position, GMarkerGoogleType.red);
@@ -590,7 +590,7 @@ namespace Diva
 					poly.Points.Add(MouseDownEnd);
 					poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
 
-					foreach (var marker in ActiveDrone.ObjectsOverlay.Markers)
+					foreach (var marker in ActiveDrone.ObjOverlay.Overlay.Markers)
 					{
 						if (poly.IsInside(marker.Position))
 						{
@@ -630,9 +630,9 @@ namespace Diva
 
 						foreach (var markerid in groupmarkers)
 						{
-							for (int a = 0; a < ActiveDrone.ObjectsOverlay.Markers.Count; a++)
+							for (int a = 0; a < ActiveDrone.ObjOverlay.Overlay.Markers.Count; a++)
 							{
-								var marker = ActiveDrone.ObjectsOverlay.Markers[a];
+								var marker = ActiveDrone.ObjOverlay.Overlay.Markers[a];
 
 								if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 								{
@@ -765,9 +765,9 @@ namespace Diva
 							continue;
 
 						seen[markerid] = 1;
-						for (int a = 0; a < ActiveDrone.ObjectsOverlay.Markers.Count; a++)
+						for (int a = 0; a < ActiveDrone.ObjOverlay.Overlay.Markers.Count; a++)
 						{
-							var marker = ActiveDrone.ObjectsOverlay.Markers[a];
+							var marker = ActiveDrone.ObjOverlay.Overlay.Markers[a];
 
 							if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 							{
@@ -1393,7 +1393,8 @@ namespace Diva
 					double.Parse(TxtHomeAltitude.Text), "H");
 
 
-			var overlay = new OverlayUtility.WPOverlay(ActiveDrone.ObjectsOverlay);
+			var overlay = new OverlayUtility.WPOverlay(ActiveDrone.ObjOverlay.Overlay,
+				ActiveDrone.ObjOverlay.RoutingColor);
 
 			overlay.RaiseFullPointsEvent += (s, e) => {
 
@@ -2496,7 +2497,8 @@ namespace Diva
 					try
 					{
 						drone = new MavDrone(dsetting);
-						myMap.Overlays.Add(((MavlinkInterface)drone).ObjectsOverlay);
+						var overlay = ((MavlinkInterface)drone).ObjOverlay.Overlay;
+						myMap.Overlays.Add(overlay);
 						drone?.Connect();
 					}
 					catch (Exception ex)
