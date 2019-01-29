@@ -3555,8 +3555,14 @@ namespace Diva
 
 		private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
 		{
-			OnlineDrones.Remove((sender as DroneInfo)?.Drone);
+			var drone = (sender as DroneInfo)?.Drone;
+			((MavlinkInterface)drone).ObjOverlay.Overlay.Markers.Clear();
+			((MavlinkInterface)drone).ObjOverlay.Overlay.Routes.Clear();
+			OnlineDrones.Remove(drone);
+			drone.Disconnect();
+
 			ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
+			
 		}
 
 		private void ClearCommands()
