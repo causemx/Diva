@@ -420,4 +420,22 @@
   <data name="StrMapImageFileExternsionFilter" xml:space="preserve">
     <value>Map Images|*.bmp;*.jpg;*.png</value>
   </data>
+  <data name="MsgFormProgressUserCanceled" xml:space="preserve">
+    <value>User Canceled</value>
+  </data>
+  <data name="TextFormProgressConnection" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="MsgFormProgressSync" xml:space="preserve">
+    <value>sync...</value>
+  </data>
+  <data name="MsgFormProgressMavlinkConnecting" xml:space="preserve">
+    <value>mavlink connecting</value>
+  </data>
+  <data name="MsgFormProgressTrying" xml:space="preserve">
+    <value>trying...{0}</value>
+  </data>
+  <data name="MsgFormProgressDone" xml:space="preserve">
+    <value>done</value>
+  </data>
 </root>

@@ -46,21 +46,23 @@ namespace Diva.Mavlink
         public Dictionary<string, MAV_PARAM_TYPE> ParamTypes = new Dictionary<string, MAV_PARAM_TYPE>();
 
         #region packets
-        Dictionary<uint, MAVLinkMessage> Packets { get; } = new Dictionary<uint, MAVLinkMessage>();
+        internal int recvpacketcount = 0;
+        private Dictionary<uint, MAVLinkMessage> Packets = new Dictionary<uint, MAVLinkMessage>();
+        private Dictionary<uint, Action<MAVLinkMessage>> Listeners = new Dictionary<uint, Action<MAVLinkMessage>>();
         public DateTime LastPacket { get; set; } = DateTime.MinValue;
         public Dictionary<uint, double> PacketsPerSecond { get; } = new Dictionary<uint, double>();
         public Dictionary<uint, DateTime> PacketsPerSecondBuild { get; } = new Dictionary<uint, DateTime>();
-        internal int recvpacketcount = 0;
         public DateTime PacketTime { get; set; }
         public float PacketsLost = 0;
         public float PacketsNotLost = 0;
         public DateTime PacketLostTimer = DateTime.MinValue;
         public float SyncLost = 0;
 
-
         object packetslock = new object();
 
-		public MAVLinkMessage GetPacket(uint id)
+        public MAVLinkMessage GetPacket(MAVLINK_MSG_ID id) => GetPacket((uint)id);
+
+        public MAVLinkMessage GetPacket(uint id)
 		{
 			lock (packetslock)
 			{
@@ -80,7 +82,9 @@ namespace Diva.Mavlink
 			}
 		}
 
-		public void ClearPacket(uint mavlinkid)
+        public void ClearPacket(MAVLINK_MSG_ID id) => ClearPacket((uint)id);
+
+        public void ClearPacket(uint mavlinkid)
 		{
 			lock (packetslock)
 			{

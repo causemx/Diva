@@ -98,26 +98,34 @@ namespace Diva.Mavlink
         #endregion Message packet handlers
 
         #region Drone modes
-        public bool DoArm(bool arm) => arm ?
-            DoCommand(MAV_CMD.COMPONENT_ARM_DISARM, 1,
+        public bool DoArm(bool arm) =>
+            SendCommandWaitAck(MAV_CMD.COMPONENT_ARM_DISARM, 1,
+                arm ?
 #if FORCE_ARM
-                                                        2989.0f
+                    2989.0f
 #else
-                                                        0
+                    0
 #endif
-                                                               , 0, 0, 0, 0, 0) :
-            DoCommand(MAV_CMD.COMPONENT_ARM_DISARM, 0, 21196.0f, 0, 0, 0, 0, 0);
+                : 21196.0f, 0, 0, 0, 0, 0, 10000);
 
-        public bool TakeOff(float height) => DoCommand(MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, height);
+        public bool TakeOff(float height) =>
+            SendCommandWaitAck(MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, height);
 
-        public void StartMission() => DoCommand(MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
+        public void StartMission() =>
+            SendCommandWaitAck(MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 
-        public void ReturnToLaunch() => DoCommand(MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
+        public void ReturnToLaunch() =>
+            SendCommandWaitAck(MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 
         public void SetMode(string targetmode)
         {
             if (MavUtlities.GetFlightModeByName(targetmode, out uint modeval))
             {
+                bool verify(MAVLinkMessage p, ref bool more) =>
+                    p.ToStructure<mavlink_command_ack_t>().command == (ushort)MAVLINK_MSG_ID.SET_MODE;
+                bool accepted(MAVLinkMessage p) =>
+                    p != null && MAV_RESULT.ACCEPTED ==
+                        (MAV_RESULT)p.ToStructure<mavlink_command_ack_t>().result;
                 var mode = new mavlink_set_mode_t
                 {
                     target_system = SysId,
@@ -126,13 +134,14 @@ namespace Diva.Mavlink
                 };
                 Console.WriteLine("mode switching");
                 PortInUse = true;
-                SendPacket(MAVLINK_MSG_ID.SET_MODE, mode);
-                GetAck((ushort)MAVLINK_MSG_ID.SET_MODE, 10);
-                if (!(GetAck((ushort)MAVLINK_MSG_ID.SET_MODE, 10) ?? false))
+                if (!accepted(SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, mode,
+                    MAVLINK_MSG_ID.COMMAND_ACK, verify)))
                 {
-                    SendPacket(MAVLINK_MSG_ID.SET_MODE, mode);
-                    Console.WriteLine("SetMode retry ack: " + ((GetAck((ushort)MAVLINK_MSG_ID.SET_MODE, 10) ?? false) ? "ok" : "failed"));
-                } else
+                    var ack = SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, mode,
+                        MAVLINK_MSG_ID.COMMAND_ACK, verify);
+                    Console.WriteLine("SetMode retry ack: " + (accepted(ack) ? "ok" : "failed"));
+                }
+                else
                     Console.WriteLine("SetMode ack: ok");
                 PortInUse = false;
             }

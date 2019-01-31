@@ -261,14 +261,18 @@ namespace Diva
 
 		private void MainLoop(CancellationToken token)
 		{
-            DateTime mapUpdateTime = DateTime.Now.AddMilliseconds(500);
+            DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(500);
 			while (!token.IsCancellationRequested)
 			{
+                Thread.Sleep(100);
+                if (DateTime.Now < nextUpdateTime) continue;
+                nextUpdateTime = DateTime.Now.AddMilliseconds(500);
+
                 try
                 {
                     if (ActiveDrone.IsOpen)
                     {
-                        Invoke((MethodInvoker)delegate
+                        BeginInvoke((MethodInvoker)delegate
                         {
                             string mode = MavUtlities.GetFlightModeName(ActiveDrone.Status.FlightMode);
                             if (mode != null)
@@ -283,14 +287,9 @@ namespace Diva
                             UpdateMapPosition(currentloc);
                         }
                     }
-                    if (DateTime.Now > mapUpdateTime)
-                    {
-                        mapUpdateTime = DateTime.Now.AddMilliseconds(500);
-                        UpdateMapItems();
-                    }
+                    UpdateMapItems();
                 }
                 catch { }
-                Thread.Sleep(20);
             }
             Invoke((MethodInvoker)(() => Close()));
 		}
@@ -300,7 +299,7 @@ namespace Diva
 		{
 			if (!isMapFocusing) return;
 
-			Invoke((MethodInvoker)delegate
+			BeginInvoke((MethodInvoker)delegate
 			{
 				try
 				{
@@ -320,7 +319,7 @@ namespace Diva
 		private void updateRowNumbers()
 		{
 			// number rows 
-			this.BeginInvoke((MethodInvoker)delegate
+			BeginInvoke((MethodInvoker)delegate
 			{
 				// thread for updateing row numbers
 				for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
@@ -1886,7 +1885,7 @@ namespace Diva
 		{
 			try
 			{
-				Invoke((MethodInvoker)delegate
+				BeginInvoke((MethodInvoker)delegate
 				{
 					try
 					{

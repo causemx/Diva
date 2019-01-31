@@ -420,4 +420,22 @@
   <data name="StrMapImageFileExternsionFilter" xml:space="preserve">
     <value>地圖影像|*.bmp;*.jpg;*.png</value>
   </data>
+  <data name="MsgFormProgressUserCanceled" xml:space="preserve">
+    <value> 使用者取消</value>
+  </data>
+  <data name="TextFormProgressConnection" xml:space="preserve">
+    <value>連線</value>
+  </data>
+  <data name="MsgFormProgressSync" xml:space="preserve">
+    <value>同步中…</value>
+  </data>
+  <data name="MsgFormProgressMavlinkConnecting" xml:space="preserve">
+    <value>MAVLink連線中</value>
+  </data>
+  <data name="MsgFormProgressTrying" xml:space="preserve">
+    <value>嘗試中…{0}</value>
+  </data>
+  <data name="MsgFormProgressDone" xml:space="preserve">
+    <value>完成</value>
+  </data>
 </root>

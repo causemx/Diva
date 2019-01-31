@@ -493,6 +493,51 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to done.
+        /// </summary>
+        public static string MsgFormProgressDone {
+            get {
+                return ResourceManager.GetString("MsgFormProgressDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mavlink connecting.
+        /// </summary>
+        public static string MsgFormProgressMavlinkConnecting {
+            get {
+                return ResourceManager.GetString("MsgFormProgressMavlinkConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sync....
+        /// </summary>
+        public static string MsgFormProgressSync {
+            get {
+                return ResourceManager.GetString("MsgFormProgressSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trying...{0}.
+        /// </summary>
+        public static string MsgFormProgressTrying {
+            get {
+                return ResourceManager.GetString("MsgFormProgressTrying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Canceled.
+        /// </summary>
+        public static string MsgFormProgressUserCanceled {
+            get {
+                return ResourceManager.GetString("MsgFormProgressUserCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to get rally point.
         /// </summary>
         public static string MsgGetRallyPointFailed {
@@ -966,6 +1011,15 @@ namespace Diva.Properties {
         public static string TelemetryDataPanel_GBVerticalSpeed_Text {
             get {
                 return ResourceManager.GetString("TelemetryDataPanel.GBVerticalSpeed.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection.
+        /// </summary>
+        public static string TextFormProgressConnection {
+            get {
+                return ResourceManager.GetString("TextFormProgressConnection", resourceCulture);
             }
         }
     }

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -99,7 +98,7 @@ namespace Diva.Mission
 		{
 			if (drones.Count < DRONE_NUMBER_CONSTRAIN)
 			{
-				MessageBox.Show(Diva.Properties.Strings.MsgDroneNumberRequest, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
+				MessageBox.Show(Strings.MsgDroneNumberRequest, Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				return;
 			}
 					   
@@ -121,7 +120,7 @@ namespace Diva.Mission
 						continue;
 					}
 
-					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationSwitch, index));
+					infoDialog.Message(String.Format(Strings.MsgDialogRotationSwitch, index));
 
 					// **IMPORTANT**: If using the INF firmware, mark this line.
 					// mav.setMode(mav.Status.sysid, mav.Status.compid, "GUIDED");
@@ -130,7 +129,7 @@ namespace Diva.Mission
 					{
 						manualResetEvent.WaitOne(1000);
                         drone.DoArm(true);
-                        drone.DoCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, 10);
+                        drone.TakeOff(10);
 					}
 
 					while (drone.Status.State != (byte)MAVLink.MAV_STATE.ACTIVE)
@@ -139,9 +138,9 @@ namespace Diva.Mission
 					}
 
                     // switch mode to AUTO
-                    drone.DoCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
+                    drone.StartMission();
 
-					infoDialog.Message(String.Format(Diva.Properties.Strings.MsgDialogRotationExecute, index));
+					infoDialog.Message(String.Format(Strings.MsgDialogRotationExecute, index));
 
 					while (drone.Status.State == (byte)MAVLink.MAV_STATE.ACTIVE)
 					{
