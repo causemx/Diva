@@ -927,7 +927,7 @@ namespace Diva
 				if (item is GMapMarkerRect)
 				{
 					GMapMarkerRect rc = item as GMapMarkerRect;
-					rc.Pen.Color = Color.Red;
+					rc.Pen.Color = Color.Transparent;
 					myMap.Invalidate(false);
 
 					int answer;

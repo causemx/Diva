@@ -136,7 +136,7 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapMarkerRect : GMapMarker
 	{
-		public Pen Pen = new Pen(Brushes.White, 2);
+		public Pen Pen = new Pen(Brushes.Transparent, 2);
 
 		public Color Color
 		{
@@ -159,7 +159,7 @@ namespace Diva.Utilities
 			if (initcolor.HasValue)
 				Color = initcolor.Value;
 			else
-				Color = Color.White;
+				Color = Color.Transparent;
 		}
 
 		public GMapMarkerRect(PointLatLng p)
@@ -182,7 +182,7 @@ namespace Diva.Utilities
 
 			// if we have drawn it, then keep that color
 			if (!initcolor.HasValue)
-				Color = Color.White;
+				Color = Color.Transparent;
 
 			// undo autochange in mouse over
 			//if (Pen.Color == Color.Blue)
