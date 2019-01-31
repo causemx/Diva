@@ -241,6 +241,8 @@ namespace Diva
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
 
+			ComBoxModeSwitch.DataSource = Enum.GetValues(typeof(FlightMode)).Cast<FlightMode>().ToList();
+
 		}
 
 		private void DataGridView_Initialize()
@@ -324,7 +326,7 @@ namespace Diva
 						{
 							if ((uint)mode == ActiveDrone.Status.mode)
 							{
-								TxtDroneMode.Text = Enum.GetName(typeof(FlightMode), mode);
+								LBLMode.Text = Enum.GetName(typeof(FlightMode), mode);
 							}
 						}
 
@@ -3597,6 +3599,16 @@ namespace Diva
 			ActiveDrone = (sender as DroneInfo)?.Drone;
 			if (ActiveDrone.LastCmds.Count != 0) { WPtoScreen(ActiveDrone.LastCmds); }
 		}
-			
+
+		private void ComBoxModeSwitch_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!ActiveDrone.BaseStream.IsOpen)
+				return;
+
+			ComboBox comboBox = (ComboBox)sender;
+			ActiveDrone.setMode(comboBox.SelectedItem.ToString());
+
+
+		}
 	}
 }

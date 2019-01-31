@@ -98,11 +98,12 @@ namespace Diva
 			this.LabelLongitude = new System.Windows.Forms.Label();
 			this.LabelLatitude = new System.Windows.Forms.Label();
 			this.LabelAltitude = new System.Windows.Forms.Label();
-			this.TxtDroneMode = new System.Windows.Forms.Label();
 			this.BtnDroneMode = new System.Windows.Forms.Button();
 			this.BtnAltitude = new System.Windows.Forms.Button();
 			this.BtnHomeLand = new System.Windows.Forms.Button();
 			this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
+			this.LBLMode = new System.Windows.Forms.Label();
+			this.ComBoxModeSwitch = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
 			this.splitContainer.Panel1.SuspendLayout();
 			this.splitContainer.Panel2.SuspendLayout();
@@ -121,6 +122,7 @@ namespace Diva
 			// 
 			// splitContainer.Panel1
 			// 
+			this.splitContainer.Panel1.Controls.Add(this.LBLMode);
 			this.splitContainer.Panel1.Controls.Add(this.RotationInfoPanel);
 			this.splitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
 			this.splitContainer.Panel1.Controls.Add(this.TSZoomPanel);
@@ -725,13 +727,13 @@ namespace Diva
 			// panelDroneInfo
 			// 
 			this.panelDroneInfo.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.panelDroneInfo.Controls.Add(this.ComBoxModeSwitch);
 			this.panelDroneInfo.Controls.Add(this.TxtHomeLongitude);
 			this.panelDroneInfo.Controls.Add(this.TxtHomeLatitude);
 			this.panelDroneInfo.Controls.Add(this.TxtHomeAltitude);
 			this.panelDroneInfo.Controls.Add(this.LabelLongitude);
 			this.panelDroneInfo.Controls.Add(this.LabelLatitude);
 			this.panelDroneInfo.Controls.Add(this.LabelAltitude);
-			this.panelDroneInfo.Controls.Add(this.TxtDroneMode);
 			this.panelDroneInfo.Controls.Add(this.BtnDroneMode);
 			this.panelDroneInfo.Controls.Add(this.BtnAltitude);
 			this.panelDroneInfo.Controls.Add(this.BtnHomeLand);
@@ -775,12 +777,6 @@ namespace Diva
 			resources.ApplyResources(this.LabelAltitude, "LabelAltitude");
 			this.LabelAltitude.Name = "LabelAltitude";
 			// 
-			// TxtDroneMode
-			// 
-			resources.ApplyResources(this.TxtDroneMode, "TxtDroneMode");
-			this.TxtDroneMode.ForeColor = System.Drawing.Color.White;
-			this.TxtDroneMode.Name = "TxtDroneMode";
-			// 
 			// BtnDroneMode
 			// 
 			this.BtnDroneMode.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
@@ -816,6 +812,20 @@ namespace Diva
 			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
+			// 
+			// LBLMode
+			// 
+			resources.ApplyResources(this.LBLMode, "LBLMode");
+			this.LBLMode.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+			this.LBLMode.ForeColor = System.Drawing.Color.White;
+			this.LBLMode.Name = "LBLMode";
+			// 
+			// ComBoxModeSwitch
+			// 
+			resources.ApplyResources(this.ComBoxModeSwitch, "ComBoxModeSwitch");
+			this.ComBoxModeSwitch.FormattingEnabled = true;
+			this.ComBoxModeSwitch.Name = "ComBoxModeSwitch";
+			this.ComBoxModeSwitch.SelectedIndexChanged += new System.EventHandler(this.ComBoxModeSwitch_SelectedIndexChanged);
 			// 
 			// Planner
 			// 
@@ -870,7 +880,6 @@ namespace Diva
 		private MyButton BtnRTL;
 		private Button BtnAltitude;
 		private Button BtnDroneMode;
-		private Label TxtDroneMode;
 		private Label LabelLongitude;
 		private Label LabelLatitude;
 		private Label LabelAltitude;
@@ -910,5 +919,7 @@ namespace Diva
         private DroneInfoPanel DroneInfoPanel;
 		private ToolStripButton But_MapFocus;
 		private FlowLayoutPanel RotationInfoPanel;
+		private Label LBLMode;
+		private ComboBox ComBoxModeSwitch;
 	}
 }
