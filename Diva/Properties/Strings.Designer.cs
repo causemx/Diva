@@ -754,7 +754,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to reject by Mav{0}.
+        ///   Looks up a localized string similar to reject by Mav {0}.
         /// </summary>
         public static string MsgSaveWPRejected {
             get {

@@ -49,7 +49,7 @@ namespace Diva.Controls
 			// arducopter
 			ComboBox_Batt_Action.setup(
 				MavParamRepository.GetOptionsInt("FS_BATT_ENABLE",
-					mav.Status.firmware.ToString()), "FS_BATT_ENABLE", mav.Status.Params);
+					mav.Status.Firmware.ToString()), "FS_BATT_ENABLE", mav.Status.Params);
 
 			// low battery
 			if (mav.Status.Params.ContainsKey("LOW_VOLT"))

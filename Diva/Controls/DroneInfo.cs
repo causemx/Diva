@@ -124,7 +124,7 @@ namespace Diva.Controls
             LabelEstimatedEnergyConsumptionText.Text = Strings.StrRecalculating;
             PowerModelManager.GetModel(Drone.Setting.PowerModel).
                 CalculateEnergyConsumptionBackground(Drone,
-                    planner.GetCommandList(), planner.GetHomeLocationwp(),
+                    planner.GetCommandList(), planner.GetHomeWP(),
                     CalculateEnergyConsumptionCallback, ++tokenSerialNumber);
         }
 

@@ -526,14 +526,14 @@ namespace Diva.Mavlink
 				if ((message.header == 'U' || message.header == 0xfe || message.header == 0xfd) && buffer.Length >= message.payloadlength)
 				{
 					// check if we lost pacakets based on seqno
-					int expectedSeqNo = ((Status.recvpacketcount + 1) % 0x100);
+					int expectedSeqNo = ((Status.recvPacketCount + 1) % 0x100);
 
 					// the second part is to work around a 3dr radio bug sending dup seqno's
-					if (packetSeqNo != expectedSeqNo && packetSeqNo != Status.recvpacketcount)
+					if (packetSeqNo != expectedSeqNo && packetSeqNo != Status.recvPacketCount)
 					{
                         Status.SyncLost++; // actualy sync loss's
 						int numLost = 0;
-						if (packetSeqNo < ((Status.recvpacketcount + 1)))
+						if (packetSeqNo < ((Status.recvPacketCount + 1)))
 						// recvpacketcount = 255 then   10 < 256 = true if was % 0x100 this would fail
 						{
 							numLost = 0x100 - expectedSeqNo + packetSeqNo;
@@ -546,7 +546,7 @@ namespace Diva.Mavlink
 					}
                     Status.PacketsNotLost++;
                     //Console.WriteLine("{0} {1}", sysid, packetSeqNo);
-                    Status.recvpacketcount = packetSeqNo;
+                    Status.recvPacketCount = packetSeqNo;
 
 					// packet stats per mav
 					if (!Status.PacketsPerSecond.ContainsKey(msgid) || double.IsInfinity(Status.PacketsPerSecond[msgid]))
@@ -1189,7 +1189,7 @@ namespace Diva.Mavlink
             mavlinkVersion = hb.mavlink_version;
 			Status.APType = (MAV_TYPE)hb.type;
 			Status.APName = (MAV_AUTOPILOT)hb.autopilot;
-			Status.recvpacketcount = message.seq;
+			Status.recvPacketCount = message.seq;
 		}
 
         public MAVLinkMessage GetHeartBeat(bool setup = false)
@@ -1219,31 +1219,31 @@ namespace Diva.Mavlink
 					switch (type)
 					{
 						case MAV_TYPE.FIXED_WING:
-                            Status.firmware = MavUtlities.Firmwares.ArduPlane;
+                            Status.Firmware = Firmwares.ArduPlane;
 							break;
 						case MAV_TYPE.QUADROTOR:
-                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.Firmware = Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.TRICOPTER:
-                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.Firmware = Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.HEXAROTOR:
-                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.Firmware = Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.OCTOROTOR:
-                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.Firmware = Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.HELICOPTER:
-                            Status.firmware = MavUtlities.Firmwares.ArduCopter2;
+                            Status.Firmware = Firmwares.ArduCopter2;
 							break;
 						case MAV_TYPE.GROUND_ROVER:
-                            Status.firmware = MavUtlities.Firmwares.ArduRover;
+                            Status.Firmware = Firmwares.ArduRover;
 							break;
 						case MAV_TYPE.SUBMARINE:
-                            Status.firmware = MavUtlities.Firmwares.ArduSub;
+                            Status.Firmware = Firmwares.ArduSub;
 							break;
 						case MAV_TYPE.ANTENNA_TRACKER:
-                            Status.firmware = MavUtlities.Firmwares.ArduTracker;
+                            Status.Firmware = Firmwares.ArduTracker;
 							break;
 						default:
 							log.Error(Status.APType + " not registered as valid type");
@@ -1254,7 +1254,7 @@ namespace Diva.Mavlink
 					switch (type)
 					{
 						case MAV_TYPE.FIXED_WING:
-                            Status.firmware = MavUtlities.Firmwares.ArduPlane;
+                            Status.Firmware = Firmwares.ArduPlane;
 							break;
 					}
 					break;
@@ -1262,18 +1262,18 @@ namespace Diva.Mavlink
 					switch (type)
 					{
 						case MAV_TYPE.FIXED_WING:
-                            Status.firmware = MavUtlities.Firmwares.Ateryx;
+                            Status.Firmware = Firmwares.Ateryx;
 							break;
 					}
 					break;
 				case MAV_AUTOPILOT.PX4:
-                    Status.firmware = MavUtlities.Firmwares.PX4;
+                    Status.Firmware = Firmwares.PX4;
 					break;
 				default:
 					switch (type)
 					{
 						case MAV_TYPE.GIMBAL: // storm32 - name 83
-                            Status.firmware = MavUtlities.Firmwares.Gymbal;
+                            Status.Firmware = Firmwares.Gymbal;
 							break;
 					}
 					break;

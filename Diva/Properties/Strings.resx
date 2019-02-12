@@ -166,7 +166,7 @@
     <value>Row error</value>
   </data>
   <data name="MsgSaveWPRejected" xml:space="preserve">
-    <value>reject by Mav{0}</value>
+    <value>reject by Mav {0}</value>
   </data>
   <data name="MsgSaveWPTimeout" xml:space="preserve">
     <value>timeout on read, please try again.</value>

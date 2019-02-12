@@ -110,7 +110,8 @@ namespace Diva.Controls
 					TelemetryData.Controls.Find(name, true)[0].Text;
 				DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
 {getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
-{getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}");
+{getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}
+({status.Latitude}, {status.Longitude})");
 
 				battNotification.Notify();
 

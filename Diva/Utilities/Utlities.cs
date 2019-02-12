@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PointLatLng = GMap.NET.PointLatLng;
 
 namespace Diva.Utilities
 {
@@ -20,10 +21,27 @@ namespace Diva.Utilities
             return deg * deg2rad;
         }
 
-        public static double map(double x, double in_min, double in_max, double out_min, double out_max)
+        public static double Scale(double x, double in_min, double in_max, double out_min, double out_max)
         {
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
+
+        public static bool InsideOf(this PointLatLng p, PointLatLng[] pn)
+        {
+            bool r = false;
+            double lng = p.Lng, lat = p.Lat;
+            for (int i = pn.Length, j = 0; --i >= 0; j = i)
+            {
+                if (((pn[i].Lng > lng) != (pn[j].Lng > lng)) &&
+                    (lat < (pn[j].Lat - pn[i].Lat) * (lng - pn[i].Lng) /
+                        (pn[j].Lng - pn[i].Lng) + pn[i].Lat))
+                    r = !r;
+            }
+            return r;
+        }
+
+        public static bool InsideOf(this PointLatLng p, System.Collections.Generic.List<PointLatLng> pn)
+            => p.InsideOf(pn.ToArray());
     }
 
     public static class ResourceHelper

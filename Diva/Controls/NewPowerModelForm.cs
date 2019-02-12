@@ -56,12 +56,12 @@ namespace Diva.Controls
                 {
                     // generate training mission here
                     var planner = Planner.GetPlannerInstance();
-                    var homeloc = planner.GetHomeLocationwp();
+                    var homeloc = planner.GetHomeWP();
                     planner.ClearMission();
                     planner.processToScreen(
                         PowerModelManager.GenerateTrainingMission<AlexModel>(
                             homeloc.Latitude, homeloc.Longitude, angle));
-                    planner.writeKMLV2();
+                    planner.WriteKMLV2();
                     DialogResult = DialogResult.OK;
                 } else
                 {

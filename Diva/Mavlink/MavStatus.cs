@@ -17,14 +17,14 @@ namespace Diva.Mavlink
         public string SerialString { get; set; } = "";
         public string FrameString { get; set; } = "";
 
-        private double batvolt;
+        private double batteryVoltage;
         public double BatteryVoltage
         {
-            get { return batvolt; }
+            get { return batteryVoltage; }
             set
             {
-                if (batvolt == 0) batvolt = value;
-                batvolt = value * 0.2f + batvolt * 0.8f;
+                if (batteryVoltage == 0) batteryVoltage = value;
+                batteryVoltage = value * 0.2f + batteryVoltage * 0.8f;
             }
         }
 
@@ -35,7 +35,7 @@ namespace Diva.Mavlink
         public virtual float Altitude { get; set; }
         public double AbsoluteAltitude { get; set; }
 
-        public MavUtlities.Firmwares firmware = MavUtlities.Firmwares.ArduCopter2;
+        public Firmwares Firmware = Firmwares.ArduCopter2;
 
 		public int SatteliteCount { get; set; }
 
@@ -46,9 +46,8 @@ namespace Diva.Mavlink
         public Dictionary<string, MAV_PARAM_TYPE> ParamTypes = new Dictionary<string, MAV_PARAM_TYPE>();
 
         #region packets
-        internal int recvpacketcount = 0;
+        internal int recvPacketCount = 0;
         private Dictionary<uint, MAVLinkMessage> Packets = new Dictionary<uint, MAVLinkMessage>();
-        private Dictionary<uint, Action<MAVLinkMessage>> Listeners = new Dictionary<uint, Action<MAVLinkMessage>>();
         public DateTime LastPacket { get; set; } = DateTime.MinValue;
         public Dictionary<uint, double> PacketsPerSecond { get; } = new Dictionary<uint, double>();
         public Dictionary<uint, DateTime> PacketsPerSecondBuild { get; } = new Dictionary<uint, DateTime>();
@@ -58,13 +57,13 @@ namespace Diva.Mavlink
         public DateTime PacketLostTimer = DateTime.MinValue;
         public float SyncLost = 0;
 
-        object packetslock = new object();
+        object packetLock = new object();
 
         public MAVLinkMessage GetPacket(MAVLINK_MSG_ID id) => GetPacket((uint)id);
 
         public MAVLinkMessage GetPacket(uint id)
 		{
-			lock (packetslock)
+			lock (packetLock)
 			{
 				if (Packets.ContainsKey(id))
 				{
@@ -76,7 +75,7 @@ namespace Diva.Mavlink
 
 		public void AddPacket(MAVLinkMessage msg)
 		{
-			lock (packetslock)
+			lock (packetLock)
 			{
 				Packets[msg.msgid] = msg;
 			}
@@ -86,7 +85,7 @@ namespace Diva.Mavlink
 
         public void ClearPacket(uint mavlinkid)
 		{
-			lock (packetslock)
+			lock (packetLock)
 			{
 				if (Packets.ContainsKey(mavlinkid))
 				{
@@ -108,9 +107,9 @@ namespace Diva.Mavlink
     {
         public float GroundSpeed { get; set; }
 
-        DateTime lastalt = DateTime.MinValue;
+        DateTime lastAltitude = DateTime.MinValue;
         private volatile float altitude = 0;
-        float oldalt = 0;
+        float oldAltitude = 0;
         public override float Altitude
         {
             get { return altitude; }
@@ -118,29 +117,31 @@ namespace Diva.Mavlink
             {
                 // check update rate, and ensure time hasnt gone backwards                
                 altitude = value;
-                if ((PacketTime - lastalt).TotalSeconds >= 0.2 && oldalt != Altitude || lastalt > PacketTime)
+                if ((PacketTime - lastAltitude).TotalSeconds >= 0.2 && oldAltitude != Altitude || lastAltitude > PacketTime)
                 {
-                    VerticalSpeed = (Altitude - oldalt) / (float)(PacketTime - lastalt).TotalSeconds;
-                    if (float.IsInfinity(verticalspeed))
-                        verticalspeed = 0;
-                    lastalt = PacketTime;
-                    oldalt = Altitude;
+                    VerticalSpeed = (Altitude - oldAltitude) / (float)(PacketTime - lastAltitude).TotalSeconds;
+                    if (float.IsInfinity(verticalSpeed))
+                        verticalSpeed = 0;
+                    lastAltitude = PacketTime;
+                    oldAltitude = Altitude;
                 }
             }
         }
 
-        float verticalspeed = 0;
+        float verticalSpeed = 0;
         public float VerticalSpeed
         {
-            get => verticalspeed;
+            get => verticalSpeed;
             set
             {
-                verticalspeed = verticalspeed * 0.4f + value * 0.6f;
-                if (float.IsNaN(verticalspeed)) verticalspeed = 0;
+                verticalSpeed = verticalSpeed * 0.4f + value * 0.6f;
+                if (float.IsNaN(verticalSpeed)) verticalSpeed = 0;
             }
         }
 
-        public uint FlightMode { get; set; }
+        public FlightMode FlightMode { get; set; }
+
+        public AltitudeMode AltitudeMode { get; set; } = AltitudeMode.Relative;
 
         public float NAVBearing { get; set; } = float.NaN;
 
@@ -148,28 +149,22 @@ namespace Diva.Mavlink
         public float Yaw
         {
             get { return yaw; }
-            set
-            {
-                if (value < 0)
-                {
-                    yaw = value + 360;
-                }
-                else
-                {
-                    yaw = value;
-                }
-            }
+            set { yaw = value < 0 ? value + 360 : value; }
         }
 
-        private float groundcourse = float.NaN;
+        private float groundCourse = float.NaN;
         public float GroundCourse
         {
-            get { return groundcourse; }
-            set { groundcourse = value < 0 ? value + 360 : value; }
+            get { return groundCourse; }
+            set { groundCourse = value < 0 ? value + 360 : value; }
         }
 
         public byte State { get; set; }
 
         public bool IsArmed { get; set; }
+
+        public ulong Capabilities { get; set; } = (ulong)MAV_PROTOCOL_CAPABILITY.MISSION_FLOAT;
+
+        public bool MissionIntSupport { get => (Capabilities & (ulong)MAV_PROTOCOL_CAPABILITY.MISSION_INT) != 0; }
     }
 }

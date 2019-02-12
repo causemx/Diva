@@ -1,4 +1,6 @@
-﻿namespace Diva.Utilities
+﻿using Diva.Mavlink;
+
+namespace Diva.Utilities
 {
 	public struct WayPoint
 	{
@@ -16,35 +18,47 @@
 		public double Longitude;        // Longitude * 10**7
 		public float Altitude;          // Altitude in centimeters (meters * 100)
 
-		/*public static implicit operator MAVLink.mavlink_mission_item_t(WayPoint input)
+		public MAVLink.mavlink_mission_item_t ToMissionItem<T>(MavCore<T> mav) where T : MavStatus
             => new MAVLink.mavlink_mission_item_t
             {
-                command = input.Id,
-                param1 = input.Param1,
-                param2 = input.Param2,
-                param3 = input.Param3,
-                param4 = input.Param4,
-                x = (float)input.Latitude,
-                y = (float)input.Longitude,
-                z = (float)input.Altitude,
-                seq = input.SeqNo,
-                frame = input.Frame
+                target_system = mav?.SysId ?? 0,
+                target_component = mav?.CompId ?? 0,
+                autocontinue = (byte)((mav.Status.Firmware == Firmwares.ArduPlane) ? 2 : 1),
+                current = 0,
+                command = Id,
+                param1 = Param1,
+                param2 = Param2,
+                param3 = Param3,
+                param4 = Param4,
+                x = (float)Latitude,
+                y = (float)Longitude,
+                z = (float)Altitude,
+                seq = SeqNo,
+                frame = Frame
             };
 
-		public static implicit operator MAVLink.mavlink_mission_item_int_t(WayPoint input)
-			=> new MAVLink.mavlink_mission_item_int_t
+        public MAVLink.mavlink_mission_item_int_t ToMissionItemInt<T>(MavCore<T> mav) where T : MavStatus
+        {
+            bool camControl = Id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONTROL ||
+                Id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONFIGURE;
+            return new MAVLink.mavlink_mission_item_int_t
             {
-                command = input.Id,
-                param1 = input.Param1,
-                param2 = input.Param2,
-                param3 = input.Param3,
-                param4 = input.Param4,
-                x = (int)(input.Latitude * 1.0e7),
-                y = (int)(input.Longitude * 1.0e7),
-                z = input.Altitude,
-                seq = input.SeqNo,
-                frame = input.Frame
-            };*/
+                target_system = mav?.SysId ?? 0,
+                target_component = mav?.CompId ?? 0,
+                autocontinue = (byte)((mav.Status.Firmware == Firmwares.ArduPlane) ? 2 : 1),
+                current = 0,
+                command = Id,
+                param1 = Param1,
+                param2 = Param2,
+                param3 = Param3,
+                param4 = Param4,
+                x = (int)(camControl ? Latitude : Latitude * 1.0e7),
+                y = (int)(camControl ? Longitude : Longitude * 1.0e7),
+                z = Altitude,
+                seq = SeqNo,
+                frame = Frame
+            };
+        }
 
 		public static implicit operator WayPoint(MAVLink.mavlink_mission_item_t input)
             => new WayPoint
