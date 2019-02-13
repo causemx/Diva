@@ -127,8 +127,6 @@ namespace Diva.Mavlink
 
 			PortInUse = true;
 
-			bool hbseen = false;
-
 			try
 			{
 				BaseStream.ReadBufferSize = 16 * 1024;
@@ -162,7 +160,6 @@ namespace Diva.Mavlink
 				};
 				countDown.Start();
 
-				int count = 0;
 				while (true)
 				{
 					if (progressWorkerEventArgs.CancelRequested)
@@ -180,64 +177,17 @@ namespace Diva.Mavlink
 						countDown.Stop();
                         if (BaseStream.IsOpen)
                             BaseStream.Close();
-						if (hbseen)
-						{
-							progressWorkerEventArgs.ErrorMessage = Strings.MsgOnlyOneHBReceived;
-							throw new Exception(Strings.MsgOnlyOneHBReceived);
-						}
-						else
-						{
-							progressWorkerEventArgs.ErrorMessage = Strings.MsgOnlyOneHBReceived;
-							throw new Exception("Can not establish a connection\n");
-						}
+						progressWorkerEventArgs.ErrorMessage = Strings.MsgNoHeartBeat;
+						throw new Exception("Can not establish a connection\n");
 					}
 					Thread.Sleep(1);
 
-                    // since we're having only 1 sysid/compid in this link, no need to check this
-					// can see 2 heartbeat packets at any time, and will connect - was one after the other
+                    // since we're having only 1 sysid/compid in this link, skip id checks
 					if (buffer.Length == 0)
 						buffer = GetHeartBeat(true);
                     if (buffer.Length > 0)
                         break;
-                    Thread.Sleep(1);
-					/*if (buffer1.Length == 0)
-						buffer1 = GetHeartBeat();
-
-					if (buffer.Length > 0 || buffer1.Length > 0)
-						hbseen = true;*/
-					count++;
-
-					// 2 hbs that match
-					/*if (buffer.Length > 5 && buffer1.Length > 5 && buffer.sysid == buffer1.sysid && buffer.compid == buffer1.compid)
-					{
-						mavlink_heartbeat_t hb = buffer.ToStructure<mavlink_heartbeat_t>();
-
-						if (hb.type != (byte)MAV_TYPE.GCS)
-						{
-							SetupMavConnect(buffer, hb);
-							break;
-						}
-					}
-
-					// 2 hb's that dont match. more than one sysid here
-					if (buffer.Length > 5 && buffer1.Length > 5 && (buffer.sysid == buffer1.sysid || buffer.compid == buffer1.compid))
-					{
-						mavlink_heartbeat_t hb = buffer.ToStructure<mavlink_heartbeat_t>();
-
-						if (hb.type != (byte)MAV_TYPE.ANTENNA_TRACKER && hb.type != (byte)MAV_TYPE.GCS)
-						{
-							SetupMavConnect(buffer, hb);
-							break;
-						}
-
-						hb = buffer1.ToStructure<mavlink_heartbeat_t>();
-
-						if (hb.type != (byte)MAV_TYPE.ANTENNA_TRACKER && hb.type != (byte)MAV_TYPE.GCS)
-						{
-							SetupMavConnect(buffer1, hb);
-							break;
-						}
-					}*/
+					// skip 2 hbs match test
 				}
 				countDown.Stop();
 
@@ -252,7 +202,7 @@ namespace Diva.Mavlink
 				GetVersion();
 
 				frmProgressReporter.UpdateProgressAndStatus(0,
-					$"Getting Params.. (sysid {SysId} compid {CompId}) ");
+					Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));
 				GetParamListBG();
 
 				if (frmProgressReporter.doWorkArgs.CancelAcknowledged == true)
@@ -605,7 +555,21 @@ namespace Diva.Mavlink
         private byte[] PreparePacket(MAVLINK_MSG_ID msgid, object indata)
         {
             int messageType = (byte)msgid;
-            byte[] data = MavlinkUtil.StructureToByteArray(indata);
+            byte[] data = null;
+            try
+            {
+                data = MavlinkUtil.StructureToByteArray(indata);
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                int len = Marshal.SizeOf(indata);
+                byte[] arr = new byte[len];
+                IntPtr ptr = Marshal.AllocHGlobal(len);
+                Marshal.StructureToPtr(indata, ptr, true);
+                Marshal.Copy(ptr, arr, 0, len);
+                Marshal.FreeHGlobal(ptr);
+                data = arr;
+            }
             var info = MAVLINK_MESSAGE_INFOS.SingleOrDefault(p => p.msgid == messageType);
             if (data.Length != info.minlength) Array.Resize(ref data, (int)info.minlength);
             byte[] packet = new byte[data.Length + 6 + 2];
@@ -668,33 +632,36 @@ namespace Diva.Mavlink
             MAVLINK_MSG_ID rid, ReplyPacketFilter filter = null, int timeoutms = 1000)
         {
             MAVLinkMessage reply = null;
+            DateTime due;
             using (AutoResetEvent ev = new AutoResetEvent(false))
             {
-                bool more = false;
                 void eh(object o, EventArgs e)
                 {
+                    bool more = false;
                     if (o is MAVLinkMessage p && rid == (MAVLINK_MSG_ID)p.msgid
                         && (filter == null || filter(p, ref more)))
                     {
                         reply = p;
+                        due = DateTime.Now.AddMilliseconds(timeoutms);
                         ev.Set();
                     }
                 }
                 byte[] pktdata = PreparePacket(msgid, indata);
                 var pkt = Status.GetPacket(rid);
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
+                due = DateTime.Now.AddMilliseconds(timeoutms);
                 packetNotifier += eh;
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                 do
                 {
-                    more = false;
                     ev.WaitOne(timeoutms);
-                } while (more);
+                } while (DateTime.Now < due);
                 packetNotifier -= eh;
                 // last minute ride
                 if (reply == null)
                 {
                     pkt = Status.GetPacket(rid);
+                    bool more = false;
                     if (pkt != null && pkt.rxtime > lasttime && filter(pkt, ref more))
                         reply = pkt;
                 }
@@ -712,31 +679,34 @@ namespace Diva.Mavlink
                 return null;
             }
             MAVLinkMessage reply = null;
+            DateTime due;
             using (AutoResetEvent ev = new AutoResetEvent(false))
             {
-                bool more = false;
+                byte[] pktdata = PreparePacket(msgid, indata);
                 void eh(object o, EventArgs e)
                 {
                     if (o is MAVLinkMessage p)
                     {
+                        bool more = false;
                         for (var i = rids.Length; --i >= 0;)
                             if (rids[i] == (MAVLINK_MSG_ID)p.msgid &&
                                 (filters[i] == null || filters[i](p, ref more)))
                             {
+                                if (more)
+                                    due = DateTime.Now.AddMilliseconds(timeoutms);
                                 reply = p;
                                 ev.Set();
                                 break;
                             }
                     }
                 }
-                byte[] pktdata = PreparePacket(msgid, indata);
+                due = DateTime.Now.AddMilliseconds(timeoutms);
                 packetNotifier += eh;
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                 do
                 {
-                    more = false;
-                    ev.WaitOne(timeoutms);
-                } while (more);
+                    ev.WaitOne(due - DateTime.Now);
+                } while (DateTime.Now < due);
                 packetNotifier -= eh;
             }
             return reply;
@@ -755,8 +725,10 @@ namespace Diva.Mavlink
 
             while (!token.IsCancellationRequested)
 			{
-				Thread.Sleep(10);
-                if (!BaseStream.IsOpen) continue;
+                do
+                {
+                    Thread.Sleep(10);
+                } while (!BaseStream.IsOpen);
 
                 DateTime timeout = DateTime.Now.AddMilliseconds(10);
                 while (DateTime.Now < timeout && BaseStream.BytesAvailable > 5)
@@ -895,6 +867,7 @@ namespace Diva.Mavlink
             }
             Status.ParamTypes[st] = (MAV_PARAM_TYPE)value.param_type;
             Status.Params.TotalReported = value.param_count;
+            //Console.WriteLine($"ParamValuePacketHandler: idx={value.param_index}, name={st}");
         }
 
         private void GPSPacketHandler(object holder, MAVLinkMessage packet)
@@ -948,26 +921,6 @@ namespace Diva.Mavlink
         #endregion Retrieve sensor data from flight control
 
         #region Parameters
-        /*public void GetParamList()
-		{
-			log.InfoFormat("getParamList {0} {1}", SysId, CompId);
-
-			frmProgressReporter = new ProgressDialogV2
-			{
-				StartPosition = FormStartPosition.CenterScreen,
-				Text = "Getting Params" + " " + SysId
-            };
-
-			frmProgressReporter.DoWork += (o, e, d) => GetParamListBG();
-			frmProgressReporter.UpdateProgressAndStatus(-1, "Get params SD");
-
-			frmProgressReporter.RunBackgroundOperationAsync();
-
-			frmProgressReporter.Dispose();
-
-			ParamListChanged?.Invoke(this, null);
-		}*/
-
         private mavlink_param_value_t VerifyParam(MAVLINK_MSG_ID msgid, object outp, string name, int timeout, int retries = 3)
         {
             mavlink_param_value_t pv = new mavlink_param_value_t();
@@ -1064,8 +1017,11 @@ namespace Diva.Mavlink
             bool waitMore = true;
             bool ParamValueHandler(MAVLinkMessage m, ref bool more)
             {
+                if (frmProgressReporter.doWorkArgs.CancelRequested) return false;
+
                 mavlink_param_value_t pv = m.ToStructure<mavlink_param_value_t>();
-                if (indices.Contains(pv.param_index)) return false;
+                more = waitMore;
+                if (indices.Contains(pv.param_index)) return true;
 
                 paramTotal = (pv.param_count);
                 paramList.TotalReported = paramTotal;
@@ -1078,10 +1034,10 @@ namespace Diva.Mavlink
                 Status.ParamTypes[pid] = (MAV_PARAM_TYPE)pv.param_type;
                 if (pv.param_index != 65535) indices.Add(pv.param_index);
 
-                frmProgressReporter.UpdateProgressAndStatus((indices.Count * 100) / paramTotal,
-                "get param" + pid);
+                frmProgressReporter.UpdateProgressAndStatus(
+                    (indices.Count * 100) / paramTotal, Strings.GotParam + pid);
 
-                more = waitMore && (pv.param_index != (paramTotal - 1));
+                more &= pv.param_index != (paramTotal - 1);
                 return true;
             }
 
@@ -1140,6 +1096,7 @@ namespace Diva.Mavlink
 			{
                 if (paramTotal > 0)
                 {
+                    Console.WriteLine("Not all params read, start one by one mode.");
                     waitMore = false;
                     mavlink_param_request_read_t req = new mavlink_param_request_read_t
                     {
@@ -1147,6 +1104,7 @@ namespace Diva.Mavlink
                         target_component = CompId,
                         param_id = new byte[] { 0x0 }
                     };
+                    Array.Resize(ref req.param_id, 16);
                     for (short i = 0; i < paramTotal; i++)
                     {
                         if (frmProgressReporter.doWorkArgs.CancelRequested) break;

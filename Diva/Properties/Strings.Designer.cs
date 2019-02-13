@@ -259,6 +259,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Got param: .
+        /// </summary>
+        public static string GotParam {
+            get {
+                return ResourceManager.GetString("GotParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to arming throttle.
         /// </summary>
         public static string MsgArming {
@@ -547,6 +556,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Getting Params.. (sysid {0} compid {1}) .
+        /// </summary>
+        public static string MsgGettingParams {
+            get {
+                return ResourceManager.GetString("MsgGettingParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must have a home altitude.
         /// </summary>
         public static string MsgHomeAltitudeRequired {
@@ -700,20 +718,20 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No heartbeat received..
+        /// </summary>
+        public static string MsgNoHeartBeat {
+            get {
+                return ResourceManager.GetString("MsgNoHeartBeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rally points - Nothing to download.
         /// </summary>
         public static string MsgNoRallyPoint {
             get {
                 return ResourceManager.GetString("MsgNoRallyPoint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Only one heartbeat received..
-        /// </summary>
-        public static string MsgOnlyOneHBReceived {
-            get {
-                return ResourceManager.GetString("MsgOnlyOneHBReceived", resourceCulture);
             }
         }
         

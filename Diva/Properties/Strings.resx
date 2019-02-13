@@ -396,8 +396,8 @@
   <data name="MsgConnectionFailed" xml:space="preserve">
     <value>Connection failed.</value>
   </data>
-  <data name="MsgOnlyOneHBReceived" xml:space="preserve">
-    <value>Only one heartbeat received.</value>
+  <data name="MsgNoHeartBeat" xml:space="preserve">
+    <value>No heartbeat received.</value>
   </data>
   <data name="DialogTitleError" xml:space="preserve">
     <value>Error</value>
@@ -437,5 +437,11 @@
   </data>
   <data name="MsgFormProgressDone" xml:space="preserve">
     <value>done</value>
+  </data>
+  <data name="GotParam" xml:space="preserve">
+    <value>Got param: </value>
+  </data>
+  <data name="MsgGettingParams" xml:space="preserve">
+    <value>Getting Params.. (sysid {0} compid {1}) </value>
   </data>
 </root>
