@@ -1,11 +1,11 @@
 ﻿using Diva.Mavlink;
+using MAV_FRAME = MAVLink.MAV_FRAME;
 
 namespace Diva.Utilities
 {
 	public struct WayPoint
 	{
 		private ushort SeqNo;
-		private byte Frame;
 		public object Tag;
 
 		public ushort Id;               // command id
@@ -17,6 +17,7 @@ namespace Diva.Utilities
 		public double Latitude;         // Lattitude * 10**7
 		public double Longitude;        // Longitude * 10**7
 		public float Altitude;          // Altitude in centimeters (meters * 100)
+		public MAV_FRAME Frame;
 
 		public MAVLink.mavlink_mission_item_t ToMissionItem<T>(MavCore<T> mav) where T : MavStatus
             => new MAVLink.mavlink_mission_item_t
@@ -34,7 +35,7 @@ namespace Diva.Utilities
                 y = (float)Longitude,
                 z = (float)Altitude,
                 seq = SeqNo,
-                frame = Frame
+                frame = (byte)Frame.ToFloatFrame()
             };
 
         public MAVLink.mavlink_mission_item_int_t ToMissionItemInt<T>(MavCore<T> mav) where T : MavStatus
@@ -56,7 +57,7 @@ namespace Diva.Utilities
                 y = (int)(camControl ? Longitude : Longitude * 1.0e7),
                 z = Altitude,
                 seq = SeqNo,
-                frame = Frame
+                frame = (byte)Frame.ToIntFrame()
             };
         }
 
@@ -72,7 +73,7 @@ namespace Diva.Utilities
 				Longitude = input.y,
 				Altitude = input.z,
 				SeqNo = input.seq,
-				Frame = input.frame
+				Frame = (MAV_FRAME)input.frame
 			};
 
 		public static implicit operator WayPoint(MAVLink.mavlink_mission_item_int_t input)
@@ -87,7 +88,7 @@ namespace Diva.Utilities
 				Longitude = input.y / 1.0e7,
 				Altitude = input.z,
 				SeqNo = input.seq,
-				Frame = input.frame
+				Frame = (MAV_FRAME)input.frame
 			};
 
 		public static implicit operator WayPoint(MissionFile.MissionItem input)
@@ -102,7 +103,7 @@ namespace Diva.Utilities
 				Longitude = input.coordinate[1],
 				Altitude = (float)input.coordinate[2],
 				SeqNo = input.id,
-				Frame = input.frame
+				Frame = (MAV_FRAME)input.frame
 			};
 
 		public static implicit operator MissionFile.MissionItem(WayPoint input)
@@ -115,7 +116,7 @@ namespace Diva.Utilities
 				param4 = input.Param4,
 				coordinate = new double[] { input.Latitude, input.Longitude, input.Altitude },
 				id = input.SeqNo,
-				frame = input.Frame
+				frame = (byte)input.Frame
 			};
-	}
+    }
 }

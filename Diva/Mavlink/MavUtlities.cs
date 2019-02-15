@@ -3,13 +3,6 @@ using static MAVLink;
 
 namespace Diva.Mavlink
 {
-    public enum AltitudeMode
-    {
-        Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
-        Absolute = MAVLink.MAV_FRAME.GLOBAL,
-        Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
-    }
-
     public enum FlightMode
     {
         STABILIZE = 0,
@@ -53,16 +46,60 @@ namespace Diva.Mavlink
         public static bool HasFlag(this byte value, MAVLink.MAV_MODE_FLAG flag) => (value & (byte)flag) == (byte)flag;
         #endregion
 
-        #region Flight mode name/value conversion
-        public static string GetName(this FlightMode mode) => Enum.GetName(typeof(FlightMode), mode);
+        #region Enums name/value conversion
+        public static string GetName(this FlightMode mode)
+            => Enum.GetName(typeof(FlightMode), mode);
+        public static string GetName(this MAV_CMD mode)
+            => Enum.GetName(typeof(MAV_CMD), mode);
+        public static string GetName(this MAV_MISSION_RESULT mode)
+            => Enum.GetName(typeof(MAV_MISSION_RESULT), mode);
 
-        public static bool GetFlightModeByName(string name, out FlightMode mode)
+        public static bool GetByName<T>(string name, out T mode) where T : struct, IConvertible
         {
-            bool found;
-            if (!(found = Enum.TryParse(name, out mode)))
-                Console.WriteLine("Failed to find flight Mode: " + name);
+            bool found = false;
+            Type t = typeof(T);
+            if (t.IsEnum)
+            {
+                if (!(found = Enum.TryParse(name, out mode)))
+                    Console.WriteLine($"Failed to find Enum value {name} in type {t.Name}.");
+            } else
+            {
+                Console.WriteLine($"GetByName: {t.Name} is not an Enum.");
+                mode = default(T);
+            }
             return found;
         }
         #endregion flight mode
+
+        #region Altitude mode translate
+        public static MAV_FRAME ToFloatFrame(this MAV_FRAME frame)
+        {
+            switch (frame)
+            {
+                case MAV_FRAME.GLOBAL_INT:
+                    return MAV_FRAME.GLOBAL;
+                case MAV_FRAME.GLOBAL_RELATIVE_ALT_INT:
+                    return MAV_FRAME.GLOBAL_RELATIVE_ALT;
+                case MAV_FRAME.GLOBAL_TERRAIN_ALT_INT:
+                    return MAV_FRAME.GLOBAL_TERRAIN_ALT;
+                default:
+                    return frame;
+            }
+        }
+        public static MAV_FRAME ToIntFrame(this MAV_FRAME frame)
+        {
+            switch (frame)
+            {
+                case MAV_FRAME.GLOBAL:
+                    return MAV_FRAME.GLOBAL_INT;
+                case MAV_FRAME.GLOBAL_RELATIVE_ALT:
+                    return MAV_FRAME.GLOBAL_RELATIVE_ALT_INT;
+                case MAV_FRAME.GLOBAL_TERRAIN_ALT:
+                    return MAV_FRAME.GLOBAL_TERRAIN_ALT_INT;
+                default:
+                    return frame;
+            }
+        }
+        #endregion
     }
 }

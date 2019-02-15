@@ -277,6 +277,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Asking flight controller version..
+        /// </summary>
+        public static string MsgAskFlightControllerVersion {
+            get {
+                return ResourceManager.GetString("MsgAskFlightControllerVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mission Saved.
         /// </summary>
         public static string MsgBoxSaveMission {
@@ -831,6 +840,15 @@ namespace Diva.Properties {
         public static string MsgUnsupported {
             get {
                 return ResourceManager.GetString("MsgUnsupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port opened, waiting for heartbeat..
+        /// </summary>
+        public static string MsgWaitHeartBeat {
+            get {
+                return ResourceManager.GetString("MsgWaitHeartBeat", resourceCulture);
             }
         }
         

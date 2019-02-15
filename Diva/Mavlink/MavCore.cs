@@ -182,8 +182,9 @@ namespace Diva.Mavlink
 					}
 					Thread.Sleep(1);
 
+                    frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MsgWaitHeartBeat);
                     // since we're having only 1 sysid/compid in this link, skip id checks
-					if (buffer.Length == 0)
+                    if (buffer.Length == 0)
 						buffer = GetHeartBeat(true);
                     if (buffer.Length > 0)
                         break;
@@ -199,7 +200,8 @@ namespace Diva.Mavlink
 
 				GetHeartBeat();
 
-				GetVersion();
+                frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MsgAskFlightControllerVersion);
+                GetVersion();
 
 				frmProgressReporter.UpdateProgressAndStatus(0,
 					Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));

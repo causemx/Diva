@@ -444,4 +444,10 @@
   <data name="MsgGettingParams" xml:space="preserve">
     <value>Getting Params.. (sysid {0} compid {1}) </value>
   </data>
+  <data name="MsgWaitHeartBeat" xml:space="preserve">
+    <value>Port opened, waiting for heartbeat.</value>
+  </data>
+  <data name="MsgAskFlightControllerVersion" xml:space="preserve">
+    <value>Asking flight controller version.</value>
+  </data>
 </root>

@@ -127,6 +127,7 @@ namespace Diva
             Latitude = (double.Parse(TxtHomeLatitude.Text)),
             Longitude = (double.Parse(TxtHomeLongitude.Text)),
             Altitude = (float.Parse(TxtHomeAltitude.Text)),
+            Frame = MAVLink.MAV_FRAME.GLOBAL
         };
 
 		public Planner()
@@ -1548,12 +1549,11 @@ namespace Diva
 			}
 		}
 
-		#region save waypoints
-		private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
+		private void SaveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
         {
+            Action<int, string> updateStatus = ((ProgressDialogV2)sender).UpdateProgressAndStatus;
             try
             {
-                
                 if (!ActiveDrone.IsOpen)
                 {
                     throw new Exception("Please connect first!");
@@ -1561,168 +1561,12 @@ namespace Diva
                  
                 }
 
-				ActiveDrone.PortInUse = true;
-
-				// define the home point
-				WayPoint home = new WayPoint();
-				try
-				{
-                    home = GetHomeWP();
-				}
-				catch
-				{
-					throw new Exception("Your home location is invalid");
-				}
-
 				// log
 				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
 
-				// set wp total
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetTotalWps);
+                ActiveDrone.SetWPs(GetCommandList(), GetHomeWP(), updateStatus);
 
-				ushort totalWPs = (ushort)(dgvWayPoints.Rows.Count + 1);
-
-				if (ActiveDrone.Status.APName == MAVLink.MAV_AUTOPILOT.PX4)
-				{
-					totalWPs--;
-				}
-
-				try
-				{
-					ActiveDrone.SetWPTotal(totalWPs);
-				}
-				catch (TimeoutException)
-				{
-					MessageBox.Show(Strings.MsgSaveWPTimeout);
-				}
-				 // + home
-
-				// set home location - overwritten/ignored depending on firmware.
-                if (ActiveDrone.Status.APName != MAVLink.MAV_AUTOPILOT.PX4)
-				{
-                    var result = ActiveDrone.SetHome(home, totalWPs, out bool timeouted);
-                    if (result != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-                    {
-                        if (result != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-                        {
-                            MessageBox.Show(Strings.MsgSaveWPRejected.FormatWith(timeouted ? "SetHome" : "SetHome/Timeouted"));
-                            return;
-                        }
-                    }
-				}
-
-                // define the default frame.
-                MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-				// get the command list from the datagrid
-				var commandlist = GetCommandList();
-
-                // process commandlist to the mav
-                int i;
-				for (i = 1; i <= commandlist.Count; i++)
-				{
-					var temp = commandlist[i - 1];
-
-					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetWp + i);
-
-					// make sure we are using the correct frame for these commands
-					if (temp.Id < (ushort)MAVLink.MAV_CMD.LAST || temp.Id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
-					{
-						var mode = AltitudeMode.Relative;
-
-						if (mode == AltitudeMode.Terrain)
-						{
-							frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
-						}
-						else if (mode == AltitudeMode.Absolute)
-						{
-							frame = MAVLink.MAV_FRAME.GLOBAL;
-						}
-						else
-						{
-							frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-						}
-					}
-
-					// handle current wp upload number
-					int uploadwpno = i;
-					if (ActiveDrone.Status.APName == MAVLink.MAV_AUTOPILOT.PX4)
-						uploadwpno--;
-
-					// try send the wp
-					MAVLink.MAV_MISSION_RESULT ans = ActiveDrone.SetWP(temp, (ushort)(uploadwpno), frame);
-
-					// we timed out while uploading wps/ command wasnt replaced/ command wasnt added
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
-					{
-						// resend for partial upload
-						ActiveDrone.SetWPPartialUpdate((ushort)(uploadwpno), totalWPs);
-						// reupload this point.
-						ans = ActiveDrone.SetWP(temp, (ushort)(uploadwpno), frame);
-					}
-
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
-					{
-						MessageBox.Show(Strings.MsgMissionRejectedTooManyWaypoints);
-						log.Error("Upload failed, please reduce the number of wp's");
-						return;
-					}
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
-					{
-
-						MessageBox.Show(Strings.MsgMissionRejectedBadWP.FormatWith(i, ans));
-						log.Error("Upload failed, mission was rejected byt the Mav,\n " +
-							"item had a bad option wp# " + i + " " +
-							ans);
-						return;
-					}
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-					{
-						// invalid sequence can only occur if we failed to see a response from the apm when we sent the request.
-						// or there is io lag and we send 2 mission_items and get 2 responces, one valid, one a ack of the second send
-
-						// the ans is received via mission_ack, so we dont know for certain what our current request is for. as we may have lost the mission_request
-
-						// get requested wp no - 1;
-						i = ActiveDrone.GetRequestedWPNo() - 1;
-
-						continue;
-					}
-					if (ans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-					{
-
-						MessageBox.Show(Strings.MsgMissionRejectedGeneral.FormatWith(
-							Enum.Parse(typeof(MAVLink.MAV_CMD), temp.Id.ToString()),
-							Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString())));
-						log.Error("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.Id.ToString()) +
-										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
-						return;
-					}
-				}
-
-				ActiveDrone.SetWayPointAck();
-				
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogSetParams);
-
-				// m
-				ActiveDrone.SetParam("WP_RADIUS", float.Parse("30") / 1);
-
-				// cm's
-				ActiveDrone.SetParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
-
-				// Remind the user after uploading the mission into firmware.
-				MessageBox.Show(Strings.MsgMissionAcceptWP.FormatWith(i));
-				
-				try
-				{
-					ActiveDrone.SetAnyParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
-						float.Parse("45"));
-				}
-				catch
-				{
-				}
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
+                updateStatus(-1, Strings.MsgDialogDone);
 			}
 			catch (Exception ex)
 			{
@@ -1733,58 +1577,49 @@ namespace Diva
 
 			ActiveDrone.PortInUse = false;
 		}
-		#endregion
 
-		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
+		void LoadWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
 		{
 			List<WayPoint> cmds = new List<WayPoint>();
 
-			try
+            if (!ActiveDrone.IsOpen)
+            {
+                // prevent application termination
+                //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
+                MessageBox.Show(Strings.MsgConnectFirst);
+                return;
+            }
+
+			ActiveDrone.PortInUse = true;
+
+			// param = port.MAV.param;
+
+			log.Info("Getting Home");
+
+			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogGetWpCount);
+
+			log.Info("Getting WP #");
+
+			int cmdcount = ActiveDrone.GetWPCount();
+
+			for (ushort a = 0; a < cmdcount; a++)
 			{
 
-                if (!ActiveDrone.IsOpen)
-                {
-                    // prevent application termination
-                    //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
-                    MessageBox.Show(Strings.MsgConnectFirst);
-                    return;
-                }
-
-				ActiveDrone.PortInUse = true;
-
-				// param = port.MAV.param;
-
-				log.Info("Getting Home");
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Diva.Properties.Strings.MsgDialogGetWpCount);
-
-				log.Info("Getting WP #");
-
-				int cmdcount = ActiveDrone.GetWPCount();
-
-				for (ushort a = 0; a < cmdcount; a++)
+				if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
 				{
-
-					if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
-					{
-						((ProgressDialogV2)sender).doWorkArgs.CancelAcknowledged = true;
-						throw new Exception("Cancel Requested");
-					}
-
-					log.Info("Getting WP" + a);
-					cmds.Add(ActiveDrone.GetWP(a));
+					((ProgressDialogV2)sender).doWorkArgs.CancelAcknowledged = true;
+					throw new Exception("Cancel Requested");
 				}
 
-				ActiveDrone.SetWayPointAck();
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
-
-				log.Info("Done");
+				log.Info("Getting WP" + a);
+				cmds.Add(ActiveDrone.GetWP(a));
 			}
-			catch (Exception ex)
-			{
-				throw;
-			}
+
+			ActiveDrone.SetWayPointAck();
+
+			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
+
+			log.Info("Done");
 
 			WPtoScreen(cmds);
 		}
@@ -2064,8 +1899,9 @@ namespace Diva
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
                 Altitude = targetHeight, // back to m
-                Latitude = (MouseDownStart.Lat),
-                Longitude = (MouseDownStart.Lng)
+                Latitude = MouseDownStart.Lat,
+                Longitude = MouseDownStart.Lng,
+                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             };
 
             try
@@ -2300,7 +2136,7 @@ namespace Diva
 				Text = Strings.MsgDialogDownloadWps,
 			};
 
-			downloadWPReporter.DoWork += getWPs;
+			downloadWPReporter.DoWork += LoadWPs;
 			downloadWPReporter.RunBackgroundOperationAsync();
 			downloadWPReporter.Dispose();
 						
@@ -2374,7 +2210,7 @@ namespace Diva
 				Text = Strings.MsgDialogUploadWps,
 			};
 
-			uploadWPReporter.DoWork += saveWPs;
+			uploadWPReporter.DoWork += SaveWPs;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 

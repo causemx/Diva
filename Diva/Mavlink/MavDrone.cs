@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using log4net;
 using Diva.Utilities;
 using static MAVLink;
+using Strings = Diva.Properties.Strings;
 
 namespace Diva.Mavlink
 {
@@ -131,7 +128,7 @@ namespace Diva.Mavlink
 
         public void SetMode(string targetModeName)
         {
-            if (MavUtlities.GetFlightModeByName(targetModeName, out FlightMode targetMode))
+            if (MavUtlities.GetByName(targetModeName, out FlightMode targetMode))
             {
                 bool verify(MAVLinkMessage p, ref bool more) =>
                     p.ToStructure<mavlink_command_ack_t>().command == (ushort)MAVLINK_MSG_ID.SET_MODE;
@@ -453,7 +450,7 @@ namespace Diva.Mavlink
             }
         }
 
-        private void SetPositionTargetGlobalInt(MAV_FRAME frame, double lat, double lng, double alt)
+         private void SetPositionTargetGlobalInt(MAV_FRAME frame, WayPoint pos)
         {
             // for mavlink SET_POSITION_TARGET messages
             const ushort MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE = ((1 << 0) | (1 << 1) | (1 << 2));
@@ -463,9 +460,9 @@ namespace Diva.Mavlink
             {
                 target_system = SysId,
                 target_component = CompId,
-                alt = (float)alt,
-                lat_int = (int)(lat * 1e7),
-                lon_int = (int)(lng * 1e7),
+                alt = (float)pos.Altitude,
+                lat_int = (int)(pos.Latitude * 1e7),
+                lon_int = (int)(pos.Longitude * 1e7),
                 coordinate_frame = (byte)frame,
                 vx = 0f,
                 vy = 0f,
@@ -475,16 +472,16 @@ namespace Diva.Mavlink
                 type_mask = ushort.MaxValue
             };
 
-            if (lat != 0 && lng != 0)
+            if (pos.Latitude != 0 && pos.Longitude != 0)
                 target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE;
-            if (lat == 0 && lng == 0)
+            if (pos.Latitude == 0 && pos.Longitude == 0)
                 target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE;
 
-            if (lat != 0)
-                Status.GuidedMode.x = (float)lat;
-            if (lng != 0)
-                Status.GuidedMode.y = (float)lng;
-            Status.GuidedMode.z = (float)alt;
+            if (pos.Latitude != 0)
+                Status.GuidedMode.x = (float)pos.Longitude;
+            if (pos.Longitude != 0)
+                Status.GuidedMode.y = (float)pos.Longitude;
+            Status.GuidedMode.z = (float)pos.Altitude;
 
             SendPacket(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target);
         }
@@ -500,7 +497,7 @@ namespace Diva.Mavlink
                 });
         }
 
-        public MAV_MISSION_RESULT SetWP(WayPoint loc, ushort index, MAV_FRAME frame)
+        public MAV_MISSION_RESULT SetWP(WayPoint loc, int index)
         {
             byte contMode = (byte)((Status.Firmware == Firmwares.ArduPlane) ? 2 : 1);
             var req = Status.MissionIntSupport ?
@@ -539,23 +536,98 @@ namespace Diva.Mavlink
             return result;
         }
 
-        public MAV_MISSION_RESULT SetHome(WayPoint home, ushort totalWPs, out bool timeouted)
+        public MAV_MISSION_RESULT SetWPs(List<WayPoint> wps, WayPoint home, Action<int, string> reportCB)
         {
-            MAV_MISSION_RESULT res;
+            if (Status.APName != MAV_AUTOPILOT.PX4) wps.Insert(0, home);
+
+            int totalWPs = wps.Count;
+            reportCB(0, Strings.MsgDialogSetTotalWps);
             try
             {
-                res = SetWP(home, 0, MAV_FRAME.GLOBAL);
-                timeouted = false;
-            } catch (TimeoutException)
-            {
                 SetWPTotal(totalWPs);
-                res = SetWP(home, 0, MAV_FRAME.GLOBAL);
-                timeouted = true;
             }
-            return res;
+            catch (TimeoutException)
+            {
+                MessageBox.Show(Strings.MsgSaveWPTimeout);
+            }
+
+            MAV_MISSION_RESULT result = MAV_MISSION_RESULT.MAV_MISSION_INVALID;
+            bool retry = false;
+            for (int i = 0; i < totalWPs; i++)
+            {
+                var wp = wps[i];
+
+                reportCB((i + 1) * 100 / totalWPs, Strings.MsgDialogSetWp + i);
+
+                // try send the wp
+                try
+                {
+                    result = SetWP(wp, i);
+                } catch (TimeoutException)
+                {
+                    if (retry)
+                    {
+                        MessageBox.Show(Strings.MsgSaveWPTimeout);
+                        log.Error("Timeout after retry to set waypoint " +
+                            (i == 0 ? "Home" : (Status.APName != MAV_AUTOPILOT.PX4 ? i - 1 : i).ToString()));
+                        result = MAV_MISSION_RESULT.MAV_MISSION_ERROR;
+                    } else
+                    {
+                        retry = true;
+                        --i;
+                        continue;
+                    }
+                }
+                retry = false;
+
+                // we timed out while uploading wps/ command wasnt replaced/ command wasnt added
+                if (result == MAV_MISSION_RESULT.MAV_MISSION_ERROR)
+                {
+                    if (i == 0)
+                        SetWPTotal(totalWPs);
+                    else
+                        // resend for partial upload
+                        SetWPPartialUpdate(i, totalWPs);
+                    // reupload this point.
+                    result = SetWP(wp, i);
+                }
+
+                switch (result)
+                {
+                    case MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE:
+                        MessageBox.Show(Strings.MsgMissionRejectedTooManyWaypoints);
+                        log.Error("Upload failed, please reduce the number of wp's");
+                        return result;
+                    case MAV_MISSION_RESULT.MAV_MISSION_INVALID:
+                        MessageBox.Show(Strings.MsgMissionRejectedBadWP.FormatWith(i, result));
+                        log.Error("Upload failed, mission was rejected byt the Mav,\n " +
+                            $"item had a bad option wp# {i} {result}");
+                        return result;
+                    case MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE:
+                        i = GetRequestedWPNo() - 1;
+                        continue;
+                    case MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED:
+                        continue;
+                    default:
+                        MessageBox.Show(Strings.MsgMissionRejectedGeneral.FormatWith(
+                            ((MAV_CMD)wp.Id).GetName(), result.GetName()));
+                        log.Error($"Upload wps failed {((MAV_CMD)wp.Id).GetName()} {result.GetName()}");
+                        return result;
+                }
+            }
+
+            SetWayPointAck();
+            reportCB(-1, Strings.MsgDialogSetParams);
+
+            // set radius, is these required?
+            SetParam("WP_RADIUS", float.Parse("30") / 1);
+            SetParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
+            try { SetAnyParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" }, float.Parse("45")); } catch { }
+
+            return result;
         }
 
-        public void SetWPPartialUpdate(ushort startwp, ushort endwp)
+        public void SetWPPartialUpdate(int startwp, int endwp)
         {
             SendPacket(MAVLINK_MSG_ID.MISSION_WRITE_PARTIAL_LIST,
                 new mavlink_mission_write_partial_list_t
@@ -567,7 +639,7 @@ namespace Diva.Mavlink
                 });
         }
 
-        public void SetWPTotal(ushort totalWPs)
+        public void SetWPTotal(int totalWPs)
         {
             PortInUse = true;
             int retries = 3;
@@ -575,7 +647,7 @@ namespace Diva.Mavlink
             {
                 target_system = SysId,
                 target_component = CompId, // MSG_NAMES.MISSION_COUNT
-                count = totalWPs
+                count = (ushort)totalWPs
             };
             MAVLinkMessage reply = null;
             do
@@ -620,14 +692,13 @@ namespace Diva.Mavlink
                     $" lat {dest.Latitude} lng {dest.Longitude} alt {dest.Altitude}");
                 if (Status.Firmware == Firmwares.ArduPlane)
                 {
-                    MAV_MISSION_RESULT ans = SetWP(dest, 0, MAV_FRAME.GLOBAL_RELATIVE_ALT);
+                    MAV_MISSION_RESULT ans = SetWP(dest, 0);
                     if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                         throw new Exception("Guided Mode Failed");
                 }
                 else
                 {
-                    SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT,
-                        dest.Latitude, dest.Longitude, dest.Altitude);
+                    SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, dest);
                 }
             }
             catch (Exception ex)

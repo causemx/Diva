@@ -141,8 +141,6 @@ namespace Diva.Mavlink
 
         public FlightMode FlightMode { get; set; }
 
-        public AltitudeMode AltitudeMode { get; set; } = AltitudeMode.Relative;
-
         public float NAVBearing { get; set; } = float.NaN;
 
         private float yaw = float.NaN;

@@ -337,7 +337,7 @@
     <value>輪值中</value>
   </data>
   <data name="MsgDialogSetTotalWps" xml:space="preserve">
-    <value>設定全部航點</value>
+    <value>設定航點數量</value>
   </data>
   <data name="MsgDialogSetWp" xml:space="preserve">
     <value>設定航點 </value>
@@ -443,5 +443,11 @@
   </data>
   <data name="MsgGettingParams" xml:space="preserve">
     <value>要求參數列表… (sysId{0}, compId{1})</value>
+  </data>
+  <data name="MsgWaitHeartBeat" xml:space="preserve">
+    <value>通訊埠開啟，等待heartbeat</value>
+  </data>
+  <data name="MsgAskFlightControllerVersion" xml:space="preserve">
+    <value>詢問飛控版本</value>
   </data>
 </root>
