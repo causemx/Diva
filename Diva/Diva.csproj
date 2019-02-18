@@ -296,7 +296,6 @@
     <Compile Include="Utilities\FileUtility.cs" />
     <Compile Include="Utilities\IFileUtility.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
-    <Compile Include="Utilities\IOverlayUtility.cs" />
     <Compile Include="Utilities\Locationwp.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
@@ -1373,6 +1372,9 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\point-red.png" />
+    <None Include="Resources\point-green.png" />
+    <None Include="Resources\point-gray.png" />
     <None Include="Resources\icon_lighting_24.png" />
     <None Include="Resources\ParameterMetaData.xml" />
     <None Include="Resources\icon_location.png" />
@@ -1434,13 +1436,9 @@
     <None Include="Resources\icon-signal-100.png" />
     <None Include="Resources\size_height_edit-32.png" />
     <None Include="Resources\news-32.png" />
-    <None Include="Resources\home-32.png" />
     <None Include="Resources\size_height_settings-64.png" />
     <None Include="Resources\news-64.png" />
-    <None Include="Resources\home-64.png" />
     <None Include="Resources\if_Psyduck_3151565.png" />
-    <None Include="Resources\capacity-flytime.png" />
-    <None Include="Resources\capacity-battery.png" />
     <None Include="Resources\icon-drone-6axis.png" />
     <None Include="Resources\if_SVG_LINE_TECHNOLOGY-05_2897338.png" />
     <None Include="Resources\mavcmd.xml" />

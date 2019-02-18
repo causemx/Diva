@@ -1396,7 +1396,8 @@ namespace Diva
 
 
 			var overlay = new OverlayUtility.WPOverlay(ActiveDrone.ObjOverlay.Overlay,
-				ActiveDrone.ObjOverlay.RoutingColor);
+				ActiveDrone.ObjOverlay.RoutingColor,
+				ActiveDrone.ObjOverlay.Marker);
 
 			overlay.RaiseFullPointsEvent += (s, e) => {
 

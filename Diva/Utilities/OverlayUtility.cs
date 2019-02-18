@@ -13,19 +13,21 @@ namespace Diva.Utilities
 {
     class OverlayUtility
     {
-		public class WPOverlay : IOverlayUtility
+		public class WPOverlay
 		{
 
 			// public GMapOverlay overlay = new GMapOverlay("WPOverlay");
 
-			public WPOverlay(GMapOverlay _overlay, Color _color)
+			public WPOverlay(GMapOverlay _overlay, Color _color, Bitmap _marker)
 			{
 				overlay = _overlay;
 				routingPathColor = _color;
+				myMarker = _marker;
 			}
 
 			public GMapOverlay overlay = null;
 			public Color routingPathColor;
+			public Bitmap myMarker;
 			public GMapRoute route = new GMapRoute("wp route");
 			public GMapRoute homeroute = new GMapRoute("home route");
 			/// list of points as per the mission
@@ -42,7 +44,7 @@ namespace Diva.Utilities
 				try
 				{
 					PointLatLng point = new PointLatLng(lat, lng);
-					GMapMarkerWP m = new GMapMarkerWP(point, tag);
+					GMapMarkerWP m = new GMapMarkerWP(point, tag, myMarker);
 					m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
 					m.ToolTipText = "Alt: " + alt.ToString("0");
 					m.Tag = tag;

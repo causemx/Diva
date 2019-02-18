@@ -131,6 +131,23 @@ namespace Diva.Utilities
 		}
 	}
 
+	public static class MarkerPicker
+	{
+		public static List<Bitmap> bitmaps = new List<Bitmap>()
+		{
+			new Bitmap(Resources.point_blue),
+			new Bitmap(Resources.point_gray),
+			new Bitmap(Resources.point_green),
+			new Bitmap(Resources.point_red),
+		};
+
+		public static Bitmap GetMarker()
+		{
+			Random random = new Random();
+			return bitmaps[random.Next(bitmaps.Count)];
+		}
+	}
+
 
 
 	[Serializable]
@@ -259,7 +276,6 @@ namespace Diva.Utilities
 	}
 
 
-	
 	[Serializable]
 	public class GMapMarkerWP : GMarkerGoogle
 	{
@@ -270,8 +286,8 @@ namespace Diva.Utilities
 		static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
 		static Font font;
 
-		public GMapMarkerWP(PointLatLng p, string wpno)
-			: base(p, new Bitmap(Resources.point_blue))
+		public GMapMarkerWP(PointLatLng p, string wpno, Bitmap bitmap)
+			: base(p, bitmap)
 		{
 			this.wpno = wpno;
 			if (font == null)

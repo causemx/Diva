@@ -192,7 +192,7 @@ namespace Diva.Mavlink
 
 			public GMapOverlay Overlay { get; }
 			public Color RoutingColor { get; } = Utility.RandomColor();
-
+			public Bitmap Marker { get; } = MarkerPicker.GetMarker();
 		}
 
 		private void SerialReader()
