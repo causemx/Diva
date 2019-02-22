@@ -345,8 +345,8 @@
   <data name="MsgDialogSetParams" xml:space="preserve">
     <value>Setting params</value>
   </data>
-  <data name="MsgDialogGetWpCount" xml:space="preserve">
-    <value>Getting WP count</value>
+  <data name="MsgDialogGetWp" xml:space="preserve">
+    <value>Getting WP</value>
   </data>
   <data name="MsgDialogDone" xml:space="preserve">
     <value>Done.</value>

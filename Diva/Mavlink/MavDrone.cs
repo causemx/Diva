@@ -291,7 +291,7 @@ namespace Diva.Mavlink
             throw new Exception("Could not verify GeoFence Point");
         }
 
-        public ushort GetWPCount()
+        public int GetWPCount()
         {
             PortInUse = true;
             var req = new mavlink_mission_request_list_t
@@ -333,7 +333,7 @@ namespace Diva.Mavlink
             }
         }
 
-        public WayPoint GetWP(ushort index)
+        public WayPoint GetWP(int index)
         {
             //while (PortInUse) Thread.Sleep(100);
 
@@ -346,7 +346,7 @@ namespace Diva.Mavlink
                 {
                     target_system = SysId,
                     target_component = CompId,
-                    seq = index
+                    seq = (ushort)index
                 };
             }
             else
@@ -356,7 +356,7 @@ namespace Diva.Mavlink
                 {
                     target_system = SysId,
                     target_component = CompId,
-                    seq = index
+                    seq = (ushort)index
                 };
             }
             PortInUse = true;
@@ -536,12 +536,11 @@ namespace Diva.Mavlink
             return result;
         }
 
-        public MAV_MISSION_RESULT SetWPs(List<WayPoint> wps, WayPoint home, Action<int, string> reportCB)
+        public MAV_MISSION_RESULT SetWPs(List<WayPoint> wps, WayPoint home, Action<int> reportCB)
         {
             if (Status.APName != MAV_AUTOPILOT.PX4) wps.Insert(0, home);
 
             int totalWPs = wps.Count;
-            reportCB(0, Strings.MsgDialogSetTotalWps);
             try
             {
                 SetWPTotal(totalWPs);
@@ -556,8 +555,7 @@ namespace Diva.Mavlink
             for (int i = 0; i < totalWPs; i++)
             {
                 var wp = wps[i];
-
-                reportCB((i + 1) * 100 / totalWPs, Strings.MsgDialogSetWp + i);
+                reportCB?.Invoke((i + 1) * 100 / totalWPs);
 
                 // try send the wp
                 try
@@ -595,29 +593,29 @@ namespace Diva.Mavlink
                 switch (result)
                 {
                     case MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE:
-                        MessageBox.Show(Strings.MsgMissionRejectedTooManyWaypoints);
                         log.Error("Upload failed, please reduce the number of wp's");
-                        return result;
+                        throw new InsufficientMemoryException(
+                            Strings.MsgMissionRejectedTooManyWaypoints);
                     case MAV_MISSION_RESULT.MAV_MISSION_INVALID:
-                        MessageBox.Show(Strings.MsgMissionRejectedBadWP.FormatWith(i, result));
                         log.Error("Upload failed, mission was rejected byt the Mav,\n " +
                             $"item had a bad option wp# {i} {result}");
-                        return result;
+                        throw new NotSupportedException(
+                            Strings.MsgMissionRejectedBadWP.FormatWith(i, result));
                     case MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE:
                         i = GetRequestedWPNo() - 1;
                         continue;
                     case MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED:
                         continue;
                     default:
-                        MessageBox.Show(Strings.MsgMissionRejectedGeneral.FormatWith(
-                            ((MAV_CMD)wp.Id).GetName(), result.GetName()));
                         log.Error($"Upload wps failed {((MAV_CMD)wp.Id).GetName()} {result.GetName()}");
-                        return result;
+                        throw new InvalidOperationException(
+                            Strings.MsgMissionRejectedGeneral.FormatWith(
+                                ((MAV_CMD)wp.Id).GetName(), result.GetName()));
                 }
             }
 
             SetWayPointAck();
-            reportCB(-1, Strings.MsgDialogSetParams);
+            reportCB?.Invoke(-1);
 
             // set radius, is these required?
             SetParam("WP_RADIUS", float.Parse("30") / 1);
@@ -625,6 +623,24 @@ namespace Diva.Mavlink
             try { SetAnyParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" }, float.Parse("45")); } catch { }
 
             return result;
+        }
+
+        public List<WayPoint> GetWPs(Action<int> progCB, Func<bool> isCanceled)
+        {
+            int totalWPs = GetWPCount();
+            List<WayPoint> wps = new List<WayPoint>(totalWPs);
+
+            progCB?.Invoke(totalWPs);
+            for (int i = 0; i < totalWPs; i++)
+            {
+                try { if (isCanceled()) return null; } catch { }
+                log.Info("Getting WP" + i);
+                wps.Add(GetWP(i));
+                progCB?.Invoke(i);
+            }
+            SetWayPointAck();
+
+            return wps;
         }
 
         public void SetWPPartialUpdate(int startwp, int endwp)

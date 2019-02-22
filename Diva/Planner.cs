@@ -1564,9 +1564,18 @@ namespace Diva
 				// log
 				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
 
-                ActiveDrone.SetWPs(GetCommandList(), GetHomeWP(), updateStatus);
+                var dlg = sender as ProgressDialogV2;
+                dlg.UpdateProgressAndStatus(0, Strings.MsgDialogSetTotalWps);
 
-                updateStatus(-1, Strings.MsgDialogDone);
+                try
+                {
+                    var result = ActiveDrone.SetWPs(GetCommandList(), GetHomeWP(),
+                        (i) => dlg.UpdateProgressAndStatus(i, i < 0 ?
+                            Strings.MsgDialogSetParams : Strings.MsgDialogSetWp + i));
+                }
+                catch { }
+
+                dlg.UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
 			}
 			catch (Exception ex)
 			{
@@ -1578,10 +1587,8 @@ namespace Diva
 			ActiveDrone.PortInUse = false;
 		}
 
-		void LoadWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
-		{
-			List<WayPoint> cmds = new List<WayPoint>();
-
+        private void LoadWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
+        {
             if (!ActiveDrone.IsOpen)
             {
                 // prevent application termination
@@ -1590,41 +1597,35 @@ namespace Diva
                 return;
             }
 
-			ActiveDrone.PortInUse = true;
+            var dlg = sender as ProgressDialogV2;
+            int totalWps = 0;
 
-			// param = port.MAV.param;
+            dlg.UpdateProgressAndStatus(0, Strings.MsgDialogDownloadWps);
+            log.Info("Getting WP #");
+            List<WayPoint> cmds = ActiveDrone.GetWPs((i) =>
+                {
+                    if (totalWps == 0)
+                        totalWps = i;
+                    else
+                        dlg.UpdateProgressAndStatus(i * 100 / totalWps, Strings.MsgDialogDownloadWps);
+                },
+                () => dlg.doWorkArgs.CancelRequested);
 
-			log.Info("Getting Home");
-
-			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogGetWpCount);
-
-			log.Info("Getting WP #");
-
-			int cmdcount = ActiveDrone.GetWPCount();
-
-			for (ushort a = 0; a < cmdcount; a++)
-			{
-
-				if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
-				{
-					((ProgressDialogV2)sender).doWorkArgs.CancelAcknowledged = true;
-					throw new Exception("Cancel Requested");
-				}
-
-				log.Info("Getting WP" + a);
-				cmds.Add(ActiveDrone.GetWP(a));
-			}
-
-			ActiveDrone.SetWayPointAck();
-
-			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
-
-			log.Info("Done");
-
-			WPtoScreen(cmds);
+            if (cmds != null)
+            {
+                dlg.UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
+                log.Info("Done");
+                WPsToScreen(cmds);
+            }
+            else if (dlg.doWorkArgs.CancelRequested)
+            {
+                dlg.doWorkArgs.CancelAcknowledged = true;
+                throw new Exception("Cancel Requested");
+            }
+            throw new Exception("LoadWPs: Unknown error");
 		}
 
-		public void WPtoScreen(List<WayPoint> cmds, bool withrally = true)
+		public void WPsToScreen(List<WayPoint> cmds, bool withrally = true)
 		{
 			try
 			{
@@ -1633,7 +1634,7 @@ namespace Diva
 					try
 					{
 						Console.WriteLine("Process " + cmds.Count);
-						processToScreen(cmds);
+						WPsToDataView(cmds);
                         DroneInfoPanel.NotifyMissionChanged();
 					}
 					catch (Exception exx)
@@ -1647,7 +1648,7 @@ namespace Diva
 							int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString()) >= 1)
 						{
 							Console.WriteLine("get rally points");
-							getRallyPoints();
+							GetRallyPoints();
 						}
 							
 					}
@@ -1671,7 +1672,7 @@ namespace Diva
 		/// <summary>
 		/// Processes a loaded EEPROM to the map and datagrid
 		/// </summary>
-		public void processToScreen(List<WayPoint> cmds, bool append = false)
+		public void WPsToDataView(List<WayPoint> cmds, bool append = false)
 		{
 			quickadd = true;
 
@@ -1794,7 +1795,7 @@ namespace Diva
 			// MainMap_OnMapZoomChanged();
 		}
 
-		public void getRallyPoints()
+		public void GetRallyPoints()
 		{
 			if (ActiveDrone.Status.Params["RALLY_TOTAL"] == null)
 			{
@@ -2342,7 +2343,7 @@ namespace Diva
 			try
 			{
 				List<WayPoint> cmds = KMLFileUtility.ReadKMLMission();
-				processToScreen(cmds, false);
+				WPsToDataView(cmds, false);
 				WriteKMLV2();
 				myMap.ZoomAndCenterMarkers("objects");
 			}

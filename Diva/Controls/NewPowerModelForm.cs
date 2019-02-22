@@ -58,7 +58,7 @@ namespace Diva.Controls
                     var planner = Planner.GetPlannerInstance();
                     var homeloc = planner.GetHomeWP();
                     planner.ClearMission();
-                    planner.processToScreen(
+                    planner.WPsToDataView(
                         PowerModelManager.GenerateTrainingMission<AlexModel>(
                             homeloc.Latitude, homeloc.Longitude, angle));
                     planner.WriteKMLV2();

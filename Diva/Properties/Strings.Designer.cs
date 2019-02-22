@@ -412,11 +412,11 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Getting WP count.
+        ///   Looks up a localized string similar to Getting WP.
         /// </summary>
-        public static string MsgDialogGetWpCount {
+        public static string MsgDialogGetWp {
             get {
-                return ResourceManager.GetString("MsgDialogGetWpCount", resourceCulture);
+                return ResourceManager.GetString("MsgDialogGetWp", resourceCulture);
             }
         }
         

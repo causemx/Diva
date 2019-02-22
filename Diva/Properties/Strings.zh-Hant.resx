@@ -345,7 +345,7 @@
   <data name="MsgDialogSetParams" xml:space="preserve">
     <value>設定參數 </value>
   </data>
-  <data name="MsgDialogGetWpCount" xml:space="preserve">
+  <data name="MsgDialogGetWp" xml:space="preserve">
     <value>取得航點 </value>
   </data>
   <data name="MsgDialogDone" xml:space="preserve">
