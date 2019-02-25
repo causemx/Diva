@@ -629,6 +629,49 @@ namespace Diva.Mavlink
             return reply;
         }
 
+        public MAVLinkMessage WaitPackets(MAVLINK_MSG_ID[] msgids,
+            WaitPacketFilter[] filters, int timeoutms = Timeout.Infinite)
+        {
+            MAVLinkMessage reply = null;
+            using (AutoResetEvent ev = new AutoResetEvent(false))
+            {
+                DateTime lasttime = DateTime.MinValue;
+                var ehs = new EventHandler<MAVLinkMessage>[msgids.Length];
+                for (var i = msgids.Length; i > 0;)
+                {
+                    int ival = --i;
+                    ehs[ival] = (object o, MAVLinkMessage p) =>
+                    {
+                        if (filters[ival] == null || filters[ival](p))
+                        {
+                            reply = p;
+                            ev.Set();
+                        }
+                    };
+                    RegisterMavMessageHandler(msgids[ival], ehs[ival]);
+                    var ipkt = Status.GetPacket(msgids[ival]);
+                    if (ipkt != null && ipkt.rxtime > lasttime)
+                        lasttime = ipkt.rxtime;
+                }
+                if (lasttime == DateTime.MinValue)
+                    lasttime = DateTime.Now;
+                ev.WaitOne(timeoutms);
+                for (var i = msgids.Length; --i >= 0; )
+                {
+                    UnregisterMavMessageHandler(msgids[i], ehs[i]);
+                    if (reply == null)
+                    {
+                        // last minute ride
+                        var ipkt = Status.GetPacket(msgids[i]);
+                        if (ipkt != null && ipkt.rxtime > lasttime &&
+                                (filters[i] == null || filters[i](ipkt)))
+                            reply = ipkt;
+                    }
+                }
+            }
+            return reply;
+        }
+
         public MAVLinkMessage SendPacketWaitReply(MAVLINK_MSG_ID msgid, object indata,
             MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000)
         {
@@ -708,7 +751,8 @@ namespace Diva.Mavlink
                 {
                     ev.WaitOne(due - DateTime.Now);
                 } while (DateTime.Now < due);
-                for (var i = rids.Length; --i >= 0; UnregisterMavMessageHandler(rids[i], ehs[i]));
+                for (var i = rids.Length; --i >= 0; )
+                    UnregisterMavMessageHandler(rids[i], ehs[i]);
             }
             return reply;
         }

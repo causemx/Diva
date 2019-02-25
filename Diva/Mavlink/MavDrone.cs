@@ -164,104 +164,69 @@ namespace Diva.Mavlink
         {
             PortInUse = true;
 
+            int retries = 3;
             var req = new mavlink_rally_fetch_point_t
             {
                 idx = (byte)no,
                 target_component = CompId,
                 target_system = SysId
             };
-            SendPacket(MAVLINK_MSG_ID.RALLY_FETCH_POINT, req);
-
-            DateTime start = DateTime.Now;
-            int retrys = 3;
+            MAVLinkMessage reply;
             while (true)
             {
-                if (!(start.AddMilliseconds(700) > DateTime.Now))
+                reply = SendPacketWaitReply(MAVLINK_MSG_ID.RALLY_FETCH_POINT,
+                    req, MAVLINK_MSG_ID.RALLY_POINT, null, 700);
+                if (reply != null)
                 {
-                    if (retrys > 0)
-                    {
-                        log.Info("getRallyPoint Retry " + retrys + " - giv com " + PortInUse);
-                        SendPacket(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
-                        start = DateTime.Now;
-                        retrys--;
+                    var fp = reply.ToStructure<mavlink_rally_point_t>();
+                    if (req.idx != fp.idx)
                         continue;
-                    }
+                    total = fp.count;
                     PortInUse = false;
-                    throw new TimeoutException("Timeout on read - getRallyPoint");
-                }
-
-                MAVLinkMessage buffer = ReadPacket();
-                if (buffer.Length > 5)
-                {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.RALLY_POINT)
+                    return new PointLatLngAlt
                     {
-                        var fp = buffer.ToStructure<mavlink_rally_point_t>();
-                        if (req.idx != fp.idx)
-                        {
-                            SendPacket(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
-                            continue;
-                        }
-                        total = fp.count;
-                        PortInUse = false;
-                        return new PointLatLngAlt
-                                {
-                                    Alt = fp.alt,
-                                    Lat = fp.lat / 1.0e7,
-                                    Lng = fp.lng / 1.0e7,
-                                    Tag = fp.idx.ToString()
-                                };
-                    }
+                        Alt = fp.alt,
+                        Lat = fp.lat / 1.0e7,
+                        Lng = fp.lng / 1.0e7,
+                        Tag = fp.idx.ToString()
+                    };
                 }
+                if (retries == 0)
+                    throw new TimeoutException("Timeout on read - getRallyPoint");
+                log.Info("getRallyPoint Retry " + retries);
+                retries--;
             }
         }
 
         public PointLatLngAlt GetFencePoint(int no, ref int total)
         {
             PortInUse = true;
+            int retries = 3;
             var req = new mavlink_fence_fetch_point_t
             {
                 idx = (byte)no,
                 target_system = SysId,
                 target_component = CompId
             };
-            SendPacket(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
-
-            DateTime start = DateTime.Now;
-            int retrys = 3;
-
-            while (true)
+            MAVLinkMessage reply;
+            while ((reply =
+                SendPacketWaitReply(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req,
+                    MAVLINK_MSG_ID.FENCE_POINT, null, 700)) == null)
             {
-                if (!(start.AddMilliseconds(700) > DateTime.Now))
-                {
-                    if (retrys > 0)
-                    {
-                        log.Info("getFencePoint Retry " + retrys + " - giv com " + PortInUse);
-                        SendPacket(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req);
-                        start = DateTime.Now;
-                        retrys--;
-                        continue;
-                    }
-                    PortInUse = false;
+               if (retries == 0)
                     throw new TimeoutException("Timeout on read - getFencePoint");
-                }
-
-                var buffer = ReadPacket();
-                if (buffer.Length > 5)
-                {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.FENCE_POINT)
-                    {
-                        PortInUse = false;
-                        mavlink_fence_point_t fp = buffer.ToStructure<mavlink_fence_point_t>();
-                        total = fp.count;
-                        return new PointLatLngAlt
-                                {
-                                    Lat = fp.lat,
-                                    Lng = fp.lng,
-                                    Tag = fp.idx.ToString()
-                                };
-                    }
-                }
+                log.Info("getFencePoint Retry " + retries + " - giv com " + PortInUse);
+                retries--;
             }
+
+            var fp = reply.ToStructure<mavlink_fence_point_t>();
+            total = fp.count;
+            return new PointLatLngAlt
+            {
+                Lat = fp.lat,
+                Lng = fp.lng,
+                Tag = fp.idx.ToString()
+            };
         }
 
         public bool SetFencePoint(byte index, PointLatLngAlt plla, byte fencepointcount)
@@ -294,54 +259,43 @@ namespace Diva.Mavlink
         public int GetWPCount()
         {
             PortInUse = true;
+            int retries = 6;
             var req = new mavlink_mission_request_list_t
             {
                 target_component = CompId,
                 target_system = SysId
             };
-            SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req);
+            MAVLinkMessage reply;
 
-            DateTime start = DateTime.Now;
-            int retrys = 6;
-            while (true)
+            while ((reply =
+                SendPacketWaitReply(MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req,
+                    MAVLINK_MSG_ID.MISSION_COUNT, null, 700)) == null)
             {
-                if (!(start.AddMilliseconds(700) > DateTime.Now))
-                {
-                    if (retrys > 0)
-                    {
-                        log.Info("getWPCount Retry " + retrys + " - giv com " + PortInUse);
-                        SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req);
-                        start = DateTime.Now;
-                        retrys--;
-                        continue;
-                    }
-                    PortInUse = false;
+                if (retries > 0)
+                    log.Info("getWPCount Retry " + retries);
+                else
                     throw new TimeoutException("Timeout on read - getWPCount");
-                }
-
-                var buffer = ReadPacket();
-                if (buffer.Length > 5)
-                {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_COUNT)
-                    {
-                        var count = buffer.ToStructure<mavlink_mission_count_t>();
-                        log.Info("wpcount: " + count.count);
-                        PortInUse = false;
-                        return count.count; // should be ushort, but apm has limited wp count < byte
-                    }
-                }
+                --retries;
             }
+
+            var wpc = reply.ToStructure<mavlink_mission_count_t>();
+            log.Info("wpcount: " + wpc.count);
+            PortInUse = false;
+            // should be ushort, but apm has limited wp count < byte
+            return wpc.count;
         }
 
         public WayPoint GetWP(int index)
         {
             //while (PortInUse) Thread.Sleep(100);
 
+            int retries = 5;
             object req;
-            MAVLINK_MSG_ID msgid;
+            MAVLINK_MSG_ID msgid, repid;
             if (Status.MissionIntSupport)
             {
                 msgid = MAVLINK_MSG_ID.MISSION_REQUEST_INT;
+                repid = MAVLINK_MSG_ID.MISSION_ITEM_INT;
                 req = new mavlink_mission_request_int_t
                 {
                     target_system = SysId,
@@ -352,6 +306,7 @@ namespace Diva.Mavlink
             else
             {
                 msgid = MAVLINK_MSG_ID.MISSION_REQUEST;
+                repid = MAVLINK_MSG_ID.MISSION_ITEM;
                 req = new mavlink_mission_request_t
                 {
                     target_system = SysId,
@@ -360,68 +315,35 @@ namespace Diva.Mavlink
                 };
             }
             PortInUse = true;
-            SendPacket(msgid, req);
-            WayPoint loc = new WayPoint();
 
-            DateTime start = DateTime.Now;
-            int retrys = 5;
+            WayPoint loc = new WayPoint();
             while (true)
             {
-                if (!(start.AddMilliseconds(3500) > DateTime.Now)) // apm times out after 5000ms
+                var reply = SendPacketWaitReply(msgid, req, repid, null, 3500);
+                if (reply != null)
                 {
-                    if (retrys > 0)
+                    if (reply.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
                     {
-                        log.Info("getWP Retry " + retrys);
-                        SendPacket(msgid, req);
-                        start = DateTime.Now;
-                        retrys--;
-                        continue;
-                    }
-                    PortInUse = false;
-                    throw new TimeoutException("Timeout on read - getWP");
-                }
-                var buffer = ReadPacket();
-                if (buffer.Length > 5)
-                {
-                    if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
-                    {
-                        var wp = buffer.ToStructure<mavlink_mission_item_t>();
+                        var wp = reply.ToStructure<mavlink_mission_item_t>();
                         if (index != wp.seq)
-                        {
-                            SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST, req);
                             continue;
-                        }
-
                         loc = wp;
-                        log.InfoFormat("getWP {0} {1} {2} {3} {4} opt {5}", loc.Id, loc.Param1, loc.Altitude, loc.Latitude, loc.Longitude,
-                            loc.Option);
-                        break;
                     }
-                    else if (buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM_INT)
+                    else //if (reply.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
                     {
-                        var wp = buffer.ToStructure<mavlink_mission_item_int_t>();
+                        var wp = reply.ToStructure<mavlink_mission_item_int_t>();
                         if (index != wp.seq)
-                        {
-                            SendPacket(MAVLINK_MSG_ID.MISSION_REQUEST_INT, req);
                             continue;
-                        }
-
                         loc = wp;
-                        if (loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL || loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
-                        {
+                        if (loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONTROL ||
+                                loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
                             loc.Latitude = wp.x;
-                        }
-
-                        log.InfoFormat("getWPint {0} {1} {2} {3} {4} opt {5}", loc.Id, loc.Param1, loc.Altitude, loc.Latitude, loc.Longitude,
-                            loc.Option);
-
-                        break;
                     }
-                    else
-                    {
-                        //log.Info(DateTime.Now + " PC getwp " + buffer.msgid);
-                    }
+                    log.InfoFormat($"getWP {loc.Id} {loc.Param1} {loc.Altitude} {loc.Latitude} {loc.Longitude} opt {loc.Option}");
+                    break;
                 }
+                if (--retries < 0)
+                    throw new TimeoutException("Timeout on read - getWP");
             }
             PortInUse = false;
             return loc;
@@ -430,8 +352,8 @@ namespace Diva.Mavlink
         public int GetRequestedWPNo()
         {
             PortInUse = true;
-            DateTime start = DateTime.Now;
 
+            // Question: shouldn't we check for MISSION_REQUEST_INT, too?
             var pkt = WaitPacket(MAVLINK_MSG_ID.MISSION_REQUEST, null, 5000);
             PortInUse = false;
             if (pkt != null)
