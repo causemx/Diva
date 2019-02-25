@@ -1590,11 +1590,8 @@ namespace Diva
 			catch (Exception ex)
 			{
 				log.Error(ex);
-				ActiveDrone.PortInUse = false;
 				throw;
 			}
-
-			ActiveDrone.PortInUse = false;
 		}
 
         private void LoadWPsFromDrone(object sender, ProgressWorkerEventArgs e, object passdata = null)
@@ -1632,7 +1629,8 @@ namespace Diva
                 dlg.doWorkArgs.CancelAcknowledged = true;
                 throw new Exception("Cancel Requested");
             }
-            throw new Exception("LoadWPs: Unknown error");
+            else
+                throw new Exception("LoadWPs: Unknown error");
 		}
 
 		public void WPsToScreen(List<WayPoint> cmds, bool withrally = true)
@@ -1665,8 +1663,6 @@ namespace Diva
 					catch
 					{
 					}
-
-					ActiveDrone.PortInUse = false;
 
 					// BUT_ReadWPs.Enabled = true;
 
@@ -1917,7 +1913,6 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				ActiveDrone.PortInUse = false;
 				MessageBox.Show(ex.Message);
 			}
 

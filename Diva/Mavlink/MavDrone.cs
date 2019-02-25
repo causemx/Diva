@@ -142,7 +142,6 @@ namespace Diva.Mavlink
                     custom_mode = (uint)targetMode
                 };
                 Console.WriteLine("mode switching");
-                PortInUse = true;
                 if (!accepted(SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, mode,
                     MAVLINK_MSG_ID.COMMAND_ACK, verify)))
                 {
@@ -152,7 +151,6 @@ namespace Diva.Mavlink
                 }
                 else
                     Console.WriteLine("SetMode ack: ok");
-                PortInUse = false;
             }
             else
                 Console.WriteLine("No Mode Changed");
@@ -162,8 +160,6 @@ namespace Diva.Mavlink
         #region Waypoints, RallyPoints and Fencepoints
         public PointLatLngAlt GetRallyPoint(int no, ref int total)
         {
-            PortInUse = true;
-
             int retries = 3;
             var req = new mavlink_rally_fetch_point_t
             {
@@ -182,7 +178,6 @@ namespace Diva.Mavlink
                     if (req.idx != fp.idx)
                         continue;
                     total = fp.count;
-                    PortInUse = false;
                     return new PointLatLngAlt
                     {
                         Alt = fp.alt,
@@ -200,7 +195,6 @@ namespace Diva.Mavlink
 
         public PointLatLngAlt GetFencePoint(int no, ref int total)
         {
-            PortInUse = true;
             int retries = 3;
             var req = new mavlink_fence_fetch_point_t
             {
@@ -215,7 +209,7 @@ namespace Diva.Mavlink
             {
                if (retries == 0)
                     throw new TimeoutException("Timeout on read - getFencePoint");
-                log.Info("getFencePoint Retry " + retries + " - giv com " + PortInUse);
+                log.Info("getFencePoint Retry " + retries);
                 retries--;
             }
 
@@ -258,7 +252,6 @@ namespace Diva.Mavlink
 
         public int GetWPCount()
         {
-            PortInUse = true;
             int retries = 6;
             var req = new mavlink_mission_request_list_t
             {
@@ -280,16 +273,15 @@ namespace Diva.Mavlink
 
             var wpc = reply.ToStructure<mavlink_mission_count_t>();
             log.Info("wpcount: " + wpc.count);
-            PortInUse = false;
+
             // should be ushort, but apm has limited wp count < byte
             return wpc.count;
         }
 
         public WayPoint GetWP(int index)
         {
-            //while (PortInUse) Thread.Sleep(100);
-
             int retries = 5;
+            WayPoint loc = new WayPoint();
             object req;
             MAVLINK_MSG_ID msgid, repid;
             if (Status.MissionIntSupport)
@@ -314,9 +306,7 @@ namespace Diva.Mavlink
                     seq = (ushort)index
                 };
             }
-            PortInUse = true;
 
-            WayPoint loc = new WayPoint();
             while (true)
             {
                 var reply = SendPacketWaitReply(msgid, req, repid, null, 3500);
@@ -345,17 +335,13 @@ namespace Diva.Mavlink
                 if (--retries < 0)
                     throw new TimeoutException("Timeout on read - getWP");
             }
-            PortInUse = false;
             return loc;
         }
 
         public int GetRequestedWPNo()
         {
-            PortInUse = true;
-
             // Question: shouldn't we check for MISSION_REQUEST_INT, too?
             var pkt = WaitPacket(MAVLINK_MSG_ID.MISSION_REQUEST, null, 5000);
-            PortInUse = false;
             if (pkt != null)
             {
                 var ans = pkt.ToStructure<mavlink_mission_request_t>();
@@ -419,7 +405,6 @@ namespace Diva.Mavlink
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
             var msgid = Status.MissionIntSupport ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
-            PortInUse = true;
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
@@ -574,7 +559,6 @@ namespace Diva.Mavlink
 
         public void SetWPTotal(int totalWPs)
         {
-            PortInUse = true;
             int retries = 3;
             var req = new mavlink_mission_count_t
             {
@@ -582,7 +566,7 @@ namespace Diva.Mavlink
                 target_component = CompId, // MSG_NAMES.MISSION_COUNT
                 count = (ushort)totalWPs
             };
-            MAVLinkMessage reply = null;
+            MAVLinkMessage reply;
             do
             {
                 reply = SendPacketWaitReply(MAVLINK_MSG_ID.MISSION_COUNT, req,
@@ -613,8 +597,6 @@ namespace Diva.Mavlink
             if (dest.Altitude == 0 || dest.Latitude == 0 || dest.Longitude == 0)
                 return;
 
-            PortInUse = true;
-
             try
             {
                 dest.Id = (ushort)MAV_CMD.WAYPOINT;
@@ -638,8 +620,6 @@ namespace Diva.Mavlink
             {
                 log.Error(ex);
             }
-
-            PortInUse = false;
         }
         #endregion Waypoints, RallyPoints and Fencepoints
     }

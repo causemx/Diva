@@ -4,7 +4,6 @@ using Diva.Utilities;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -24,33 +23,6 @@ namespace Diva.Mavlink
         public const int GET_PARAM_TIMEOUT = 1000;
         private const int GROUNDCONTROLSTATION_SYSTEM_ID = 255;
         #endregion Constants
-
-        private int portInUseLevel = 0;
-        private StackTrace portLockTracer;
-        private Timer portUnlockTimer;
-        public bool PortInUse
-        {
-            get => portInUseLevel > 0;
-            set
-            {
-                if (value)
-                {
-                    portInUseLevel++;
-                    if (!portUnlockTimer.Enabled)
-                    {
-                        portUnlockTimer.Start();
-                        portLockTracer = new StackTrace();
-                    }
-                }
-                else if (portInUseLevel > 0)
-                {
-                    if (--portInUseLevel == 0)
-                    {
-                        portUnlockTimer.Stop();
-                    }
-                }
-            }
-        }
 
         private MavStream baseStream;
         public MavStream BaseStream
@@ -85,17 +57,6 @@ namespace Diva.Mavlink
         #region Core
         public MavCore()
 		{
-            portUnlockTimer = new Timer { Interval = 5000, AutoReset = false };
-            portUnlockTimer.Elapsed += (s, e) =>
-            {
-                if (PortInUse)
-                {
-                    Console.WriteLine($"MavCore: port locked too long (called from " +
-                        $"{portLockTracer.GetFrame(1).GetMethod().Name} from " +
-                        $"{portLockTracer.GetFrame(2).GetMethod().Name}), released.");
-                    portInUseLevel = 0;
-                }
-            };
             InitializeMavLinkMessageHandler();
         }
 
@@ -124,8 +85,6 @@ namespace Diva.Mavlink
 		public void OpenBg(object PRsender, ProgressWorkerEventArgs progressWorkerEventArgs, object param = null)
 		{
 			frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MsgFormProgressMavlinkConnecting);
-
-			PortInUse = true;
 
 			try
 			{
@@ -168,7 +127,6 @@ namespace Diva.Mavlink
 						countDown.Stop();
 						if (BaseStream.IsOpen)
 							BaseStream.Close();
-						PortInUse = false;
 						return;
 					}
 					log.Info(DateTime.Now.Millisecond + " Start connect loop ");
@@ -209,7 +167,6 @@ namespace Diva.Mavlink
 
 				if (frmProgressReporter.doWorkArgs.CancelAcknowledged == true)
 				{
-					PortInUse = false;
 					if (BaseStream.IsOpen)
 						BaseStream.Close();
 					return;
@@ -222,14 +179,12 @@ namespace Diva.Mavlink
 					BaseStream.Close();
 				}
 				catch {	}
-				PortInUse = false;
 				if (string.IsNullOrEmpty(progressWorkerEventArgs.ErrorMessage))
 					progressWorkerEventArgs.ErrorMessage = Strings.MsgConnectionFailed;
 				log.Error(e);
 				throw e;
 			}
 			//frmProgressReporter.Close();
-			PortInUse = false;
 			frmProgressReporter.UpdateProgressAndStatus(100, Strings.MsgFormProgressDone);
 			log.Info($"Done open {SysId} {CompId}");
 			Status.PacketsLost = 0;
@@ -1025,8 +980,6 @@ namespace Diva.Mavlink
                 return true;
             }
 
-            PortInUse = true;
-
             var req = new mavlink_param_set_t
             {
                 target_system = SysId,
@@ -1048,7 +1001,6 @@ namespace Diva.Mavlink
                     MAV_PARAM_TYPE.REAL32 : (MAV_PARAM_TYPE)pv.param_type,
                 (MAV_PARAM_TYPE)pv.param_type);
             log.Info($"SetParam got ack {name} : {Status.Params[name]}");
-            PortInUse = false;
             return true;
         }
 
@@ -1085,8 +1037,6 @@ namespace Diva.Mavlink
                 more &= pv.param_index != (paramTotal - 1);
                 return true;
             }
-
-            PortInUse = true;
 
             int retries = 6;
             do
@@ -1131,7 +1081,6 @@ namespace Diva.Mavlink
                 if (frmProgressReporter.doWorkArgs.CancelRequested)
                 {
                     frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
-                    PortInUse = false;
                     frmProgressReporter.doWorkArgs.ErrorMessage = Strings.MsgFormProgressUserCanceled;
                     return Status.Params;
                 }
@@ -1163,7 +1112,6 @@ namespace Diva.Mavlink
 
                 if (indices.Count != paramTotal || paramTotal == 0)
                 {
-                    PortInUse = false;
                     if (frmProgressReporter.doWorkArgs.CancelRequested)
                     {
                         frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
@@ -1174,7 +1122,6 @@ namespace Diva.Mavlink
                         throw new Exception($"Missing Params: got {indices.Count}/{paramTotal}");
                 }
             }
-			PortInUse = false;
 
 			Status.Params.Clear();
 			Status.Params.TotalReported = paramTotal;
@@ -1197,7 +1144,6 @@ namespace Diva.Mavlink
 
         public MAVLinkMessage GetHeartBeat(bool setup = false)
 		{
-			PortInUse = true;
 			MAVLinkMessage buffer = WaitPacket(MAVLINK_MSG_ID.HEARTBEAT, null, 2200);
             if (buffer != null)
             {
@@ -1208,7 +1154,6 @@ namespace Diva.Mavlink
                     SetupMavConnect(buffer, hb);
             }
 
-            PortInUse = false;
             return buffer ?? MAVLinkMessage.Invalid;
         }
 
@@ -1285,7 +1230,6 @@ namespace Diva.Mavlink
 
 		public bool GetVersion()
 		{
-            PortInUse = true;
             int retries = 3;
             MAVLinkMessage reply = null;
             do
