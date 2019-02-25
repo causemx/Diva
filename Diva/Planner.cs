@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using static MAVLink;
 
 namespace Diva
 {
@@ -123,11 +124,11 @@ namespace Diva
 		internal MyGMap GMapControl => myMap;
         internal WayPoint GetHomeWP() => new WayPoint
         {
-            Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+            Id = (ushort)MAV_CMD.WAYPOINT,
             Latitude = (double.Parse(TxtHomeLatitude.Text)),
             Longitude = (double.Parse(TxtHomeLongitude.Text)),
             Altitude = (float.Parse(TxtHomeAltitude.Text)),
-            Frame = MAVLink.MAV_FRAME.GLOBAL
+            Frame = MAV_FRAME.GLOBAL
         };
 
 		public Planner()
@@ -1200,8 +1201,8 @@ namespace Diva
 			selectedRow = dgvWayPoints.Rows.Add();
 
 			
-			dgvWayPoints.Rows[selectedRow].Cells[colCommand.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
-			ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+			dgvWayPoints.Rows[selectedRow].Cells[colCommand.Index].Value = MAV_CMD.WAYPOINT.ToString();
+			ChangeColumnHeader(MAV_CMD.WAYPOINT.ToString());
 			
 
 			SetFromMap(lat, lng, alt);
@@ -1252,7 +1253,7 @@ namespace Diva
 
             try
 			{
-                bool knownCMD = Enum.TryParse<MAVLink.MAV_CMD>(getS(colCommand), out var cmdid);
+                bool knownCMD = Enum.TryParse<MAV_CMD>(getS(colCommand), out var cmdid);
                 return new WayPoint()
                 {
                     Id = knownCMD ? (ushort)cmdid : (ushort)getC(colCommand).Tag,
@@ -1549,7 +1550,7 @@ namespace Diva
 			}
 		}
 
-		private void SaveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
+		private void SaveWPsToDrone(object sender, ProgressWorkerEventArgs e, object passdata)
         {
             Action<int, string> updateStatus = ((ProgressDialogV2)sender).UpdateProgressAndStatus;
             try
@@ -1573,7 +1574,16 @@ namespace Diva
                         (i) => dlg.UpdateProgressAndStatus(i, i < 0 ?
                             Strings.MsgDialogSetParams : Strings.MsgDialogSetWp + i));
                 }
-                catch { }
+                catch (Exception ex) when (
+                    (ex is InsufficientMemoryException ||
+                        ex is NotSupportedException ||
+                        ex is InvalidOperationException) &&
+                    ex.InnerException != null &&
+                    ex.InnerException.Message == "SetWPs")
+                {
+                    dlg.doWorkArgs.ErrorMessage = ex.Message;
+                    return;
+                }
 
                 dlg.UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
 			}
@@ -1587,7 +1597,7 @@ namespace Diva
 			ActiveDrone.PortInUse = false;
 		}
 
-        private void LoadWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
+        private void LoadWPsFromDrone(object sender, ProgressWorkerEventArgs e, object passdata = null)
         {
             if (!ActiveDrone.IsOpen)
             {
@@ -1598,13 +1608,13 @@ namespace Diva
             }
 
             var dlg = sender as ProgressDialogV2;
-            int totalWps = 0;
+            int totalWps = -1;
 
             dlg.UpdateProgressAndStatus(0, Strings.MsgDialogDownloadWps);
             log.Info("Getting WP #");
             List<WayPoint> cmds = ActiveDrone.GetWPs((i) =>
                 {
-                    if (totalWps == 0)
+                    if (totalWps < 0)
                         totalWps = i;
                     else
                         dlg.UpdateProgressAndStatus(i * 100 / totalWps, Strings.MsgDialogDownloadWps);
@@ -1676,7 +1686,6 @@ namespace Diva
 		{
 			quickadd = true;
 
-
 			// mono fix
 			dgvWayPoints.CurrentCell = null;
 
@@ -1715,7 +1724,7 @@ namespace Diva
 				cellcmd.Value = "UNKNOWN";
 				cellcmd.Tag = temp.Id;
 
-				foreach (object value in Enum.GetValues(typeof(MAVLink.MAV_CMD)))
+				foreach (object value in Enum.GetValues(typeof(MAV_CMD)))
 				{
 					
 					if ((ushort)value == temp.Id)
@@ -1855,7 +1864,6 @@ namespace Diva
 
         private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
 			if (!ActiveDrone.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
@@ -1878,13 +1886,11 @@ namespace Diva
 				return;
 			}
 
-
-			if (ActiveDrone.Status.State != (byte)MAVLink.MAV_STATE.ACTIVE)
+			if (ActiveDrone.Status.State != (byte)MAV_STATE.ACTIVE)
 			{
 				DialogResult dr = MessageBox.Show(Strings.MsgWarnDroneMustActive, Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				if (dr == DialogResult.OK) return;
 			}
-
 
 			float targetHeight = 0.0f;
 			InputDataDialog _dialog = new InputDataDialog()
@@ -1898,11 +1904,11 @@ namespace Diva
 
             WayPoint gotohere = new WayPoint
             {
-                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                Id = (ushort)MAV_CMD.WAYPOINT,
                 Altitude = targetHeight, // back to m
                 Latitude = MouseDownStart.Lat,
                 Longitude = MouseDownStart.Lng,
-                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
+                Frame = MAV_FRAME.GLOBAL_RELATIVE_ALT
             };
 
             try
@@ -1915,16 +1921,13 @@ namespace Diva
 				MessageBox.Show(ex.Message);
 			}
 
-
 			overlays.commons.Markers.Clear();
 			
 			AddPolygonMarker("Click & GO", gotohere.Longitude,
 								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, overlays.commons);
-
-
 		}
 
-		public int AddCommand(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+		public int AddCommand(MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
 			selectedRow = dgvWayPoints.Rows.Add();
@@ -1936,7 +1939,7 @@ namespace Diva
 			return selectedRow;
 		}
 
-		public void InsertCommand(int rowIndex, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+		public void InsertCommand(int rowIndex, MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
 			if (dgvWayPoints.Rows.Count <= rowIndex)
@@ -1954,7 +1957,7 @@ namespace Diva
 			WriteKMLV2();
 		}
 
-		private void FillCommand(int rowIndex, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
+		private void FillCommand(int rowIndex, MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
 			double y, double z, object tag = null)
 		{
 			dgvWayPoints.Rows[rowIndex].Cells[colCommand.Index].Value = cmd.ToString();
@@ -1963,14 +1966,14 @@ namespace Diva
 
 			ChangeColumnHeader(cmd.ToString());
 
-			if (cmd == MAVLink.MAV_CMD.WAYPOINT)
+			if (cmd == MAV_CMD.WAYPOINT)
 			{
 				// add delay if supplied
 				dgvWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
 
 				SetFromMap(y, x, (int)z, Math.Round(p1, 1));
 			}
-			else if (cmd == MAVLink.MAV_CMD.LOITER_UNLIM)
+			else if (cmd == MAV_CMD.LOITER_UNLIM)
 			{
 				SetFromMap(y, x, (int)z);
 			}
@@ -2118,7 +2121,6 @@ namespace Diva
 				return;
 			}
 
-
 			if (dgvWayPoints.Rows.Count > 0)
 			{
 				
@@ -2137,7 +2139,7 @@ namespace Diva
 				Text = Strings.MsgDialogDownloadWps,
 			};
 
-			downloadWPReporter.DoWork += LoadWPs;
+			downloadWPReporter.DoWork += LoadWPsFromDrone;
 			downloadWPReporter.RunBackgroundOperationAsync();
 			downloadWPReporter.Dispose();
 						
@@ -2145,7 +2147,6 @@ namespace Diva
 
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
-
 			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
@@ -2184,18 +2185,17 @@ namespace Diva
                     if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 						continue;
 
-					ushort cmd =
-						(ushort)
-								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
+					ushort cmd = (ushort)Enum.Parse(typeof(MAV_CMD),
+									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
+                                    false);
 
-					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
+					if (cmd < (ushort)MAV_CMD.LAST &&
 						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
 					{
-                        if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-                            cmd != (ushort)MAVLink.MAV_CMD.LAND &&
-                            cmd != (ushort)MAVLink.MAV_CMD.DELAY &&
-							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
+                        if (cmd != (ushort)MAV_CMD.TAKEOFF &&
+                            cmd != (ushort)MAV_CMD.LAND &&
+                            cmd != (ushort)MAV_CMD.DELAY &&
+							cmd != (ushort)MAV_CMD.RETURN_TO_LAUNCH)
 						{
 							MessageBox.Show(Strings.MsgWarnWPAltitiude.FormatWith(a + 1));
 							return;
@@ -2211,7 +2211,7 @@ namespace Diva
 				Text = Strings.MsgDialogUploadWps,
 			};
 
-			uploadWPReporter.DoWork += SaveWPs;
+			uploadWPReporter.DoWork += SaveWPsToDrone;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
@@ -2327,7 +2327,7 @@ namespace Diva
 		{
 			WayPoint home = new WayPoint
 			{
-				Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+				Id = (ushort)MAV_CMD.WAYPOINT,
 				Latitude = (double.Parse(TxtHomeLatitude.Text)),
 				Longitude = (double.Parse(TxtHomeLongitude.Text)),
 				Altitude = (float.Parse(TxtHomeAltitude.Text)),
@@ -2358,7 +2358,7 @@ namespace Diva
 		{
 			isMapFocusing = !isMapFocusing;
 		}
-		
+
 		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			/**

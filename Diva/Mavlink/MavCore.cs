@@ -1278,10 +1278,10 @@ namespace Diva.Mavlink
         {
             log.Info($"SendCommandWaitAck cmd {cmd.ToString()} {p1} {p2} {p3} {p4} {p5} {p6} {p7}");
             int retries = 3;
-            MAVLinkMessage ackpkt = null;
+            MAVLinkMessage ack = null;
             do
             {
-                ackpkt = SendPacketWaitReply(MAVLINK_MSG_ID.COMMAND_LONG,
+                ack = SendPacketWaitReply(MAVLINK_MSG_ID.COMMAND_LONG,
                     new mavlink_command_long_t
                     {
                         target_system = SysId,
@@ -1297,9 +1297,9 @@ namespace Diva.Mavlink
                     }, MAVLINK_MSG_ID.COMMAND_ACK,
                     (MAVLinkMessage p, ref bool more) =>
                         (MAV_CMD)p.ToStructure<mavlink_command_ack_t>().command == cmd);
-            } while (ackpkt == null && retries-- > 0);
-            if (ackpkt != null)
-                return (MAV_RESULT)ackpkt.ToStructure<mavlink_command_ack_t>().result == MAV_RESULT.ACCEPTED;
+            } while (ack == null && retries-- > 0);
+            if (ack != null)
+                return (MAV_RESULT)ack.ToStructure<mavlink_command_ack_t>().result == MAV_RESULT.ACCEPTED;
             throw new TimeoutException($"Timeout on waiting ack from command {cmd}");
         }
 

@@ -432,22 +432,15 @@ namespace Diva.Mavlink
             PortInUse = true;
             DateTime start = DateTime.Now;
 
-            while (true)
+            var pkt = WaitPacket(MAVLINK_MSG_ID.MISSION_REQUEST, null, 5000);
+            PortInUse = false;
+            if (pkt != null)
             {
-                if (!(start.AddMilliseconds(5000) > DateTime.Now))
-                {
-                    PortInUse = false;
-                    throw new TimeoutException("Timeout on read - GetRequestedWPNo");
-                }
-                MAVLinkMessage buffer = ReadPacket();
-                if (buffer.Length > 5 && buffer.msgid == (byte)MAVLINK_MSG_ID.MISSION_REQUEST)
-                {
-                    var ans = buffer.ToStructure<mavlink_mission_request_t>();
-                    log.InfoFormat("GetRequestedWPNo seq {0} ts {1} tc {2}", ans.seq, ans.target_system, ans.target_component);
-                    PortInUse = false;
-                    return ans.seq;
-                }
+                var ans = pkt.ToStructure<mavlink_mission_request_t>();
+                log.InfoFormat("GetRequestedWPNo seq {0} ts {1} tc {2}", ans.seq, ans.target_system, ans.target_component);
+                return pkt.seq;
             }
+            throw new TimeoutException("Timeout on read - GetRequestedWPNo");
         }
 
          private void SetPositionTargetGlobalInt(MAV_FRAME frame, WayPoint pos)
@@ -595,12 +588,13 @@ namespace Diva.Mavlink
                     case MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE:
                         log.Error("Upload failed, please reduce the number of wp's");
                         throw new InsufficientMemoryException(
-                            Strings.MsgMissionRejectedTooManyWaypoints);
+                            Strings.MsgMissionRejectedTooManyWaypoints, new Exception("SetWPs"));
                     case MAV_MISSION_RESULT.MAV_MISSION_INVALID:
                         log.Error("Upload failed, mission was rejected byt the Mav,\n " +
                             $"item had a bad option wp# {i} {result}");
                         throw new NotSupportedException(
-                            Strings.MsgMissionRejectedBadWP.FormatWith(i, result));
+                            Strings.MsgMissionRejectedBadWP.FormatWith(i, result),
+                            new Exception("SetWPs"));
                     case MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE:
                         i = GetRequestedWPNo() - 1;
                         continue;
@@ -610,7 +604,8 @@ namespace Diva.Mavlink
                         log.Error($"Upload wps failed {((MAV_CMD)wp.Id).GetName()} {result.GetName()}");
                         throw new InvalidOperationException(
                             Strings.MsgMissionRejectedGeneral.FormatWith(
-                                ((MAV_CMD)wp.Id).GetName(), result.GetName()));
+                                ((MAV_CMD)wp.Id).GetName(), result.GetName()),
+                            new Exception("SetWPs"));
                 }
             }
 
