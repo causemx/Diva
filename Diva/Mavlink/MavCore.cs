@@ -639,9 +639,13 @@ namespace Diva.Mavlink
                     bool more = false;
                     if (filter == null || filter(p, ref more))
                     {
-                        reply = p;
-                        due = DateTime.Now.AddMilliseconds(timeoutms);
-                        ev.Set();
+                        if (more)
+                            due = DateTime.Now.AddMilliseconds(timeoutms);
+                        else
+                        {
+                            reply = p;
+                            ev.Set();
+                        }
                     }
                 }
                 byte[] pktdata = PreparePacket(msgid, indata);
@@ -651,10 +655,7 @@ namespace Diva.Mavlink
                 RegisterMavMessageHandler(replyid, eh);
                 //packetNotifier += eh;
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
-                do
-                {
-                    ev.WaitOne(timeoutms);
-                } while (DateTime.Now < due);
+                while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
                 //packetNotifier -= eh;
                 UnregisterMavMessageHandler(replyid, eh);
                 // last minute ride
@@ -695,17 +696,17 @@ namespace Diva.Mavlink
                         {
                             if (more)
                                 due = DateTime.Now.AddMilliseconds(timeoutms);
-                            reply = p;
-                            ev.Set();
+                            else
+                            {
+                                reply = p;
+                                ev.Set();
+                            }
                         }
                     };
                     RegisterMavMessageHandler(rids[ival], ehs[ival]);
                 }
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
-                do
-                {
-                    ev.WaitOne(due - DateTime.Now);
-                } while (DateTime.Now < due);
+                while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
                 for (var i = rids.Length; --i >= 0; )
                     UnregisterMavMessageHandler(rids[i], ehs[i]);
             }
@@ -730,7 +731,7 @@ namespace Diva.Mavlink
                     Thread.Sleep(10);
                 } while (!BaseStream.IsOpen);
 
-                DateTime timeout = DateTime.Now.AddMilliseconds(10);
+                DateTime timeout = DateTime.Now.AddMilliseconds(100);
                 while (DateTime.Now < timeout && BaseStream.BytesAvailable > 5)
                 {
                     MAVLinkMessage packet = ReadPacket();

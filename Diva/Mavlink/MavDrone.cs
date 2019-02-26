@@ -536,7 +536,7 @@ namespace Diva.Mavlink
             for (int i = 0; i < totalWPs; i++)
             {
                 try { if (isCanceled()) return null; } catch { }
-                log.Info("Getting WP" + i);
+                log.Info("Getting WP" + i + ": " + (DateTime.Now.Second + DateTime.Now.Millisecond / 1000.0));
                 wps.Add(GetWP(i));
                 progCB?.Invoke(i);
             }
