@@ -62,8 +62,9 @@ namespace Diva.Mavlink
 
         public void Close()
 		{
-            bgReaderLoop.Cancel();
-            bgReaderLoop = null;
+            //bgReaderLoop.Cancel();
+            //bgReaderLoop = null;
+            lock (mavs) mavs.Remove(this);
             try { BaseStream.Close(); } catch { }
         }
 
@@ -100,8 +101,9 @@ namespace Diva.Mavlink
 					BaseStream.Open();
 				}
 
-                if (bgReaderLoop == null)
-                    bgReaderLoop = BackgroundLoop.Start(SerialReader);
+                lock (mavs) mavs.Add(this);
+                //if (bgReaderLoop == null)
+                //    bgReaderLoop = BackgroundLoop.Start(SerialReader);
 
                 MAVLinkMessage buffer = MAVLinkMessage.Invalid;
 				MAVLinkMessage buffer1 = MAVLinkMessage.Invalid;
@@ -715,70 +717,84 @@ namespace Diva.Mavlink
         #endregion Core
 
         #region Background Loop
-        private BackgroundLoop bgReaderLoop;
-        protected Action bgLoopAction;
+        private static readonly List<MavCore<StatusType>> mavs = new List<MavCore<StatusType>>();
+        static MavCore() { BackgroundLoop.Start(MavCoreBackgroundLoop); }
 
-        private void SerialReader(CancellationToken token)
-		{
+        private static void MavCoreBackgroundLoop(CancellationToken token)
+        {
             DateTime lastHeartBeatSent = DateTime.Now;
-            DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(50);
+            DateTime nextUpdateTime = DateTime.Now.AddSeconds(30);
             DateTime lastUpdatedTime = DateTime.MinValue;
 
             while (!token.IsCancellationRequested)
-			{
-                do
+            {
+                try
                 {
-                    Thread.Sleep(10);
-                } while (!BaseStream.IsOpen);
-
-                DateTime timeout = DateTime.Now.AddMilliseconds(100);
-                while (DateTime.Now < timeout && BaseStream.BytesAvailable > 5)
-                {
-                    MAVLinkMessage packet = ReadPacket();
-                    if (packet.Length < 5) break;
-                    HandleMavLinkMessage(packet);
-                }
-
-                if (lastHeartBeatSent.Second != DateTime.Now.Second)
-				{
-					if (!BaseStream.IsOpen) continue;
-					SendPacket(MAVLINK_MSG_ID.HEARTBEAT, new mavlink_heartbeat_t
+                    lock (mavs) foreach (var mav in mavs)
                     {
-                        type = (byte)MAV_TYPE.GCS,
-                        autopilot = (byte)MAV_AUTOPILOT.INVALID,
-                        mavlink_version = 3 // MAVLINK_VERSION
-                    });
-	    			lastHeartBeatSent = DateTime.Now;
-				}
-
-                if (DateTime.Now > nextUpdateTime) lock (this)
-                {
-                    nextUpdateTime = DateTime.Now.AddMilliseconds(50);
-
-                    // re-request streams
-                    if (!(lastUpdatedTime.AddSeconds(8) > DateTime.Now) && BaseStream.IsOpen)
-                    {
+                        if (!mav.BaseStream.IsOpen) continue;
                         try
                         {
-                            GetDataStream(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-                            GetDataStream(MAV_DATA_STREAM.POSITION, 2);
-                            GetDataStream(MAV_DATA_STREAM.EXTRA1, 4);
-                            GetDataStream(MAV_DATA_STREAM.EXTRA2, 4);
-                            GetDataStream(MAV_DATA_STREAM.EXTRA3, 2);
-                            GetDataStream(MAV_DATA_STREAM.RAW_SENSORS, 2);
-                            GetDataStream(MAV_DATA_STREAM.RC_CHANNELS, 2);
+                            while (mav.BaseStream.BytesAvailable > 5)
+                            {
+                                MAVLinkMessage packet = mav.ReadPacket();
+                                if (packet.Length < 5) break;
+                                mav.HandleMavLinkMessage(packet);
+                            }
                         }
-                        catch
+                        catch { }
+                    }
+
+                    if (lastHeartBeatSent.Second != DateTime.Now.Second)
+                    {
+                        lastHeartBeatSent = DateTime.Now;
+                        lock (mavs) foreach (var mav in mavs)
                         {
-                            Console.WriteLine("Failed to request rates");
+                            if (!mav.BaseStream.IsOpen) continue;
+                            try
+                            {
+                                mav.SendPacket(MAVLINK_MSG_ID.HEARTBEAT, new mavlink_heartbeat_t
+                                {
+                                    type = (byte)MAV_TYPE.GCS,
+                                    autopilot = (byte)MAV_AUTOPILOT.INVALID,
+                                    mavlink_version = 3 // MAVLINK_VERSION
+                                });
+                            }
+                            catch { }
                         }
-                        lastUpdatedTime = DateTime.Now.AddSeconds(30); // prevent flooding
+                    }
+
+                    if (DateTime.Now > nextUpdateTime)
+                    {
+                        nextUpdateTime = DateTime.Now.AddSeconds(30);
+                        lock (mavs) foreach (var mav in mavs)
+                        {
+                            if (!mav.BaseStream.IsOpen) continue;
+                            // re-request streams
+                            try
+                            {
+                                mav.GetDataStream(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+                                mav.GetDataStream(MAV_DATA_STREAM.POSITION, 2);
+                                mav.GetDataStream(MAV_DATA_STREAM.EXTRA1, 4);
+                                mav.GetDataStream(MAV_DATA_STREAM.EXTRA2, 4);
+                                mav.GetDataStream(MAV_DATA_STREAM.EXTRA3, 2);
+                                mav.GetDataStream(MAV_DATA_STREAM.RAW_SENSORS, 2);
+                                mav.GetDataStream(MAV_DATA_STREAM.RC_CHANNELS, 2);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Failed to request rates");
+                            }
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MavCoreBackgroundLoop got exception: " + ex);
+                }
             }
-
-            Console.WriteLine("serialreader done");
-		}
+            Console.WriteLine("MavCoreBackgroundLoop done");
+        }
         #endregion Background Loop
 
         #region Retrieve packets from flight control.
