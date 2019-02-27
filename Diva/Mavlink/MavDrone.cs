@@ -405,6 +405,8 @@ namespace Diva.Mavlink
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
             var msgid = Status.MissionIntSupport ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
+            var repid = Status.MissionIntSupport ?
+                MAVLINK_MSG_ID.MISSION_REQUEST_INT : MAVLINK_MSG_ID.MISSION_REQUEST;
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
@@ -412,7 +414,7 @@ namespace Diva.Mavlink
             do
             {
                 SendPacketWaitReplies(msgid, req,
-                new[] { MAVLINK_MSG_ID.MISSION_ACK, MAVLINK_MSG_ID.MISSION_REQUEST },
+                new[] { MAVLINK_MSG_ID.MISSION_ACK, repid },
                 new ReplyPacketFilter[] {
                     (MAVLinkMessage p, ref bool more) =>
                     {
@@ -421,6 +423,14 @@ namespace Diva.Mavlink
                             Enum.Parse(typeof(MAV_MISSION_RESULT), result.ToString()));
                         return true;
                     },
+                    Status.MissionIntSupport ?
+                    (ReplyPacketFilter)((MAVLinkMessage p, ref bool more) =>
+                    {
+                        var m = p.ToStructure<mavlink_mission_request_int_t>();
+                        bool seqOk = m.seq == (index + 1);
+                        if (seqOk) log.Info($"set wp doing {index} req {m.seq} REQ 40: {p.msgid}");
+                        return seqOk;
+                    }) :
                     (MAVLinkMessage p, ref bool more) =>
                     {
                         var m = p.ToStructure<mavlink_mission_request_t>();

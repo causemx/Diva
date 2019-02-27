@@ -1247,20 +1247,21 @@ namespace Diva
 
 		private WayPoint DataViewToWayPoint(int i)
 		{
-            DataGridViewCell getC(DataGridViewBand col) => dgvWayPoints.Rows[i].Cells[col.Index];
-            string getS(DataGridViewBand col) => getC(col).Value.ToString();
-            float getF(DataGridViewBand col) => (float)double.Parse(getS(col));
-
             try
 			{
-                bool knownCMD = Enum.TryParse<MAV_CMD>(getS(colCommand), out var cmdid);
+                DataGridViewCell getC(DataGridViewBand col) => dgvWayPoints.Rows[i].Cells[col.Index];
+                string getS(DataGridViewBand col) => getC(col).Value.ToString();
+                double getD(DataGridViewBand col) => double.Parse(getS(col));
+                float getF(DataGridViewBand col) => (float)getD(col);
+
                 return new WayPoint()
                 {
-                    Id = knownCMD ? (ushort)cmdid : (ushort)getC(colCommand).Tag,
+                    Id = Enum.TryParse<MAV_CMD>(getS(colCommand), out var cmdid) ?
+                            (ushort)cmdid : (ushort)getC(colCommand).Tag,
                     // TODO: I don't know where multiplieralt come from..
                     Altitude = getF(colAltitude) / 1,
-                    Latitude = getF(colLatitude),
-                    Longitude = getF(colLongitude),
+                    Latitude = getD(colLatitude),
+                    Longitude = getD(colLongitude),
                     Param1 = getF(colParam1),
                     Param2 = getF(colParam2),
                     Param3 = getF(colParam3),
