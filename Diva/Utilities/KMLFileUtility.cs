@@ -58,45 +58,43 @@ namespace Diva.Utilities
 		{
             List<WayPoint> cmds = sender as List<WayPoint>;
             Element element = e.Element;
-			Document doc = element as Document;
-			Placemark pm = element as Placemark;
 
-			if (doc != null)
-			{
-				foreach (var feat in doc.Features)
-				{
-					//Console.WriteLine("feat " + feat.GetType());
-					//processKML((Element)feat);
-				}
-			}
-			else if (pm != null)
-			{
-				if (pm.Geometry is Point)
-				{
-					var point = ((Point)pm.Geometry).Coordinate;
-					SchemaData sdata = pm.ExtendedData.SchemaData.First();
-					SimpleData[] datas = (sdata.SimpleData).ToArray();
+            if (element is Document doc)
+            {
+                foreach (var feat in doc.Features)
+                {
+                    //Console.WriteLine("feat " + feat.GetType());
+                    //processKML((Element)feat);
+                }
+            }
+            else if (element is Placemark pm)
+            {
+                if (pm.Geometry is Point)
+                {
+                    var point = ((Point)pm.Geometry).Coordinate;
+                    SchemaData sdata = pm.ExtendedData.SchemaData.First();
+                    SimpleData[] datas = (sdata.SimpleData).ToArray();
 
-					WayPoint temp = new WayPoint();
-					if (datas[2].Text == "3") { temp.Option = 1; }
-					else if (datas[2].Text == "10") { temp.Option = 8; }
-					else { temp.Option = 0; }
+                    WayPoint temp = new WayPoint();
+                    if (datas[2].Text == "3") { temp.Option = 1; }
+                    else if (datas[2].Text == "10") { temp.Option = 8; }
+                    else { temp.Option = 0; }
 
-					temp.Id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), datas[3].Text, false);
-					if (temp.Id == 99) { temp.Id = 0; }
+                    temp.Id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), datas[3].Text, false);
+                    if (temp.Id == 99) { temp.Id = 0; }
 
-					temp.Param1 = float.Parse(datas[4].Text, new CultureInfo("en-US"));
-					temp.Param2 = (float)(double.Parse(datas[5].Text, new CultureInfo("en-US")));
-					temp.Param3 = (float)(double.Parse(datas[6].Text, new CultureInfo("en-US")));
-					temp.Param4 = (float)(double.Parse(datas[7].Text, new CultureInfo("en-US")));
-					temp.Latitude = point.Latitude;
-					temp.Longitude = point.Longitude;
-					temp.Altitude = (float)point.Altitude;
+                    temp.Param1 = float.Parse(datas[4].Text, new CultureInfo("en-US"));
+                    temp.Param2 = float.Parse(datas[5].Text, new CultureInfo("en-US"));
+                    temp.Param3 = float.Parse(datas[6].Text, new CultureInfo("en-US"));
+                    temp.Param4 = float.Parse(datas[7].Text, new CultureInfo("en-US"));
+                    temp.Latitude = point.Latitude;
+                    temp.Longitude = point.Longitude;
+                    temp.Altitude = (float)point.Altitude;
 
-					cmds.Add(temp);
-				}
-			}
-		}
+                    cmds.Add(temp);
+                }
+            }
+        }
 
 		public static void SaveKMLMission(List<WayPoint> _cmds, WayPoint home)
 		{
@@ -141,7 +139,7 @@ namespace Diva.Utilities
 					}
 
 					Thread.Sleep(1000);
-					MessageBox.Show(Diva.Properties.Strings.MsgBoxSaveMission);
+					MessageBox.Show(Properties.Strings.MsgBoxSaveMission);
 					
 				}
 			}
@@ -159,9 +157,8 @@ namespace Diva.Utilities
 
 
 			ExtendedData extendedData = new ExtendedData();
-			SchemaData schemaData = new SchemaData();
-			schemaData.SchemaUrl = new Uri("https://127.0.0.1");
-			schemaData.AddData(new SimpleData() { Name = "p1", Text = wpCount.ToString() });
+            SchemaData schemaData = new SchemaData { SchemaUrl = new Uri("https://127.0.0.1") };
+            schemaData.AddData(new SimpleData() { Name = "p1", Text = wpCount.ToString() });
 			schemaData.AddData(new SimpleData() { Name = "p2", Text = isHome? "1" : "0" });
 			schemaData.AddData(new SimpleData() { Name = "p3", Text = isHome ? "0" : "3" });
 			schemaData.AddData(new SimpleData() { Name = "p4", Text = (wp.Id).ToString() });
