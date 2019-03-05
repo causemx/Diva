@@ -450,4 +450,7 @@
   <data name="MsgAskFlightControllerVersion" xml:space="preserve">
     <value>Asking flight controller version.</value>
   </data>
+  <data name="MsgErrorReadingKmlFile" xml:space="preserve">
+    <value>Error reading kml file: </value>
+  </data>
 </root>

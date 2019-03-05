@@ -88,7 +88,7 @@ namespace Diva.Mavlink
         }
         public static MAV_FRAME ToIntFrame(this MAV_FRAME frame)
         {
-            switch (frame)
+            /*switch (frame)
             {
                 case MAV_FRAME.GLOBAL:
                     return MAV_FRAME.GLOBAL_INT;
@@ -98,7 +98,9 @@ namespace Diva.Mavlink
                     return MAV_FRAME.GLOBAL_TERRAIN_ALT_INT;
                 default:
                     return frame;
-            }
+            }*/
+            // somehow ardupilot has no int type frame support (actually for any enum > 4)
+            return frame.ToFloatFrame();
         }
         #endregion
 

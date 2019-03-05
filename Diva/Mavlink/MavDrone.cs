@@ -401,7 +401,7 @@ namespace Diva.Mavlink
         public MAV_MISSION_RESULT SetWP(WayPoint loc, int index)
         {
             byte contMode = (byte)((Status.Firmware == Firmwares.ArduPlane) ? 2 : 1);
-            bool useint = false;// Status.MissionIntSupport;
+            bool useint = Status.MissionIntSupport;
             var req = useint ?
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
             var msgid = useint ?

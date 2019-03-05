@@ -20,25 +20,11 @@ namespace Diva.Utilities
 				DialogResult result = fd.ShowDialog();
 				if (result == DialogResult.OK)
 				{
-					try
-					{
-						try
-                        {
-                            return ReadKMLMissionFile(fd.FileName);
-                        }
-                        catch (Exception e1)
-						{
-							Planner.log.Error("Bad kml error" + e1);
-						}
-					}
-					catch (Exception e2)
-					{
-						Planner.log.Error("Can not find the file" + e2);
-					}
+                    return ReadKMLMissionFile(fd.FileName);
 				}
 				else
 				{
-					throw new Exception("no wapoints readed");
+                    Planner.log.Error("no waypoint file specified");
 				}
 			}
             return null;

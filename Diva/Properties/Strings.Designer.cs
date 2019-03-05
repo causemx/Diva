@@ -493,6 +493,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error reading kml file: .
+        /// </summary>
+        public static string MsgErrorReadingKmlFile {
+            get {
+                return ResourceManager.GetString("MsgErrorReadingKmlFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to send new fence points .
         /// </summary>
         public static string MsgFailedToSendNewFencePoints {

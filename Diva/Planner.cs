@@ -2340,13 +2340,17 @@ namespace Diva
 			try
 			{
 				List<WayPoint> cmds = KMLFileUtility.ReadKMLMission();
-				WPsToDataView(cmds, false);
-				WriteKMLV2();
-				myMap.ZoomAndCenterMarkers("objects");
-			}
-			catch (Exception e1)
+                if (cmds != null)
+                {
+                    WPsToDataView(cmds, false);
+                    WriteKMLV2();
+                    myMap.ZoomAndCenterMarkers("objects");
+                }
+            }
+			catch (Exception ex)
 			{
-				log.Warn(e1.ToString());
+				log.Warn(ex);
+                MessageBox.Show(Strings.MsgErrorReadingKmlFile + ex);
 			}
 			
 		}

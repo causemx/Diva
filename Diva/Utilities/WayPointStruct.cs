@@ -33,7 +33,7 @@ namespace Diva.Utilities
                 param4 = Param4,
                 x = (float)Latitude,
                 y = (float)Longitude,
-                z = (float)Altitude,
+                z = Altitude,
                 seq = SeqNo,
                 frame = (byte)Frame.ToFloatFrame()
             };
