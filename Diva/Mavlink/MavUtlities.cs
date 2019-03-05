@@ -101,5 +101,10 @@ namespace Diva.Mavlink
             }
         }
         #endregion
+
+        #region MavLink class support
+        public static bool IsGCSPacket(this MAVLinkMessage mav)
+            => (mav.sysid == 255 || mav.sysid == 253);
+        #endregion
     }
 }

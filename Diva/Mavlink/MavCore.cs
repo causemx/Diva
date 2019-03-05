@@ -398,6 +398,9 @@ namespace Diva.Mavlink
 				return MAVLinkMessage.Invalid;
 			}
 
+            if (message.IsGCSPacket())
+                return message;
+
 			byte sysid = message.sysid;
 			byte compid = message.compid;
 			byte packetSeqNo = message.seq;
@@ -557,7 +560,7 @@ namespace Diva.Mavlink
         public delegate bool ReplyPacketFilter(MAVLinkMessage packet, ref bool more);
 
         public MAVLinkMessage WaitPacket(MAVLINK_MSG_ID msgid,
-            WaitPacketFilter filter = null, int timeoutms = Timeout.Infinite)
+            WaitPacketFilter filter = null, int timeoutms = Timeout.Infinite, bool gcs = false)
         {
             MAVLinkMessage reply = null;
             using (AutoResetEvent ev = new AutoResetEvent(false))
@@ -572,9 +575,9 @@ namespace Diva.Mavlink
                 }
                 var pkt = Status.GetPacket(msgid);
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
-                RegisterMavMessageHandler(msgid, eh);
+                RegisterMavMessageHandler(msgid, eh, gcs);
                 ev.WaitOne(timeoutms);
-                UnregisterMavMessageHandler(msgid, eh);
+                UnregisterMavMessageHandler(msgid, eh, gcs);
                 // last minute ride
                 if (reply == null)
                 {
@@ -587,7 +590,7 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage WaitPackets(MAVLINK_MSG_ID[] msgids,
-            WaitPacketFilter[] filters, int timeoutms = Timeout.Infinite)
+            WaitPacketFilter[] filters, int timeoutms = Timeout.Infinite, bool gcs = false)
         {
             MAVLinkMessage reply = null;
             using (AutoResetEvent ev = new AutoResetEvent(false))
@@ -605,7 +608,7 @@ namespace Diva.Mavlink
                             ev.Set();
                         }
                     };
-                    RegisterMavMessageHandler(msgids[ival], ehs[ival]);
+                    RegisterMavMessageHandler(msgids[ival], ehs[ival], gcs);
                     var ipkt = Status.GetPacket(msgids[ival]);
                     if (ipkt != null && ipkt.rxtime > lasttime)
                         lasttime = ipkt.rxtime;
@@ -615,7 +618,7 @@ namespace Diva.Mavlink
                 ev.WaitOne(timeoutms);
                 for (var i = msgids.Length; --i >= 0; )
                 {
-                    UnregisterMavMessageHandler(msgids[i], ehs[i]);
+                    UnregisterMavMessageHandler(msgids[i], ehs[i], gcs);
                     if (reply == null)
                     {
                         // last minute ride
@@ -630,11 +633,11 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage SendPacketWaitReply(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000)
+            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000, bool gcs = false)
         {
             MAVLinkMessage reply = null;
             DateTime due;
-            using (AutoResetEvent ev = new AutoResetEvent(false))
+            using (ManualResetEvent ev = new ManualResetEvent(false))
             {
                 void eh(object o, MAVLinkMessage p)
                 {
@@ -654,12 +657,12 @@ namespace Diva.Mavlink
                 var pkt = Status.GetPacket(replyid);
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
                 due = DateTime.Now.AddMilliseconds(timeoutms);
-                RegisterMavMessageHandler(replyid, eh);
+                RegisterMavMessageHandler(replyid, eh, gcs);
                 //packetNotifier += eh;
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                 while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
                 //packetNotifier -= eh;
-                UnregisterMavMessageHandler(replyid, eh);
+                UnregisterMavMessageHandler(replyid, eh, gcs);
                 // last minute ride
                 if (reply == null)
                 {
@@ -673,7 +676,7 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage SendPacketWaitReplies(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters, int timeoutms = 1000)
+            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters, int timeoutms = 1000, bool gcs = false)
         {
             if (rids == null || filters == null || filters.Length == 0 
                 || rids.Length != filters.Length)
@@ -683,7 +686,7 @@ namespace Diva.Mavlink
             }
             MAVLinkMessage reply = null;
             DateTime due;
-            using (AutoResetEvent ev = new AutoResetEvent(false))
+            using (ManualResetEvent ev = new ManualResetEvent(false))
             {
                 byte[] pktdata = PreparePacket(msgid, indata);
                 due = DateTime.Now.AddMilliseconds(timeoutms);
@@ -705,12 +708,12 @@ namespace Diva.Mavlink
                             }
                         }
                     };
-                    RegisterMavMessageHandler(rids[ival], ehs[ival]);
+                    RegisterMavMessageHandler(rids[ival], ehs[ival], gcs);
                 }
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                 while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
                 for (var i = rids.Length; --i >= 0; )
-                    UnregisterMavMessageHandler(rids[i], ehs[i]);
+                    UnregisterMavMessageHandler(rids[i], ehs[i], gcs);
             }
             return reply;
         }
@@ -798,13 +801,15 @@ namespace Diva.Mavlink
         #endregion Background Loop
 
         #region Retrieve packets from flight control.
+        public class MessageHolder { public object Message = null; };
+
         public const int MAX_MAVLINK_MSGID = 256;
         private readonly EventHandler<MAVLinkMessage>[] msgMap = new EventHandler<MAVLinkMessage>[MAX_MAVLINK_MSGID];
-        protected void RegisterMavMessageHandler(MAVLINK_MSG_ID msgid, EventHandler<MAVLinkMessage> handler)
-            => msgMap[(uint)msgid] += handler;
-        protected void UnregisterMavMessageHandler(MAVLINK_MSG_ID msgid, EventHandler<MAVLinkMessage> handler)
-            => msgMap[(uint)msgid] -= handler;
-        public class MessageHolder { public object Message = null; };
+        private readonly EventHandler<MAVLinkMessage>[] gcsMsgMap = new EventHandler<MAVLinkMessage>[MAX_MAVLINK_MSGID];
+        protected void RegisterMavMessageHandler(MAVLINK_MSG_ID msgid, EventHandler<MAVLinkMessage> handler, bool gcs = false)
+            => (gcs ? gcsMsgMap : msgMap)[(uint)msgid] += handler;
+        protected void UnregisterMavMessageHandler(MAVLINK_MSG_ID msgid, EventHandler<MAVLinkMessage> handler, bool gcs = false)
+            => (gcs ? gcsMsgMap : msgMap)[(uint)msgid] -= handler;
         protected static T GetMessage<T>(MAVLinkMessage packet, ref object h)
         {
             var mh = h as MessageHolder;
@@ -814,7 +819,8 @@ namespace Diva.Mavlink
         protected void HandleMavLinkMessage(MAVLinkMessage message)
         {
             if (message != null && message.msgid < MAX_MAVLINK_MSGID)
-                msgMap[message.msgid]?.Invoke(new MessageHolder(), message);
+                (message.IsGCSPacket() ? gcsMsgMap : msgMap)[message.msgid]?.
+                    Invoke(new MessageHolder(), message);
         }
 
         protected void InitializeMavLinkMessageHandler()

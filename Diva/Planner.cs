@@ -1266,6 +1266,7 @@ namespace Diva
                     Param2 = getF(colParam2),
                     Param3 = getF(colParam3),
                     Param4 = getF(colParam4),
+                    SeqNo = (ushort)(ActiveDrone.Status.APName != MAV_AUTOPILOT.PX4 ? i + 1 : i),
                     Tag = getC(colTagData).Value
                 };
 			}

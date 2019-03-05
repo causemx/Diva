@@ -5,7 +5,7 @@ namespace Diva.Utilities
 {
 	public struct WayPoint
 	{
-		private ushort SeqNo;
+		public ushort SeqNo;
 		public object Tag;
 
 		public ushort Id;               // command id

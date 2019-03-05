@@ -401,19 +401,20 @@ namespace Diva.Mavlink
         public MAV_MISSION_RESULT SetWP(WayPoint loc, int index)
         {
             byte contMode = (byte)((Status.Firmware == Firmwares.ArduPlane) ? 2 : 1);
-            var req = Status.MissionIntSupport ?
+            bool useint = false;// Status.MissionIntSupport;
+            var req = useint ?
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
-            var msgid = Status.MissionIntSupport ?
+            var msgid = useint ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
-            var repid = Status.MissionIntSupport ?
+            var repid = useint ?
                 MAVLINK_MSG_ID.MISSION_REQUEST_INT : MAVLINK_MSG_ID.MISSION_REQUEST;
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
-            MAVLinkMessage reply = null;
+            MAVLinkMessage reply;
             do
             {
-                SendPacketWaitReplies(msgid, req,
+                reply = SendPacketWaitReplies(msgid, req,
                 new[] { MAVLINK_MSG_ID.MISSION_ACK, repid },
                 new ReplyPacketFilter[] {
                     (MAVLinkMessage p, ref bool more) =>
@@ -423,7 +424,7 @@ namespace Diva.Mavlink
                             Enum.Parse(typeof(MAV_MISSION_RESULT), result.ToString()));
                         return true;
                     },
-                    Status.MissionIntSupport ?
+                    useint ?
                     (ReplyPacketFilter)((MAVLinkMessage p, ref bool more) =>
                     {
                         var m = p.ToStructure<mavlink_mission_request_int_t>();
@@ -435,11 +436,12 @@ namespace Diva.Mavlink
                     {
                         var m = p.ToStructure<mavlink_mission_request_t>();
                         bool seqOk = m.seq == (index + 1);
-                        if (seqOk) log.Info($"set wp doing {index} req {m.seq} REQ 40: {p.msgid}");
+                        if (seqOk) log.Info($"SetWP: doing {index} req {m.seq} REQ 40: {p.msgid}");
                         return seqOk;
                     }
                 }, 400);
             } while (reply == null && retries-- > 0);
+            log.Info($"SetWP: reply=" + reply);
 
             if (reply == null)
                 throw new TimeoutException("Timeout on read - SetWP");
