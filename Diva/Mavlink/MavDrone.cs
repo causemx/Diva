@@ -406,8 +406,6 @@ namespace Diva.Mavlink
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
             var msgid = useint ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
-            var repid = useint ?
-                MAVLINK_MSG_ID.MISSION_REQUEST_INT : MAVLINK_MSG_ID.MISSION_REQUEST;
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
@@ -415,8 +413,14 @@ namespace Diva.Mavlink
             do
             {
                 reply = SendPacketWaitReplies(msgid, req,
-                new[] { MAVLINK_MSG_ID.MISSION_ACK, repid },
-                new ReplyPacketFilter[] {
+                new[]
+                {
+                    MAVLINK_MSG_ID.MISSION_ACK,
+                    MAVLINK_MSG_ID.MISSION_REQUEST_INT,
+                    MAVLINK_MSG_ID.MISSION_REQUEST
+                },
+                new ReplyPacketFilter[]
+                {
                     (MAVLinkMessage p, ref bool more) =>
                     {
                         result = (MAV_MISSION_RESULT)p.ToStructure<mavlink_mission_ack_t>().type;
@@ -424,14 +428,13 @@ namespace Diva.Mavlink
                             Enum.Parse(typeof(MAV_MISSION_RESULT), result.ToString()));
                         return true;
                     },
-                    useint ?
-                    (ReplyPacketFilter)((MAVLinkMessage p, ref bool more) =>
+                    (MAVLinkMessage p, ref bool more) =>
                     {
                         var m = p.ToStructure<mavlink_mission_request_int_t>();
                         bool seqOk = m.seq == (index + 1);
-                        if (seqOk) log.Info($"set wp doing {index} req {m.seq} REQ 40: {p.msgid}");
+                        if (seqOk) log.Info($"SetWPi: doing {index} req {m.seq} REQ 40: {p.msgid}");
                         return seqOk;
-                    }) :
+                    },
                     (MAVLinkMessage p, ref bool more) =>
                     {
                         var m = p.ToStructure<mavlink_mission_request_t>();
@@ -464,10 +467,12 @@ namespace Diva.Mavlink
 
             MAV_MISSION_RESULT result = MAV_MISSION_RESULT.MAV_MISSION_INVALID;
             bool retry = false;
+            Console.WriteLine("SetWPs: total wps=" + totalWPs);
             for (int i = 0; i < totalWPs; i++)
             {
                 var wp = wps[i];
-                reportCB?.Invoke((i + 1) * 100 / totalWPs);
+                reportCB?.Invoke(i);
+                Console.WriteLine("setwp: invoke callback with " + i);
 
                 // try send the wp
                 try
@@ -489,6 +494,8 @@ namespace Diva.Mavlink
                     }
                 }
                 retry = false;
+                Console.WriteLine($"setwp: #{i} result: " +
+                    Enum.GetName(typeof(MAV_MISSION_RESULT), result));
 
                 // we timed out while uploading wps/ command wasnt replaced/ command wasnt added
                 if (result == MAV_MISSION_RESULT.MAV_MISSION_ERROR)

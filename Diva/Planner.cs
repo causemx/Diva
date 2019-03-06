@@ -1572,9 +1572,16 @@ namespace Diva
 
                 try
                 {
-                    var result = ActiveDrone.SetWPs(GetCommandList(), GetHomeWP(),
-                        (i) => dlg.UpdateProgressAndStatus(i, i < 0 ?
-                            Strings.MsgDialogSetParams : Strings.MsgDialogSetWp + i));
+                    var cmds = GetCommandList();
+                    int totalwps = cmds.Count() +
+                        (ActiveDrone.Status.APName != MAV_AUTOPILOT.PX4 ? 1 : 0);
+                    var result = ActiveDrone.SetWPs(cmds, GetHomeWP(),
+                        (i) =>
+                        {
+                            dlg.UpdateProgressAndStatus((i * 100 / totalwps), i < 0 ?
+                       Strings.MsgDialogSetParams : Strings.MsgDialogSetWp + i);
+                            Console.WriteLine("setwps callback: #" + i);
+                        });
                 }
                 catch (Exception ex) when (
                     (ex is InsufficientMemoryException ||
@@ -2866,6 +2873,10 @@ namespace Diva
         {
             try
             {
+                // overlay marks has to be touched for updating
+                if (overlays.routes.Markers.Count > 0)
+                    BeginInvoke((MethodInvoker)delegate
+                        { overlays.routes.Markers[0] = overlays.routes.Markers[0]; });
                 /*var droneMarkers = overlays.routes.Markers.Select(m => (m as GMapDroneMarker).Drone);
                 if (droneMarkers.Except(OnlineDrones).Count() > 0 ||
                     OnlineDrones.Except(droneMarkers).Count() > 0)
