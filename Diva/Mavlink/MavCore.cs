@@ -43,12 +43,9 @@ namespace Diva.Mavlink
         public BufferedStream LogFile { get; set; }
 		public BufferedStream RawLogFile { get; set; }
 
-		internal string plaintxtline = "";
-
 		protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private readonly object writeLock = new object();
 		private int pacCount = 0;
-		private string plainTextLine = "";
 		private byte mavlinkVersion = 0;
 		private bool GPSLocationMode = false;
 		private ProgressDialogV2 frmProgressReporter;
@@ -200,9 +197,11 @@ namespace Diva.Mavlink
 			int length = 0;
 			int readcount = 0;
 			MAVLinkMessage message = null;
+            string plainTextLine = "";
+            string plaintxtline = "";
+            DateTime start = DateTime.Now;
 
-			DateTime start = DateTime.Now;
-			while (BaseStream.IsOpen)
+            while (BaseStream.IsOpen)
 			{
 				try
 				{
