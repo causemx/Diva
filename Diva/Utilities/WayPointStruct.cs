@@ -53,8 +53,8 @@ namespace Diva.Utilities
                 param2 = Param2,
                 param3 = Param3,
                 param4 = Param4,
-                x = (int)(camControl ? Latitude : Latitude * 1.0e7),
-                y = (int)(camControl ? Longitude : Longitude * 1.0e7),
+                x = (int)System.Math.Round(camControl ? Latitude : Latitude * 1.0e7),
+                y = (int)System.Math.Round(camControl ? Longitude : Longitude * 1.0e7),
                 z = Altitude,
                 seq = SeqNo,
                 frame = (byte)Frame.ToIntFrame()
@@ -77,21 +77,31 @@ namespace Diva.Utilities
 			};
 
 		public static implicit operator WayPoint(MAVLink.mavlink_mission_item_int_t input)
-		    => new WayPoint
-			{
-				Id = input.command,
-				Param1 = input.param1,
-				Param2 = input.param2,
-				Param3 = input.param3,
-				Param4 = input.param4,
-				Latitude = input.x / 1.0e7,
-				Longitude = input.y / 1.0e7,
-				Altitude = input.z,
-				SeqNo = input.seq,
-				Frame = (MAV_FRAME)input.frame
-			};
+        {
+            bool camControl = false;
+            switch (input.command)
+            {
+                case (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONTROL:
+                case (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONFIGURE:
+                    camControl = true;
+                    break;
+            }
+            return new WayPoint
+            {
+                Id = input.command,
+                Param1 = input.param1,
+                Param2 = input.param2,
+                Param3 = input.param3,
+                Param4 = input.param4,
+                Latitude = camControl ? input.x : input.x / 1.0e7,
+                Longitude = camControl ? input.y : input.y / 1.0e7,
+                Altitude = input.z,
+                SeqNo = input.seq,
+                Frame = (MAV_FRAME)input.frame
+            };
+        }
 
-		public static implicit operator WayPoint(MissionFile.MissionItem input)
+        public static implicit operator WayPoint(MissionFile.MissionItem input)
             => new WayPoint()
 			{
 				Id = input.command,

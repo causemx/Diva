@@ -318,7 +318,6 @@ namespace Diva.Mavlink
                         if (index != wp.seq)
                             continue;
                         loc = wp;
-                        //Console.WriteLine($"GetWP #{wp.seq}: loc ({loc.Latitude},{loc.Longitude}), req ({wp.x},{wp.y})");
                     }
                     else //if (reply.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
                     {
@@ -408,7 +407,6 @@ namespace Diva.Mavlink
             var msgid = useint ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
             var wp = (mavlink_mission_item_int_t)req;
-            //Console.WriteLine($"SetWP #{index}: loc ({loc.Latitude},{loc.Longitude}), req ({wp.x},{wp.y})");
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
@@ -470,12 +468,10 @@ namespace Diva.Mavlink
 
             MAV_MISSION_RESULT result = MAV_MISSION_RESULT.MAV_MISSION_INVALID;
             bool retry = false;
-            Console.WriteLine("SetWPs: total wps=" + totalWPs);
             for (int i = 0; i < totalWPs; i++)
             {
                 var wp = wps[i];
                 reportCB?.Invoke(i);
-                Console.WriteLine("setwp: invoke callback with " + i);
 
                 // try send the wp
                 try
@@ -497,8 +493,6 @@ namespace Diva.Mavlink
                     }
                 }
                 retry = false;
-                Console.WriteLine($"setwp: #{i} result: " +
-                    Enum.GetName(typeof(MAV_MISSION_RESULT), result));
 
                 // we timed out while uploading wps/ command wasnt replaced/ command wasnt added
                 if (result == MAV_MISSION_RESULT.MAV_MISSION_ERROR)
