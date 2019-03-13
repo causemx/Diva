@@ -58,6 +58,7 @@ namespace Diva.Utilities
 		{
             List<WayPoint> cmds = sender as List<WayPoint>;
             Element element = e.Element;
+            CultureInfo ci = CultureInfo.GetCultureInfo("en-US");
 
             if (element is Document doc)
             {
@@ -75,21 +76,20 @@ namespace Diva.Utilities
                     SchemaData sdata = pm.ExtendedData.SchemaData.First();
                     SimpleData[] datas = (sdata.SimpleData).ToArray();
 
-                    WayPoint temp = new WayPoint();
-                    if (datas[2].Text == "3") { temp.Option = 1; }
-                    else if (datas[2].Text == "10") { temp.Option = 8; }
-                    else { temp.Option = 0; }
-
-                    temp.Id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), datas[3].Text, false);
+                    WayPoint temp = new WayPoint
+                    {
+                        Id = (ushort)Enum.Parse(typeof(MAVLink.MAV_CMD), datas[3].Text, false),
+                        Param1 = float.Parse(datas[4].Text, ci),
+                        Param2 = float.Parse(datas[5].Text, ci),
+                        Param3 = float.Parse(datas[6].Text, ci),
+                        Param4 = float.Parse(datas[7].Text, ci),
+                        Latitude = point.Latitude,
+                        Longitude = point.Longitude,
+                        Altitude = (float)point.Altitude,
+                        Option = (byte)(datas[2].Text == "3" ? 1 :
+                                        datas[2].Text == "10" ? 8 : 0)
+                    };
                     if (temp.Id == 99) { temp.Id = 0; }
-
-                    temp.Param1 = float.Parse(datas[4].Text, new CultureInfo("en-US"));
-                    temp.Param2 = float.Parse(datas[5].Text, new CultureInfo("en-US"));
-                    temp.Param3 = float.Parse(datas[6].Text, new CultureInfo("en-US"));
-                    temp.Param4 = float.Parse(datas[7].Text, new CultureInfo("en-US"));
-                    temp.Latitude = point.Latitude;
-                    temp.Longitude = point.Longitude;
-                    temp.Altitude = (float)point.Altitude;
 
                     cmds.Add(temp);
                 }

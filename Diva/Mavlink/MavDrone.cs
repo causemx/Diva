@@ -318,6 +318,7 @@ namespace Diva.Mavlink
                         if (index != wp.seq)
                             continue;
                         loc = wp;
+                        //Console.WriteLine($"GetWP #{wp.seq}: loc ({loc.Latitude},{loc.Longitude}), req ({wp.x},{wp.y})");
                     }
                     else //if (reply.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
                     {
@@ -406,6 +407,8 @@ namespace Diva.Mavlink
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
             var msgid = useint ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
+            var wp = (mavlink_mission_item_int_t)req;
+            //Console.WriteLine($"SetWP #{index}: loc ({loc.Latitude},{loc.Longitude}), req ({wp.x},{wp.y})");
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;

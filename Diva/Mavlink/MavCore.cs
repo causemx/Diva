@@ -657,10 +657,8 @@ namespace Diva.Mavlink
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
                 due = DateTime.Now.AddMilliseconds(timeoutms);
                 RegisterMavMessageHandler(replyid, eh, gcs);
-                //packetNotifier += eh;
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                 while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
-                //packetNotifier -= eh;
                 UnregisterMavMessageHandler(replyid, eh, gcs);
                 // last minute ride
                 if (reply == null)
