@@ -1,6 +1,4 @@
-﻿using Diva.Utilities;
-using GMap.NET;
-using log4net;
+﻿using log4net;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -56,8 +54,7 @@ namespace Diva.Mavlink
         public float PacketsNotLost = 0;
         public DateTime PacketLostTimer = DateTime.MinValue;
         public float SyncLost = 0;
-
-        object packetLock = new object();
+        readonly object packetLock = new object();
 
         public MAVLinkMessage GetPacket(MAVLINK_MSG_ID id) => GetPacket((uint)id);
 

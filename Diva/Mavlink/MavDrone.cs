@@ -25,6 +25,9 @@ namespace Diva.Mavlink
             RegisterMavMessageHandler(MAVLINK_MSG_ID.AUTOPILOT_VERSION, AutopilotVersionHandler);
         }
 
+        protected override bool IsValidId(MAVLinkMessage message)
+            => message.IsMainComponent();
+
         public bool Connect()
         {
             BaseStream = MavStream.CreateStream(Setting);
@@ -48,6 +51,26 @@ namespace Diva.Mavlink
         }
 
         public void Disconnect() => Close();
+
+        protected override void DoBackgroundWork()
+        {
+            if (!BaseStream.IsOpen) return;
+            // re-request streams
+            try
+            {
+                GetDataStream(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+                GetDataStream(MAV_DATA_STREAM.POSITION, 2);
+                GetDataStream(MAV_DATA_STREAM.EXTRA1, 4);
+                GetDataStream(MAV_DATA_STREAM.EXTRA2, 4);
+                GetDataStream(MAV_DATA_STREAM.EXTRA3, 2);
+                GetDataStream(MAV_DATA_STREAM.RAW_SENSORS, 2);
+                GetDataStream(MAV_DATA_STREAM.RC_CHANNELS, 2);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to request rates: " + e);
+            }
+        }
 
         #region Message packet handlers
         private void MissionCurrentPacketHandler(object holder, MAVLinkMessage packet)

@@ -12,6 +12,7 @@ namespace Diva.Mavlink
             DataBits = serialPort.DataBits;
             Parity = serialPort.Parity;
             StopBits = serialPort.StopBits;
+            ReadTimeout = 1200;
         }
         ~MavSerialStream() { Dispose(false); }
         // IDisposable override
@@ -46,7 +47,7 @@ namespace Diva.Mavlink
             get => parity;
             set => serialPort.Parity = parity = value;
         }
-        private string portname;
+        private readonly string portname;
 
         // common method overrides
         public new int ReadBufferSize
@@ -71,7 +72,7 @@ namespace Diva.Mavlink
         }
         public override string StreamDescription => portname + "@" + baudrate;
         public override int BytesAvailable { get => serialPort.BytesToRead; }
-        protected override bool streamOpened => serialPort.IsOpen;
+        protected override bool StreamOpened => serialPort.IsOpen;
 
         public override void Open()
         {
@@ -79,9 +80,11 @@ namespace Diva.Mavlink
             Close();
             try
             {
-                serialPort = new SerialPort(portname, BaurdRate, Parity, DataBits);
-                serialPort.ReadTimeout = ReadTimeout;
-                serialPort.ReadBufferSize = ReadBufferSize;
+                serialPort = new SerialPort(portname, BaurdRate, Parity, DataBits)
+                {
+                    ReadTimeout = ReadTimeout,
+                    ReadBufferSize = ReadBufferSize
+                };
                 serialPort.Open();
                 System.Threading.Thread.Sleep(OpenDelay);
                 serialPort.DiscardInBuffer();

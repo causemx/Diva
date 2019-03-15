@@ -107,6 +107,13 @@ namespace Diva.Mavlink
         #region MavLink class support
         public static bool IsGCSPacket(this MAVLinkMessage mav)
             => (mav.sysid == 255 || mav.sysid == 253);
+
+        public static bool IsRadioPacket(this MAVLinkMessage mav)
+            => (mav.sysid == 51 && mav.compid == 68)    //3dr radio
+            || (MAV_COMPONENT)mav.compid == MAV_COMPONENT.MAV_COMP_ID_UDP_BRIDGE;   // wifi chip
+
+        public static bool IsMainComponent(this MAVLinkMessage mav)
+            => (MAV_COMPONENT)mav.compid == MAV_COMPONENT.MAV_COMP_ID_AUTOPILOT1;
         #endregion
     }
 }

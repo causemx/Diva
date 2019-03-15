@@ -23,8 +23,8 @@ namespace Diva.Mavlink
 
         // stream status property
         private bool opened = false;
-        protected virtual bool streamOpened => false;
-        public bool IsOpen { get => opened && streamOpened; protected set => opened = value; }
+        protected virtual bool StreamOpened => false;
+        public bool IsOpen { get => opened && StreamOpened; protected set => opened = value; }
         public int ReadTimeout { get; set; }
 
         // general property access

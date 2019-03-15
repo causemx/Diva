@@ -190,6 +190,8 @@ namespace Diva.Mavlink
 			Status.SyncLost = 0;
 		}
 
+        protected virtual bool IsValidId(MAVLinkMessage message) => false;
+
 		public MAVLinkMessage ReadPacket()
 		{
 			byte[] buffer = new byte[MAVLINK_MAX_PACKET_LEN + 25];
@@ -324,10 +326,10 @@ namespace Diva.Mavlink
 							}
 							if (BaseStream.IsOpen)
 							{
-								int read = BaseStream.Read(buffer, headerlengthstx, length - (headerlengthstx));
+								int read = BaseStream.Read(buffer, headerlengthstx, length - headerlengthstx);
 								if (read != (length - headerlengthstx))
-									log.InfoFormat("MAVLINK: bad read {0}, {1}, {2}", headerlengthstx, length,
-										count);
+									log.InfoFormat("MAVLINK: bad read hdrlen {0}, expecting {1}, read {2}, receiving {3}",
+                                        headerlengthstx, length, count, read);
 								if (RawLogFile != null && RawLogFile.CanWrite)
 								{
 									// write only what we read, temp is the whole packet, so 6-end
@@ -400,14 +402,14 @@ namespace Diva.Mavlink
             if (message.IsGCSPacket())
                 return message;
 
+            if (message.IsRadioPacket())
+                return MAVLinkMessage.Invalid;
+
 			byte sysid = message.sysid;
 			byte compid = message.compid;
 			byte packetSeqNo = message.seq;
 
-			if (buffer.Length >= 5 && (sysid == 255 || sysid == 253)) // gcs packet
-				return message;
-
-            if (SysId == 0)
+            if (SysId == 0 && IsValidId(message))
             {
                 log.Info($"MavCore opened with (sysid, compid)=({sysid},{compid})");
                 SysId = sysid;
@@ -420,7 +422,7 @@ namespace Diva.Mavlink
             } else if (compid != CompId)
             {
                 // handle multi component here
-                log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({sysid},{compid}), dropped");
+                log.Info($"MavCore ({SysId},{CompId}) received subcomponent packet ({sysid},{compid}), dropped");
                 return MAVLinkMessage.Invalid;
             }
 
@@ -720,6 +722,8 @@ namespace Diva.Mavlink
         private static readonly List<MavCore<StatusType>> mavs = new List<MavCore<StatusType>>();
         static MavCore() { BackgroundLoop.Start(MavCoreBackgroundLoop); }
 
+        protected virtual void DoBackgroundWork() { }
+
         private static void MavCoreBackgroundLoop(CancellationToken token)
         {
             DateTime lastHeartBeatSent = DateTime.Now;
@@ -738,7 +742,7 @@ namespace Diva.Mavlink
                             while (mav.BaseStream.BytesAvailable > 5)
                             {
                                 MAVLinkMessage packet = mav.ReadPacket();
-                                if (packet.Length < 5) break;
+                                if (packet == MAVLinkMessage.Invalid || packet.Length < 5) break;
                                 mav.HandleMavLinkMessage(packet);
                             }
                         }
@@ -767,25 +771,7 @@ namespace Diva.Mavlink
                     if (DateTime.Now > nextUpdateTime)
                     {
                         nextUpdateTime = DateTime.Now.AddSeconds(30);
-                        lock (mavs) foreach (var mav in mavs)
-                        {
-                            if (!mav.BaseStream.IsOpen) continue;
-                            // re-request streams
-                            try
-                            {
-                                mav.GetDataStream(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-                                mav.GetDataStream(MAV_DATA_STREAM.POSITION, 2);
-                                mav.GetDataStream(MAV_DATA_STREAM.EXTRA1, 4);
-                                mav.GetDataStream(MAV_DATA_STREAM.EXTRA2, 4);
-                                mav.GetDataStream(MAV_DATA_STREAM.EXTRA3, 2);
-                                mav.GetDataStream(MAV_DATA_STREAM.RAW_SENSORS, 2);
-                                mav.GetDataStream(MAV_DATA_STREAM.RC_CHANNELS, 2);
-                            }
-                            catch
-                            {
-                                Console.WriteLine("Failed to request rates");
-                            }
-                        }
+                        lock (mavs) foreach (var mav in mavs) mav.DoBackgroundWork();
                     }
                 }
                 catch (Exception ex)

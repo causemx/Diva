@@ -10,7 +10,7 @@ namespace Diva.Mavlink
         internal MavUdpStream(DroneSetting setting) : base(setting)
         {
             int.TryParse(setting.PortNumber, out port);
-            ReadTimeout = 5000;
+            ReadTimeout = 500;
         }
         ~MavUdpStream() { Dispose(false);  }
         // IDisposable override
@@ -21,21 +21,21 @@ namespace Diva.Mavlink
 
         // UDP specific
         private UdpClient client;
-        private class readBufferStruct
+        private class ReadBufferStruct
         {
             private byte[] buffer;
             private int dataBegin;
-            public int length => buffer.Length - dataBegin;
+            public int Length => buffer.Length - dataBegin;
 
-            public void reset() { buffer = new byte[0]; dataBegin = 0; }
-            public void set(MemoryStream stream)
+            public void Reset() { buffer = new byte[0]; dataBegin = 0; }
+            public void Set(MemoryStream stream)
             {
                 buffer = stream.ToArray();
                 dataBegin = 0;
             }
-            public int get(byte[] dst, int offset, int len)
+            public int Get(byte[] dst, int offset, int len)
             {
-                int size = length;
+                int size = Length;
                 if (size > 0)
                 {
                     if (size > len)
@@ -46,14 +46,14 @@ namespace Diva.Mavlink
                 return size;
             }
         };
-        private readBufferStruct readBuffer = new readBufferStruct();
-        private int port;
+        private ReadBufferStruct readBuffer = new ReadBufferStruct();
+        private readonly int port;
         private IPEndPoint Remote;
 
         // common overrides
         public override string StreamDescription => "UDP" + port;
-        public override int BytesAvailable { get => readBuffer.length + client.Available; }
-        protected override bool streamOpened => client?.Client != null;
+        public override int BytesAvailable { get => readBuffer.Length + client.Available; }
+        protected override bool StreamOpened => client?.Client != null;
 
         public override void Open()
         {
@@ -70,7 +70,7 @@ namespace Diva.Mavlink
                 client.Receive(ref Remote);
                 Console.WriteLine($"MavUDPStream connecting to {Remote.Address} : {Remote.Port}");
                 IsOpen = true;
-                readBuffer.reset();
+                readBuffer.Reset();
             } catch (Exception ex)
             {
                 Close();
@@ -89,7 +89,7 @@ namespace Diva.Mavlink
         {
             if (!IsOpen || length < 1) return 0;
 
-            int copied = readBuffer.get(buffer, offset, length);
+            int copied = readBuffer.Get(buffer, offset, length);
             if (copied == length) return length;
             offset += copied;
             length -= copied;
@@ -104,10 +104,10 @@ namespace Diva.Mavlink
                 } while (client.Available > 0 &&
                     ms.Length < ReadBufferSize &&
                     DateTime.Now < timeout);
-                readBuffer.set(ms);
+                readBuffer.Set(ms);
             }
 
-            return copied + readBuffer.get(buffer, offset, length);
+            return copied + readBuffer.Get(buffer, offset, length);
         }
 
         public override void Write(byte[] buffer, int offset, int length)

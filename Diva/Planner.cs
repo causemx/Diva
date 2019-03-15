@@ -2876,17 +2876,11 @@ namespace Diva
                 // overlay marks has to be touched for updating
                 if (overlays.routes.Markers.Count > 0)
                     BeginInvoke((MethodInvoker)delegate
-                        { overlays.routes.Markers[0] = overlays.routes.Markers[0]; });
-                /*var droneMarkers = overlays.routes.Markers.Select(m => (m as GMapDroneMarker).Drone);
-                if (droneMarkers.Except(OnlineDrones).Count() > 0 ||
-                    OnlineDrones.Except(droneMarkers).Count() > 0)
-                {
-                    Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
-                    foreach (MavDrone drone in OnlineDrones)
                     {
-                        overlays.routes.Markers.Add(new GMapDroneMarker(drone));
-                    }
-                }*/
+                        lock (overlays)
+                            if (overlays.routes.Markers.Count > 0)
+                                overlays.routes.Markers[0] = overlays.routes.Markers[0];
+                    });
 
                 //autopan
                 if (autopan)
