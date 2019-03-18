@@ -1260,6 +1260,8 @@ namespace Diva
                             (ushort)cmdid : (ushort)getC(colCommand).Tag,
                     // TODO: I don't know where multiplieralt come from..
                     Altitude = getF(colAltitude) / 1,
+                    // Gridview does not contains frame field, set waypoint frame to relative by default
+                    Frame = cmdid == MAV_CMD.WAYPOINT ? MAV_FRAME.GLOBAL_RELATIVE_ALT : MAV_FRAME.GLOBAL,
                     Latitude = getD(colLatitude),
                     Longitude = getD(colLongitude),
                     Param1 = getF(colParam1),

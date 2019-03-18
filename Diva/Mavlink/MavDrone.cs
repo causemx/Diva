@@ -342,7 +342,7 @@ namespace Diva.Mavlink
                             continue;
                         loc = wp;
                     }
-                    else //if (reply.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM)
+                    else //if (reply.msgid == (byte)MAVLINK_MSG_ID.MISSION_ITEM_INT)
                     {
                         var wp = reply.ToStructure<mavlink_mission_item_int_t>();
                         if (index != wp.seq)
@@ -352,11 +352,11 @@ namespace Diva.Mavlink
                                 loc.Id == (ushort)MAV_CMD.DO_DIGICAM_CONFIGURE)
                             loc.Latitude = wp.x;
                     }
-                    log.InfoFormat($"getWP {loc.Id} {loc.Param1} {loc.Altitude} {loc.Latitude} {loc.Longitude} opt {loc.Option}");
+                    log.InfoFormat($"GetWP {loc.Id} {loc.Param1} {loc.Altitude} {loc.Latitude} {loc.Longitude} opt {loc.Option}");
                     break;
                 }
                 if (--retries < 0)
-                    throw new TimeoutException("Timeout on read - getWP");
+                    throw new TimeoutException("Timeout on read - GetWP");
             }
             return loc;
         }
@@ -429,7 +429,6 @@ namespace Diva.Mavlink
                 (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
             var msgid = useint ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
-            var wp = (mavlink_mission_item_int_t)req;
 
             int retries = 10;
             var result = MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
