@@ -2053,9 +2053,13 @@ namespace Diva
 				return;
 			}
 
-			// arm the MAV
-			try
-			{
+            if (ActiveDrone.Status.IsArmed) return;
+
+            // arm the MAV
+            try
+            {
+                if (ActiveDrone.Status.FlightMode != FlightMode.GUIDED)
+                    ActiveDrone.SetMode("GUIDED");
 				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.IsArmed);
 				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.IsArmed);
 				if (ans == false)
@@ -2264,8 +2268,8 @@ namespace Diva
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-			ConfigureForm config = new ConfigureForm();
-            config.InitPage = sender as string;
+            ConfigureForm.InitPage = sender as string;
+            ConfigureForm config = new ConfigureForm();
 			config.ShowDialog(this);
 		}
 
