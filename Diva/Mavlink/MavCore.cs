@@ -39,6 +39,7 @@ namespace Diva.Mavlink
 
         public byte SysId { get; private set; }
         public byte CompId { get; private set; }
+        public virtual string Name { get => baseStream.StreamDescription; }
 
         public BufferedStream LogFile { get; set; }
 		public BufferedStream RawLogFile { get; set; }
@@ -814,6 +815,7 @@ namespace Diva.Mavlink
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.SYS_STATUS, SysStatusPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.STATUSTEXT, StatusTextPacketHandler);
         }
 
         private void HeartBeatPacketHandler(object holder, MAVLinkMessage packet) =>
@@ -923,6 +925,13 @@ namespace Diva.Mavlink
             ushort packetdropremote = sysstatus.drop_rate_comm;
 
             Status.BatteryVoltage = battery_voltage;
+        }
+
+        private void StatusTextPacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var m = GetMessage<mavlink_statustext_t>(packet, ref holder);
+            string s = ASCIIEncoding.ASCII.GetString(m.text).Split('\0')[0];
+            FloatMessage.NewMessage(m.severity, $"{Name}: {s}");
         }
         #endregion Retrieve sensor data from flight control
 

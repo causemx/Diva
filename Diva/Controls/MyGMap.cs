@@ -1,56 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using System.Drawing;
 using System.Net;
+using System.Threading;
+
+namespace Diva
+{
+    public class FloatMessage
+    {
+        private const int BasicDisplayTime = 10;
+        private const int SeverityExtendedTime = 16;
+        private static readonly List<FloatMessage> floatMessages = new List<FloatMessage>();
+        public readonly static Brush[] MsgBrushes =
+        {
+            Brushes.Magenta,
+            Brushes.Red,
+            Brushes.Orange,
+            Brushes.Yellow,
+            Brushes.GreenYellow,
+            Brushes.Cyan,
+            Brushes.Gray,
+            Brushes.DimGray
+        };
+        public readonly static Brush BgBrushes = new SolidBrush(Color.FromArgb(127, Color.Black));
+
+        public static void NewMessage(int severity, string message, int timeout = 0)
+        {
+            lock (floatMessages)
+                floatMessages.Add(new FloatMessage(severity, message, timeout));
+        }
+
+        public static FloatMessage[] GetMessages()
+        {
+            lock (floatMessages)
+            {
+                floatMessages.RemoveAll(m => m.Due < DateTime.Now);
+                return floatMessages.ToArray();
+            }
+        }
+
+        public readonly int Severity;
+        public readonly string Message;
+        public readonly DateTime Due;
+
+        private FloatMessage(int severity, string message, int timeout)
+        {
+            Severity = severity;
+            Message = message;
+            Due = DateTime.Now.AddSeconds(timeout > 0 ? timeout :
+                BasicDisplayTime + (SeverityExtendedTime / (1 + severity)));
+        }
+    }
+}
 
 namespace Diva.Controls
 {
 	public class MyGMap : GMapControl
 	{
         public readonly GMapProvider GlobalMapProvider = BingSatelliteMapProvider.Instance;
-        public bool inOnPaint = false;
-        public bool DebugMapLocation { get; set; }
+        public bool DebugMode { get; set; }
         public bool IndoorMode { get; private set; }
-		string otherthread = "";
+        Thread onPaintThread = null;
 		int lastx = 0;
 		int lasty = 0;
-		public MyGMap() : base()
+
+        public MyGMap() : base()
 		{
             MapScaleInfoEnabled = false;
             DisableFocusOnMouseEnter = true;
             //RoutesEnabled = true; // set by designer
             ForceDoubleBuffer = false;
-            DebugMapLocation = true;
-
-            /*OnSelectionChange += (s, z) =>
-            {
-                if (!IndoorMode && !s.IsEmpty)
-                {
-                    for (int i = 0; i < MapProvider.MaxZoom; i++)
-                    {
-                        using (TilePrefetcher pf = new TilePrefetcher())
-                        {
-                            pf.ShowCompleteMessage = false;
-                            pf.Shuffle = true;
-                            pf.Start(s, i, MapProvider, 100, 3);
-                        }
-                    }
-                }
-                SelectedArea = new RectLatLng();
-            };*/
+            DebugMode = true;
+            msgRefreshTimer.Interval = 1000;
+            msgRefreshTimer.Tick += InvalidateMessage;
+            msgRefreshTimer.Start();
         }
 
         protected override void OnLoad(EventArgs e)
         {
             ResetMapProvider();
-
             base.OnLoad(e);
         }
 
@@ -106,19 +138,16 @@ namespace Diva.Controls
             catch { }
         }
 
-        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
 		{
-			var start = DateTime.Now;
-
-			if (inOnPaint)
+			if (onPaintThread != null)
 			{
-				Console.WriteLine("Was in onpaint Gmap th:" + System.Threading.Thread.CurrentThread.Name + " in " + otherthread);
+				Console.WriteLine("Was in onpaint Gmap th:" + Thread.CurrentThread.Name + " in " + onPaintThread.Name);
 				return;
 			}
 
-			otherthread = System.Threading.Thread.CurrentThread.Name;
-
-			inOnPaint = true;
+            var start = DateTime.Now;
+            onPaintThread = Thread.CurrentThread;
 
 			try
 			{
@@ -126,11 +155,9 @@ namespace Diva.Controls
 			}
 			catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
-			inOnPaint = false;
+            onPaintThread = null;
 
-			var end = DateTime.Now;
-
-			System.Diagnostics.Debug.WriteLine("map draw time " + (end - start).TotalMilliseconds);
+			System.Diagnostics.Debug.WriteLine("map draw time " + (DateTime.Now - start).TotalMilliseconds);
 		}
 
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -159,15 +186,52 @@ namespace Diva.Controls
 
 		}
 
+        private Rectangle msgRect;
+        private readonly System.Windows.Forms.Timer msgRefreshTimer =
+            new System.Windows.Forms.Timer();
+
+        private void InvalidateMessage(object sender, EventArgs e)
+        {
+            if (msgRect.Height > 0)
+                Invalidate(msgRect);
+        }
+
+        private void DrawMessage(Graphics g)
+        {
+            Font f = SystemFonts.MessageBoxFont;
+            var msgs = FloatMessage.GetMessages();
+            if (msgs.Length > 0)
+            {
+                var fsize = g.MeasureString("A", f);
+                float lineheight = fsize.Height + 2;
+                float width = fsize.Width * 40;
+                if (width > Width / 2)
+                    width = Width / 2;
+                float top = Height - lineheight * msgs.Length;
+                float left = Width - width;
+                msgRect = Rectangle.Round(new RectangleF(left, top, width, lineheight * msgs.Length));
+                g.FillRectangle(FloatMessage.BgBrushes, msgRect);
+                for (int i = 0; i < msgs.Length; i++, top += lineheight)
+                {
+                    int s = msgs[i].Severity;
+                    if (s < 7 || DebugMode)
+                        g.DrawString(msgs[i].Message, f,
+                            FloatMessage.MsgBrushes[s], left, top);
+                }
+            }
+            else
+                msgRect.Height = 0;
+        }
+
         protected override void OnPaintOverlays(Graphics g)
         {
-            Font f = SystemFonts.SmallCaptionFont;
             base.OnPaintOverlays(g);
-            if (DebugMapLocation && IndoorMode)
+            if (DebugMode && IndoorMode)
             {
                 g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
-                    f, Brushes.Blue, 20, Height - 20);
+                    SystemFonts.SmallCaptionFont, Brushes.Blue, 20, Height - 20);
             }
+            DrawMessage(g);
         }
 
         private bool markingCache = false;

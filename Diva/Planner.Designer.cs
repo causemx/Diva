@@ -451,7 +451,7 @@ namespace Diva
 			this.myMap.Bearing = 0F;
 			this.myMap.CanDragMap = true;
 			this.myMap.ContextMenuStrip = this.cmMap;
-			this.myMap.DebugMapLocation = true;
+			this.myMap.DebugMode = true;
 			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
 			this.myMap.GrayScaleMode = false;
 			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;

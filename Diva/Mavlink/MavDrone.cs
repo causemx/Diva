@@ -10,7 +10,7 @@ namespace Diva.Mavlink
     public class MavDrone : MavCore<DroneStatus>
     {
         public DroneSetting Setting { get; }
-        public string Name => Setting?.Name;
+        public override string Name => Setting?.Name ?? base.Name;
         public bool IsOpen => BaseStream?.IsOpen ?? false;
         public bool IsRotationStandby = true;
 

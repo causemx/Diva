@@ -48,11 +48,11 @@ namespace Diva
         internal int MissionListItemCount => dgvWayPoints.Rows.Count;
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
 
-        public bool autopan { get; set; }
+        public bool Autopan { get; set; }
 
 		private static readonly double WARN_ALT = 2D;
 
-		private class plannerOverlays
+		private class PlannerOverlays
 		{
 			public GMapOverlay kmlpolygons;
 			public GMapOverlay rallypoints;
@@ -64,7 +64,7 @@ namespace Diva
 			public GMapOverlay geofence;
 			public GMapOverlay POI;
 			public GMapOverlay routes;
-			internal plannerOverlays(MyGMap map)
+			internal PlannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
 						var o = new GMapOverlay(f.Name);
@@ -72,7 +72,7 @@ namespace Diva
 						f.SetValue(this, o);
 					});
 		}
-		private plannerOverlays overlays;
+		private PlannerOverlays overlays;
 
 		private GMapRectMarker currentRectMarker;
 		private GMap3DPointMarker currentRallyPt;
@@ -95,14 +95,13 @@ namespace Diva
 		internal GMapPolygon drawnPolygon;
 		internal GMapPolygon wpPolygon;
 		
-
 		private bool quickadd = false;
 		private int selectedRow = 0;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<WayPoint>> history = new List<List<WayPoint>>();
 		private List<int> groupmarkers = new List<int>();
-		private Object thisLock = new Object();
+		private object thisLock = new object();
 		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
 		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
@@ -140,7 +139,7 @@ namespace Diva
 						
 			quickadd = false;
 
-			overlays = new plannerOverlays(myMap);
+			overlays = new PlannerOverlays(myMap);
 
 			overlays.objects.Markers.Clear();
 
@@ -2889,7 +2888,7 @@ namespace Diva
                     });
 
                 //autopan
-                if (autopan)
+                if (Autopan)
                 {
                     if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
                     {
