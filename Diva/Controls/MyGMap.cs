@@ -18,8 +18,8 @@ namespace Diva.Controls
         public bool DebugMode { get; set; }
         public bool IndoorMode { get; private set; }
         Thread onPaintThread = null;
-		int lastx = 0;
-		int lasty = 0;
+		private int lastMouseX = 0;
+		private int lastMouseY = 0;
 
         public MyGMap() : base()
 		{
@@ -118,14 +118,14 @@ namespace Diva.Controls
 			try
 			{
 				var buffer = 1;
-				if (e.X >= lastx - buffer && e.X <= lastx + buffer && e.Y >= lasty - buffer && e.Y <= lasty + buffer)
+				if (e.X >= lastMouseX - buffer && e.X <= lastMouseX + buffer && e.Y >= lastMouseY - buffer && e.Y <= lastMouseY + buffer)
 					return;
 
 				if (HoldInvalidation)
 					return;
 
-				lastx = e.X;
-				lasty = e.Y;
+				lastMouseX = e.X;
+				lastMouseY = e.Y;
 
                 lock (Overlays)
                 {
@@ -148,13 +148,22 @@ namespace Diva.Controls
                 Invalidate(msgRect);
         }
 
-        private static void DrawText(Graphics g, string s, Font f, Brush b, ref float l, float t, bool spacing = false)
+        private static void DrawText(Graphics g, string s, Font f, Brush b,
+            ref float x, float y, bool rmost = false)
         {
             if (string.IsNullOrEmpty(s)) return;
-            if (spacing) s += " ";
+            s += " ";
             var sz = g.MeasureString(s, f);
-            g.DrawString(s, f, b, l, t);
-            l += sz.Width;
+            if (rmost)
+            {
+                x -= sz.Width;
+                g.DrawString(s, f, b, x, y);
+            }
+            else
+            {
+                g.DrawString(s, f, b, x, y);
+                x += sz.Width;
+            }
         }
 
         private void DrawMessage(Graphics g)
@@ -179,11 +188,12 @@ namespace Diva.Controls
                 foreach (var m in msgs)
                 {
                     float ll = left + 2;
-                    DrawText(g, m.Source, FltMsg.SrcFont, m.SrcBrush, ref ll, lt, true);
-                    DrawText(g, m.TimeStr, FltMsg.TimeFont, FltMsg.TimeBrush, ref ll, lt, true);
+                    DrawText(g, m.Source, FltMsg.SrcFont, m.SrcBrush, ref ll, lt);
                     Brush b = FltMsg.MsgBlink[m.Severity] && blinking ?
                         FltMsg.BlinkBrush : FltMsg.MsgBrushes[m.Severity];
-                    DrawText(g, m.Message, FltMsg.MsgFont, b, ref ll, lt, true);
+                    DrawText(g, m.Message, FltMsg.MsgFont, b, ref ll, lt);
+                    float r = Width;
+                    DrawText(g, m.TimeStr, FltMsg.TimeFont, FltMsg.TimeBrush, ref r, lt, true);
                     lt += lh;
                 }
             }
