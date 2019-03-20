@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -7,55 +6,9 @@ using GMap.NET.WindowsForms;
 using System.Drawing;
 using System.Net;
 using System.Threading;
+using Timer = System.Timers.Timer;
+using FltMsg = Diva.Utilities.FloatMessage;
 
-namespace Diva
-{
-    public class FloatMessage
-    {
-        private const int BasicDisplayTime = 10;
-        private const int SeverityExtendedTime = 16;
-        private static readonly List<FloatMessage> floatMessages = new List<FloatMessage>();
-        public readonly static Brush[] MsgBrushes =
-        {
-            Brushes.Magenta,
-            Brushes.Red,
-            Brushes.Orange,
-            Brushes.Yellow,
-            Brushes.GreenYellow,
-            Brushes.Cyan,
-            Brushes.Gray,
-            Brushes.DimGray
-        };
-        public readonly static Brush BgBrushes = new SolidBrush(Color.FromArgb(127, Color.Black));
-
-        public static void NewMessage(int severity, string message, int timeout = 0)
-        {
-            lock (floatMessages)
-                floatMessages.Add(new FloatMessage(severity, message, timeout));
-        }
-
-        public static FloatMessage[] GetMessages()
-        {
-            lock (floatMessages)
-            {
-                floatMessages.RemoveAll(m => m.Due < DateTime.Now);
-                return floatMessages.ToArray();
-            }
-        }
-
-        public readonly int Severity;
-        public readonly string Message;
-        public readonly DateTime Due;
-
-        private FloatMessage(int severity, string message, int timeout)
-        {
-            Severity = severity;
-            Message = message;
-            Due = DateTime.Now.AddSeconds(timeout > 0 ? timeout :
-                BasicDisplayTime + (SeverityExtendedTime / (1 + severity)));
-        }
-    }
-}
 
 namespace Diva.Controls
 {
@@ -75,8 +28,8 @@ namespace Diva.Controls
             //RoutesEnabled = true; // set by designer
             ForceDoubleBuffer = false;
             DebugMode = true;
-            msgRefreshTimer.Interval = 1000;
-            msgRefreshTimer.Tick += InvalidateMessage;
+            FltMsg.NewMessageNotice += InvalidateMessage;
+            msgRefreshTimer.Elapsed += InvalidateMessage;
             msgRefreshTimer.Start();
         }
 
@@ -187,36 +140,51 @@ namespace Diva.Controls
 		}
 
         private Rectangle msgRect;
-        private readonly System.Windows.Forms.Timer msgRefreshTimer =
-            new System.Windows.Forms.Timer();
+        private readonly Timer msgRefreshTimer = new Timer { Interval = 500 };
 
         private void InvalidateMessage(object sender, EventArgs e)
         {
-            if (msgRect.Height > 0)
+            if (msgRect.Height > 0 || sender is FltMsg)
                 Invalidate(msgRect);
+        }
+
+        private static void DrawText(Graphics g, string s, Font f, Brush b, ref float l, float t, bool spacing = false)
+        {
+            if (string.IsNullOrEmpty(s)) return;
+            if (spacing) s += " ";
+            var sz = g.MeasureString(s, f);
+            g.DrawString(s, f, b, l, t);
+            l += sz.Width;
         }
 
         private void DrawMessage(Graphics g)
         {
-            Font f = SystemFonts.MessageBoxFont;
-            var msgs = FloatMessage.GetMessages();
+            var msgs = FltMsg.GetMessages(DebugMode ? 7 : 6);
             if (msgs.Length > 0)
             {
-                var fsize = g.MeasureString("A", f);
-                float lineheight = fsize.Height + 2;
-                float width = fsize.Width * 40;
+                Font f = FltMsg.MsgFont;
+                SizeF fsize = g.MeasureString("W", f);
+                float lh = fsize.Height + 2;
+                float cw = fsize.Width;
+                float width = cw * 40;
                 if (width > Width / 2)
                     width = Width / 2;
-                float top = Height - lineheight * msgs.Length;
-                float left = Width - width;
-                msgRect = Rectangle.Round(new RectangleF(left, top, width, lineheight * msgs.Length));
-                g.FillRectangle(FloatMessage.BgBrushes, msgRect);
-                for (int i = 0; i < msgs.Length; i++, top += lineheight)
+                float top = Height - lh * msgs.Length - 2;
+                float left = Width - width - 4;
+                msgRect = Rectangle.Round(new RectangleF(left, top, width, lh * msgs.Length));
+                g.FillRectangle(FltMsg.BgBrush, msgRect);
+
+                float lt = top + 2;
+                bool blinking = DateTime.Now.Second % 2 == 0;
+                foreach (var m in msgs)
                 {
-                    int s = msgs[i].Severity;
-                    if (s < 7 || DebugMode)
-                        g.DrawString(msgs[i].Message, f,
-                            FloatMessage.MsgBrushes[s], left, top);
+                    float ll = left + 2;
+                    DrawText(g, m.Source, FltMsg.SrcFont, m.SrcBrush, ref ll, lt, true);
+                    DrawText(g, m.TimeStr, FltMsg.TimeFont, FltMsg.TimeBrush, ref ll, lt, true);
+                    Brush b = FltMsg.MsgBlink[m.Severity] && blinking ?
+                        FltMsg.BlinkBrush : FltMsg.MsgBrushes[m.Severity];
+                    DrawText(g, m.Message, FltMsg.MsgFont, b, ref ll, lt, true);
+                    lt += lh;
                 }
             }
             else

@@ -558,9 +558,9 @@ namespace Diva.Mavlink
             reportCB?.Invoke(-1);
 
             // set radius, is these required?
-            SetParam("WP_RADIUS", float.Parse("30") / 1);
-            SetParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
-            try { SetAnyParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" }, float.Parse("45")); } catch { }
+            //SetParam("WP_RADIUS", 30 / 1);
+            //SetParam("WPNAV_RADIUS", 30 / 1 * 100.0);
+            //try { SetAnyParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" }, 45); } catch { }
 
             return result;
         }

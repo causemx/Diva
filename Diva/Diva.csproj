@@ -290,6 +290,7 @@
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
+    <Compile Include="Utilities\FloatMessage.cs" />
     <Compile Include="Utilities\QGCWaypointFileUtlity.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
     <Compile Include="Utilities\WayPointStruct.cs" />

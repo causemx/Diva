@@ -638,7 +638,7 @@ namespace Diva.Mavlink
             MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000, bool gcs = false)
         {
             MAVLinkMessage reply = null;
-            DateTime due;
+            long dueticks;
             using (ManualResetEvent ev = new ManualResetEvent(false))
             {
                 void eh(object o, MAVLinkMessage p)
@@ -647,7 +647,8 @@ namespace Diva.Mavlink
                     if (filter == null || filter(p, ref more))
                     {
                         if (more)
-                            due = DateTime.Now.AddMilliseconds(timeoutms);
+                            Volatile.Write(ref dueticks,
+                                DateTime.Now.AddMilliseconds(timeoutms).Ticks);
                         else
                         {
                             reply = p;
@@ -658,10 +659,11 @@ namespace Diva.Mavlink
                 byte[] pktdata = PreparePacket(msgid, indata);
                 var pkt = Status.GetPacket(replyid);
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
-                due = DateTime.Now.AddMilliseconds(timeoutms);
+                dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
                 RegisterMavMessageHandler(replyid, eh, gcs);
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
-                while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
+                while (!ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks))
+                    && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
                 UnregisterMavMessageHandler(replyid, eh, gcs);
                 // last minute ride
                 if (reply == null)
@@ -685,11 +687,11 @@ namespace Diva.Mavlink
                 return null;
             }
             MAVLinkMessage reply = null;
-            DateTime due;
+            long dueticks;
             using (ManualResetEvent ev = new ManualResetEvent(false))
             {
                 byte[] pktdata = PreparePacket(msgid, indata);
-                due = DateTime.Now.AddMilliseconds(timeoutms);
+                dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
                 var ehs = new EventHandler<MAVLinkMessage>[rids.Length];
                 for (var i = rids.Length; i > 0; )
                 {
@@ -700,7 +702,8 @@ namespace Diva.Mavlink
                         if (filters[ival] == null || filters[ival](p, ref more))
                         {
                             if (more)
-                                due = DateTime.Now.AddMilliseconds(timeoutms);
+                                Volatile.Write(ref dueticks,
+                                    DateTime.Now.AddMilliseconds(timeoutms).Ticks);
                             else
                             {
                                 reply = p;
@@ -711,7 +714,8 @@ namespace Diva.Mavlink
                     RegisterMavMessageHandler(rids[ival], ehs[ival], gcs);
                 }
                 lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
-                while (!ev.WaitOne(due - DateTime.Now) && DateTime.Now < due);
+                while (!ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks))
+                    && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
                 for (var i = rids.Length; --i >= 0; )
                     UnregisterMavMessageHandler(rids[i], ehs[i], gcs);
             }
@@ -931,7 +935,7 @@ namespace Diva.Mavlink
         {
             var m = GetMessage<mavlink_statustext_t>(packet, ref holder);
             string s = ASCIIEncoding.ASCII.GetString(m.text).Split('\0')[0];
-            FloatMessage.NewMessage(m.severity, $"{Name}: {s}");
+            FloatMessage.NewMessage(Name, m.severity, s);
         }
         #endregion Retrieve sensor data from flight control
 
@@ -1026,17 +1030,16 @@ namespace Diva.Mavlink
             int paramTotal = 0;
 			List<int> indices = new List<int>();
 			MAVLinkParamList paramList = new MAVLinkParamList();
-            bool waitMore = true;
+            int targetIndex = -1;
             bool ParamValueHandler(MAVLinkMessage m, ref bool more)
             {
                 if (frmProgressReporter.doWorkArgs.CancelRequested) return false;
 
                 mavlink_param_value_t pv = m.ToStructure<mavlink_param_value_t>();
-                more = waitMore;
+                more = targetIndex != pv.param_index;
                 if (indices.Contains(pv.param_index)) return true;
 
-                paramTotal = (pv.param_count);
-                paramList.TotalReported = paramTotal;
+                paramList.TotalReported = paramTotal = pv.param_count;
                 string pid = ASCIIEncoding.ASCII.GetString(pv.param_id).Split('\0')[0];
                 var offset = Marshal.OffsetOf(typeof(mavlink_param_value_t), "param_value");
                 paramList[pid] = new MAVLinkParam(pid, BitConverter.GetBytes(pv.param_value),
@@ -1044,20 +1047,21 @@ namespace Diva.Mavlink
                         MAV_PARAM_TYPE.REAL32 : (MAV_PARAM_TYPE)pv.param_type,
                     (MAV_PARAM_TYPE)pv.param_type);
                 Status.ParamTypes[pid] = (MAV_PARAM_TYPE)pv.param_type;
-                if (pv.param_index != 65535) indices.Add(pv.param_index);
+                if (pv.param_index != 65535)
+                    indices.Add(pv.param_index);
 
                 frmProgressReporter.UpdateProgressAndStatus(
                     (indices.Count * 100) / paramTotal, Strings.GotParam + pid);
-
-                more &= pv.param_index != (paramTotal - 1);
+                if (pv.param_index == (paramTotal - 1))
+                    more = false;
                 return true;
             }
 
             int retries = 6;
+            var lreq = new mavlink_param_request_list_t { target_system = SysId, target_component = CompId };
             do
             {
-                SendPacketWaitReplies(MAVLINK_MSG_ID.PARAM_REQUEST_LIST, new
-                    mavlink_param_request_list_t { target_system = SysId, target_component = CompId },
+                SendPacketWaitReplies(MAVLINK_MSG_ID.PARAM_REQUEST_LIST, lreq,
                     new MAVLINK_MSG_ID[] { MAVLINK_MSG_ID.PARAM_VALUE, MAVLINK_MSG_ID.STATUSTEXT },
                     new ReplyPacketFilter[]
                     {
@@ -1085,7 +1089,7 @@ namespace Diva.Mavlink
                             }
                             return more = true;
                         }
-                    }, 4000);
+                    }, 500);
                 if (paramTotal > 0 && indices.Count == paramTotal)
                 {
                     Status.Params.Clear();
@@ -1093,32 +1097,33 @@ namespace Diva.Mavlink
                     Status.Params.AddRange(paramList);
                     return Status.Params;
                 }
+                log.Debug("GetParamListBG: Params receive timeouted, " + 
+                    (retries > 0 ? "retry" : "try 1-by-1 mode"));
                 if (frmProgressReporter.doWorkArgs.CancelRequested)
                 {
                     frmProgressReporter.doWorkArgs.CancelAcknowledged = true;
                     frmProgressReporter.doWorkArgs.ErrorMessage = Strings.MsgFormProgressUserCanceled;
                     return Status.Params;
                 }
-            } while (retries-- > 0);
+            } while (retries-- > 0 && (indices.Count < paramTotal * 0.95 || paramTotal == 0));
 
             if (indices.Count != paramTotal || paramTotal == 0)
 			{
                 if (paramTotal > 0)
                 {
-                    Console.WriteLine("Not all params read, start one by one mode.");
-                    waitMore = false;
+                    log.Debug("Not all params read, start one by one mode.");
                     mavlink_param_request_read_t req = new mavlink_param_request_read_t
                     {
                         target_system = SysId,
                         target_component = CompId,
-                        param_id = new byte[] { 0x0 }
+                        param_id = new byte[16]
                     };
-                    Array.Resize(ref req.param_id, 16);
+                    req.param_id[0] = 0;
                     for (short i = 0; i < paramTotal; i++)
                     {
                         if (frmProgressReporter.doWorkArgs.CancelRequested) break;
                         if (indices.Contains(i)) continue;
-                        req.param_index = i;
+                        targetIndex = req.param_index = i;
                         SendPacketWaitReply(MAVLINK_MSG_ID.PARAM_REQUEST_READ, req,
                             MAVLINK_MSG_ID.PARAM_VALUE, ParamValueHandler);
                         if (!indices.Contains(i)) break;

@@ -94,7 +94,6 @@ namespace Diva.Utilities
 		float Yaw => Drone.Status.Yaw;
 		float CoG => Drone.Status.GroundCourse;
 		float Bearing => Drone.Status.NAVBearing;
-		int SysId => Drone.SysId;
 
 		public float warn = -1;
 		public float danger = -1;
@@ -144,9 +143,13 @@ namespace Diva.Utilities
 			g.DrawImageUnscaled(Icon, Icon.Width / -2 + 2, Icon.Height / -2);
 
 
-			// Show SYSID on the drone icon.
+			// Show name on the drone icon.
 			g.RotateTransform(180);
-			g.DrawString(SysId.ToString(), new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Blue, -8, -8);
+            string name = Drone.Name;
+            if (name.Length > 5)
+                name = name.Substring(0, 5);
+            int offset = (int)(-8.0 * name.Length);
+			g.DrawString(name, new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Blue, offset, -8);
 
 			g.Transform = temp;
 
