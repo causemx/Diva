@@ -152,8 +152,7 @@ namespace Diva.Controls
             ref float x, float y, bool rmost = false)
         {
             if (string.IsNullOrEmpty(s)) return;
-            s += " ";
-            var sz = g.MeasureString(s, f);
+            var sz = g.MeasureString(s + "-", f);
             if (rmost)
             {
                 x -= sz.Width;
@@ -176,18 +175,18 @@ namespace Diva.Controls
                 float lh = fsize.Height + 2;
                 float cw = fsize.Width;
                 float width = cw * 40;
-                if (width > Width / 2)
-                    width = Width / 2;
-                float top = Height - lh * msgs.Length - 2;
-                float left = Width - width - 4;
-                msgRect = Rectangle.Round(new RectangleF(left, top, width, lh * msgs.Length));
+                if (width > Width / 2 - 8)
+                    width = Width / 2 - 8;
+                float top = Height - lh * msgs.Length - 6;
+                float left = Width - width - 8;
+                msgRect = Rectangle.Round(new RectangleF(left, top, width + 4, lh * msgs.Length + 2));
                 g.FillRectangle(FltMsg.BgBrush, msgRect);
 
-                float lt = top + 2;
+                float lt = top + 4;
                 bool blinking = DateTime.Now.Second % 2 == 0;
                 foreach (var m in msgs)
                 {
-                    float ll = left + 2;
+                    float ll = left + 4;
                     DrawText(g, m.Source, FltMsg.SrcFont, m.SrcBrush, ref ll, lt);
                     Brush b = FltMsg.MsgBlink[m.Severity] && blinking ?
                         FltMsg.BlinkBrush : FltMsg.MsgBrushes[m.Severity];

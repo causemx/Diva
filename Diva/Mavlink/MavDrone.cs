@@ -218,23 +218,16 @@ namespace Diva.Mavlink
 
         public PointLatLngAlt GetFencePoint(int no, ref int total)
         {
-            int retries = 3;
             var req = new mavlink_fence_fetch_point_t
             {
                 idx = (byte)no,
                 target_system = SysId,
                 target_component = CompId
             };
-            MAVLinkMessage reply;
-            while ((reply =
-                SendPacketWaitReply(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req,
-                    MAVLINK_MSG_ID.FENCE_POINT, null, 700)) == null)
-            {
-               if (retries == 0)
-                    throw new TimeoutException("Timeout on read - getFencePoint");
-                log.Info("getFencePoint Retry " + retries);
-                retries--;
-            }
+            MAVLinkMessage reply = SendPacketWaitReply(MAVLINK_MSG_ID.FENCE_FETCH_POINT, req,
+                    MAVLINK_MSG_ID.FENCE_POINT, null, 700, 3);
+            if (reply == null)
+                throw new TimeoutException("Timeout on read - getFencePoint");
 
             var fp = reply.ToStructure<mavlink_fence_point_t>();
             total = fp.count;
@@ -275,24 +268,16 @@ namespace Diva.Mavlink
 
         public int GetWPCount()
         {
-            int retries = 6;
             var req = new mavlink_mission_request_list_t
             {
                 target_component = CompId,
                 target_system = SysId
             };
-            MAVLinkMessage reply;
-
-            while ((reply =
+            MAVLinkMessage reply =
                 SendPacketWaitReply(MAVLINK_MSG_ID.MISSION_REQUEST_LIST, req,
-                    MAVLINK_MSG_ID.MISSION_COUNT, null, 700)) == null)
-            {
-                if (retries > 0)
-                    log.Info("getWPCount Retry " + retries);
-                else
-                    throw new TimeoutException("Timeout on read - getWPCount");
-                --retries;
-            }
+                    MAVLINK_MSG_ID.MISSION_COUNT, null, 700, 6);
+            if (reply == null)
+                throw new TimeoutException("Timeout on read - GetWPCount");
 
             var wpc = reply.ToStructure<mavlink_mission_count_t>();
             log.Info("wpcount: " + wpc.count);
@@ -597,17 +582,13 @@ namespace Diva.Mavlink
 
         public void SetWPTotal(int totalWPs)
         {
-            int retries = 3;
             var req = new mavlink_mission_count_t
             {
                 target_system = SysId,
                 target_component = CompId, // MSG_NAMES.MISSION_COUNT
                 count = (ushort)totalWPs
             };
-            MAVLinkMessage reply;
-            do
-            {
-                reply = SendPacketWaitReply(MAVLINK_MSG_ID.MISSION_COUNT, req,
+            MAVLinkMessage reply = SendPacketWaitReply(MAVLINK_MSG_ID.MISSION_COUNT, req,
                     MAVLINK_MSG_ID.MISSION_REQUEST,
                     (MAVLinkMessage p, ref bool more) =>
                     {
@@ -624,8 +605,7 @@ namespace Diva.Mavlink
                             return true;
                         }
                         return false;
-                    }, 700);
-            } while (reply == null && retries-- > 0);
+                    }, 700, 3);
             if (reply == null)
                 throw new TimeoutException("Timeout on read - SetWPTotal");
         }

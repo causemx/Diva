@@ -592,7 +592,7 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage WaitPackets(MAVLINK_MSG_ID[] msgids,
-            WaitPacketFilter[] filters, int timeoutms = Timeout.Infinite, bool gcs = false)
+            WaitPacketFilter[] filters, bool[] gcs = null, int timeoutms = Timeout.Infinite)
         {
             MAVLinkMessage reply = null;
             using (AutoResetEvent ev = new AutoResetEvent(false))
@@ -610,7 +610,8 @@ namespace Diva.Mavlink
                             ev.Set();
                         }
                     };
-                    RegisterMavMessageHandler(msgids[ival], ehs[ival], gcs);
+                    RegisterMavMessageHandler(msgids[ival], ehs[ival],
+                        gcs?.GetValue(ival) != null ? gcs[ival] : false);
                     var ipkt = Status.GetPacket(msgids[ival]);
                     if (ipkt != null && ipkt.rxtime > lasttime)
                         lasttime = ipkt.rxtime;
@@ -620,7 +621,8 @@ namespace Diva.Mavlink
                 ev.WaitOne(timeoutms);
                 for (var i = msgids.Length; --i >= 0; )
                 {
-                    UnregisterMavMessageHandler(msgids[i], ehs[i], gcs);
+                    UnregisterMavMessageHandler(msgids[i], ehs[i],
+                        gcs?.GetValue(i) != null ? gcs[i] : false);
                     if (reply == null)
                     {
                         // last minute ride
@@ -635,7 +637,11 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage SendPacketWaitReply(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000, bool gcs = false)
+            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000, int retries = 1)
+                => SendPacketWaitReply(msgid, indata, replyid, filter, false, timeoutms, retries);
+
+        public MAVLinkMessage SendPacketWaitReply(MAVLINK_MSG_ID msgid, object indata,
+            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter, bool gcs, int timeoutms = 1000, int retries = 1)
         {
             MAVLinkMessage reply = null;
             long dueticks;
@@ -647,8 +653,10 @@ namespace Diva.Mavlink
                     if (filter == null || filter(p, ref more))
                     {
                         if (more)
+                        {
                             Volatile.Write(ref dueticks,
                                 DateTime.Now.AddMilliseconds(timeoutms).Ticks);
+                        }
                         else
                         {
                             reply = p;
@@ -661,9 +669,17 @@ namespace Diva.Mavlink
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
                 dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
                 RegisterMavMessageHandler(replyid, eh, gcs);
-                lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
-                while (!ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks))
-                    && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
+                bool notdone;
+                do
+                {
+                    lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
+                    while ((notdone = !ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks)))
+                        && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
+                    if (notdone)
+                        log.Debug("SendPacketWaitReply timeouted: " +
+                            DateTime.Now.ToString("HH:mm:ss.fff") + ", due " +
+                            new DateTime(Volatile.Read(ref dueticks)).ToString("HH:mm:ss.fff"));
+                } while (notdone && --retries > 0);
                 UnregisterMavMessageHandler(replyid, eh, gcs);
                 // last minute ride
                 if (reply == null)
@@ -678,7 +694,11 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage SendPacketWaitReplies(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters, int timeoutms = 1000, bool gcs = false)
+            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters = null, int timeoutms = 1000, int retries = 1)
+                => SendPacketWaitReplies(msgid, indata, rids, filters, null, timeoutms, retries);
+
+        public MAVLinkMessage SendPacketWaitReplies(MAVLINK_MSG_ID msgid, object indata,
+            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters, bool[] gcs = null, int timeoutms = 1000, int retries = 1)
         {
             if (rids == null || filters == null || filters.Length == 0 
                 || rids.Length != filters.Length)
@@ -702,8 +722,10 @@ namespace Diva.Mavlink
                         if (filters[ival] == null || filters[ival](p, ref more))
                         {
                             if (more)
+                            {
                                 Volatile.Write(ref dueticks,
-                                    DateTime.Now.AddMilliseconds(timeoutms).Ticks);
+                                        DateTime.Now.AddMilliseconds(timeoutms).Ticks);
+                            }
                             else
                             {
                                 reply = p;
@@ -711,13 +733,24 @@ namespace Diva.Mavlink
                             }
                         }
                     };
-                    RegisterMavMessageHandler(rids[ival], ehs[ival], gcs);
+                    RegisterMavMessageHandler(rids[ival], ehs[ival],
+                        gcs?.GetValue(ival) != null ? gcs[ival] : false);
                 }
-                lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
-                while (!ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks))
-                    && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
+                bool notdone;
+                do
+                {
+                    dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
+                    lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
+                    while ((notdone = !ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks)))
+                        && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
+                    if (notdone)
+                        log.Debug("SendPacketWaitReplies timeouted: " +
+                            DateTime.Now.ToString("HH:mm:ss.fff") + ", due " +
+                            new DateTime(Volatile.Read(ref dueticks)).ToString("HH:mm:ss.fff"));
+                } while (notdone && --retries > 0);
                 for (var i = rids.Length; --i >= 0; )
-                    UnregisterMavMessageHandler(rids[i], ehs[i], gcs);
+                    UnregisterMavMessageHandler(rids[i], ehs[i],
+                        gcs?.GetValue(i) != null ? gcs[i] : false);
             }
             return reply;
         }
@@ -943,7 +976,7 @@ namespace Diva.Mavlink
         private mavlink_param_value_t VerifyParam(MAVLINK_MSG_ID msgid, object outp, string name, int timeout, int retries = 3)
         {
             mavlink_param_value_t pv = new mavlink_param_value_t();
-            while (SendPacketWaitReply(MAVLINK_MSG_ID.PARAM_SET, outp,
+            if (SendPacketWaitReply(MAVLINK_MSG_ID.PARAM_SET, outp,
                 MAVLINK_MSG_ID.PARAM_VALUE, (MAVLinkMessage p, ref bool more) =>
                 {
                     pv = p.ToStructure<mavlink_param_value_t>();
@@ -953,8 +986,7 @@ namespace Diva.Mavlink
                             $"{ASCIIEncoding.ASCII.GetString(pv.param_id)} - {pv.param_value}" +
                             $"Expected: '{name}' Received: '{st}'");
                     return st == name;
-                }, timeout) == null)
-                if (retries-- < 0)
+                }, timeout, retries) == null)
                     throw new TimeoutException("Timeout on waiting PARAM_VALUE for " + name);
             return pv;
         }
@@ -1036,7 +1068,7 @@ namespace Diva.Mavlink
                 if (frmProgressReporter.doWorkArgs.CancelRequested) return false;
 
                 mavlink_param_value_t pv = m.ToStructure<mavlink_param_value_t>();
-                more = targetIndex != pv.param_index;
+                more = true;
                 if (indices.Contains(pv.param_index)) return true;
 
                 paramList.TotalReported = paramTotal = pv.param_count;
@@ -1250,18 +1282,12 @@ namespace Diva.Mavlink
 
 		public bool GetVersion()
 		{
-            int retries = 3;
-            MAVLinkMessage reply = null;
-            do
-            {
-                reply = SendPacketWaitReply(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST,
+            return null != SendPacketWaitReply(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST,
                     new mavlink_autopilot_version_request_t
                     {
                         target_component = CompId,
                         target_system = SysId
-                    }, MAVLINK_MSG_ID.AUTOPILOT_VERSION);
-            } while (retries-- > 0);
-            return reply != null;
+                    }, MAVLINK_MSG_ID.AUTOPILOT_VERSION, null, 1000, 3);
 		}
 
         public void SendCommand(MAV_CMD cmd, float p1, float p2, float p3, float p4, float p5, float p6, float p7)
@@ -1285,11 +1311,7 @@ namespace Diva.Mavlink
         public bool SendCommandWaitAck(MAV_CMD cmd, float p1, float p2, float p3, float p4, float p5, float p6, float p7, int timeoutms = 2000)
         {
             log.Info($"SendCommandWaitAck cmd {cmd.ToString()} {p1} {p2} {p3} {p4} {p5} {p6} {p7}");
-            int retries = 3;
-            MAVLinkMessage ack = null;
-            do
-            {
-                ack = SendPacketWaitReply(MAVLINK_MSG_ID.COMMAND_LONG,
+            MAVLinkMessage ack = SendPacketWaitReply(MAVLINK_MSG_ID.COMMAND_LONG,
                     new mavlink_command_long_t
                     {
                         target_system = SysId,
@@ -1304,11 +1326,11 @@ namespace Diva.Mavlink
                         param7 = p7
                     }, MAVLINK_MSG_ID.COMMAND_ACK,
                     (MAVLinkMessage p, ref bool more) =>
-                        (MAV_CMD)p.ToStructure<mavlink_command_ack_t>().command == cmd);
-            } while (ack == null && retries-- > 0);
-            if (ack != null)
-                return (MAV_RESULT)ack.ToStructure<mavlink_command_ack_t>().result == MAV_RESULT.ACCEPTED;
-            throw new TimeoutException($"Timeout on waiting ack from command {cmd}");
+                        (MAV_CMD)p.ToStructure<mavlink_command_ack_t>().command == cmd,
+                    1000, 3);
+            if (ack == null)
+                throw new TimeoutException($"Timeout on waiting ack from command {cmd}");
+            return (MAV_RESULT)ack.ToStructure<mavlink_command_ack_t>().result == MAV_RESULT.ACCEPTED;
         }
 
         public void GetDataStream(MAV_DATA_STREAM id, byte hzrate)
