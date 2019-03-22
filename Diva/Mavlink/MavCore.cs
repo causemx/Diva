@@ -611,7 +611,7 @@ namespace Diva.Mavlink
                         }
                     };
                     RegisterMavMessageHandler(msgids[ival], ehs[ival],
-                        gcs?.GetValue(ival) != null ? gcs[ival] : false);
+                        gcs != null && gcs.Length > ival && gcs[ival]);
                     var ipkt = Status.GetPacket(msgids[ival]);
                     if (ipkt != null && ipkt.rxtime > lasttime)
                         lasttime = ipkt.rxtime;
@@ -622,7 +622,7 @@ namespace Diva.Mavlink
                 for (var i = msgids.Length; --i >= 0; )
                 {
                     UnregisterMavMessageHandler(msgids[i], ehs[i],
-                        gcs?.GetValue(i) != null ? gcs[i] : false);
+                        gcs != null && gcs.Length > i && gcs[i]);
                     if (reply == null)
                     {
                         // last minute ride
@@ -644,7 +644,7 @@ namespace Diva.Mavlink
             MAVLINK_MSG_ID replyid, ReplyPacketFilter filter, bool gcs, int timeoutms = 1000, int retries = 1)
         {
             MAVLinkMessage reply = null;
-            long dueticks;
+            long dueticks = 0;
             using (ManualResetEvent ev = new ManualResetEvent(false))
             {
                 void eh(object o, MAVLinkMessage p)
@@ -667,11 +667,12 @@ namespace Diva.Mavlink
                 byte[] pktdata = PreparePacket(msgid, indata);
                 var pkt = Status.GetPacket(replyid);
                 var lasttime = pkt?.rxtime ?? DateTime.Now;
-                dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
                 RegisterMavMessageHandler(replyid, eh, gcs);
                 bool notdone;
                 do
                 {
+                    Volatile.Write(ref dueticks,
+                        DateTime.Now.AddMilliseconds(timeoutms).Ticks);
                     lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                     while ((notdone = !ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks)))
                         && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
@@ -707,11 +708,10 @@ namespace Diva.Mavlink
                 return null;
             }
             MAVLinkMessage reply = null;
-            long dueticks;
+            long dueticks = 0;
             using (ManualResetEvent ev = new ManualResetEvent(false))
             {
                 byte[] pktdata = PreparePacket(msgid, indata);
-                dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
                 var ehs = new EventHandler<MAVLinkMessage>[rids.Length];
                 for (var i = rids.Length; i > 0; )
                 {
@@ -734,12 +734,13 @@ namespace Diva.Mavlink
                         }
                     };
                     RegisterMavMessageHandler(rids[ival], ehs[ival],
-                        gcs?.GetValue(ival) != null ? gcs[ival] : false);
+                        gcs != null && gcs.Length > ival && gcs[ival]);
                 }
                 bool notdone;
                 do
                 {
-                    dueticks = DateTime.Now.AddMilliseconds(timeoutms).Ticks;
+                    Volatile.Write(ref dueticks,
+                        DateTime.Now.AddMilliseconds(timeoutms).Ticks);
                     lock (writeLock) BaseStream.Write(pktdata, 0, pktdata.Length);
                     while ((notdone = !ev.WaitOne(new TimeSpan(dueticks - DateTime.Now.Ticks)))
                         && DateTime.Now.Ticks < Volatile.Read(ref dueticks));
@@ -750,7 +751,7 @@ namespace Diva.Mavlink
                 } while (notdone && --retries > 0);
                 for (var i = rids.Length; --i >= 0; )
                     UnregisterMavMessageHandler(rids[i], ehs[i],
-                        gcs?.GetValue(i) != null ? gcs[i] : false);
+                        gcs != null && gcs.Length > i && gcs[i]);
             }
             return reply;
         }
