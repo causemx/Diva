@@ -195,7 +195,6 @@ namespace Diva
 
 			//setup toolstrip
 			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
-			TSZoomPanel.Renderer = new Controls.Components.MyTSRenderer();
 			//Collect DroneInfoPanels
 
 			// setup geofence
@@ -258,20 +257,6 @@ namespace Diva
 
 		private void Planner_Load(object sender, EventArgs e)
 		{
-			FlightRecorder recorder = new FlightRecorder()
-			{
-				UserName = ResStrings.StrAnonymousAccount,
-				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				TotalDistance = 0.0d,
-				HomeLatitude = 0.0d,
-				HomeLongitude = 0.0d,
-				HomeAltitude = 0.0d,
-			};
-
-			DatabaseManager.InitialDatabase();
-			recorder_id = DatabaseManager.InsertValue(recorder);
-
 			mainThread = new Thread(MainLoop)
 			{
 				IsBackground = true,
@@ -280,9 +265,10 @@ namespace Diva
 			};
 			mainThread.Start();
 
+			isUpdatemapThreadRun = true;
 			updateMapItemThread = new Thread(MapitemUpdateLoop) { IsBackground = true };
 			updateMapItemThread.Start();
-			isUpdatemapThreadRun = true;
+			
 		}
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
@@ -302,8 +288,6 @@ namespace Diva
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
-			DatabaseManager.Dump(recorder_id);
 			OnlineDrones.ForEach(d => d.Disconnect());
 		}
 
@@ -1415,7 +1399,6 @@ namespace Diva
 
 						dist += myMap.MapProvider.Projection.GetDistance(e.FullPoints[a - 1], e.FullPoints[a]);
 						DroneInfoPanel.UpdateAssumeTime(dist);
-						DatabaseManager.UpdateTotalDistance(recorder_id, dist);
 					}
 				}
 			};
@@ -2729,8 +2712,6 @@ namespace Diva
 			TxtHomeAltitude.Text = "0";
 			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString();
 			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
-
-			DatabaseManager.UpdateHomeLocation(recorder_id, MouseDownStart.Lat, MouseDownStart.Lng, 0.0d);
 		}
 
 

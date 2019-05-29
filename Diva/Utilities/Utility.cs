@@ -332,7 +332,7 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapMarkerQuad : GMapMarker
 	{
-		private readonly Bitmap icon = Resources.icon_drone_4axis;
+		private readonly Bitmap icon = Resources.icon_drone2;
 
 		float heading = 0;
 		float cog = -1;

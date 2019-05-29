@@ -117,200 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="splitContainer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="CollectionTelemetryData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>595, 262</value>
-  </data>
-  <data name="CollectionTelemetryData.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="CollectionTelemetryData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>341, 245</value>
-  </data>
-  <data name="DroneInfo3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>592, 178</value>
-  </data>
-  <data name="DroneInfo3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="DroneInfo3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 78</value>
-  </data>
-  <data name="DroneInfo2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>592, 94</value>
-  </data>
-  <data name="DroneInfo2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="DroneInfo2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 78</value>
-  </data>
-  <data name="DroneInfo1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>592, 10</value>
-  </data>
-  <data name="DroneInfo1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="DroneInfo1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>344, 78</value>
-  </data>
-  <data name="BtnRTL.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnRTL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnRTL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 404</value>
-  </data>
-  <data name="BtnRTL.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="BtnRTL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnRTL.Text" xml:space="preserve">
-    <value>回原點</value>
-  </data>
-  <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnLand.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnLand.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 218</value>
-  </data>
-  <data name="BtnLand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnLand.Text" xml:space="preserve">
-    <value>降落</value>
-  </data>
-  <data name="BtnVideo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnVideo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnVideo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 404</value>
-  </data>
-  <data name="BtnVideo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="BtnVideo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnVideo.Text" xml:space="preserve">
-    <value>影像</value>
-  </data>
-  <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnAuto.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnAuto.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 218</value>
-  </data>
-  <data name="BtnAuto.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnAuto.Text" xml:space="preserve">
-    <value>執行任務</value>
-  </data>
-  <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnArm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 125</value>
-  </data>
-  <data name="BtnArm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnArm.Text" xml:space="preserve">
-    <value>發動</value>
-  </data>
-  <data name="BtnReadWPs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnReadWPs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnReadWPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 311</value>
-  </data>
-  <data name="BtnReadWPs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnReadWPs.Text" xml:space="preserve">
-    <value>讀取任務</value>
-  </data>
-  <data name="BtnTakeOff.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnTakeOff.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 125</value>
-  </data>
-  <data name="BtnTakeOff.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnTakeOff.Text" xml:space="preserve">
-    <value>起飛</value>
-  </data>
-  <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnWriteWPs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnWriteWPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 311</value>
-  </data>
-  <data name="BtnWriteWPs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 87</value>
-  </data>
-  <data name="BtnWriteWPs.Text" xml:space="preserve">
-    <value>輸入任務</value>
-  </data>
-  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnConnect.Text" xml:space="preserve">
-    <value>連線</value>
-  </data>
-  <data name="TSBtnRotation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnRotation.Text" xml:space="preserve">
-    <value>輪值</value>
-  </data>
-  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnConfigure.Text" xml:space="preserve">
-    <value>設定頁面</value>
-  </data>
-  <data name="TSBtnTagging.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnTagging.Text" xml:space="preserve">
-    <value>標記路線</value>
-  </data>
-  <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 9</value>
-  </data>
   <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 22</value>
   </data>
@@ -352,12 +159,6 @@
   </data>
   <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
     <value>上傳</value>
-  </data>
-  <data name="downloadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
-  </data>
-  <data name="downloadToolStripMenuItem.Text" xml:space="preserve">
-    <value>下載</value>
   </data>
   <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
@@ -413,8 +214,292 @@
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 120</value>
   </data>
-  <data name="myMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 526</value>
+  <data name="BtnRTL.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnVideo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 128</value>
+  </data>
+  <data name="BtnReadWPs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnTakeOff.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 128</value>
+  </data>
+  <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnConnect.Text" xml:space="preserve">
+    <value>連線</value>
+  </data>
+  <data name="Btn_Rotation.HoverImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        RK5CYII=
+</value>
+  </data>
+  <data name="Btn_Rotation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEwAAABMCAYAAADHl1ErAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMrSURBVHhe7Zi9a1NRGMZTHSz9DxwaCgqWptLFv6AgtEMr
+        QnHSVerc2Ukb7ObuqFODbjq6ZHARdEjagvgBmiGQ4ZoY0Xz6PJcn0GBqbm4qHOX5weXc836d97w39+Tc
+        kzHGGGOMMcYYY4wxxhhjjDHm79Hv92d6vd7Vbrf7qN1ufywWi71KpdLqdDolyPLQZ2WaCsSeR5xdxC6X
+        SqUO43McjsdxOb5MwwfJLqIwr9DGYCLvMJEXuJ62Wq3PlFWr1Z9oHuCalVsiYD9Hv1qt9gNtn/EQt8D4
+        HIcyovEX5RYueLqrzWazzqQxicfoL0kVA/EZyDYxuQPaoD1Ef1nqPwK7Fdgfya/MOIwndQzH47i0YR7o
+        r0oVHkguV6/Xm1EUfcf9dYlHAv05TCzPV4k+6F+TaiTU0w72cOvu0V+qkXB85qHYOYnDAQ90BtdrPlkm
+        K/FYYLsGl4iFQHtb4iFgc4d6/GK+4n5d4rEwD+YDmFdYaxqS22BmePpPJEoMfJewFn2hP4sjcQz6O5RT
+        j/uJfynMR3E3JAoD5LSvxC5LNBHwu3isaJuSbbOP9eoD9bHhhDAfxgD7EoUBJlvB9UndVGByF/CLKKC9
+        gmuLr6GKuCCTVDAv5qduGPARYrIv1Z0KFOum1rQI95ckTg3zYn7qhsFpFYwFYqFYMBZO4qkIsmCn8Upi
+        Tgt8BVWsLUz0PvdS3KthI/oW1xvIb8g8MaG+klMv+lzcFWObMhTsOfv89GEhoX8P3a3YISHMhzFAWIs+
+        EptmW5FjQeiP+x2JWbCHlBHqoRv6akgC86E/85MoDJBT2o3rOjekeg2H9mCDgqG9d+xPYE3qsTAP+oPw
+        Nq4ECU76abTHQpz0aQTZXRUqS32j0fiGfg9+efrLbCTQh/1pNADJJf34LtMG7RH6K1IPAfVZ6M6ry9jL
+        tJffAePg9t/9+B6AXE863ilgLYqPd3Q8w+OdObklAvaz9NPx0OB45xnjcxzKiMYP/3hnAJL97QCR/3a4
+        L0O2C928TFOB+FnGQWFKPJhkfI7D8Tgux5epMcYYY4wxxhhjjDHGGGOMMcYYY4wxxhhjjDH/MZnML4vG
+        MXR6vcGGAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="Btn_Rotation.Text" xml:space="preserve">
+    <value>自動輪值</value>
+  </data>
+  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnConfigure.HoverImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        cYWJMmylPwA/B7hure/UAAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="TSBtnConfigure.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEwAAABMCAYAAADHl1ErAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASTSURBVHhe7Zo5aFRRFIbjFkGIuBQiKIrGTsRGELWQuBQW
+        2rk0iQguqJWVpYjYWQa3xsKlsLcSF6KiCDamVGNhFDRITIzZM/7f+M8wY95MMq7vJeeDy7vvnP/ce87N
+        m5c3d15dEARBEARBEARBEGSVXC5XPzo6eru9vX1E/TKw4VN3juXB2NhYC4ujhbmsw5nSZltOmmbLAy8O
+        LLCpCLYfrtwZm6Y+ujoWq51yW2wzizFD5xt1Fd39sSaVFwwNWnVn2FVx3EyjQpYNDw+/omigL9satZPq
+        d2Dr6OgYHhkZeaTuPIcVwYYPDVpiiGWMhHGXOSybqIDlFNLd3f1NNW2nuZ9HC/FUmma1BodURJr5ai3E
+        ODz387hetOUOyRZKvHFoaOgdhajfZDP2JhX9TMedNtUMsR6jbFzmYk71G23OBkp4CYn39fV9UX+zzX8d
+        XWlbmNOLtsTm9KNkj/KREdtt+mcwJxMrh8M2pR8lu4uk/Qw1y+aqKGaR2n7FnFfMNRp9bPgsqwpzeU4W
+        bJfN2UCJXyRxHW9QiM3jUGGr0XR2dg6hh4GBgY80n+bwoUHrsHFIxmIxF3NetDk7qLgGbsK6Ob9UDYlf
+        a6Q51tXVNeAFuSodH6d6u1mEemz40KAlxu4ymIO5enp6+pjb5uygAk6r8dHYZlMZWgQ+evBAmkYdZ+u4
+        R/ZWtTturdjsa9SCPCSAWA9TBnPhF6dtygZKeObg4OB7FfjYpjJU2CGqUuE3dZij86bCQ2hvb+9Xxb2g
+        0cfm56smtIq5hY0xPFwZzMncksy0Kf24uMQvzLIt1b/+HhX2XJJ6nbe0tbWNalFeq79Xba6laOdik+8N
+        GrTEEMsYOl9qaRHZmj138RktlSjBDfrr39cz0Nv+/v7PFKi8F9pdRJoL8kk+to4Y7k1cFUnaAvikeYKW
+        GGIZg7EsKYKWucmBXMiJGLvTA1eBPgoflHDhkeCcXUVkn6X/fp/ku8u5FoF7UrcKmvAhEw1aYjjXGPcY
+        izHzghKYmxxo5ERudqUHJcc96axPE5FkPToVf0KHlfSTFrYSXgjiV3gMWG93IuSEyKfpIZ/6BHtWKvKA
+        dVvV30dHx012TwhaxxC71f0DdiciSX6vzafpgaRE1QWT/yAiFblW7SR9scruCUFLgGKPMwZ9cdDuROTP
+        7oJxNVgXVxhJ1XIPU1vhmOl5D4v/kjWign7nOexJkrYAPjSlz2GycXVm9zmsFCX4P5/08z/Z6ZjuJ/1S
+        lO9kv0vyvTC+S4IS/pXdit2y/7xbsdu+qbtbAUq+gb0pFflb+2HS7MCHZhL7Ye3+0SV7+2EqspYd1+ss
+        CHpgt5Xm08KO63W0DhuHZNndcVVhhT39SxRic1UU86f29JmTW0F29vSV7xGSFv/tVyNxxKb0o79u8XdJ
+        Jb7F5r8OczEnc5ODzdlACccv37WixCfzbkWL2nyHVAQNWmIcPrXerSigAib79g7b1JXe3nk8Ld7eKaBC
+        4v2wP4kWId5ArAVdHdXecb2iY+IX+WmL1oMv1fEWdRAEQRAEQRAEQRAEQRAEQRAEQRAEQVALdXXfAXdE
+        HXMChG9FAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="TSBtnConfigure.Text" xml:space="preserve">
+    <value>設定頁面</value>
+  </data>
+  <data name="TSBtnTagging.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnTagging.HoverImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+</value>
+  </data>
+  <data name="TSBtnTagging.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+</value>
+  </data>
+  <data name="TSBtnTagging.Text" xml:space="preserve">
+    <value>標記路線</value>
+  </data>
+  <data name="TSBtnSaveMission.Text" xml:space="preserve">
+    <value>儲存任務</value>
+  </data>
+  <data name="TSBtnReadMission.Text" xml:space="preserve">
+    <value>讀取任務</value>
+  </data>
+  <data name="TSBtnCusOverlay.Text" xml:space="preserve">
+    <value>自訂圖層</value>
   </data>
   <data name="colCommand.HeaderText" xml:space="preserve">
     <value>命令</value>
@@ -471,9 +556,6 @@
   <data name="colAngle.HeaderText" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="colAngle.Width" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
   <data name="colDelete.HeaderText" xml:space="preserve">
     <value>刪除</value>
   </data>
@@ -489,53 +571,20 @@
   <data name="colTagData.Width" type="System.Int32, mscorlib">
     <value>70</value>
   </data>
-  <data name="dgvWayPoints.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 51</value>
-  </data>
-  <data name="dgvWayPoints.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="dgvWayPoints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 82</value>
-  </data>
   <data name="TxtHomeLongitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TxtHomeLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>383, 6</value>
-  </data>
-  <data name="TxtHomeLongitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 41</value>
   </data>
   <data name="TxtHomeLatitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="TxtHomeLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>279, 6</value>
-  </data>
-  <data name="TxtHomeLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 41</value>
-  </data>
   <data name="TxtHomeAltitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TxtHomeAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="TxtHomeAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 41</value>
   </data>
   <data name="LabelLongitude.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="LabelLongitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="LabelLongitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LabelLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>347, 18</value>
   </data>
   <data name="LabelLongitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>25, 18</value>
@@ -549,12 +598,6 @@
   <data name="LabelLatitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="LabelLatitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LabelLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>245, 18</value>
-  </data>
   <data name="LabelLatitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>25, 18</value>
   </data>
@@ -567,29 +610,11 @@
   <data name="LabelAltitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="LabelAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LabelAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 18</value>
-  </data>
   <data name="LabelAltitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>25, 18</value>
   </data>
   <data name="LabelAltitude.Text" xml:space="preserve">
     <value>高:</value>
-  </data>
-  <data name="TxtDroneMode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TxtDroneMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="TxtDroneMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>864, 18</value>
-  </data>
-  <data name="TxtDroneMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 18</value>
   </data>
   <data name="BtnDroneMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -597,29 +622,11 @@
   <data name="BtnDroneMode.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt, style=Bold</value>
   </data>
-  <data name="BtnDroneMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnDroneMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>728, 1</value>
-  </data>
-  <data name="BtnDroneMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 49</value>
-  </data>
   <data name="BtnDroneMode.Text" xml:space="preserve">
     <value>無人機模式</value>
   </data>
   <data name="BtnAltitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt, style=Bold</value>
-  </data>
-  <data name="BtnAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>472, 1</value>
-  </data>
-  <data name="BtnAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 49</value>
   </data>
   <data name="BtnAltitude.Text" xml:space="preserve">
     <value>寫入高度</value>
@@ -627,110 +634,14 @@
   <data name="BtnHomeLand.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt, style=Bold</value>
   </data>
-  <data name="BtnHomeLand.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnHomeLand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 49</value>
-  </data>
   <data name="BtnHomeLand.Text" xml:space="preserve">
     <value>原點位置</value>
   </data>
   <data name="TxtAltitudeValue.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <data name="TxtAltitudeValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>608, 6</value>
-  </data>
-  <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 41</value>
-  </data>
-  <data name="panelDroneInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 51</value>
-  </data>
-  <data name="splitContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 662</value>
-  </data>
-  <data name="splitContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>526</value>
-  </data>
-  <data name="splitContainer.SplitterWidth" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="ImgListBatteryHealth.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAe
-        CwAAAk1TRnQBSQFMAgEBBgEAAdQBAQHcAQEBEAEAARABAAT/AQkBEAj/AUIBTQE2AQQGAAE2AQQCAAEo
-        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
-        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
-        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
-        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
-        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
-        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
-        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
-        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
-        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
-        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
-        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
-        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
-        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
-        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
-        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
-        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
-        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
-        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
-        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
-        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
-        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
-        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
-        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
-        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
-        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
-        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
-        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
-        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/4IADf8B9AIADf8B9CIA
-        Af8N9AIAAf8N9CIAAv8KAAL0AgAC/woAAvQiAAH/AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/
-        AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/
-        AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/AQAHugEZAgAB9AL/AQAB/wEACboBGQH0Av8hAAH/
-        AQAHugEZAgAC9AIAAf8BAAm6AfIC9CIAAv8KAAL0AgAC/woAAvQiAA3/AfQCAA3/AfQiAA30Af8CAA30
-        Af//ACMADf8B9AIADf8B9AIADf8B9AIADf8B9AIAAf8N9AIAAf8N9AIAAf8N9AIAAf8N9AIAAv8KAAL0
-        AgAC/woAAvQCAAL/CgAC9AIAAv8KAAL0AgAB/wsAAfQC/wEAAf8BAAFvAZMIAAH0Av8BAAH/AQADWQGa
-        BgAB9AL/AQAB/wEABboBuwQAAfQC/wEAAf8LAAH0Av8BAAH/AQABbwGTCAAB9AL/AQAB/wEAA1kBmgYA
-        AfQC/wEAAf8BAAW6AbsEAAH0Av8BAAH/CwAB9AL/AQAB/wEAAW8BkwgAAfQC/wEAAf8BAANZAZoGAAH0
-        Av8BAAH/AQAFugG7BAAB9AL/AQAB/wsAAfQC/wEAAf8BAAFvAZMIAAH0Av8BAAH/AQADWQGaBgAB9AL/
-        AQAB/wEABboBuwQAAfQC/wEAAf8LAAH0Av8BAAH/AQABbwGTCAAB9AL/AQAB/wEAA1kBmgYAAfQC/wEA
-        Af8BAAW6AbsEAAH0Av8BAAH/CwAC9AIAAf8BAAEWAZMIAAL0AgAB/wEAA3oBmgYAAvQCAAH/AQAFugEJ
-        BAAC9AIAAv8KAAL0AgAC/woAAvQCAAL/CgAC9AIAAv8KAAL0AgAN/wH0AgAN/wH0AgAN/wH0AgAN/wH0
-        AgAN9AH/AgAN9AH/AgAN9AH/AgAN9AH/gQABQgFNAT4HAAE+AwABKAMAAUADAAEgAwABAQEAAQEGAAEB
-        FgAD/wEABP8EAAT/BAABgAEBAYABAQQAAYABAQGAAQEEAAGfAfkBnwH5BAABoAEYAaAFAAGgARgBoAUA
-        AaABGAGgBQABoAEYAaAFAAGgARgBoAUAAaABGQGgAQEEAAGfAfkBnwH5BAABgAEBAYABAQQAAYABAQGA
-        AQEEAAT/BAAE/wQAEP8BgAEBAYABAQGAAQEBgAEBAYABAQGAAQEBgAEBAYABAQGfAfkBnwH5AZ8B+QGf
-        AfkBvwH4AacB+AGhAfgBoAF4Ab8B+AGnAfgBoQH4AaABeAG/AfgBpwH4AaEB+AGgAXgBvwH4AacB+AGh
-        AfgBoAF4Ab8B+AGnAfgBoQH4AaABeAG/AfkBpwH5AaEB+QGgAXkBnwH5AZ8B+QGfAfkBnwH5AYABAQGA
-        AQEBgAEBAYABAQGAAQEBgAEBAYABAQGAAQEQ/xYACw==
-</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>948, 662</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>962, 644</value>
-  </data>
-  <data name="Btn_Rotation.Text" xml:space="preserve">
-    <value>自動輪值</value>
-  </data>
-  <data name="TSBtnSaveMission.Text" xml:space="preserve">
-    <value>儲存任務</value>
-  </data>
-  <data name="TSBtnReadMission.Text" xml:space="preserve">
-    <value>讀取任務</value>
-  </data>
-  <data name="TSBtnCusOverlay.Text" xml:space="preserve">
-    <value>自訂圖層</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
 </root>

@@ -47,10 +47,10 @@
 			// PBDroneView
 			// 
 			this.PBDroneView.BackColor = System.Drawing.Color.Transparent;
-			this.PBDroneView.Image = global::Diva.Properties.Resources.icon_drone_4axis;
+			this.PBDroneView.Image = global::Diva.Properties.Resources.icon_drone1;
 			this.PBDroneView.Location = new System.Drawing.Point(8, 10);
 			this.PBDroneView.Name = "PBDroneView";
-			this.PBDroneView.Size = new System.Drawing.Size(58, 58);
+			this.PBDroneView.Size = new System.Drawing.Size(54, 54);
 			this.PBDroneView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.PBDroneView.TabIndex = 0;
 			this.PBDroneView.TabStop = false;
@@ -58,40 +58,40 @@
 			// TxtDroneName
 			// 
 			this.TxtDroneName.AutoSize = true;
-			this.TxtDroneName.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TxtDroneName.ForeColor = System.Drawing.Color.White;
+			this.TxtDroneName.Font = new System.Drawing.Font("Noto Sans", 9F, System.Drawing.FontStyle.Bold);
+			this.TxtDroneName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
 			this.TxtDroneName.Location = new System.Drawing.Point(75, 6);
 			this.TxtDroneName.Name = "TxtDroneName";
-			this.TxtDroneName.Size = new System.Drawing.Size(45, 15);
+			this.TxtDroneName.Size = new System.Drawing.Size(46, 17);
 			this.TxtDroneName.TabIndex = 1;
 			this.TxtDroneName.Text = "APM-1";
 			// 
 			// pictureBox2
 			// 
-			this.pictureBox2.Image = global::Diva.Properties.Resources.icon_flytime;
-			this.pictureBox2.Location = new System.Drawing.Point(75, 49);
+			this.pictureBox2.Image = global::Diva.Properties.Resources.icon_stopwatch;
+			this.pictureBox2.Location = new System.Drawing.Point(75, 48);
 			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(30, 22);
+			this.pictureBox2.Size = new System.Drawing.Size(24, 24);
 			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBox2.TabIndex = 2;
 			this.pictureBox2.TabStop = false;
 			// 
 			// pictureBox3
 			// 
-			this.pictureBox3.Image = global::Diva.Properties.Resources.icon_battery_3;
-			this.pictureBox3.Location = new System.Drawing.Point(158, 49);
+			this.pictureBox3.Image = global::Diva.Properties.Resources.icon_battery;
+			this.pictureBox3.Location = new System.Drawing.Point(158, 48);
 			this.pictureBox3.Name = "pictureBox3";
-			this.pictureBox3.Size = new System.Drawing.Size(30, 22);
+			this.pictureBox3.Size = new System.Drawing.Size(28, 24);
 			this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBox3.TabIndex = 3;
 			this.pictureBox3.TabStop = false;
 			// 
 			// pictureBox4
 			// 
-			this.pictureBox4.Image = global::Diva.Properties.Resources.capacity_signal;
-			this.pictureBox4.Location = new System.Drawing.Point(253, 49);
+			this.pictureBox4.Image = global::Diva.Properties.Resources.icon_signal;
+			this.pictureBox4.Location = new System.Drawing.Point(253, 48);
 			this.pictureBox4.Name = "pictureBox4";
-			this.pictureBox4.Size = new System.Drawing.Size(30, 22);
+			this.pictureBox4.Size = new System.Drawing.Size(24, 24);
 			this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBox4.TabIndex = 4;
 			this.pictureBox4.TabStop = false;
@@ -99,44 +99,44 @@
 			// TxtAssumeTime
 			// 
 			this.TxtAssumeTime.AutoSize = true;
-			this.TxtAssumeTime.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtAssumeTime.Font = new System.Drawing.Font("Noto Sans", 9F);
 			this.TxtAssumeTime.ForeColor = System.Drawing.Color.White;
-			this.TxtAssumeTime.Location = new System.Drawing.Point(111, 53);
+			this.TxtAssumeTime.Location = new System.Drawing.Point(108, 53);
 			this.TxtAssumeTime.Name = "TxtAssumeTime";
-			this.TxtAssumeTime.Size = new System.Drawing.Size(39, 15);
+			this.TxtAssumeTime.Size = new System.Drawing.Size(36, 17);
 			this.TxtAssumeTime.TabIndex = 5;
 			this.TxtAssumeTime.Text = "0.0m";
 			// 
 			// TxtBatteryHealth
 			// 
 			this.TxtBatteryHealth.AutoSize = true;
-			this.TxtBatteryHealth.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtBatteryHealth.Font = new System.Drawing.Font("Noto Sans", 9F);
 			this.TxtBatteryHealth.ForeColor = System.Drawing.Color.White;
 			this.TxtBatteryHealth.Location = new System.Drawing.Point(195, 53);
 			this.TxtBatteryHealth.Name = "TxtBatteryHealth";
-			this.TxtBatteryHealth.Size = new System.Drawing.Size(44, 15);
+			this.TxtBatteryHealth.Size = new System.Drawing.Size(41, 17);
 			this.TxtBatteryHealth.TabIndex = 6;
 			this.TxtBatteryHealth.Text = "00 vol";
 			// 
 			// TxtSatelliteCount
 			// 
 			this.TxtSatelliteCount.AutoSize = true;
-			this.TxtSatelliteCount.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtSatelliteCount.Font = new System.Drawing.Font("Noto Sans", 9F);
 			this.TxtSatelliteCount.ForeColor = System.Drawing.Color.White;
-			this.TxtSatelliteCount.Location = new System.Drawing.Point(290, 53);
+			this.TxtSatelliteCount.Location = new System.Drawing.Point(287, 53);
 			this.TxtSatelliteCount.Name = "TxtSatelliteCount";
-			this.TxtSatelliteCount.Size = new System.Drawing.Size(45, 15);
+			this.TxtSatelliteCount.Size = new System.Drawing.Size(42, 17);
 			this.TxtSatelliteCount.TabIndex = 7;
 			this.TxtSatelliteCount.Text = "00 cut";
 			// 
 			// TxtSystemID
 			// 
 			this.TxtSystemID.AutoSize = true;
-			this.TxtSystemID.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.TxtSystemID.Font = new System.Drawing.Font("Noto Sans", 9F);
 			this.TxtSystemID.ForeColor = System.Drawing.Color.White;
 			this.TxtSystemID.Location = new System.Drawing.Point(75, 26);
 			this.TxtSystemID.Name = "TxtSystemID";
-			this.TxtSystemID.Size = new System.Drawing.Size(23, 15);
+			this.TxtSystemID.Size = new System.Drawing.Size(22, 17);
 			this.TxtSystemID.TabIndex = 8;
 			this.TxtSystemID.Text = "00";
 			// 
@@ -145,7 +145,7 @@
 			this.BtnClose.AutoSize = true;
 			this.BtnClose.FlatAppearance.BorderSize = 0;
 			this.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnClose.Image = global::Diva.Properties.Resources.icon_zoomin1;
+			this.BtnClose.Image = global::Diva.Properties.Resources.icon_btn_expand;
 			this.BtnClose.Location = new System.Drawing.Point(305, 3);
 			this.BtnClose.Name = "BtnClose";
 			this.BtnClose.Size = new System.Drawing.Size(36, 30);
@@ -156,7 +156,7 @@
 			// DroneInfo
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-			this.BackColor = System.Drawing.Color.Black;
+			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
 			this.Controls.Add(this.BtnClose);
 			this.Controls.Add(this.TxtSystemID);
 			this.Controls.Add(this.TxtSatelliteCount);
