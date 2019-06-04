@@ -268,7 +268,6 @@ namespace Diva
 			isUpdatemapThreadRun = true;
 			updateMapItemThread = new Thread(MapitemUpdateLoop) { IsBackground = true };
 			updateMapItemThread.Start();
-			
 		}
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
@@ -278,6 +277,7 @@ namespace Diva
 				isUpdatemapThreadRun = false;
 				updateMapItemThread = null;
 			}
+
 			if (mainThread != null)
 			{
 				serialThread = false;
@@ -1381,7 +1381,7 @@ namespace Diva
 
 			var overlay = new OverlayUtility.WPOverlay(ActiveDrone.ObjOverlay.Overlay,
 				ActiveDrone.ObjOverlay.RoutingColor,
-				ActiveDrone.ObjOverlay.Marker);
+				Resources.point_blue);
 
 			overlay.RaiseFullPointsEvent += (s, e) => {
 
@@ -3460,6 +3460,15 @@ namespace Diva
 				Thread.Sleep(500);
 			}
 		}
+
+
+		private void KeyDownListener(object sender, KeyEventArgs e)
+		{
+			string mode = Enum.GetName(typeof(FlightMode), ActiveDrone.Status.mode);
+			while (mode != "LOITER")
+				ActiveDrone.setMode("AUTO");
+		}
+
 
 		#region customized overlay related functions
 

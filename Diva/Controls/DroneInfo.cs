@@ -20,7 +20,7 @@ namespace Diva.Controls
 			private set
 			{
 				isActive = value;
-                BackColor = isActive ? Color.FromArgb(67, 78, 84) : Color.FromArgb(128, 128, 128);
+                BackColor = isActive ? Color.FromArgb(37, 54, 98) : Color.FromArgb(128, 128, 128);
 				Parent?.Invalidate(Bounds, true);
 			}
 		}

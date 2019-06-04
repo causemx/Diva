@@ -35,7 +35,7 @@ namespace Diva.Utilities
 			/// list of point as per mission including jump repeats
 			public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
-			public Color color = Color.AliceBlue;
+			public Color color = Color.Yellow;
 
 			public void ConfigRouteColor(Color _color) => this.color = _color;
 

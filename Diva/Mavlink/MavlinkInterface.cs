@@ -192,7 +192,7 @@ namespace Diva.Mavlink
 
 			public GMapOverlay Overlay { get; }
 			public Color RoutingColor { get; } = Utility.RandomColor();
-			public Bitmap Marker { get; } = MarkerPicker.GetMarker();
+			// public Bitmap Marker { get; } = MarkerPicker.GetMarker();
 		}
 
 		private void SerialReader()
@@ -321,6 +321,15 @@ namespace Diva.Mavlink
 								Status.failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;*/
 								Status.sys_status = hb.system_status;
 							}
+						}
+					}
+
+					if (mavlinkMessage.msgid == ((uint)MAVLink.MAVLINK_MSG_ID.MISSION_ITEM_REACHED))
+					{
+						if (mavlinkMessage != null)
+						{
+							var msg = mavlinkMessage.ToStructure<MAVLink.mavlink_mission_item_reached_t>();
+							Planner.log.Info("current_waypoint_seq: " + msg.seq);
 						}
 					}
 
