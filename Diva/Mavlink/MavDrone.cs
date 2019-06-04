@@ -13,6 +13,8 @@ namespace Diva.Mavlink
         public override string Name => Setting?.Name ?? base.Name;
         public bool IsOpen => BaseStream?.IsOpen ?? false;
         public bool IsRotationStandby = true;
+        public EventHandler<MAV_STATE> StateChangedEvent;
+        public EventHandler<FlightMode> FlightModeChanged;
 
         public MavDrone(DroneSetting setting = null)
         {
@@ -95,17 +97,21 @@ namespace Diva.Mavlink
         private void DroneHeartBeatPacketHandler(object holder, MAVLinkMessage packet)
         {
             var hb = GetMessage<mavlink_heartbeat_t>(packet, ref holder);
-            var mode = (FlightMode)hb.custom_mode;
-            if (Status.FlightMode != mode)
-            {
-                Status.FlightMode = mode;
-                Planner.GetPlannerInstance()?.DroneModeChangedCallback(this);
-            }
-            Status.State = hb.system_status;
             if (hb.type != (byte)MAV_TYPE.GCS)
             {
+                var mode = (FlightMode)hb.custom_mode;
+                if (Status.FlightMode != mode)
+                {
+                    Status.FlightMode = mode;
+                    FlightModeChanged?.Invoke(this, mode);
+                }
                 Status.IsArmed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
-                Status.State = hb.system_status;
+                var state = (MAV_STATE)hb.system_status;
+                if (Status.State != state)
+                {
+                    Status.State = state;
+                    StateChangedEvent?.Invoke(this, state);
+                }
             }
         }
 

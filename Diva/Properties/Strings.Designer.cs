@@ -1060,7 +1060,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection.
+        ///   Looks up a localized string similar to Connecting {0}....
         /// </summary>
         public static string TextFormProgressConnection {
             get {

@@ -154,7 +154,7 @@ namespace Diva.Mavlink
             set { groundCourse = value < 0 ? value + 360 : value; }
         }
 
-        public byte State { get; set; }
+        public MAV_STATE State { get; set; }
 
         public bool IsArmed { get; set; }
 

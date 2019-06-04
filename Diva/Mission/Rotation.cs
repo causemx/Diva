@@ -107,7 +107,7 @@ namespace Diva.Mission
 				LockDrone(index);
 				MavDrone drone = drones[index];
 
-				if (!drone.IsRotationStandby && drone.Status.State == (byte)MAVLink.MAV_STATE.STANDBY)
+				if (!drone.IsRotationStandby && drone.Status.State == MAVLink.MAV_STATE.STANDBY)
 				{
 					try
 					{
@@ -132,7 +132,7 @@ namespace Diva.Mission
                         drone.TakeOff(10);
 					}
 
-					while (drone.Status.State != (byte)MAVLink.MAV_STATE.ACTIVE)
+					while (drone.Status.State != MAVLink.MAV_STATE.ACTIVE)
 					{
 						manualResetEvent.WaitOne(1000);
 					}
@@ -142,7 +142,7 @@ namespace Diva.Mission
 
 					infoDialog.Message(String.Format(Strings.MsgDialogRotationExecute, index));
 
-					while (drone.Status.State == (byte)MAVLink.MAV_STATE.ACTIVE)
+					while (drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
 					{
 						manualResetEvent.WaitOne(1000);
 					}

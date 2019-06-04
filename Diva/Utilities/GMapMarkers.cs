@@ -146,12 +146,30 @@ namespace Diva.Utilities
 			// Show name on the drone icon.
 			g.RotateTransform(180);
             string name = Drone.Name;
-            if (name.Length > 5)
-                name = name.Substring(0, 5);
-            int offset = (int)(-8.0 * name.Length);
-			g.DrawString(name, new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold), Brushes.Blue, offset, -8);
+            Font font = new Font(FontFamily.GenericMonospace, 15, FontStyle.Bold);
+            SizeF textSize = g.MeasureString(name, font);
+            if (textSize.Width > Icon.Width + 8)
+            {
+                do
+                {
+                    name = name.Substring(0, name.Length - 1);
+                } while ((textSize = g.MeasureString(name, font)).Width > Icon.Width);
+                name += "...";
+                
+            }
+            using (GraphicsPath p = new GraphicsPath())
+            {
+                p.AddString(name, FontFamily.GenericMonospace, (int)FontStyle.Bold,
+                    g.DpiY * font.Size / 72,
+                    new PointF(-textSize.Width / 2, -textSize.Height / 2),
+                    new StringFormat());
+                g.DrawPath(new Pen(Brushes.Aqua, 2), p);
+                g.FillPath(Brushes.Blue, p);
+            }
+            //int offset = (int)(-8.0 * name.Length);
+            //g.DrawString(name, font, Brushes.Blue, offset, -8);
 
-			g.Transform = temp;
+            g.Transform = temp;
 
 			{
 				double width =

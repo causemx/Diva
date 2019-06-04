@@ -424,7 +424,7 @@
     <value> 使用者取消</value>
   </data>
   <data name="TextFormProgressConnection" xml:space="preserve">
-    <value>連線</value>
+    <value>連線至{0}...</value>
   </data>
   <data name="MsgFormProgressSync" xml:space="preserve">
     <value>同步中…</value>

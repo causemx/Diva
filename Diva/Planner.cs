@@ -1892,7 +1892,7 @@ namespace Diva
 				return;
 			}
 
-			if (ActiveDrone.Status.State != (byte)MAV_STATE.ACTIVE)
+			if (ActiveDrone.Status.State != MAV_STATE.ACTIVE)
 			{
 				DialogResult dr = MessageBox.Show(Strings.MsgWarnDroneMustActive, Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				if (dr == DialogResult.OK) return;
@@ -2028,8 +2028,10 @@ namespace Diva
                         drone?.Disconnect();
                         drone = null;
                     }
-                    if (drone?.IsOpen ?? false)
+                    if (drone != null && drone.IsOpen)
                     {
+                        drone.FlightModeChanged += UpdateDroneMode;
+                        drone.StateChangedEvent += NotifyDroneState;
                         DroneInfoPanel.AddDrone(drone);
                         OnlineDrones.Add(drone);
                         overlays.routes.Markers.Add(new GMapDroneMarker(drone));
@@ -2992,14 +2994,14 @@ namespace Diva
         {
             if ((ActiveDrone = (sender as DroneInfo)?.Drone) != null)
             {
-                DroneModeChangedCallback(ActiveDrone);
+                UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
             }
         }
 
-        public void DroneModeChangedCallback(MavDrone drone)
+        public void UpdateDroneMode(object obj, FlightMode mode)
         {
-            void updateText() { TxtDroneMode.Text = drone.Status.FlightMode.GetName(); }
-            if (drone == ActiveDrone)
+            void updateText() { TxtDroneMode.Text = mode.GetName(); }
+            if (obj as MavDrone == ActiveDrone)
             {
                 if (InvokeRequired)
                     BeginInvoke((MethodInvoker)delegate { updateText(); });
@@ -3007,5 +3009,17 @@ namespace Diva
                     updateText();
             }
         }
-	}
+
+        public void NotifyDroneState(object obj, MAV_STATE state)
+        {
+            if (obj as MavDrone == ActiveDrone)
+            {
+                /*void notifyAction() {  }
+                if (InvokeRequired)
+                    BeginInvoke((MethodInvoker)delegate { notifyAction(); });
+                else
+                    notifyAction();*/
+            }
+        }
+    }
 }

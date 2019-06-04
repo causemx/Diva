@@ -424,7 +424,7 @@
     <value>User Canceled</value>
   </data>
   <data name="TextFormProgressConnection" xml:space="preserve">
-    <value>Connection</value>
+    <value>Connecting {0}...</value>
   </data>
   <data name="MsgFormProgressSync" xml:space="preserve">
     <value>sync...</value>

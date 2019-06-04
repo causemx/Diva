@@ -72,7 +72,8 @@ namespace Diva.Mavlink
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_warn,
-				Text = Strings.TextFormProgressConnection,
+				Text = Strings.TextFormProgressConnection.FormatWith(
+                        (this as MavDrone).Name ?? ""),
 			};
 
 			frmProgressReporter.DoWork += OpenBg;
