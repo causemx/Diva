@@ -117,130 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;Tbox_Value.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;Btn_Cancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
+  <data name="Tbox_Value.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 54</value>
   </data>
-  <data name="&gt;&gt;Btn_Confirm.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;Lbl_Hint.Name" xml:space="preserve">
-    <value>Lbl_Hint</value>
-  </data>
-  <data name="&gt;&gt;Btn_Confirm.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="Btn_Cancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;Btn_Cancel.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="Tbox_Value.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 22</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Tbox_Value.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="Lbl_Unit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+  <data name="&gt;&gt;Tbox_Value.Name" xml:space="preserve">
+    <value>Tbox_Value</value>
+  </data>
+  <data name="&gt;&gt;Tbox_Value.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Tbox_Value.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Tbox_Value.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Lbl_Unit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Lbl_Unit.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
+  <data name="Lbl_Unit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>191, 55</value>
+  </data>
+  <data name="Lbl_Unit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 15</value>
+  </data>
   <data name="Lbl_Unit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="Btn_Cancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 81</value>
+  <data name="&gt;&gt;Lbl_Unit.Name" xml:space="preserve">
+    <value>Lbl_Unit</value>
   </data>
-  <data name="&gt;&gt;Lbl_Hint.Type" xml:space="preserve">
+  <data name="&gt;&gt;Lbl_Unit.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Btn_Confirm.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;Lbl_Hint.Parent" xml:space="preserve">
+  <data name="&gt;&gt;Lbl_Unit.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="Btn_Cancel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
   </data>
   <data name="&gt;&gt;Lbl_Unit.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="Btn_Cancel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="Btn_Confirm.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="Btn_Confirm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 81</value>
+  </data>
+  <data name="Btn_Confirm.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="Btn_Confirm.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="Lbl_Unit.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>231, 133</value>
-  </data>
-  <data name="Lbl_Hint.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="Lbl_Hint.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 36</value>
-  </data>
-  <data name="Btn_Confirm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="&gt;&gt;Tbox_Value.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;Lbl_Unit.Name" xml:space="preserve">
-    <value>Lbl_Unit</value>
-  </data>
-  <data name="Tbox_Value.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 22</value>
-  </data>
-  <data name="&gt;&gt;Btn_Confirm.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Lbl_Hint.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="Tbox_Value.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 54</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>InputDataDialog</value>
-  </data>
-  <data name="&gt;&gt;Lbl_Hint.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;Lbl_Unit.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="Btn_Cancel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
+  <data name="Btn_Confirm.Text" xml:space="preserve">
+    <value>Enter</value>
   </data>
   <data name="&gt;&gt;Btn_Confirm.Name" xml:space="preserve">
     <value>Btn_Confirm</value>
   </data>
-  <data name="&gt;&gt;Lbl_Unit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;Btn_Confirm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Btn_Confirm.Text" xml:space="preserve">
-    <value>Enter</value>
+  <data name="&gt;&gt;Btn_Confirm.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;Tbox_Value.Name" xml:space="preserve">
-    <value>Tbox_Value</value>
+  <data name="&gt;&gt;Btn_Confirm.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="Btn_Confirm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 81</value>
+  <data name="Btn_Cancel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="Btn_Cancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 81</value>
+  </data>
+  <data name="Btn_Cancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="Btn_Cancel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="Btn_Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="&gt;&gt;Btn_Cancel.Name" xml:space="preserve">
     <value>Btn_Cancel</value>
+  </data>
+  <data name="&gt;&gt;Btn_Cancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Btn_Cancel.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;Btn_Cancel.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -248,22 +224,46 @@
   <data name="Lbl_Hint.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Lbl_Hint.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="Lbl_Hint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 36</value>
   </data>
   <data name="Lbl_Hint.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 15</value>
   </data>
-  <data name="Lbl_Unit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 55</value>
+  <data name="Lbl_Hint.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>InputDataDialog</value>
+  <data name="&gt;&gt;Lbl_Hint.Name" xml:space="preserve">
+    <value>Lbl_Hint</value>
   </data>
-  <data name="&gt;&gt;Tbox_Value.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;Lbl_Hint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Hint.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Lbl_Hint.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>231, 133</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>InputDataDialog</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>InputDataDialog</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using ResStrings = Diva.Properties.Strings;
+using static Diva.Utilities.ResourceHelper;
 
 namespace Diva.Controls
 {
@@ -95,6 +89,22 @@ namespace Diva.Controls
                 TBoxProxyHost.Text = TBoxProxyPort.Text = "";
             }
 
+            loc = ConfigData.GetOption(ConfigData.OptionName.OriginGeolocation);
+            if (loc != "")
+            {
+                string[] locs = loc.Split('|');
+                if (locs.Length > 1)
+                {
+                    double.TryParse(locs[0], out lat);
+                    double.TryParse(locs[1], out lng);
+                }
+                TBoxOGLatitude.Text = lat.ToString(); ;
+                TBoxOGLongitude.Text = lng.ToString();
+            }
+
+            TBoxIndoorMapLocation.Text = ConfigData.GetOption(ConfigData.OptionName.ImageMapSource);
+            (ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap)
+                ? RBtnIndoorMap : RBtnGlobalMap).Checked = true;
             mapConfigDirtyUpdate = true;
         }
 
@@ -107,6 +117,7 @@ namespace Diva.Controls
             }
             if (!(sender as RadioButton).Checked) return;
             updateControls(PanelGlobalMapControls, RBtnGlobalMap.Checked);
+            updateControls(PanelIndoorMapControls, RBtnIndoorMap.Checked);
             MapConfigDirty = true;
         }
 
@@ -128,10 +139,19 @@ namespace Diva.Controls
             double.TryParse(TBoxIPLongitude.Text, out lng);
             double.TryParse(TBoxInitialZoom.Text, out zoom);
             ConfigData.SetOption(ConfigData.OptionName.MapInitialLocation,
-                $"{lat},{lng},{zoom}");
+                $"{lat}|{lng}|{zoom}");
+            double.TryParse(TBoxOGLatitude.Text, out lat);
+            double.TryParse(TBoxOGLongitude.Text, out lng);
+            ConfigData.SetOption(ConfigData.OptionName.OriginGeolocation,
+                $"{lat}|{lng}");
             int.TryParse(TBoxProxyPort.Text, out int port);
             ConfigData.SetOption(ConfigData.OptionName.MapProxy,
                 RBtnProxySystem.Checked ? "System" : $"{TBoxProxyHost.Text}:{port}");
+            ConfigData.SetOption(ConfigData.OptionName.ImageMapSource, TBoxIndoorMapLocation.Text);
+            bool imagemap = RBtnIndoorMap.Checked;
+            ConfigData.SetOption(ConfigData.OptionName.UseImageMap, imagemap.ToString());
+            if (gmap != null && (imagemap || gmap.MapProvider != gmap.GlobalMapProvider))
+                gmap.ResetMapProvider();
         }
 
         private void BtnBrowseMapLocation_Click(object sender, EventArgs e)
@@ -143,6 +163,18 @@ namespace Diva.Controls
                 dlg.InitialDirectory = TBoxMapCacheLocation.Text;
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                     TBoxMapCacheLocation.Text = dlg.FileName;
+            }
+        }
+
+        private void BtnBrowseIndoorMap_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.CheckFileExists = true;
+                dlg.Filter = Properties.Strings.StrMapImageFileExternsionFilter;
+                var result = dlg.ShowDialog();
+                if (result == DialogResult.OK)
+                    TBoxIndoorMapLocation.Text = dlg.FileName;
             }
         }
 

@@ -258,6 +258,7 @@ namespace Diva
 			// 
 			// splitContainer.Panel2
 			// 
+			resources.ApplyResources(this.splitContainer.Panel2, "splitContainer.Panel2");
 			this.splitContainer.Panel2.Controls.Add(this.dgvWayPoints);
 			this.splitContainer.Panel2.Controls.Add(this.panelDroneInfo);
 			// 
@@ -319,13 +320,18 @@ namespace Diva
 			// 
 			// RotationInfoPanel
 			// 
-			resources.ApplyResources(this.RotationInfoPanel, "RotationInfoPanel");
-			this.RotationInfoPanel.Name = "RotationInfoPanel";
+			resources.ApplyResources(this.PanelPowerConsumption, "PanelPowerConsumption");
+			this.PanelPowerConsumption.Name = "PanelPowerConsumption";
+			// 
+			// PanelRotationInfo
+			// 
+			resources.ApplyResources(this.PanelRotationInfo, "PanelRotationInfo");
+			this.PanelRotationInfo.Name = "PanelRotationInfo";
 			// 
 			// DroneInfoPanel
 			// 
-			this.DroneInfoPanel.ActiveDroneInfo = null;
 			resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
+			this.DroneInfoPanel.ActiveDroneInfo = null;
 			this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
 			this.DroneInfoPanel.Name = "DroneInfoPanel";
 			this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
@@ -463,6 +469,7 @@ namespace Diva
 			// 
 			this.TSMainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
 			resources.ApplyResources(this.TSMainPanel, "TSMainPanel");
+			this.TSMainPanel.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
 			this.TSMainPanel.GripMargin = new System.Windows.Forms.Padding(0);
 			this.TSMainPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.TSMainPanel.ImageScalingSize = new System.Drawing.Size(0, 0);
@@ -584,12 +591,12 @@ namespace Diva
 			// 
 			// myMap
 			// 
+			resources.ApplyResources(this.myMap, "myMap");
 			this.myMap.BackColor = System.Drawing.SystemColors.Control;
 			this.myMap.Bearing = 0F;
 			this.myMap.CanDragMap = true;
 			this.myMap.ContextMenuStrip = this.cmMap;
-			this.myMap.DebugMapLocation = true;
-			resources.ApplyResources(this.myMap, "myMap");
+			this.myMap.DebugMode = true;
 			this.myMap.EmptyTileColor = System.Drawing.Color.Navy;
 			this.myMap.GrayScaleMode = false;
 			this.myMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
@@ -619,6 +626,7 @@ namespace Diva
 			// 
 			// dgvWayPoints
 			// 
+			resources.ApplyResources(this.dgvWayPoints, "dgvWayPoints");
 			this.dgvWayPoints.AllowUserToAddRows = false;
 			this.dgvWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
 			this.dgvWayPoints.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -634,7 +642,6 @@ namespace Diva
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.dgvWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-			resources.ApplyResources(this.dgvWayPoints, "dgvWayPoints");
 			this.dgvWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
             this.colParam1,
@@ -769,7 +776,6 @@ namespace Diva
 			this.panelDroneInfo.Controls.Add(this.BtnAltitude);
 			this.panelDroneInfo.Controls.Add(this.BtnHomeLand);
 			this.panelDroneInfo.Controls.Add(this.TxtAltitudeValue);
-			resources.ApplyResources(this.panelDroneInfo, "panelDroneInfo");
 			this.panelDroneInfo.Name = "panelDroneInfo";
 			// 
 			// ComBoxModeSwitch
@@ -781,45 +787,44 @@ namespace Diva
 			// 
 			// TxtHomeLongitude
 			// 
-			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtHomeLongitude, "TxtHomeLongitude");
+			this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtHomeLongitude.Name = "TxtHomeLongitude";
 			// 
 			// TxtHomeLatitude
 			// 
-			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtHomeLatitude, "TxtHomeLatitude");
+			this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtHomeLatitude.Name = "TxtHomeLatitude";
 			// 
 			// TxtHomeAltitude
 			// 
-			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtHomeAltitude, "TxtHomeAltitude");
+			this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtHomeAltitude.Name = "TxtHomeAltitude";
 			// 
 			// LabelLongitude
 			// 
-			this.LabelLongitude.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.LabelLongitude, "LabelLongitude");
+			this.LabelLongitude.ForeColor = System.Drawing.Color.White;
 			this.LabelLongitude.Name = "LabelLongitude";
 			// 
 			// LabelLatitude
 			// 
-			this.LabelLatitude.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.LabelLatitude, "LabelLatitude");
+			this.LabelLatitude.ForeColor = System.Drawing.Color.White;
 			this.LabelLatitude.Name = "LabelLatitude";
 			// 
 			// LabelAltitude
 			// 
-			this.LabelAltitude.ForeColor = System.Drawing.Color.White;
 			resources.ApplyResources(this.LabelAltitude, "LabelAltitude");
+			this.LabelAltitude.ForeColor = System.Drawing.Color.White;
 			this.LabelAltitude.Name = "LabelAltitude";
 			// 
 			// BtnDroneMode
 			// 
 			this.BtnDroneMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
 			this.BtnDroneMode.FlatAppearance.BorderSize = 0;
-			resources.ApplyResources(this.BtnDroneMode, "BtnDroneMode");
 			this.BtnDroneMode.ForeColor = System.Drawing.Color.White;
 			this.BtnDroneMode.Image = global::Diva.Properties.Resources.icon_airplane_32;
 			this.BtnDroneMode.Name = "BtnDroneMode";
@@ -847,14 +852,14 @@ namespace Diva
 			// 
 			// TxtAltitudeValue
 			// 
-			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
+			this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.TxtAltitudeValue.Name = "TxtAltitudeValue";
 			// 
 			// Planner
 			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			resources.ApplyResources(this, "$this");
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.Controls.Add(this.splitContainer);
 			this.Name = "Planner";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Planner_FormClosing);

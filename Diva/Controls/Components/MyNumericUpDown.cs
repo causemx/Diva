@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.Properties;
 
 namespace Diva.Controls.Components
 {
@@ -46,7 +47,7 @@ namespace Diva.Controls.Components
 		public void setup(float Min, float Max, float Scale, float Increment, string paramname,
 		   MAVLink.MAVLinkParamList paramlist, Control enabledisable = null)
 		{
-			setup(Min, Max, Scale, Increment, new string[] { paramname }, paramlist, enabledisable);
+			setup(Min, Max, Scale, Increment, new [] { paramname }, paramlist, enabledisable);
 		}
 
 		public void setup(float Min, float Max, float Scale, float Increment, string[] paramname,
@@ -179,13 +180,13 @@ namespace Diva.Controls.Components
 			{
 				try
 				{
-					bool ans = Planner.GetActiveDrone().setParam(ParamName, (float)base.Value * (float)_scale);
+					bool ans = Planner.GetActiveDrone().SetParam(ParamName, (float)base.Value * (float)_scale);
 					if (ans == false)
-						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+						MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 				catch
 				{
-					MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+					MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 
 				timer.Stop();

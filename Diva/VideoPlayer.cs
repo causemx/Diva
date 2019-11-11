@@ -21,7 +21,7 @@ namespace Diva
             Player = new VlcControl();
             Player.Top = Player.Left = 0;
             Player.VlcMediaplayerOptions = debug ?
-                new string[] { "-vvv", "--extraintf=logger", "--verbose=2", "--logfile=vlclogs.log" } : null;
+                new [] { "-vvv", "--extraintf=logger", "--verbose=2", "--logfile=vlclogs.log" } : null;
             Player.VlcLibDirectory = new DirectoryInfo(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libvlc"));
             Player.VlcLibDirectoryNeeded += (o, ex) =>

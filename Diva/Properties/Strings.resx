@@ -166,7 +166,7 @@
     <value>Row error</value>
   </data>
   <data name="MsgSaveWPRejected" xml:space="preserve">
-    <value>reject by Mav{0}</value>
+    <value>reject by Mav {0}</value>
   </data>
   <data name="MsgSaveWPTimeout" xml:space="preserve">
     <value>timeout on read, please try again.</value>
@@ -225,13 +225,7 @@
   <data name="MsgFileLoaded" xml:space="preserve">
     <value>Loaded {0}</value>
   </data>
-  <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
-    <value />
-  </data>
   <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.FontFamily" xml:space="preserve">
     <value />
   </data>
   <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
@@ -240,34 +234,13 @@
   <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
     <value />
   </data>
-  <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
-    <value />
-  </data>
   <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
     <value />
   </data>
   <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
     <value />
   </data>
-  <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
-    <value />
-  </data>
   <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
     <value />
   </data>
   <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
@@ -276,22 +249,7 @@
   <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
     <value />
   </data>
-  <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
-    <value />
-  </data>
   <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
     <value />
   </data>
   <data name="ConfigAccountPage.MsgCreateAccount" xml:space="preserve">
@@ -321,24 +279,6 @@
   <data name="DroneSettingInput.DiscardBtn.Text" xml:space="preserve">
     <value>Discard</value>
   </data>
-  <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.FontFamily" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
-    <value />
-  </data>
   <data name="DroneSetting_MsgNoName" xml:space="preserve">
     <value>No name assigned.</value>
   </data>
@@ -349,7 +289,7 @@
     <value>Invalid value</value>
   </data>
   <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
-    <value>"XML files|*.xml|All files|*.*"</value>
+    <value>XML files|*.xml|All files|*.*</value>
   </data>
   <data name="MsgConnectFirst" xml:space="preserve">
     <value>Please Connect First!</value>
@@ -378,19 +318,7 @@
   <data name="MsgMissionAcceptWP" xml:space="preserve">
     <value>Upload mission complete</value>
   </data>
-  <data name="ConfigMapPage.LabelProxySetting.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ConfigMapPage.LabelProxyPort.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ConfigMapPage.RBtnProxySystem.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="strActivateDrone" xml:space="preserve">
+  <data name="StrActivateDrone" xml:space="preserve">
     <value>Click to activate drone</value>
   </data>
   <data name="MsgCustomizeOverlayImport" xml:space="preserve">
@@ -417,8 +345,8 @@
   <data name="MsgDialogSetParams" xml:space="preserve">
     <value>Setting params</value>
   </data>
-  <data name="MsgDialogGetWpCount" xml:space="preserve">
-    <value>Getting WP count</value>
+  <data name="MsgDialogGetWp" xml:space="preserve">
+    <value>Getting WP</value>
   </data>
   <data name="MsgDialogDone" xml:space="preserve">
     <value>Done.</value>
@@ -449,5 +377,80 @@
   </data>
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>Rotation mission have executing</value>
+  </data>
+  <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
+    <value>(None)</value>
+  </data>
+  <data name="StrPowerLogFileFilter" xml:space="preserve">
+    <value>Log files|*.log|All files|*.*</value>
+  </data>
+  <data name="MsgInvalidPowerModelName" xml:space="preserve">
+    <value>'{0}' is not a valid power model name.</value>
+  </data>
+  <data name="MsgPowerLogFileNotFound" xml:space="preserve">
+    <value>Power log file does not exist.</value>
+  </data>
+  <data name="StrInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
+    <value>Invalid power model and/or battery setting.</value>
+  </data>
+  <data name="MsgConnectionFailed" xml:space="preserve">
+    <value>Connection failed.</value>
+  </data>
+  <data name="MsgNoHeartBeat" xml:space="preserve">
+    <value>No heartbeat received.</value>
+  </data>
+  <data name="DialogTitleError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MsgFailedToSendNewFencePoints" xml:space="preserve">
+    <value>Failed to send new fence points </value>
+  </data>
+  <data name="StrEstimatedEnergy" xml:space="preserve">
+    <value>Estimated energy: {0:F2} mAh</value>
+  </data>
+  <data name="StrNoMissionPointAvailable" xml:space="preserve">
+    <value>No mission point available.</value>
+  </data>
+  <data name="StrEnergyConsumptionEstimationFailed" xml:space="preserve">
+    <value>Energy consumption estimation failed.</value>
+  </data>
+  <data name="StrRecalculating" xml:space="preserve">
+    <value>Recalculating...</value>
+  </data>
+  <data name="StrMapImageFileExternsionFilter" xml:space="preserve">
+    <value>Map Images|*.bmp;*.jpg;*.png</value>
+  </data>
+  <data name="MsgFormProgressUserCanceled" xml:space="preserve">
+    <value>User Canceled</value>
+  </data>
+  <data name="TextFormProgressConnection" xml:space="preserve">
+    <value>Connecting {0}...</value>
+  </data>
+  <data name="MsgFormProgressSync" xml:space="preserve">
+    <value>sync...</value>
+  </data>
+  <data name="MsgFormProgressMavlinkConnecting" xml:space="preserve">
+    <value>mavlink connecting</value>
+  </data>
+  <data name="MsgFormProgressTrying" xml:space="preserve">
+    <value>trying...{0}</value>
+  </data>
+  <data name="MsgFormProgressDone" xml:space="preserve">
+    <value>done</value>
+  </data>
+  <data name="GotParam" xml:space="preserve">
+    <value>Got param: </value>
+  </data>
+  <data name="MsgGettingParams" xml:space="preserve">
+    <value>Getting Params.. (sysid {0} compid {1}) </value>
+  </data>
+  <data name="MsgWaitHeartBeat" xml:space="preserve">
+    <value>Port opened, waiting for heartbeat.</value>
+  </data>
+  <data name="MsgAskFlightControllerVersion" xml:space="preserve">
+    <value>Asking flight controller version.</value>
+  </data>
+  <data name="MsgErrorReadingKmlFile" xml:space="preserve">
+    <value>Error reading kml file: </value>
   </data>
 </root>

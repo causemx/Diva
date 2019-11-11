@@ -146,12 +146,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
-    <Compile Include="Comms\CommsSerialPort.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Comms\CommsUdpSerial.cs" />
-    <Compile Include="Comms\ICommsSerial.cs" />
     <Compile Include="Controls\AboutBoxPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,12 +203,19 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NewPowerModelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\NewPowerModelForm.Designer.cs">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RotationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\RotationInfo.Designer.cs">
       <DependentUpon>RotationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Account.cs" />
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
       <SubType>UserControl</SubType>
@@ -222,19 +223,12 @@
     <Compile Include="Controls\DroneSettingInput.Designer.cs">
       <DependentUpon>DroneSettingInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\IActivate.cs" />
     <Compile Include="Controls\InputBox.cs" />
     <Compile Include="Controls\MyGMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\MyListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\MyListView.Designer.cs">
-      <DependentUpon>MyListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MyVideoForm.cs">
       <SubType>Form</SubType>
@@ -260,10 +254,13 @@
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="Data\WPDataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
+    <Compile Include="Mavlink\MavStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
-    <Compile Include="Mavlink\MavlinkInterface.cs" />
-    <Compile Include="Mavlink\MavList.cs" />
+    <Compile Include="Mavlink\MavCore.cs" />
+    <Compile Include="Mavlink\MavSerialStream.cs" />
     <Compile Include="Mavlink\MavStatus.cs" />
+    <Compile Include="Mavlink\MavUdpStream.cs" />
+    <Compile Include="Mavlink\MavUtlities.cs" />
     <Compile Include="Mission\Rotation.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>
@@ -271,6 +268,7 @@
     <Compile Include="Planner.Designer.cs">
       <DependentUpon>Planner.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnergyConsumption\PowerModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\SplashForm.cs">
@@ -289,27 +287,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
-    <Compile Include="Strings.cs" />
+    <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DatabaseManager.cs" />
-    <Compile Include="Utilities\Demux.cs" />
-    <Compile Include="Utilities\FileUtility.cs" />
-    <Compile Include="Utilities\IFileUtility.cs" />
+    <Compile Include="Utilities\FloatMessage.cs" />
+    <Compile Include="Utilities\QGCWaypointFileUtlity.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
-    <Compile Include="Utilities\Locationwp.cs" />
+    <Compile Include="Utilities\WayPointStruct.cs" />
     <Compile Include="Utilities\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
     <Compile Include="Utilities\OverlayUtility.cs" />
-    <Compile Include="Utilities\ParameterMetaDataConstants.cs" />
-    <Compile Include="Utilities\ParameterMetaDataRepository.cs" />
-    <Compile Include="Utilities\ParameterMetaDataRepositoryAPM.cs" />
+    <Compile Include="Mavlink\MavParamRepository.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />
-    <Compile Include="Utilities\ResourceStringHelper.cs" />
-    <Compile Include="Utilities\Settings.cs" />
-    <Compile Include="Utilities\Utility.cs" />
-    <EmbeddedResource Include="Controls\Components\MyNumericUpDown.resx">
-      <DependentUpon>MyNumericUpDown.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Utilities\Utlities.cs" />
+    <Compile Include="Utilities\GMapMarkers.cs" />
     <EmbeddedResource Include="Controls\ConfigAccountPage.resx">
       <DependentUpon>ConfigAccountPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -321,6 +312,9 @@
       <DependentUpon>ConfigGeoFencePage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigMapPage.resx">
+      <DependentUpon>ConfigMapPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigMapPage.zh-Hant.resx">
       <DependentUpon>ConfigMapPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigureForm.resx">
@@ -338,6 +332,9 @@
     <EmbeddedResource Include="Controls\DroneInfoPanel.resx">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DroneSettingInput.zh-Hant.resx">
+      <DependentUpon>DroneSettingInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\InputDataDialog.resx">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,6 +343,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NewPowerModelForm.resx">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NewPowerModelForm.zh-Hant.resx">
+      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
@@ -367,6 +370,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.zh-Hant.resx">
       <DependentUpon>Planner.cs</DependentUpon>
@@ -414,6 +418,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EnergyConsumption\Power Model Tools.exe" />
     <Content Include="if_seo3_65_417793.ico" />
     <Content Include="LibVlc\libvlc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1557,9 +1562,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

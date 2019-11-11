@@ -182,9 +182,9 @@
 
 		private System.Windows.Forms.PictureBox PBDroneView;
 		private System.Windows.Forms.Label TxtDroneName;
-		private System.Windows.Forms.PictureBox pictureBox2;
-		private System.Windows.Forms.PictureBox pictureBox3;
-		private System.Windows.Forms.PictureBox pictureBox4;
+		private System.Windows.Forms.PictureBox IconFlightTime;
+		private System.Windows.Forms.PictureBox IconBattery;
+		private System.Windows.Forms.PictureBox IconSignalStrength;
 		private System.Windows.Forms.Label TxtAssumeTime;
 		private System.Windows.Forms.Label TxtBatteryHealth;
 		private System.Windows.Forms.Label TxtSatelliteCount;

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.Properties;
 
 namespace Diva.Controls.Components
 {
@@ -119,13 +120,13 @@ namespace Diva.Controls.Components
 				enableControl(true);
 				try
 				{
-					bool ans = Planner.GetActiveDrone().setParam(ParamName, OnValue);
+					bool ans = Planner.GetActiveDrone().SetParam(ParamName, OnValue);
 					if (ans == false)
-						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+						MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 				catch
 				{
-					MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+					MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 			}
 			else
@@ -133,13 +134,13 @@ namespace Diva.Controls.Components
 				enableControl(false);
 				try
 				{
-					bool ans = Planner.GetActiveDrone().setParam(ParamName, OffValue);
+					bool ans = Planner.GetActiveDrone().SetParam(ParamName, OffValue);
 					if (ans == false)
-						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+						MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 				catch
 				{
-					MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+					MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 			}
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Diva.Properties;
 
 namespace Diva.Controls.Components
 {
@@ -111,24 +112,24 @@ namespace Diva.Controls.Components
 						return;
 					}
 
-					if (!Planner.GetActiveDrone().setParam(ParamName, (float)(Int32)Enum.Parse(_source, this.Text)))
+					if (!Planner.GetActiveDrone().SetParam(ParamName, (float)(Int32)Enum.Parse(_source, this.Text)))
 					{
-						MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+						MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 					}
 
 					if (paramname2 != "")
 					{
 						if (
-							!Planner.GetActiveDrone().setParam(paramname2,
+							!Planner.GetActiveDrone().SetParam(paramname2,
 								(float)(Int32)Enum.Parse(_source, this.Text) > 0 ? 1 : 0))
 						{
-							MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, paramname2), Strings.ERROR);
+							MessageBox.Show(String.Format(Strings.MsgInvalidEntry, paramname2), Strings.DialogTitleError);
 						}
 					}
 				}
 				catch
 				{
-					MessageBox.Show(String.Format(Strings.ErrorSetValueFailed, ParamName), Strings.ERROR);
+					MessageBox.Show(String.Format(Strings.MsgInvalidEntry, ParamName), Strings.DialogTitleError);
 				}
 			}
 			else if (_source2 != null)
@@ -142,24 +143,24 @@ namespace Diva.Controls.Components
 						return;
 					}
 
-					if (!Planner.GetActiveDrone().setParam(ParamName, (float)(int)((MyComboBox)sender).SelectedValue))
+					if (!Planner.GetActiveDrone().SetParam(ParamName, (float)(int)((MyComboBox)sender).SelectedValue))
 					{
-						MessageBox.Show("Set " + ParamName + " Failed!", Strings.ERROR);
+						MessageBox.Show("Set " + ParamName + " Failed!", Strings.DialogTitleError);
 					}
 
 					if (paramname2 != "")
 					{
 						if (
-							!Planner.GetActiveDrone().setParam(paramname2,
+							!Planner.GetActiveDrone().SetParam(paramname2,
 								(float)(int)((MyComboBox)sender).SelectedValue > 0 ? 1 : 0))
 						{
-							MessageBox.Show("Set " + paramname2 + " Failed!", Strings.ERROR);
+							MessageBox.Show("Set " + paramname2 + " Failed!", Strings.DialogTitleError);
 						}
 					}
 				}
 				catch
 				{
-					MessageBox.Show("Set " + ParamName + " Failed!", Strings.ERROR);
+					MessageBox.Show("Set " + ParamName + " Failed!", Strings.DialogTitleError);
 				}
 			}
 		}

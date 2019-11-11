@@ -9,60 +9,52 @@ using Diva.Mavlink;
 
 namespace Diva.Utilities
 {
-	public class NotificationManager
+	public interface INotification
 	{
+		void Notify();
+	}
 
-		public interface INotification
+	public class BatteryNotification : INotification
+	{
+		bool isShowing = false;
+		DroneInfo dinfo;
+		MavDrone activeDrone = null;
+
+		public BatteryNotification(DroneInfo info)
 		{
-			void Notify();
+			this.dinfo = info;
+			this.activeDrone = info.Drone;
 		}
 
-		public class BatteryNotification : INotification
+		public void Notify()
 		{
-			bool isShowing = false;
-			DroneInfo dinfo;
-			MavlinkInterface activeDrone = null;
-			
 
-			public BatteryNotification(DroneInfo info)
+			if (activeDrone.Status.BatteryVoltage == 0.0d) return;
+
+			try
 			{
-				this.dinfo = info;
-				this.activeDrone = info.Drone;
-			}
-
-			public void Notify()
-			{
-
-				if (activeDrone.Status.battery_voltage == 0.0d) return;
-
-				try
-				{
 				
-					if (!isShowing && activeDrone.Status.battery_voltage < activeDrone.Status.low_voltage)
+				if (!isShowing && activeDrone.Status.BatteryVoltage < activeDrone.Status.BatteryLowVoltage)
+				{
+					Task.Factory.StartNew(() =>
 					{
-						Task.Factory.StartNew(() =>
-						{
-							dinfo.LowVoltageWarning(true);
-							MessageBox.Show(Diva.Properties.Strings.MsgLowVoltageWarning, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
-						});
-						isShowing = true;
-					}
-					else if (activeDrone.Status.battery_voltage > activeDrone.Status.low_voltage)
-					{
-						dinfo.LowVoltageWarning(false);
-						isShowing = false;
-					}
+						dinfo.LowVoltageWarning(true);
+						MessageBox.Show(Diva.Properties.Strings.MsgLowVoltageWarning, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
+					});
+					isShowing = true;
+				}
+				else if (activeDrone.Status.BatteryVoltage > activeDrone.Status.BatteryLowVoltage)
+				{
+					dinfo.LowVoltageWarning(false);
+					isShowing = false;
+				}
 					
 
-				}
-				catch (Exception e)
-				{
-					Planner.log.Error(e.ToString());
-				}
 			}
-
-			
+			catch (Exception e)
+			{
+				Planner.log.Error(e.ToString());
+			}
 		}
-
 	}
 }

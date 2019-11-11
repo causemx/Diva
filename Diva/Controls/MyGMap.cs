@@ -1,61 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using System.Drawing;
 using System.Net;
+using System.Threading;
+using Timer = System.Timers.Timer;
+using FltMsg = Diva.Utilities.FloatMessage;
+
 
 namespace Diva.Controls
 {
 	public class MyGMap : GMapControl
 	{
-		public bool inOnPaint = false;
-        public bool DebugMapLocation { get; set; }
+        public readonly GMapProvider GlobalMapProvider = BingSatelliteMapProvider.Instance;
+        public bool DebugMode { get; set; }
         public bool IndoorMode { get; private set; }
-		string otherthread = "";
-		int lastx = 0;
-		int lasty = 0;
-		public MyGMap() : base()
+        Thread onPaintThread = null;
+		private int lastMouseX = 0;
+		private int lastMouseY = 0;
+
+        public MyGMap() : base()
 		{
             MapScaleInfoEnabled = false;
             DisableFocusOnMouseEnter = true;
             //RoutesEnabled = true; // set by designer
             ForceDoubleBuffer = false;
-            DebugMapLocation = true;
-
-            OnSelectionChange += (s, z) =>
-            {
-                if (!IndoorMode && !s.IsEmpty)
-                {
-                    for (int i = 0; i < MapProvider.MaxZoom; i++)
-                    {
-                        using (TilePrefetcher pf = new TilePrefetcher())
-                        {
-                            pf.ShowCompleteMessage = false;
-                            pf.Shuffle = true;
-                            pf.Start(s, i, MapProvider, 100, 3);
-                        }
-                    }
-                }
-                SelectedArea = new RectLatLng();
-            };
+            DebugMode = true;
+            FltMsg.NewMessageNotice += InvalidateMessage;
+            msgRefreshTimer.Elapsed += InvalidateMessage;
+            msgRefreshTimer.Start();
         }
 
         protected override void OnLoad(EventArgs e)
         {
             ResetMapProvider();
-
             base.OnLoad(e);
         }
 
         public void ResetMapProvider()
         {
-            IndoorMode = false;
+            (MapProvider as ImageMapProvider)?.Dispose();
+            IndoorMode = ConfigData.GetBoolOption(ConfigData.OptionName.UseImageMap);
+            if (IndoorMode)
+            {
+                var p = new ImageMapProvider(ConfigData.GetOption(ConfigData.OptionName.ImageMapSource));
+                if (p != null)
+                {
+                    GMaps.Instance.Mode = AccessMode.ServerOnly;
+                    GMaps.Instance.MemoryCache.Clear();
+                    MapProvider = p;
+                    MaxZoom = p.MaxZoom ?? MaxZoom;
+                    MinZoom = p.MinZoom;
+                    if (Zoom > MaxZoom) Zoom = MaxZoom;
+                    if (Zoom < MinZoom) Zoom = MinZoom;
+                    if (p.Area != null)
+                        Position = ((RectLatLng)p.Area).LocationMiddle;
+                    return;
+                }
+                ConfigData.SetOption(ConfigData.OptionName.UseImageMap, false.ToString());
+            }
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             string proxy = ConfigData.GetOption(ConfigData.OptionName.MapProxy);
             string[] prox = proxy.Split(':');
@@ -72,7 +77,7 @@ namespace Diva.Controls
                 }
             }
             GMapProvider.WebProxy = webproxy;
-            MapProvider = BingSatelliteMapProvider.Instance;
+            MapProvider = GlobalMapProvider;
             MinZoom = 0;
             MaxZoom = 24;
             Zoom = 15;
@@ -86,19 +91,16 @@ namespace Diva.Controls
             catch { }
         }
 
-        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
 		{
-			var start = DateTime.Now;
-
-			if (inOnPaint)
+			if (onPaintThread != null)
 			{
-				Console.WriteLine("Was in onpaint Gmap th:" + System.Threading.Thread.CurrentThread.Name + " in " + otherthread);
+				Console.WriteLine("Was in onpaint Gmap th:" + Thread.CurrentThread.Name + " in " + onPaintThread.Name);
 				return;
 			}
 
-			otherthread = System.Threading.Thread.CurrentThread.Name;
-
-			inOnPaint = true;
+            var start = DateTime.Now;
+            onPaintThread = Thread.CurrentThread;
 
 			try
 			{
@@ -106,11 +108,9 @@ namespace Diva.Controls
 			}
 			catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
-			inOnPaint = false;
+            onPaintThread = null;
 
-			var end = DateTime.Now;
-
-			System.Diagnostics.Debug.WriteLine("map draw time " + (end - start).TotalMilliseconds);
+			System.Diagnostics.Debug.WriteLine("map draw time " + (DateTime.Now - start).TotalMilliseconds);
 		}
 
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -118,14 +118,14 @@ namespace Diva.Controls
 			try
 			{
 				var buffer = 1;
-				if (e.X >= lastx - buffer && e.X <= lastx + buffer && e.Y >= lasty - buffer && e.Y <= lasty + buffer)
+				if (e.X >= lastMouseX - buffer && e.X <= lastMouseX + buffer && e.Y >= lastMouseY - buffer && e.Y <= lastMouseY + buffer)
 					return;
 
 				if (HoldInvalidation)
 					return;
 
-				lastx = e.X;
-				lasty = e.Y;
+				lastMouseX = e.X;
+				lastMouseY = e.Y;
 
                 lock (Overlays)
                 {
@@ -139,15 +139,76 @@ namespace Diva.Controls
 
 		}
 
+        private Rectangle msgRect;
+        private readonly Timer msgRefreshTimer = new Timer { Interval = 500 };
+
+        private void InvalidateMessage(object sender, EventArgs e)
+        {
+            if (msgRect.Height > 0 || sender is FltMsg)
+                Invalidate(msgRect);
+        }
+
+        private static void DrawText(Graphics g, string s, Font f, Brush b,
+            ref float x, float y, bool rmost = false)
+        {
+            if (string.IsNullOrEmpty(s)) return;
+            var sz = g.MeasureString(s + "-", f);
+            if (rmost)
+            {
+                x -= sz.Width;
+                g.DrawString(s, f, b, x, y);
+            }
+            else
+            {
+                g.DrawString(s, f, b, x, y);
+                x += sz.Width;
+            }
+        }
+
+        private void DrawMessage(Graphics g)
+        {
+            var msgs = FltMsg.GetMessages(DebugMode ? 7 : 6);
+            if (msgs.Length > 0)
+            {
+                Font f = FltMsg.MsgFont;
+                SizeF fsize = g.MeasureString("W", f);
+                float lh = fsize.Height + 2;
+                float cw = fsize.Width;
+                float width = cw * 40;
+                if (width > Width / 2 - 8)
+                    width = Width / 2 - 8;
+                float top = Height - lh * msgs.Length - 6;
+                float left = Width - width - 8;
+                msgRect = Rectangle.Round(new RectangleF(left, top, width + 4, lh * msgs.Length + 2));
+                g.FillRectangle(FltMsg.BgBrush, msgRect);
+
+                float lt = top + 4;
+                bool blinking = DateTime.Now.Second % 2 == 0;
+                foreach (var m in msgs)
+                {
+                    float ll = left + 4;
+                    DrawText(g, m.Source, FltMsg.SrcFont, m.SrcBrush, ref ll, lt);
+                    Brush b = FltMsg.MsgBlink[m.Severity] && blinking ?
+                        FltMsg.BlinkBrush : FltMsg.MsgBrushes[m.Severity];
+                    DrawText(g, m.Message, FltMsg.MsgFont, b, ref ll, lt);
+                    float r = Width;
+                    DrawText(g, m.TimeStr, FltMsg.TimeFont, FltMsg.TimeBrush, ref r, lt, true);
+                    lt += lh;
+                }
+            }
+            else
+                msgRect.Height = 0;
+        }
+
         protected override void OnPaintOverlays(Graphics g)
         {
-            Font f = SystemFonts.SmallCaptionFont;
             base.OnPaintOverlays(g);
-            if (DebugMapLocation && IndoorMode)
+            if (DebugMode && IndoorMode)
             {
                 g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
-                    f, Brushes.Blue, 20, Height - 20);
+                    SystemFonts.SmallCaptionFont, Brushes.Blue, 20, Height - 20);
             }
+            DrawMessage(g);
         }
 
         private bool markingCache = false;
@@ -173,8 +234,9 @@ namespace Diva.Controls
             if (cache == null) return;
             RectLatLng sel = SelectedArea;
             if (sel.IsEmpty) return;
-            int zmax = MapProvider.MaxZoom ?? 20;
-            for (var z = MapProvider.MinZoom; z < zmax; z++)
+            //int zmax = MapProvider.MaxZoom ?? 20;
+            //for (var z = MapProvider.MinZoom; z < zmax; z++)
+            int z = 19;
             {
                 using (TilePrefetcher pf = new TilePrefetcher())
                 {

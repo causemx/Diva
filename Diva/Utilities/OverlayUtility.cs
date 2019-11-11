@@ -57,17 +57,16 @@ namespace Diva.Utilities
 						//m.selected = true;
 					}
 
-					//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-					GMapMarkerRect mBorders = new GMapMarkerRect(point);
-					{
-						mBorders.InnerMarker = m;
-						mBorders.Tag = tag;
-						mBorders.wprad = (int)wpradius;
-						if (color.HasValue)
-						{
-							mBorders.Color = color.Value;
-						}
-					}
+                    GMapRectMarker mBorders = new GMapRectMarker(point)
+                    {
+                        InnerMarker = m,
+                        Tag = tag,
+                        wprad = (int)wpradius
+                    };
+                    if (color.HasValue)
+                    {
+                        mBorders.Color = color.Value;
+                    }
 
 					overlay.Markers.Add(m);
 					overlay.Markers.Add(mBorders);
@@ -77,9 +76,7 @@ namespace Diva.Utilities
 				}
 			}
 
-			
-
-            public void CreateOverlay(PointLatLngAlt home, List<Locationwp> missionitems, double wpradius, double loiterradius)
+            public void CreateOverlay(PointLatLngAlt home, List<WayPoint> missionitems, double wpradius, double loiterradius)
             {
                 overlay.Clear();
 
@@ -88,19 +85,20 @@ namespace Diva.Utilities
                 double minlat = 180;
                 double minlong = 180;
 
-                Func<double, double, double> gethomealt = (lat, lng) => GetHomeAlt(MAVLink.MAV_FRAME.GLOBAL_INT, home.Alt, lat, lng);
+                double gethomealt(double lat, double lng)
+                    => GetHomeAlt(MAVLink.MAV_FRAME.GLOBAL_INT, home.Alt, lat, lng);
 
                 home.Tag = "H";
                 // home.Tag2 = altmode.ToString();
 
                 pointlist.Add(home);
                 fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                addpolygonmarker("H", home.Lng, home.Lat, home.Alt, null, 0);
+                AddPolygonMarker("H", home.Lng, home.Lat, home.Alt, null, 0);
 
                 int a = 0;
                 foreach (var item in missionitems)
                 {
-                    ushort command = item.id;
+                    ushort command = item.Id;
 
                     if (command < (ushort)MAVLink.MAV_CMD.LAST &&
                         command != (ushort)MAVLink.MAV_CMD.TAKEOFF && // doesnt have a position
@@ -111,13 +109,9 @@ namespace Diva.Utilities
                         command != (ushort)MAVLink.MAV_CMD.GUIDED_ENABLE
                         || command == (ushort)MAVLink.MAV_CMD.DO_SET_ROI)
                     {
-                        //string alt = Commands.Rows[a].Cells[Alt.Index].Value.ToString(); // alt
-                        //string lat = Commands.Rows[a].Cells[Lat.Index].Value.ToString(); // lat
-                        //string lng = Commands.Rows[a].Cells[Lon.Index].Value.ToString(); // lng
-
-                        var lat = item.lat;
-                        var lng = item.lng;
-                        var alt = item.alt;
+                        var lat = item.Latitude;
+                        var lng = item.Longitude;
+                        var alt = item.Altitude;
 
                         // land can be 0,0 or a lat,lng
                         if (command == (ushort)MAVLink.MAV_CMD.LAND && lat == 0 && lng == 0)
@@ -127,17 +121,19 @@ namespace Diva.Utilities
                         {
                             pointlist.Add(new PointLatLngAlt(lat, lng,
                                 alt + gethomealt(lat, lng), "ROI" + (a + 1))
-                            { color = Color.Red });
+                            { Color = Color.Red });
                             // do set roi is not a nav command. so we dont route through it
                             //fullpointlist.Add(pointlist[pointlist.Count - 1]);
                             GMarkerGoogle m =
                                 new GMarkerGoogle(new PointLatLng(lat, lng),
-                                    GMarkerGoogleType.red);
-                            m.ToolTipMode = MarkerTooltipMode.Always;
-                            m.ToolTipText = (a + 1).ToString();
-                            m.Tag = (a + 1).ToString();
+                                    GMarkerGoogleType.red)
+                                {
+                                    ToolTipMode = MarkerTooltipMode.Always,
+                                    ToolTipText = (a + 1).ToString(),
+                                    Tag = (a + 1).ToString()
+                                };
 
-                            GMapMarkerRect mBorders = new GMapMarkerRect(m.Position);
+                            GMapRectMarker mBorders = new GMapRectMarker(m.Position);
                             {
                                 mBorders.InnerMarker = m;
                                 mBorders.Tag = "Dont draw line";
@@ -158,10 +154,10 @@ namespace Diva.Utilities
                             pointlist.Add(new PointLatLngAlt(lat, lng,
                                 alt + gethomealt(lat, lng), (a + 1).ToString())
                             {
-                                color = Color.LightBlue
+                                Color = Color.LightBlue
                             });
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                            addpolygonmarker((a + 1).ToString(), lng, lat,
+                            AddPolygonMarker((a + 1).ToString(), lng, lat,
                                 alt, Color.LightBlue, loiterradius);
                         }
                         else if (command == (ushort)MAVLink.MAV_CMD.SPLINE_WAYPOINT)
@@ -170,7 +166,7 @@ namespace Diva.Utilities
                                 alt + gethomealt(lat, lng), (a + 1).ToString())
                             { Tag2 = "spline" });
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                            addpolygonmarker((a + 1).ToString(), lng, lat,
+                            AddPolygonMarker((a + 1).ToString(), lng, lat,
                                 alt, Color.Green, wpradius);
                         }
                         else
@@ -178,7 +174,7 @@ namespace Diva.Utilities
                             pointlist.Add(new PointLatLngAlt(lat, lng,
                                 alt + gethomealt(lat, lng), (a + 1).ToString()));
                             fullpointlist.Add(pointlist[pointlist.Count - 1]);
-                            addpolygonmarker((a + 1).ToString(), lng, lat,
+                            AddPolygonMarker((a + 1).ToString(), lng, lat,
                                 alt, null, wpradius);
                         }
 
@@ -191,8 +187,8 @@ namespace Diva.Utilities
                     {
                         pointlist.Add(null);
 
-                        int wpno = (int)item.p1;
-                        int repeat = (int)item.p2;
+                        int wpno = (int)item.Param1;
+                        int repeat = (int)item.Param2;
 
                         List<PointLatLngAlt> list = new List<PointLatLngAlt>();
 
@@ -219,7 +215,6 @@ namespace Diva.Utilities
 
                 RegenerateWPRoute(fullpointlist, home);
             }
-
 
 			public event EventHandler<FullPointsEventArgs> RaiseFullPointsEvent;
 
@@ -325,7 +320,6 @@ namespace Diva.Utilities
 
                 return homealt;
             }
-
 
 			public class FullPointsEventArgs : EventArgs
 			{

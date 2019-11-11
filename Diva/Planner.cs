@@ -4,13 +4,13 @@ using Diva.Mission;
 using Diva.Properties;
 using Diva.Utilities;
 using GMap.NET;
-using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -21,7 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using ResStrings = Diva.Properties.Strings;
+using static MAVLink;
 
 namespace Diva
 {
@@ -34,18 +34,25 @@ namespace Diva
 		public const int TAKEOFF_HEIGHT = 30;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
-		private static Planner Instance = null;
-		internal static Planner GetPlannerInstance() => Instance;
-		internal static MavlinkInterface GetActiveDrone() => Instance?.ActiveDrone;
+        private static Planner Instance = null;
+        internal static Planner GetPlannerInstance() => Instance;
+        internal static MavDrone DummyDrone = new MavDrone();
+        internal static MavDrone GetActiveDrone() => Instance?.ActiveDrone;
+        private MavDrone currenDrone = DummyDrone;
+        private MavDrone ActiveDrone
+        {
+            get => currenDrone;
+            set => currenDrone = value ?? DummyDrone;
+        }
+        internal static DroneInfo GetActiveDroneInfo() => Instance.DroneInfoPanel?.ActiveDroneInfo;
+        internal int MissionListItemCount => dgvWayPoints.Rows.Count;
+        private List<MavDrone> OnlineDrones = new List<MavDrone>();
 
-		private MavlinkInterface ActiveDrone = new MavlinkInterface();
-		private List<MavDrone> OnlineDrones = new List<MavDrone>();
-
-		public bool autopan { get; set; }
+        public bool Autopan { get; set; }
 
 		private static readonly double WARN_ALT = 2D;
 
-		private class plannerOverlays
+		private class PlannerOverlays
 		{
 			public GMapOverlay kmlpolygons;
 			public GMapOverlay rallypoints;
@@ -57,7 +64,7 @@ namespace Diva
 			public GMapOverlay geofence;
 			public GMapOverlay POI;
 			public GMapOverlay routes;
-			internal plannerOverlays(MyGMap map)
+			internal PlannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
 						var o = new GMapOverlay(f.Name);
@@ -65,10 +72,10 @@ namespace Diva
 						f.SetValue(this, o);
 					});
 		}
-		private plannerOverlays overlays;
+		private PlannerOverlays overlays;
 
-		private GMapMarkerRect currentRectMarker;
-		private GMapMarkerRallyPt currentRallyPt;
+		private GMapRectMarker currentRectMarker;
+		private GMap3DPointMarker currentRallyPt;
 
 		private GMapMarker currentMarker;
 		private GMapMarker center = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
@@ -87,21 +94,19 @@ namespace Diva
 		internal GMapPolygon geofencePolygon;
 		internal GMapPolygon drawnPolygon;
 		internal GMapPolygon wpPolygon;
-
-
+		
 		private bool quickadd = false;
-		private int selectedrow = 0;
+		private int selectedRow = 0;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
-		private List<List<Locationwp>> history = new List<List<Locationwp>>();
+		private List<List<WayPoint>> history = new List<List<WayPoint>>();
 		private List<int> groupmarkers = new List<int>();
-		private Object thisLock = new Object();
-
+		private object thisLock = new object();
+		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
+		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
 		// Thread setup
-		private Thread mainThread = null;
-		private Thread updateMapItemThread = null;
-		private bool serialThread = false;
+		private BackgroundLoop mainThread = null;
 
 		private DateTime heartbeatSend = DateTime.Now;
 		private DateTime lastupdate = DateTime.Now;
@@ -115,50 +120,15 @@ namespace Diva
 		private Rotation rotationMission = null;
 		private RotationInfo rotationInfo = null;
 
-		public enum AltitudeMode
-		{
-			Relative = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT,
-			Absolute = MAVLink.MAV_FRAME.GLOBAL,
-			Terrain = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT
-		}
-
-		public enum FlightMode
-		{
-			STABILIZE = 0,
-			ACRO = 1,
-			ALT_HOLD = 2,
-			AUTO = 3,
-			GUIDED = 4,
-			LOITER = 5,
-			RTL = 6,
-			CIRCLE = 7,
-			POSITION = 8,
-			LAND = 9,
-			OF_LOITER = 10,
-			DRIFT = 11,
-			SPORT = 13,
-			FLIP = 14,
-			AUTOTUNE = 15,
-			POSHOLD = 16,
-			BRAKE = 17,
-			THROW = 18,
-			AVOID_ADSB = 19,
-			GUIDED_NOGPS = 20,
-		}
-
-		public enum Firmwares
-		{
-			ArduPlane,
-			ArduCopter2,
-			ArduRover,
-			ArduSub,
-			Ateryx,
-			ArduTracker,
-			Gymbal,
-			PX4
-		}
-
 		internal MyGMap GMapControl => myMap;
+        internal WayPoint GetHomeWP() => new WayPoint
+        {
+            Id = (ushort)MAV_CMD.WAYPOINT,
+            Latitude = (double.Parse(TxtHomeLatitude.Text)),
+            Longitude = (double.Parse(TxtHomeLongitude.Text)),
+            Altitude = (float.Parse(TxtHomeAltitude.Text)),
+            Frame = MAV_FRAME.GLOBAL
+        };
 
 		public Planner()
 		{
@@ -169,7 +139,7 @@ namespace Diva
 
 			quickadd = false;
 
-			overlays = new plannerOverlays(myMap);
+			overlays = new PlannerOverlays(myMap);
 
 			// overlays.objects.Markers.Clear();
 			ActiveDrone.ObjOverlay.Overlay.Markers.Clear();
@@ -185,7 +155,7 @@ namespace Diva
 			//myMap.Zoom = 3;
 
 			// RegeneratePolygon();
-			updateCMDParams();
+			UpdateCMDParams();
 
 			DataGridView_Initialize();
 
@@ -212,7 +182,7 @@ namespace Diva
 
 			//setup rotationinfo panel
 			rotationInfo = new RotationInfo() { Visible = false };
-			RotationInfoPanel.Controls.Add(rotationInfo);
+			PanelRotationInfo.Controls.Add(rotationInfo);
 
 			//set home
 			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
@@ -221,7 +191,7 @@ namespace Diva
 				string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
 				if (loc != "")
 				{
-					string[] locs = loc.Split(',');
+					string[] locs = loc.Split('|');
 					if (locs.Length > 1)
 					{
 						double.TryParse(locs[0], out lat);
@@ -248,96 +218,76 @@ namespace Diva
 		{
 			foreach (DataGridViewColumn commandsColumn in dgvWayPoints.Columns)
 			{
-				if (commandsColumn is DataGridViewTextBoxColumn)
-					commandsColumn.CellTemplate.Value = "0";
-			}
+				UserName = Strings.StrAnonymousAccount,
+				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
+				TotalDistance = 0.0d,
+				HomeLatitude = 0.0d,
+				HomeLongitude = 0.0d,
+				HomeAltitude = 0.0d,
+			};
 
 			dgvWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
 		}
 
-		private void Planner_Load(object sender, EventArgs e)
-		{
-			mainThread = new Thread(MainLoop)
-			{
-				IsBackground = true,
-				Name = "Main Serial reader",
-				Priority = ThreadPriority.AboveNormal
-			};
-			mainThread.Start();
-
-			isUpdatemapThreadRun = true;
-			updateMapItemThread = new Thread(MapitemUpdateLoop) { IsBackground = true };
-			updateMapItemThread.Start();
+            mainThread = BackgroundLoop.Start(MainLoop);
 		}
 
 		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (updateMapItemThread != null)
-			{
-				isUpdatemapThreadRun = false;
-				updateMapItemThread = null;
-			}
-
-			if (mainThread != null)
-			{
-				serialThread = false;
-				e.Cancel = true;
-				mainThread = null;
-			}
+            if (mainThread?.IsRunning ?? false)
+                mainThread.Cancel();
 		}
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			OnlineDrones.ForEach(d => d.Disconnect());
+			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
+			DatabaseManager.Dump(recorder_id);
+            OnlineDrones.ForEach(d => d.Disconnect());
+            BackgroundLoop.FreeTasks(5000);
 		}
 
-		private void MainLoop()
+		private void MainLoop(CancellationToken token)
 		{
-			if (serialThread == true)
-				return;
-
-			serialThread = true;
-
-			while (serialThread)
+            DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(500);
+			while (!token.IsCancellationRequested)
 			{
-				Thread.Sleep(20);
-				if (ActiveDrone.BaseStream.IsOpen)
-				{
+                Thread.Sleep(100);
+                if (DateTime.Now < nextUpdateTime) continue;
+                nextUpdateTime = DateTime.Now.AddMilliseconds(500);
 
-					Invoke((MethodInvoker)delegate
-					{
-						foreach (int mode in Enum.GetValues(typeof(FlightMode)))
-						{
-							if ((uint)mode == ActiveDrone.Status.mode)
-							{
-								LBLMode.Text = Enum.GetName(typeof(FlightMode), mode);
-							}
-						}
+                try
+                {
+                    if (ActiveDrone.IsOpen)
+                    {
+                        BeginInvoke((MethodInvoker)delegate
+                        {
+                            string mode = ActiveDrone.Status.FlightMode.GetName();
+                            if (mode != null)
+                                TxtDroneMode.Text = mode;
+                            DroneInfoPanel.UpdateDisplayInfo();
+                        });
 
-						DroneInfoPanel.UpdateDisplayInfo();
-					});
+                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
 
-					PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
-
-					if (ActiveDrone.Status.current_lat != 0 && ActiveDrone.Status.current_lng != 0)
-					{
-						UpdateMapPosition(currentloc);
-					}
-				}
-			}
-
-			mainThread = null;
-			Invoke((MethodInvoker)(() => Close()));
+                        if (ActiveDrone.Status.Latitude != 0 && ActiveDrone.Status.Longitude != 0)
+                        {
+                            UpdateMapPosition(currentloc);
+                        }
+                    }
+                    UpdateMapItems();
+                }
+                catch { }
+            }
+            Invoke((MethodInvoker)(() => Close()));
 		}
-
-
+		
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
-
 			if (!isMapFocusing) return;
 
-			Invoke((MethodInvoker)delegate
+			BeginInvoke((MethodInvoker)delegate
 			{
 				try
 				{
@@ -347,20 +297,17 @@ namespace Diva
 						{
 							myMap.Position = currentloc;
 						}
-
 						lastmapposchange = DateTime.Now;
 					}
 				}
-				catch
-				{
-				}
+				catch { }
 			});
 		}
 
-		private void updateRowNumbers()
+		private void UpdateRowNumbers()
 		{
 			// number rows 
-			this.BeginInvoke((MethodInvoker)delegate
+			BeginInvoke((MethodInvoker)delegate
 			{
 				// thread for updateing row numbers
 				for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
@@ -387,9 +334,9 @@ namespace Diva
 			});
 		}
 
-		private void updateCMDParams()
+		private void UpdateCMDParams()
 		{
-			cmdParamNames = readCMDXML();
+			cmdParamNames = ReadCMDXML();
 
 			List<string> cmds = new List<string>();
 
@@ -403,8 +350,7 @@ namespace Diva
 			colCommand.DataSource = cmds;
 		}
 
-
-		Dictionary<string, string[]> readCMDXML()
+		Dictionary<string, string[]> ReadCMDXML()
 		{
 			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
 
@@ -413,12 +359,12 @@ namespace Diva
 			{
 				reader.Read();
 				reader.ReadStartElement("CMD");
-				if (ActiveDrone.Status.firmware == Firmwares.ArduPlane ||
-					ActiveDrone.Status.firmware == Firmwares.Ateryx)
+				if (ActiveDrone.Status.Firmware == Firmwares.ArduPlane ||
+					ActiveDrone.Status.Firmware == Firmwares.Ateryx)
 				{
 					reader.ReadToFollowing("APM");
 				}
-				else if (ActiveDrone.Status.firmware == Firmwares.ArduRover)
+				else if (ActiveDrone.Status.Firmware == Firmwares.ArduRover)
 				{
 					reader.ReadToFollowing("APRover");
 				}
@@ -466,7 +412,6 @@ namespace Diva
 			return cmd;
 		}
 
-
 		#region GMap event handlers - move to MyGMap.cs when possible
 
 		private void MainMap_OnCurrentPositionChanged(PointLatLng point)
@@ -490,20 +435,17 @@ namespace Diva
 			center.Position = point;
 		}
 
-		void groupmarkeradd(GMapMarker marker)
+		void AddGroupMarkers(GMapMarker marker)
 		{
-			log.Debug("add marker " + marker.Tag.ToString());
-			if (!marker.Tag.ToString().Equals("H"))
+			Debug.WriteLine("add marker " + marker.Tag.ToString());
+			groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+			if (marker is GMapTaggedMarker)
 			{
-				groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+				((GMapTaggedMarker)marker).Selected = true;
 			}
-			if (marker is GMapMarkerWP)
+			if (marker is GMapRectMarker)
 			{
-				((GMapMarkerWP)marker).selected = true;
-			}
-			if (marker is GMapMarkerRect)
-			{
-				((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
+				((GMapTaggedMarker)((GMapRectMarker)marker).InnerMarker).Selected = true;
 			}
 		}
 
@@ -584,7 +526,7 @@ namespace Diva
 							{
 								if (marker.Tag != null)
 								{
-									groupmarkeradd(marker);
+									AddGroupMarkers(marker);
 								}
 							}
 							catch (Exception ex)
@@ -632,14 +574,14 @@ namespace Diva
 						{
 							var value = item.Value;
 							quickadd = true;
-							callMeDrag(item.Key, value.Lat, value.Lng, -1);
+							DragCallback(item.Key, value.Lat, value.Lng, -1);
 							quickadd = false;
 						}
 
 						myMap.SelectedArea = RectLatLng.Empty;
 						groupmarkers.Clear();
 						// redraw to remove selection
-						writeKMLV2();
+						WriteKMLV2();
 
 						currentRectMarker = null;
 					}
@@ -664,7 +606,7 @@ namespace Diva
 						}
 						else
 						{
-							callMeDrag(currentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
+							DragCallback(currentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
 								currentMarker.Position.Lng, -2);
 						}
 
@@ -885,7 +827,7 @@ namespace Diva
 				{
 					try
 					{
-						groupmarkeradd(item);
+						AddGroupMarkers(item);
 
 						log.Info("add marker to group");
 					}
@@ -910,7 +852,7 @@ namespace Diva
 
 			if (!isMouseDown)
 			{
-				if (item is GMapMarkerRect)
+				if (item is GMapRectMarker)
 				{
 					GMapMarkerRect rc = item as GMapMarkerRect;
 					rc.Pen.Color = Color.Transparent;
@@ -934,9 +876,9 @@ namespace Diva
 
 					currentRectMarker = rc;
 				}
-				if (item is GMapMarkerRallyPt)
+				if (item is GMap3DPointMarker)
 				{
-					currentRallyPt = item as GMapMarkerRallyPt;
+					currentRallyPt = item as GMap3DPointMarker;
 				}
 				/**if (item is GMapMarkerAirport)
 				{
@@ -947,7 +889,7 @@ namespace Diva
 				{
 					CurrentPOIMarker = item as GMapMarkerPOI;
 				}*/
-				if (item is GMapMarkerWP)
+				if (item is GMapTaggedMarker)
 				{
 					currentGMapMarker = item;
 				}
@@ -962,14 +904,14 @@ namespace Diva
 		{
 			if (!isMouseDown)
 			{
-				if (item is GMapMarkerRect)
+				if (item is GMapRectMarker)
 				{
 					currentRectMarker = null;
-					GMapMarkerRect rc = item as GMapMarkerRect;
+					GMapRectMarker rc = item as GMapRectMarker;
 					rc.ResetColor();
 					myMap.Invalidate(false);
 				}
-				if (item is GMapMarkerRallyPt)
+				if (item is GMap3DPointMarker)
 				{
 					currentRallyPt = null;
 				}
@@ -1020,32 +962,23 @@ namespace Diva
 		}
 		#endregion
 
-		private void addpolygonmarker(string tag, double lng, double lat, int alt, Color? color, GMapOverlay overlay)
+		private void AddPolygonMarker(string tag, double lng, double lat, int alt, Color color, GMapOverlay overlay)
 		{
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot);
-				m.ToolTipMode = MarkerTooltipMode.Always;
-				m.ToolTipText = tag;
-				m.Tag = tag;
+                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot)
+                {
+                    ToolTipMode = MarkerTooltipMode.Always,
+                    ToolTipText = tag,
+                    Tag = tag
+                };
 
-				GMapMarkerRect mBorders = new GMapMarkerRect(point);
-				{
-					mBorders.InnerMarker = m;
-					try
-					{
-						// mBorders.wprad = (int)(Settings.Instance.GetFloat("TXT_WPRad"));
-						mBorders.wprad = 30;
-					}
-					catch
-					{
-					}
-					if (color.HasValue)
-					{
-						mBorders.Color = color.Value;
-					}
-				}
+                GMapRectMarker mBorders = new GMapRectMarker(point)
+                {
+                    InnerMarker = m,
+                    Color = color
+                };
 
 				Invoke((MethodInvoker)delegate
 				{
@@ -1058,21 +991,20 @@ namespace Diva
 			}
 		}
 
-		private void addpolygonmarkergrid(string tag, double lng, double lat, int alt)
+		private void AddPolygonMarkerGrid(string tag, double lng, double lat, int alt)
 		{
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.green);
-				m.ToolTipMode = MarkerTooltipMode.Never;
-				m.ToolTipText = "grid" + tag;
-				m.Tag = "grid" + tag;
+                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.green)
+                {
+                    ToolTipMode = MarkerTooltipMode.Never,
+                    ToolTipText = "grid" + tag,
+                    Tag = "grid" + tag
+                };
 
-				//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-				GMapMarkerRect mBorders = new GMapMarkerRect(point);
-				{
-					mBorders.InnerMarker = m;
-				}
+                //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
+                GMapRectMarker mBorders = new GMapRectMarker(point) { InnerMarker = m };
 
 				overlays.drawnpolygons.Markers.Add(m);
 				overlays.drawnpolygons.Markers.Add(mBorders);
@@ -1096,17 +1028,18 @@ namespace Diva
 					dgvWayPoints.CurrentCell = null;
 					dgvWayPoints.Rows.RemoveAt(e.RowIndex);
 					quickadd = false;
-					writeKMLV2();
-				}
-				// setgradanddistandaz();
-			}
+					WriteKMLV2();
+                    DroneInfoPanel.NotifyMissionChanged();
+                }
+                // setgradanddistandaz();
+            }
 			catch (Exception)
 			{
-				MessageBox.Show(ResStrings.MsgRowError);
+				MessageBox.Show(Strings.MsgRowError);
 			}
 		}
 
-		public void callMeDrag(string pointno, double lat, double lng, int alt)
+		public void DragCallback(string pointno, double lat, double lng, int alt)
 		{
 			if (pointno == "")
 			{
@@ -1123,33 +1056,26 @@ namespace Diva
 				return;
 			}
 
-
-			if (pointno == "Tracker Home")
-			{
-				ActiveDrone.Status.TrackerLocation = new PointLatLngAlt(lat, lng, alt, "");
-				return;
-			}
-
 			try
 			{
-				selectedrow = int.Parse(pointno) - 1;
-				dgvWayPoints.CurrentCell = dgvWayPoints[1, selectedrow];
+				selectedRow = int.Parse(pointno) - 1;
+				dgvWayPoints.CurrentCell = dgvWayPoints[1, selectedRow];
 				// depending on the dragged item, selectedrow can be reset 
-				selectedrow = int.Parse(pointno) - 1;
+				selectedRow = int.Parse(pointno) - 1;
 			}
 			catch
 			{
 				return;
 			}
 
-			setfromMap(lat, lng, alt);
+			SetFromMap(lat, lng, alt);
 		}
 
-		public void setfromMap(double lat, double lng, int alt, double p1 = 0)
+		public void SetFromMap(double lat, double lng, int alt, double p1 = 0)
 		{
-			if (selectedrow > dgvWayPoints.RowCount)
+			if (selectedRow > dgvWayPoints.RowCount)
 			{
-				MessageBox.Show(ResStrings.MsgInvalidCoordinate);
+				MessageBox.Show(Strings.MsgInvalidCoordinate);
 				return;
 			}
 
@@ -1162,7 +1088,7 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ResStrings.MsgInvalidEntry.FormatWith(ex.Message));
+				MessageBox.Show(Strings.MsgInvalidEntry.FormatWith(ex.Message));
 			}
 
 			// remove more than 20 revisions
@@ -1174,20 +1100,20 @@ namespace Diva
 			DataGridViewTextBoxCell cell;
 			if (dgvWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedRow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lat.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
 			if (dgvWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedRow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lng.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
 			if (alt != -1 && alt != -2 &&
 				dgvWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedRow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
 
 				{
 					double result;
@@ -1199,21 +1125,21 @@ namespace Diva
 
 						string homealt = "10";
 						//if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
-						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgHomeAltitudeRequired, homealt, ref homealt))
+						if (DialogResult.Cancel == InputBox.Show(Strings.MsgHomeAltitudeRequired, homealt, ref homealt))
 							return;
 						TxtHomeAltitude.Text = homealt;
 					}
 					int results1;
 					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
 					{
-						MessageBox.Show(ResStrings.MsgDefaultAltitudeInvalid);
+						MessageBox.Show(Strings.MsgDefaultAltitudeInvalid);
 						return;
 					}
 
 					if (results1 == 0)
 					{
 						string defalt = "10";
-						if (DialogResult.Cancel == InputBox.Show(ResStrings.MsgDefaultAltitudeRequired, defalt, ref defalt))
+						if (DialogResult.Cancel == InputBox.Show(Strings.MsgDefaultAltitudeRequired, defalt, ref defalt))
 							return;
 						TxtAltitudeValue.Text = defalt;
 					}
@@ -1235,12 +1161,10 @@ namespace Diva
 				}
 				else
 				{
-					MessageBox.Show(ResStrings.MsgInvalidHomeOrWPAltitide);
+					MessageBox.Show(Strings.MsgInvalidHomeOrWPAltitide);
 					cell.Style.BackColor = Color.Red;
 				}
 			}
-
-
 
 			// convert to utm
 			// convertFromGeographic(lat, lng);
@@ -1248,16 +1172,15 @@ namespace Diva
 			// Add more for other params
 			if (dgvWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedrow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedRow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
 				cell.Value = p1;
 				cell.DataGridView.EndEdit();
 			}
 
-			writeKMLV2();
-			// writeKML();
+            WriteKMLV2();
+            // writeKML();
 
-
-			dgvWayPoints.EndEdit();
+            dgvWayPoints.EndEdit();
 		}
 
 		public void AddWPToMap(double lat, double lng, int alt)
@@ -1265,32 +1188,26 @@ namespace Diva
 			// check home point setup.
 			if (IsHomeEmpty())
 			{
-				MessageBox.Show(ResStrings.MsgSetHomeFirst);
+				MessageBox.Show(Strings.MsgSetHomeFirst);
 				return;
 			}
 
 			// creating a WP
-			selectedrow = dgvWayPoints.Rows.Add();
+			selectedRow = dgvWayPoints.Rows.Add();
 
+			
+			dgvWayPoints.Rows[selectedRow].Cells[colCommand.Index].Value = MAV_CMD.WAYPOINT.ToString();
+			ChangeColumnHeader(MAV_CMD.WAYPOINT.ToString());
+			
 
-			dgvWayPoints.Rows[selectedrow].Cells[colCommand.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
-			ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+			SetFromMap(lat, lng, alt);
+            DroneInfoPanel.NotifyMissionChanged();
+        }
 
-
-			setfromMap(lat, lng, alt);
-		}
-
-		private bool IsHomeEmpty()
-		{
-			/*if (TxtHomeAltitude.Text != "" && TxtHomeLatitude.Text != "" && TxtHomeLongitude.Text != "")
-				return false;
-			else
-				return true;*/
-			double holder;
-			return !double.TryParse(TxtHomeAltitude.Text, out holder) ||
-					!double.TryParse(TxtHomeLatitude.Text, out holder) ||
-					!double.TryParse(TxtHomeLongitude.Text, out holder);
-		}
+        private bool IsHomeEmpty() =>
+            !double.TryParse(TxtHomeAltitude.Text, out double holder) ||
+                    !double.TryParse(TxtHomeLatitude.Text, out holder) ||
+                    !double.TryParse(TxtHomeLongitude.Text, out holder);
 
 		private void ChangeColumnHeader(string command)
 		{
@@ -1309,13 +1226,13 @@ namespace Diva
 			}
 		}
 
-		private List<Locationwp> GetCommandList()
+		public List<WayPoint> GetCommandList()
 		{
-			List<Locationwp> commands = new List<Locationwp>();
+			List<WayPoint> commands = new List<WayPoint>();
 
 			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
 			{
-				var temp = DataViewtoLocationwp(a);
+				var temp = DataViewToWayPoint(a);
 
 				commands.Add(temp);
 			}
@@ -1323,56 +1240,46 @@ namespace Diva
 			return commands;
 		}
 
-		private Locationwp DataViewtoLocationwp(int a)
+		private WayPoint DataViewToWayPoint(int i)
 		{
-			try
+            try
 			{
-				Locationwp temp = new Locationwp();
-				if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
-				{
-					temp.id = (ushort)dgvWayPoints.Rows[a].Cells[colCommand.Index].Tag;
-				}
-				else
-				{
-					temp.id =
-						(ushort)
-								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
-									false);
-				}
+                DataGridViewCell getC(DataGridViewBand col) => dgvWayPoints.Rows[i].Cells[col.Index];
+                string getS(DataGridViewBand col) => getC(col).Value.ToString();
+                double getD(DataGridViewBand col) => double.Parse(getS(col));
+                float getF(DataGridViewBand col) => (float)getD(col);
 
-				// TODO: I don't know where currentstate come from..
-
-				temp.alt =
-					(float)
-						(double.Parse(dgvWayPoints.Rows[a].Cells[colAltitude.Index].Value.ToString()));
-
-				temp.lat = (double.Parse(dgvWayPoints.Rows[a].Cells[colLatitude.Index].Value.ToString()));
-				temp.lng = (double.Parse(dgvWayPoints.Rows[a].Cells[colLongitude.Index].Value.ToString()));
-				temp.p1 = float.Parse(dgvWayPoints.Rows[a].Cells[colParam1.Index].Value.ToString());
-				temp.p2 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam2.Index].Value.ToString()));
-				temp.p3 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam3.Index].Value.ToString()));
-				temp.p4 = (float)(double.Parse(dgvWayPoints.Rows[a].Cells[colParam4.Index].Value.ToString()));
-
-				temp.Tag = dgvWayPoints.Rows[a].Cells[colTagData.Index].Value;
-
-				return temp;
+                return new WayPoint()
+                {
+                    Id = Enum.TryParse<MAV_CMD>(getS(colCommand), out var cmdid) ?
+                            (ushort)cmdid : (ushort)getC(colCommand).Tag,
+                    // TODO: I don't know where multiplieralt come from..
+                    Altitude = getF(colAltitude) / 1,
+                    // Gridview does not contains frame field, set waypoint frame to relative by default
+                    Frame = cmdid == MAV_CMD.WAYPOINT ? MAV_FRAME.GLOBAL_RELATIVE_ALT : MAV_FRAME.GLOBAL,
+                    Latitude = getD(colLatitude),
+                    Longitude = getD(colLongitude),
+                    Param1 = getF(colParam1),
+                    Param2 = getF(colParam2),
+                    Param3 = getF(colParam3),
+                    Param4 = getF(colParam4),
+                    SeqNo = (ushort)(ActiveDrone.Status.APName != MAV_AUTOPILOT.PX4 ? i + 1 : i),
+                    Tag = getC(colTagData).Value
+                };
 			}
 			catch (Exception ex)
 			{
-				throw new FormatException("Invalid number on row " + (a + 1).ToString(), ex);
+				throw new FormatException("Invalid number on row " + (i + 1).ToString(), ex);
 			}
 		}
+                
+        public void WriteKMLV2()
+        {
+            // quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
+            if (quickadd)
+                return;
 
-		public void writeKMLV2()
-		{
-
-
-			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
-			if (quickadd)
-				return;
-
-			updateRowNumbers();
+            UpdateRowNumbers();
 
 			var home = new PointLatLngAlt(
 					double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
@@ -1490,13 +1397,13 @@ namespace Diva
 				return;
 			try
 			{
-				selectedrow = e.RowIndex;
-				string option = dgvWayPoints[colCommand.Index, selectedrow].EditedFormattedValue.ToString();
+				selectedRow = e.RowIndex;
+				string option = dgvWayPoints[colCommand.Index, selectedRow].EditedFormattedValue.ToString();
 				string cmd;
 				try
 				{
-					if (dgvWayPoints[colCommand.Index, selectedrow].Value != null)
-						cmd = dgvWayPoints[colCommand.Index, selectedrow].Value.ToString();
+					if (dgvWayPoints[colCommand.Index, selectedRow].Value != null)
+						cmd = dgvWayPoints[colCommand.Index, selectedRow].Value.ToString();
 					else
 						cmd = option;
 				}
@@ -1573,14 +1480,14 @@ namespace Diva
 
 		private void Commands_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
 		{
-			selectedrow = e.RowIndex;
+			selectedRow = e.RowIndex;
 			Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0));
 			// do header labels - encure we dont 0 out valid colums
 			int cols = dgvWayPoints.Columns.Count;
 			for (int a = 1; a < cols; a++)
 			{
 				DataGridViewTextBoxCell cell;
-				cell = dgvWayPoints.Rows[selectedrow].Cells[a] as DataGridViewTextBoxCell;
+				cell = dgvWayPoints.Rows[selectedRow].Cells[a] as DataGridViewTextBoxCell;
 
 				if (dgvWayPoints.Columns[a].HeaderText.Equals("") && cell != null && cell.Value == null)
 				{
@@ -1596,534 +1503,120 @@ namespace Diva
 			}
 		}
 
-		#region save waypoints
-		void saveWPsFast(object sender, ProgressWorkerEventArgs e, object passdata)
-		{
-			var totalwpcountforupload = (ushort)(dgvWayPoints.RowCount + 1);
-			var reqno = 0;
-			MAVLink.MAV_MISSION_RESULT result = MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED;
-
-			var sub1 = ActiveDrone.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_ACK,
-				message =>
-				{
-					var data = ((MAVLink.mavlink_mission_ack_t)message.data);
-					var ans = (MAVLink.MAV_MISSION_RESULT)data.type;
-					if (ActiveDrone.Status.sysid != message.sysid &&
-						ActiveDrone.Status.compid != message.compid)
-						return true;
-					result = ans;
-					log.Info("MISSION_ACK " + ans);
-					return true;
-				});
-
-			var sub2 = ActiveDrone.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_REQUEST,
-				message =>
-				{
-					var data = ((MAVLink.mavlink_mission_request_t)message.data);
-					if (ActiveDrone.Status.sysid != message.sysid &&
-						ActiveDrone.Status.compid != message.compid)
-						return true;
-					reqno = data.seq;
-					log.Info("MISSION_REQUEST " + reqno);
-					return true;
-				});
-
-			((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetTotalWps);
-			ActiveDrone.setWPTotal(totalwpcountforupload);
-
-			// define the home point
-			Locationwp home = new Locationwp();
-			try
-			{
-				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TxtHomeLatitude.Text));
-				home.lng = (double.Parse(TxtHomeLongitude.Text));
-				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
-			}
-			catch
-			{
-				ActiveDrone.UnSubscribeToPacketType(sub1);
-				ActiveDrone.UnSubscribeToPacketType(sub2);
-				throw new Exception("Your home location is invalid");
-			}
-
-			// define the default frame.
-			MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-			// get the command list from the datagrid
-			var commandlist = GetCommandList();
-
-			commandlist.Insert(0, home);
-
-			// process commandlist to the mav
-			for (var a = 0; a < commandlist.Count; a++)
-			{
-				if (a % 10 == 0 && a != 0)
-				{
-					var start = DateTime.Now;
-					while (true)
-					{
-						if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
-						{
-							ActiveDrone.setWPTotal(0);
-							ActiveDrone.UnSubscribeToPacketType(sub1);
-							ActiveDrone.UnSubscribeToPacketType(sub2);
-							return;
-						}
-
-						if (reqno == a)
-						{
-							// all received
-							break;
-						}
-
-						if (start.AddSeconds(1.1) < DateTime.Now)
-						{
-							// do next 10 starting at reqno
-							a = reqno;
-							break;
-						}
-
-						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-							Thread.Sleep(500);
-
-						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
-						{
-							// resend for partial upload
-							ActiveDrone.setWPPartialUpdate((ushort)(reqno), totalwpcountforupload);
-							a = reqno;
-							break;
-						}
-
-						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
-						{
-							log.Error("Upload failed, please reduce the number of wp's");
-							ActiveDrone.UnSubscribeToPacketType(sub1);
-							ActiveDrone.UnSubscribeToPacketType(sub2);
-							return;
-						}
-						if (result == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
-						{
-							log.Error(
-								"Upload failed, mission was rejected byt the Mav,\n item had a bad option wp# " + a + " " +
-								result);
-							ActiveDrone.UnSubscribeToPacketType(sub1);
-							ActiveDrone.UnSubscribeToPacketType(sub2);
-							return;
-						}
-						if (result != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-						{
-							log.Error("Upload wps failed " + reqno +
-											 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), result.ToString()));
-							ActiveDrone.UnSubscribeToPacketType(sub1);
-							ActiveDrone.UnSubscribeToPacketType(sub2);
-							return;
-						}
-
-						System.Threading.Thread.Sleep(10);
-					}
-				}
-
-				var loc = commandlist[a];
-
-				// make sure we are using the correct frame for these commands
-				if (loc.id < (ushort)MAVLink.MAV_CMD.LAST || loc.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
-				{
-					var mode = AltitudeMode.Relative;
-
-					if (mode == AltitudeMode.Terrain)
-					{
-						frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
-					}
-					else if (mode == AltitudeMode.Absolute)
-					{
-						frame = MAVLink.MAV_FRAME.GLOBAL;
-					}
-					else
-					{
-						frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-					}
-				}
-
-				MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
-
-				req.target_system = ActiveDrone.Status.sysid;
-				req.target_component = ActiveDrone.Status.compid;
-
-				req.command = loc.id;
-
-				req.current = 0;
-				req.autocontinue = 1;
-
-				req.frame = (byte)frame;
-				if (loc.id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONTROL || loc.id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONFIGURE)
-				{
-					req.y = (int)(loc.lng);
-					req.x = (int)(loc.lat);
-				}
-				else
-				{
-					req.y = (int)(loc.lng * 1.0e7);
-					req.x = (int)(loc.lat * 1.0e7);
-				}
-				req.z = (float)(loc.alt);
-
-				req.param1 = loc.p1;
-				req.param2 = loc.p2;
-				req.param3 = loc.p3;
-				req.param4 = loc.p4;
-
-				req.seq = (ushort)a;
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetWp + a);
-				log.Info("WP no " + a);
-
-				ActiveDrone.sendPacket(req, ActiveDrone.Status.sysid, ActiveDrone.Status.compid);
-			}
-
-			ActiveDrone.UnSubscribeToPacketType(sub1);
-			ActiveDrone.UnSubscribeToPacketType(sub2);
-
-			ActiveDrone.setWPACK();
-		}
-
-		private void saveWPs(object sender, ProgressWorkerEventArgs e, object passdata)
-		{
-			try
-			{
-
-				if (!ActiveDrone.BaseStream.IsOpen)
-				{
-					throw new Exception("Please connect first!");
-					// MessageBox.Show(ResStrings.MsgConnectFirst);
-
-				}
-
-				ActiveDrone.giveComport = true;
-				int a = 0;
-
-				// define the home point
-				Locationwp home = new Locationwp();
-				try
-				{
-					home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-					home.lat = (double.Parse(TxtHomeLatitude.Text));
-					home.lng = (double.Parse(TxtHomeLongitude.Text));
-					home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
-				}
-				catch
-				{
-					throw new Exception("Your home location is invalid");
-				}
+		private void SaveWPsToDrone(object sender, ProgressWorkerEventArgs e, object passdata)
+        {
+            Action<int, string> updateStatus = ((ProgressDialogV2)sender).UpdateProgressAndStatus;
+            try
+            {
+                if (!ActiveDrone.IsOpen)
+                {
+                    throw new Exception("Please connect first!");
+                    // MessageBox.Show(Strings.MsgConnectFirst);
+                 
+                }
 
 				// log
-				log.Info("wps values " + ActiveDrone.Status.wps.Values.Count);
 				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
 
-				// check for changes / future mod to send just changed wp's
-				if (ActiveDrone.Status.wps.Values.Count == (dgvWayPoints.Rows.Count + 1))
-				{
-					Hashtable wpstoupload = new Hashtable();
+                var dlg = sender as ProgressDialogV2;
+                dlg.UpdateProgressAndStatus(0, Strings.MsgDialogSetTotalWps);
 
-					a = -1;
-					foreach (var item in ActiveDrone.Status.wps.Values)
-					{
-						// skip home
-						if (a == -1)
-						{
-							a++;
-							continue;
-						}
+                try
+                {
+                    var cmds = GetCommandList();
+                    int totalwps = cmds.Count() +
+                        (ActiveDrone.Status.APName != MAV_AUTOPILOT.PX4 ? 1 : 0);
+                    var result = ActiveDrone.SetWPs(cmds, GetHomeWP(),
+                        (i) =>
+                        {
+                            dlg.UpdateProgressAndStatus((i * 100 / totalwps), i < 0 ?
+                       Strings.MsgDialogSetParams : Strings.MsgDialogSetWp + i);
+                            Console.WriteLine("setwps callback: #" + i);
+                        });
+                }
+                catch (Exception ex) when (
+                    (ex is InsufficientMemoryException ||
+                        ex is NotSupportedException ||
+                        ex is InvalidOperationException) &&
+                    ex.InnerException != null &&
+                    ex.InnerException.Message == "SetWPs")
+                {
+                    dlg.doWorkArgs.ErrorMessage = ex.Message;
+                    return;
+                }
 
-						MAVLink.mavlink_mission_item_t temp = DataViewtoLocationwp(a);
-
-						if (temp.command == item.command &&
-							temp.x == item.x &&
-							temp.y == item.y &&
-							temp.z == item.z &&
-							temp.param1 == item.param1 &&
-							temp.param2 == item.param2 &&
-							temp.param3 == item.param3 &&
-							temp.param4 == item.param4
-							)
-						{
-							log.Info("wp match " + (a + 1));
-						}
-						else
-						{
-							log.Info("wp no match" + (a + 1));
-							wpstoupload[a] = "";
-						}
-
-						a++;
-					}
-				}
-
-				uint capabilities = (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FLOAT;
-				bool use_int = (capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_INT) > 0;
-
-				// set wp total
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetTotalWps);
-
-				ushort totalwpcountforupload = (ushort)(dgvWayPoints.Rows.Count + 1);
-
-				if (ActiveDrone.Status.apname == MAVLink.MAV_AUTOPILOT.PX4)
-				{
-					totalwpcountforupload--;
-				}
-
-				try
-				{
-					ActiveDrone.setWPTotal(totalwpcountforupload);
-				}
-				catch (TimeoutException)
-				{
-					MessageBox.Show(ResStrings.MsgSaveWPTimeout);
-				}
-				// + home
-
-				// set home location - overwritten/ignored depending on firmware.
-				// ((ProgressReporterDialogue)sender).UpdateProgressAndStatus(0, "Set home");
-
-				// upload from wp0
-				a = 0;
-
-				if (ActiveDrone.Status.apname != MAVLink.MAV_AUTOPILOT.PX4)
-				{
-					try
-					{
-						var homeans = ActiveDrone.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
-						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-						{
-							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-							{
-								MessageBox.Show(ResStrings.MsgSaveWPRejected.FormatWith(1));
-								return;
-							}
-						}
-						a++;
-					}
-					catch (TimeoutException)
-					{
-						use_int = false;
-						// added here to prevent timeout errors
-						ActiveDrone.setWPTotal(totalwpcountforupload);
-						var homeans = ActiveDrone.setWP(home, (ushort)a, MAVLink.MAV_FRAME.GLOBAL, 0, 1, use_int);
-						if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-						{
-							if (homeans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-							{
-								MessageBox.Show(ResStrings.MsgSaveWPRejected.FormatWith(2));
-								return;
-							}
-						}
-						a++;
-					}
-				}
-				else
-				{
-					use_int = false;
-				}
-
-				// define the default frame.
-				MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-				// get the command list from the datagrid
-				var commandlist = GetCommandList();
-
-				// process commandlist to the mav
-				for (a = 1; a <= commandlist.Count; a++)
-				{
-					var temp = commandlist[a - 1];
-
-					((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetWp + a);
-
-					// make sure we are using the correct frame for these commands
-					if (temp.id < (ushort)MAVLink.MAV_CMD.LAST || temp.id == (ushort)MAVLink.MAV_CMD.DO_SET_HOME)
-					{
-						var mode = AltitudeMode.Relative;
-
-						if (mode == AltitudeMode.Terrain)
-						{
-							frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
-						}
-						else if (mode == AltitudeMode.Absolute)
-						{
-							frame = MAVLink.MAV_FRAME.GLOBAL;
-						}
-						else
-						{
-							frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-						}
-					}
-
-					// handle current wp upload number
-					int uploadwpno = a;
-					if (ActiveDrone.Status.apname == MAVLink.MAV_AUTOPILOT.PX4)
-						uploadwpno--;
-
-					// try send the wp
-					MAVLink.MAV_MISSION_RESULT ans = ActiveDrone.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
-
-					// we timed out while uploading wps/ command wasnt replaced/ command wasnt added
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ERROR)
-					{
-						// resend for partial upload
-						ActiveDrone.setWPPartialUpdate((ushort)(uploadwpno), totalwpcountforupload);
-						// reupload this point.
-						ans = ActiveDrone.setWP(temp, (ushort)(uploadwpno), frame, 0, 1, use_int);
-					}
-
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_NO_SPACE)
-					{
-						MessageBox.Show(ResStrings.MsgMissionRejectedTooManyWaypoints);
-						log.Error("Upload failed, please reduce the number of wp's");
-						return;
-					}
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID)
-					{
-
-						MessageBox.Show(ResStrings.MsgMissionRejectedBadWP.FormatWith(a, ans));
-						log.Error("Upload failed, mission was rejected byt the Mav,\n " +
-							"item had a bad option wp# " + a + " " +
-							ans);
-						return;
-					}
-					if (ans == MAVLink.MAV_MISSION_RESULT.MAV_MISSION_INVALID_SEQUENCE)
-					{
-						// invalid sequence can only occur if we failed to see a response from the apm when we sent the request.
-						// or there is io lag and we send 2 mission_items and get 2 responces, one valid, one a ack of the second send
-
-						// the ans is received via mission_ack, so we dont know for certain what our current request is for. as we may have lost the mission_request
-
-						// get requested wp no - 1;
-						a = ActiveDrone.getRequestedWPNo() - 1;
-
-						continue;
-					}
-					if (ans != MAVLink.MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
-					{
-
-						MessageBox.Show(ResStrings.MsgMissionRejectedGeneral.FormatWith(
-							Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()),
-							Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString())));
-						log.Error("Upload wps failed " + Enum.Parse(typeof(MAVLink.MAV_CMD), temp.id.ToString()) +
-										 " " + Enum.Parse(typeof(MAVLink.MAV_MISSION_RESULT), ans.ToString()));
-						return;
-					}
-				}
-
-				ActiveDrone.setWPACK();
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogSetParams);
-
-				// m
-				ActiveDrone.setParam("WP_RADIUS", float.Parse("30") / 1);
-
-				// cm's
-				ActiveDrone.setParam("WPNAV_RADIUS", float.Parse("30") / 1 * 100.0);
-
-				// Remind the user after uploading the mission into firmware.
-				MessageBox.Show(ResStrings.MsgMissionAcceptWP.FormatWith(a));
-
-				try
-				{
-					ActiveDrone.setParam(new[] { "LOITER_RAD", "WP_LOITER_RAD" },
-						float.Parse("45"));
-				}
-				catch
-				{
-				}
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogDone);
+                dlg.UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
 			}
 			catch (Exception ex)
 			{
 				log.Error(ex);
-				ActiveDrone.giveComport = false;
 				throw;
 			}
-
-			ActiveDrone.giveComport = false;
-		}
-		#endregion
-
-		void getWPs(object sender, ProgressWorkerEventArgs e, object passdata = null)
-		{
-			List<Locationwp> cmds = new List<Locationwp>();
-
-			try
-			{
-
-				if (!ActiveDrone.BaseStream.IsOpen)
-				{
-					// prevent application termination
-					//throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
-					MessageBox.Show(ResStrings.MsgConnectFirst);
-					return;
-				}
-
-				ActiveDrone.giveComport = true;
-
-				// param = port.MAV.param;
-
-				log.Info("Getting Home");
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, Diva.Properties.Strings.MsgDialogGetWpCount);
-
-				log.Info("Getting WP #");
-
-				int cmdcount = ActiveDrone.getWPCount();
-
-				for (ushort a = 0; a < cmdcount; a++)
-				{
-
-					if (((ProgressDialogV2)sender).doWorkArgs.CancelRequested)
-					{
-						((ProgressDialogV2)sender).doWorkArgs.CancelAcknowledged = true;
-						throw new Exception("Cancel Requested");
-					}
-
-					log.Info("Getting WP" + a);
-					cmds.Add(ActiveDrone.getWP(a));
-				}
-
-				ActiveDrone.setWPACK();
-
-				((ProgressDialogV2)sender).UpdateProgressAndStatus(-1, ResStrings.MsgDialogDone);
-
-				log.Info("Done");
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}
-
-			WPtoScreen(cmds);
 		}
 
-		public void WPtoScreen(List<Locationwp> cmds, bool withrally = true)
+        private void LoadWPsFromDrone(object sender, ProgressWorkerEventArgs e, object passdata = null)
+        {
+            if (!ActiveDrone.IsOpen)
+            {
+                // prevent application termination
+                //throw new Exception(Diva.Properties.Strings.MsgConnectFirst);
+                MessageBox.Show(Strings.MsgConnectFirst);
+                return;
+            }
+
+            var dlg = sender as ProgressDialogV2;
+            int totalWps = -1;
+
+            dlg.UpdateProgressAndStatus(0, Strings.MsgDialogDownloadWps);
+            log.Info("Getting WP #");
+            List<WayPoint> cmds = ActiveDrone.GetWPs((i) =>
+                {
+                    if (totalWps < 0)
+                        totalWps = i;
+                    else
+                        dlg.UpdateProgressAndStatus(i * 100 / totalWps, Strings.MsgDialogDownloadWps);
+                },
+                () => dlg.doWorkArgs.CancelRequested);
+
+            if (cmds != null)
+            {
+                dlg.UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
+                log.Info("Done");
+                WPsToScreen(cmds);
+            }
+            else if (dlg.doWorkArgs.CancelRequested)
+            {
+                dlg.doWorkArgs.CancelAcknowledged = true;
+                throw new Exception("Cancel Requested");
+            }
+            else
+                throw new Exception("LoadWPs: Unknown error");
+		}
+
+		public void WPsToScreen(List<WayPoint> cmds, bool withrally = true)
 		{
 			try
 			{
-				Invoke((MethodInvoker)delegate
+				BeginInvoke((MethodInvoker)delegate
 				{
 					try
 					{
-						processToScreen(cmds);
+						Console.WriteLine("Process " + cmds.Count);
+						WPsToDataView(cmds);
+                        DroneInfoPanel.NotifyMissionChanged();
 					}
 					catch (Exception exx)
 					{
 						log.Error(exx.ToString());
 					}
-
-
+					
 					try
 					{
-						if (withrally && ActiveDrone.Status.param.ContainsKey("RALLY_TOTAL") &&
-							int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) >= 1)
+						if (withrally && ActiveDrone.Status.Params.ContainsKey("RALLY_TOTAL") &&
+							int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString()) >= 1)
 						{
-							getRallyPoints();
+							Console.WriteLine("get rally points");
+							GetRallyPoints();
 						}
 
 					}
@@ -2131,11 +1624,9 @@ namespace Diva
 					{
 					}
 
-					ActiveDrone.giveComport = false;
-
 					// BUT_ReadWPs.Enabled = true;
 
-					writeKMLV2();
+					WriteKMLV2();
 				});
 			}
 			catch (Exception exx)
@@ -2147,10 +1638,9 @@ namespace Diva
 		/// <summary>
 		/// Processes a loaded EEPROM to the map and datagrid
 		/// </summary>
-		void processToScreen(List<Locationwp> cmds, bool append = false)
+		public void WPsToDataView(List<WayPoint> cmds, bool append = false)
 		{
 			quickadd = true;
-
 
 			// mono fix
 			dgvWayPoints.CurrentCell = null;
@@ -2168,19 +1658,19 @@ namespace Diva
 			dgvWayPoints.Enabled = false;
 
 			int i = dgvWayPoints.Rows.Count - 1;
-			foreach (Locationwp temp in cmds)
+			foreach (WayPoint temp in cmds)
 			{
 				i++;
 				//Console.WriteLine("FP processToScreen " + i);
-				if (temp.id == 0 && i != 0) // 0 and not home
+				if (temp.Id == 0 && i != 0) // 0 and not home
 					break;
-				if (temp.id == 255 && i != 0) // bad record - never loaded any WP's - but have started the board up.
+				if (temp.Id == 255 && i != 0) // bad record - never loaded any WP's - but have started the board up.
 					break;
 				if (i == 0 && append) // we dont want to add home again.
 					continue;
 				if (i + 1 >= dgvWayPoints.Rows.Count)
 				{
-					selectedrow = dgvWayPoints.Rows.Add();
+					selectedRow = dgvWayPoints.Rows.Add();
 				}
 				//if (i == 0 && temp.alt == 0) // skip 0 home
 				//  continue;
@@ -2188,12 +1678,12 @@ namespace Diva
 				DataGridViewComboBoxCell cellcmd;
 				cellcmd = dgvWayPoints.Rows[i].Cells[colCommand.Index] as DataGridViewComboBoxCell;
 				cellcmd.Value = "UNKNOWN";
-				cellcmd.Tag = temp.id;
+				cellcmd.Tag = temp.Id;
 
-				foreach (object value in Enum.GetValues(typeof(MAVLink.MAV_CMD)))
+				foreach (object value in Enum.GetValues(typeof(MAV_CMD)))
 				{
-
-					if ((ushort)value == temp.id)
+					
+					if ((ushort)value == temp.Id)
 					{
 						cellcmd.Value = value.ToString();
 						break;
@@ -2201,20 +1691,20 @@ namespace Diva
 				}
 
 				cell = dgvWayPoints.Rows[i].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.alt;
+				cell.Value = temp.Altitude;
 				cell = dgvWayPoints.Rows[i].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.lat;
+				cell.Value = temp.Latitude;
 				cell = dgvWayPoints.Rows[i].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.lng;
+				cell.Value = temp.Longitude;
 
 				cell = dgvWayPoints.Rows[i].Cells[colParam1.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p1;
+				cell.Value = temp.Param1;
 				cell = dgvWayPoints.Rows[i].Cells[colParam2.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p2;
+				cell.Value = temp.Param2;
 				cell = dgvWayPoints.Rows[i].Cells[colParam3.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p3;
+				cell.Value = temp.Param3;
 				cell = dgvWayPoints.Rows[i].Cells[colParam4.Index] as DataGridViewTextBoxCell;
-				cell.Value = temp.p4;
+				cell.Value = temp.Param4;
 
 				// convert to utm
 				// convertFromGeographic(temp.lat, temp.lng);
@@ -2234,8 +1724,8 @@ namespace Diva
 				{
 					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
-						DialogResult dr = MessageBox.Show(ResStrings.MsgResetHomeCoordinate,
-							ResStrings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
+						DialogResult dr = MessageBox.Show(Strings.MsgResetHomeCoordinate,
+							Strings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
 
 						if (dr == DialogResult.Yes)
 						{
@@ -2263,41 +1753,40 @@ namespace Diva
 
 			quickadd = false;
 
-			writeKMLV2();
+			WriteKMLV2();
 
 			myMap.ZoomAndCenterMarkers("objects");
 
 			// MainMap_OnMapZoomChanged();
 		}
 
-		public void getRallyPoints()
+		public void GetRallyPoints()
 		{
-			if (ActiveDrone.Status.param["RALLY_TOTAL"] == null)
+			if (ActiveDrone.Status.Params["RALLY_TOTAL"] == null)
 			{
-				MessageBox.Show(ResStrings.MsgUnsupported);
+				MessageBox.Show(Strings.MsgUnsupported);
 				return;
 			}
 
-			if (int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString()) < 1)
+			if (int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString()) < 1)
 			{
-				MessageBox.Show(ResStrings.MsgNoRallyPoint);
+				MessageBox.Show(Strings.MsgNoRallyPoint);
 				return;
 			}
 
 			overlays.rallypoints.Markers.Clear();
 
-			int count = int.Parse(ActiveDrone.Status.param["RALLY_TOTAL"].ToString());
+			int count = int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString());
 
 			for (int a = 0; a < (count); a++)
 			{
 				try
 				{
-					PointLatLngAlt plla = ActiveDrone.getRallyPoint(a, ref count);
-					overlays.rallypoints.Markers.Add(new GMapMarkerRallyPt(new PointLatLng(plla.Lat, plla.Lng))
+					PointLatLngAlt plla = ActiveDrone.GetRallyPoint(a, ref count);
+					overlays.rallypoints.Markers.Add(new GMap3DPointMarker(plla)
 					{
-						Alt = (int)plla.Alt,
 						ToolTipMode = MarkerTooltipMode.OnMouseOver,
-						ToolTipText = ResStrings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
+						ToolTipText = Strings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
 					});
 				}
 				catch
@@ -2312,8 +1801,9 @@ namespace Diva
 			myMap.Invalidate();
 		}
 
+        internal void ClearMission() => clearMissionToolStripMenuItem_Click(null, null);
 
-		private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void clearMissionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			quickadd = true;
 
@@ -2322,18 +1812,18 @@ namespace Diva
 
 			dgvWayPoints.Rows.Clear();
 
-			selectedrow = 0;
+			selectedRow = 0;
 			quickadd = false;
-			writeKMLV2();
-		}
+			WriteKMLV2();
+            DroneInfoPanel.NotifyMissionChanged();
+        }
 
-		private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
+        private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				// CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
-				MessageBox.Show(ResStrings.MsgNoConnection);
+				MessageBox.Show(Strings.MsgNoConnection);
 				return;
 			}
 
@@ -2352,64 +1842,59 @@ namespace Diva
 				return;
 			}
 
-
-			if (ActiveDrone.Status.sys_status != (byte)MAVLink.MAV_STATE.ACTIVE)
+			if (ActiveDrone.Status.State != MAV_STATE.ACTIVE)
 			{
-				DialogResult dr = MessageBox.Show(ResStrings.MsgWarnDroneMustActive, ResStrings.DialogTitleWarning, MessageBoxButtons.OK);
+				DialogResult dr = MessageBox.Show(Strings.MsgWarnDroneMustActive, Strings.DialogTitleWarning, MessageBoxButtons.OK);
 				if (dr == DialogResult.OK) return;
 			}
-
 
 			float targetHeight = 0.0f;
 			InputDataDialog _dialog = new InputDataDialog()
 			{
-				Hint = ResStrings.MsgInputDialogHeightHint,
+				Hint = Strings.MsgInputDialogHeightHint,
 				Unit = "m",
 			};
 
 			_dialog.DoClick += (s2, e2) => targetHeight = float.Parse(_dialog.Value);
 			_dialog.ShowDialog();
 
-			Locationwp gotohere = new Locationwp();
+            WayPoint gotohere = new WayPoint
+            {
+                Id = (ushort)MAV_CMD.WAYPOINT,
+                Altitude = targetHeight, // back to m
+                Latitude = MouseDownStart.Lat,
+                Longitude = MouseDownStart.Lng,
+                Frame = MAV_FRAME.GLOBAL_RELATIVE_ALT
+            };
 
-			gotohere.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-			gotohere.alt = targetHeight; // back to m
-			gotohere.lat = (MouseDownStart.Lat);
-			gotohere.lng = (MouseDownStart.Lng);
-
-
-			try
+            try
 			{
-				ActiveDrone.setGuidedModeWP(gotohere);
+				ActiveDrone.SetGuidedModeWP(gotohere);
 			}
 			catch (Exception ex)
 			{
-				ActiveDrone.giveComport = false;
 				MessageBox.Show(ex.Message);
 			}
 
-
 			overlays.commons.Markers.Clear();
-
-			addpolygonmarker("Click & GO", gotohere.lng,
-								  gotohere.lat, (int)gotohere.alt, Color.Blue, overlays.commons);
-
-
+			
+			AddPolygonMarker("Click & GO", gotohere.Longitude,
+								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, overlays.commons);
 		}
 
-		public int AddCommand(MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+		public int AddCommand(MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
-			selectedrow = dgvWayPoints.Rows.Add();
+			selectedRow = dgvWayPoints.Rows.Add();
 
-			FillCommand(this.selectedrow, cmd, p1, p2, p3, p4, x, y, z, tag);
+			FillCommand(this.selectedRow, cmd, p1, p2, p3, p4, x, y, z, tag);
 
-			writeKMLV2();
+			WriteKMLV2();
 
-			return selectedrow;
+			return selectedRow;
 		}
 
-		public void InsertCommand(int rowIndex, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+		public void InsertCommand(int rowIndex, MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
 			if (dgvWayPoints.Rows.Count <= rowIndex)
@@ -2420,14 +1905,14 @@ namespace Diva
 
 			dgvWayPoints.Rows.Insert(rowIndex);
 
-			this.selectedrow = rowIndex;
+			this.selectedRow = rowIndex;
 
-			FillCommand(this.selectedrow, cmd, p1, p2, p3, p4, x, y, z, tag);
+			FillCommand(this.selectedRow, cmd, p1, p2, p3, p4, x, y, z, tag);
 
-			writeKMLV2();
+			WriteKMLV2();
 		}
 
-		private void FillCommand(int rowIndex, MAVLink.MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
+		private void FillCommand(int rowIndex, MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
 			double y, double z, object tag = null)
 		{
 			dgvWayPoints.Rows[rowIndex].Cells[colCommand.Index].Value = cmd.ToString();
@@ -2436,16 +1921,16 @@ namespace Diva
 
 			ChangeColumnHeader(cmd.ToString());
 
-			if (cmd == MAVLink.MAV_CMD.WAYPOINT)
+			if (cmd == MAV_CMD.WAYPOINT)
 			{
 				// add delay if supplied
 				dgvWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
 
-				setfromMap(y, x, (int)z, Math.Round(p1, 1));
+				SetFromMap(y, x, (int)z, Math.Round(p1, 1));
 			}
-			else if (cmd == MAVLink.MAV_CMD.LOITER_UNLIM)
+			else if (cmd == MAV_CMD.LOITER_UNLIM)
 			{
-				setfromMap(y, x, (int)z);
+				SetFromMap(y, x, (int)z);
 			}
 			else
 			{
@@ -2461,65 +1946,73 @@ namespace Diva
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-			if (OnlineDrones.Count > 0)
-			{
-				if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
-						MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-					return;
-				DroneInfoPanel.Clear();
-				OnlineDrones.Clear();
-			}
-			var dsettings = ConfigData.GetTypeList<DroneSetting>();
-			if (dsettings.Count == 0)
-			{
-				BUT_Configure_Click("Vehicle", null);
-				return;
-			}
-			foreach (var dsetting in dsettings)
-			{
-				try
-				{
-					MavDrone drone = null;
-					try
-					{
-						drone = new MavDrone(dsetting);
-						var overlay = ((MavlinkInterface)drone).ObjOverlay.Overlay;
-						myMap.Overlays.Add(overlay);
-						drone?.Connect();
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show(ResStrings.MsgCannotEstablishConnection
-							.FormatWith(ex.Message));
-						drone?.Disconnect();
-						drone = null;
-					}
-					if (drone == null)
-						return;
-					OnlineDrones.Add(DroneInfoPanel.AddDrone(drone)?.Drone);
-				}
-				catch (Exception exception)
-				{
-					log.Debug(exception);
-				}
-			}
-		}
+            if (OnlineDrones.Count > 0)
+            {
+                if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
+                        MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    return;
+                OnlineDrones.Clear();
+                DroneInfoPanel.Clear();
+                overlays.routes.Markers.Clear();
+            }
+            var dsettings = ConfigData.GetTypeList<DroneSetting>().Where(d => d.Checked);
+            if (!dsettings.Any())
+            {
+                BUT_Configure_Click("Vehicle", null);
+                return;
+            }
+            foreach (var dsetting in dsettings)
+            {
+                try
+                {
+                    MavDrone drone = null;
+                    try
+                    {
+                        drone = new MavDrone(dsetting);
+                        drone?.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Strings.MsgCannotEstablishConnection
+                            .FormatWith(ex.Message));
+                        drone?.Disconnect();
+                        drone = null;
+                    }
+                    if (drone != null && drone.IsOpen)
+                    {
+                        drone.FlightModeChanged += UpdateDroneMode;
+                        drone.StateChangedEvent += NotifyDroneState;
+                        DroneInfoPanel.AddDrone(drone);
+                        OnlineDrones.Add(drone);
+                        overlays.routes.Markers.Add(new GMapDroneMarker(drone));
+                    }
+                }
+                catch (Exception exception)
+                {
+                    log.Debug(exception);
+                }
+            }
+        }
 
 		#region Button click event handlers
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			// arm the MAV
-			try
-			{
-				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.armed);
-				bool ans = ActiveDrone.doARM(!ActiveDrone.Status.armed);
+            if (ActiveDrone.Status.IsArmed) return;
+
+            // arm the MAV
+            try
+            {
+                if (ActiveDrone.Status.FlightMode != FlightMode.GUIDED)
+                    ActiveDrone.SetMode("GUIDED");
+				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.IsArmed);
+				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.IsArmed);
 				if (ans == false)
 					log.Error("arm failed");
 			}
@@ -2531,7 +2024,7 @@ namespace Diva
 
 		private void BUT_Takeoff_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
@@ -2539,13 +2032,13 @@ namespace Diva
 
 			InputDataDialog _dialog = new InputDataDialog()
 			{
-				Hint = ResStrings.MsgInputDialogHeightHint,
+				Hint = Strings.MsgInputDialogHeightHint,
 				Unit = "m",
 			};
 
 			_dialog.DoClick += (s2, e2) => {
-				ActiveDrone.setMode("GUIDED");
-				ActiveDrone.doCommand(MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, float.Parse(_dialog.Value));
+				ActiveDrone.SetMode("GUIDED");
+				ActiveDrone.TakeOff(float.Parse(_dialog.Value));
 			};
 
 			_dialog.ShowDialog();
@@ -2555,98 +2048,81 @@ namespace Diva
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			if (ActiveDrone.BaseStream.IsOpen)
+			if (ActiveDrone.IsOpen)
 			{
-				// flyToHereAltToolStripMenuItem_Click(null, null);
-				ActiveDrone.doCommand(MAVLink.MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
-			}
+                ActiveDrone.StartMission();
+            }
 		}
-
 
 		private void BUT_RTL_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-			if (ActiveDrone.BaseStream.IsOpen)
+			if (ActiveDrone.IsOpen)
 			{
-				ActiveDrone.doCommand(MAVLink.MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
+				ActiveDrone.ReturnToLaunch();
 			}
 		}
 
-		ProgressDialogV2 downloadWPReporter = null;
-
-		/// <summary>
-		/// Reads the EEPROM from a com port
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
 		public void BUT_read_Click(object sender, EventArgs e)
 		{
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
-
 			if (dgvWayPoints.Rows.Count > 0)
 			{
-
-				if (MessageBox.Show(ResStrings.MsgConfirmClearExistingMission,
-					ResStrings.MsgConfirmTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
+				
+				if (MessageBox.Show(Strings.MsgConfirmClearExistingMission,
+					Strings.MsgConfirmTitle, MessageBoxButtons.OKCancel) != DialogResult.OK)
 				{
 					return;
 				}
 
 			}
 
-			downloadWPReporter = new ProgressDialogV2
+			var downloadWPReporter = new ProgressDialogV2
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_info,
-				Text = ResStrings.MsgDialogDownloadWps,
+				Text = Strings.MsgDialogDownloadWps,
 			};
 
-			downloadWPReporter.DoWork += getWPs;
+			downloadWPReporter.DoWork += LoadWPsFromDrone;
 			downloadWPReporter.RunBackgroundOperationAsync();
 			downloadWPReporter.Dispose();
 
 		}
 
-
-		private ProgressDialogV2 uploadWPReporter;
-
 		public void BUT_write_Click(object sender, EventArgs e)
 		{
-
-			if (!ActiveDrone.BaseStream.IsOpen)
+			if (!ActiveDrone.IsOpen)
 			{
 				log.Error("basestream have opened");
 				return;
 			}
 
 			// check home
-			Locationwp home = new Locationwp();
+			WayPoint home;
 			try
 			{
-				home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-				home.lat = (double.Parse(TxtHomeLatitude.Text));
-				home.lng = (double.Parse(TxtHomeLongitude.Text));
-				home.alt = (float.Parse(TxtHomeAltitude.Text)); // use saved home
+                home = GetHomeWP();
 			}
 			catch
 			{
-				MessageBox.Show(ResStrings.MsgHomeLocationInvalid);
+				MessageBox.Show(Strings.MsgHomeLocationInvalid);
 				return;
 			}
 
@@ -2655,57 +2131,53 @@ namespace Diva
 			{
 				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
 				{
-					double answer;
-					if (b >= 1 && b <= 7)
-					{
-						if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out answer))
-						{
-							MessageBox.Show(ResStrings.MsgMissionError);
-							return;
-						}
-					}
+                    if (b >= 1 && b <= 7)
+                    {
+                        if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out double answer))
+                        {
+                            MessageBox.Show(Strings.MsgMissionError);
+                            return;
+                        }
+                    }
 
-					// if (TXT_altwarn.Text == "")
-					// 	TXT_altwarn.Text = (0).ToString();
+                    // if (TXT_altwarn.Text == "")
+                    // 	TXT_altwarn.Text = (0).ToString();
 
-					if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
+                    if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 						continue;
 
-					ushort cmd =
-						(ushort)
-								Enum.Parse(typeof(MAVLink.MAV_CMD),
-									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(), false);
+					ushort cmd = (ushort)Enum.Parse(typeof(MAV_CMD),
+									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
+                                    false);
 
-					if (cmd < (ushort)MAVLink.MAV_CMD.LAST &&
+					if (cmd < (ushort)MAV_CMD.LAST &&
 						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
 					{
-						if (cmd != (ushort)MAVLink.MAV_CMD.TAKEOFF &&
-							cmd != (ushort)MAVLink.MAV_CMD.LAND &&
-							cmd != (ushort)MAVLink.MAV_CMD.DELAY &&
-							cmd != (ushort)MAVLink.MAV_CMD.RETURN_TO_LAUNCH)
+                        if (cmd != (ushort)MAV_CMD.TAKEOFF &&
+                            cmd != (ushort)MAV_CMD.LAND &&
+                            cmd != (ushort)MAV_CMD.DELAY &&
+							cmd != (ushort)MAV_CMD.RETURN_TO_LAUNCH)
 						{
-							MessageBox.Show(ResStrings.MsgWarnWPAltitiude.FormatWith(a + 1));
+							MessageBox.Show(Strings.MsgWarnWPAltitiude.FormatWith(a + 1));
 							return;
 						}
 					}
 				}
 			}
 
-			uploadWPReporter = new ProgressDialogV2
+			var uploadWPReporter = new ProgressDialogV2
 			{
 				StartPosition = FormStartPosition.CenterScreen,
 				HintImage = Resources.icon_info,
-				Text = ResStrings.MsgDialogUploadWps,
+				Text = Strings.MsgDialogUploadWps,
 			};
 
-			uploadWPReporter.DoWork += saveWPs;
+			uploadWPReporter.DoWork += SaveWPsToDrone;
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
 			myMap.Focus();
 		}
-
-		#endregion
 
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -2713,8 +2185,6 @@ namespace Diva
 			TxtHomeLatitude.Text = MouseDownStart.Lat.ToString();
 			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
 		}
-
-
 
 		private void Btn_Rotation_Click(object sender, EventArgs e)
 		{
@@ -2724,7 +2194,7 @@ namespace Diva
 			try
 			{
 				if (rotationMission.IsActived()) {
-					MessageBox.Show(ResStrings.MsgWarnRotationExcuteing);
+					MessageBox.Show(Strings.MsgWarnRotationExcuteing);
 					return;
 				}
 				rotationMission.ShowDialog();
@@ -2739,40 +2209,16 @@ namespace Diva
 
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
-			if (ActiveDrone.BaseStream.IsOpen)
+			if (ActiveDrone.IsOpen)
 			{
-				ActiveDrone.setMode(
-					ActiveDrone.Status.sysid,
-					ActiveDrone.Status.compid,
-					new MAVLink.mavlink_set_mode_t()
-					{
-						target_system = ActiveDrone.Status.sysid,
-						base_mode = (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-						custom_mode = (uint)9,
-					});
-			}
-		}
-
-
-		private Demux demultiplexer = new Demux();
-		private bool isDeplexClicked = false;
-		private void BUT_Deplex_Click(object sender, EventArgs e)
-		{
-			isDeplexClicked = !isDeplexClicked;
-			if (isDeplexClicked)
-			{
-				demultiplexer.Active();
-			}
-			else
-			{
-				demultiplexer.Deactive();
+                ActiveDrone.SetMode("LAND");
 			}
 		}
 
 		private void BUT_Configure_Click(object sender, EventArgs e)
 		{
-			ConfigureForm config = new ConfigureForm();
-			config.InitPage = sender as string;
+            ConfigureForm.InitPage = sender as string;
+            ConfigureForm config = new ConfigureForm();
 			config.ShowDialog(this);
 		}
 
@@ -2793,29 +2239,8 @@ namespace Diva
 			{
 				Task.Run(async () => await CleanupAsync());
 			}
-
+			
 		}
-
-		private void BUT_PowerConsume_Click(object sender, EventArgs e)
-		{
-
-
-			try
-			{
-				Locationwp home = new Locationwp()
-				{
-					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-					lat = (double.Parse(TxtHomeLatitude.Text)),
-					lng = (double.Parse(TxtHomeLongitude.Text)),
-					alt = (float.Parse(TxtHomeAltitude.Text)),
-				};
-
-				FileUtility fu = new FileUtility(ActiveDrone, GetCommandList(), home);
-				fu.Write();
-			}
-			catch (Exception) { }
-		}
-
 
 		private CancellationTokenSource _tokenSource = new CancellationTokenSource();
 
@@ -2826,7 +2251,7 @@ namespace Diva
 				// Do whatever cleanup you need to.
 				Console.WriteLine("ping timer");
 
-				AddWPToMap(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng, 10);
+				AddWPToMap(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude, 10);
 
 				// set the time span
 				await Task.Delay(System.TimeSpan.FromSeconds(5), _tokenSource.Token);
@@ -2835,7 +2260,7 @@ namespace Diva
 
 		private void VideoDemo_Click(object sender, EventArgs e)
 		{
-			// string uri = Microsoft.VisualBasic.Interaction.InputBox(ResStrings.MsgSpecifyVideoURI);
+			// string uri = Microsoft.VisualBasic.Interaction.InputBox(Strings.MsgSpecifyVideoURI);
 
 			var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
 			string streamUri = dsetting.StreamURI;
@@ -2857,41 +2282,40 @@ namespace Diva
 			}
 		}
 
-
 		private void BtnSaveMission_Click(object sender, EventArgs e)
 		{
-			KMLFileUtility kUtility = new KMLFileUtility();
-
-			Locationwp home = new Locationwp()
+			WayPoint home = new WayPoint
 			{
-				id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-				lat = (double.Parse(TxtHomeLatitude.Text)),
-				lng = (double.Parse(TxtHomeLongitude.Text)),
-				alt = (float.Parse(TxtHomeAltitude.Text)),
+				Id = (ushort)MAV_CMD.WAYPOINT,
+				Latitude = (double.Parse(TxtHomeLatitude.Text)),
+				Longitude = (double.Parse(TxtHomeLongitude.Text)),
+				Altitude = (float.Parse(TxtHomeAltitude.Text)),
 			};
 
-			kUtility.SaveKMLMission(GetCommandList(), home);
+            KMLFileUtility.SaveKMLMission(GetCommandList(), home);
 
-			writeKMLV2();
+			WriteKMLV2();
 		}
 
 		private void BtnReadMission_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				KMLFileUtility kUtility = new KMLFileUtility();
-				List<Locationwp> cmds = kUtility.ReadKMLMission();
-				processToScreen(cmds, false);
-				writeKMLV2();
-				myMap.ZoomAndCenterMarkers("objects");
-			}
-			catch (Exception e1)
+				List<WayPoint> cmds = KMLFileUtility.ReadKMLMission();
+                if (cmds != null)
+                {
+                    WPsToDataView(cmds, false);
+                    WriteKMLV2();
+                    myMap.ZoomAndCenterMarkers("objects");
+                }
+            }
+			catch (Exception ex)
 			{
-				log.Warn(e1.ToString());
+				log.Warn(ex);
+                MessageBox.Show(Strings.MsgErrorReadingKmlFile + ex);
 			}
 
 		}
-
 
 		private void But_MapFocus_Click(object sender, EventArgs e)
 		{
@@ -2925,7 +2349,7 @@ namespace Diva
 
 			drawnPolygon.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng));
 
-			addpolygonmarkergrid(drawnPolygon.Points.Count.ToString(), MouseDownStart.Lng, MouseDownStart.Lat, 0);
+			AddPolygonMarkerGrid(drawnPolygon.Points.Count.ToString(), MouseDownStart.Lng, MouseDownStart.Lat, 0);
 
 			myMap.UpdatePolygonLocalPosition(drawnPolygon);
 
@@ -2941,7 +2365,7 @@ namespace Diva
 			overlays.drawnpolygons.Markers.Clear();
 			myMap.Invalidate();
 
-			writeKMLV2();
+			WriteKMLV2();
 		}
 
 		private void savePolygonToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3016,7 +2440,7 @@ namespace Diva
 								continue;
 
 							drawnPolygon.Points.Add(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])));
-							addpolygonmarkergrid(drawnPolygon.Points.Count.ToString(), double.Parse(items[1]),
+							AddPolygonMarkerGrid(drawnPolygon.Points.Count.ToString(), double.Parse(items[1]),
 								double.Parse(items[0]), 0);
 
 							a++;
@@ -3041,34 +2465,12 @@ namespace Diva
 			}
 		}
 
-		/// <summary>
-		/// from http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-		/// </summary>
-		/// <param name="array"> a closed polygon</param>
-		/// <param name="testx"></param>
-		/// <param name="testy"></param>
-		/// <returns> true = outside</returns>
-		bool pnpoly(PointLatLng[] array, double testx, double testy)
-		{
-			int nvert = array.Length;
-			int i, j = 0;
-			bool c = false;
-			for (i = 0, j = nvert - 1; i < nvert; j = i++)
-			{
-				if (((array[i].Lng > testy) != (array[j].Lng > testy)) &&
-					(testx <
-					 (array[j].Lat - array[i].Lat) * (testy - array[i].Lng) / (array[j].Lng - array[i].Lng) + array[i].Lat))
-					c = !c;
-			}
-			return c;
-		}
-
 		private void GeoFenceuploadToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// polygongridmode = false;
 			//FENCE_ENABLE ON COPTER
 			//FENCE_ACTION ON PLANE
-			if (!ActiveDrone.Status.param.ContainsKey("FENCE_ENABLE") && !ActiveDrone.Status.param.ContainsKey("FENCE_ACTION"))
+			if (!ActiveDrone.Status.Params.ContainsKey("FENCE_ENABLE") && !ActiveDrone.Status.Params.ContainsKey("FENCE_ACTION"))
 			{
 				MessageBox.Show("Not Supported");
 				return;
@@ -3096,9 +2498,8 @@ namespace Diva
 			List<PointLatLng> plll = new List<PointLatLng>(drawnPolygon.Points.ToArray());
 			// close it
 			plll.Add(plll[0]);
-			// check it
-			if (
-				!pnpoly(plll.ToArray(), overlays.geofence.Markers[0].Position.Lat, overlays.geofence.Markers[0].Position.Lng))
+            // check it
+            if (!overlays.geofence.Markers[0].Position.InsideOf(plll))
 			{
 				MessageBox.Show("Your return location is outside the polygon");
 				return;
@@ -3107,10 +2508,10 @@ namespace Diva
 			int minalt = 0;
 			int maxalt = 0;
 
-			if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
+			if (ActiveDrone.Status.Params.ContainsKey("FENCE_MINALT"))
 			{
 				string minalts =
-					(int.Parse(ActiveDrone.Status.param["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+					(int.Parse(ActiveDrone.Status.Params["FENCE_MINALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
 						.ToString("0");
 				if (DialogResult.Cancel == InputBox.Show("Min Alt", "Box Minimum Altitude?", ref minalts))
 					return;
@@ -3122,10 +2523,10 @@ namespace Diva
 				}
 			}
 
-			if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
+			if (ActiveDrone.Status.Params.ContainsKey("FENCE_MAXALT"))
 			{
 				string maxalts =
-					(int.Parse(ActiveDrone.Status.param["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
+					(int.Parse(ActiveDrone.Status.Params["FENCE_MAXALT"].ToString()) * CURRENTSTATE_MULTIPLERDIST)
 						.ToString(
 							"0");
 				if (DialogResult.Cancel == InputBox.Show("Max Alt", "Box Maximum Altitude?", ref maxalts))
@@ -3140,10 +2541,10 @@ namespace Diva
 
 			try
 			{
-				if (ActiveDrone.Status.param.ContainsKey("FENCE_MINALT"))
-					ActiveDrone.setParam("FENCE_MINALT", minalt);
-				if (ActiveDrone.Status.param.ContainsKey("FENCE_MAXALT"))
-					ActiveDrone.setParam("FENCE_MAXALT", maxalt);
+				if (ActiveDrone.Status.Params.ContainsKey("FENCE_MINALT"))
+					ActiveDrone.SetParam("FENCE_MINALT", minalt);
+				if (ActiveDrone.Status.Params.ContainsKey("FENCE_MAXALT"))
+					ActiveDrone.SetParam("FENCE_MAXALT", maxalt);
 			}
 			catch (Exception ex)
 			{
@@ -3152,11 +2553,11 @@ namespace Diva
 				return;
 			}
 
-			float oldaction = (float)ActiveDrone.Status.param["FENCE_ACTION"];
+			float oldaction = (float)ActiveDrone.Status.Params["FENCE_ACTION"];
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_ACTION", 0);
+				ActiveDrone.SetParam("FENCE_ACTION", 0);
 			}
 			catch
 			{
@@ -3170,7 +2571,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_TOTAL", pointcount);
+				ActiveDrone.SetParam("FENCE_TOTAL", pointcount);
 			}
 			catch
 			{
@@ -3182,21 +2583,21 @@ namespace Diva
 			{
 				byte a = 0;
 				// add return loc
-				ActiveDrone.setFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
+				ActiveDrone.SetFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
 				a++;
 				// add points
 				foreach (var pll in drawnPolygon.Points)
 				{
-					ActiveDrone.setFencePoint(a, new PointLatLngAlt(pll), pointcount);
+					ActiveDrone.SetFencePoint(a, new PointLatLngAlt(pll), pointcount);
 					a++;
 				}
 
 				// add polygon close
-				ActiveDrone.setFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
+				ActiveDrone.SetFencePoint(a, new PointLatLngAlt(drawnPolygon.Points[0]), pointcount);
 
 				try
 				{
-					ActiveDrone.setParam("FENCE_ACTION", oldaction);
+					ActiveDrone.SetParam("FENCE_ACTION", oldaction);
 				}
 				catch
 				{
@@ -3240,7 +2641,7 @@ namespace Diva
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Failed to send new fence points " + ex, Strings.ERROR);
+				MessageBox.Show(Strings.MsgFailedToSendNewFencePoints + ex, Strings.DialogTitleError);
 			}
 		}
 
@@ -3253,7 +2654,6 @@ namespace Diva
 
 			myMap.Invalidate();
 		}
-
 
 		private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -3296,7 +2696,7 @@ namespace Diva
 							else
 							{
 								drawnPolygon.Points.Add(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])));
-								addpolygonmarkergrid(drawnPolygon.Points.Count.ToString(), double.Parse(items[1]),
+								AddPolygonMarkerGrid(drawnPolygon.Points.Count.ToString(), double.Parse(items[1]),
 									double.Parse(items[0]), 0);
 							}
 							a++;
@@ -3318,7 +2718,6 @@ namespace Diva
 				}
 			}
 		}
-
 
 		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -3375,14 +2774,20 @@ namespace Diva
 				}
 			}
 		}
-		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+
+		private void powerConsumptionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            DroneInfoPanel.NotifyMissionChanged();
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//FENCE_ENABLE ON COPTER
 			//FENCE_ACTION ON PLANE
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_ENABLE", 0);
+				ActiveDrone.SetParam("FENCE_ENABLE", 0);
 			}
 			catch
 			{
@@ -3392,7 +2797,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_ACTION", 0);
+				ActiveDrone.SetParam("FENCE_ACTION", 0);
 			}
 			catch
 			{
@@ -3402,7 +2807,7 @@ namespace Diva
 
 			try
 			{
-				ActiveDrone.setParam("FENCE_TOTAL", 0);
+				ActiveDrone.SetParam("FENCE_TOTAL", 0);
 			}
 			catch
 			{
@@ -3417,66 +2822,42 @@ namespace Diva
 			geofencePolygon.Points.Clear();
 		}
 
-		/// <summary>
-		/// Draw an mav icon, and update tracker location icon and guided mode wp on FP screen
-		/// Frame rate about 20 ms
-		/// </summary>
+		#endregion
 
-		public static bool isUpdatemapThreadRun = false;
-		private void MapitemUpdateLoop()
+        private void UpdateMapItems()
+        {
+            try
+            {
+                // overlay marks has to be touched for updating
+                if (overlays.routes.Markers.Count > 0)
+                    BeginInvoke((MethodInvoker)delegate
+                    {
+                        lock (overlays)
+                            if (overlays.routes.Markers.Count > 0)
+                                overlays.routes.Markers[0] = overlays.routes.Markers[0];
+                    });
+
+                //autopan
+                if (Autopan)
+                {
+                    if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
+                    {
+                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
+                        UpdateMapPosition(currentloc);
+                        mapupdate = DateTime.Now;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        #region customized overlay related functions
+
+        private void ReadCustomizedOverlayFile(string file)
 		{
-
-			while (isUpdatemapThreadRun)
-			{
-				//if (OnlineDrones.Count == 0) { overlays.routes.Markers.Clear(); }
-
-				try
-				{
-					Invoke((MethodInvoker)delegate { overlays.routes.Markers.Clear(); });
-					foreach (MavlinkInterface mav in OnlineDrones)
-					{
-						if (mav.Status.current_lat == 0 || mav.Status.current_lng == 0) { continue; }
-						var marker = new GMapMarkerQuad(new PointLatLng(mav.Status.current_lat, mav.Status.current_lng),
-							mav.Status.yaw, mav.Status.groundcourse, mav.Status.nav_bearing, mav.Status.sysid);
-						overlays.routes.Markers.Add(marker);
-					}
-
-					//autopan
-					if (autopan)
-					{
-						if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
-						{
-							PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.current_lat, ActiveDrone.Status.current_lng);
-							UpdateMapPosition(currentloc);
-							mapupdate = DateTime.Now;
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine(ex.ToString());
-				}
-
-				Thread.Sleep(500);
-			}
-		}
-
-
-		private void KeyDownListener(object sender, KeyEventArgs e)
-		{
-			string mode = Enum.GetName(typeof(FlightMode), ActiveDrone.Status.mode);
-			while (mode != "LOITER")
-				ActiveDrone.setMode("AUTO");
-		}
-
-
-		#region customized overlay related functions
-
-
-
-		private void ReadCustomizedOverlayFile(string file)
-		{
-
 			List<Customizewp> cmds = new List<Customizewp>();
 
 			try
@@ -3486,11 +2867,11 @@ namespace Diva
 
 				// myMap.ZoomAndCenterMarkers("objects");
 				string filename = (Path.GetFileName(file)).Split('.')[0];
-				MessageBox.Show(ResStrings.MsgCustomizeOverlayImport.FormatWith(filename));
+				MessageBox.Show(Strings.MsgCustomizeOverlayImport.FormatWith(filename));
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ResStrings.MsgCantOpenFile.FormatWith(ex.Message));
+				MessageBox.Show(Strings.MsgCantOpenFile.FormatWith(ex.Message));
 			}
 		}
 
@@ -3499,14 +2880,12 @@ namespace Diva
 			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
 			if (quickadd)
 				return;
-
-
+			
 			// generate new polygon every time.
 			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
-			GMapCustomizedPolygon customizePolygon = new GMapCustomizedPolygon(polygonPointsCus, "customize", areaname);
+			GMapCustomizedPolygonMarker customizePolygon = new GMapCustomizedPolygonMarker(polygonPointsCus, "customize", areaname);
 			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
 			customizePolygon.Fill = Brushes.AliceBlue;
-
 
 			try
 			{
@@ -3515,7 +2894,7 @@ namespace Diva
 				cmds.ForEach(i => {
 					StringBuilder sb = new StringBuilder("_cus_");
 					customizePolygon.Points.Add(Customizewp.ConvertToPoint(i));
-					addpolygonmarkergrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
+					AddPolygonMarkerGrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
 				});
 
 				overlays.drawnpolygons.Polygons.Add(customizePolygon);
@@ -3527,7 +2906,6 @@ namespace Diva
 				log.Info(ex.ToString());
 			}
 		}
-
 
 		private void LoadCustomizedOverlay_Click(object o, EventArgs e)
 		{
@@ -3546,60 +2924,50 @@ namespace Diva
 
 		#endregion
 
-		private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
-		{
-			var drone = (sender as DroneInfo)?.Drone;
-			((MavlinkInterface)drone).ObjOverlay.Overlay.Markers.Clear();
-			((MavlinkInterface)drone).ObjOverlay.Overlay.Routes.Clear();
-			OnlineDrones.Remove(drone);
-			drone.Disconnect();
+        private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
+        {
+            var drone = (sender as DroneInfo)?.Drone;
+            OnlineDrones.Remove(drone);
+            try
+            {
+                overlays.routes.Markers.Remove(overlays.routes.Markers.Single(
+                    x => (x as GMapDroneMarker).Drone == drone));
+            }
+            catch
+            {
+            }
+        }
 
-			ActiveDrone = DroneInfoPanel.ActiveDroneInfo?.Drone ?? new MavlinkInterface();
-			
-		}
+        private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
+        {
+            if ((ActiveDrone = (sender as DroneInfo)?.Drone) != null)
+            {
+                UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
+            }
+        }
 
-		private void ClearCommands()
-		{
-			// clear datagridview data
-			dgvWayPoints.Rows.Clear();
-			dgvWayPoints.Refresh();
-		}
+        public void UpdateDroneMode(object obj, FlightMode mode)
+        {
+            void updateText() { TxtDroneMode.Text = mode.GetName(); }
+            if (obj as MavDrone == ActiveDrone)
+            {
+                if (InvokeRequired)
+                    BeginInvoke((MethodInvoker)delegate { updateText(); });
+                else
+                    updateText();
+            }
+        }
 
-
-		private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
-		{
-			List<Locationwp> wps = new List<Locationwp>();
-
-			try
-			{
-				Locationwp home = new Locationwp()
-				{
-					id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-					lat = (double.Parse(TxtHomeLatitude.Text)),
-					lng = (double.Parse(TxtHomeLongitude.Text)),
-					alt = (float.Parse(TxtHomeAltitude.Text))
-				};
-
-				wps.Add(home);
-				wps.AddRange(GetCommandList());
-			}
-			catch (Exception exception) { log.Error(exception.ToString()); }
-			
-
-			ActiveDrone.LastCmds = wps;
-			ActiveDrone = (sender as DroneInfo)?.Drone;
-			if (ActiveDrone.LastCmds.Count != 0) { WPtoScreen(ActiveDrone.LastCmds); }
-		}
-
-		private void ComBoxModeSwitch_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (!ActiveDrone.BaseStream.IsOpen)
-				return;
-
-			ComboBox comboBox = (ComboBox)sender;
-			ActiveDrone.setMode(comboBox.SelectedItem.ToString());
-
-
-		}
-	}
+        public void NotifyDroneState(object obj, MAV_STATE state)
+        {
+            if (obj as MavDrone == ActiveDrone)
+            {
+                /*void notifyAction() {  }
+                if (InvokeRequired)
+                    BeginInvoke((MethodInvoker)delegate { notifyAction(); });
+                else
+                    notifyAction();*/
+            }
+        }
+    }
 }

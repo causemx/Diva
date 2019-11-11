@@ -225,14 +225,8 @@
   <data name="MsgCantOpenFile" xml:space="preserve">
     <value>無法開啟檔案{0}</value>
   </data>
-  <data name="ConfigMapPage.FontSizeAdjust" xml:space="preserve">
-    <value>1.0</value>
-  </data>
   <data name="ConfigAccountPage.FontSizeAdjust" xml:space="preserve">
     <value>1.0</value>
-  </data>
-  <data name="ConfigMapPage.FontFamily" xml:space="preserve">
-    <value>Microsoft JhengHei UI</value>
   </data>
   <data name="ConfigAccountPage.FontFamily" xml:space="preserve">
     <value>Microsoft JhengHei UI</value>
@@ -240,35 +234,14 @@
   <data name="ConfigAccountPage.BtnDeleteAccount.Text" xml:space="preserve">
     <value>刪除</value>
   </data>
-  <data name="ConfigMapPage.BtnMapConfigReset.Text" xml:space="preserve">
-    <value>回復</value>
-  </data>
-  <data name="ConfigMapPage.BtnMapConfigApply.Text" xml:space="preserve">
-    <value>套用</value>
-  </data>
-  <data name="ConfigMapPage.RBtnIndoorMap.Text" xml:space="preserve">
-    <value>室內地圖</value>
-  </data>
-  <data name="ConfigMapPage.LabelImageMapLocation.Text" xml:space="preserve">
-    <value>室內地圖圖檔路徑:</value>
-  </data>
   <data name="ConfigAccountPage.LabelPassword.Text" xml:space="preserve">
     <value>密碼:</value>
   </data>
   <data name="ConfigAccountPage.BtnCreateAccount.Text" xml:space="preserve">
     <value>建立</value>
   </data>
-  <data name="ConfigMapPage.RBtnGlobalMap.Text" xml:space="preserve">
-    <value>戶外地圖</value>
-  </data>
   <data name="ConfigAccountPage.LabelNewPassword.Text" xml:space="preserve">
     <value>新密碼:</value>
-  </data>
-  <data name="ConfigMapPage.BtnBrowseMapLocation.Text" xml:space="preserve">
-    <value>瀏覽</value>
-  </data>
-  <data name="ConfigMapPage.BtnBrowseIndoorMap.Text" xml:space="preserve">
-    <value>瀏覽</value>
   </data>
   <data name="ConfigAccountPage.LabelLoginAccount.Text" xml:space="preserve">
     <value>目前登入帳號: </value>
@@ -276,23 +249,8 @@
   <data name="ConfigAccountPage.LabelConfirmPassword.Text" xml:space="preserve">
     <value>確認密碼:</value>
   </data>
-  <data name="ConfigMapPage.LabelIPLongtitude.Text" xml:space="preserve">
-    <value>經度:</value>
-  </data>
-  <data name="ConfigMapPage.LabelIPLatitude.Text" xml:space="preserve">
-    <value>緯度:</value>
-  </data>
   <data name="ConfigAccountPage.BtnChangePassword.Text" xml:space="preserve">
     <value>變更密碼</value>
-  </data>
-  <data name="ConfigMapPage.LabelInitialPosition.Text" xml:space="preserve">
-    <value>起始位置</value>
-  </data>
-  <data name="ConfigMapPage.LabelInitialZoom.Text" xml:space="preserve">
-    <value>起始縮放階層:</value>
-  </data>
-  <data name="ConfigMapPage.LabelMapCacheLocation.Text" xml:space="preserve">
-    <value>離線地圖快取路徑(將存放於TileDBv5\en目錄下)</value>
   </data>
   <data name="ConfigAccountPage.MsgDeleteAccount" xml:space="preserve">
     <value>刪除帳號{0}？</value>
@@ -310,7 +268,7 @@
     <value>新增</value>
   </data>
   <data name="DroneSettingInput.EditBtn.Text" xml:space="preserve">
-    <value>編輯</value>
+    <value>修改</value>
   </data>
   <data name="DroneSettingInput.RemoveBtn.Text" xml:space="preserve">
     <value>移除</value>
@@ -320,24 +278,6 @@
   </data>
   <data name="DroneSettingInput.DiscardBtn.Text" xml:space="preserve">
     <value>放棄</value>
-  </data>
-  <data name="DroneSettingInput.LabelPortName.Text" xml:space="preserve">
-    <value>連線名</value>
-  </data>
-  <data name="DroneSettingInput.LabelPortNumber.Text" xml:space="preserve">
-    <value>埠號</value>
-  </data>
-  <data name="DroneSettingInput.LabelBaudrate.Text" xml:space="preserve">
-    <value>傳輸率</value>
-  </data>
-  <data name="DroneSettingInput.LabelStreamURI.Text" xml:space="preserve">
-    <value>影像串流</value>
-  </data>
-  <data name="DroneSettingInput.FontFamily" xml:space="preserve">
-    <value>Microsoft JhengHei UI</value>
-  </data>
-  <data name="DroneSettingInput.FontSizeAdjust" xml:space="preserve">
-    <value>1.0</value>
   </data>
   <data name="DroneSetting_MsgNoName" xml:space="preserve">
     <value>未命名</value>
@@ -349,7 +289,7 @@
     <value>數值不正確</value>
   </data>
   <data name="StrDroneSettingsFileExtensionFilter" xml:space="preserve">
-    <value>"XML檔案|*.xml|所有檔案|*.*"</value>
+    <value>XML檔案|*.xml|所有檔案|*.*</value>
   </data>
   <data name="MsgConnectFirst" xml:space="preserve">
     <value>尚未連線</value>
@@ -378,20 +318,7 @@
   <data name="MsgMissionAcceptWP" xml:space="preserve">
     <value>成功寫入航點</value>
   </data>
-  <data name="ConfigMapPage.LabelProxySetting.Text" xml:space="preserve">
-    <value>代理伺服器
-(需重啟程式)</value>
-  </data>
-  <data name="ConfigMapPage.LabelProxyPort.Text" xml:space="preserve">
-    <value>連接埠</value>
-  </data>
-  <data name="ConfigMapPage.RBtnProxySystem.Text" xml:space="preserve">
-    <value>使用系統設定</value>
-  </data>
-  <data name="ConfigMapPage.RBtnProxyCustom.Text" xml:space="preserve">
-    <value>位址</value>
-  </data>
-  <data name="strActivateDrone" xml:space="preserve">
+  <data name="StrActivateDrone" xml:space="preserve">
     <value>點擊設為使用中</value>
   </data>
   <data name="MsgCustomizeOverlayImport" xml:space="preserve">
@@ -410,7 +337,7 @@
     <value>輪值中</value>
   </data>
   <data name="MsgDialogSetTotalWps" xml:space="preserve">
-    <value>設定全部航點</value>
+    <value>設定航點數量</value>
   </data>
   <data name="MsgDialogSetWp" xml:space="preserve">
     <value>設定航點 </value>
@@ -418,7 +345,7 @@
   <data name="MsgDialogSetParams" xml:space="preserve">
     <value>設定參數 </value>
   </data>
-  <data name="MsgDialogGetWpCount" xml:space="preserve">
+  <data name="MsgDialogGetWp" xml:space="preserve">
     <value>取得航點 </value>
   </data>
   <data name="MsgDialogDone" xml:space="preserve">
@@ -450,5 +377,80 @@
   </data>
   <data name="MsgWarnRotationExcuteing" xml:space="preserve">
     <value>輪值執行中</value>
+  </data>
+  <data name="MsgDroneSettingNoPowerModel" xml:space="preserve">
+    <value>(無)</value>
+  </data>
+  <data name="StrPowerLogFileFilter" xml:space="preserve">
+    <value>紀錄檔|*.log|所有檔案|*.*</value>
+  </data>
+  <data name="MsgInvalidPowerModelName" xml:space="preserve">
+    <value>'{0}'不是合法的能耗模型名稱</value>
+  </data>
+  <data name="MsgPowerLogFileNotFound" xml:space="preserve">
+    <value>指定的紀錄檔不存在</value>
+  </data>
+  <data name="StrInvalidPowerModelAndOrBatterySetting" xml:space="preserve">
+    <value>無效的能耗模型或電池容量設定。</value>
+  </data>
+  <data name="MsgConnectionFailed" xml:space="preserve">
+    <value>連線失敗</value>
+  </data>
+  <data name="MsgNoHeartBeat" xml:space="preserve">
+    <value>未收到heartbeat</value>
+  </data>
+  <data name="DialogTitleError" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="MsgFailedToSendNewFencePoints" xml:space="preserve">
+    <value>無法傳送新圍籬座標點：</value>
+  </data>
+  <data name="StrEstimatedEnergy" xml:space="preserve">
+    <value>預測所需能耗：{0:F2} mAh</value>
+  </data>
+  <data name="StrNoMissionPointAvailable" xml:space="preserve">
+    <value>目前無任務點</value>
+  </data>
+  <data name="StrEnergyConsumptionEstimationFailed" xml:space="preserve">
+    <value>計算能耗失敗</value>
+  </data>
+  <data name="StrRecalculating" xml:space="preserve">
+    <value>重新計算中…</value>
+  </data>
+  <data name="StrMapImageFileExternsionFilter" xml:space="preserve">
+    <value>地圖影像|*.bmp;*.jpg;*.png</value>
+  </data>
+  <data name="MsgFormProgressUserCanceled" xml:space="preserve">
+    <value> 使用者取消</value>
+  </data>
+  <data name="TextFormProgressConnection" xml:space="preserve">
+    <value>連線至{0}...</value>
+  </data>
+  <data name="MsgFormProgressSync" xml:space="preserve">
+    <value>同步中…</value>
+  </data>
+  <data name="MsgFormProgressMavlinkConnecting" xml:space="preserve">
+    <value>MAVLink連線中</value>
+  </data>
+  <data name="MsgFormProgressTrying" xml:space="preserve">
+    <value>嘗試中…{0}</value>
+  </data>
+  <data name="MsgFormProgressDone" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="GotParam" xml:space="preserve">
+    <value>讀取參數：</value>
+  </data>
+  <data name="MsgGettingParams" xml:space="preserve">
+    <value>要求參數列表… (sysId{0}, compId{1})</value>
+  </data>
+  <data name="MsgWaitHeartBeat" xml:space="preserve">
+    <value>通訊埠開啟，等待heartbeat</value>
+  </data>
+  <data name="MsgAskFlightControllerVersion" xml:space="preserve">
+    <value>詢問飛控版本</value>
+  </data>
+  <data name="MsgErrorReadingKmlFile" xml:space="preserve">
+    <value>讀取kml失敗：</value>
   </data>
 </root>

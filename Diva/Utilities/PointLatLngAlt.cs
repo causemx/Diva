@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Diva.Utilities
 {
-	public class PointLatLngAlt : IComparable
+	public class PointLatLngAlt
 	{
 		public static readonly PointLatLngAlt Zero = new PointLatLngAlt();
 		public double Lat = 0;
@@ -16,130 +16,60 @@ namespace Diva.Utilities
 		public double Alt = 0;
 		public string Tag = "";
 		public string Tag2 = "";
-		public Color color = Color.White;
+		public Color Color = Color.White;
 
 		public PointLatLngAlt(double lat, double lng, double alt, string tag)
 		{
-			this.Lat = lat;
-			this.Lng = lng;
-			this.Alt = alt;
-			this.Tag = tag;
+			Lat = lat;
+			Lng = lng;
+			Alt = alt;
+			Tag = tag;
 		}
 
-		public PointLatLngAlt()
-		{
+        public PointLatLngAlt() { }
 
-		}
-
-		public PointLatLngAlt(GMap.NET.PointLatLng pll)
+		public PointLatLngAlt(PointLatLng pll)
 		{
-			this.Lat = pll.Lat;
-			this.Lng = pll.Lng;
+			Lat = pll.Lat;
+			Lng = pll.Lng;
 		}
 
 		public PointLatLngAlt(double lat, double lng)
 		{
-			this.Lat = lat;
-			this.Lng = lng;
+			Lat = lat;
+			Lng = lng;
 		}
 
 		public PointLatLngAlt(double lat, double lng, double alt)
 		{
-			this.Lat = lat;
-			this.Lng = lng;
-			this.Alt = alt;
-		}
-
-		public PointLatLngAlt(Locationwp locwp)
-		{
-			this.Lat = locwp.lat;
-			this.Lng = locwp.lng;
-			this.Alt = locwp.alt;
+			Lat = lat;
+			Lng = lng;
+			Alt = alt;
 		}
 
 		public PointLatLngAlt(PointLatLngAlt plla)
 		{
-			this.Lat = plla.Lat;
-			this.Lng = plla.Lng;
-			this.Alt = plla.Alt;
-			this.color = plla.color;
-			this.Tag = plla.Tag;
-		}
-
-		public PointLatLng Point()
-		{
-			PointLatLng pnt = new PointLatLng(Lat, Lng);
-			return pnt;
+			Lat = plla.Lat;
+			Lng = plla.Lng;
+			Alt = plla.Alt;
+			Color = plla.Color;
+			Tag = plla.Tag;
+            Tag2 = plla.Tag2;
 		}
 
 		public static implicit operator PointLatLngAlt(PointLatLng a)
-		{
-			return new PointLatLngAlt(a);
-		}
+            => new PointLatLngAlt(a);
 
 		public static implicit operator PointLatLng(PointLatLngAlt a)
-		{
-			return a.Point();
-		}
+            => new PointLatLng(a.Lat, a.Lng);
 
 		public static implicit operator double[] (PointLatLngAlt a)
-		{
-			return new double[] { a.Lng, a.Lat };
-		}
+		    => new double[] { a.Lng, a.Lat, a.Alt };
 
 		public static implicit operator PointLatLngAlt(double[] a)
-		{
-			if (a.Count() == 3)
-			{
-				return new PointLatLngAlt() { Lng = a[0], Lat = a[1], Alt = a[2] };
-			}
-			return new PointLatLngAlt() { Lng = a[0], Lat = a[1] };
-		}
+            => new PointLatLngAlt(a[0], a[1], a.Length > 2 ? a[2] : 0);
 
-
-		public override bool Equals(Object pllaobj)
-		{
-			PointLatLngAlt plla = pllaobj as PointLatLngAlt;
-
-			if (plla == null)
-				return false;
-
-			if (this.Lat == plla.Lat &&
-			this.Lng == plla.Lng &&
-			this.Alt == plla.Alt &&
-			this.color == plla.color &&
-			this.Tag == plla.Tag)
-			{
-				return true;
-			}
-			return false;
-		}
-
-		public override int GetHashCode()
-		{
-			return (int)((Lat + (Lng * 100) + (Alt * 10000)) * 100);
-		}
-
-		public override string ToString()
-		{
-			return Lat + "," + Lng + "," + Alt;
-		}
-
-		public int GetUTMZone()
-		{
-			int zone = (int)((Lng - -186.0) / 6.0);
-			if (Lat < 0)
-				zone *= -1;
-
-			return zone;
-		}
-
-		public string GetFriendlyZone()
-		{
-			return GetUTMZone().ToString("0N;0S");
-		}
-
-		public PointLatLngAlt newpos(double bearing, double distance)
+        public PointLatLngAlt OffsetAngleDistance(double bearing, double distance)
 		{
 			// '''extrapolate latitude/longitude given a heading and distance 
 			//   thanks to http://www.movable-type.co.uk/scripts/latlong.html
@@ -163,17 +93,11 @@ namespace Diva.Utilities
 			return new PointLatLngAlt(latout, lngout, this.Alt, this.Tag);
 		}
 
-		/// <summary>
-		/// move a point a specific number of meters
-		/// </summary>
-		/// <param name="east"></param>
-		/// <param name="north"></param>
-		/// <returns></returns>
-		public PointLatLngAlt gps_offset(double east, double north)
+		public PointLatLngAlt OffsetNorthEast(double north, double east)
 		{
 			double bearing = Math.Atan2(east, north) * MathHelper.rad2deg;
 			double distance = Math.Sqrt(Math.Pow(east, 2) + Math.Pow(north, 2));
-			return newpos(bearing, distance);
+			return OffsetAngleDistance(bearing, distance);
 		}
 
 		public double GetBearing(PointLatLngAlt p2)
@@ -188,11 +112,6 @@ namespace Diva.Utilities
 			return (MathHelper.rad2deg * (Math.Atan2(y, x)) + 360) % 360;
 		}
 
-		/// <summary>
-		/// Calc Distance in M
-		/// </summary>
-		/// <param name="p2"></param>
-		/// <returns>Distance in M</returns>
 		public double GetDistance(PointLatLngAlt p2)
 		{
 			double d = Lat * 0.017453292519943295;
@@ -204,52 +123,6 @@ namespace Diva.Utilities
 			double num7 = Math.Pow(Math.Sin(num6 / 2.0), 2.0) + ((Math.Cos(d) * Math.Cos(num3)) * Math.Pow(Math.Sin(num5 / 2.0), 2.0));
 			double num8 = 2.0 * Math.Atan2(Math.Sqrt(num7), Math.Sqrt(1.0 - num7));
 			return (6371 * num8) * 1000.0; // M
-		}
-
-		public double GetDistance2(PointLatLngAlt p2)
-		{
-			//http://www.movable-type.co.uk/scripts/latlong.html
-			var R = 6371.0; // 6371 km
-			var dLat = (p2.Lat - Lat) * MathHelper.deg2rad;
-			var dLon = (p2.Lng - Lng) * MathHelper.deg2rad;
-			var lat1 = Lat * MathHelper.deg2rad;
-			var lat2 = p2.Lat * MathHelper.deg2rad;
-
-			var a = Math.Sin(dLat / 2.0) * Math.Sin(dLat / 2.0) +
-					Math.Sin(dLon / 2.0) * Math.Sin(dLon / 2.0) * Math.Cos(lat1) * Math.Cos(lat2);
-			var c = 2.0 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1.0 - a));
-			var d = R * c * 1000.0; // M
-
-			return d;
-		}
-
-		public int CompareTo(object obj)
-		{
-			PointLatLngAlt pnt = obj as PointLatLngAlt;
-
-			if (pnt == null)
-				return 1;
-
-			double wpno = 0;
-			double wpnothis = 0;
-
-			if (!double.TryParse(this.Tag, out wpnothis))
-			{
-				return 0;
-			}
-
-			if (double.TryParse(pnt.Tag, out wpno))
-			{
-				if (wpno < wpnothis)
-					return 1;
-				if (wpno > wpnothis)
-					return -1;
-				return 0;
-			}
-			else
-			{
-				return 0;
-			}
 		}
 	}
 }

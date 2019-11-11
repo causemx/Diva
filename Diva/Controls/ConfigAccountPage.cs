@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 using ResStrings = Diva.Properties.Strings;
+using static Diva.Utilities.ResourceHelper;
 
 namespace Diva.Controls
 {

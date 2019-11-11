@@ -24,7 +24,7 @@ namespace Diva
         {
             private static int AES_KEYSIZE = 128;
             private static int ITERATIONS = 1024;
-            private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("THUNDERBIRD");
+            private static readonly byte[] cryptKey = Encoding.UTF8.GetBytes("Diva.GCS/ITRI");
             private static Aes aes = null;
             private static Rfc2898DeriveBytes key;
             public static UInt64 Salt { set {
@@ -94,6 +94,7 @@ namespace Diva
             public const string MapProxy = "MapProxy";
             public const string MapCacheLocation = "MapCacheLocation";
             public const string MapInitialLocation = "MapInitialLocation";
+            public const string OriginGeolocation = "OriginGeolocation";
             public const string Salt = "Salt";
             public const string SkipNoAccountAlert = "NoAccountAlert";
             public const string UseImageMap = "UseImageMap";
@@ -140,6 +141,7 @@ namespace Diva
                     }  },
                     { "l|MapInitiailLocation=", v => setOpt(OptionName.MapInitialLocation, v) },
                     { "lang|Language=", v => setOpt(OptionName.Language, v) },
+                    { "o|Origin=", v => setOpt(OptionName.OriginGeolocation, v) },
                     { "p|proxy=", v => setOpt(OptionName.Language, v) },
                     { "s|Salt=", v => setOpt(OptionName.Salt, v) },
                     { "u|UseImageMap=", v => setOpt(OptionName.UseImageMap, v) }
@@ -303,9 +305,9 @@ namespace Diva
                                     && m.IsGenericMethodDefinition
                                     && m.GetParameters().Length == 1
                                     && m.GetParameters()[0].ParameterType == typeof(string)).MakeGenericMethod(typeOfList);
-                            var list = deserializeMethod.Invoke(null, new object[] { jstr });
+                            var list = deserializeMethod.Invoke(null, new [] { jstr });
                             var updateListMethod = typeof(ConfigData).GetMethod("UpdateList").MakeGenericMethod(t);
-                            updateListMethod.Invoke(lazy.Value, new object[] { list, false });
+                            updateListMethod.Invoke(lazy.Value, new [] { list, false });
                         }
                         else
                             Console.WriteLine($"Unable to resolve type '{s}'.");
