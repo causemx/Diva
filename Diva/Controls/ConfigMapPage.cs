@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using static Diva.Utilities.ResourceHelper;
+using Diva.Utilities;
 
 namespace Diva.Controls
 {
@@ -57,7 +57,7 @@ namespace Diva.Controls
                 ConfigData.GetOption(ConfigData.OptionName.MapCacheLocation) :
                 gmap.CacheLocation;
 
-            double lng = Planner.DEFAULT_LONGITUDE, lat = Planner.DEFAULT_LATITUDE, zoom = Planner.DEFAULT_ZOOM;
+            double lng = DefaultValues.Longitude, lat = DefaultValues.Latitude, zoom = DefaultValues.ZoomLevel;
 
             string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
             if (loc != "")
@@ -134,7 +134,7 @@ namespace Diva.Controls
         {
             MapConfigDirty = false;
             ConfigData.SetOption(ConfigData.OptionName.MapCacheLocation, TBoxMapCacheLocation.Text);
-            double lat = Planner.DEFAULT_LATITUDE, lng = Planner.DEFAULT_LONGITUDE, zoom = Planner.DEFAULT_ZOOM;
+            double lat = DefaultValues.Latitude, lng = DefaultValues.Longitude, zoom = DefaultValues.ZoomLevel;
             double.TryParse(TBoxIPLatitude.Text, out lat);
             double.TryParse(TBoxIPLongitude.Text, out lng);
             double.TryParse(TBoxInitialZoom.Text, out zoom);

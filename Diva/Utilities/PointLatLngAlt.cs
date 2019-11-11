@@ -18,21 +18,7 @@ namespace Diva.Utilities
 		public string Tag2 = "";
 		public Color Color = Color.White;
 
-		public PointLatLngAlt(double lat, double lng, double alt, string tag)
-		{
-			Lat = lat;
-			Lng = lng;
-			Alt = alt;
-			Tag = tag;
-		}
-
         public PointLatLngAlt() { }
-
-		public PointLatLngAlt(PointLatLng pll)
-		{
-			Lat = pll.Lat;
-			Lng = pll.Lng;
-		}
 
 		public PointLatLngAlt(double lat, double lng)
 		{
@@ -45,6 +31,29 @@ namespace Diva.Utilities
 			Lat = lat;
 			Lng = lng;
 			Alt = alt;
+		}
+
+		public PointLatLngAlt(double lat, double lng, double alt, string tag)
+		{
+			Lat = lat;
+			Lng = lng;
+			Alt = alt;
+			Tag = tag;
+		}
+
+        public PointLatLngAlt(double lat, double lng, double alt, string tag, Color color)
+        {
+            Lat = lat;
+            Lng = lng;
+            Alt = alt;
+            Tag = tag;
+            Color = color;
+        }
+
+        public PointLatLngAlt(PointLatLng pll)
+		{
+			Lat = pll.Lat;
+			Lng = pll.Lng;
 		}
 
 		public PointLatLngAlt(PointLatLngAlt plla)

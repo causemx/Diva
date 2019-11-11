@@ -250,12 +250,10 @@ namespace Diva.Utilities
 	}
 
 	[Serializable]
-	public class GMap3DPointMarker : GMapMarker
+	public class GMapMarkerRallyPt : GMapMarker
 	{
-		// TODO(causemx): add location icon here.
-		static readonly Size SizeSt = new Size(Resources.icon_live.Width,
-			Resources.icon_live.Height);
         public static Bitmap Localcache2 => Resources.icon_live;
+        static readonly Size SizeSt = Localcache2.Size;
 
         public new PointLatLngAlt Position;
 		public int Alt
@@ -264,15 +262,19 @@ namespace Diva.Utilities
             set => Position.Alt = value;
         }
 
-        public GMap3DPointMarker(PointLatLngAlt p)
-			: base(p)
+        public GMapMarkerRallyPt(PointLatLngAlt p) : base(p)
 		{
 			Size = SizeSt;
 			Offset = new Point(-10, -40);
 		}
 
 		static readonly Point[] Arrow = new Point[]
-		{new Point(-7, 7), new Point(0, -22), new Point(7, 7), new Point(0, 2)};
+		{
+            new Point(-7, 7),
+            new Point(0, -22),
+            new Point(7, 7),
+            new Point(0, 2)
+        };
 
 		public override void OnRender(Graphics g)
 		{

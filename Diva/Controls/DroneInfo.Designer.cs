@@ -30,18 +30,18 @@
 		{
 			this.PBDroneView = new System.Windows.Forms.PictureBox();
 			this.TxtDroneName = new System.Windows.Forms.Label();
-			this.pictureBox2 = new System.Windows.Forms.PictureBox();
-			this.pictureBox3 = new System.Windows.Forms.PictureBox();
-			this.pictureBox4 = new System.Windows.Forms.PictureBox();
-			this.TxtAssumeTime = new System.Windows.Forms.Label();
+			this.IconFlightTime = new System.Windows.Forms.PictureBox();
+			this.IconBattery = new System.Windows.Forms.PictureBox();
+			this.IconSignalStrength = new System.Windows.Forms.PictureBox();
+			this.TxtEstimatedTime = new System.Windows.Forms.Label();
 			this.TxtBatteryHealth = new System.Windows.Forms.Label();
 			this.TxtSatelliteCount = new System.Windows.Forms.Label();
 			this.TxtSystemID = new System.Windows.Forms.Label();
-			this.BtnClose = new System.Windows.Forms.Button();
+			this.BtnExpand = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.IconFlightTime)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.IconBattery)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.IconSignalStrength)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// PBDroneView
@@ -66,46 +66,46 @@
 			this.TxtDroneName.TabIndex = 1;
 			this.TxtDroneName.Text = "APM-1";
 			// 
-			// pictureBox2
+			// IconFlightTime
 			// 
-			this.pictureBox2.Image = global::Diva.Properties.Resources.icon_stopwatch;
-			this.pictureBox2.Location = new System.Drawing.Point(75, 48);
-			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(24, 24);
-			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox2.TabIndex = 2;
-			this.pictureBox2.TabStop = false;
+			this.IconFlightTime.Image = global::Diva.Properties.Resources.icon_stopwatch;
+			this.IconFlightTime.Location = new System.Drawing.Point(75, 48);
+			this.IconFlightTime.Name = "IconFlightTime";
+			this.IconFlightTime.Size = new System.Drawing.Size(24, 24);
+			this.IconFlightTime.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.IconFlightTime.TabIndex = 2;
+			this.IconFlightTime.TabStop = false;
 			// 
-			// pictureBox3
+			// IconBattery
 			// 
-			this.pictureBox3.Image = global::Diva.Properties.Resources.icon_battery;
-			this.pictureBox3.Location = new System.Drawing.Point(158, 48);
-			this.pictureBox3.Name = "pictureBox3";
-			this.pictureBox3.Size = new System.Drawing.Size(28, 24);
-			this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox3.TabIndex = 3;
-			this.pictureBox3.TabStop = false;
+			this.IconBattery.Image = global::Diva.Properties.Resources.icon_battery;
+			this.IconBattery.Location = new System.Drawing.Point(158, 48);
+			this.IconBattery.Name = "IconBattery";
+			this.IconBattery.Size = new System.Drawing.Size(28, 24);
+			this.IconBattery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.IconBattery.TabIndex = 3;
+			this.IconBattery.TabStop = false;
 			// 
-			// pictureBox4
+			// IconSignalStrength
 			// 
-			this.pictureBox4.Image = global::Diva.Properties.Resources.icon_signal;
-			this.pictureBox4.Location = new System.Drawing.Point(253, 48);
-			this.pictureBox4.Name = "pictureBox4";
-			this.pictureBox4.Size = new System.Drawing.Size(24, 24);
-			this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.pictureBox4.TabIndex = 4;
-			this.pictureBox4.TabStop = false;
+			this.IconSignalStrength.Image = global::Diva.Properties.Resources.icon_signal;
+			this.IconSignalStrength.Location = new System.Drawing.Point(253, 48);
+			this.IconSignalStrength.Name = "IconSignalStrength";
+			this.IconSignalStrength.Size = new System.Drawing.Size(24, 24);
+			this.IconSignalStrength.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.IconSignalStrength.TabIndex = 4;
+			this.IconSignalStrength.TabStop = false;
 			// 
 			// TxtAssumeTime
 			// 
-			this.TxtAssumeTime.AutoSize = true;
-			this.TxtAssumeTime.Font = new System.Drawing.Font("Noto Sans", 9F);
-			this.TxtAssumeTime.ForeColor = System.Drawing.Color.White;
-			this.TxtAssumeTime.Location = new System.Drawing.Point(108, 53);
-			this.TxtAssumeTime.Name = "TxtAssumeTime";
-			this.TxtAssumeTime.Size = new System.Drawing.Size(36, 17);
-			this.TxtAssumeTime.TabIndex = 5;
-			this.TxtAssumeTime.Text = "0.0m";
+			this.TxtEstimatedTime.AutoSize = true;
+			this.TxtEstimatedTime.Font = new System.Drawing.Font("Noto Sans", 9F);
+			this.TxtEstimatedTime.ForeColor = System.Drawing.Color.White;
+			this.TxtEstimatedTime.Location = new System.Drawing.Point(108, 53);
+			this.TxtEstimatedTime.Name = "TxtAssumeTime";
+			this.TxtEstimatedTime.Size = new System.Drawing.Size(36, 17);
+			this.TxtEstimatedTime.TabIndex = 5;
+			this.TxtEstimatedTime.Text = "0.0m";
 			// 
 			// TxtBatteryHealth
 			// 
@@ -140,39 +140,39 @@
 			this.TxtSystemID.TabIndex = 8;
 			this.TxtSystemID.Text = "00";
 			// 
-			// BtnClose
+			// BtnExpand
 			// 
-			this.BtnClose.AutoSize = true;
-			this.BtnClose.FlatAppearance.BorderSize = 0;
-			this.BtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnClose.Image = global::Diva.Properties.Resources.icon_btn_expand;
-			this.BtnClose.Location = new System.Drawing.Point(305, 3);
-			this.BtnClose.Name = "BtnClose";
-			this.BtnClose.Size = new System.Drawing.Size(36, 30);
-			this.BtnClose.TabIndex = 9;
-			this.BtnClose.UseVisualStyleBackColor = true;
-			this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
+			this.BtnExpand.AutoSize = true;
+			this.BtnExpand.FlatAppearance.BorderSize = 0;
+			this.BtnExpand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnExpand.Image = global::Diva.Properties.Resources.icon_btn_expand;
+			this.BtnExpand.Location = new System.Drawing.Point(305, 3);
+			this.BtnExpand.Name = "BtnExpand";
+			this.BtnExpand.Size = new System.Drawing.Size(36, 30);
+			this.BtnExpand.TabIndex = 9;
+			this.BtnExpand.UseVisualStyleBackColor = true;
+			this.BtnExpand.Click += new System.EventHandler(this.BtnExpand_Click);
 			// 
 			// DroneInfo
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
-			this.Controls.Add(this.BtnClose);
+			this.Controls.Add(this.BtnExpand);
 			this.Controls.Add(this.TxtSystemID);
 			this.Controls.Add(this.TxtSatelliteCount);
 			this.Controls.Add(this.TxtBatteryHealth);
-			this.Controls.Add(this.TxtAssumeTime);
-			this.Controls.Add(this.pictureBox4);
-			this.Controls.Add(this.pictureBox3);
-			this.Controls.Add(this.pictureBox2);
+			this.Controls.Add(this.TxtEstimatedTime);
+			this.Controls.Add(this.IconSignalStrength);
+			this.Controls.Add(this.IconBattery);
+			this.Controls.Add(this.IconFlightTime);
 			this.Controls.Add(this.TxtDroneName);
 			this.Controls.Add(this.PBDroneView);
 			this.Name = "DroneInfo";
 			this.Size = new System.Drawing.Size(341, 78);
 			((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.IconFlightTime)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.IconBattery)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.IconSignalStrength)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -185,10 +185,10 @@
 		private System.Windows.Forms.PictureBox IconFlightTime;
 		private System.Windows.Forms.PictureBox IconBattery;
 		private System.Windows.Forms.PictureBox IconSignalStrength;
-		private System.Windows.Forms.Label TxtAssumeTime;
+		private System.Windows.Forms.Label TxtEstimatedTime;
 		private System.Windows.Forms.Label TxtBatteryHealth;
 		private System.Windows.Forms.Label TxtSatelliteCount;
 		private System.Windows.Forms.Label TxtSystemID;
-		private System.Windows.Forms.Button BtnClose;
+		private System.Windows.Forms.Button BtnExpand;
 	}
 }

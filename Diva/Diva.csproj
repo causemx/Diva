@@ -123,6 +123,9 @@
     <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
@@ -203,12 +206,6 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NewPowerModelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\NewPowerModelForm.Designer.cs">
-      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RotationInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -252,7 +249,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\DataManager.cs" />
-    <Compile Include="Data\WPDataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Mavlink\MavStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
@@ -268,7 +264,6 @@
     <Compile Include="Planner.Designer.cs">
       <DependentUpon>Planner.cs</DependentUpon>
     </Compile>
-    <Compile Include="EnergyConsumption\PowerModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\SplashForm.cs">
@@ -289,14 +284,13 @@
     </Compile>
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
-    <Compile Include="Utilities\DatabaseManager.cs" />
+    <Compile Include="Utilities\DefaultValues.cs" />
     <Compile Include="Utilities\FloatMessage.cs" />
-    <Compile Include="Utilities\QGCWaypointFileUtlity.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
-    <Compile Include="Utilities\WayPointStruct.cs" />
-    <Compile Include="Utilities\MissionFile.cs" />
+    <Compile Include="Mission\WayPoint.cs" />
+    <Compile Include="Mission\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
-    <Compile Include="Utilities\OverlayUtility.cs" />
+    <Compile Include="Mission\DroneMission.cs" />
     <Compile Include="Mavlink\MavParamRepository.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Utlities.cs" />
@@ -344,12 +338,6 @@
     <EmbeddedResource Include="Controls\MyVideoForm.resx">
       <DependentUpon>MyVideoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewPowerModelForm.resx">
-      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\NewPowerModelForm.zh-Hant.resx">
-      <DependentUpon>NewPowerModelForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </EmbeddedResource>
@@ -374,6 +362,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.zh-Hant.resx">
       <DependentUpon>Planner.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Planner.zh-Hant.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -418,7 +408,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EnergyConsumption\Power Model Tools.exe" />
     <Content Include="if_seo3_65_417793.ico" />
     <Content Include="LibVlc\libvlc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

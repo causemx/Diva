@@ -69,10 +69,9 @@ namespace Diva.Controls
 				drone.Disconnect();
 				DroneClosed?.Invoke(s, e);
 			};
-			dinfo.ToggleTelemetryInfoTriggered += (s, e) =>
+			dinfo.ToggleTelemetryInfo += (s, e) =>
 			{
-				var d = s as DroneInfo;
-				if (d != null)
+				if (s is DroneInfo d)
 				{
 					ActiveDroneInfo = d;
 					TelemetryData.Visible = !TelemetryData.Visible;
@@ -122,11 +121,11 @@ namespace Diva.Controls
             catch { }
 		}
 
-		public void UpdateAssumeTime(double missionDistance) =>
-            ActiveDroneInfo?.UpdateAssumeTime(missionDistance);
+		public void UpdateEstmatedTime(double missionDistance) =>
+            ActiveDroneInfo?.UpdateEstimatedTime(missionDistance);
 
-		public void ResetAssumeTime() =>
-			ActiveDroneInfo?.ResetAssumeTime();
+		public void ResetEstimatedTime() =>
+			ActiveDroneInfo?.ResetEstimatedTime();
 
         public void NotifyMissionChanged() => ActiveDroneInfo?.NotifyMissionChanged();
 

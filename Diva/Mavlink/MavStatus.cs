@@ -161,5 +161,7 @@ namespace Diva.Mavlink
         public ulong Capabilities { get; set; } = (ulong)MAV_PROTOCOL_CAPABILITY.MISSION_FLOAT;
 
         public bool MissionIntSupport { get => (Capabilities & (ulong)MAV_PROTOCOL_CAPABILITY.MISSION_INT) != 0; }
+
+        public List<Mission.WayPoint> Mission { get; set; } = new List<Mission.WayPoint>();
     }
 }

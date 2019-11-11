@@ -117,380 +117,244 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;TBoxPortValue.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacity.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnNewModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 23</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNumberText.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="&gt;&gt;RBUdp.Name" xml:space="preserve">
-    <value>RBUdp</value>
-  </data>
-  <data name="&gt;&gt;PBDronePhoto.Name" xml:space="preserve">
-    <value>PBDronePhoto</value>
-  </data>
-  <data name="&gt;&gt;LabelPortName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="TopPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="BtnDeaction.Text" xml:space="preserve">
-    <value>Remove</value>
-  </data>
-  <data name="LabelPortName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="LabelPowerModelText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNameText.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="ComboPowerModel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;LabelStreamURIText.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
   <data name="LabelStreamURIText.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LabelBatteryCapacity.Font" type="System.Drawing.Font, System.Drawing">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="LabelStreamURIText.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="&gt;&gt;LabelBatteryAvailabilityText.Name" xml:space="preserve">
-    <value>LabelBatteryAvailabilityText</value>
-  </data>
-  <data name="TBoxStreamURI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 21</value>
-  </data>
-  <data name="&gt;&gt;LabelPowerModelText.Name" xml:space="preserve">
-    <value>LabelPowerModelText</value>
-  </data>
-  <data name="RBSerial.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LabelPortName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 10</value>
-  </data>
-  <data name="&gt;&gt;TBoxPortValue.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;LabelBaudrateText.Name" xml:space="preserve">
-    <value>LabelBaudrateText</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacity.Name" xml:space="preserve">
-    <value>LabelBatteryCapacity</value>
-  </data>
-  <data name="EditPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="TBoxComNo.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNumberText.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;TopPanel.Name" xml:space="preserve">
-    <value>TopPanel</value>
-  </data>
-  <data name="LabelPortNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 33</value>
-  </data>
-  <data name="RBUdp.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacityText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PBDronePhoto.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="RBSerial.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="LabelPortName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 14</value>
-  </data>
-  <data name="&gt;&gt;TBoxStreamURI.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="LabelPortNumber.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNumber.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LabelStreamURIText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 56</value>
   </data>
   <data name="LabelStreamURIText.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 15</value>
   </data>
-  <data name="LabelStreamURI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 14</value>
-  </data>
-  <data name="TBoxBatteryCapacity.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="LabelPortNumberText.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="LabelBatteryCapacity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacityText.Name" xml:space="preserve">
-    <value>LabelBatteryCapacityText</value>
-  </data>
-  <data name="&gt;&gt;TboxBatteryAvailability.Parent" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="PBDronePhoto.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="BtnAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>195, 12</value>
-  </data>
-  <data name="BtnAction.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="TBoxDroneName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
-  </data>
-  <data name="TBoxBatteryCapacity.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;TopPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="BtnDeaction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;LabelPowerModelText.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="LabelPortNameText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
-  </data>
-  <data name="&gt;&gt;PBDronePhoto.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="&gt;&gt;TBoxDroneName.Name" xml:space="preserve">
-    <value>TBoxDroneName</value>
-  </data>
-  <data name="LabelPowerModelText.Text" xml:space="preserve">
-    <value>(None)</value>
-  </data>
-  <data name="&gt;&gt;EditPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TopPanel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="LabelPowerModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 14</value>
-  </data>
-  <data name="TBoxPortValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 21</value>
-  </data>
-  <data name="&gt;&gt;BottomPanel.Name" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="LabelBaudrate.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="PBDronePhoto.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 14</value>
-  </data>
-  <data name="TBoxDroneName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;BtnDeaction.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LabelBaudrate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;RBSerial.ZOrder" xml:space="preserve">
+  <data name="LabelStreamURIText.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="LabelPortName.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
+  <data name="&gt;&gt;LabelStreamURIText.Name" xml:space="preserve">
+    <value>LabelStreamURIText</value>
   </data>
-  <data name="LabelPowerModelText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 15</value>
-  </data>
-  <data name="BtnDeaction.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelBatteryCapacity.Text" xml:space="preserve">
-    <value>Battery Capacity</value>
-  </data>
-  <data name="LabelBaudrateText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
-  </data>
-  <data name="LabelPowerModel.Text" xml:space="preserve">
-    <value>Power Model</value>
-  </data>
-  <data name="LabelBatteryAvailabilityText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;LabelPowerModelText.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="TBoxDroneName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelPortNumberText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
-  </data>
-  <data name="LabelBaudrate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 33</value>
-  </data>
-  <data name="&gt;&gt;LabelPowerModel.Type" xml:space="preserve">
+  <data name="&gt;&gt;LabelStreamURIText.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TBoxBatteryCapacity.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LabelStreamURI.Text" xml:space="preserve">
-    <value>Video stream</value>
-  </data>
-  <data name="LabelBaudrateText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNumber.Parent" xml:space="preserve">
+  <data name="&gt;&gt;LabelStreamURIText.Parent" xml:space="preserve">
     <value>BottomPanel</value>
   </data>
-  <data name="&gt;&gt;LabelPowerModel.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="BottomPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>358, 148</value>
-  </data>
-  <data name="&gt;&gt;EditPanel.Name" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnDeaction.Parent" xml:space="preserve">
-    <value>TopPanel</value>
-  </data>
-  <data name="LabelPortName.Text" xml:space="preserve">
-    <value>Port name</value>
-  </data>
-  <data name="&gt;&gt;RBUdp.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="EditPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 145</value>
-  </data>
-  <data name="&gt;&gt;BtnAction.Name" xml:space="preserve">
-    <value>BtnAction</value>
-  </data>
-  <data name="LabelBatteryAvailability.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="PBDronePhoto.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>CenterImage</value>
-  </data>
-  <data name="LabelBatteryAvailabilityText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="ComboPowerModel.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;LabelStreamURIText.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="LabelBaudrateText.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;BtnNewModel.Parent" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="&gt;&gt;TboxBatteryAvailability.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnAction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="LabelPowerModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 79</value>
-  </data>
-  <data name="&gt;&gt;ChkDroneNameText.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LabelBaudrate.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="LabelBatteryAvailability.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 14</value>
-  </data>
-  <data name="&gt;&gt;TBoxBatteryCapacity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="TBoxStreamURI.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="LabelBaudrateText.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="&gt;&gt;BtnAction.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LabelBaudrateText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 33</value>
   </data>
-  <data name="&gt;&gt;LabelBaudrate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LabelBaudrateText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 15</value>
   </data>
-  <data name="TboxBatteryAvailability.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="LabelBaudrateText.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
-  <data name="&gt;&gt;BottomPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="BottomPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 51</value>
-  </data>
-  <data name="EditPanel.Visible" type="System.Boolean, mscorlib">
+  <data name="LabelBaudrateText.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;LabelPortNameText.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="&gt;&gt;LabelBaudrateText.Name" xml:space="preserve">
+    <value>LabelBaudrateText</value>
   </data>
-  <data name="&gt;&gt;LabelBaudrate.Name" xml:space="preserve">
-    <value>LabelBaudrate</value>
+  <data name="&gt;&gt;LabelBaudrateText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TBoxDroneName.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="&gt;&gt;LabelBaudrateText.Parent" xml:space="preserve">
+    <value>BottomPanel</value>
   </data>
-  <data name="LabelBatteryCapacity.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="&gt;&gt;LabelBaudrateText.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>DroneSettingInput</value>
+  <data name="LabelPortNumberText.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="LabelPowerModel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;PBDronePhoto.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LabelPortNumberText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
   </data>
   <data name="LabelPortNumberText.Location" type="System.Drawing.Point, System.Drawing">
     <value>200, 33</value>
   </data>
+  <data name="LabelPortNumberText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 15</value>
+  </data>
+  <data name="LabelPortNumberText.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="LabelPortNumberText.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumberText.Name" xml:space="preserve">
+    <value>LabelPortNumberText</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumberText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumberText.Parent" xml:space="preserve">
+    <value>BottomPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumberText.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="LabelPortNameText.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LabelPortNameText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelPortNameText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 10</value>
+  </data>
+  <data name="LabelPortNameText.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 15</value>
+  </data>
+  <data name="LabelPortNameText.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNameText.Name" xml:space="preserve">
+    <value>LabelPortNameText</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNameText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNameText.Parent" xml:space="preserve">
+    <value>BottomPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNameText.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LabelStreamURI.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelStreamURI.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 56</value>
+  </data>
+  <data name="LabelStreamURI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 14</value>
+  </data>
+  <data name="LabelStreamURI.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="LabelStreamURI.Text" xml:space="preserve">
+    <value>Video stream</value>
+  </data>
+  <data name="LabelStreamURI.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;LabelStreamURI.Name" xml:space="preserve">
+    <value>LabelStreamURI</value>
+  </data>
+  <data name="&gt;&gt;LabelStreamURI.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelStreamURI.Parent" xml:space="preserve">
+    <value>BottomPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelStreamURI.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LabelBaudrate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelBaudrate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 33</value>
+  </data>
+  <data name="LabelBaudrate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 14</value>
+  </data>
+  <data name="LabelBaudrate.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="LabelBaudrate.Text" xml:space="preserve">
+    <value>Baudrate</value>
+  </data>
+  <data name="LabelBaudrate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="LabelBaudrate.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;LabelBaudrate.Name" xml:space="preserve">
+    <value>LabelBaudrate</value>
+  </data>
+  <data name="&gt;&gt;LabelBaudrate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelBaudrate.Parent" xml:space="preserve">
+    <value>BottomPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelBaudrate.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="LabelPortNumber.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelPortNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 33</value>
+  </data>
+  <data name="LabelPortNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 14</value>
+  </data>
   <data name="LabelPortNumber.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;LabelPowerModel.Parent" xml:space="preserve">
+  <data name="LabelPortNumber.Text" xml:space="preserve">
+    <value>Port number</value>
+  </data>
+  <data name="LabelPortNumber.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumber.Name" xml:space="preserve">
+    <value>LabelPortNumber</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumber.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelPortNumber.Parent" xml:space="preserve">
     <value>BottomPanel</value>
   </data>
-  <data name="RBUdp.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="&gt;&gt;LabelPortNumber.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="LabelPortName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelPortName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 10</value>
+  </data>
+  <data name="LabelPortName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 14</value>
+  </data>
+  <data name="LabelPortName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="LabelPortName.Text" xml:space="preserve">
+    <value>Port name</value>
+  </data>
+  <data name="LabelPortName.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;LabelPortName.Name" xml:space="preserve">
+    <value>LabelPortName</value>
+  </data>
+  <data name="&gt;&gt;LabelPortName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelPortName.Parent" xml:space="preserve">
+    <value>BottomPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelPortName.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="PBDronePhoto.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -541,535 +405,377 @@
         qtEAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="&gt;&gt;LabelPortNumber.Name" xml:space="preserve">
-    <value>LabelPortNumber</value>
+  <data name="PBDronePhoto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 14</value>
   </data>
   <data name="PBDronePhoto.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 78</value>
   </data>
-  <data name="LabelPortNumberText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="PBDronePhoto.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>CenterImage</value>
   </data>
-  <data name="RBSerial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 19</value>
-  </data>
-  <data name="LabelBaudrateText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 33</value>
-  </data>
-  <data name="TboxBatteryAvailability.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;TBoxDroneName.Parent" xml:space="preserve">
-    <value>TopPanel</value>
-  </data>
-  <data name="LabelPortNumber.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;ComboPowerModel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LabelPortNumber.Text" xml:space="preserve">
-    <value>Port number</value>
-  </data>
-  <data name="LabelPortNameText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 10</value>
-  </data>
-  <data name="&gt;&gt;LabelPowerModelText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TBoxDroneName.ZOrder" xml:space="preserve">
+  <data name="PBDronePhoto.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;LabelBaudrateText.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PBDronePhoto.Name" xml:space="preserve">
+    <value>PBDronePhoto</value>
+  </data>
+  <data name="&gt;&gt;PBDronePhoto.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PBDronePhoto.Parent" xml:space="preserve">
     <value>BottomPanel</value>
   </data>
-  <data name="TBoxStreamURI.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="&gt;&gt;PBDronePhoto.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
-  <data name="&gt;&gt;LabelPortNumber.ZOrder" xml:space="preserve">
-    <value>11</value>
+  <data name="BottomPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 51</value>
   </data>
-  <data name="&gt;&gt;LabelStreamURIText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="BottomPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>358, 100</value>
   </data>
-  <data name="ChkDroneNameText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 16</value>
+  <data name="BottomPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="RBSerial.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;BottomPanel.Name" xml:space="preserve">
+    <value>BottomPanel</value>
+  </data>
+  <data name="&gt;&gt;BottomPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BottomPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;BottomPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="TBoxPortValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="BtnNewModel.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="TBoxDroneName.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelBatteryCapacityText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LabelStreamURI.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;ComboPowerModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryAvailabilityText.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="LabelBaudrate.Text" xml:space="preserve">
-    <value>Baudrate</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacity.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LabelStreamURI.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 56</value>
-  </data>
-  <data name="TopPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>357, 48</value>
-  </data>
-  <data name="TBoxStreamURI.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 54</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryAvailabilityText.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ComboPowerModel.Parent" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="LabelStreamURI.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;RBUdp.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="TBoxComNo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 8</value>
-  </data>
-  <data name="&gt;&gt;ChkDroneNameText.Name" xml:space="preserve">
-    <value>ChkDroneNameText</value>
-  </data>
-  <data name="&gt;&gt;RBUdp.Parent" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="BtnDeaction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="RBSerial.Text" xml:space="preserve">
-    <value>COM</value>
-  </data>
-  <data name="LabelPortNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 14</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryAvailability.Name" xml:space="preserve">
-    <value>LabelBatteryAvailability</value>
-  </data>
-  <data name="TBoxBatteryCapacity.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;BtnNewModel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LabelPortNameText.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="TBoxComNo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 21</value>
-  </data>
-  <data name="&gt;&gt;LabelStreamURIText.Name" xml:space="preserve">
-    <value>LabelStreamURIText</value>
-  </data>
-  <data name="BtnDeaction.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryAvailabilityText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LabelPortNameText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="RBSerial.Location" type="System.Drawing.Point, System.Drawing">
-    <value>45, 10</value>
-  </data>
-  <data name="RBUdp.Text" xml:space="preserve">
-    <value>UDP</value>
-  </data>
-  <data name="BtnAction.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;LabelBaudrate.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;ChkDroneNameText.Parent" xml:space="preserve">
-    <value>TopPanel</value>
-  </data>
-  <data name="&gt;&gt;LabelPortName.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
   </data>
   <data name="TBoxDroneName.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 14</value>
   </data>
-  <data name="LabelBatteryAvailability.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="TBoxComNo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="TBoxDroneName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;EditPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TBoxDroneName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
   </data>
-  <data name="&gt;&gt;RBSerial.Name" xml:space="preserve">
-    <value>RBSerial</value>
+  <data name="TBoxDroneName.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="&gt;&gt;LabelBatteryAvailability.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TboxBatteryAvailability.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 21</value>
-  </data>
-  <data name="LabelBatteryCapacity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 14</value>
-  </data>
-  <data name="BtnNewModel.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="LabelBaudrate.Visible" type="System.Boolean, mscorlib">
+  <data name="TBoxDroneName.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="LabelBatteryCapacityText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;BtnDeaction.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LabelStreamURIText.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryCapacityText.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="TopPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
-  </data>
-  <data name="TBoxBatteryCapacity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 100</value>
-  </data>
-  <data name="&gt;&gt;TBoxStreamURI.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>360, 200</value>
-  </data>
-  <data name="&gt;&gt;LabelBaudrateText.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;TBoxBatteryCapacity.Name" xml:space="preserve">
-    <value>TBoxBatteryCapacity</value>
-  </data>
-  <data name="BtnDeaction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>276, 12</value>
-  </data>
-  <data name="ComboPowerModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 76</value>
-  </data>
-  <data name="&gt;&gt;BtnAction.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNameText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnDeaction.Name" xml:space="preserve">
-    <value>BtnDeaction</value>
-  </data>
-  <data name="RBUdp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 10</value>
-  </data>
-  <data name="&gt;&gt;TboxBatteryAvailability.Name" xml:space="preserve">
-    <value>TboxBatteryAvailability</value>
-  </data>
-  <data name="LabelBatteryCapacityText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 102</value>
-  </data>
-  <data name="&gt;&gt;TBoxStreamURI.Parent" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="BtnAction.Text" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="&gt;&gt;TBoxBatteryCapacity.Parent" xml:space="preserve">
-    <value>EditPanel</value>
-  </data>
-  <data name="TBoxPortValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 31</value>
+  <data name="&gt;&gt;TBoxDroneName.Name" xml:space="preserve">
+    <value>TBoxDroneName</value>
   </data>
   <data name="&gt;&gt;TBoxDroneName.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;TBoxDroneName.Parent" xml:space="preserve">
+    <value>TopPanel</value>
+  </data>
+  <data name="&gt;&gt;TBoxDroneName.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BtnDeaction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnDeaction.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnDeaction.Location" type="System.Drawing.Point, System.Drawing">
+    <value>276, 12</value>
+  </data>
+  <data name="BtnDeaction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="BtnDeaction.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="BtnDeaction.Text" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="&gt;&gt;BtnDeaction.Name" xml:space="preserve">
+    <value>BtnDeaction</value>
+  </data>
+  <data name="&gt;&gt;BtnDeaction.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDeaction.Parent" xml:space="preserve">
+    <value>TopPanel</value>
+  </data>
+  <data name="&gt;&gt;BtnDeaction.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BtnAction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnAction.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnAction.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 12</value>
+  </data>
+  <data name="BtnAction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="BtnAction.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="BtnAction.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="&gt;&gt;BtnAction.Name" xml:space="preserve">
+    <value>BtnAction</value>
+  </data>
+  <data name="&gt;&gt;BtnAction.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnAction.Parent" xml:space="preserve">
+    <value>TopPanel</value>
+  </data>
+  <data name="&gt;&gt;BtnAction.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ChkDroneNameText.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="ChkDroneNameText.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 16</value>
   </data>
   <data name="ChkDroneNameText.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 16</value>
   </data>
+  <data name="ChkDroneNameText.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ChkDroneNameText.Name" xml:space="preserve">
+    <value>ChkDroneNameText</value>
+  </data>
+  <data name="&gt;&gt;ChkDroneNameText.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChkDroneNameText.Parent" xml:space="preserve">
+    <value>TopPanel</value>
+  </data>
+  <data name="&gt;&gt;ChkDroneNameText.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="TopPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 2</value>
+  </data>
+  <data name="TopPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>357, 48</value>
+  </data>
+  <data name="TopPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;TopPanel.Name" xml:space="preserve">
+    <value>TopPanel</value>
+  </data>
+  <data name="&gt;&gt;TopPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TopPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TopPanel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TBoxComNo.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TBoxComNo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="TBoxComNo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 8</value>
+  </data>
+  <data name="TBoxComNo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="TBoxComNo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 21</value>
+  </data>
+  <data name="TBoxComNo.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;TBoxComNo.Name" xml:space="preserve">
+    <value>TBoxComNo</value>
+  </data>
   <data name="&gt;&gt;TBoxComNo.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LabelBatteryAvailabilityText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 125</value>
-  </data>
-  <data name="EditPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>195, 51</value>
   </data>
   <data name="&gt;&gt;TBoxComNo.Parent" xml:space="preserve">
     <value>EditPanel</value>
   </data>
   <data name="&gt;&gt;TBoxComNo.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>0</value>
   </data>
-  <data name="LabelStreamURIText.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="TBoxStreamURI.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="&gt;&gt;LabelPortName.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="TBoxStreamURI.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 54</value>
   </data>
-  <data name="LabelBaudrate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 14</value>
+  <data name="TBoxStreamURI.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;LabelBatteryCapacityText.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LabelBatteryCapacity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 102</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNumberText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BottomPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;LabelBatteryAvailability.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="RBUdp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 19</value>
+  <data name="TBoxStreamURI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 21</value>
   </data>
   <data name="TBoxStreamURI.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="LabelPortNameText.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;TBoxStreamURI.Name" xml:space="preserve">
+    <value>TBoxStreamURI</value>
   </data>
-  <data name="LabelBatteryAvailabilityText.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+  <data name="&gt;&gt;TBoxStreamURI.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LabelStreamURI.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNameText.Name" xml:space="preserve">
-    <value>LabelPortNameText</value>
-  </data>
-  <data name="&gt;&gt;LabelBaudrate.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="&gt;&gt;TBoxPortValue.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TBoxStreamURI.Parent" xml:space="preserve">
     <value>EditPanel</value>
   </data>
-  <data name="&gt;&gt;BtnAction.Parent" xml:space="preserve">
-    <value>TopPanel</value>
-  </data>
-  <data name="LabelPowerModelText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 79</value>
-  </data>
-  <data name="&gt;&gt;BtnNewModel.Name" xml:space="preserve">
-    <value>BtnNewModel</value>
-  </data>
-  <data name="LabelBatteryCapacityText.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="LabelBatteryAvailability.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="LabelBatteryCapacityText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelPortNumberText.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="LabelPowerModel.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="ComboPowerModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 23</value>
-  </data>
-  <data name="&gt;&gt;LabelPortNumberText.Name" xml:space="preserve">
-    <value>LabelPortNumberText</value>
-  </data>
-  <data name="ChkDroneNameText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;LabelPowerModel.Name" xml:space="preserve">
-    <value>LabelPowerModel</value>
-  </data>
-  <data name="&gt;&gt;TBoxPortValue.Name" xml:space="preserve">
-    <value>TBoxPortValue</value>
-  </data>
-  <data name="LabelPortNumberText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
+  <data name="&gt;&gt;TBoxStreamURI.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="TBoxPortValue.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="LabelBatteryAvailabilityText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+  <data name="TBoxPortValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 31</value>
   </data>
-  <data name="TBoxBatteryCapacity.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 21</value>
-  </data>
-  <data name="LabelBatteryCapacity.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;TboxBatteryAvailability.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="EditPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="TBoxPortValue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;TopPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LabelPowerModelText.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelPowerModel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelBatteryAvailability.Text" xml:space="preserve">
-    <value>Battery Availability</value>
-  </data>
-  <data name="&gt;&gt;LabelStreamURIText.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="TboxBatteryAvailability.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 123</value>
-  </data>
-  <data name="BtnNewModel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>110, 75</value>
-  </data>
-  <data name="ChkDroneNameText.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="RBSerial.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelStreamURI.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="RBUdp.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelBatteryAvailability.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 125</value>
-  </data>
-  <data name="LabelStreamURIText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 56</value>
-  </data>
-  <data name="LabelBatteryAvailabilityText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;TBoxComNo.Name" xml:space="preserve">
-    <value>TBoxComNo</value>
-  </data>
-  <data name="&gt;&gt;LabelPortName.Name" xml:space="preserve">
-    <value>LabelPortName</value>
-  </data>
-  <data name="RBUdp.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="LabelPowerModelText.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="LabelBatteryAvailability.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="TBoxPortValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 21</value>
   </data>
   <data name="TBoxPortValue.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;LabelBatteryAvailability.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
+  <data name="&gt;&gt;TBoxPortValue.Name" xml:space="preserve">
+    <value>TBoxPortValue</value>
   </data>
-  <data name="TboxBatteryAvailability.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
+  <data name="&gt;&gt;TBoxPortValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LabelStreamURI.Parent" xml:space="preserve">
-    <value>BottomPanel</value>
-  </data>
-  <data name="TBoxComNo.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;TBoxStreamURI.Name" xml:space="preserve">
-    <value>TBoxStreamURI</value>
-  </data>
-  <data name="&gt;&gt;LabelStreamURI.Name" xml:space="preserve">
-    <value>LabelStreamURI</value>
-  </data>
-  <data name="LabelPortName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="BtnNewModel.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;BtnNewModel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="BtnNewModel.Text" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="BtnAction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="LabelBaudrateText.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;EditPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="TBoxComNo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LabelBaudrateText.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="TBoxDroneName.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;LabelBaudrateText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelStreamURI.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BottomPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BottomPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;ComboPowerModel.Name" xml:space="preserve">
-    <value>ComboPowerModel</value>
-  </data>
-  <data name="&gt;&gt;RBSerial.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TBoxPortValue.Parent" xml:space="preserve">
     <value>EditPanel</value>
   </data>
-  <data name="&gt;&gt;ChkDroneNameText.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;TBoxPortValue.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="LabelBatteryCapacityText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 15</value>
+  <data name="RBSerial.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RBSerial.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="RBSerial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>45, 10</value>
+  </data>
+  <data name="RBSerial.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="RBSerial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 19</value>
+  </data>
+  <data name="RBSerial.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RBSerial.Text" xml:space="preserve">
+    <value>COM</value>
+  </data>
+  <data name="&gt;&gt;RBSerial.Name" xml:space="preserve">
+    <value>RBSerial</value>
   </data>
   <data name="&gt;&gt;RBSerial.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;RBSerial.Parent" xml:space="preserve">
+    <value>EditPanel</value>
+  </data>
+  <data name="&gt;&gt;RBSerial.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RBUdp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RBUdp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="RBUdp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 10</value>
+  </data>
+  <data name="RBUdp.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="RBUdp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 19</value>
+  </data>
+  <data name="RBUdp.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RBUdp.Text" xml:space="preserve">
+    <value>UDP</value>
+  </data>
+  <data name="&gt;&gt;RBUdp.Name" xml:space="preserve">
+    <value>RBUdp</value>
+  </data>
+  <data name="&gt;&gt;RBUdp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RBUdp.Parent" xml:space="preserve">
+    <value>EditPanel</value>
+  </data>
+  <data name="&gt;&gt;RBUdp.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="EditPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 51</value>
+  </data>
+  <data name="EditPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="EditPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 100</value>
+  </data>
+  <data name="EditPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="EditPanel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;EditPanel.Name" xml:space="preserve">
+    <value>EditPanel</value>
+  </data>
+  <data name="&gt;&gt;EditPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EditPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;EditPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>360, 152</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>DroneSettingInput</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

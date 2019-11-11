@@ -141,6 +141,7 @@ namespace Diva.Controls
 
         private Rectangle msgRect;
         private readonly Timer msgRefreshTimer = new Timer { Interval = 500 };
+        public PointF MsgWindowOffset { get; set; } = new PointF();
 
         private void InvalidateMessage(object sender, EventArgs e)
         {
@@ -182,11 +183,11 @@ namespace Diva.Controls
                 msgRect = Rectangle.Round(new RectangleF(left, top, width + 4, lh * msgs.Length + 2));
                 g.FillRectangle(FltMsg.BgBrush, msgRect);
 
-                float lt = top + 4;
+                float lt = top + 4 + MsgWindowOffset.Y;
                 bool blinking = DateTime.Now.Second % 2 == 0;
                 foreach (var m in msgs)
                 {
-                    float ll = left + 4;
+                    float ll = left + 4 + MsgWindowOffset.X;
                     DrawText(g, m.Source, FltMsg.SrcFont, m.SrcBrush, ref ll, lt);
                     Brush b = FltMsg.MsgBlink[m.Severity] && blinking ?
                         FltMsg.BlinkBrush : FltMsg.MsgBrushes[m.Severity];

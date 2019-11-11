@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Diva.Mission;
 using Diva.Utilities;
 using static MAVLink;
 using Strings = Diva.Properties.Strings;

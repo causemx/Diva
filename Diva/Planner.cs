@@ -12,7 +12,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,24 +27,20 @@ namespace Diva
 	public partial class Planner : Form
 	{
 		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		public const double DEFAULT_LATITUDE = 24.773518;
-		public const double DEFAULT_LONGITUDE = 121.0443385;
-		public const double DEFAULT_ZOOM = 20;
-		public const int TAKEOFF_HEIGHT = 30;
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
         private static Planner Instance = null;
         internal static Planner GetPlannerInstance() => Instance;
         internal static MavDrone DummyDrone = new MavDrone();
         internal static MavDrone GetActiveDrone() => Instance?.ActiveDrone;
-        private MavDrone currenDrone = DummyDrone;
+        private MavDrone currentDrone = DummyDrone;
         private MavDrone ActiveDrone
         {
-            get => currenDrone;
-            set => currenDrone = value ?? DummyDrone;
+            get => currentDrone;
+            set => currentDrone = value ?? DummyDrone;
         }
         internal static DroneInfo GetActiveDroneInfo() => Instance.DroneInfoPanel?.ActiveDroneInfo;
-        internal int MissionListItemCount => dgvWayPoints.Rows.Count;
+        internal int MissionListItemCount => DGVWayPoints.Rows.Count;
         private List<MavDrone> OnlineDrones = new List<MavDrone>();
 
         public bool Autopan { get; set; }
@@ -54,16 +49,15 @@ namespace Diva
 
 		private class PlannerOverlays
 		{
-			public GMapOverlay kmlpolygons;
-			public GMapOverlay rallypoints;
-			public GMapOverlay polygons;
-			public GMapOverlay airports;
-			// public GMapOverlay objects;
-			public GMapOverlay commons;
-			public GMapOverlay drawnpolygons;
-			public GMapOverlay geofence;
+			public GMapOverlay KMLPolygons;
+			public GMapOverlay RallyPoints;
+			public GMapOverlay Polygons;
+			public GMapOverlay Airports;
+			public GMapOverlay Commons;
+			public GMapOverlay DrawnPolygons;
+			public GMapOverlay Geofence;
 			public GMapOverlay POI;
-			public GMapOverlay routes;
+			public GMapOverlay Routes;
 			internal PlannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
@@ -72,17 +66,18 @@ namespace Diva
 						f.SetValue(this, o);
 					});
 		}
-		private PlannerOverlays overlays;
+		private PlannerOverlays Overlays;
+        private Dictionary<MavDrone, (Color Color, GMapOverlay Overlay)> DroneOverlays =
+            new Dictionary<MavDrone, (Color Color, GMapOverlay Overlay)>();
 
-		private GMapRectMarker currentRectMarker;
-		private GMap3DPointMarker currentRallyPt;
+		private GMapRectMarker CurrentRectMarker;
+		private GMapMarkerRallyPt CurrentRallyPt;
 
-		private GMapMarker currentMarker;
-		private GMapMarker center = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
-		private GMapMarker currentGMapMarker;
+		private GMapMarker CurrentMarker;
+		private GMapMarker CenterMarker = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
+		private GMapMarker CurrentGMapMarker;
 
 		public GMapRoute route = new GMapRoute("wp route");
-		public GMapRoute homeroute = new GMapRoute("home route");
 
 		private bool isMouseDown;
 		private bool isMouseDraging;
@@ -102,31 +97,24 @@ namespace Diva
 		private List<List<WayPoint>> history = new List<List<WayPoint>>();
 		private List<int> groupmarkers = new List<int>();
 		private object thisLock = new object();
-		public List<PointLatLngAlt> pointlist = new List<PointLatLngAlt>(); // used to calc distance
-		public List<PointLatLngAlt> fullpointlist = new List<PointLatLngAlt>();
 
 		// Thread setup
 		private BackgroundLoop mainThread = null;
-
-		private DateTime heartbeatSend = DateTime.Now;
-		private DateTime lastupdate = DateTime.Now;
-		private DateTime lastdata = DateTime.MinValue;
 		private DateTime mapupdate = DateTime.MinValue;
-
-		private long recorder_id = 0;
 
 		private bool isMapFocusing = true;
 
 		private Rotation rotationMission = null;
 		private RotationInfo rotationInfo = null;
 
-		internal MyGMap GMapControl => myMap;
+		internal MyGMap GMapControl => Map;
         internal WayPoint GetHomeWP() => new WayPoint
         {
             Id = (ushort)MAV_CMD.WAYPOINT,
             Latitude = (double.Parse(TxtHomeLatitude.Text)),
             Longitude = (double.Parse(TxtHomeLongitude.Text)),
             Altitude = (float.Parse(TxtHomeAltitude.Text)),
+            Tag = "H",
             Frame = MAV_FRAME.GLOBAL
         };
 
@@ -139,17 +127,14 @@ namespace Diva
 
 			quickadd = false;
 
-			overlays = new PlannerOverlays(myMap);
-
-			// overlays.objects.Markers.Clear();
-			ActiveDrone.ObjOverlay.Overlay.Markers.Clear();
+			Overlays = new PlannerOverlays(Map);
 
 			// set current marker
-			currentMarker = new GMarkerGoogle(myMap.Position, GMarkerGoogleType.red);
+			CurrentMarker = new GMarkerGoogle(Map.Position, GMarkerGoogleType.red);
 			//top.Markers.Add(currentMarker);
 
 			// map center
-			center = new GMarkerGoogle(myMap.Position, GMarkerGoogleType.none);
+			CenterMarker = new GMarkerGoogle(Map.Position, GMarkerGoogleType.none);
 			//top.Markers.Add(center);
 
 			//myMap.Zoom = 3;
@@ -168,24 +153,25 @@ namespace Diva
 			//Collect DroneInfoPanels
 
 			// setup geofence
+            geofencePolygon = new GMapPolygon(new List<PointLatLng>(), "geofence")
+            {
+                Stroke = new Pen(Color.Pink, 5),
+                Fill = Brushes.Transparent
+            };
 
-			List<PointLatLng> polygonPoints = new List<PointLatLng>();
-			geofencePolygon = new GMapPolygon(polygonPoints, "geofence");
-			geofencePolygon.Stroke = new Pen(Color.Pink, 5);
-			geofencePolygon.Fill = Brushes.Transparent;
+            //setup drawnpolgon
+            drawnPolygon = new GMapPolygon(new List<PointLatLng>(), "drawnpoly")
+            {
+                Stroke = new Pen(Color.Red, 2),
+                Fill = Brushes.Transparent
+            };
 
-			//setup drawnpolgon
-			List<PointLatLng> polygonPoints2 = new List<PointLatLng>();
-			drawnPolygon = new GMapPolygon(polygonPoints2, "drawnpoly");
-			drawnPolygon.Stroke = new Pen(Color.Red, 2);
-			drawnPolygon.Fill = Brushes.Transparent;
-
-			//setup rotationinfo panel
-			rotationInfo = new RotationInfo() { Visible = false };
-			PanelRotationInfo.Controls.Add(rotationInfo);
+            //setup rotationinfo panel
+            rotationInfo = new RotationInfo() { Visible = false };
+			RotationInfoPanel.Controls.Add(rotationInfo);
 
 			//set home
-			double lng = DEFAULT_LONGITUDE, lat = DEFAULT_LATITUDE, zoom = DEFAULT_ZOOM;
+			double lng = DefaultValues.Longitude, lat = DefaultValues.Latitude, zoom = DefaultValues.ZoomLevel;
 			try
 			{
 				string loc = ConfigData.GetOption(ConfigData.OptionName.MapInitialLocation);
@@ -205,35 +191,28 @@ namespace Diva
 			{
 				log.Error(ex);
 			}
-			myMap.Position = new PointLatLng(lat, lng);
-			myMap.Zoom = zoom;
+			Map.Position = new PointLatLng(lat, lng);
+			Map.Zoom = zoom;
 			TxtHomeLatitude.Text = lat.ToString();
 			TxtHomeLongitude.Text = lng.ToString();
+            TxtHomeAltitude.Text = DefaultValues.TakeoffHeight.ToString();
 
 			ComBoxModeSwitch.DataSource = Enum.GetValues(typeof(FlightMode)).Cast<FlightMode>().ToList();
 
-		}
-
-		private void DataGridView_Initialize()
-		{
-			foreach (DataGridViewColumn commandsColumn in dgvWayPoints.Columns)
-			{
-				UserName = Strings.StrAnonymousAccount,
-				StartTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				EndTime = DatabaseManager.DateTimeSQLite(DateTime.Now),
-				TotalDistance = 0.0d,
-				HomeLatitude = 0.0d,
-				HomeLongitude = 0.0d,
-				HomeAltitude = 0.0d,
-			};
-
-			dgvWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
-		}
-
             mainThread = BackgroundLoop.Start(MainLoop);
+        }
+
+        private void DataGridView_Initialize()
+		{
+			foreach (DataGridViewColumn commandsColumn in DGVWayPoints.Columns)
+			{
+                if (commandsColumn is DataGridViewTextBoxColumn)
+                    commandsColumn.CellTemplate.Value = "0";
+            }
+			DGVWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
 		}
 
-		private void Planner_FormClosing(object sender, FormClosingEventArgs e)
+        private void Planner_FormClosing(object sender, FormClosingEventArgs e)
 		{
             if (mainThread?.IsRunning ?? false)
                 mainThread.Cancel();
@@ -241,8 +220,6 @@ namespace Diva
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			DatabaseManager.UpdateEndTime(recorder_id, DatabaseManager.DateTimeSQLite(DateTime.Now));
-			DatabaseManager.Dump(recorder_id);
             OnlineDrones.ForEach(d => d.Disconnect());
             BackgroundLoop.FreeTasks(5000);
 		}
@@ -260,13 +237,14 @@ namespace Diva
                 {
                     if (ActiveDrone.IsOpen)
                     {
-                        BeginInvoke((MethodInvoker)delegate
+                        // should be handled by ActiveDrone's FlightModeChanged event
+                        /*BeginInvoke((MethodInvoker)delegate
                         {
                             string mode = ActiveDrone.Status.FlightMode.GetName();
                             if (mode != null)
-                                TxtDroneMode.Text = mode;
+                                LBLMode.Text = mode;
                             DroneInfoPanel.UpdateDisplayInfo();
-                        });
+                        });*/
 
                         PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
 
@@ -293,9 +271,9 @@ namespace Diva
 				{
 					if (lastmapposchange.Second != DateTime.Now.Second)
 					{
-						if (Math.Abs(currentloc.Lat - myMap.Position.Lat) > 0.0001 || Math.Abs(currentloc.Lng - myMap.Position.Lng) > 0.0001)
+						if (Math.Abs(currentloc.Lat - Map.Position.Lat) > 0.0001 || Math.Abs(currentloc.Lng - Map.Position.Lng) > 0.0001)
 						{
-							myMap.Position = currentloc;
+							Map.Position = currentloc;
 						}
 						lastmapposchange = DateTime.Now;
 					}
@@ -310,21 +288,21 @@ namespace Diva
 			BeginInvoke((MethodInvoker)delegate
 			{
 				// thread for updateing row numbers
-				for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+				for (int a = 0; a < DGVWayPoints.Rows.Count - 0; a++)
 				{
 					try
 					{
-						if (dgvWayPoints.Rows[a].HeaderCell.Value == null)
+						if (DGVWayPoints.Rows[a].HeaderCell.Value == null)
 						{
 							//Commands.Rows[a].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-							dgvWayPoints.Rows[a].HeaderCell.Value = (a + 1).ToString();
+							DGVWayPoints.Rows[a].HeaderCell.Value = (a + 1).ToString();
 						}
 						// skip rows with the correct number
-						string rowno = dgvWayPoints.Rows[a].HeaderCell.Value.ToString();
+						string rowno = DGVWayPoints.Rows[a].HeaderCell.Value.ToString();
 						if (!rowno.Equals((a + 1).ToString()))
 						{
 							// this code is where the delay is when deleting.
-							dgvWayPoints.Rows[a].HeaderCell.Value = (a + 1).ToString();
+							DGVWayPoints.Rows[a].HeaderCell.Value = (a + 1).ToString();
 						}
 					}
 					catch (Exception)
@@ -432,7 +410,7 @@ namespace Diva
 			{
 				point.Lng = -180;
 			}
-			center.Position = point;
+			CenterMarker.Position = point;
 		}
 
 		void AddGroupMarkers(GMapMarker marker)
@@ -485,7 +463,7 @@ namespace Diva
 				return;
 			}*/
 
-			MouseDownEnd = myMap.FromLocalToLatLng(e.X, e.Y);
+			MouseDownEnd = Map.FromLocalToLatLng(e.X, e.Y);
 
 			// Console.WriteLine("MainMap MU");
 
@@ -518,7 +496,7 @@ namespace Diva
 					poly.Points.Add(MouseDownEnd);
 					poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
 
-					foreach (var marker in ActiveDrone.ObjOverlay.Overlay.Markers)
+					foreach (var marker in ActiveDrone.GetOverlay().Markers)
 					{
 						if (poly.IsInside(marker.Position))
 						{
@@ -541,13 +519,13 @@ namespace Diva
 				}
 				if (!isMouseDraging)
 				{
-					if (currentRectMarker != null)
+					if (CurrentRectMarker != null)
 					{
 						// cant add WP in existing rect
 					}
 					else
 					{
-						AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
+						AddWPToMap(CurrentMarker.Position.Lat, CurrentMarker.Position.Lng, 0);
 					}
 				}
 				else
@@ -558,9 +536,9 @@ namespace Diva
 
 						foreach (var markerid in groupmarkers)
 						{
-							for (int a = 0; a < ActiveDrone.ObjOverlay.Overlay.Markers.Count; a++)
+							for (int a = 0; a < ActiveDrone.GetOverlay().Markers.Count; a++)
 							{
-								var marker = ActiveDrone.ObjOverlay.Overlay.Markers[a];
+								var marker = ActiveDrone.GetOverlay().Markers[a];
 
 								if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 								{
@@ -578,26 +556,26 @@ namespace Diva
 							quickadd = false;
 						}
 
-						myMap.SelectedArea = RectLatLng.Empty;
+						Map.SelectedArea = RectLatLng.Empty;
 						groupmarkers.Clear();
 						// redraw to remove selection
 						WriteKMLV2();
 
-						currentRectMarker = null;
+						CurrentRectMarker = null;
 					}
 
-					if (currentRectMarker != null && currentRectMarker.InnerMarker != null)
+					if (CurrentRectMarker != null && CurrentRectMarker.InnerMarker != null)
 					{
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
-							&& !currentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
+						if (CurrentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
+							&& !CurrentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
 						{
 							try
 							{
 								drawnPolygon.Points[
-									int.Parse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
+									int.Parse(CurrentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
 									new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
-								myMap.UpdatePolygonLocalPosition(drawnPolygon);
-								myMap.Invalidate();
+								Map.UpdatePolygonLocalPosition(drawnPolygon);
+								Map.Invalidate();
 							}
 							catch (Exception ex)
 							{
@@ -606,11 +584,11 @@ namespace Diva
 						}
 						else
 						{
-							DragCallback(currentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
-								currentMarker.Position.Lng, -2);
+							DragCallback(CurrentRectMarker.InnerMarker.Tag.ToString(), CurrentMarker.Position.Lat,
+								CurrentMarker.Position.Lng, -2);
 						}
 
-						currentRectMarker = null;
+						CurrentRectMarker = null;
 					}
 				}
 			}
@@ -623,7 +601,7 @@ namespace Diva
 			if (isMouseClickOffMenu)
 				return;
 
-			MouseDownStart = myMap.FromLocalToLatLng(e.X, e.Y);
+			MouseDownStart = Map.FromLocalToLatLng(e.X, e.Y);
 
 			// Console.WriteLine("MainMap MD");
 
@@ -641,9 +619,9 @@ namespace Diva
 				isMouseDown = true;
 				isMouseDraging = false;
 
-				if (currentMarker.IsVisible)
+				if (CurrentMarker.IsVisible)
 				{
-					currentMarker.Position = myMap.FromLocalToLatLng(e.X, e.Y);
+					CurrentMarker.Position = Map.FromLocalToLatLng(e.X, e.Y);
 				}
 			}
 		}
@@ -651,14 +629,14 @@ namespace Diva
 		// move current marker with left holding
 		private void MainMap_MouseMove(object sender, MouseEventArgs e)
 		{
-			PointLatLng point = myMap.FromLocalToLatLng(e.X, e.Y);
+			PointLatLng point = Map.FromLocalToLatLng(e.X, e.Y);
 
 			if (MouseDownStart == point)
 				return;
 
 			//  Console.WriteLine("MainMap MM " + point);
 
-			currentMarker.Position = point;
+			CurrentMarker.Position = point;
 
 			if (!isMouseDown)
 			{
@@ -670,11 +648,11 @@ namespace Diva
 			if (e.Button == MouseButtons.Left && isMouseDown)
 			{
 				isMouseDraging = true;
-				if (currentRallyPt != null)
+				if (CurrentRallyPt != null)
 				{
-					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
+					PointLatLng pnew = Map.FromLocalToLatLng(e.X, e.Y);
 
-					currentRallyPt.Position = pnew;
+					CurrentRallyPt.Position = pnew;
 				}
 				else if (groupmarkers.Count > 0)
 				{
@@ -693,9 +671,9 @@ namespace Diva
 							continue;
 
 						seen[markerid] = 1;
-						for (int a = 0; a < ActiveDrone.ObjOverlay.Overlay.Markers.Count; a++)
+						for (int a = 0; a < ActiveDrone.GetOverlay().Markers.Count; a++)
 						{
-							var marker = ActiveDrone.ObjOverlay.Overlay.Markers[a];
+							var marker = ActiveDrone.GetOverlay().Markers[a];
 
 							if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
 							{
@@ -706,19 +684,19 @@ namespace Diva
 						}
 					}
 				}
-				else if (currentRectMarker != null) // left click pan
+				else if (CurrentRectMarker != null) // left click pan
 				{
 					try
 					{
 						// check if this is a grid point
-						if (currentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
-							&& !currentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
+						if (CurrentRectMarker.InnerMarker.Tag.ToString().Contains("grid")
+							&& !CurrentRectMarker.InnerMarker.Tag.ToString().Contains("_cus_"))
 						{
 							drawnPolygon.Points[
-								int.Parse(currentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
+								int.Parse(CurrentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
 								new PointLatLng(point.Lat, point.Lng);
-							myMap.UpdatePolygonLocalPosition(drawnPolygon);
-							myMap.Invalidate();
+							Map.UpdatePolygonLocalPosition(drawnPolygon);
+							Map.Invalidate();
 						}
 					}
 					catch (Exception ex)
@@ -726,14 +704,14 @@ namespace Diva
 						log.Error(ex);
 					}
 
-					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
+					PointLatLng pnew = Map.FromLocalToLatLng(e.X, e.Y);
 
 					// adjust polyline point while we drag
 					try
 					{
-						if (currentGMapMarker != null && currentGMapMarker.Tag is int)
+						if (CurrentGMapMarker != null && CurrentGMapMarker.Tag is int)
 						{
-							int? pIndex = (int?)currentRectMarker.Tag;
+							int? pIndex = (int?)CurrentRectMarker.Tag;
 							if (pIndex.HasValue)
 							{
 								if (pIndex < wpPolygon.Points.Count)
@@ -741,7 +719,7 @@ namespace Diva
 									wpPolygon.Points[pIndex.Value] = pnew;
 									lock (thisLock)
 									{
-										myMap.UpdatePolygonLocalPosition(wpPolygon);
+										Map.UpdatePolygonLocalPosition(wpPolygon);
 									}
 								}
 							}
@@ -753,15 +731,15 @@ namespace Diva
 					}
 
 					// update rect and marker pos.
-					if (currentMarker.IsVisible)
+					if (CurrentMarker.IsVisible)
 					{
-						currentMarker.Position = pnew;
+						CurrentMarker.Position = pnew;
 					}
-					currentRectMarker.Position = pnew;
+					CurrentRectMarker.Position = pnew;
 
-					if (currentRectMarker.InnerMarker != null)
+					if (CurrentRectMarker.InnerMarker != null)
 					{
-						currentRectMarker.InnerMarker.Position = pnew;
+						CurrentRectMarker.InnerMarker.Position = pnew;
 					}
 				}
 				/**else if (currentPOIMarker != null)
@@ -770,11 +748,11 @@ namespace Diva
 
 					CurrentPOIMarker.Position = pnew;
 				}**/
-				else if (currentGMapMarker != null)
+				else if (CurrentGMapMarker != null)
 				{
-					PointLatLng pnew = myMap.FromLocalToLatLng(e.X, e.Y);
+					PointLatLng pnew = Map.FromLocalToLatLng(e.X, e.Y);
 
-					currentGMapMarker.Position = pnew;
+					CurrentGMapMarker.Position = pnew;
 				}
 				else if (ModifierKeys == Keys.Control)
 				{
@@ -782,7 +760,7 @@ namespace Diva
 					double latdif = MouseDownStart.Lat - point.Lat;
 					double lngdif = MouseDownStart.Lng - point.Lng;
 
-					myMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, point.Lat),
+					Map.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, point.Lat),
 						Math.Min(MouseDownStart.Lng, point.Lng), Math.Abs(lngdif), Math.Abs(latdif));
 				}
 				else // left click pan
@@ -795,8 +773,8 @@ namespace Diva
 						lock (thisLock)
 						{
 							if (!isMouseClickOffMenu)
-								myMap.Position = new PointLatLng(center.Position.Lat + latdif,
-									center.Position.Lng + lngdif);
+								Map.Position = new PointLatLng(CenterMarker.Position.Lat + latdif,
+									CenterMarker.Position.Lng + lngdif);
 						}
 					}
 					catch (Exception ex)
@@ -838,7 +816,7 @@ namespace Diva
 				}
 				if (int.TryParse(item.Tag.ToString(), out answer))
 				{
-					dgvWayPoints.CurrentCell = dgvWayPoints[0, answer - 1];
+					DGVWayPoints.CurrentCell = DGVWayPoints[0, answer - 1];
 				}
 			}
 			catch (Exception ex)
@@ -852,51 +830,34 @@ namespace Diva
 
 			if (!isMouseDown)
 			{
-				if (item is GMapRectMarker)
-				{
-					GMapMarkerRect rc = item as GMapMarkerRect;
-					rc.Pen.Color = Color.Transparent;
-					myMap.Invalidate(false);
-
-					int answer;
-					if (item.Tag != null && rc.InnerMarker != null &&
-						int.TryParse(rc.InnerMarker.Tag.ToString(), out answer))
-					{
-						try
-						{
-							dgvWayPoints.CurrentCell = dgvWayPoints[0, answer - 1];
-							item.ToolTipText = "Alt: " + dgvWayPoints[colAltitude.Index, answer - 1].Value;
-							item.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-						}
-						catch (Exception ex)
-						{
-							log.Error(ex);
-						}
-					}
-
-					currentRectMarker = rc;
-				}
-				if (item is GMap3DPointMarker)
-				{
-					currentRallyPt = item as GMap3DPointMarker;
-				}
-				/**if (item is GMapMarkerAirport)
-				{
-					// do nothing - readonly
-					return;
-				}
-				if (item is GMapMarkerPOI)
-				{
-					CurrentPOIMarker = item as GMapMarkerPOI;
-				}*/
-				if (item is GMapTaggedMarker)
-				{
-					currentGMapMarker = item;
-				}
-				if (item is GMapMarker)
-				{
-					currentGMapMarker = item;
-				}
+                switch (item)
+                {
+                    case GMapRectMarker rc:
+                        rc.Pen.Color = Color.Transparent;
+                        Map.Invalidate(false);
+                        if (item.Tag != null && rc.InnerMarker != null &&
+                            int.TryParse(rc.InnerMarker.Tag.ToString(), out int answer))
+                        {
+                            try
+                            {
+                                DGVWayPoints.CurrentCell = DGVWayPoints[0, answer - 1];
+                                item.ToolTipText = "Alt: " + DGVWayPoints[colAltitude.Index, answer - 1].Value;
+                                item.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                            }
+                            catch (Exception ex)
+                            {
+                                log.Error(ex);
+                            }
+                        }
+                        CurrentRectMarker = rc;
+                        break;
+                    case GMapMarkerRallyPt rpt:
+                        CurrentRallyPt = rpt;
+                        break;
+                    default:    // GMapMarker
+                        CurrentGMapMarker = item;
+                        break;
+                }
 			}
 		}
 
@@ -904,60 +865,54 @@ namespace Diva
 		{
 			if (!isMouseDown)
 			{
-				if (item is GMapRectMarker)
-				{
-					currentRectMarker = null;
-					GMapRectMarker rc = item as GMapRectMarker;
-					rc.ResetColor();
-					myMap.Invalidate(false);
-				}
-				if (item is GMap3DPointMarker)
-				{
-					currentRallyPt = null;
-				}
-				/**if (item is GMapMarkerPOI)
-				{
-					CurrentPOIMarker = null;
-				}*/
-				if (item is GMapMarker)
-				{
-					// when you click the context menu this triggers and causes problems
-					currentGMapMarker = null;
-				}
+                switch (item)
+                {
+                    case GMapRectMarker rc:
+                        CurrentRectMarker = null;
+                        rc.ResetColor();
+                        Map.Invalidate(false);
+                        break;
+                    case GMapMarkerRallyPt rpt:
+                        CurrentRallyPt = null;
+                        break;
+                    default:
+                        CurrentGMapMarker = null;
+                        break;
+                }
 			}
 		}
 
 		private void But_ZoomIn_Click(object sender, EventArgs e)
 		{
-			if (myMap.Zoom > 0)
+			if (Map.Zoom > 0)
 			{
 				try
 				{
-					myMap.Zoom += 1;
+					Map.Zoom += 1;
 				}
 				catch (Exception ex)
 				{
 					log.Error(ex);
 				}
 				//textBoxZoomCurrent.Text = MainMap.Zoom.ToString();
-				center.Position = myMap.Position;
+				CenterMarker.Position = Map.Position;
 			}
 		}
 
 		private void But_ZoomOut_Click(object sender, EventArgs e)
 		{
-			if (myMap.Zoom > 0)
+			if (Map.Zoom > 0)
 			{
 				try
 				{
-					myMap.Zoom -= 1;
+					Map.Zoom -= 1;
 				}
 				catch (Exception ex)
 				{
 					log.Error(ex);
 				}
 				//textBoxZoomCurrent.Text = MainMap.Zoom.ToString();
-				center.Position = myMap.Position;
+				CenterMarker.Position = Map.Position;
 			}
 		}
 		#endregion
@@ -1006,8 +961,8 @@ namespace Diva
                 //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
                 GMapRectMarker mBorders = new GMapRectMarker(point) { InnerMarker = m };
 
-				overlays.drawnpolygons.Markers.Add(m);
-				overlays.drawnpolygons.Markers.Add(mBorders);
+				Overlays.DrawnPolygons.Markers.Add(m);
+				Overlays.DrawnPolygons.Markers.Add(mBorders);
 			}
 			catch (Exception ex)
 			{
@@ -1021,12 +976,12 @@ namespace Diva
 			{
 				if (e.RowIndex < 0)
 					return;
-				if (e.ColumnIndex == colDelete.Index && (e.RowIndex + 0) < dgvWayPoints.RowCount) // delete
+				if (e.ColumnIndex == colDelete.Index && (e.RowIndex + 0) < DGVWayPoints.RowCount) // delete
 				{
 					quickadd = true;
 					// mono fix
-					dgvWayPoints.CurrentCell = null;
-					dgvWayPoints.Rows.RemoveAt(e.RowIndex);
+					DGVWayPoints.CurrentCell = null;
+					DGVWayPoints.Rows.RemoveAt(e.RowIndex);
 					quickadd = false;
 					WriteKMLV2();
                     DroneInfoPanel.NotifyMissionChanged();
@@ -1059,7 +1014,7 @@ namespace Diva
 			try
 			{
 				selectedRow = int.Parse(pointno) - 1;
-				dgvWayPoints.CurrentCell = dgvWayPoints[1, selectedRow];
+				DGVWayPoints.CurrentCell = DGVWayPoints[1, selectedRow];
 				// depending on the dragged item, selectedrow can be reset 
 				selectedRow = int.Parse(pointno) - 1;
 			}
@@ -1073,7 +1028,7 @@ namespace Diva
 
 		public void SetFromMap(double lat, double lng, int alt, double p1 = 0)
 		{
-			if (selectedRow > dgvWayPoints.RowCount)
+			if (selectedRow > DGVWayPoints.RowCount)
 			{
 				MessageBox.Show(Strings.MsgInvalidCoordinate);
 				return;
@@ -1098,89 +1053,77 @@ namespace Diva
 			}
 
 			DataGridViewTextBoxCell cell;
-			if (dgvWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
+			if (DGVWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedRow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[selectedRow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lat.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
-			if (dgvWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
+			if (DGVWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedRow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[selectedRow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lng.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
 			if (alt != -1 && alt != -2 &&
-				dgvWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
+				DGVWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedRow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[selectedRow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
 
+                if (!double.TryParse(TxtHomeAltitude.Text, out double homealt))
 				{
-					double result;
-					bool pass = double.TryParse(TxtHomeAltitude.Text, out result);
-
-					if (pass == false)
-					{
-						//MessageBox.Show("You must have a home altitude");
-
-						string homealt = "10";
-						//if (DialogResult.Cancel == InputBox.Show("Home Alt", "Home Altitude", ref homealt))
-						if (DialogResult.Cancel == InputBox.Show(Strings.MsgHomeAltitudeRequired, homealt, ref homealt))
-							return;
-						TxtHomeAltitude.Text = homealt;
-					}
-					int results1;
-					if (!int.TryParse(TxtAltitudeValue.Text, out results1))
-					{
-						MessageBox.Show(Strings.MsgDefaultAltitudeInvalid);
+					string alttext = "10";
+					if (DialogResult.Cancel == InputBox.Show(Strings.MsgHomeAltitudeRequired, alttext, ref alttext))
 						return;
-					}
+					TxtHomeAltitude.Text = alttext;
+				}
+                if (!int.TryParse(TxtAltitudeValue.Text, out int altval))
+                {
+                    MessageBox.Show(Strings.MsgDefaultAltitudeInvalid);
+                    return;
+                }
 
-					if (results1 == 0)
-					{
-						string defalt = "10";
-						if (DialogResult.Cancel == InputBox.Show(Strings.MsgDefaultAltitudeRequired, defalt, ref defalt))
-							return;
-						TxtAltitudeValue.Text = defalt;
-					}
+                if (altval == 0)
+				{
+					string defalt = "10";
+					if (DialogResult.Cancel == InputBox.Show(Strings.MsgDefaultAltitudeRequired, defalt, ref defalt))
+						return;
+					TxtAltitudeValue.Text = defalt;
 				}
 
 				cell.Value = TxtAltitudeValue.Text;
 
-				float ans;
-				if (float.TryParse(cell.Value.ToString(), out ans))
-				{
-					ans = (int)ans;
-					if (alt != 0) // use passed in value;
-						cell.Value = alt.ToString();
-					if (ans == 0) // default
-						cell.Value = 50;
+                if (float.TryParse(cell.Value.ToString(), out float ans))
+                {
+                    int altint = (int)ans;
+                    if (alt != 0) // use passed in value;
+                        cell.Value = alt.ToString();
+                    if (altint == 0) // default
+                        cell.Value = 50;
 
-
-					cell.DataGridView.EndEdit();
-				}
-				else
-				{
-					MessageBox.Show(Strings.MsgInvalidHomeOrWPAltitide);
-					cell.Style.BackColor = Color.Red;
-				}
-			}
+                    cell.DataGridView.EndEdit();
+                }
+                else
+                {
+                    MessageBox.Show(Strings.MsgInvalidHomeOrWPAltitide);
+                    cell.Style.BackColor = Color.Red;
+                }
+            }
 
 			// convert to utm
 			// convertFromGeographic(lat, lng);
 
 			// Add more for other params
-			if (dgvWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
+			if (DGVWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
 			{
-				cell = dgvWayPoints.Rows[selectedRow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[selectedRow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
 				cell.Value = p1;
 				cell.DataGridView.EndEdit();
 			}
 
             WriteKMLV2();
-            // writeKML();
 
-            dgvWayPoints.EndEdit();
+            DGVWayPoints.EndEdit();
 		}
 
 		public void AddWPToMap(double lat, double lng, int alt)
@@ -1193,12 +1136,10 @@ namespace Diva
 			}
 
 			// creating a WP
-			selectedRow = dgvWayPoints.Rows.Add();
+			selectedRow = DGVWayPoints.Rows.Add();
 
-			
-			dgvWayPoints.Rows[selectedRow].Cells[colCommand.Index].Value = MAV_CMD.WAYPOINT.ToString();
+			DGVWayPoints.Rows[selectedRow].Cells[colCommand.Index].Value = MAV_CMD.WAYPOINT.ToString();
 			ChangeColumnHeader(MAV_CMD.WAYPOINT.ToString());
-			
 
 			SetFromMap(lat, lng, alt);
             DroneInfoPanel.NotifyMissionChanged();
@@ -1215,10 +1156,10 @@ namespace Diva
 			{
 				if (cmdParamNames.ContainsKey(command))
 					for (int i = 1; i <= 7; i++)
-						dgvWayPoints.Columns[i].HeaderText = cmdParamNames[command][i - 1];
+						DGVWayPoints.Columns[i].HeaderText = cmdParamNames[command][i - 1];
 				else
 					for (int i = 1; i <= 7; i++)
-						dgvWayPoints.Columns[i].HeaderText = "setme";
+						DGVWayPoints.Columns[i].HeaderText = "setme";
 			}
 			catch (Exception ex)
 			{
@@ -1230,7 +1171,7 @@ namespace Diva
 		{
 			List<WayPoint> commands = new List<WayPoint>();
 
-			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+			for (int a = 0; a < DGVWayPoints.Rows.Count - 0; a++)
 			{
 				var temp = DataViewToWayPoint(a);
 
@@ -1244,7 +1185,7 @@ namespace Diva
 		{
             try
 			{
-                DataGridViewCell getC(DataGridViewBand col) => dgvWayPoints.Rows[i].Cells[col.Index];
+                DataGridViewCell getC(DataGridViewBand col) => DGVWayPoints.Rows[i].Cells[col.Index];
                 string getS(DataGridViewBand col) => getC(col).Value.ToString();
                 double getD(DataGridViewBand col) => double.Parse(getS(col));
                 float getF(DataGridViewBand col) => (float)getD(col);
@@ -1281,114 +1222,45 @@ namespace Diva
 
             UpdateRowNumbers();
 
-			var home = new PointLatLngAlt(
-					double.Parse(TxtHomeLatitude.Text), double.Parse(TxtHomeLongitude.Text),
-					double.Parse(TxtHomeAltitude.Text), "H");
+			var mission = ActiveDrone.GetMission();
+            mission.Home = GetHomeWP();
+            mission.Items = GetCommandList();
 
+            mission.DrawMission();
 
-			var overlay = new OverlayUtility.WPOverlay(ActiveDrone.ObjOverlay.Overlay,
-				ActiveDrone.ObjOverlay.RoutingColor,
-				Resources.point_blue);
+            var xwps = mission.ExpandedWaypoints;
+            var p1 = xwps.FirstOrDefault();
+            var wps = xwps.Skip(1).Where(p => p != null);
+            if (wps.Count() > 1)
+            {
+                double d = 0.0; 
+                foreach (var p in wps)
+                {
+                    d += Map.MapProvider.Projection.GetDistance(p, p1);
+                    p1 = p;
+                }
+                DroneInfoPanel.UpdateEstmatedTime(d);
+            }
 
-			overlay.RaiseFullPointsEvent += (s, e) => {
+            Map.HoldInvalidation = true;
 
-				if (e.FullPoints.Count > 0)
-				{
-					double dist = 0.0d;
+			mission.Overlay.ForceUpdate();
 
-					for (int a = 1; a < e.FullPoints.Count; a++)
-					{
-						if (e.FullPoints[a - 1] == null)
-							continue;
-
-						if (e.FullPoints[a] == null)
-							continue;
-
-						dist += myMap.MapProvider.Projection.GetDistance(e.FullPoints[a - 1], e.FullPoints[a]);
-						DroneInfoPanel.UpdateAssumeTime(dist);
-					}
-				}
-			};
-
-			overlay.CreateOverlay(home, GetCommandList(), 30, 30);
-
-			myMap.HoldInvalidation = true;
-
-			overlay.overlay.ForceUpdate();
-
-			// setgradanddistandaz(overlay.pointlist, home);
-
-			if (overlay.pointlist.Count <= 1)
+			if (mission.Waypoints.Count <= 1)
 			{
-				RectLatLng? rect = myMap.GetRectOfAllMarkers(overlay.overlay.Id);
+				RectLatLng? rect = Map.GetRectOfAllMarkers(mission.Overlay.Id);
 				if (rect.HasValue)
 				{
-					myMap.Position = rect.Value.LocationMiddle;
+					Map.Position = rect.Value.LocationMiddle;
 				}
 
-				DroneInfoPanel.ResetAssumeTime();
+				DroneInfoPanel.ResetEstimatedTime();
 
 				// myMap_OnMapZoomChanged();
 			}
 
 
-			myMap.Refresh();
-		}
-
-
-		/// <summary>
-		/// Format distance according to prefer distance unit
-		/// </summary>
-		/// <param name="distInKM">distance in kilometers</param>
-		/// <param name="toMeterOrFeet">convert distance to meter or feet if true, covert to km or miles if false</param>
-		/// <returns>formatted distance with unit</returns>
-		private string FormatDistance(double distInKM, bool toMeterOrFeet)
-		{
-			string sunits = Utilities.Settings.Instance["distunits"];
-			Utility.distances units = Utility.distances.Meters;
-
-			if (sunits != null)
-				try
-				{
-					units = (Utility.distances)Enum.Parse(typeof(Utility.distances), sunits);
-				}
-				catch (Exception)
-				{
-				}
-
-			switch (units)
-			{
-				case Utility.distances.Feet:
-					return toMeterOrFeet
-						? string.Format((distInKM * 3280.8399).ToString("0.00 ft"))
-						: string.Format((distInKM * 0.621371).ToString("0.0000 miles"));
-				case Utility.distances.Meters:
-				default:
-					return toMeterOrFeet
-						? string.Format((distInKM * 1000).ToString("0.00 m"))
-						: string.Format(distInKM.ToString("0.0000 km"));
-			}
-		}
-
-		private double find_angle(List<PointLatLngAlt> points)
-		{
-			log.Info("find_angle");
-
-			for (int i = 1; i < points.Count - 1; i++)
-			{
-				PointLatLng p1 = new PointLatLng(points[i - 1].Lat, points[i - 1].Lng);
-				PointLatLng p2 = new PointLatLng(points[i].Lat, points[i].Lng);
-				PointLatLng p3 = new PointLatLng(points[i + 1].Lat, points[i + 1].Lng);
-
-				double p12 = Math.Sqrt(Math.Pow(p1.Lat - p2.Lat, 2) + Math.Pow(p1.Lng - p2.Lng, 2));
-				double p23 = Math.Sqrt(Math.Pow(p2.Lat - p3.Lat, 2) + Math.Pow(p2.Lng - p3.Lng, 2));
-				double p13 = Math.Sqrt(Math.Pow(p1.Lat - p3.Lat, 2) + Math.Pow(p1.Lng - p3.Lng, 2));
-
-				double angle = Math.Acos((Math.Pow(p12, 2) + Math.Pow(p13, 2) - Math.Pow(p23, 2)) / (2 * p12 * p13));
-
-			}
-
-			return 0;
+			Map.Refresh();
 		}
 
 		private void Commands_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -1398,12 +1270,12 @@ namespace Diva
 			try
 			{
 				selectedRow = e.RowIndex;
-				string option = dgvWayPoints[colCommand.Index, selectedRow].EditedFormattedValue.ToString();
+				string option = DGVWayPoints[colCommand.Index, selectedRow].EditedFormattedValue.ToString();
 				string cmd;
 				try
 				{
-					if (dgvWayPoints[colCommand.Index, selectedRow].Value != null)
-						cmd = dgvWayPoints[colCommand.Index, selectedRow].Value.ToString();
+					if (DGVWayPoints[colCommand.Index, selectedRow].Value != null)
+						cmd = DGVWayPoints[colCommand.Index, selectedRow].Value.ToString();
 					else
 						cmd = option;
 				}
@@ -1428,9 +1300,9 @@ namespace Diva
 
 		private void Commands_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
-			for (int i = 0; i < dgvWayPoints.ColumnCount; i++)
+			for (int i = 0; i < DGVWayPoints.ColumnCount; i++)
 			{
-				DataGridViewCell tcell = dgvWayPoints.Rows[e.RowIndex].Cells[i];
+				DataGridViewCell tcell = DGVWayPoints.Rows[e.RowIndex].Cells[i];
 				if (tcell.GetType() == typeof(DataGridViewTextBoxCell))
 				{
 					if (tcell.Value == null)
@@ -1438,12 +1310,12 @@ namespace Diva
 				}
 			}
 
-			DataGridViewComboBoxCell cell = dgvWayPoints.Rows[e.RowIndex].Cells[colCommand.Index] as DataGridViewComboBoxCell;
+			DataGridViewComboBoxCell cell = DGVWayPoints.Rows[e.RowIndex].Cells[colCommand.Index] as DataGridViewComboBoxCell;
 			if (cell.Value == null)
 			{
 				cell.Value = "WAYPOINT";
 				cell.DropDownWidth = 200;
-				dgvWayPoints.Rows[e.RowIndex].Cells[colDelete.Index].Value = "X";
+				DGVWayPoints.Rows[e.RowIndex].Cells[colDelete.Index].Value = "X";
 				if (!quickadd)
 				{
 					Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0)); // do header labels
@@ -1457,17 +1329,17 @@ namespace Diva
 
 			try
 			{
-				dgvWayPoints.CurrentCell = dgvWayPoints.Rows[e.RowIndex].Cells[0];
+				DGVWayPoints.CurrentCell = DGVWayPoints.Rows[e.RowIndex].Cells[0];
 
-				if (dgvWayPoints.Rows.Count > 1)
+				if (DGVWayPoints.Rows.Count > 1)
 				{
-					if (dgvWayPoints.Rows[e.RowIndex - 1].Cells[colCommand.Index].Value.ToString() == "WAYPOINT")
+					if (DGVWayPoints.Rows[e.RowIndex - 1].Cells[colCommand.Index].Value.ToString() == "WAYPOINT")
 					{
-						dgvWayPoints.Rows[e.RowIndex].Selected = true; // highlight row
+						DGVWayPoints.Rows[e.RowIndex].Selected = true; // highlight row
 					}
 					else
 					{
-						dgvWayPoints.CurrentCell = dgvWayPoints[1, e.RowIndex - 1];
+						DGVWayPoints.CurrentCell = DGVWayPoints[1, e.RowIndex - 1];
 						//Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex-1));
 					}
 				}
@@ -1483,13 +1355,13 @@ namespace Diva
 			selectedRow = e.RowIndex;
 			Commands_RowEnter(sender, new DataGridViewCellEventArgs(0, e.RowIndex - 0));
 			// do header labels - encure we dont 0 out valid colums
-			int cols = dgvWayPoints.Columns.Count;
+			int cols = DGVWayPoints.Columns.Count;
 			for (int a = 1; a < cols; a++)
 			{
 				DataGridViewTextBoxCell cell;
-				cell = dgvWayPoints.Rows[selectedRow].Cells[a] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[selectedRow].Cells[a] as DataGridViewTextBoxCell;
 
-				if (dgvWayPoints.Columns[a].HeaderText.Equals("") && cell != null && cell.Value == null)
+				if (DGVWayPoints.Columns[a].HeaderText.Equals("") && cell != null && cell.Value == null)
 				{
 					cell.Value = "0";
 				}
@@ -1516,7 +1388,7 @@ namespace Diva
                 }
 
 				// log
-				log.Info("cmd rows " + (dgvWayPoints.Rows.Count + 1)); // + home
+				log.Info("cmd rows " + (DGVWayPoints.Rows.Count + 1)); // + home
 
                 var dlg = sender as ProgressDialogV2;
                 dlg.UpdateProgressAndStatus(0, Strings.MsgDialogSetTotalWps);
@@ -1643,10 +1515,10 @@ namespace Diva
 			quickadd = true;
 
 			// mono fix
-			dgvWayPoints.CurrentCell = null;
+			DGVWayPoints.CurrentCell = null;
 
-			while (dgvWayPoints.Rows.Count > 0 && !append)
-				dgvWayPoints.Rows.Clear();
+			while (DGVWayPoints.Rows.Count > 0 && !append)
+				DGVWayPoints.Rows.Clear();
 
 			if (cmds.Count == 0)
 			{
@@ -1654,10 +1526,10 @@ namespace Diva
 				return;
 			}
 
-			dgvWayPoints.SuspendLayout();
-			dgvWayPoints.Enabled = false;
+			DGVWayPoints.SuspendLayout();
+			DGVWayPoints.Enabled = false;
 
-			int i = dgvWayPoints.Rows.Count - 1;
+			int i = DGVWayPoints.Rows.Count - 1;
 			foreach (WayPoint temp in cmds)
 			{
 				i++;
@@ -1668,15 +1540,15 @@ namespace Diva
 					break;
 				if (i == 0 && append) // we dont want to add home again.
 					continue;
-				if (i + 1 >= dgvWayPoints.Rows.Count)
+				if (i + 1 >= DGVWayPoints.Rows.Count)
 				{
-					selectedRow = dgvWayPoints.Rows.Add();
+					selectedRow = DGVWayPoints.Rows.Add();
 				}
 				//if (i == 0 && temp.alt == 0) // skip 0 home
 				//  continue;
 				DataGridViewTextBoxCell cell;
 				DataGridViewComboBoxCell cellcmd;
-				cellcmd = dgvWayPoints.Rows[i].Cells[colCommand.Index] as DataGridViewComboBoxCell;
+				cellcmd = DGVWayPoints.Rows[i].Cells[colCommand.Index] as DataGridViewComboBoxCell;
 				cellcmd.Value = "UNKNOWN";
 				cellcmd.Tag = temp.Id;
 
@@ -1690,28 +1562,28 @@ namespace Diva
 					}
 				}
 
-				cell = dgvWayPoints.Rows[i].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Altitude;
-				cell = dgvWayPoints.Rows[i].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Latitude;
-				cell = dgvWayPoints.Rows[i].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Longitude;
 
-				cell = dgvWayPoints.Rows[i].Cells[colParam1.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colParam1.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Param1;
-				cell = dgvWayPoints.Rows[i].Cells[colParam2.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colParam2.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Param2;
-				cell = dgvWayPoints.Rows[i].Cells[colParam3.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colParam3.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Param3;
-				cell = dgvWayPoints.Rows[i].Cells[colParam4.Index] as DataGridViewTextBoxCell;
+				cell = DGVWayPoints.Rows[i].Cells[colParam4.Index] as DataGridViewTextBoxCell;
 				cell.Value = temp.Param4;
 
 				// convert to utm
 				// convertFromGeographic(temp.lat, temp.lng);
 			}
 
-			dgvWayPoints.Enabled = true;
-			dgvWayPoints.ResumeLayout();
+			DGVWayPoints.Enabled = true;
+			DGVWayPoints.ResumeLayout();
 
 			// We don't have parameter panel.
 			// setWPParams();
@@ -1719,7 +1591,7 @@ namespace Diva
 			try
 			{
 				DataGridViewTextBoxCell cellhome;
-				cellhome = dgvWayPoints.Rows[0].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
+				cellhome = DGVWayPoints.Rows[0].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				if (cellhome.Value != null)
 				{
 					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
@@ -1730,11 +1602,10 @@ namespace Diva
 						if (dr == DialogResult.Yes)
 						{
 							TxtHomeLatitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-							cellhome = dgvWayPoints.Rows[0].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
+							cellhome = DGVWayPoints.Rows[0].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 							TxtHomeLongitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-							cellhome = dgvWayPoints.Rows[0].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
-							TxtHomeAltitude.Text =
-								(double.Parse(cellhome.Value.ToString())).ToString();
+							cellhome = DGVWayPoints.Rows[0].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
+							TxtHomeAltitude.Text = (double.Parse(cellhome.Value.ToString())).ToString();
 						}
 					}
 				}
@@ -1745,17 +1616,17 @@ namespace Diva
 
 			} // if there is no valid home
 
-			if (dgvWayPoints.RowCount > 0)
+			if (DGVWayPoints.RowCount > 0)
 			{
 				log.Info("remove home from list");
-				dgvWayPoints.Rows.Remove(dgvWayPoints.Rows[0]); // remove home row
+				DGVWayPoints.Rows.Remove(DGVWayPoints.Rows[0]); // remove home row
 			}
 
 			quickadd = false;
 
 			WriteKMLV2();
 
-			myMap.ZoomAndCenterMarkers("objects");
+			Map.ZoomAndCenterMarkers("objects");
 
 			// MainMap_OnMapZoomChanged();
 		}
@@ -1774,7 +1645,7 @@ namespace Diva
 				return;
 			}
 
-			overlays.rallypoints.Markers.Clear();
+			Overlays.RallyPoints.Markers.Clear();
 
 			int count = int.Parse(ActiveDrone.Status.Params["RALLY_TOTAL"].ToString());
 
@@ -1783,7 +1654,7 @@ namespace Diva
 				try
 				{
 					PointLatLngAlt plla = ActiveDrone.GetRallyPoint(a, ref count);
-					overlays.rallypoints.Markers.Add(new GMap3DPointMarker(plla)
+					Overlays.RallyPoints.Markers.Add(new GMapMarkerRallyPt(plla)
 					{
 						ToolTipMode = MarkerTooltipMode.OnMouseOver,
 						ToolTipText = Strings.StrRallyPointToolTipText.FormatWith(plla.Alt * 1)
@@ -1796,9 +1667,9 @@ namespace Diva
 				}
 			}
 
-			myMap.UpdateMarkerLocalPosition(overlays.rallypoints.Markers[0]);
+			Map.UpdateMarkerLocalPosition(Overlays.RallyPoints.Markers[0]);
 
-			myMap.Invalidate();
+			Map.Invalidate();
 		}
 
         internal void ClearMission() => clearMissionToolStripMenuItem_Click(null, null);
@@ -1808,9 +1679,9 @@ namespace Diva
 			quickadd = true;
 
 			// mono fix
-			dgvWayPoints.CurrentCell = null;
+			DGVWayPoints.CurrentCell = null;
 
-			dgvWayPoints.Rows.Clear();
+			DGVWayPoints.Rows.Clear();
 
 			selectedRow = 0;
 			quickadd = false;
@@ -1876,16 +1747,16 @@ namespace Diva
 				MessageBox.Show(ex.Message);
 			}
 
-			overlays.commons.Markers.Clear();
+			Overlays.Commons.Markers.Clear();
 			
 			AddPolygonMarker("Click & GO", gotohere.Longitude,
-								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, overlays.commons);
+								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, Overlays.Commons);
 		}
 
 		public int AddCommand(MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
-			selectedRow = dgvWayPoints.Rows.Add();
+			selectedRow = DGVWayPoints.Rows.Add();
 
 			FillCommand(this.selectedRow, cmd, p1, p2, p3, p4, x, y, z, tag);
 
@@ -1897,13 +1768,13 @@ namespace Diva
 		public void InsertCommand(int rowIndex, MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
-			if (dgvWayPoints.Rows.Count <= rowIndex)
+			if (DGVWayPoints.Rows.Count <= rowIndex)
 			{
 				AddCommand(cmd, p1, p2, p3, p4, x, y, z, tag);
 				return;
 			}
 
-			dgvWayPoints.Rows.Insert(rowIndex);
+			DGVWayPoints.Rows.Insert(rowIndex);
 
 			this.selectedRow = rowIndex;
 
@@ -1915,16 +1786,16 @@ namespace Diva
 		private void FillCommand(int rowIndex, MAV_CMD cmd, double p1, double p2, double p3, double p4, double x,
 			double y, double z, object tag = null)
 		{
-			dgvWayPoints.Rows[rowIndex].Cells[colCommand.Index].Value = cmd.ToString();
-			dgvWayPoints.Rows[rowIndex].Cells[colTagData.Index].Tag = tag;
-			dgvWayPoints.Rows[rowIndex].Cells[colTagData.Index].Value = tag;
+			DGVWayPoints.Rows[rowIndex].Cells[colCommand.Index].Value = cmd.ToString();
+			DGVWayPoints.Rows[rowIndex].Cells[colTagData.Index].Tag = tag;
+			DGVWayPoints.Rows[rowIndex].Cells[colTagData.Index].Value = tag;
 
 			ChangeColumnHeader(cmd.ToString());
 
 			if (cmd == MAV_CMD.WAYPOINT)
 			{
 				// add delay if supplied
-				dgvWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
+				DGVWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
 
 				SetFromMap(y, x, (int)z, Math.Round(p1, 1));
 			}
@@ -1934,15 +1805,17 @@ namespace Diva
 			}
 			else
 			{
-				dgvWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
-				dgvWayPoints.Rows[rowIndex].Cells[colParam2.Index].Value = p2;
-				dgvWayPoints.Rows[rowIndex].Cells[colParam3.Index].Value = p3;
-				dgvWayPoints.Rows[rowIndex].Cells[colParam4.Index].Value = p4;
-				dgvWayPoints.Rows[rowIndex].Cells[colLatitude.Index].Value = y;
-				dgvWayPoints.Rows[rowIndex].Cells[colLongitude.Index].Value = x;
-				dgvWayPoints.Rows[rowIndex].Cells[colAltitude.Index].Value = z;
+				DGVWayPoints.Rows[rowIndex].Cells[colParam1.Index].Value = p1;
+				DGVWayPoints.Rows[rowIndex].Cells[colParam2.Index].Value = p2;
+				DGVWayPoints.Rows[rowIndex].Cells[colParam3.Index].Value = p3;
+				DGVWayPoints.Rows[rowIndex].Cells[colParam4.Index].Value = p4;
+				DGVWayPoints.Rows[rowIndex].Cells[colLatitude.Index].Value = y;
+				DGVWayPoints.Rows[rowIndex].Cells[colLongitude.Index].Value = x;
+				DGVWayPoints.Rows[rowIndex].Cells[colAltitude.Index].Value = z;
 			}
 		}
+
+		#region Button click event handlers
 
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
@@ -1951,9 +1824,10 @@ namespace Diva
                 if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
                         MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                     return;
+                OnlineDrones.ForEach(d => d.Disconnect());
                 OnlineDrones.Clear();
                 DroneInfoPanel.Clear();
-                overlays.routes.Markers.Clear();
+                Overlays.Routes.Markers.Clear();
             }
             var dsettings = ConfigData.GetTypeList<DroneSetting>().Where(d => d.Checked);
             if (!dsettings.Any())
@@ -1984,7 +1858,8 @@ namespace Diva
                         drone.StateChangedEvent += NotifyDroneState;
                         DroneInfoPanel.AddDrone(drone);
                         OnlineDrones.Add(drone);
-                        overlays.routes.Markers.Add(new GMapDroneMarker(drone));
+                        Overlays.Routes.Markers.Add(new GMapDroneMarker(drone));
+                        DroneMission.GetMission(drone);
                     }
                 }
                 catch (Exception exception)
@@ -1993,8 +1868,6 @@ namespace Diva
                 }
             }
         }
-
-		#region Button click event handlers
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
 		{
@@ -2082,7 +1955,7 @@ namespace Diva
 				return;
 			}
 
-			if (dgvWayPoints.Rows.Count > 0)
+			if (DGVWayPoints.Rows.Count > 0)
 			{
 				
 				if (MessageBox.Show(Strings.MsgConfirmClearExistingMission,
@@ -2127,13 +2000,13 @@ namespace Diva
 			}
 
 			// check for invalid grid data
-			for (int a = 0; a < dgvWayPoints.Rows.Count - 0; a++)
+			for (int a = 0; a < DGVWayPoints.Rows.Count - 0; a++)
 			{
-				for (int b = 0; b < dgvWayPoints.ColumnCount - 0; b++)
+				for (int b = 0; b < DGVWayPoints.ColumnCount - 0; b++)
 				{
                     if (b >= 1 && b <= 7)
                     {
-                        if (!double.TryParse(dgvWayPoints[b, a].Value.ToString(), out double answer))
+                        if (!double.TryParse(DGVWayPoints[b, a].Value.ToString(), out double answer))
                         {
                             MessageBox.Show(Strings.MsgMissionError);
                             return;
@@ -2143,15 +2016,15 @@ namespace Diva
                     // if (TXT_altwarn.Text == "")
                     // 	TXT_altwarn.Text = (0).ToString();
 
-                    if (dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
+                    if (DGVWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString().Contains("UNKNOWN"))
 						continue;
 
 					ushort cmd = (ushort)Enum.Parse(typeof(MAV_CMD),
-									dgvWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
+									DGVWayPoints.Rows[a].Cells[colCommand.Index].Value.ToString(),
                                     false);
 
 					if (cmd < (ushort)MAV_CMD.LAST &&
-						double.Parse(dgvWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
+						double.Parse(DGVWayPoints[colAltitude.Index, a].Value.ToString()) < WARN_ALT)
 					{
                         if (cmd != (ushort)MAV_CMD.TAKEOFF &&
                             cmd != (ushort)MAV_CMD.LAND &&
@@ -2176,7 +2049,7 @@ namespace Diva
 			uploadWPReporter.RunBackgroundOperationAsync();
 			uploadWPReporter.Dispose();
 
-			myMap.Focus();
+			Map.Focus();
 		}
 
 		private void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2306,7 +2179,7 @@ namespace Diva
                 {
                     WPsToDataView(cmds, false);
                     WriteKMLV2();
-                    myMap.ZoomAndCenterMarkers("objects");
+                    Map.ZoomAndCenterMarkers("objects");
                 }
             }
 			catch (Exception ex)
@@ -2334,10 +2207,10 @@ namespace Diva
 			polygongridmode = true;*/
 
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
-			if (overlays.drawnpolygons.Polygons.Count == 0)
+			if (Overlays.DrawnPolygons.Polygons.Count == 0)
 			{
 				drawnPolygon.Points.Clear();
-				overlays.drawnpolygons.Polygons.Add(drawnPolygon);
+				Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
 			}
 
 			drawnPolygon.Fill = Brushes.AliceBlue;
@@ -2351,9 +2224,9 @@ namespace Diva
 
 			AddPolygonMarkerGrid(drawnPolygon.Points.Count.ToString(), MouseDownStart.Lng, MouseDownStart.Lat, 0);
 
-			myMap.UpdatePolygonLocalPosition(drawnPolygon);
+			Map.UpdatePolygonLocalPosition(drawnPolygon);
 
-			myMap.Invalidate();
+			Map.Invalidate();
 		}
 
 		private void clearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2362,8 +2235,8 @@ namespace Diva
 			if (drawnPolygon == null)
 				return;
 			drawnPolygon.Points.Clear();
-			overlays.drawnpolygons.Markers.Clear();
-			myMap.Invalidate();
+			Overlays.DrawnPolygons.Markers.Clear();
+			Map.Invalidate();
 
 			WriteKMLV2();
 		}
@@ -2420,8 +2293,8 @@ namespace Diva
 				{
 					StreamReader sr = new StreamReader(fd.OpenFile());
 
-					overlays.drawnpolygons.Markers.Clear();
-					overlays.drawnpolygons.Polygons.Clear();
+					Overlays.DrawnPolygons.Markers.Clear();
+					Overlays.DrawnPolygons.Polygons.Clear();
 					drawnPolygon.Points.Clear();
 
 					int a = 0;
@@ -2454,13 +2327,13 @@ namespace Diva
 						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
 					}
 
-					overlays.drawnpolygons.Polygons.Add(drawnPolygon);
+					Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
 
-					myMap.UpdatePolygonLocalPosition(drawnPolygon);
+					Map.UpdatePolygonLocalPosition(drawnPolygon);
 
-					myMap.Invalidate();
+					Map.Invalidate();
 
-					myMap.ZoomAndCenterMarkers(overlays.drawnpolygons.Id);
+					Map.ZoomAndCenterMarkers(Overlays.DrawnPolygons.Id);
 				}
 			}
 		}
@@ -2482,7 +2355,7 @@ namespace Diva
 				return;
 			}
 
-			if (overlays.geofence.Markers.Count == 0)
+			if (Overlays.Geofence.Markers.Count == 0)
 			{
 				MessageBox.Show("No return location set");
 				return;
@@ -2499,7 +2372,7 @@ namespace Diva
 			// close it
 			plll.Add(plll[0]);
             // check it
-            if (!overlays.geofence.Markers[0].Position.InsideOf(plll))
+            if (!Overlays.Geofence.Markers[0].Position.InsideOf(plll))
 			{
 				MessageBox.Show("Your return location is outside the polygon");
 				return;
@@ -2583,7 +2456,7 @@ namespace Diva
 			{
 				byte a = 0;
 				// add return loc
-				ActiveDrone.SetFencePoint(a, new PointLatLngAlt(overlays.geofence.Markers[0].Position), pointcount);
+				ActiveDrone.SetFencePoint(a, new PointLatLngAlt(Overlays.Geofence.Markers[0].Position), pointcount);
 				a++;
 				// add points
 				foreach (var pll in drawnPolygon.Points)
@@ -2606,9 +2479,9 @@ namespace Diva
 				}
 
 				// clear everything
-				overlays.polygons.Polygons.Clear();
-				overlays.polygons.Markers.Clear();
-				overlays.geofence.Polygons.Clear();
+				Overlays.Polygons.Polygons.Clear();
+				Overlays.Polygons.Markers.Clear();
+				Overlays.Geofence.Polygons.Clear();
 				geofencePolygon.Points.Clear();
 
 				// add polygon
@@ -2616,7 +2489,7 @@ namespace Diva
 
 				drawnPolygon.Points.Clear();
 
-				overlays.geofence.Polygons.Add(geofencePolygon);
+				Overlays.Geofence.Polygons.Add(geofencePolygon);
 
 				/**
 				// update flightdata
@@ -2634,10 +2507,10 @@ namespace Diva
 					ToolTipMode = overlays.geofence.Markers[0].ToolTipMode
 				});*/
 
-				myMap.UpdatePolygonLocalPosition(geofencePolygon);
-				myMap.UpdateMarkerLocalPosition(overlays.geofence.Markers[0]);
+				Map.UpdatePolygonLocalPosition(geofencePolygon);
+				Map.UpdateMarkerLocalPosition(Overlays.Geofence.Markers[0]);
 
-				myMap.Invalidate();
+				Map.Invalidate();
 			}
 			catch (Exception ex)
 			{
@@ -2647,12 +2520,12 @@ namespace Diva
 
 		private void setReturnLocationToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			overlays.geofence.Markers.Clear();
-			overlays.geofence.Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
+			Overlays.Geofence.Markers.Clear();
+			Overlays.Geofence.Markers.Add(new GMarkerGoogle(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng),
 				GMarkerGoogleType.red)
 			{ ToolTipMode = MarkerTooltipMode.OnMouseOver, ToolTipText = "GeoFence Return" });
 
-			myMap.Invalidate();
+			Map.Invalidate();
 		}
 
 		private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2665,8 +2538,8 @@ namespace Diva
 				{
 					StreamReader sr = new StreamReader(fd.OpenFile());
 
-					overlays.drawnpolygons.Markers.Clear();
-					overlays.drawnpolygons.Polygons.Clear();
+					Overlays.DrawnPolygons.Markers.Clear();
+					Overlays.DrawnPolygons.Polygons.Clear();
 					drawnPolygon.Points.Clear();
 
 					int a = 0;
@@ -2683,15 +2556,15 @@ namespace Diva
 
 							if (a == 0)
 							{
-								overlays.geofence.Markers.Clear();
-								overlays.geofence.Markers.Add(
+								Overlays.Geofence.Markers.Clear();
+								Overlays.Geofence.Markers.Add(
 									new GMarkerGoogle(new PointLatLng(double.Parse(items[0]), double.Parse(items[1])),
 										GMarkerGoogleType.red)
 									{
 										ToolTipMode = MarkerTooltipMode.OnMouseOver,
 										ToolTipText = "GeoFence Return"
 									});
-								myMap.UpdateMarkerLocalPosition(overlays.geofence.Markers[0]);
+								Map.UpdateMarkerLocalPosition(Overlays.Geofence.Markers[0]);
 							}
 							else
 							{
@@ -2710,18 +2583,18 @@ namespace Diva
 						drawnPolygon.Points.RemoveAt(drawnPolygon.Points.Count - 1);
 					}
 
-					overlays.drawnpolygons.Polygons.Add(drawnPolygon);
+					Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
 
-					myMap.UpdatePolygonLocalPosition(drawnPolygon);
+					Map.UpdatePolygonLocalPosition(drawnPolygon);
 
-					myMap.Invalidate();
+					Map.Invalidate();
 				}
 			}
 		}
 
 		private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (overlays.geofence.Markers.Count == 0)
+			if (Overlays.Geofence.Markers.Count == 0)
 			{
 				MessageBox.Show("Please set a return location");
 				return;
@@ -2740,8 +2613,8 @@ namespace Diva
 
 						sw.WriteLine("#saved by APM Planner " + Application.ProductVersion);
 
-						sw.WriteLine(overlays.geofence.Markers[0].Position.Lat + " " +
-									 overlays.geofence.Markers[0].Position.Lng);
+						sw.WriteLine(Overlays.Geofence.Markers[0].Position.Lat + " " +
+									 Overlays.Geofence.Markers[0].Position.Lng);
 						if (drawnPolygon.Points.Count > 0)
 						{
 							foreach (var pll in drawnPolygon.Points)
@@ -2816,9 +2689,9 @@ namespace Diva
 			}
 
 			// clear all
-			overlays.drawnpolygons.Polygons.Clear();
-			overlays.drawnpolygons.Markers.Clear();
-			overlays.geofence.Polygons.Clear();
+			Overlays.DrawnPolygons.Polygons.Clear();
+			Overlays.DrawnPolygons.Markers.Clear();
+			Overlays.Geofence.Polygons.Clear();
 			geofencePolygon.Points.Clear();
 		}
 
@@ -2829,12 +2702,12 @@ namespace Diva
             try
             {
                 // overlay marks has to be touched for updating
-                if (overlays.routes.Markers.Count > 0)
+                if (Overlays.Routes.Markers.Count > 0)
                     BeginInvoke((MethodInvoker)delegate
                     {
-                        lock (overlays)
-                            if (overlays.routes.Markers.Count > 0)
-                                overlays.routes.Markers[0] = overlays.routes.Markers[0];
+                        lock (Overlays)
+                            if (Overlays.Routes.Markers.Count > 0)
+                                Overlays.Routes.Markers[0] = Overlays.Routes.Markers[0];
                     });
 
                 //autopan
@@ -2897,9 +2770,9 @@ namespace Diva
 					AddPolygonMarkerGrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
 				});
 
-				overlays.drawnpolygons.Polygons.Add(customizePolygon);
-				myMap.UpdatePolygonLocalPosition(customizePolygon);
-				myMap.Invalidate();
+				Overlays.DrawnPolygons.Polygons.Add(customizePolygon);
+				Map.UpdatePolygonLocalPosition(customizePolygon);
+				Map.Invalidate();
 			}
 			catch (Exception ex)
 			{
@@ -2928,9 +2801,10 @@ namespace Diva
         {
             var drone = (sender as DroneInfo)?.Drone;
             OnlineDrones.Remove(drone);
+            DroneMission.RemoveMission(drone);
             try
             {
-                overlays.routes.Markers.Remove(overlays.routes.Markers.Single(
+                Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
                     x => (x as GMapDroneMarker).Drone == drone));
             }
             catch
@@ -2940,15 +2814,42 @@ namespace Diva
 
         private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
         {
+            try
+            {
+                var mission = ActiveDrone.Status.Mission;
+                mission.Clear();
+                mission.Add(GetHomeWP());
+                mission.AddRange(GetCommandList());
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.ToString());
+            }
             if ((ActiveDrone = (sender as DroneInfo)?.Drone) != null)
             {
                 UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
+                WPsToScreen(ActiveDrone.Status.Mission);
+                // add marker again to ensure drone icon is topmost
+                var marker = Overlays.Routes.Markers.SingleOrDefault(
+                    x => (x as GMapDroneMarker).Drone == ActiveDrone);
+                if (marker != null)
+                {
+                    Overlays.Routes.Markers.Remove(marker);
+                    Overlays.Routes.Markers.Add(marker);
+                }
             }
         }
 
         public void UpdateDroneMode(object obj, FlightMode mode)
         {
-            void updateText() { TxtDroneMode.Text = mode.GetName(); }
+            void updateText()
+            {
+                string modename = mode.GetName();
+                LblMode.Text = modename;
+                int modeidx = ComBoxModeSwitch.Items.IndexOf(mode);
+                if (ComBoxModeSwitch.SelectedIndex != modeidx)
+                    ComBoxModeSwitch.SelectedIndex = modeidx;
+            }
             if (obj as MavDrone == ActiveDrone)
             {
                 if (InvokeRequired)
@@ -2956,6 +2857,16 @@ namespace Diva
                 else
                     updateText();
             }
+        }
+
+        private void ComBoxModeSwitch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!ActiveDrone.BaseStream.IsOpen || !(sender is ComboBox modeSwitch))
+                return;
+
+            string modename = modeSwitch.SelectedItem.ToString();
+            if (ActiveDrone.Status.FlightMode.ToString() != modename)
+                ActiveDrone.SetMode(modename);
         }
 
         public void NotifyDroneState(object obj, MAV_STATE state)
@@ -2968,6 +2879,12 @@ namespace Diva
                 else
                     notifyAction();*/
             }
+        }
+
+        private void RotationInfoPanel_SizeChanged(object sender, EventArgs e)
+        {
+            if (sender is FlowLayoutPanel panel)
+                Map.MsgWindowOffset = new PointF(0, -panel.Height);
         }
     }
 }

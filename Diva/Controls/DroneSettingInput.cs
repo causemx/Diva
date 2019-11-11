@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Diva.EnergyConsumption;
 using static Diva.Utilities.ResourceHelper;
 
 namespace Diva.Controls
@@ -86,9 +85,6 @@ namespace Diva.Controls
                     TBoxPortValue.Text = Baudrate;
                 }
                 TBoxStreamURI.Text = StreamURI;
-                ComboPowerModel.SelectedItem = PowerModelName;
-                TBoxBatteryCapacity.Text = BatteryCapacity;
-                TboxBatteryAvailability.Text = BatteryAvailability;
                 NoTrigger = false;
             } else
             {
@@ -145,9 +141,6 @@ namespace Diva.Controls
                 LabelBaudrate.Visible = LabelBaudrateText.Visible = RBSerial.Checked;
                 d.PortName = PortName;
                 StreamURI = d.StreamURI = TBoxStreamURI.Text;
-                d.PowerModel = PowerModelName = (string)ComboPowerModel.SelectedItem;
-                BatteryCapacity = d.BatteryCapacity = TBoxBatteryCapacity.Text;
-                BatteryAvailability = d.BatteryAvailability = TboxBatteryAvailability.Text;
                 if (CurMode == Mode.New)
                     DroneList?.Add(d);
                 EditPanel.Visible = false;
@@ -193,21 +186,6 @@ namespace Diva.Controls
             get => LabelStreamURIText.Text;
             set => LabelStreamURIText.Text = value;
 		}
-        public string PowerModelName
-        {
-            get => PowerModelManager.GetModel(LabelPowerModelText.Text).ModelName;
-            set => LabelPowerModelText.Text = PowerModelManager.GetModel(value).ModelName;
-        }
-        public string BatteryCapacity
-        {
-            get => LabelBatteryCapacityText.Text;
-            set => LabelBatteryCapacityText.Text = value;
-        }
-        public string BatteryAvailability
-        {
-            get => LabelBatteryAvailabilityText.Text;
-            set => LabelBatteryAvailabilityText.Text = value;
-        }
         public bool Checked
         {
             get => ChkDroneNameText.Checked;
@@ -233,8 +211,6 @@ namespace Diva.Controls
             Removed += DefaultRemoved;
             CurMode = Mode.Empty;
             NoTrigger = false;
-            ComboPowerModel.Items.AddRange(PowerModelManager.GetPowerModelNames().ToArray());
-            ComboPowerModel.SelectedItem = PowerModelName = PowerModelManager.PowerModelNone.ModelName;
         }
 
         public static DroneSettingInput FromSetting(DroneSetting s)
@@ -246,9 +222,6 @@ namespace Diva.Controls
                 PortNumber = s.PortNumber,
                 Baudrate = s.Baudrate,
                 StreamURI = s.StreamURI,
-                PowerModelName = s.PowerModel,
-                BatteryCapacity = s.BatteryCapacity,
-                BatteryAvailability = s.BatteryAvailability,
                 Checked = s.Checked,
             };
             input.CurMode = Mode.Normal;
@@ -322,22 +295,6 @@ namespace Diva.Controls
             var d = DroneList?.Find(n => n.Name == DroneName);
             if (d != null) d.Checked = Checked;
             SetSettingsDirty();
-        }
-
-        private void BtnNewModel_Click(object sender, EventArgs e)
-        {
-            var dlg = new NewPowerModelForm();
-            if (dlg.ShowDialog() == DialogResult.Yes)
-            {
-                foreach (var dsi in Parent.Controls.OfType<DroneSettingInput>())
-                {
-                    string pm = (string)dsi.ComboPowerModel.SelectedItem;
-                    dsi.ComboPowerModel.Items.Clear();
-                    dsi.ComboPowerModel.Items.AddRange(PowerModelManager.GetPowerModelNames().ToArray());
-                    dsi.ComboPowerModel.SelectedItem = pm;
-                }
-                ComboPowerModel.SelectedItem = dlg.NewPowerModelName;
-            }
         }
         #endregion
     }
