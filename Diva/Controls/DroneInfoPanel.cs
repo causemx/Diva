@@ -57,9 +57,17 @@ namespace Diva.Controls
 		{
 			var dinfo = new DroneInfo(drone, drone.Name);
 
-			dinfo.Click += (s, e) => ActiveDroneInfo = s as DroneInfo;
+            dinfo.MouseClick += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                    ActiveDroneInfo = s as DroneInfo;
+                else if (e.Button == MouseButtons.Right)
+                    Mission.DroneMission.GetMission((s as DroneInfo).Drone).ChangeRouteColor();
+            };
 			dinfo.DoubleClick += (s, e) =>
 			{
+                if (e is MouseEventArgs m && m.Button == MouseButtons.Right)
+                    return;
 				ThePanel.Controls.Remove(s as Control);
 				if (s == ActiveDroneInfo)
                 {

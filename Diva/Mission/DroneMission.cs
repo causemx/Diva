@@ -43,7 +43,7 @@ namespace Diva.Mission
         }
         public static void Reset() => Overlays.Clear();
 
-        public Color RoutingPathColor { get; set; } = Color.FromArgb(RNG.Next(256), RNG.Next(256), RNG.Next(256));
+        public Color RoutingPathColor { get; private set; } = Color.FromArgb(RNG.Next(256), RNG.Next(256), RNG.Next(256));
         public double WPRadius { get; set; } = 30.0d;
         public double LoiterRadius { get; set; } = 30.0d;
         public readonly MavDrone Drone;
@@ -82,9 +82,6 @@ namespace Diva.Mission
                     Tag = tag
                 };
 
-                if (!int.TryParse(tag, out int wpno))
-                    wpno = -1;
-
                 GMapRectMarker mBorders = new GMapRectMarker(point)
                 {
                     InnerMarker = m,
@@ -109,9 +106,6 @@ namespace Diva.Mission
                     ToolTipMode = MarkerTooltipMode.OnMouseOver,
                     ToolTipText = "Alt: " + p.Alt.ToString("0")
                 };
-
-                if (!int.TryParse(p.Tag, out int wpno))
-                    wpno = -1;
 
                 GMapRectMarker mBorders = new GMapRectMarker(p)
                 {
@@ -307,6 +301,13 @@ namespace Diva.Mission
                 Overlay.Routes.Add(homeRoute);
                 Overlay.Routes.Add(route);
             }
+        }
+
+        public void ChangeRouteColor()
+        {
+            RoutingPathColor = Color.FromArgb(RNG.Next(256), RNG.Next(256), RNG.Next(256));
+            DrawMission();
+            Overlay.ForceUpdate();
         }
     }
 }

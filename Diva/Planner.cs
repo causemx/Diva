@@ -835,7 +835,8 @@ namespace Diva
                     case GMapRectMarker rc:
                         rc.Pen.Color = Color.Transparent;
                         Map.Invalidate(false);
-                        if (item.Tag != null && rc.InnerMarker != null &&
+                        if (ActiveDrone.GetOverlay().Markers.Contains(item) &&
+                            item.Tag != null && rc.InnerMarker != null &&
                             int.TryParse(rc.InnerMarker.Tag.ToString(), out int answer))
                         {
                             try
@@ -2837,6 +2838,9 @@ namespace Diva
                     Overlays.Routes.Markers.Remove(marker);
                     Overlays.Routes.Markers.Add(marker);
                 }
+                var overlay = ActiveDrone.GetOverlay();
+                Map.Overlays.Remove(overlay);
+                Map.Overlays.Add(overlay);
             }
         }
 
