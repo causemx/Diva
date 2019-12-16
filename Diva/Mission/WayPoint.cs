@@ -134,6 +134,6 @@ namespace Diva.Mission
         public PointLatLng ToPointLatLng() => new PointLatLng(Latitude, Longitude);
 
         public PointLatLngAlt ToPointLatLngAlt()
-            => new PointLatLngAlt(Latitude, Longitude, Altitude, Tag.ToString());
+            => new PointLatLngAlt(Latitude, Longitude, Altitude, Tag?.ToString());
     }
 }

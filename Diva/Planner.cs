@@ -1454,8 +1454,17 @@ namespace Diva
             if (cmds != null)
             {
                 dlg.UpdateProgressAndStatus(-1, Strings.MsgDialogDone);
-                log.Info("Done");
-                WPsToScreen(cmds);
+                if (passdata == null)
+                {
+                    log.Info("Done");
+                    WPsToScreen(cmds);
+                }
+                else
+                {
+                    var drone = passdata as MavDrone;
+                    log.Info("WPs loaded from " + drone.Name + " on connect");
+                    drone.Status.Mission = cmds;
+                }
             }
             else if (dlg.doWorkArgs.CancelRequested)
             {
@@ -1597,8 +1606,9 @@ namespace Diva
 				{
 					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
-						DialogResult dr = MessageBox.Show(Strings.MsgResetHomeCoordinate,
-							Strings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
+						DialogResult dr = connectingDrones ? DialogResult.Yes :
+                            MessageBox.Show(Strings.MsgResetHomeCoordinate,
+							    Strings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
 
 						if (dr == DialogResult.Yes)
 						{
@@ -1816,8 +1826,8 @@ namespace Diva
 			}
 		}
 
-		#region Button click event handlers
-
+        #region Button click event handlers
+        bool connectingDrones = false;
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
             if (OnlineDrones.Count > 0)
@@ -1836,6 +1846,7 @@ namespace Diva
                 BUT_Configure_Click("Vehicle", null);
                 return;
             }
+            connectingDrones = true;
             foreach (var dsetting in dsettings)
             {
                 try
@@ -1860,7 +1871,21 @@ namespace Diva
                         DroneInfoPanel.AddDrone(drone);
                         OnlineDrones.Add(drone);
                         Overlays.Routes.Markers.Add(new GMapDroneMarker(drone));
-                        DroneMission.GetMission(drone);
+                        var readWPWorker = new ProgressDialogV2
+                        {
+                            StartPosition = FormStartPosition.CenterScreen,
+                            HintImage = Resources.icon_info,
+                            Text = Strings.MsgDialogDownloadWps,
+                        };
+
+                        readWPWorker.DoWork += (o, ev, d) =>
+                        {
+                            LoadWPsFromDrone(o, ev, drone);
+                            var mission = DroneMission.GetMission(drone);
+                            mission.DrawMission(false);
+                        };
+                        readWPWorker.RunBackgroundOperationAsync();
+                        readWPWorker.Dispose();
                     }
                 }
                 catch (Exception exception)
@@ -1868,6 +1893,9 @@ namespace Diva
                     log.Debug(exception);
                 }
             }
+            connectingDrones = false;
+            if (OnlineDrones.Count > 0)
+                WPsToScreen(ActiveDrone.Status.Mission);
         }
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
@@ -2815,7 +2843,7 @@ namespace Diva
 
         private void DroneInfoPanel_ActiveDroneChanged(object sender, EventArgs e)
         {
-            try
+            if (!connectingDrones) try
             {
                 var mission = ActiveDrone.Status.Mission;
                 mission.Clear();
@@ -2865,7 +2893,7 @@ namespace Diva
 
         private void ComBoxModeSwitch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!ActiveDrone.BaseStream.IsOpen || !(sender is ComboBox modeSwitch))
+            if (!ActiveDrone.IsOpen || !(sender is ComboBox modeSwitch))
                 return;
 
             string modename = modeSwitch.SelectedItem.ToString();

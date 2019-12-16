@@ -51,7 +51,7 @@ namespace Diva.Mission
 
         private List<PointLatLngAlt> waypoints, expandedWaypoints;
         private readonly List<WayPoint> missionItems = new List<WayPoint>();
-        public WayPoint Home { get; set; } = Planner.GetPlannerInstance().GetHomeWP();
+        public WayPoint Home = Planner.GetPlannerInstance().GetHomeWP();
         public List<WayPoint> Items {
             get => missionItems;
             set
@@ -122,7 +122,7 @@ namespace Diva.Mission
             }
         }
 
-        public void DrawMission()
+        public void DrawMission(bool active = true)
         {
             Overlay.Clear();
 
@@ -131,6 +131,12 @@ namespace Diva.Mission
             double minlat = 180;
             double minlng = 180;
 
+            if (!active)
+            {
+                Home = Drone.Status.Mission[0];
+                Home.Tag = "H";
+                Items = Drone.Status.Mission.Skip(1).ToList();
+            }
             PointLatLngAlt home = Home.ToPointLatLngAlt();
             AddPolygonMarker("H", home.Lng, home.Lat, home.Alt, 0);
             waypoints = new List<PointLatLngAlt> { home };
