@@ -23,9 +23,10 @@ namespace Diva.Mavlink
             RegisterMavMessageHandler(MAVLINK_MSG_ID.MISSION_CURRENT, MissionCurrentPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, NavControllerOutputPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.HEARTBEAT, DroneHeartBeatPacketHandler);
-            RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
+            //RegisterMavMessageHandler(MAVLINK_MSG_ID.GLOBAL_POSITION_INT, GPSPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.AUTOPILOT_VERSION, AutopilotVersionHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.ATTITUDE, AttitudePacketHandler);
         }
 
         protected override bool IsValidId(MAVLinkMessage message)
@@ -116,17 +117,25 @@ namespace Diva.Mavlink
             }
         }
 
-        private void GPSPacketHandler(object holder, MAVLinkMessage packet)
+        /*private void GPSPacketHandler(object holder, MAVLinkMessage packet)
         {
             var loc = GetMessage<mavlink_global_position_int_t>(packet, ref holder);
             Status.Yaw = loc.hdg == UInt16.MaxValue ? float.NaN : loc.hdg / 100.0f;
-        }
+        }*/
 
         private void GPSRawPacketHandler(object holder, MAVLinkMessage packet)
         {
             var gps = GetMessage<mavlink_gps_raw_int_t>(packet, ref holder);
             Status.GroundSpeed = gps.vel * 1.0e-2f;
             Status.GroundCourse = gps.cog * 1.0e-2f;
+        }
+
+        private void AttitudePacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var att = GetMessage<mavlink_attitude_t>(packet, ref holder);
+            Status.Roll = (float)(att.roll * 180 / Math.PI);
+            Status.Yaw = (float)(att.yaw * 180 / Math.PI);
+            Status.Pitch = (float)(att.pitch * 180 / Math.PI);
         }
 
         private void AutopilotVersionHandler(object holder, MAVLinkMessage packet)

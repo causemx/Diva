@@ -137,5 +137,6 @@ namespace Diva.Controls
 
         public void NotifyMissionChanged() => ActiveDroneInfo?.NotifyMissionChanged();
 
+        public bool HUDShown => TelemetryData.Visible;
     }
 }

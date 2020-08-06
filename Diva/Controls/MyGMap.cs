@@ -105,6 +105,7 @@ namespace Diva.Controls
 			try
 			{
 				base.OnPaint(e);
+                Planner.GetPlannerInstance().HUD.Draw(e.Graphics);
 			}
 			catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 

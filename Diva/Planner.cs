@@ -199,6 +199,23 @@ namespace Diva
 
 			ComBoxModeSwitch.DataSource = Enum.GetValues(typeof(FlightMode)).Cast<FlightMode>().ToList();
 
+            HUD.BorderColor = BackColor;
+            HUD.TextFont = Font;
+            HUD.GetReferencePoint = () => {
+                if (DroneInfoPanel.HUDShown)
+                    return new Point(DroneInfoPanel.Left, DroneInfoPanel.Bottom);
+                return null;
+            };
+            HUD.GetAttitude = () =>
+            {
+                if (ActiveDrone != null)
+                {
+                    var s = ActiveDrone.Status;
+                    return (s.Roll, s.Yaw, s.Pitch);
+                }
+                return (float.NaN, float.NaN, float.NaN);
+            };
+
             mainThread = BackgroundLoop.Start(MainLoop);
         }
 
@@ -1466,6 +1483,13 @@ namespace Diva
                     drone.Status.Mission = cmds;
                 }
             }
+            else if (passdata != null)
+            {
+                // supress exception on connection
+                // decrement counter for calculating
+                if (connectingDrones)
+                    Interlocked.Decrement(ref droneConnectingCounter);
+            }
             else if (dlg.doWorkArgs.CancelRequested)
             {
                 dlg.doWorkArgs.CancelAcknowledged = true;
@@ -1491,6 +1515,11 @@ namespace Diva
 					{
 						log.Error(exx.ToString());
 					}
+                    finally
+                    {
+                        if (connectingDrones)
+                            Interlocked.Decrement(ref droneConnectingCounter);
+                    }
 					
 					try
 					{
@@ -1827,7 +1856,8 @@ namespace Diva
 		}
 
         #region Button click event handlers
-        bool connectingDrones = false;
+        private int droneConnectingCounter;
+        private bool connectingDrones => droneConnectingCounter != 0;
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
             if (OnlineDrones.Count > 0)
@@ -1846,7 +1876,7 @@ namespace Diva
                 BUT_Configure_Click("Vehicle", null);
                 return;
             }
-            connectingDrones = true;
+            droneConnectingCounter = 0;
             foreach (var dsetting in dsettings)
             {
                 try
@@ -1866,6 +1896,7 @@ namespace Diva
                     }
                     if (drone != null && drone.IsOpen)
                     {
+                        Interlocked.Increment(ref droneConnectingCounter);
                         drone.FlightModeChanged += UpdateDroneMode;
                         drone.StateChangedEvent += NotifyDroneState;
                         DroneInfoPanel.AddDrone(drone);
@@ -1893,9 +1924,11 @@ namespace Diva
                     log.Debug(exception);
                 }
             }
-            connectingDrones = false;
             if (OnlineDrones.Count > 0)
+            {
+                Interlocked.Increment(ref droneConnectingCounter);
                 WPsToScreen(ActiveDrone.Status.Mission);
+        }
         }
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
@@ -2825,6 +2858,13 @@ namespace Diva
 		}
 
 		#endregion
+
+        public HUDPanel HUD = new HUDPanel
+        {
+            GroundLineColor = Color.Green,
+            IndicatorColor = Color.Red,
+            ScaleLineColor = Color.White
+        };
 
         private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
         {

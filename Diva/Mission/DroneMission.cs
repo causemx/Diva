@@ -126,6 +126,20 @@ namespace Diva.Mission
         {
             Overlay.Clear();
 
+            PointLatLngAlt home;
+            waypoints = new List<PointLatLngAlt>();
+            expandedWaypoints = new List<PointLatLngAlt>();
+            if (Drone.Status.Mission == null || Drone.Status.Mission.Count == 0)
+            {
+                if (active)
+                {
+                    home = Home.ToPointLatLngAlt();
+                    AddPolygonMarker("H", home.Lng, home.Lat, home.Alt, 0);
+                    waypoints.Add(home);
+                }
+                return;
+            }
+
 			double maxlat = -180;
             double maxlng = -180;
             double minlat = 180;
@@ -137,10 +151,9 @@ namespace Diva.Mission
                 Home.Tag = "H";
                 Items = Drone.Status.Mission.Skip(1).ToList();
             }
-            PointLatLngAlt home = Home.ToPointLatLngAlt();
+            home = Home.ToPointLatLngAlt();
             AddPolygonMarker("H", home.Lng, home.Lat, home.Alt, 0);
-            waypoints = new List<PointLatLngAlt> { home };
-		    expandedWaypoints = new List<PointLatLngAlt>();
+            waypoints.Add(home);
             if (waypoints.Count > 0)
                 expandedWaypoints.Add(waypoints[waypoints.Count - 1]);
 

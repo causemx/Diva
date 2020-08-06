@@ -140,12 +140,16 @@ namespace Diva.Mavlink
 
         public float NAVBearing { get; set; } = float.NaN;
 
+        public float Roll { get; set; } = float.NaN;
+
         private float yaw = float.NaN;
         public float Yaw
         {
             get { return yaw; }
             set { yaw = value < 0 ? value + 360 : value; }
         }
+
+        public float Pitch { get; set; } = float.NaN;
 
         private float groundCourse = float.NaN;
         public float GroundCourse

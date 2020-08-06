@@ -250,6 +250,7 @@
     </Compile>
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
+    <Compile Include="HUDPanel.cs" />
     <Compile Include="Mavlink\MavStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
     <Compile Include="Mavlink\MavCore.cs" />
@@ -1366,6 +1367,8 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\compass.png" />
+    <None Include="Resources\hud.png" />
     <None Include="Resources\icon-zoom-out-active.png" />
     <None Include="Resources\icon-zoom-out.png" />
     <None Include="Resources\icon-zoom-in-active.png" />

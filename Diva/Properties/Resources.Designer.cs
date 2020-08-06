@@ -73,6 +73,26 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap compass {
+            get {
+                object obj = ResourceManager.GetObject("compass", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap hud {
+            get {
+                object obj = ResourceManager.GetObject("hud", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_4_zoomin {
             get {
                 object obj = ResourceManager.GetObject("icon_4_zoomin", resourceCulture);
@@ -181,7 +201,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_battery_3 {
             get {
@@ -191,7 +211,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_btn_collapse {
             get {
@@ -201,7 +221,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_btn_expand {
             get {
@@ -211,7 +231,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_c {
             get {
@@ -221,7 +241,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_c_active {
             get {
@@ -231,7 +251,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_checbox_checked {
             get {
@@ -241,7 +261,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_checkbox {
             get {
@@ -251,7 +271,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_checkbox_disabled {
             get {
@@ -261,7 +281,17 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_close_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon_close_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_configure {
             get {
@@ -271,7 +301,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_configure_active {
             get {
@@ -281,7 +311,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_connect {
             get {
@@ -291,7 +321,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_connect_active {
             get {
@@ -301,7 +331,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_drone {
             get {
@@ -311,7 +341,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_drone_4axis {
             get {
@@ -321,7 +351,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_drone_4axis_32 {
             get {
@@ -331,7 +361,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_drone1 {
             get {
@@ -341,7 +371,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_drone2 {
             get {
@@ -351,7 +381,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_edit_32 {
             get {
@@ -361,7 +391,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_emoticon_48 {
             get {
@@ -371,7 +401,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_error {
             get {
@@ -381,7 +411,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_failSafe {
             get {
@@ -391,7 +421,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_fence {
             get {
@@ -401,7 +431,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_flytime {
             get {
@@ -411,7 +441,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_geofence {
             get {
@@ -421,7 +451,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_homepoint {
             get {
@@ -431,7 +461,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_house_32 {
             get {
@@ -441,7 +471,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_info {
             get {
@@ -451,7 +481,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_information {
             get {
@@ -461,7 +491,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_land {
             get {
@@ -471,7 +501,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_land_active {
             get {
@@ -481,7 +511,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_auto {
             get {
@@ -491,7 +521,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_auto_active {
             get {
@@ -501,7 +531,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_home {
             get {
@@ -511,7 +541,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_home_active {
             get {
@@ -521,7 +551,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_input {
             get {
@@ -531,7 +561,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_input_active {
             get {
@@ -541,7 +571,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_landing {
             get {
@@ -551,7 +581,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_landing_active {
             get {
@@ -561,7 +591,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_output {
             get {
@@ -571,7 +601,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_output_active {
             get {
@@ -581,7 +611,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_startup {
             get {
@@ -591,7 +621,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_startup_active {
             get {
@@ -601,7 +631,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_takeoff {
             get {
@@ -611,7 +641,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_takeoff_active {
             get {
@@ -621,7 +651,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_video {
             get {
@@ -631,7 +661,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_left_video_active {
             get {
@@ -663,9 +693,9 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_close_24 {
+        internal static System.Drawing.Bitmap icon_loading {
             get {
-                object obj = ResourceManager.GetObject("icon_close_24", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_loading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -726,6 +756,36 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_mode_stop {
             get {
                 object obj = ResourceManager.GetObject("icon_mode_stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_power_full_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_power_full_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_power_low_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_power_low_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_power_medium_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_power_medium_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -863,16 +923,6 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_loading {
-            get {
-                object obj = ResourceManager.GetObject("icon_loading", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icon_setting_map {
             get {
                 object obj = ResourceManager.GetObject("icon_setting_map", resourceCulture);
@@ -886,36 +936,6 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_signal {
             get {
                 object obj = ResourceManager.GetObject("icon_signal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_power_full_32 {
-            get {
-                object obj = ResourceManager.GetObject("icon_power_full_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_power_low_32 {
-            get {
-                object obj = ResourceManager.GetObject("icon_power_low_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_power_medium_32 {
-            get {
-                object obj = ResourceManager.GetObject("icon_power_medium_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1021,7 +1041,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_mark_active {
             get {
@@ -1031,7 +1051,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_patrol {
             get {
@@ -1041,7 +1061,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_patrol_active {
             get {
@@ -1051,7 +1071,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_power {
             get {
@@ -1061,7 +1081,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_power_active {
             get {
@@ -1071,7 +1091,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_read {
             get {
@@ -1081,7 +1101,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_read_active {
             get {
@@ -1091,7 +1111,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_save {
             get {
@@ -1101,7 +1121,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_save_active {
             get {
@@ -1111,7 +1131,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_setting {
             get {
@@ -1121,7 +1141,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_top_setting_active {
             get {
@@ -1191,7 +1211,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_zoom_focus_active {
             get {
@@ -1201,7 +1221,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_zoom_in {
             get {
@@ -1211,7 +1231,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_zoom_in_active {
             get {
@@ -1221,7 +1241,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_zoom_out {
             get {
@@ -1231,7 +1251,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_zoom_out_active {
             get {
@@ -1241,7 +1261,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_zoomin1 {
             get {
@@ -1318,7 +1338,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap point_gray {
             get {
@@ -1328,7 +1348,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap point_green {
             get {
@@ -1338,7 +1358,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap point_red {
             get {
