@@ -91,7 +91,7 @@ namespace Diva.Controls.Components
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) { }
 	}
 
-	public class MyTSButton : ToolStripButton
+    public class MyTSButton : ToolStripButton
     {
         private Image _NormalImage;
         public new Image Image
@@ -128,6 +128,40 @@ namespace Diva.Controls.Components
         [Browsable(true)]
         public Color ClickBackColor { get; set; }
 
+        [Browsable(true)]
+        public Image CheckedImage { get; set; }
+        [Browsable(true)]
+        public Color CheckedForeColor { get; set; }
+        [Browsable(true)]
+        public Color CheckedBackColor { get; set; }
+        [Browsable(true)]
+        public String CheckedText { get; set; }
+
+        private string _Text;
+        public new string Text
+        {
+            get => _Text;
+            set { _Text = base.Text = value; }
+        }
+
+        public Color CheckStateColor => Checked ? CheckedForeColor : _ForeColor;
+        public Color CheckStateBackColor => Checked ? CheckedBackColor : _BackColor;
+        public Image CheckStateImage => Checked ? CheckedImage : _NormalImage;
+        public String CheckStateText => Checked ? CheckedText : _Text;
+
+        private void SetCheckedState()
+        {
+            base.Image = CheckStateImage;
+            base.ForeColor = CheckStateColor;
+            base.BackColor = CheckStateBackColor;
+            base.Text = CheckStateText;
+        }
+
+        public MyTSButton() : base()
+        {
+            SetCheckedState();
+        }
+
         protected override void OnMouseHover(EventArgs e)
         {
             base.OnMouseHover(e);
@@ -142,9 +176,7 @@ namespace Diva.Controls.Components
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            base.Image = _NormalImage;
-            base.ForeColor = _ForeColor;
-            base.BackColor = _BackColor;
+            SetCheckedState();
         }
 
         protected override void OnMouseDown(MouseEventArgs mevent)
@@ -161,9 +193,13 @@ namespace Diva.Controls.Components
         protected override void OnMouseUp(MouseEventArgs mevent)
         {
             base.OnMouseUp(mevent);
-            base.Image = _NormalImage;
-            base.ForeColor = _ForeColor;
-            base.BackColor = _BackColor;
+            SetCheckedState();
+        }
+
+        protected override void OnCheckedChanged(EventArgs e)
+        {
+            base.OnCheckedChanged(e);
+            SetCheckedState();
         }
     }
 }

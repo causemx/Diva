@@ -118,6 +118,51 @@ namespace Diva
             Frame = MAV_FRAME.GLOBAL
         };
 
+        private bool fullControl;
+        public bool FullControl
+        {
+            get => fullControl;
+            set
+            {
+                fullControl = value;
+                BtnArm.Visible = value;
+                BtnTakeOff.Visible = value;
+                BtnLand.Visible = value;
+                BtnAuto.Visible = value;
+                BtnReadWPs.Visible = value;
+                BtnWriteWPs.Visible = value;
+                BtnRTL.Visible = value;
+                BtnVideo.Visible = value;
+                BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = value ? 184 : 12;
+
+                int newHeight = value ? 120: 51;
+                int diff = newHeight - SplitContainer.Panel2.Height;
+                SplitContainer.Panel2MinSize = newHeight;
+                SplitContainer.SplitterDistance -= diff;
+                SplitContainer.IsSplitterFixed = !value;
+                SplitContainer.FixedPanel = value ? FixedPanel.None : FixedPanel.Panel2;
+                TSMainPanel.SuspendLayout();
+
+                if (value)
+                {
+                    TSMainPanel.Items.Add(Btn_Rotation);
+                    TSMainPanel.Items.Add(TSBtnTagging);
+                    TSMainPanel.Items.Add(TSBtnReadMission);
+                    TSMainPanel.Items.Add(TSBtnSaveMission);
+                    TSMainPanel.Items.Add(TSBtnCusOverlay);
+                }
+                else
+                {
+                    TSMainPanel.Items.Remove(Btn_Rotation);
+                    TSMainPanel.Items.Remove(TSBtnTagging);
+                    TSMainPanel.Items.Remove(TSBtnReadMission);
+                    TSMainPanel.Items.Remove(TSBtnSaveMission);
+                    TSMainPanel.Items.Remove(TSBtnCusOverlay);
+                }
+                TSMainPanel.ResumeLayout();
+            }
+        }
+
 		public Planner()
 		{
 			InitializeComponent();
@@ -215,6 +260,16 @@ namespace Diva
                 }
                 return (float.NaN, float.NaN, float.NaN);
             };
+
+            FullControl = false;
+            var btnFullControl = new Controls.Components.MyTSButton
+            {
+                Text = "Full\nControl",
+                CheckedText = "Simplified\nControl",
+                CheckOnClick = true,
+            };
+            btnFullControl.CheckedChanged += (o, e) => { FullControl = btnFullControl.Checked; };
+            TSMainPanel.Items.Add(btnFullControl);
 
             mainThread = BackgroundLoop.Start(MainLoop);
         }
@@ -446,6 +501,8 @@ namespace Diva
 
 		private void MainMap_MouseUp(object sender, MouseEventArgs e)
 		{
+            if (!FullControl) return;
+
 			if (isMouseClickOffMenu)
 			{
 				isMouseClickOffMenu = false;
@@ -542,7 +599,8 @@ namespace Diva
 					}
 					else
 					{
-						AddWPToMap(CurrentMarker.Position.Lat, CurrentMarker.Position.Lng, 0);
+                        if (!FullControl) return;
+                        AddWPToMap(CurrentMarker.Position.Lat, CurrentMarker.Position.Lng, 0);
 					}
 				}
 				else
