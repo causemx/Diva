@@ -81,7 +81,6 @@ namespace Diva
 
 		private bool isMouseDown;
 		private bool isMouseDraging;
-		private bool isMouseClickOffMenu;
 		private PointLatLng MouseDownStart;
 		internal PointLatLng MouseDownEnd;
 
@@ -134,6 +133,7 @@ namespace Diva
                 BtnRTL.Visible = value;
                 BtnVideo.Visible = value;
                 BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = value ? 184 : 12;
+                Map.ContextMenuStrip = value ? cmMap : null;
 
                 int newHeight = value ? 120: 51;
                 int diff = newHeight - SplitContainer.Panel2.Height;
@@ -501,13 +501,9 @@ namespace Diva
 
 		private void MainMap_MouseUp(object sender, MouseEventArgs e)
 		{
-            if (!FullControl) return;
-
-			if (isMouseClickOffMenu)
-			{
-				isMouseClickOffMenu = false;
-				return;
-			}
+            if (!FullControl) {
+                return;
+            }
 
 			// check if the mouse up happend over our button
 			/*
@@ -673,9 +669,6 @@ namespace Diva
 
 		private void MainMap_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (isMouseClickOffMenu)
-				return;
-
 			MouseDownStart = Map.FromLocalToLatLng(e.X, e.Y);
 
 			// Console.WriteLine("MainMap MD");
@@ -847,9 +840,8 @@ namespace Diva
 					{
 						lock (thisLock)
 						{
-							if (!isMouseClickOffMenu)
-								Map.Position = new PointLatLng(CenterMarker.Position.Lat + latdif,
-									CenterMarker.Position.Lng + lngdif);
+							Map.Position = new PointLatLng(CenterMarker.Position.Lat + latdif,
+								CenterMarker.Position.Lng + lngdif);
 						}
 					}
 					catch (Exception ex)
