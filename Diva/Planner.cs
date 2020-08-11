@@ -134,6 +134,7 @@ namespace Diva
                 BtnVideo.Visible = value;
                 BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = value ? 184 : 12;
                 Map.ContextMenuStrip = value ? cmMap : null;
+                DroneMission.SetVisible(value);
 
                 int newHeight = value ? 120: 51;
                 int diff = newHeight - SplitContainer.Panel2.Height;

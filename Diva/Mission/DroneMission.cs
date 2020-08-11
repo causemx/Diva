@@ -42,6 +42,11 @@ namespace Diva.Mission
             return found;
         }
         public static void Reset() => Overlays.Clear();
+        public static void SetVisible(bool visible)
+        {
+            foreach (var p in Overlays)
+                p.Value.Overlay.IsVisibile = visible;
+        }
 
         public Color RoutingPathColor { get; private set; } = Color.FromArgb(RNG.Next(256), RNG.Next(256), RNG.Next(256));
         public double WPRadius { get; set; } = 30.0d;
@@ -67,6 +72,7 @@ namespace Diva.Mission
         {
             Drone = drone;
             Overlay = new GMapOverlay("DroneMission_" + drone.Name + this.GetHashCode());
+            Overlay.IsVisibile = Planner.GetPlannerInstance().FullControl;
             Overlays.Add(drone, this);
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -205,16 +204,7 @@ namespace Diva.Controls
 
         protected override void OnPaintOverlays(Graphics g)
         {
-            bool showmission = Planner.GetPlannerInstance().FullControl;
-            lock (Overlays)
-            {
-                Overlays.All(o => {
-                    if (o.Id.StartsWith("DroneMission_"))
-                        o.IsVisibile = showmission;
-                    return true;
-                });
-                base.OnPaintOverlays(g);
-            }
+            base.OnPaintOverlays(g);
             if (DebugMode && IndoorMode)
             {
                 g.DrawString($"Zoom level: {Zoom}, Center: {Position.Lat}, {Position.Lng}",
