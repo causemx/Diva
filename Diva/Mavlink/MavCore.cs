@@ -774,6 +774,8 @@ namespace Diva.Mavlink
             {
                 try
                 {
+                    var loopStart = DateTime.Now;
+
                     lock (mavs) foreach (var mav in mavs)
                     {
                         if (!mav.BaseStream.IsOpen) continue;
@@ -789,9 +791,11 @@ namespace Diva.Mavlink
                         catch { }
                     }
 
-                    if (lastHeartBeatSent.Second != DateTime.Now.Second)
+                    var now = DateTime.Now;
+
+                    if (lastHeartBeatSent.Second != now.Second)
                     {
-                        lastHeartBeatSent = DateTime.Now;
+                        lastHeartBeatSent = now;
                         lock (mavs) foreach (var mav in mavs)
                         {
                             if (!mav.BaseStream.IsOpen) continue;
@@ -808,11 +812,16 @@ namespace Diva.Mavlink
                         }
                     }
 
-                    if (DateTime.Now > nextUpdateTime)
+                    if (now > nextUpdateTime)
                     {
-                        nextUpdateTime = DateTime.Now.AddSeconds(30);
+                        nextUpdateTime = now.AddSeconds(30);
                         lock (mavs) foreach (var mav in mavs) mav.DoBackgroundWork();
                     }
+
+                    now = DateTime.Now;
+                    int msElapsed = (now - loopStart).Milliseconds;
+                    if (msElapsed < 30)
+                        Thread.Sleep(30 - msElapsed);
                 }
                 catch (Exception ex)
                 {
