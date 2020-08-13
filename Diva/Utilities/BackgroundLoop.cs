@@ -41,6 +41,6 @@ namespace Diva.Utilities
 
         public void Cancel() => cts.Cancel();
         public bool IsRunning => tasks.Contains(this);
-        public EventHandler LoopExited;
+        public event EventHandler LoopExited;
     }
 }

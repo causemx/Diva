@@ -242,6 +242,7 @@ namespace Diva
             BackgroundLoop.FreeTasks(5000);
 		}
 
+        public event EventHandler BackgroundTimer;
 		private void MainLoop(CancellationToken token)
 		{
             DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(500);
@@ -272,6 +273,7 @@ namespace Diva
                         }
                     }
                     UpdateMapItems();
+                    BackgroundTimer?.Invoke(this, null);
                 }
                 catch { }
             }
@@ -447,6 +449,24 @@ namespace Diva
 
 		private void MainMap_MouseUp(object sender, MouseEventArgs e)
 		{
+            MouseDownEnd = Map.FromLocalToLatLng(e.X, e.Y);
+
+            if (FlyToClicked && !isMouseDraging && e.Button == MouseButtons.Left)
+            {
+                Console.WriteLine($"Last mouse: {CurrentFlyTo.To.Lat},{CurrentFlyTo.To.Lng}"
+                    + $"Mouse Uo: {MouseDownEnd.Lat},{MouseDownEnd.Lng}");
+                try
+                {
+                    CurrentFlyTo.Start();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                FlyToClicked = false;
+                return;
+            }
+
             if (!FullControl) {
                 return;
             }
@@ -478,8 +498,6 @@ namespace Diva
 
 				return;
 			}*/
-
-			MouseDownEnd = Map.FromLocalToLatLng(e.X, e.Y);
 
 			// Console.WriteLine("MainMap MU");
 
@@ -644,6 +662,12 @@ namespace Diva
 		private void MainMap_MouseMove(object sender, MouseEventArgs e)
 		{
 			PointLatLng point = Map.FromLocalToLatLng(e.X, e.Y);
+
+            if (FlyToClicked)
+            {
+                CurrentFlyTo.SetDestination(point);
+                return;
+            }
 
 			if (MouseDownStart == point)
 				return;
@@ -3002,43 +3026,58 @@ namespace Diva
                 TSMainPanel.ResumeLayout();
             }
         }
+        private ToolStripButton BtnFullCtrl = new Controls.Components.MyTSButton
+        {
+            AutoSize = false,
+            CheckedText = "Simplified\nControl",
+            CheckOnClick = true,
+            Height = 80,
+            Text = "Full\nControl",
+            Width = 80,
+        };
 
-        private bool flyToClicked;
         public bool FlyToClicked
         {
-            get => flyToClicked;
-            set
-            {
-                flyToClicked = value;
-            }
+            get => BtnFlyTo.Checked;
+            set => BtnFlyTo.Checked = value;
         }
+        private ToolStripButton BtnFlyTo = new Controls.Components.MyTSButton
+        {
+            AutoSize = false,
+            CheckedForeColor = Color.Red,
+            CheckedText = "Choose\nDestination",
+            CheckOnClick = true,
+            Height = 80,
+            Text = "Fly To",
+            Width = 80,
+        };
+
+        private FlyTo CurrentFlyTo = null;
 
         private void SetupExtraButtons()
         {
             FullControl = false;
-            var fullCtrlBtn = new Controls.Components.MyTSButton
-            {
-                AutoSize = false,
-                CheckedText = "Simplified\nControl",
-                CheckOnClick = true,
-                Height = 80,
-                Text = "Full\nControl",
-                Width = 80,
-            };
-            fullCtrlBtn.CheckedChanged += (o, e) => { FullControl = fullCtrlBtn.Checked; };
-            TSMainPanel.Items.Add(fullCtrlBtn);
+            BtnFullCtrl.CheckedChanged += (o, e) => FullControl = BtnFullCtrl.Checked;
+            TSMainPanel.Items.Add(BtnFullCtrl);
 
-            var flytoBtn = new Controls.Components.MyTSButton
+            BtnFlyTo.CheckedChanged += (o, e) =>
             {
-                AutoSize = false,
-                CheckedForeColor = Color.Red,
-                CheckedText = "Select\nDestination",
-                CheckOnClick = true,
-                Height = 80,
-                Text = "Fly To",
-                Width = 80,
+                if (FlyToClicked)
+                {
+                    if (ActiveDrone == null || ActiveDrone == DummyDrone
+                        || !ActiveDrone.Status.IsArmed
+                        || ActiveDrone.Status.State != MAV_STATE.ACTIVE)
+                    {
+                        FlyToClicked = false;
+                        MessageBox.Show("Active drone not ready.");
+                        return;
+                    }
+                    CurrentFlyTo = new FlyTo(ActiveDrone);
+                }
+                else if (CurrentFlyTo != null)
+                    CurrentFlyTo = null;
             };
-            TSMainPanel.Items.Add(flytoBtn);
+            TSMainPanel.Items.Add(BtnFlyTo);
         }
         #endregion
     }

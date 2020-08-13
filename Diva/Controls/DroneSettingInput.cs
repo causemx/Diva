@@ -152,9 +152,9 @@ namespace Diva.Controls
         #endregion
 
         #region public property
-        public static EventHandler DefaultAdded;
-        public static EventHandler DefaultModified;
-        public static EventHandler DefaultRemoved;
+        public static event EventHandler DefaultAdded;
+        public static event EventHandler DefaultModified;
+        public static event EventHandler DefaultRemoved;
         public static void SetDefaultHandlers(EventHandler added, EventHandler modified, EventHandler removed)
         { DefaultAdded = added; DefaultModified = modified; DefaultRemoved = removed; }
         public event EventHandler Added;
