@@ -99,7 +99,7 @@ namespace Diva.Utilities
 		public float danger = -1;
 
 		public GMapDroneMarker(MavDrone drone)
-			: base(new PointLatLng(drone.Status.Latitude, drone.Status.Longitude))
+			: base(drone.Status.Location)
 		{
             Drone = drone;
 			Size = Icon.Size;
@@ -108,7 +108,7 @@ namespace Diva.Utilities
 
 		public override void OnRender(Graphics g)
 		{
-            Position = new PointLatLng(Drone.Status.Latitude, Drone.Status.Longitude);
+            Position = Drone.Status.Location;
             Matrix temp = g.Transform;
 			g.TranslateTransform(LocalPosition.X, LocalPosition.Y);
 

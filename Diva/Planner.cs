@@ -265,9 +265,9 @@ namespace Diva
                             DroneInfoPanel.UpdateDisplayInfo();
                         });*/
 
-                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
+                        PointLatLng currentloc = ActiveDrone.Status.Location;
 
-                        if (ActiveDrone.Status.Latitude != 0 && ActiveDrone.Status.Longitude != 0)
+                        if (currentloc.Lat != 0 && currentloc.Lng != 0)
                         {
                             UpdateMapPosition(currentloc);
                         }
