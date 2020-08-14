@@ -2797,8 +2797,7 @@ namespace Diva
                 {
                     if (route.Points[route.Points.Count - 1].Lat != 0 && (mapupdate.AddSeconds(3) < DateTime.Now))
                     {
-                        PointLatLng currentloc = new PointLatLng(ActiveDrone.Status.Latitude, ActiveDrone.Status.Longitude);
-                        UpdateMapPosition(currentloc);
+                        UpdateMapPosition(ActiveDrone.Status.Location);
                         mapupdate = DateTime.Now;
                     }
                 }
