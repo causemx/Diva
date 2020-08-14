@@ -3005,27 +3005,51 @@ namespace Diva
                 SplitContainer.SplitterDistance -= diff;
                 SplitContainer.IsSplitterFixed = !value;
                 SplitContainer.FixedPanel = value ? FixedPanel.None : FixedPanel.Panel2;
-                TSMainPanel.SuspendLayout();
 
+                TSMainPanel.SuspendLayout();
+                var btns = TSMainPanel.Items;
+                Btn_Rotation.Visible = TSBtnTagging.Visible = TSBtnReadMission.Visible = TSBtnSaveMission.Visible = TSBtnCusOverlay.Visible = true;
                 if (value)
                 {
-                    TSMainPanel.Items.Add(Btn_Rotation);
-                    TSMainPanel.Items.Add(TSBtnTagging);
-                    TSMainPanel.Items.Add(TSBtnReadMission);
-                    TSMainPanel.Items.Add(TSBtnSaveMission);
-                    TSMainPanel.Items.Add(TSBtnCusOverlay);
+                    int max = scrollLeft = btns.Count;
+                    btns.Add(Btn_Rotation);
+                    btns.Add(TSBtnTagging);
+                    btns.Add(TSBtnReadMission);
+                    btns.Add(TSBtnSaveMission);
+                    btns.Add(TSBtnCusOverlay);
+                    TSMainPanel.ResumeLayout();
+                    max += 5;
+                    for (scrollRight = scrollLeft;
+                        scrollRight < max &&
+                        TSMainPanel.Items[scrollRight].Visible;
+                        ++scrollRight) ;
+                    if (scrollRight < btns.Count)
+                    {
+                        TSMainPanel.SuspendLayout();
+                        btns.Insert(scrollLeft++, ScrollBackward);
+                        btns.Add(ScrollForward);
+                        TSMainPanel.ResumeLayout();
+                        max += 2;
+                        while (++scrollRight < max &&
+                            TSMainPanel.Items[scrollRight].Visible) ;
+                        ScrollBackward.Enabled = false;
+                        ScrollForward.Enabled = true;
+                    }
                 }
                 else
                 {
-                    TSMainPanel.Items.Remove(Btn_Rotation);
-                    TSMainPanel.Items.Remove(TSBtnTagging);
-                    TSMainPanel.Items.Remove(TSBtnReadMission);
-                    TSMainPanel.Items.Remove(TSBtnSaveMission);
-                    TSMainPanel.Items.Remove(TSBtnCusOverlay);
+                    btns.Remove(ScrollBackward);
+                    btns.Remove(Btn_Rotation);
+                    btns.Remove(TSBtnTagging);
+                    btns.Remove(TSBtnReadMission);
+                    btns.Remove(TSBtnSaveMission);
+                    btns.Remove(TSBtnCusOverlay);
+                    btns.Remove(ScrollForward);
                 }
                 TSMainPanel.ResumeLayout();
             }
         }
+
         private ToolStripButton BtnFullCtrl = new Controls.Components.MyTSButton
         {
             AutoSize = false,
@@ -3035,7 +3059,6 @@ namespace Diva
             Text = "Full\nControl",
             Width = 80,
         };
-
         public bool FlyToClicked
         {
             get => BtnFlyTo.Checked;
@@ -3052,10 +3075,52 @@ namespace Diva
             Width = 80,
         };
 
+        private int tsMargin;
+        private int scrollLeft;
+        private int scrollRight;
+        private ToolStripButton ScrollForward = new ToolStripButton("▹") { Overflow = ToolStripItemOverflow.Never, ToolTipText = "Scroll Forward" };
+        private ToolStripButton ScrollBackward = new ToolStripButton("◃") { Overflow = ToolStripItemOverflow.Never, ToolTipText = "Scroll Back" };
+
         private FlyTo CurrentFlyTo = null;
 
         private void SetupExtraButtons()
         {
+            TSMainPanel.MaximumSize = TSMainPanel.Size;
+            tsMargin = Map.Width - TSMainPanel.Width;
+            int bwIdx = 0;
+            ScrollForward.Click += (o, e) =>
+            {
+                var btns = TSMainPanel.Items;
+                btns[scrollLeft++].Visible = false;
+                btns[scrollRight++].Visible = true;
+                if (scrollRight == btns.Count - 1)
+                    ScrollForward.Enabled = false;
+                ScrollBackward.Enabled = true;
+            };
+            ScrollBackward.Click += (o, e) =>
+            {
+                var btns = TSMainPanel.Items;
+                btns[--scrollRight].Visible = false;
+                btns[--scrollLeft].Visible = true;
+                if (scrollLeft == btns.IndexOf(ScrollBackward) + 1)
+                    ScrollBackward.Enabled = false;
+                ScrollForward.Enabled = true;
+            };
+            SizeChanged += (o, e) =>
+            {
+                int ol = scrollLeft, or = scrollRight;
+                bool os = TSMainPanel.Items.Contains(ScrollForward);
+                TSMainPanel.MaximumSize = new Size(Map.Width - tsMargin, TSMainPanel.Height);
+                if (fullControl)
+                {
+                    FullControl = false;
+                    FullControl = true;
+                    if (os && TSMainPanel.Items.Contains(ScrollForward))
+                        while (scrollLeft < ol && ScrollForward.Enabled)
+                            ScrollForward.PerformClick();
+                }
+            };
+
             FullControl = false;
             BtnFullCtrl.CheckedChanged += (o, e) => FullControl = BtnFullCtrl.Checked;
             TSMainPanel.Items.Add(BtnFullCtrl);
@@ -3078,6 +3143,7 @@ namespace Diva
                     CurrentFlyTo = null;
             };
             TSMainPanel.Items.Add(BtnFlyTo);
+            bwIdx = TSMainPanel.Items.Count;
         }
         #endregion
     }
