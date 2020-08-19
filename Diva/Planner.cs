@@ -2998,7 +2998,7 @@ namespace Diva
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);
 
-                int newHeight = value ? 120 : 51;
+                int newHeight = value ? 120 : 0;
                 int diff = newHeight - SplitContainer.Panel2.Height;
                 SplitContainer.Panel2MinSize = newHeight;
                 SplitContainer.SplitterDistance -= diff;

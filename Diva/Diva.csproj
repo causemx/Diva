@@ -287,6 +287,7 @@
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DefaultValues.cs" />
+    <Compile Include="Utilities\DestinationMarker.cs" />
     <Compile Include="Utilities\FloatMessage.cs" />
     <Compile Include="Utilities\KMLFileUtility.cs" />
     <Compile Include="Mission\WayPoint.cs" />

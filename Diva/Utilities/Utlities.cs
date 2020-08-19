@@ -27,6 +27,19 @@ namespace Diva.Utilities
 
         public static bool InsideOf(this PointLatLng p, System.Collections.Generic.List<PointLatLng> pn)
             => p.InsideOf(pn.ToArray());
+
+        public static double DistanceTo(this PointLatLng from, PointLatLng to)
+        {
+            double d = from.Lat * 0.017453292519943295;
+            double num2 = from.Lng * 0.017453292519943295;
+            double num3 = to.Lat * 0.017453292519943295;
+            double num4 = to.Lng * 0.017453292519943295;
+            double num5 = num4 - num2;
+            double num6 = num3 - d;
+            double num7 = Math.Pow(Math.Sin(num6 / 2.0), 2.0) + ((Math.Cos(d) * Math.Cos(num3)) * Math.Pow(Math.Sin(num5 / 2.0), 2.0));
+            double num8 = 2.0 * Math.Atan2(Math.Sqrt(num7), Math.Sqrt(1.0 - num7));
+            return (6371 * num8) * 1000.0; // M
+        }
     }
 
     public static class ResourceHelper

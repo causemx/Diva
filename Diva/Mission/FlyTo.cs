@@ -17,13 +17,14 @@ namespace Diva.Mission
         Canceled,
     }
 
-    class FlyTo
+    class FlyTo : IDisposable
     {
         public const double AngleTolerance = 0.5;
         public const double DistanceTolerance = 5.0;
+        public static readonly TimeSpan TimeTolerance = new TimeSpan(0, 0, 30);
 
-        public PointLatLng To { get; private set; }
-        public PointLatLng From { get; private set; }
+        public PointLatLng To => marker.To;
+        public PointLatLng From => marker.From;
         public MavDrone Drone { get; private set; }
         public FlyToState State { get; private set; }
         public bool ShowReachedMessage { get; set; } = true;
@@ -31,13 +32,14 @@ namespace Diva.Mission
         public event EventHandler DestinationReached;
 
         public bool Reached => (State == FlyToState.Reached) ||
-            (new PointLatLngAlt(Drone.Status.Latitude, Drone.Status.Longitude)
-                .GetDistance(To) < DistanceTolerance);
+            (Drone.Status.Location.DistanceTo(To) < DistanceTolerance);
+
+        private DestinationMarker marker;
 
         public FlyTo(MavDrone drone)
         {
             Drone = drone;
-            From = To = new PointLatLng(Drone.Status.Latitude, Drone.Status.Longitude);
+            marker = new DestinationMarker(Drone.Status.Location);
             State = FlyToState.Setting;
         }
 
@@ -45,7 +47,7 @@ namespace Diva.Mission
         {
             if (State == FlyToState.Setting)
             {
-                To = dest;
+                marker.To = dest;
                 return true;
             }
             return false;
@@ -57,7 +59,6 @@ namespace Diva.Mission
                 || !Drone.Status.IsArmed
                 || Drone.Status.State != MAVLink.MAV_STATE.ACTIVE)
                 return false;
-            State = FlyToState.Flying;
             Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
@@ -66,6 +67,9 @@ namespace Diva.Mission
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             });
+            lastPosTime = DateTime.Now;
+            lastPos = Drone.Status.Location;
+            State = FlyToState.Flying;
             Planner.GetPlannerInstance().BackgroundTimer += DetectDroneStatus;
             return true;
         }
@@ -73,19 +77,57 @@ namespace Diva.Mission
         public bool Stop()
         {
             if (State != FlyToState.Flying) return false;
+            State = FlyToState.Canceled;
             Drone.SetMode("BRAKE");
+            marker.SetBrakeMode(true);
             return true;
         }
+
+        public bool Resume()
+        {
+            if (State != FlyToState.Canceled) return false;
+            Drone.SetMode("GUIDED");
+            lastPosTime = DateTime.Now;
+            lastPos = Drone.Status.Location;
+            State = FlyToState.Flying;
+            marker.SetBrakeMode(false);
+            return true;
+        }
+
+        private DateTime lastPosTime;
+        private PointLatLng lastPos;
 
         private void DetectDroneStatus(object o, EventArgs e)
         {
             var p = o as Planner;
             if (State == FlyToState.Flying &&
-                Drone.Status.FlightMode == FlightMode.GUIDED &&
-                Drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
+                    Drone.Status.FlightMode == FlightMode.GUIDED &&
+                    Drone.Status.State == MAVLink.MAV_STATE.ACTIVE
+                || State == FlyToState.Canceled &&
+                    Drone.Status.FlightMode == FlightMode.BRAKE &&
+                    Drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
             {
                 if (!Reached)
+                {
+                    var pos = Drone.Status.Location;
+                    if (State == FlyToState.Flying &&
+                        pos.DistanceTo(lastPos) < DistanceTolerance)
+                    {
+                        var now = DateTime.Now;
+                        if (now - lastPosTime > TimeTolerance)
+                        {
+                            p.BackgroundTimer -= DetectDroneStatus;
+                            FloatMessage.NewMessage(
+                                Drone.Name,
+                                (int)MAVLink.MAV_SEVERITY.WARNING,
+                                "FlyTo command applied but drone is not moving.");
+                            Dispose();
+                            return;
+                        }
+                    }
+                    marker.From = pos;
                     return;
+                }
                 State = FlyToState.Reached;
                 p.BackgroundTimer -= DetectDroneStatus;
                 if (ShowReachedMessage)
@@ -104,6 +146,13 @@ namespace Diva.Mission
                         (int)MAVLink.MAV_SEVERITY.NOTICE,
                         "FlyTo canceled.");
             }
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            marker?.Dispose();
+            marker = null;
         }
     }
 }
