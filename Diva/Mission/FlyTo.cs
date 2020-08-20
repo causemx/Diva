@@ -23,6 +23,14 @@ namespace Diva.Mission
         public const double DistanceTolerance = 5.0;
         public static readonly TimeSpan TimeTolerance = new TimeSpan(0, 0, 30);
 
+        private static List<FlyTo> flyingTargets = new List<FlyTo>();
+        public static void DisposeAll()
+        {
+            var flytos = flyingTargets;
+            flyingTargets = null;
+            flytos.ForEach(f => f.Dispose());
+        }
+
         public PointLatLng To => marker.To;
         public PointLatLng From => marker.From;
         public MavDrone Drone { get; private set; }
@@ -59,6 +67,8 @@ namespace Diva.Mission
                 || !Drone.Status.IsArmed
                 || Drone.Status.State != MAVLink.MAV_STATE.ACTIVE)
                 return false;
+            flyingTargets.FirstOrDefault(f => f.Drone == Drone)?.Dispose();
+            flyingTargets.Add(this);
             Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
@@ -151,6 +161,7 @@ namespace Diva.Mission
 
         public void Dispose()
         {
+            flyingTargets?.Remove(this);
             marker?.Dispose();
             marker = null;
         }

@@ -239,6 +239,7 @@ namespace Diva
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
             OnlineDrones.ForEach(d => d.Disconnect());
+            FlyTo.DisposeAll();
             BackgroundLoop.FreeTasks(5000);
 		}
 
@@ -451,13 +452,14 @@ namespace Diva
 		{
             MouseDownEnd = Map.FromLocalToLatLng(e.X, e.Y);
 
-            if (FlyToClicked && !isMouseDraging && e.Button == MouseButtons.Left)
+            if (FlyToClicked && !isMouseDraging)
             {
-                Console.WriteLine($"Last mouse: {CurrentFlyTo.To.Lat},{CurrentFlyTo.To.Lng}"
-                    + $"Mouse Uo: {MouseDownEnd.Lat},{MouseDownEnd.Lng}");
                 try
                 {
-                    CurrentFlyTo.Start();
+                    if (e.Button == MouseButtons.Left)
+                        CurrentFlyTo?.Start();
+                    else if (e.Button == MouseButtons.Right)
+                        CurrentFlyTo?.Dispose();
                 }
                 catch (Exception ex)
                 {
