@@ -3047,10 +3047,10 @@ namespace Diva
         private ToolStripButton BtnFullCtrl = new Controls.Components.MyTSButton
         {
             AutoSize = false,
-            CheckedText = "Simplified\nControl",
+            CheckedText = Strings.BtnSimplifiedControlText,
             CheckOnClick = true,
             Height = 80,
-            Text = "Full\nControl",
+            Text = Strings.BtnFullControlText,
             Width = 80,
         };
         public bool FlyToClicked
@@ -3062,10 +3062,10 @@ namespace Diva
         {
             AutoSize = false,
             CheckedForeColor = Color.Red,
-            CheckedText = "Choose\nDestination",
+            CheckedText = Strings.BtnChooseDestinationText,
             CheckOnClick = true,
             Height = 80,
-            Text = "Fly To",
+            Text = Strings.BtnFlyToText,
             Width = 80,
         };
 
@@ -3142,7 +3142,7 @@ namespace Diva
                         || ActiveDrone.Status.State != MAV_STATE.ACTIVE)
                     {
                         FlyToClicked = false;
-                        MessageBox.Show("Active drone not ready.");
+                        MessageBox.Show(Diva.Properties.Strings.MsgActiveUnavailableOrNotReady);
                         return;
                     }
                     CurrentFlyTo = new FlyTo(ActiveDrone);

@@ -23,11 +23,12 @@ namespace Diva.Utilities
 
         public static readonly Color NormalColor = Color.White;
         public static readonly Color BrakeColor = Color.Red;
+        public const float DefaultLineWidth = 5.0f;
 
         public Color LineColor { get; set; } = NormalColor;
         public Brush TextBrush { get; set; } = Brushes.DarkBlue;
         public Brush FillBrush { get; set; } = Brushes.CornflowerBlue;
-        public float Width = 2.0f;
+        public float Width = DefaultLineWidth;
         public PointLatLng To
         {
             get => Position;

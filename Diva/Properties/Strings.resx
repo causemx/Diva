@@ -453,4 +453,25 @@
   <data name="MsgErrorReadingKmlFile" xml:space="preserve">
     <value>Error reading kml file: </value>
   </data>
+  <data name="MsgFlyToTargetNotProperlySet" xml:space="preserve">
+    <value>FlyTo target not properly set.</value>
+  </data>
+  <data name="BtnSimplifiedControlText" xml:space="preserve">
+    <value>Simplified
+Control</value>
+  </data>
+  <data name="BtnFullControlText" xml:space="preserve">
+    <value>Full
+Control</value>
+  </data>
+  <data name="BtnChooseDestinationText" xml:space="preserve">
+    <value>Choose
+Destination</value>
+  </data>
+  <data name="BtnFlyToText" xml:space="preserve">
+    <value>Fly To</value>
+  </data>
+  <data name="MsgActiveUnavailableOrNotReady" xml:space="preserve">
+    <value>Active droneis unavailable or not ready to fly.</value>
+  </data>
 </root>

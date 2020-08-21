@@ -76,7 +76,7 @@ namespace Diva.Mission
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
-                System.Windows.Forms.MessageBox.Show("Target not properly set.");
+                System.Windows.Forms.MessageBox.Show(Diva.Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
                 return false;
             }

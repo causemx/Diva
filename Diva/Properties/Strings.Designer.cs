@@ -61,6 +61,45 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose
+        ///Destination.
+        /// </summary>
+        public static string BtnChooseDestinationText {
+            get {
+                return ResourceManager.GetString("BtnChooseDestinationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fly To.
+        /// </summary>
+        public static string BtnFlyToText {
+            get {
+                return ResourceManager.GetString("BtnFlyToText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full
+        ///Control.
+        /// </summary>
+        public static string BtnFullControlText {
+            get {
+                return ResourceManager.GetString("BtnFullControlText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Simplified
+        ///Control.
+        /// </summary>
+        public static string BtnSimplifiedControlText {
+            get {
+                return ResourceManager.GetString("BtnSimplifiedControlText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string ConfigAccountPage_BtnChangePassword_Text {
@@ -264,6 +303,15 @@ namespace Diva.Properties {
         public static string GotParam {
             get {
                 return ResourceManager.GetString("GotParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active droneis unavailable or not ready to fly..
+        /// </summary>
+        public static string MsgActiveUnavailableOrNotReady {
+            get {
+                return ResourceManager.GetString("MsgActiveUnavailableOrNotReady", resourceCulture);
             }
         }
         
@@ -516,6 +564,15 @@ namespace Diva.Properties {
         public static string MsgFileLoaded {
             get {
                 return ResourceManager.GetString("MsgFileLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FlyTo target not properly set..
+        /// </summary>
+        public static string MsgFlyToTargetNotProperlySet {
+            get {
+                return ResourceManager.GetString("MsgFlyToTargetNotProperlySet", resourceCulture);
             }
         }
         

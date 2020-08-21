@@ -453,4 +453,22 @@
   <data name="MsgErrorReadingKmlFile" xml:space="preserve">
     <value>讀取kml失敗：</value>
   </data>
+  <data name="MsgFlyToTargetNotProperlySet" xml:space="preserve">
+    <value>無法設定飛行目的地</value>
+  </data>
+  <data name="BtnChooseDestinationText" xml:space="preserve">
+    <value>選擇目的地</value>
+  </data>
+  <data name="BtnFlyToText" xml:space="preserve">
+    <value>飛至</value>
+  </data>
+  <data name="BtnFullControlText" xml:space="preserve">
+    <value>所有控制</value>
+  </data>
+  <data name="BtnSimplifiedControlText" xml:space="preserve">
+    <value>簡化控制</value>
+  </data>
+  <data name="MsgActiveUnavailableOrNotReady" xml:space="preserve">
+    <value>當前無人機不存在或非可飛行模式</value>
+  </data>
 </root>
