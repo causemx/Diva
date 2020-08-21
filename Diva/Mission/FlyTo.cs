@@ -67,16 +67,21 @@ namespace Diva.Mission
                 || !Drone.Status.IsArmed
                 || Drone.Status.State != MAVLink.MAV_STATE.ACTIVE)
                 return false;
-            flyingTargets.FirstOrDefault(f => f.Drone == Drone)?.Dispose();
-            flyingTargets.Add(this);
-            Drone.SetGuidedModeWP(new WayPoint
+            if (!Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
                 Altitude = Drone.Status.Altitude, // back to m
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
-            });
+            }))
+            {
+                System.Windows.Forms.MessageBox.Show("Target not properly set.");
+                Dispose();
+                return false;
+            }
+            flyingTargets.FirstOrDefault(f => f.Drone == Drone)?.Dispose();
+            flyingTargets.Add(this);
             lastPosTime = DateTime.Now;
             lastPos = Drone.Status.Location;
             State = FlyToState.Flying;

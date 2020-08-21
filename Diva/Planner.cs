@@ -460,6 +460,7 @@ namespace Diva
                         CurrentFlyTo?.Start();
                     else if (e.Button == MouseButtons.Right)
                         CurrentFlyTo?.Dispose();
+                    CurrentFlyTo = null;
                 }
                 catch (Exception ex)
                 {

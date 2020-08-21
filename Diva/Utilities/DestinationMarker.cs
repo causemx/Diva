@@ -34,12 +34,17 @@ namespace Diva.Utilities
             set
             {
                 Position = value;
-                if (route != null)
-                    DistanceOverlay.Routes.Remove(route);
-                route = new GMapRoute(EndPoints, null)
-                { Stroke = new Pen(LineColor, Width) };
-                DistanceOverlay.Routes.Add(route);
-                DistanceOverlay?.ForceUpdate();
+                if (route == null)
+                {
+                    route = new GMapRoute(EndPoints, null)
+                    { Stroke = new Pen(LineColor, Width) };
+                    DistanceOverlay.Routes.Add(route);
+                }
+                else
+                    route.Points[1] = value;
+                if (DistanceOverlay != null)
+                    lock (DistanceOverlay)
+                        DistanceOverlay.ForceUpdate();
                 ToolTipText = GetDescriptionText();
             }
         }
@@ -52,15 +57,17 @@ namespace Diva.Utilities
             set
             {
                 from = value;
-                if (route != null)
+                if (route == null)
                 {
-                    DistanceOverlay.Routes.Remove(route);
-                    route.Dispose();
+                    route = new GMapRoute(EndPoints, null)
+                    { Stroke = new Pen(LineColor, Width) };
+                    DistanceOverlay.Routes.Add(route);
                 }
-                route = new GMapRoute(EndPoints, null)
-                { Stroke = new Pen(LineColor, Width) };
-                DistanceOverlay.Routes.Add(route);
-                DistanceOverlay?.ForceUpdate();
+                else
+                    route.Points[0] = value;
+                if (DistanceOverlay != null)
+                    lock (DistanceOverlay)
+                        DistanceOverlay.ForceUpdate();
                 ToolTipText = GetDescriptionText();
             }
         }

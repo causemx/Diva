@@ -374,43 +374,6 @@ namespace Diva.Mavlink
             }
             throw new TimeoutException("Timeout on read - GetRequestedWPNo");
         }
-
-         private void SetPositionTargetGlobalInt(MAV_FRAME frame, WayPoint pos)
-        {
-            // for mavlink SET_POSITION_TARGET messages
-            const ushort MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE = ((1 << 0) | (1 << 1) | (1 << 2));
-            const ushort MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE = ((0 << 0) | (0 << 1) | (1 << 2));
-
-            var target = new mavlink_set_position_target_global_int_t
-            {
-                target_system = SysId,
-                target_component = CompId,
-                alt = (float)pos.Altitude,
-                lat_int = (int)(pos.Latitude * 1e7),
-                lon_int = (int)(pos.Longitude * 1e7),
-                coordinate_frame = (byte)frame,
-                vx = 0f,
-                vy = 0f,
-                vz = 0f,
-                yaw = 0f,
-                yaw_rate = 0f,
-                type_mask = ushort.MaxValue
-            };
-
-            if (pos.Latitude != 0 && pos.Longitude != 0)
-                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE;
-            if (pos.Latitude == 0 && pos.Longitude == 0)
-                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE;
-
-            if (pos.Latitude != 0)
-                Status.GuidedMode.x = (float)pos.Longitude;
-            if (pos.Longitude != 0)
-                Status.GuidedMode.y = (float)pos.Longitude;
-            Status.GuidedMode.z = (float)pos.Altitude;
-
-            SendPacket(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target);
-        }
-
         public void SetWayPointAck()
         {
             SendPacket(MAVLINK_MSG_ID.MISSION_ACK,
@@ -626,10 +589,56 @@ namespace Diva.Mavlink
                 throw new TimeoutException("Timeout on read - SetWPTotal");
         }
 
-        public void SetGuidedModeWP(WayPoint dest)
+        private bool SetPositionTargetGlobalInt(MAV_FRAME frame, WayPoint pos)
+        {
+            // for mavlink SET_POSITION_TARGET messages
+            const ushort MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE = ((1 << 0) | (1 << 1) | (1 << 2));
+            const ushort MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE = ((0 << 0) | (0 << 1) | (1 << 2));
+
+            var target = new mavlink_set_position_target_global_int_t
+            {
+                target_system = SysId,
+                target_component = CompId,
+                alt = (float)pos.Altitude,
+                lat_int = (int)(pos.Latitude * 1e7),
+                lon_int = (int)(pos.Longitude * 1e7),
+                coordinate_frame = (byte)frame,
+                vx = 0f,
+                vy = 0f,
+                vz = 0f,
+                yaw = 0f,
+                yaw_rate = 0f,
+                type_mask = ushort.MaxValue
+            };
+
+            if (pos.Latitude != 0 && pos.Longitude != 0)
+                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE;
+            if (pos.Latitude == 0 && pos.Longitude == 0)
+                target.type_mask -= MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE;
+
+            if (pos.Latitude != 0)
+                Status.GuidedMode.x = (float)pos.Longitude;
+            if (pos.Longitude != 0)
+                Status.GuidedMode.y = (float)pos.Longitude;
+            Status.GuidedMode.z = (float)pos.Altitude;
+
+            SendPacket(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target);
+
+            var result = WaitPacket(MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT, null, 1000).ToStructure<mavlink_position_target_global_int_t>();
+            return target.type_mask == result.type_mask &&
+                // frame type changed results in altitude not comparable
+                (target.coordinate_frame != result.coordinate_frame ||
+                    (result.type_mask & MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE) != 0 ||
+                    target.alt == result.alt) &&
+                ((result.type_mask & MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE) != 0 ||
+                    target.lat_int == result.lat_int &&
+                    target.lon_int == result.lon_int);
+        }
+
+        public bool SetGuidedModeWP(WayPoint dest)
         {
             if (dest.Altitude == 0 || dest.Latitude == 0 || dest.Longitude == 0)
-                return;
+                return false;
 
             try
             {
@@ -644,16 +653,16 @@ namespace Diva.Mavlink
                     MAV_MISSION_RESULT ans = SetWP(dest, 0);
                     if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                         throw new Exception("Guided Mode Failed");
+                    return true;
                 }
                 else
-                {
-                    SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, dest);
-                }
+                    return SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, dest);
             }
             catch (Exception ex)
             {
                 log.Error(ex);
             }
+            return false;
         }
         #endregion Waypoints, RallyPoints and Fencepoints
     }
