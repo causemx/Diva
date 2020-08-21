@@ -109,59 +109,68 @@ namespace Diva.Mission
 
         private void DetectDroneStatus(object o, EventArgs e)
         {
-            var p = o as Planner;
-            if (State == FlyToState.Flying &&
-                    Drone.Status.FlightMode == FlightMode.GUIDED &&
-                    Drone.Status.State == MAVLink.MAV_STATE.ACTIVE
-                || State == FlyToState.Canceled &&
-                    Drone.Status.FlightMode == FlightMode.BRAKE &&
-                    Drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
+            try
             {
-                if (!Reached)
+                var p = o as Planner;
+                if (State == FlyToState.Flying &&
+                        Drone.Status.FlightMode == FlightMode.GUIDED &&
+                        Drone.Status.State == MAVLink.MAV_STATE.ACTIVE
+                    || State == FlyToState.Canceled &&
+                        Drone.Status.FlightMode == FlightMode.BRAKE &&
+                        Drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
                 {
-                    var pos = Drone.Status.Location;
-                    if (State == FlyToState.Flying &&
-                        pos.DistanceTo(lastPos) < DistanceTolerance)
+                    if (!Reached)
                     {
-                        var now = DateTime.Now;
-                        if (now - lastPosTime > TimeTolerance)
+                        var pos = Drone.Status.Location;
+                        if (State == FlyToState.Flying &&
+                            pos.DistanceTo(lastPos) < DistanceTolerance)
                         {
-                            p.BackgroundTimer -= DetectDroneStatus;
-                            FloatMessage.NewMessage(
-                                Drone.Name,
-                                (int)MAVLink.MAV_SEVERITY.WARNING,
-                                "FlyTo command applied but drone is not moving.");
-                            Dispose();
-                            return;
+                            var now = DateTime.Now;
+                            if (now - lastPosTime > TimeTolerance)
+                            {
+                                p.BackgroundTimer -= DetectDroneStatus;
+                                FloatMessage.NewMessage(
+                                    Drone.Name,
+                                    (int)MAVLink.MAV_SEVERITY.WARNING,
+                                    "FlyTo command applied but drone is not moving.");
+                                Dispose();
+                                return;
+                            }
                         }
+                        marker.From = pos;
+                        return;
                     }
-                    marker.From = pos;
-                    return;
+                    State = FlyToState.Reached;
+                    p.BackgroundTimer -= DetectDroneStatus;
+                    if (ShowReachedMessage)
+                        FloatMessage.NewMessage(
+                            Drone.Name,
+                            (int)MAVLink.MAV_SEVERITY.INFO,
+                            "FlyTo destination reached.");
+                    DestinationReached?.Invoke(this, null);
                 }
-                State = FlyToState.Reached;
-                p.BackgroundTimer -= DetectDroneStatus;
-                if (ShowReachedMessage)
-                    FloatMessage.NewMessage(
-                        Drone.Name,
-                        (int)MAVLink.MAV_SEVERITY.INFO,
-                        "FlyTo destination reached.");
-                DestinationReached?.Invoke(this, null);
+                else
+                {
+                    p.BackgroundTimer -= DetectDroneStatus;
+                    if (ShowReachedMessage)
+                        FloatMessage.NewMessage(
+                            Drone.Name,
+                            (int)MAVLink.MAV_SEVERITY.NOTICE,
+                            "FlyTo canceled.");
+                }
+                Dispose();
             }
-            else
+            catch (Exception x)
             {
-                p.BackgroundTimer -= DetectDroneStatus;
-                if (ShowReachedMessage)
-                    FloatMessage.NewMessage(
-                        Drone.Name,
-                        (int)MAVLink.MAV_SEVERITY.NOTICE,
-                        "FlyTo canceled.");
+                Console.WriteLine(x);
             }
-            Dispose();
         }
 
         public void Dispose()
         {
             flyingTargets?.Remove(this);
+            if (State == FlyToState.Flying)
+                Planner.GetPlannerInstance().BackgroundTimer -= DetectDroneStatus;
             marker?.Dispose();
             marker = null;
         }

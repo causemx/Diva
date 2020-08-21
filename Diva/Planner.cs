@@ -2982,6 +2982,7 @@ namespace Diva
 
         #region MIRDC features
         private bool fullControl;
+        private ToolStripItem[] fixedButtons, toggleButtons;
         public bool FullControl
         {
             get => fullControl;
@@ -3013,13 +3014,9 @@ namespace Diva
                 if (value)
                 {
                     int max = scrollLeft = btns.Count;
-                    btns.Add(Btn_Rotation);
-                    btns.Add(TSBtnTagging);
-                    btns.Add(TSBtnReadMission);
-                    btns.Add(TSBtnSaveMission);
-                    btns.Add(TSBtnCusOverlay);
+                    btns.AddRange(toggleButtons);
                     TSMainPanel.ResumeLayout();
-                    max += 5;
+                    max += toggleButtons.Length;
                     for (scrollRight = scrollLeft;
                         scrollRight < max &&
                         TSMainPanel.Items[scrollRight].Visible;
@@ -3039,13 +3036,8 @@ namespace Diva
                 }
                 else
                 {
-                    btns.Remove(ScrollBackward);
-                    btns.Remove(Btn_Rotation);
-                    btns.Remove(TSBtnTagging);
-                    btns.Remove(TSBtnReadMission);
-                    btns.Remove(TSBtnSaveMission);
-                    btns.Remove(TSBtnCusOverlay);
-                    btns.Remove(ScrollForward);
+                    btns.Clear();
+                    btns.AddRange(fixedButtons);
                 }
                 TSMainPanel.ResumeLayout();
             }
@@ -3122,6 +3114,20 @@ namespace Diva
                 }
             };
 
+            fixedButtons = new ToolStripItem[]
+            {
+                TSBtnConnect,
+                BtnFullCtrl,
+            };
+            toggleButtons = new ToolStripItem[]
+            {
+                TSBtnConfigure,
+                Btn_Rotation,
+                TSBtnTagging,
+                TSBtnReadMission,
+                TSBtnSaveMission,
+                TSBtnCusOverlay,
+            };
             FullControl = false;
             BtnFullCtrl.CheckedChanged += (o, e) => FullControl = BtnFullCtrl.Checked;
             TSMainPanel.Items.Add(BtnFullCtrl);
