@@ -212,6 +212,12 @@
     <Compile Include="Controls\RotationInfo.Designer.cs">
       <DependentUpon>RotationInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TrackerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TrackerDialog.Designer.cs">
+      <DependentUpon>TrackerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\Account.cs" />
     <Compile Include="Data\DroneSetting.cs" />
     <Compile Include="Controls\DroneSettingInput.cs">
@@ -358,6 +364,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TelemetryDataPanel.resx">
       <DependentUpon>TelemetryDataPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TrackerDialog.resx">
+      <DependentUpon>TrackerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TrackerDialog.zh-Hant.resx">
+      <DependentUpon>TrackerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>

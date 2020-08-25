@@ -9,7 +9,7 @@ namespace Diva.Utilities
     public static class MathHelper
     {
         public const double rad2deg = (180 / Math.PI);
-        public const double deg2rad = (1.0 / rad2deg);
+        public const double deg2rad = (Math.PI / 180);
 
         public static bool InsideOf(this PointLatLng p, PointLatLng[] pn)
         {
@@ -28,18 +28,36 @@ namespace Diva.Utilities
         public static bool InsideOf(this PointLatLng p, System.Collections.Generic.List<PointLatLng> pn)
             => p.InsideOf(pn.ToArray());
 
-        public static double DistanceTo(this PointLatLng from, PointLatLng to)
+        public static double DistanceBetween(double lat1, double lng1, double lat2, double lng2)
         {
-            double d = from.Lat * 0.017453292519943295;
-            double num2 = from.Lng * 0.017453292519943295;
-            double num3 = to.Lat * 0.017453292519943295;
-            double num4 = to.Lng * 0.017453292519943295;
+            double d = lat1 * deg2rad;
+            double num2 = lng1 * deg2rad;
+            double num3 = lat2 * deg2rad;
+            double num4 = lng2 * deg2rad;
             double num5 = num4 - num2;
             double num6 = num3 - d;
             double num7 = Math.Pow(Math.Sin(num6 / 2.0), 2.0) + ((Math.Cos(d) * Math.Cos(num3)) * Math.Pow(Math.Sin(num5 / 2.0), 2.0));
             double num8 = 2.0 * Math.Atan2(Math.Sqrt(num7), Math.Sqrt(1.0 - num7));
             return (6371 * num8) * 1000.0; // M
         }
+
+        public static double BearingOf(double lat1, double lng1, double lat2, double lng2)
+        {
+            var lngdiff = (lng2 - lng1) * deg2rad;
+            lat1 *= deg2rad;
+            lat2 *= deg2rad;
+
+            var y = Math.Sin(lngdiff) * Math.Cos(lat2);
+            var x = Math.Cos(lat1) * Math.Sin(lat2) - Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(lngdiff);
+
+            return (rad2deg * (Math.Atan2(y, x)) + 360) % 360;
+        }
+
+        public static double DistanceTo(this PointLatLng from, PointLatLng to)
+            => DistanceBetween(from.Lat, from.Lng, to.Lat, to.Lng);
+
+        public static double BearingTo(this PointLatLng from, PointLatLng to)
+            => BearingOf(from.Lat, from.Lng, to.Lat, to.Lng);
     }
 
     public static class ResourceHelper

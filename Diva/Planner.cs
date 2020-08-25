@@ -3068,6 +3068,13 @@ namespace Diva
             Text = Strings.BtnFlyToText,
             Width = 80,
         };
+        private ToolStripButton BtnTrack = new Controls.Components.MyTSButton
+        {
+            AutoSize = false,
+            Height = 80,
+            Text = "Track",
+            Width = 80,
+        };
 
         private int tsMargin;
         private int scrollLeft;
@@ -3076,6 +3083,18 @@ namespace Diva
         private ToolStripButton ScrollBackward = new ToolStripButton("◃") { Overflow = ToolStripItemOverflow.Never, ToolTipText = "Scroll Back" };
 
         private FlyTo CurrentFlyTo = null;
+
+        private bool IsActiveDroneReady()
+        {
+            if (ActiveDrone == null || ActiveDrone == DummyDrone
+                || !ActiveDrone.Status.IsArmed
+                || ActiveDrone.Status.State != MAV_STATE.ACTIVE)
+            {
+                MessageBox.Show(Strings.MsgActiveUnavailableOrNotReady);
+                return false;
+            }
+            return true;
+        }
 
         private void SetupExtraButtons()
         {
@@ -3119,6 +3138,7 @@ namespace Diva
             {
                 TSBtnConnect,
                 BtnFullCtrl,
+                BtnTrack,
             };
             toggleButtons = new ToolStripItem[]
             {
@@ -3130,6 +3150,7 @@ namespace Diva
                 TSBtnCusOverlay,
             };
             FullControl = false;
+
             BtnFullCtrl.CheckedChanged += (o, e) => FullControl = BtnFullCtrl.Checked;
             TSMainPanel.Items.Add(BtnFullCtrl);
 
@@ -3137,12 +3158,9 @@ namespace Diva
             {
                 if (FlyToClicked)
                 {
-                    if (ActiveDrone == null || ActiveDrone == DummyDrone
-                        || !ActiveDrone.Status.IsArmed
-                        || ActiveDrone.Status.State != MAV_STATE.ACTIVE)
+                    if (!IsActiveDroneReady())
                     {
                         FlyToClicked = false;
-                        MessageBox.Show(Diva.Properties.Strings.MsgActiveUnavailableOrNotReady);
                         return;
                     }
                     CurrentFlyTo = new FlyTo(ActiveDrone);
@@ -3151,6 +3169,23 @@ namespace Diva
                     CurrentFlyTo = null;
             };
             TSMainPanel.Items.Add(BtnFlyTo);
+
+            BtnTrack.Click += (o, e) =>
+            {
+                var form = new TrackerDialog(OnlineDrones, ActiveDrone);
+                if (!IsActiveDroneReady()) return;
+                if (OnlineDrones.Count <= 1)
+                {
+                    MessageBox.Show("No available track source");
+                    return;
+                }
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+
+                }
+            };
+            TSMainPanel.Items.Add(BtnTrack);
+
             bwIdx = TSMainPanel.Items.Count;
         }
         #endregion

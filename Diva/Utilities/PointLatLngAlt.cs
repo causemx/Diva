@@ -109,29 +109,10 @@ namespace Diva.Utilities
 			return OffsetAngleDistance(bearing, distance);
 		}
 
-		public double GetBearing(PointLatLngAlt p2)
-		{
-			var latitude1 = MathHelper.deg2rad * (this.Lat);
-			var latitude2 = MathHelper.deg2rad * (p2.Lat);
-			var longitudeDifference = MathHelper.deg2rad * (p2.Lng - this.Lng);
-
-			var y = Math.Sin(longitudeDifference) * Math.Cos(latitude2);
-			var x = Math.Cos(latitude1) * Math.Sin(latitude2) - Math.Sin(latitude1) * Math.Cos(latitude2) * Math.Cos(longitudeDifference);
-
-			return (MathHelper.rad2deg * (Math.Atan2(y, x)) + 360) % 360;
-		}
+        public double GetBearing(PointLatLngAlt p2)
+            => MathHelper.BearingOf(Lat, Lng, p2.Lat, p2.Lng);
 
 		public double GetDistance(PointLatLngAlt p2)
-		{
-			double d = Lat * 0.017453292519943295;
-			double num2 = Lng * 0.017453292519943295;
-			double num3 = p2.Lat * 0.017453292519943295;
-			double num4 = p2.Lng * 0.017453292519943295;
-			double num5 = num4 - num2;
-			double num6 = num3 - d;
-			double num7 = Math.Pow(Math.Sin(num6 / 2.0), 2.0) + ((Math.Cos(d) * Math.Cos(num3)) * Math.Pow(Math.Sin(num5 / 2.0), 2.0));
-			double num8 = 2.0 * Math.Atan2(Math.Sqrt(num7), Math.Sqrt(1.0 - num7));
-			return (6371 * num8) * 1000.0; // M
-		}
-	}
+            => MathHelper.DistanceBetween(Lat, Lng, p2.Lat, p2.Lng);
+    }
 }
