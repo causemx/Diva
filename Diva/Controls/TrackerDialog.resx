@@ -117,215 +117,146 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LblTrackingTarget.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="LblTrackingTarget.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LblTrackingTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 9</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LblTrackingTarget.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="LblTrackingTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
-  </data>
-  <data name="LblTrackingTarget.TabIndex" type="System.Int32, mscorlib">
+  <data name="TBoxDistance.Text" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="LblTrackingTarget.Text" xml:space="preserve">
-    <value>Target: </value>
+  <data name="&gt;&gt;TBoxBearingAngle.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
-  <data name="&gt;&gt;LblTrackingTarget.Name" xml:space="preserve">
-    <value>LblTrackingTarget</value>
-  </data>
-  <data name="&gt;&gt;LblTrackingTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblTrackingTarget.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;LblTrackingTarget.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="LBTrackingTarget.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LBTrackingTarget.ItemHeight" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="LBTrackingTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>74, 5</value>
-  </data>
-  <data name="LBTrackingTarget.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="LBTrackingTarget.ScrollAlwaysVisible" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LBTrackingTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 19</value>
-  </data>
-  <data name="LBTrackingTarget.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;LBTrackingTarget.Name" xml:space="preserve">
-    <value>LBTrackingTarget</value>
-  </data>
-  <data name="&gt;&gt;LBTrackingTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LBTrackingTarget.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;LBTrackingTarget.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="RBtnTrackClose.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="RBtnTrackClose.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="RBtnTrackClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 32</value>
-  </data>
-  <data name="RBtnTrackClose.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="RBtnTrackClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 19</value>
-  </data>
-  <data name="RBtnTrackClose.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="RBtnTrackClose.Text" xml:space="preserve">
-    <value>Close to target</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackClose.Name" xml:space="preserve">
-    <value>RBtnTrackClose</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackClose.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackClose.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="RBtnTrackRelative.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="RBtnTrackRelative.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="RBtnTrackRelative.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 59</value>
-  </data>
-  <data name="RBtnTrackRelative.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="RBtnTrackRelative.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 19</value>
   </data>
-  <data name="RBtnTrackRelative.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LblDistance.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
-  <data name="RBtnTrackRelative.Text" xml:space="preserve">
-    <value>Maintain relative position</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackRelative.Name" xml:space="preserve">
-    <value>RBtnTrackRelative</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackRelative.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackRelative.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;RBtnTrackRelative.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="RBtnCustomizedTrack.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="RBtnCustomizedTrack.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="RBtnCustomizedTrack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 86</value>
-  </data>
-  <data name="RBtnCustomizedTrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="RBtnCustomizedTrack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 19</value>
-  </data>
-  <data name="RBtnCustomizedTrack.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="RBtnCustomizedTrack.Text" xml:space="preserve">
-    <value>Customize</value>
-  </data>
-  <data name="&gt;&gt;RBtnCustomizedTrack.Name" xml:space="preserve">
-    <value>RBtnCustomizedTrack</value>
-  </data>
-  <data name="&gt;&gt;RBtnCustomizedTrack.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RBtnCustomizedTrack.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;RBtnCustomizedTrack.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="LblBearingAngle.AutoSize" type="System.Boolean, mscorlib">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="RBtnTrackRelative.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="LblBearingAngle.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="LblBearingAngle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 109</value>
+  <data name="&gt;&gt;RBtnCustomizedTrack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="LblBearingAngle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
+  <data name="&gt;&gt;RBtnTrackRelative.Name" xml:space="preserve">
+    <value>RBtnTrackRelative</value>
   </data>
-  <data name="LblBearingAngle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 15</value>
+  <data name="RBtnCustomizedTrack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 19</value>
   </data>
-  <data name="LblBearingAngle.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="RBtnTrackClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 19</value>
   </data>
-  <data name="LblBearingAngle.Text" xml:space="preserve">
-    <value>Bearing</value>
+  <data name="TBoxBearingAngle.Text" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;LblBearingAngle.Name" xml:space="preserve">
-    <value>LblBearingAngle</value>
+  <data name="&gt;&gt;PBoxSchematic.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;LblBearingAngle.Type" xml:space="preserve">
+  <data name="&gt;&gt;LblTrackingTarget.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="RBtnTrackRelative.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="&gt;&gt;RBtnCustomizedTrack.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblDistance.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblBearingAngleUnit.Name" xml:space="preserve">
+    <value>LblBearingAngleUnit</value>
+  </data>
+  <data name="TBoxDistance.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="TBoxDistanceUnit.Text" xml:space="preserve">
+    <value>m</value>
   </data>
   <data name="&gt;&gt;LblBearingAngle.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;LblBearingAngle.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="&gt;&gt;CBTrackingTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TBoxBearingAngle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9pt</value>
+  <data name="LblBearingAngleUnit.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
   </data>
-  <data name="TBoxBearingAngle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 106</value>
+  <data name="&gt;&gt;BtnOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TBoxBearingAngle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="&gt;&gt;BtnOk.Name" xml:space="preserve">
+    <value>BtnOk</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Tracking Option</value>
+  </data>
+  <data name="RBtnTrackClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 32</value>
+  </data>
+  <data name="BtnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="RBtnTrackRelative.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="LblBearingAngle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;TBoxDistance.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;RBtnTrackRelative.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LblTrackingTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RBtnTrackClose.Text" xml:space="preserve">
+    <value>Close to target</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 15</value>
+  </data>
+  <data name="TBoxDistanceUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>193, 138</value>
+  </data>
+  <data name="LblDistance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 138</value>
+  </data>
+  <data name="BtnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="CBTrackingTarget.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;TBoxBearingAngle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TBoxDistanceUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="BtnCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;LblBearingAngleUnit.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="LblBearingAngleUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>12, 15</value>
+  </data>
+  <data name="RBtnTrackClose.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="TBoxBearingAngle.MaxLength" type="System.Int32, mscorlib">
     <value>4</value>
@@ -333,256 +264,313 @@
   <data name="TBoxBearingAngle.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 22</value>
   </data>
-  <data name="TBoxBearingAngle.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="TBoxBearingAngle.Text" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TBoxBearingAngle.Name" xml:space="preserve">
-    <value>TBoxBearingAngle</value>
-  </data>
-  <data name="&gt;&gt;TBoxBearingAngle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TBoxBearingAngle.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;TBoxBearingAngle.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="LblBearingAngleUnit.AutoSize" type="System.Boolean, mscorlib">
+  <data name="RBtnCustomizedTrack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LblBearingAngleUnit.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
+  <data name="&gt;&gt;RBtnTrackClose.Name" xml:space="preserve">
+    <value>RBtnTrackClose</value>
   </data>
-  <data name="LblBearingAngleUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 109</value>
+  <data name="BtnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
-  <data name="LblBearingAngleUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
+  <data name="CBTrackingTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 23</value>
   </data>
-  <data name="LblBearingAngleUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>12, 15</value>
+  <data name="LblTrackingTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 9</value>
   </data>
-  <data name="LblBearingAngleUnit.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="&gt;&gt;RBtnCustomizedTrack.Name" xml:space="preserve">
+    <value>RBtnCustomizedTrack</value>
   </data>
-  <data name="LblBearingAngleUnit.Text" xml:space="preserve">
-    <value>°</value>
-  </data>
-  <data name="&gt;&gt;LblBearingAngleUnit.Name" xml:space="preserve">
-    <value>LblBearingAngleUnit</value>
+  <data name="RBtnTrackClose.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
   </data>
   <data name="&gt;&gt;LblBearingAngleUnit.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LblBearingAngleUnit.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;RBtnTrackRelative.ZOrder" xml:space="preserve">
+    <value>11</value>
   </data>
-  <data name="&gt;&gt;LblBearingAngleUnit.ZOrder" xml:space="preserve">
+  <data name="TBoxDistance.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9pt</value>
+  </data>
+  <data name="&gt;&gt;LblDistance.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="LblDistance.AutoSize" type="System.Boolean, mscorlib">
+  <data name="LblBearingAngle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="&gt;&gt;PBoxSchematic.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;LblDistance.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="RBtnCustomizedTrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="BtnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 166</value>
+  </data>
+  <data name="TBoxDistanceUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 15</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>TrackerDialog</value>
+  </data>
+  <data name="&gt;&gt;RBtnTrackClose.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="TBoxDistance.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="PBoxSchematic.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 160</value>
+  </data>
+  <data name="LblDistance.Text" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="RBtnTrackClose.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="LblDistance.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="LblDistance.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 138</value>
-  </data>
-  <data name="LblDistance.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="LblDistance.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 15</value>
-  </data>
   <data name="LblDistance.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="LblDistance.Text" xml:space="preserve">
-    <value>Distance</value>
+  <data name="&gt;&gt;LblTrackingTarget.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnCancel.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;LblDistance.Name" xml:space="preserve">
     <value>LblDistance</value>
   </data>
-  <data name="&gt;&gt;LblDistance.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;RBtnTrackClose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LblDistance.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="LblTrackingTarget.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
   </data>
-  <data name="&gt;&gt;LblDistance.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="PBoxSchematic.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
-  <data name="TBoxDistance.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9pt</value>
+  <data name="RBtnCustomizedTrack.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
   </data>
-  <data name="TBoxDistance.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 135</value>
+  <data name="&gt;&gt;LblBearingAngle.Name" xml:space="preserve">
+    <value>LblBearingAngle</value>
   </data>
-  <data name="TBoxDistance.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
   </data>
-  <data name="TBoxDistance.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 22</value>
-  </data>
-  <data name="TBoxDistance.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="TBoxDistance.Text" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;BtnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TBoxDistance.Name" xml:space="preserve">
     <value>TBoxDistance</value>
   </data>
-  <data name="&gt;&gt;TBoxDistance.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TBoxDistance.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;TBoxDistance.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="TBoxDistanceUnit.AutoSize" type="System.Boolean, mscorlib">
+  <data name="LblTrackingTarget.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="TBoxDistanceUnit.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="TBoxDistanceUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>193, 138</value>
   </data>
   <data name="TBoxDistanceUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
   </data>
-  <data name="TBoxDistanceUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>19, 15</value>
+  <data name="LblBearingAngleUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 109</value>
   </data>
-  <data name="TBoxDistanceUnit.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="&gt;&gt;BtnCancel.Name" xml:space="preserve">
+    <value>BtnCancel</value>
   </data>
-  <data name="TBoxDistanceUnit.Text" xml:space="preserve">
-    <value>m</value>
+  <data name="&gt;&gt;TBoxBearingAngle.Name" xml:space="preserve">
+    <value>TBoxBearingAngle</value>
+  </data>
+  <data name="&gt;&gt;PBoxSchematic.Name" xml:space="preserve">
+    <value>PBoxSchematic</value>
+  </data>
+  <data name="BtnOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;TBoxDistance.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LblBearingAngle.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;TBoxDistanceUnit.Name" xml:space="preserve">
     <value>TBoxDistanceUnit</value>
   </data>
-  <data name="&gt;&gt;TBoxDistanceUnit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TBoxBearingAngle.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9pt</value>
+  </data>
+  <data name="LblBearingAngleUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="LblTrackingTarget.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="BtnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;LblTrackingTarget.Name" xml:space="preserve">
+    <value>LblTrackingTarget</value>
+  </data>
+  <data name="TBoxDistance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 135</value>
   </data>
   <data name="&gt;&gt;TBoxDistanceUnit.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;TBoxDistanceUnit.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
-  <data name="PBoxSchematic.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="&gt;&gt;CBTrackingTarget.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="PBoxSchematic.Location" type="System.Drawing.Point, System.Drawing">
-    <value>278, 5</value>
+  <data name="&gt;&gt;TBoxBearingAngle.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="PBoxSchematic.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="TBoxBearingAngle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="PBoxSchematic.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 160</value>
+  <data name="TBoxDistance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 22</value>
   </data>
-  <data name="PBoxSchematic.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="LblBearingAngleUnit.Text" xml:space="preserve">
+    <value>°</value>
   </data>
-  <data name="&gt;&gt;PBoxSchematic.Name" xml:space="preserve">
-    <value>PBoxSchematic</value>
-  </data>
-  <data name="&gt;&gt;PBoxSchematic.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PBoxSchematic.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;PBoxSchematic.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="BtnOk.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 166</value>
-  </data>
-  <data name="BtnOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="BtnOk.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;RBtnTrackClose.ZOrder" xml:space="preserve">
     <value>12</value>
-  </data>
-  <data name="BtnOk.Text" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="&gt;&gt;BtnOk.Name" xml:space="preserve">
-    <value>BtnOk</value>
-  </data>
-  <data name="&gt;&gt;BtnOk.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnOk.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;BtnOk.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="BtnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="BtnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 166</value>
-  </data>
-  <data name="BtnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="BtnCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="BtnCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="&gt;&gt;BtnCancel.Name" xml:space="preserve">
-    <value>BtnCancel</value>
-  </data>
-  <data name="&gt;&gt;BtnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BtnCancel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;BtnCancel.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="LblBearingAngle.Text" xml:space="preserve">
+    <value>Bearing</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 15</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>444, 201</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Tracking Option</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>TrackerDialog</value>
+  <data name="&gt;&gt;RBtnTrackRelative.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="RBtnTrackRelative.Text" xml:space="preserve">
+    <value>Maintain relative position</value>
+  </data>
+  <data name="RBtnCustomizedTrack.Text" xml:space="preserve">
+    <value>Customize</value>
+  </data>
+  <data name="RBtnTrackClose.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LblDistance.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblBearingAngle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="LblTrackingTarget.Text" xml:space="preserve">
+    <value>Target: </value>
+  </data>
+  <data name="PBoxSchematic.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;LblTrackingTarget.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="BtnOk.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="RBtnTrackRelative.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 59</value>
+  </data>
+  <data name="PBoxSchematic.Location" type="System.Drawing.Point, System.Drawing">
+    <value>278, 5</value>
+  </data>
+  <data name="TBoxBearingAngle.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="LblBearingAngle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>37, 109</value>
+  </data>
+  <data name="&gt;&gt;LblBearingAngleUnit.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LblBearingAngleUnit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RBtnCustomizedTrack.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 86</value>
+  </data>
+  <data name="&gt;&gt;BtnOk.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;LblBearingAngle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CBTrackingTarget.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>444, 201</value>
+  </data>
+  <data name="BtnOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>135, 166</value>
+  </data>
+  <data name="&gt;&gt;CBTrackingTarget.Name" xml:space="preserve">
+    <value>CBTrackingTarget</value>
+  </data>
+  <data name="RBtnCustomizedTrack.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="LblDistance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 15</value>
+  </data>
+  <data name="TBoxDistanceUnit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RBtnTrackRelative.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;RBtnCustomizedTrack.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="CBTrackingTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>64, 6</value>
+  </data>
+  <data name="LblTrackingTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 15</value>
+  </data>
+  <data name="&gt;&gt;TBoxDistance.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TBoxDistanceUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PBoxSchematic.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;PBoxSchematic.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblBearingAngle.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="TBoxDistanceUnit.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="TBoxBearingAngle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 106</value>
+  </data>
+  <data name="LblBearingAngleUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="&gt;&gt;BtnOk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

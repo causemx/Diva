@@ -3138,6 +3138,7 @@ namespace Diva
             {
                 TSBtnConnect,
                 BtnFullCtrl,
+                BtnFlyTo,
                 BtnTrack,
             };
             toggleButtons = new ToolStripItem[]
@@ -3172,16 +3173,19 @@ namespace Diva
 
             BtnTrack.Click += (o, e) =>
             {
-                var form = new TrackerDialog(OnlineDrones, ActiveDrone);
-                if (!IsActiveDroneReady()) return;
-                if (OnlineDrones.Count <= 1)
+                using (var form = new TrackerDialog(OnlineDrones, ActiveDrone))
                 {
-                    MessageBox.Show("No available track source");
-                    return;
-                }
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-
+                    if (!IsActiveDroneReady()) return;
+                    if (OnlineDrones.Count <= 1)
+                    {
+                        MessageBox.Show("No available track source");
+                        return;
+                    }
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        new FlyTo(ActiveDrone).StartTracking(
+                            form.Target, form.Distance, form.BearingAngle);
+                    }
                 }
             };
             TSMainPanel.Items.Add(BtnTrack);

@@ -644,8 +644,8 @@ namespace Diva.Mavlink
             {
                 dest.Id = (ushort)MAV_CMD.WAYPOINT;
                 // Must be Guided mode.s
-                // fix for followme change
-                SetMode("GUIDED");
+                if (Status.FlightMode != FlightMode.GUIDED)
+                    SetMode("GUIDED");
                 log.InfoFormat($"SetGuidedModeWP {SysId}:{CompId}" +
                     $" lat {dest.Latitude} lng {dest.Longitude} alt {dest.Altitude}");
                 if (Status.Firmware == Firmwares.ArduPlane)

@@ -130,29 +130,13 @@
   <data name="LblTrackingTarget.Text" xml:space="preserve">
     <value>目標：</value>
   </data>
-  <data name="LBTrackingTarget.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei, 11.25pt</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LBTrackingTarget.ItemHeight" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="LBTrackingTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>76, 8</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LBTrackingTarget.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="LBTrackingTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 23</value>
-  </data>
   <data name="RBtnTrackClose.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei, 11.25pt</value>
   </data>
   <data name="RBtnTrackClose.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 40</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="RBtnTrackClose.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
@@ -208,7 +192,7 @@
     <value>Microsoft JhengHei, 11.25pt</value>
   </data>
   <data name="TBoxBearingAngle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 121</value>
+    <value>82, 121</value>
   </data>
   <data name="TBoxBearingAngle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
@@ -300,6 +284,12 @@
   <data name="BtnCancel.Text" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="CBTrackingTarget.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 9</value>
+  </data>
+  <data name="CBTrackingTarget.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 27</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>9, 19</value>
   </data>
@@ -308,9 +298,6 @@
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei, 11.25pt</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>

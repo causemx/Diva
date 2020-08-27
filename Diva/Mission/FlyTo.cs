@@ -22,6 +22,7 @@ namespace Diva.Mission
         public const double AngleTolerance = 0.5;
         public const double DistanceTolerance = 5.0;
         public static readonly TimeSpan TimeTolerance = new TimeSpan(0, 0, 30);
+        public const int TrackUpdatePeriodMS = 5000;
 
         private static List<FlyTo> flyingTargets = new List<FlyTo>();
         public static void DisposeAll()
@@ -36,6 +37,7 @@ namespace Diva.Mission
         public MavDrone Drone { get; private set; }
         public FlyToState State { get; private set; }
         public bool ShowReachedMessage { get; set; } = true;
+        public bool TrackMode { get; private set; }
 
         public event EventHandler DestinationReached;
 
@@ -53,12 +55,20 @@ namespace Diva.Mission
 
         public bool SetDestination(PointLatLng dest)
         {
-            if (State == FlyToState.Setting)
+            if (!TrackMode && State == FlyToState.Setting)
             {
                 marker.To = dest;
                 return true;
             }
             return false;
+        }
+
+        private void RegisterDroneFlight()
+        {
+            flyingTargets.FirstOrDefault(f => f.Drone == Drone)?.Dispose();
+            flyingTargets.Add(this);
+            State = FlyToState.Flying;
+            Planner.GetPlannerInstance().BackgroundTimer += DetectDroneStatus;
         }
 
         public bool Start()
@@ -81,12 +91,53 @@ namespace Diva.Mission
                 Dispose();
                 return false;
             }
-            flyingTargets.FirstOrDefault(f => f.Drone == Drone)?.Dispose();
-            flyingTargets.Add(this);
             lastPosTime = DateTime.Now;
             lastPos = Drone.Status.Location;
-            State = FlyToState.Flying;
-            Planner.GetPlannerInstance().BackgroundTimer += DetectDroneStatus;
+            RegisterDroneFlight();
+            return true;
+        }
+
+        public MavDrone TrackTarget { get; private set; }
+        public double TrackDistance { get; private set; }
+        public double TrackBearing { get; private set; }
+        private DateTime trackUpdateTime;
+        private PointLatLng TrackLocation =>
+            TrackDistance > 0.01 ? TrackTarget.Status.Location
+                .OffsetAngleDistance(TrackBearing, TrackDistance) :
+            TrackTarget.Status.Location;
+
+        private bool CheckTrackUpdate()
+        {
+            var now = DateTime.Now;
+            if (now < trackUpdateTime)
+                return false;
+            trackUpdateTime = now.AddMilliseconds(TrackUpdatePeriodMS);
+            return true;
+        }
+
+        public bool StartTracking(MavDrone target, double distance, double bearing)
+        {
+            TrackMode = true;
+            TrackTarget = target;
+            TrackDistance = distance;
+            TrackBearing = bearing;
+            trackUpdateTime = DateTime.Now.AddMilliseconds(TrackUpdatePeriodMS);
+            marker.To = TrackLocation;
+            if (!Drone.SetGuidedModeWP(new WayPoint
+            {
+                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                Altitude = Drone.Status.Altitude, // back to m
+                Latitude = To.Lat,
+                Longitude = To.Lng,
+                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
+            }))
+            {
+                Drone.SetMode("BRAKE");
+                System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
+                Dispose();
+                return false;
+            }
+            RegisterDroneFlight();
             return true;
         }
 
@@ -125,7 +176,25 @@ namespace Diva.Mission
                         Drone.Status.FlightMode == FlightMode.BRAKE &&
                         Drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
                 {
-                    if (!Reached)
+                    if (TrackMode)
+                    {
+                        if (CheckTrackUpdate())
+                        {
+                            var pos = TrackLocation;
+                            marker.To = pos;
+                            Drone.SetGuidedModeWP(new WayPoint
+                            {
+                                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                                Altitude = Drone.Status.Altitude, // back to m
+                                Latitude = pos.Lat,
+                                Longitude = pos.Lng,
+                                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
+                            });
+                        }
+                        marker.From = Drone.Status.Location;
+                        return;
+                    }
+                    else if (!Reached)
                     {
                         var pos = Drone.Status.Location;
                         if (State == FlyToState.Flying &&

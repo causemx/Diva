@@ -114,11 +114,13 @@ namespace Diva.Utilities
             {
                 if (route != null)
                 {
-                    DistanceOverlay.Routes.Remove(route);
+                    lock (DistanceOverlay)
+                        DistanceOverlay.Routes.Remove(route);
                     route.Dispose();
                 }
                 route = null;
-                DistanceOverlay.Markers.Remove(this);
+                lock (DistanceOverlay)
+                    DistanceOverlay.Markers.Remove(this);
                 disposing = true;
             }
             base.Dispose();

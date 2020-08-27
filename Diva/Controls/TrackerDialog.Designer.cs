@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrackerDialog));
             this.LblTrackingTarget = new System.Windows.Forms.Label();
-            this.LBTrackingTarget = new System.Windows.Forms.ListBox();
             this.RBtnTrackClose = new System.Windows.Forms.RadioButton();
             this.RBtnTrackRelative = new System.Windows.Forms.RadioButton();
             this.RBtnCustomizedTrack = new System.Windows.Forms.RadioButton();
@@ -43,6 +42,7 @@
             this.PBoxSchematic = new System.Windows.Forms.PictureBox();
             this.BtnOk = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
+            this.CBTrackingTarget = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.PBoxSchematic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,13 +50,6 @@
             // 
             resources.ApplyResources(this.LblTrackingTarget, "LblTrackingTarget");
             this.LblTrackingTarget.Name = "LblTrackingTarget";
-            // 
-            // LBTrackingTarget
-            // 
-            resources.ApplyResources(this.LBTrackingTarget, "LBTrackingTarget");
-            this.LBTrackingTarget.FormattingEnabled = true;
-            this.LBTrackingTarget.Name = "LBTrackingTarget";
-            this.LBTrackingTarget.SelectedIndexChanged += new System.EventHandler(this.LBTrackingTarget_SelectedIndexChanged);
             // 
             // RBtnTrackClose
             // 
@@ -134,6 +127,13 @@
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // CBTrackingTarget
+            // 
+            resources.ApplyResources(this.CBTrackingTarget, "CBTrackingTarget");
+            this.CBTrackingTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBTrackingTarget.FormattingEnabled = true;
+            this.CBTrackingTarget.Name = "CBTrackingTarget";
+            // 
             // TrackerDialog
             // 
             this.AcceptButton = this.BtnOk;
@@ -141,6 +141,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ControlBox = false;
+            this.Controls.Add(this.CBTrackingTarget);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOk);
             this.Controls.Add(this.PBoxSchematic);
@@ -153,7 +154,6 @@
             this.Controls.Add(this.RBtnCustomizedTrack);
             this.Controls.Add(this.RBtnTrackRelative);
             this.Controls.Add(this.RBtnTrackClose);
-            this.Controls.Add(this.LBTrackingTarget);
             this.Controls.Add(this.LblTrackingTarget);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "TrackerDialog";
@@ -167,7 +167,6 @@
         #endregion
 
         private System.Windows.Forms.Label LblTrackingTarget;
-        private System.Windows.Forms.ListBox LBTrackingTarget;
         private System.Windows.Forms.RadioButton RBtnTrackClose;
         private System.Windows.Forms.RadioButton RBtnTrackRelative;
         private System.Windows.Forms.RadioButton RBtnCustomizedTrack;
@@ -180,5 +179,6 @@
         private System.Windows.Forms.PictureBox PBoxSchematic;
         private System.Windows.Forms.Button BtnOk;
         private System.Windows.Forms.Button BtnCancel;
+        private System.Windows.Forms.ComboBox CBTrackingTarget;
     }
 }
