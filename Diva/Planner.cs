@@ -233,13 +233,15 @@ namespace Diva
         private void Planner_FormClosing(object sender, FormClosingEventArgs e)
 		{
             if (mainThread?.IsRunning ?? false)
+            {
                 mainThread.Cancel();
-		}
+                FlyTo.DisposeAll();
+            }
+        }
 
 		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
 		{
             OnlineDrones.ForEach(d => d.Disconnect());
-            FlyTo.DisposeAll();
             BackgroundLoop.FreeTasks(5000);
 		}
 
@@ -1658,7 +1660,7 @@ namespace Diva
 				{
 					if (cellhome.Value.ToString() != TxtHomeLatitude.Text && cellhome.Value.ToString() != "0")
 					{
-						DialogResult dr = connectingDrones ? DialogResult.Yes :
+						DialogResult dr = connectingDrones || !FullControl ? DialogResult.Yes :
                             MessageBox.Show(Strings.MsgResetHomeCoordinate,
 							    Strings.MsgResetHomeCoordinateTitle, MessageBoxButtons.YesNo);
 
