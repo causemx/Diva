@@ -307,7 +307,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active droneis unavailable or not ready to fly..
+        ///   Looks up a localized string similar to Active drone is unavailable or not ready to fly..
         /// </summary>
         public static string MsgActiveUnavailableOrNotReady {
             get {

@@ -2893,10 +2893,11 @@ namespace Diva
         private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
         {
             var drone = (sender as DroneInfo)?.Drone;
-            OnlineDrones.Remove(drone);
-            DroneMission.RemoveMission(drone);
             try
             {
+                OnlineDrones.Remove(drone);
+                DroneMission.RemoveMission(drone);
+                FlyTo.DropFlight(drone);
                 Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
                     x => (x as GMapDroneMarker).Drone == drone));
             }
@@ -3185,7 +3186,7 @@ namespace Diva
                     }
                     if (form.ShowDialog() == DialogResult.OK)
                     {
-                        new FlyTo(ActiveDrone).StartTracking(
+                        new FlyTo(ActiveDrone, true).StartTracking(
                             form.Target, form.Distance, form.BearingAngle);
                     }
                 }

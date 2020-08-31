@@ -472,6 +472,6 @@ Destination</value>
     <value>Fly To</value>
   </data>
   <data name="MsgActiveUnavailableOrNotReady" xml:space="preserve">
-    <value>Active droneis unavailable or not ready to fly.</value>
+    <value>Active drone is unavailable or not ready to fly.</value>
   </data>
 </root>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Diva.Mavlink;
 using Diva.Utilities;
 using PointLatLng = GMap.NET.PointLatLng;
@@ -25,6 +23,8 @@ namespace Diva.Mission
         public const int TrackUpdatePeriodMS = 5000;
 
         private static List<FlyTo> flyingTargets = new List<FlyTo>();
+        public static void DropFlight(MavDrone drone)
+            => flyingTargets.FindAll(f => f.Drone == drone || f.TrackTarget == drone).ForEach(f => f.Dispose());
         public static void DisposeAll()
         {
             var flytos = flyingTargets;
@@ -46,10 +46,10 @@ namespace Diva.Mission
 
         private DestinationMarker marker;
 
-        public FlyTo(MavDrone drone)
+        public FlyTo(MavDrone drone, bool isTracker = false)
         {
             Drone = drone;
-            marker = new DestinationMarker(Drone.Status.Location);
+            marker = new DestinationMarker(Drone.Status.Location, isTracker);
             State = FlyToState.Setting;
         }
 
@@ -86,10 +86,10 @@ namespace Diva.Mission
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
-                Drone.SetMode("BRAKE");
+                /*Drone.SetMode("BRAKE");
                 System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
-                return false;
+                return false;*/
             }
             lastPosTime = DateTime.Now;
             lastPos = Drone.Status.Location;

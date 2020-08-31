@@ -16,6 +16,7 @@ namespace Diva.Utilities
         public static readonly Color NormalColor = Color.White;
         public static readonly Color BrakeColor = Color.Red;
         public const float DefaultLineWidth = 5.0f;
+        public const float TrackTargetRadius = 15.0f;
 
         public Color LineColor { get; set; } = NormalColor;
         public Brush TextBrush { get; set; } = Brushes.DarkBlue;
@@ -38,7 +39,8 @@ namespace Diva.Utilities
                 if (DistanceOverlay != null)
                     lock (DistanceOverlay)
                         DistanceOverlay.ForceUpdate();
-                ToolTipText = GetDescriptionText();
+                if (ToolTipMode == MarkerTooltipMode.Always)
+                    ToolTipText = GetDescriptionText();
             }
         }
         private PointLatLng from;
@@ -61,7 +63,8 @@ namespace Diva.Utilities
                 if (DistanceOverlay != null)
                     lock (DistanceOverlay)
                         DistanceOverlay.ForceUpdate();
-                ToolTipText = GetDescriptionText();
+                if (ToolTipMode == MarkerTooltipMode.Always)
+                    ToolTipText = GetDescriptionText();
             }
         }
 
@@ -73,18 +76,39 @@ namespace Diva.Utilities
                 $"{toFixed(Overlay.Control.MapProvider.Projection.GetDistance(From, To) * 1000)}m";
         }
 
-        public DestinationMarker(PointLatLng dest) : base(dest)
+        public DestinationMarker(PointLatLng dest, bool trackmode = false) : base(dest)
         {
-            ToolTip = new GMapBaloonToolTip(this)
+            if (trackmode)
             {
-                Fill = FillBrush,
-                Font = Font,
-                Foreground = TextBrush,
-                Offset = new Point(-10, -20)
-            };
+                ToolTipMode = MarkerTooltipMode.Never;
+            }
+            else
+            {
+                ToolTip = new GMapBaloonToolTip(this)
+                {
+                    Fill = FillBrush,
+                    Font = Font,
+                    Foreground = TextBrush,
+                    Offset = new Point(-10, -20)
+                };
+                ToolTipMode = MarkerTooltipMode.Always;
+            }
             DistanceOverlay.Markers.Add(this);
             From = dest;
-            ToolTipMode = MarkerTooltipMode.Always;
+        }
+
+        public override void OnRender(Graphics g)
+        {
+            base.OnRender(g);
+            if (ToolTipMode == MarkerTooltipMode.Never)
+            {
+                var temp = g.Transform;
+                g.TranslateTransform(LocalPosition.X, LocalPosition.Y);
+                g.FillEllipse(TextBrush,
+                    -TrackTargetRadius + DefaultLineWidth, -TrackTargetRadius + DefaultLineWidth,
+                    TrackTargetRadius + DefaultLineWidth, TrackTargetRadius + DefaultLineWidth);
+                g.Transform = temp;
+            }
         }
 
         public void SetBrakeMode(bool brake)
