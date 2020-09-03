@@ -86,10 +86,10 @@ namespace Diva.Mission
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
-                /*Drone.SetMode("BRAKE");
+                Drone.SetMode("BRAKE");
                 System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
-                return false;*/
+                return false;
             }
             lastPosTime = DateTime.Now;
             lastPos = Drone.Status.Location;
@@ -244,8 +244,7 @@ namespace Diva.Mission
         public void Dispose()
         {
             flyingTargets?.Remove(this);
-            if (State == FlyToState.Flying)
-                Planner.GetPlannerInstance().BackgroundTimer -= DetectDroneStatus;
+            Planner.GetPlannerInstance().BackgroundTimer -= DetectDroneStatus;
             marker?.Dispose();
             marker = null;
         }

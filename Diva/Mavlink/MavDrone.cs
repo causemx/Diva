@@ -632,8 +632,8 @@ namespace Diva.Mavlink
                     (result.type_mask & MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE) != 0 ||
                     target.alt == result.alt) &&
                 ((result.type_mask & MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE) != 0 ||
-                    Math.Abs(target.lat_int - result.lat_int) < 10 &&
-                    Math.Abs(target.lon_int - result.lon_int) < 10);
+                    Math.Abs(1 - (float)result.lat_int / target.lat_int) < 1e-5 &&
+                    Math.Abs(1 - (float)result.lon_int / target.lon_int) < 1e-5);
         }
 
         public bool SetGuidedModeWP(WayPoint dest)
@@ -658,6 +658,23 @@ namespace Diva.Mavlink
                 }
                 else
                     return SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, dest);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+            return false;
+        }
+
+        public bool SetGuidedModeAltitude(float height)
+        {
+            try
+            {
+                return SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, new WayPoint
+                {
+                    Id = (ushort)MAV_CMD.WAYPOINT,
+                    Altitude = height
+                });
             }
             catch (Exception ex)
             {

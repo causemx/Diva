@@ -259,14 +259,14 @@ namespace Diva
                 {
                     if (ActiveDrone.IsOpen)
                     {
-                        // should be handled by ActiveDrone's FlightModeChanged event
-                        /*BeginInvoke((MethodInvoker)delegate
+                        BeginInvoke((MethodInvoker)delegate
                         {
-                            string mode = ActiveDrone.Status.FlightMode.GetName();
+                            // should be handled by ActiveDrone's FlightModeChanged event
+                            /*string mode = ActiveDrone.Status.FlightMode.GetName();
                             if (mode != null)
-                                LBLMode.Text = mode;
+                                LBLMode.Text = mode;*/
                             DroneInfoPanel.UpdateDisplayInfo();
-                        });*/
+                        });
 
                         PointLatLng currentloc = ActiveDrone.Status.Location;
 
