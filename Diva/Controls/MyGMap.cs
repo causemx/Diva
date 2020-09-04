@@ -103,18 +103,61 @@ namespace Diva.Controls
             onPaintThread = Thread.CurrentThread;
 
 			try
-			{
-				base.OnPaint(e);
+            {
+                base.OnPaint(e);
+                // default map scale is blocked by toolstrip
+                if (!IndoorMode) DrawCustomMapScale(e.Graphics);
                 Planner.GetPlannerInstance().HUD.Draw(e.Graphics);
-			}
-			catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
             onPaintThread = null;
 
 			System.Diagnostics.Debug.WriteLine("map draw time " + (DateTime.Now - start).TotalMilliseconds);
 		}
 
-		protected override void OnMouseMove(MouseEventArgs e)
+        public Brush ScaleForeBrush { get; set; } = Brushes.Black;
+        public Brush ScaleBackBrush = Brushes.White;
+        public Font ScaleFont { get; set; } = SystemFonts.SmallCaptionFont;
+        public Point ScalePosition { get; set; } = new Point(10, -100);
+        public Size ScaleSize { get; set; } = new Size(10, 10);
+
+        private void DrawScale(Graphics g, int scale, int rezs, bool fg)
+        {
+            int x = ScalePosition.X, y = ScalePosition.Y, h = ScaleSize.Height;
+            if (x < 0) x += Width;
+            if (y < 0) y += Height;
+            var brush = fg ? ScaleForeBrush : ScaleBackBrush;
+            g.FillRectangle(brush, x, y, rezs, h);
+            g.DrawString(scale > 1000 ? $"{scale / 1000}km" : $"{scale}m",
+                ScaleFont, ScaleForeBrush, x + rezs, y + h + 1);
+        }
+
+        private void DrawCustomMapScale(Graphics g)
+        {
+            double rez = MapProvider.Projection.GetGroundResolution((int)Zoom, Position.Lat);
+            int maxw = Width / 3, minw = 20;
+            int scale = 10000000, rezs;
+            bool minproof = true;
+
+            do
+            {
+                scale /= 2;
+                rezs = (int)(scale / rez);
+                if (minw > rezs) break;
+                if (maxw > rezs) DrawScale(g, scale, rezs, false);
+                minproof = false;
+                scale /= 5;
+                rezs = (int)(scale / rez);
+                if (minw > rezs) break;
+                if (maxw > rezs) DrawScale(g, scale, rezs, true);
+                minproof = false;
+            } while (scale > 1);
+            if (minproof) DrawScale(g, scale, rezs, true);
+            DrawScale(g, 0, 0, true);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
 		{
 			try
 			{

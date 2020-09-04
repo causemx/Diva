@@ -665,23 +665,6 @@ namespace Diva.Mavlink
             }
             return false;
         }
-
-        public bool SetGuidedModeAltitude(float height)
-        {
-            try
-            {
-                return SetPositionTargetGlobalInt(MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, new WayPoint
-                {
-                    Id = (ushort)MAV_CMD.WAYPOINT,
-                    Altitude = height
-                });
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-            return false;
-        }
         #endregion Waypoints, RallyPoints and Fencepoints
     }
 }
