@@ -119,42 +119,43 @@ namespace Diva.Controls
         public Brush ScaleForeBrush { get; set; } = Brushes.Black;
         public Brush ScaleBackBrush = Brushes.White;
         public Font ScaleFont { get; set; } = SystemFonts.SmallCaptionFont;
-        public Point ScalePosition { get; set; } = new Point(10, -100);
-        public Size ScaleSize { get; set; } = new Size(10, 10);
+        public Point ScalePosition { get; set; } = new Point(10, -50);
+        public Size ScaleSize { get; set; } = new Size(20, 10);
 
-        private void DrawScale(Graphics g, int scale, int rezs, bool fg)
+        private void DrawScale(Graphics g, int x, int y, int scale, int rezs, bool fg)
         {
-            int x = ScalePosition.X, y = ScalePosition.Y, h = ScaleSize.Height;
-            if (x < 0) x += Width;
-            if (y < 0) y += Height;
             var brush = fg ? ScaleForeBrush : ScaleBackBrush;
-            g.FillRectangle(brush, x, y, rezs, h);
+            g.FillRectangle(brush, x, y, rezs, ScaleSize.Height);
             g.DrawString(scale > 1000 ? $"{scale / 1000}km" : $"{scale}m",
-                ScaleFont, ScaleForeBrush, x + rezs, y + h + 1);
+                ScaleFont, ScaleForeBrush, x + rezs - 5, y + ScaleSize.Height + 1);
         }
 
         private void DrawCustomMapScale(Graphics g)
         {
             double rez = MapProvider.Projection.GetGroundResolution((int)Zoom, Position.Lat);
-            int maxw = Width / 3, minw = 20;
+            int maxw = Width / 3, minw = ScaleSize.Width;
             int scale = 10000000, rezs;
             bool minproof = true;
+            int x = ScalePosition.X, y = ScalePosition.Y;
+            if (x < 0) x += Width;
+            if (y < 0) y += Height;
 
             do
             {
                 scale /= 2;
                 rezs = (int)(scale / rez);
                 if (minw > rezs) break;
-                if (maxw > rezs) DrawScale(g, scale, rezs, false);
+                if (maxw > rezs) DrawScale(g, x, y, scale, rezs, false);
                 minproof = false;
                 scale /= 5;
                 rezs = (int)(scale / rez);
                 if (minw > rezs) break;
-                if (maxw > rezs) DrawScale(g, scale, rezs, true);
+                if (maxw > rezs) DrawScale(g, x, y, scale, rezs, true);
                 minproof = false;
             } while (scale > 1);
-            if (minproof) DrawScale(g, scale, rezs, true);
-            DrawScale(g, 0, 0, true);
+            if (minproof) DrawScale(g, x, y, scale, rezs, true);
+            g.DrawString(scale > 500 ? "0km" : "0m",
+                ScaleFont, ScaleForeBrush, x - 5, y + ScaleSize.Height + 1);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -275,8 +276,9 @@ namespace Diva.Controls
 
         private void CacheSelection()
         {
-            var cache = GMaps.Instance.PrimaryCache as GMap.NET.CacheProviders.SQLitePureImageCache;
-            if (cache == null) return;
+            if (!(GMaps.Instance.PrimaryCache is
+                GMap.NET.CacheProviders.SQLitePureImageCache cache))
+                return;
             RectLatLng sel = SelectedArea;
             if (sel.IsEmpty) return;
             //int zmax = MapProvider.MaxZoom ?? 20;

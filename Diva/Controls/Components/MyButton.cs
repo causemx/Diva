@@ -128,14 +128,54 @@ namespace Diva.Controls.Components
         [Browsable(true)]
         public Color ClickBackColor { get; set; }
 
+        private Image _CheckedImage;
+        private Color _CheckedForeColor;
+        private Color _CheckedBackColor;
+        private string _CheckedText;
         [Browsable(true)]
-        public Image CheckedImage { get; set; }
+        public Image CheckedImage
+        {
+            get => _CheckedImage;
+            set
+            {
+                _CheckedImage = value;
+                if (Checked)
+                    base.Image = value;
+            }
+        }
         [Browsable(true)]
-        public Color CheckedForeColor { get; set; }
+        public Color CheckedForeColor
+        {
+            get => _CheckedForeColor;
+            set
+            {
+                _CheckedForeColor = value;
+                if (Checked)
+                    base.ForeColor = value;
+            }
+        }
         [Browsable(true)]
-        public Color CheckedBackColor { get; set; }
+        public Color CheckedBackColor
+        {
+            get => _CheckedBackColor;
+            set
+            {
+                _CheckedBackColor = value;
+                if (Checked)
+                    base.BackColor = value;
+            }
+        }
         [Browsable(true)]
-        public String CheckedText { get; set; }
+        public string CheckedText
+        {
+            get => _CheckedText;
+            set
+            {
+                _CheckedText = value;
+                if (Checked)
+                    base.Text = value;
+            }
+        }
 
         private string _Text;
         public new string Text

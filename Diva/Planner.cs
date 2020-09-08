@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using static MAVLink;
+using MyTSButton = Diva.Controls.Components.MyTSButton;
 
 namespace Diva
 {
@@ -215,7 +216,7 @@ namespace Diva
                 return (float.NaN, float.NaN, float.NaN);
             };
 
-            SetupExtraButtons();
+            SetupMIRDC();
 
             mainThread = BackgroundLoop.Start(MainLoop);
         }
@@ -3047,7 +3048,7 @@ namespace Diva
             }
         }
 
-        private ToolStripButton BtnFullCtrl = new Controls.Components.MyTSButton
+        private MyTSButton BtnFullCtrl = new MyTSButton
         {
             AutoSize = false,
             CheckedText = Strings.BtnSimplifiedControlText,
@@ -3061,7 +3062,7 @@ namespace Diva
             get => BtnFlyTo.Checked;
             set => BtnFlyTo.Checked = value;
         }
-        private ToolStripButton BtnFlyTo = new Controls.Components.MyTSButton
+        private MyTSButton BtnFlyTo = new MyTSButton
         {
             AutoSize = false,
             CheckedForeColor = Color.Red,
@@ -3071,12 +3072,14 @@ namespace Diva
             Text = Strings.BtnFlyToText,
             Width = 80,
         };
-        private ToolStripButton BtnTrack = new Controls.Components.MyTSButton
+        private MyTSButton BtnTrack = new MyTSButton
         {
             AutoSize = false,
             Height = 80,
             Text = "Track",
             Width = 80,
+            CheckedText = "Tracking",
+            CheckedForeColor = Color.Green
         };
 
         private int tsMargin;
@@ -3099,7 +3102,7 @@ namespace Diva
             return true;
         }
 
-        private void SetupExtraButtons()
+        private void SetupMIRDC()
         {
             TSMainPanel.MaximumSize = TSMainPanel.Size;
             tsMargin = Map.Width - TSMainPanel.Width;
@@ -3157,43 +3160,66 @@ namespace Diva
 
             BtnFullCtrl.CheckedChanged += (o, e) => FullControl = BtnFullCtrl.Checked;
             TSMainPanel.Items.Add(BtnFullCtrl);
-
-            BtnFlyTo.CheckedChanged += (o, e) =>
-            {
-                if (FlyToClicked)
-                {
-                    if (!IsActiveDroneReady())
-                    {
-                        FlyToClicked = false;
-                        return;
-                    }
-                    CurrentFlyTo = new FlyTo(ActiveDrone);
-                }
-                else if (CurrentFlyTo != null)
-                    CurrentFlyTo = null;
-            };
+            BtnFlyTo.CheckedChanged += BtnFlyTo_Clicked;
             TSMainPanel.Items.Add(BtnFlyTo);
-
-            BtnTrack.Click += (o, e) =>
-            {
-                using (var form = new TrackerDialog(OnlineDrones, ActiveDrone))
-                {
-                    if (!IsActiveDroneReady()) return;
-                    if (OnlineDrones.Count <= 1)
-                    {
-                        MessageBox.Show("No available track source");
-                        return;
-                    }
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        new FlyTo(ActiveDrone, true).StartTracking(
-                            form.Target, form.Distance, form.BearingAngle);
-                    }
-                }
-            };
+            BtnTrack.Click += BtnTrack_Clicked;
             TSMainPanel.Items.Add(BtnTrack);
 
             bwIdx = TSMainPanel.Items.Count;
+        }
+
+        private void BtnFlyTo_Clicked(object sender, EventArgs e)
+        {
+            if (FlyToClicked)
+            {
+                if (!IsActiveDroneReady())
+                {
+                    FlyToClicked = false;
+                    return;
+                }
+                CurrentFlyTo = new FlyTo(ActiveDrone);
+            }
+            else if (CurrentFlyTo != null)
+                CurrentFlyTo = null;
+        }
+
+        private void BtnTrack_Clicked(object sender, EventArgs e)
+        {
+            using (var form = new TrackerDialog(OnlineDrones, ActiveDrone))
+            {
+                if (!IsActiveDroneReady()) return;
+                if (OnlineDrones.Count <= 1)
+                {
+                    MessageBox.Show("No available track source");
+                    return;
+                }
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    var f = new FlyTo(ActiveDrone, true);
+                    if (f.StartTracking(form.Target, form.Distance, form.BearingAngle))
+                    {
+                        BtnTrack.Checked = true;
+                        f.TrackUpdate += (o, r) => BeginInvoke((MethodInvoker)(() =>
+                        {
+                            if (f.Drone == ActiveDrone)
+                            {
+                                BtnTrack.CheckedForeColor =
+                                    r && BtnTrack.CheckedForeColor == Color.Green ?
+                                    Color.Red : Color.Green;
+                            }
+                                
+                        }));
+                        f.TrackStopped += (o, v) => BeginInvoke((MethodInvoker)(() =>
+                        {
+                            if (f.Drone == ActiveDrone)
+                            {
+                                BtnTrack.Checked = false;
+                                BtnTrack.CheckedForeColor = Color.Green;
+                            }
+                        }));
+                    }
+                }
+            }
         }
         #endregion
     }

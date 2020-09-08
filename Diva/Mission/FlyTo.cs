@@ -105,6 +105,8 @@ namespace Diva.Mission
             TrackDistance > 0.01 ? TrackTarget.Status.Location
                 .OffsetAngleDistance(TrackBearing, TrackDistance) :
             TrackTarget.Status.Location;
+        public event EventHandler<bool> TrackUpdate;
+        public event EventHandler TrackStopped;
 
         private bool CheckTrackUpdate()
         {
@@ -138,6 +140,7 @@ namespace Diva.Mission
                 return false;
             }
             RegisterDroneFlight();
+            TrackUpdate?.Invoke(this, false);
             return true;
         }
 
@@ -192,6 +195,7 @@ namespace Diva.Mission
                             });
                         }
                         marker.From = Drone.Status.Location;
+                        TrackUpdate?.Invoke(this, Reached);
                         return;
                     }
                     else if (!Reached)
@@ -247,6 +251,8 @@ namespace Diva.Mission
             Planner.GetPlannerInstance().BackgroundTimer -= DetectDroneStatus;
             marker?.Dispose();
             marker = null;
+            if (TrackMode)
+                TrackStopped?.Invoke(this, null);
         }
     }
 }

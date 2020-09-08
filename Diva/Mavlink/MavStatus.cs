@@ -96,8 +96,6 @@ namespace Diva.Mavlink
         public MAV_TYPE APType { get; set; } = 0;
         public MAV_AUTOPILOT APName { get; set; } = 0;
 
-		public mavlink_mission_item_t GuidedMode = new mavlink_mission_item_t();
-
 		public Int64 TimeOffset_ns { get; set; }
 	}
 
@@ -168,5 +166,7 @@ namespace Diva.Mavlink
         public bool MissionIntSupport { get => (Capabilities & (ulong)MAV_PROTOCOL_CAPABILITY.MISSION_INT) != 0; }
 
         public List<Mission.WayPoint> Mission { get; set; } = new List<Mission.WayPoint>();
+
+        public mavlink_mission_item_t GuidedMode = new mavlink_mission_item_t();
     }
 }

@@ -363,6 +363,10 @@ namespace Diva
             // TSBtnConnect
             // 
             resources.ApplyResources(this.TSBtnConnect, "TSBtnConnect");
+            this.TSBtnConnect.CheckedBackColor = System.Drawing.Color.Empty;
+            this.TSBtnConnect.CheckedForeColor = System.Drawing.Color.Empty;
+            this.TSBtnConnect.CheckedImage = null;
+            this.TSBtnConnect.CheckedText = null;
             this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.ClickImage = null;
@@ -379,6 +383,10 @@ namespace Diva
             // TSBtnConfigure
             // 
             resources.ApplyResources(this.TSBtnConfigure, "TSBtnConfigure");
+            this.TSBtnConfigure.CheckedBackColor = System.Drawing.Color.Empty;
+            this.TSBtnConfigure.CheckedForeColor = System.Drawing.Color.Empty;
+            this.TSBtnConfigure.CheckedImage = null;
+            this.TSBtnConfigure.CheckedText = null;
             this.TSBtnConfigure.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.ClickImage = null;
@@ -394,6 +402,10 @@ namespace Diva
             // Btn_Rotation
             // 
             resources.ApplyResources(this.Btn_Rotation, "Btn_Rotation");
+            this.Btn_Rotation.CheckedBackColor = System.Drawing.Color.Empty;
+            this.Btn_Rotation.CheckedForeColor = System.Drawing.Color.Empty;
+            this.Btn_Rotation.CheckedImage = null;
+            this.Btn_Rotation.CheckedText = null;
             this.Btn_Rotation.ClickBackColor = System.Drawing.Color.Empty;
             this.Btn_Rotation.ClickForeColor = System.Drawing.Color.Empty;
             this.Btn_Rotation.ClickImage = null;
@@ -409,6 +421,10 @@ namespace Diva
             // TSBtnTagging
             // 
             resources.ApplyResources(this.TSBtnTagging, "TSBtnTagging");
+            this.TSBtnTagging.CheckedBackColor = System.Drawing.Color.Empty;
+            this.TSBtnTagging.CheckedForeColor = System.Drawing.Color.Empty;
+            this.TSBtnTagging.CheckedImage = null;
+            this.TSBtnTagging.CheckedText = null;
             this.TSBtnTagging.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnTagging.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnTagging.ClickImage = null;
@@ -424,6 +440,10 @@ namespace Diva
             // TSBtnSaveMission
             // 
             resources.ApplyResources(this.TSBtnSaveMission, "TSBtnSaveMission");
+            this.TSBtnSaveMission.CheckedBackColor = System.Drawing.Color.Empty;
+            this.TSBtnSaveMission.CheckedForeColor = System.Drawing.Color.Empty;
+            this.TSBtnSaveMission.CheckedImage = null;
+            this.TSBtnSaveMission.CheckedText = null;
             this.TSBtnSaveMission.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnSaveMission.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnSaveMission.ClickImage = null;
@@ -439,6 +459,10 @@ namespace Diva
             // TSBtnReadMission
             // 
             resources.ApplyResources(this.TSBtnReadMission, "TSBtnReadMission");
+            this.TSBtnReadMission.CheckedBackColor = System.Drawing.Color.Empty;
+            this.TSBtnReadMission.CheckedForeColor = System.Drawing.Color.Empty;
+            this.TSBtnReadMission.CheckedImage = null;
+            this.TSBtnReadMission.CheckedText = null;
             this.TSBtnReadMission.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnReadMission.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnReadMission.ClickImage = null;
@@ -454,6 +478,10 @@ namespace Diva
             // TSBtnCusOverlay
             // 
             resources.ApplyResources(this.TSBtnCusOverlay, "TSBtnCusOverlay");
+            this.TSBtnCusOverlay.CheckedBackColor = System.Drawing.Color.Empty;
+            this.TSBtnCusOverlay.CheckedForeColor = System.Drawing.Color.Empty;
+            this.TSBtnCusOverlay.CheckedImage = null;
+            this.TSBtnCusOverlay.CheckedText = null;
             this.TSBtnCusOverlay.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnCusOverlay.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnCusOverlay.ClickImage = null;
@@ -483,12 +511,16 @@ namespace Diva
             this.Map.MinZoom = 0;
             this.Map.MouseWheelZoomEnabled = true;
             this.Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+            this.Map.MsgWindowOffset = ((System.Drawing.PointF)(resources.GetObject("Map.MsgWindowOffset")));
             this.Map.Name = "Map";
             this.Map.NegativeMode = false;
             this.Map.PolygonsEnabled = true;
             this.Map.RetryLoadTile = 0;
             this.Map.RoutesEnabled = true;
+            this.Map.ScaleFont = new System.Drawing.Font("Microsoft JhengHei UI", 9F);
             this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.Map.ScalePosition = new System.Drawing.Point(10, -50);
+            this.Map.ScaleSize = new System.Drawing.Size(20, 10);
             this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.Map.ShowTileGridLines = false;
             this.Map.Zoom = 15D;
@@ -943,5 +975,5 @@ namespace Diva
 		private MyButton BtnZoomIn;
 		private MyButton BtnMapFocus;
 		private Label LblModeDesc;
-	}
+    }
 }
