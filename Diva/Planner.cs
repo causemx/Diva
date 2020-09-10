@@ -275,6 +275,8 @@ namespace Diva
                         {
                             UpdateMapPosition(currentloc);
                         }
+
+                        AltitudeControl.Check();
                     }
                     UpdateMapItems();
                     BackgroundTimer?.Invoke(this, null);
@@ -2789,6 +2791,9 @@ namespace Diva
         {
             try
             {
+                // altitude control panel
+                AltitudeControlPanel.SetSource(ActiveDrone);
+
                 // overlay marks has to be touched for updating
                 if (Overlays.Routes.Markers.Count > 0)
                     BeginInvoke((MethodInvoker)delegate
@@ -2900,6 +2905,7 @@ namespace Diva
                 DroneMission.RemoveMission(drone);
                 FlyTo.DropFlight(drone);
                 AltitudeControl.Remove(drone);
+                AltitudeControlPanel.ClearSource();
                 Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
                     x => (x as GMapDroneMarker).Drone == drone));
             }
@@ -2936,6 +2942,7 @@ namespace Diva
                 var overlay = ActiveDrone.GetOverlay();
                 Map.Overlays.Remove(overlay);
                 Map.Overlays.Add(overlay);
+                AltitudeControlPanel.SetSource(ActiveDrone);
             }
         }
 
@@ -3005,7 +3012,7 @@ namespace Diva
                 BtnVideo.Visible = value;
                 BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left
                     = BtnAltitudeHighest.Left = BtnAltitudeHigher.Left = BtnAltitudeLower.Left
-                    = value ? 184 : 12;
+                    = AltitudeControlPanel.Left = value ? 184 : 12;
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);
 
@@ -3211,6 +3218,11 @@ namespace Diva
         private void BtnAltitudeHighest_Click(object sender, EventArgs e)
         {
             SetTargetAltitude(AltitudeControl.MaxAltitude);
+        }
+
+        private void AltitudeControlPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            SetTargetAltitude(AltitudeControlPanel.PointValue);
         }
 
         private void BtnTrack_Clicked(object sender, EventArgs e)

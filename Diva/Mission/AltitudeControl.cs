@@ -40,7 +40,7 @@ namespace Diva.Mission
                 get
                 {
                     var ac = instances.Find(a => a.Drone == drone);
-                    return ac == null ? drone.Status.Altitude : ac.TargetAltitude;
+                    return ac == null ? drone?.Status.Altitude ?? 0 : ac.TargetAltitude;
                 }
                 set
                 {
@@ -67,9 +67,21 @@ namespace Diva.Mission
             return ac == null ? drone.Status.Altitude : ac.targetAltitude;
         }
 
+        public static bool Has(MavDrone drone)
+            => instances.Any(a => a.Drone == drone);
+        public static void Check()
+            => instances.ForEach(a => a.CheckDroneAltitude());
+
         public static void Remove(MavDrone drone)
         {
             lock (instances) instances.RemoveAll(ac => ac.Drone == drone);
+        }
+
+        public void CheckDroneAltitude()
+        {
+            if (Drone.Status.FlightMode != FlightMode.GUIDED || !Drone.Status.IsArmed
+                || Math.Abs(Drone.Status.Altitude - targetAltitude) < AltitudeTolerance)
+                instances.Remove(this);
         }
 
         public MavDrone Drone { get; private set; }
