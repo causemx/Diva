@@ -636,7 +636,7 @@ namespace Diva.Mavlink
                     Math.Abs(1 - (float)result.lon_int / target.lon_int) < 1e-5);
         }
 
-        public bool SetGuidedModeWP(WayPoint dest)
+        public bool SetGuidedModeWP(WayPoint dest, bool setmode = true)
         {
             if (dest.Altitude == 0 || dest.Latitude == 0 || dest.Longitude == 0)
                 return false;
@@ -646,7 +646,10 @@ namespace Diva.Mavlink
                 dest.Id = (ushort)MAV_CMD.WAYPOINT;
                 // Must be Guided mode.s
                 if (Status.FlightMode != FlightMode.GUIDED)
-                    SetMode("GUIDED");
+                    if (setmode)
+                        SetMode("GUIDED");
+                    else
+                        return false;
                 log.InfoFormat($"SetGuidedModeWP {SysId}:{CompId}" +
                     $" lat {dest.Latitude} lng {dest.Longitude} alt {dest.Altitude}");
                 if (Status.Firmware == Firmwares.ArduPlane)

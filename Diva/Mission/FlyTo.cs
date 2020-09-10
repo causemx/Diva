@@ -123,7 +123,7 @@ namespace Diva.Mission
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
-            });
+            }, false);
         }
 
         public MavDrone TrackTarget { get; private set; }
@@ -221,7 +221,7 @@ namespace Diva.Mission
                                 Latitude = pos.Lat,
                                 Longitude = pos.Lng,
                                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
-                            });
+                            }, false);
                         }
                         marker.From = Drone.Status.Location;
                         TrackUpdate?.Invoke(this, Reached);
