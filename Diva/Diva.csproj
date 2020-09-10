@@ -264,6 +264,7 @@
     <Compile Include="Mavlink\MavStatus.cs" />
     <Compile Include="Mavlink\MavUdpStream.cs" />
     <Compile Include="Mavlink\MavUtlities.cs" />
+    <Compile Include="Mission\AltitudeControl.cs" />
     <Compile Include="Mission\FlyTo.cs" />
     <Compile Include="Mission\Rotation.cs" />
     <Compile Include="Planner.cs">

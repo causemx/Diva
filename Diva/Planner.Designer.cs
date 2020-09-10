@@ -39,6 +39,9 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.BtnAltitudeLower = new Diva.Controls.Components.MyButton();
+            this.BtnAltitudeHigher = new Diva.Controls.Components.MyButton();
+            this.BtnAltitudeHighest = new Diva.Controls.Components.MyButton();
             this.LblModeDesc = new System.Windows.Forms.Label();
             this.BtnZoomOut = new Diva.Controls.Components.MyButton();
             this.BtnZoomIn = new Diva.Controls.Components.MyButton();
@@ -121,6 +124,9 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
+            this.SplitContainer.Panel1.Controls.Add(this.BtnAltitudeLower);
+            this.SplitContainer.Panel1.Controls.Add(this.BtnAltitudeHigher);
+            this.SplitContainer.Panel1.Controls.Add(this.BtnAltitudeHighest);
             this.SplitContainer.Panel1.Controls.Add(this.LblModeDesc);
             this.SplitContainer.Panel1.Controls.Add(this.BtnZoomOut);
             this.SplitContainer.Panel1.Controls.Add(this.BtnZoomIn);
@@ -143,6 +149,48 @@ namespace Diva
             // 
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
+            // 
+            // BtnAltitudeLower
+            // 
+            this.BtnAltitudeLower.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeLower.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeLower.ClickImage = null;
+            resources.ApplyResources(this.BtnAltitudeLower, "BtnAltitudeLower");
+            this.BtnAltitudeLower.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeLower.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeLower.HoverImage = null;
+            this.BtnAltitudeLower.Name = "BtnAltitudeLower";
+            this.BtnAltitudeLower.UseVisualStyleBackColor = true;
+            this.BtnAltitudeLower.Click += new System.EventHandler(this.BtnAltitudeLower_Click);
+            this.BtnAltitudeLower.MouseHover += new System.EventHandler(this.AltitudeButtons_MouseHover);
+            // 
+            // BtnAltitudeHigher
+            // 
+            this.BtnAltitudeHigher.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHigher.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHigher.ClickImage = null;
+            resources.ApplyResources(this.BtnAltitudeHigher, "BtnAltitudeHigher");
+            this.BtnAltitudeHigher.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHigher.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHigher.HoverImage = null;
+            this.BtnAltitudeHigher.Name = "BtnAltitudeHigher";
+            this.BtnAltitudeHigher.UseVisualStyleBackColor = true;
+            this.BtnAltitudeHigher.Click += new System.EventHandler(this.BtnAltitudeHigher_Click);
+            this.BtnAltitudeHigher.MouseHover += new System.EventHandler(this.AltitudeButtons_MouseHover);
+            // 
+            // BtnAltitudeHighest
+            // 
+            this.BtnAltitudeHighest.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHighest.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHighest.ClickImage = null;
+            resources.ApplyResources(this.BtnAltitudeHighest, "BtnAltitudeHighest");
+            this.BtnAltitudeHighest.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHighest.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnAltitudeHighest.HoverImage = null;
+            this.BtnAltitudeHighest.Name = "BtnAltitudeHighest";
+            this.BtnAltitudeHighest.UseVisualStyleBackColor = true;
+            this.BtnAltitudeHighest.Click += new System.EventHandler(this.BtnAltitudeHighest_Click);
+            this.BtnAltitudeHighest.MouseHover += new System.EventHandler(this.AltitudeButtons_MouseHover);
             // 
             // LblModeDesc
             // 
@@ -975,5 +1023,8 @@ namespace Diva
 		private MyButton BtnZoomIn;
 		private MyButton BtnMapFocus;
 		private Label LblModeDesc;
+        private MyButton BtnAltitudeLower;
+        private MyButton BtnAltitudeHigher;
+        private MyButton BtnAltitudeHighest;
     }
 }

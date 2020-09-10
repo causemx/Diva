@@ -31,6 +31,20 @@ namespace Diva.Mission
             flyingTargets = null;
             flytos.ForEach(f => f.Dispose());
         }
+        public static bool UpdateAltitude(MavDrone drone)
+        {
+            bool found = false;
+            flyingTargets.Any(f =>
+            {
+                if (f.Drone == drone)
+                {
+                    f.UpdateAltitude();
+                    found = true;
+                }
+                return found;
+            });
+            return found;
+        }
 
         public PointLatLng To => marker.To;
         public PointLatLng From => marker.From;
@@ -80,7 +94,7 @@ namespace Diva.Mission
             if (!Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = Drone.Status.Altitude, // back to m
+                Altitude = AltitudeControl.TargetAltitudes[Drone],
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
@@ -95,6 +109,21 @@ namespace Diva.Mission
             lastPos = Drone.Status.Location;
             RegisterDroneFlight();
             return true;
+        }
+
+        public bool UpdateAltitude()
+        {
+            if (State != FlyToState.Flying || TrackMode ||
+                    Drone.Status.FlightMode != FlightMode.GUIDED)
+                return false;
+            return Drone.SetGuidedModeWP(new WayPoint
+            {
+                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                Altitude = AltitudeControl.GetActualTarget(Drone),
+                Latitude = To.Lat,
+                Longitude = To.Lng,
+                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
+            });
         }
 
         public MavDrone TrackTarget { get; private set; }
@@ -128,7 +157,7 @@ namespace Diva.Mission
             if (!Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = Drone.Status.Altitude, // back to m
+                Altitude = AltitudeControl.TargetAltitudes[Drone],
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
@@ -188,7 +217,7 @@ namespace Diva.Mission
                             Drone.SetGuidedModeWP(new WayPoint
                             {
                                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                                Altitude = Drone.Status.Altitude, // back to m
+                                Altitude = AltitudeControl.TargetAltitudes[Drone],
                                 Latitude = pos.Lat,
                                 Longitude = pos.Lng,
                                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT

@@ -2899,6 +2899,7 @@ namespace Diva
                 OnlineDrones.Remove(drone);
                 DroneMission.RemoveMission(drone);
                 FlyTo.DropFlight(drone);
+                AltitudeControl.Remove(drone);
                 Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
                     x => (x as GMapDroneMarker).Drone == drone));
             }
@@ -3002,7 +3003,9 @@ namespace Diva
                 BtnWriteWPs.Visible = value;
                 BtnRTL.Visible = value;
                 BtnVideo.Visible = value;
-                BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = value ? 184 : 12;
+                BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left
+                    = BtnAltitudeHighest.Left = BtnAltitudeHigher.Left = BtnAltitudeLower.Left
+                    = value ? 184 : 12;
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);
 
@@ -3181,6 +3184,33 @@ namespace Diva
             }
             else if (CurrentFlyTo != null)
                 CurrentFlyTo = null;
+        }
+
+        private void SetTargetAltitude(float altitude)
+        {
+            if (ActiveDrone != null && ActiveDrone != DummyDrone
+                    && ActiveDrone.Status.IsArmed)
+                AltitudeControl.TargetAltitudes[ActiveDrone] = altitude;
+        }
+
+        private void AltitudeButtons_MouseHover(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnAltitudeLower_Click(object sender, EventArgs e)
+        {
+            SetTargetAltitude(AltitudeControl.TargetAltitudes[ActiveDrone] - 20);
+        }
+
+        private void BtnAltitudeHigher_Click(object sender, EventArgs e)
+        {
+            SetTargetAltitude(AltitudeControl.TargetAltitudes[ActiveDrone] + 20);
+        }
+
+        private void BtnAltitudeHighest_Click(object sender, EventArgs e)
+        {
+            SetTargetAltitude(AltitudeControl.MaxAltitude);
         }
 
         private void BtnTrack_Clicked(object sender, EventArgs e)
