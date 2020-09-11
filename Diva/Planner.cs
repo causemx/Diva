@@ -2948,20 +2948,20 @@ namespace Diva
 
         public void UpdateDroneMode(object obj, FlightMode mode)
         {
-            void updateText()
+            void updateText(MavDrone drone)
             {
                 string modename = mode.GetName();
-                LblMode.Text = modename;
+                LblMode.Text = drone.Status.IsArmed ? modename : "DISARMED";
                 int modeidx = ComBoxModeSwitch.Items.IndexOf(mode);
                 if (ComBoxModeSwitch.SelectedIndex != modeidx)
                     ComBoxModeSwitch.SelectedIndex = modeidx;
             }
-            if (obj as MavDrone == ActiveDrone)
+            if (obj is MavDrone d && d == ActiveDrone)
             {
                 if (InvokeRequired)
-                    BeginInvoke((MethodInvoker)delegate { updateText(); });
+                    BeginInvoke((MethodInvoker)delegate { updateText(d); });
                 else
-                    updateText();
+                    updateText(d);
             }
         }
 

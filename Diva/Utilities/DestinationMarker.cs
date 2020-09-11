@@ -70,10 +70,11 @@ namespace Diva.Utilities
 
         private string GetDescriptionText()
         {
-            string toFixed(double d, int digits = 5) { return d.ToString($"N{digits}"); }
+            string toFixed(double d, int digits = 1) { return d.ToString($"N{digits}"); }
             if (Overlay == null) return "";
+            var distkm = Overlay.Control.MapProvider.Projection.GetDistance(From, To);
             return $"To: ({toFixed(To.Lat)},{toFixed(To.Lng)})\nDistance: " +
-                $"{toFixed(Overlay.Control.MapProvider.Projection.GetDistance(From, To) * 1000)}m";
+                (distkm > 10 ? $"{toFixed(distkm, 3)}km" : $"{toFixed(distkm * 1000)}m");
         }
 
         public DestinationMarker(PointLatLng dest, bool trackmode = false) : base(dest)

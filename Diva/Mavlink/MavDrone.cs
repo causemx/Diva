@@ -102,12 +102,12 @@ namespace Diva.Mavlink
             if (hb.type != (byte)MAV_TYPE.GCS)
             {
                 var mode = (FlightMode)hb.custom_mode;
-                if (Status.FlightMode != mode)
-                {
-                    Status.FlightMode = mode;
+                bool armed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
+                bool modechange = Status.FlightMode != mode || armed != Status.IsArmed;
+                Status.FlightMode = mode;
+                Status.IsArmed = armed;
+                if (modechange)
                     FlightModeChanged?.Invoke(this, mode);
-                }
-                Status.IsArmed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
                 var state = (MAV_STATE)hb.system_status;
                 if (Status.State != state)
                 {
