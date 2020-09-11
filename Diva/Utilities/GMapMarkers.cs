@@ -88,7 +88,7 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapDroneMarker : GMapMarker
 	{
-		public Bitmap Icon => Resources.icon_drone_4axis;
+		public Bitmap Icon = Resources.icon_drone_4axis;
         public readonly MavDrone Drone;
 
 		float Yaw => Drone.Status.Yaw;
@@ -98,13 +98,24 @@ namespace Diva.Utilities
 		public float warn = -1;
 		public float danger = -1;
 
-		public GMapDroneMarker(MavDrone drone)
+        private bool IsShip => Drone.Name.StartsWith("ship", StringComparison.InvariantCultureIgnoreCase);
+
+        public GMapDroneMarker(MavDrone drone)
 			: base(drone.Status.Location)
 		{
             Drone = drone;
-			Size = Icon.Size;
-			Icon.SetResolution(100, 100);
-		}
+            if (IsShip)
+            {
+                Icon = Resources.icon_fish_boat;
+                Size = new Size(Icon.Size.Width / 10, Icon.Size.Height / 10);
+                Icon.SetResolution(1000, 1000);
+            }
+            else
+            {
+                Size = Icon.Size;
+                Icon.SetResolution(100, 100);
+            }
+        }
 
 		public override void OnRender(Graphics g)
 		{
@@ -122,25 +133,30 @@ namespace Diva.Utilities
 			catch
 			{
 			}
-			g.DrawLine(new Pen(Color.Green, 2), 0.0f, 0.0f, (float)Math.Cos((CoG - 90) * MathHelper.deg2rad) * length,
-				(float)Math.Sin((CoG - 90) * MathHelper.deg2rad) * length);
-            Pen dashpen = new Pen(Color.Orange, 2)
-            {
-                DashStyle = DashStyle.Dash
-            };
 
-            g.DrawLine(dashpen, 0.0f, 0.0f, (float)Math.Cos((Bearing - 90) * MathHelper.deg2rad) * length,
-				(float)Math.Sin((Bearing - 90) * MathHelper.deg2rad) * length);
-			// anti NaN
-			try
+            if (!IsShip)
+            {
+                g.DrawLine(new Pen(Color.Green, 2), 0.0f, 0.0f, (float)Math.Cos((CoG - 90) * MathHelper.deg2rad) * length,
+                    (float)Math.Sin((CoG - 90) * MathHelper.deg2rad) * length);
+                Pen dashpen = new Pen(Color.Orange, 2)
+                {
+                    DashStyle = DashStyle.Dash
+                };
+
+                g.DrawLine(dashpen, 0.0f, 0.0f, (float)Math.Cos((Bearing - 90) * MathHelper.deg2rad) * length,
+                    (float)Math.Sin((Bearing - 90) * MathHelper.deg2rad) * length);
+            }
+            // anti NaN
+            try
 			{
-				g.RotateTransform(Yaw);
+                if (!IsShip)
+				    g.RotateTransform(Yaw);
 			}
 			catch
 			{
 			}
 
-			g.DrawImageUnscaled(Icon, Icon.Width / -2 + 2, Icon.Height / -2);
+			g.DrawImageUnscaled(Icon, Size.Width / -2 + 2, Size.Height / -2);
 
 
 			// Show name on the drone icon.
@@ -152,7 +168,7 @@ namespace Diva.Utilities
                 do
                 {
                     name = name.Substring(0, name.Length - 1);
-                } while ((textSize = g.MeasureString(name, font)).Width > Icon.Width);
+                } while ((textSize = g.MeasureString(name, font)).Width > Size.Width);
                 name += "...";
                 
             }

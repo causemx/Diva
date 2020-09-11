@@ -1391,6 +1391,7 @@
     <Content Include="LibVlc\plugins\visualization\libvisual_plugin.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\icon_fish_boat.png" />
     <None Include="Resources\compass.png" />
     <None Include="Resources\hud.png" />
     <None Include="Resources\icon-zoom-out-active.png" />
