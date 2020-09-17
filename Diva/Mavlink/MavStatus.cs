@@ -30,7 +30,7 @@ namespace Diva.Mavlink
 
         public double Latitude { get; set; }
 		public double Longitude { get; set; }
-        public GMap.NET.PointLatLng Location => new GMap.NET.PointLatLng(Latitude, Longitude);
+        public virtual GMap.NET.PointLatLng Location => new GMap.NET.PointLatLng(Latitude, Longitude);
         public virtual float Altitude { get; set; }
         public double AbsoluteAltitude { get; set; }
 

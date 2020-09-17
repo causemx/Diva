@@ -3227,10 +3227,15 @@ namespace Diva
 
         private void BtnTrack_Clicked(object sender, EventArgs e)
         {
+            if (!IsActiveDroneReady()) return;
+            if (!BaseLocation.Initialized && DialogResult.Yes !=
+                MessageBox.Show(
+                    "Cannot select computer as track source. Continue anyway?",
+                    "Location API not ready yet", MessageBoxButtons.YesNo))
+                return;
             using (var form = new TrackerDialog(OnlineDrones, ActiveDrone))
             {
-                if (!IsActiveDroneReady()) return;
-                if (OnlineDrones.Count <= 1)
+                if (form.Sources.Count < 1)
                 {
                     MessageBox.Show("No available track source");
                     return;

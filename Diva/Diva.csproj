@@ -106,6 +106,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\MissionPlanner-openglmap\bin\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Device" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Reactive.Core, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -298,6 +299,7 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\BackgroundLoop.cs" />
+    <Compile Include="Utilities\BaseLocation.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
     <Compile Include="Utilities\DefaultValues.cs" />
     <Compile Include="Utilities\DestinationMarker.cs" />

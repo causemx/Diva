@@ -626,14 +626,17 @@ namespace Diva.Mavlink
 
             WaitPacket(MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT, null, 1000);
             var result = WaitPacket(MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT, null, 1000).ToStructure<mavlink_position_target_global_int_t>();
+            bool altEquals() { return (result.type_mask & MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE) != 0 || target.alt == result.alt; }
+            bool coordEquals(double tolerance)
+            {
+                return (result.type_mask & MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE) != 0 ||
+                        Math.Abs(1 - (float)result.lat_int / target.lat_int) < tolerance &&
+                        Math.Abs(1 - (float)result.lon_int / target.lon_int) < tolerance;
+            }
+            bool ae = altEquals(), ce = coordEquals(2e-5);
             return target.type_mask == result.type_mask &&
                 // frame type changed results in altitude not comparable
-                (target.coordinate_frame != result.coordinate_frame ||
-                    (result.type_mask & MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE) != 0 ||
-                    target.alt == result.alt) &&
-                ((result.type_mask & MAVLINK_SET_POS_TYPE_MASK_POS_IGNORE) != 0 ||
-                    Math.Abs(1 - (float)result.lat_int / target.lat_int) < 1e-5 &&
-                    Math.Abs(1 - (float)result.lon_int / target.lon_int) < 1e-5);
+                (target.coordinate_frame != result.coordinate_frame || ae) && ce;
         }
 
         public bool SetGuidedModeWP(WayPoint dest, bool setmode = true)

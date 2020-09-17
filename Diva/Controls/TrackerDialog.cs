@@ -12,16 +12,18 @@ namespace Diva.Controls
     {
         private Bitmap PBoxBackground;
         private MavDrone Active;
-        private List<MavDrone> Sources;
+        private List<MavDrone> sources;
+        public  System.Collections.ObjectModel.ReadOnlyCollection<MavDrone> Sources => sources.AsReadOnly();
 
         public TrackerDialog(List<MavDrone> drones, MavDrone active)
         {
             InitializeComponent();
-            Sources = drones.FindAll(d => d != active);
+            sources = drones.FindAll(d => d != active);
+            if (BaseLocation.Ready) sources.Add(BaseLocation.AsDrone);
             Active = active;
         }
 
-        public MavDrone Target => Sources[CBTrackingTarget.SelectedIndex];
+        public MavDrone Target => sources[CBTrackingTarget.SelectedIndex];
 
         public double BearingAngle
         {
@@ -57,7 +59,7 @@ namespace Diva.Controls
         {
             if (RBtnTrackRelative.Checked)
             {
-                PLL src = Sources[CBTrackingTarget.SelectedIndex].Status.Location;
+                PLL src = sources[CBTrackingTarget.SelectedIndex].Status.Location;
                 PLL cur = Active.Status.Location;
                 TBoxBearingAngle.Text = src.BearingTo(cur).ToString();
                 TBoxDistance.Text = src.DistanceTo(cur).ToString();
@@ -111,7 +113,7 @@ namespace Diva.Controls
         private void TrackerDialog_Shown(object sender, EventArgs e)
         {
             CBTrackingTarget.Items.Clear();
-            Sources.ForEach(s => CBTrackingTarget.Items.Add(s.Name));
+            sources.ForEach(s => CBTrackingTarget.Items.Add(s.Name));
             CBTrackingTarget.SelectedIndex = 0;
             var angle = BearingAngle;
             if (PBoxBackground == null)
