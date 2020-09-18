@@ -474,4 +474,13 @@ Destination</value>
   <data name="MsgActiveUnavailableOrNotReady" xml:space="preserve">
     <value>Active drone is unavailable or not ready to fly.</value>
   </data>
+  <data name="StrBase" xml:space="preserve">
+    <value>[Base]</value>
+  </data>
+  <data name="MsgLocationApiNotReady" xml:space="preserve">
+    <value>Cannot select computer as track source. Continue anyway?</value>
+  </data>
+  <data name="MsgLocationApiNotReadyTitle" xml:space="preserve">
+    <value>Location API not ready yet</value>
+  </data>
 </root>

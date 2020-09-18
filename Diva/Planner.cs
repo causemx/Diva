@@ -3011,7 +3011,6 @@ namespace Diva
                 BtnRTL.Visible = value;
                 BtnVideo.Visible = value;
                 BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left
-                    = BtnAltitudeHighest.Left = BtnAltitudeHigher.Left = BtnAltitudeLower.Left
                     = AltitudeControlPanel.Left = value ? 184 : 12;
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);
@@ -3193,45 +3192,20 @@ namespace Diva
                 CurrentFlyTo = null;
         }
 
-        private void SetTargetAltitude(float altitude)
+        private void AltitudeControlPanel_MouseClick(object sender, MouseEventArgs e)
         {
             if (ActiveDrone != null && ActiveDrone != DummyDrone
                     && ActiveDrone.Status.IsArmed)
-                AltitudeControl.TargetAltitudes[ActiveDrone] = altitude;
-        }
-
-        private void AltitudeButtons_MouseHover(object sender, EventArgs e)
-        {
-
-        }
-
-        private void BtnAltitudeLower_Click(object sender, EventArgs e)
-        {
-            SetTargetAltitude(AltitudeControl.TargetAltitudes[ActiveDrone] - 20);
-        }
-
-        private void BtnAltitudeHigher_Click(object sender, EventArgs e)
-        {
-            SetTargetAltitude(AltitudeControl.TargetAltitudes[ActiveDrone] + 20);
-        }
-
-        private void BtnAltitudeHighest_Click(object sender, EventArgs e)
-        {
-            SetTargetAltitude(AltitudeControl.MaxAltitude);
-        }
-
-        private void AltitudeControlPanel_MouseClick(object sender, MouseEventArgs e)
-        {
-            SetTargetAltitude(AltitudeControlPanel.PointValue);
+                AltitudeControl.TargetAltitudes[ActiveDrone]
+                    = AltitudeControlPanel.PointValue;
         }
 
         private void BtnTrack_Clicked(object sender, EventArgs e)
         {
             if (!IsActiveDroneReady()) return;
             if (!BaseLocation.Initialized && DialogResult.Yes !=
-                MessageBox.Show(
-                    "Cannot select computer as track source. Continue anyway?",
-                    "Location API not ready yet", MessageBoxButtons.YesNo))
+                MessageBox.Show(Strings.MsgLocationApiNotReady,
+                    Strings.MsgLocationApiNotReadyTitle, MessageBoxButtons.YesNo))
                 return;
             using (var form = new TrackerDialog(OnlineDrones, ActiveDrone))
             {

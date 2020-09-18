@@ -471,4 +471,13 @@
   <data name="MsgActiveUnavailableOrNotReady" xml:space="preserve">
     <value>當前無人機不存在或非可飛行模式</value>
   </data>
+  <data name="StrBase" xml:space="preserve">
+    <value>[地面站]</value>
+  </data>
+  <data name="MsgLocationApiNotReady" xml:space="preserve">
+    <value>無法設定電腦為跟隨目標，仍要繼續？</value>
+  </data>
+  <data name="MsgLocationApiNotReadyTitle" xml:space="preserve">
+    <value>定位API尚未就續</value>
+  </data>
 </root>

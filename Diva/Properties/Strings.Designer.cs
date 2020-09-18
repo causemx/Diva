@@ -721,6 +721,24 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot select computer as track source. Continue anyway?.
+        /// </summary>
+        public static string MsgLocationApiNotReady {
+            get {
+                return ResourceManager.GetString("MsgLocationApiNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location API not ready yet.
+        /// </summary>
+        public static string MsgLocationApiNotReadyTitle {
+            get {
+                return ResourceManager.GetString("MsgLocationApiNotReadyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Low voltage level, Starting return to launch..
         /// </summary>
         public static string MsgLowVoltageWarning {
@@ -969,6 +987,15 @@ namespace Diva.Properties {
         public static string StrAnonymousAccount {
             get {
                 return ResourceManager.GetString("StrAnonymousAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [Base].
+        /// </summary>
+        public static string StrBase {
+            get {
+                return ResourceManager.GetString("StrBase", resourceCulture);
             }
         }
         

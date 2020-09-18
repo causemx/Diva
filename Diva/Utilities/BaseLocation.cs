@@ -16,7 +16,7 @@ namespace Diva.Utilities
             public override GPoint Location => BaseLocation.Location;
         }
         public readonly static MavDrone AsDrone
-            = new MavDrone(new DroneSetting { Name = "[Base]" }) { Status = new BaseLocationStatus() };
+            = new MavDrone(new DroneSetting { Name = Diva.Properties.Strings.StrBase }) { Status = new BaseLocationStatus() };
 
         private readonly static GeoCoordinateWatcher LocationWatcher = new GeoCoordinateWatcher();
 
