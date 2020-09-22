@@ -19,8 +19,8 @@ namespace Diva.Utilities
         public const float TrackTargetRadius = 15.0f;
 
         public Color LineColor { get; set; } = NormalColor;
-        public Brush TextBrush { get; set; } = Brushes.DarkBlue;
-        public Brush FillBrush { get; set; } = Brushes.CornflowerBlue;
+        public Brush TextBrush { get; set; } = Brushes.White;
+        public Brush FillBrush { get; set; } = Brushes.Navy;
         public float Width = DefaultLineWidth;
         public PointLatLng To
         {
@@ -71,9 +71,11 @@ namespace Diva.Utilities
         private string GetDescriptionText()
         {
             string toFixed(double d, int digits = 1) { return d.ToString($"N{digits}"); }
+            string Lat(double lat) { return toFixed(System.Math.Abs(lat)) + (lat < 0 ? "S" : "N");  }
+            string Lng(double lng) { return toFixed(System.Math.Abs(lng)) + (lng < 0 ? "W" : "E");  }
             if (Overlay == null) return "";
             var distkm = Overlay.Control.MapProvider.Projection.GetDistance(From, To);
-            return $"To: ({toFixed(To.Lat)},{toFixed(To.Lng)})\nDistance: " +
+            return $"To: ({Lat(To.Lat)},{Lng(To.Lng)})\nDistance: " +
                 (distkm > 10 ? $"{toFixed(distkm, 3)}km" : $"{toFixed(distkm * 1000)}m");
         }
 

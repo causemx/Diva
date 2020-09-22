@@ -21,9 +21,7 @@ namespace Diva.Mission
                     {
                         var d = ac.Drone;
                         if (d == null || d.Status.FlightMode != FlightMode.GUIDED
-                                || d.Status.State != MAVLink.MAV_STATE.ACTIVE
-                                || Math.Abs(d.Status.Altitude - ac.targetAltitude)
-                                    < AltitudeTolerance)
+                                || d.Status.State != MAVLink.MAV_STATE.ACTIVE)
                             ac.IsTargeting = false;
                     }
                 });
@@ -69,19 +67,10 @@ namespace Diva.Mission
 
         public static bool Has(MavDrone drone)
             => instances.Any(a => a.Drone == drone);
-        public static void Check()
-            => instances.ForEach(a => a.CheckDroneAltitude());
 
         public static void Remove(MavDrone drone)
         {
             lock (instances) instances.RemoveAll(ac => ac.Drone == drone);
-        }
-
-        public void CheckDroneAltitude()
-        {
-            if (Drone.Status.FlightMode != FlightMode.GUIDED || !Drone.Status.IsArmed
-                || Math.Abs(Drone.Status.Altitude - targetAltitude) < AltitudeTolerance)
-                instances.Remove(this);
         }
 
         public MavDrone Drone { get; private set; }

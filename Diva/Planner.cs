@@ -275,8 +275,6 @@ namespace Diva
                         {
                             UpdateMapPosition(currentloc);
                         }
-
-                        AltitudeControl.Check();
                     }
                     UpdateMapItems();
                     BackgroundTimer?.Invoke(this, null);
@@ -3196,8 +3194,13 @@ namespace Diva
         {
             if (ActiveDrone != null && ActiveDrone != DummyDrone
                     && ActiveDrone.Status.IsArmed)
-                AltitudeControl.TargetAltitudes[ActiveDrone]
-                    = AltitudeControlPanel.PointValue;
+            {
+                if (e.Button == MouseButtons.Left)
+                    AltitudeControl.TargetAltitudes[ActiveDrone]
+                        = AltitudeControlPanel.PointValue;
+                else if (e.Button == MouseButtons.Right)
+                    AltitudeControl.Remove(ActiveDrone);
+            }
         }
 
         private void BtnTrack_Clicked(object sender, EventArgs e)
