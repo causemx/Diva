@@ -8,10 +8,12 @@ namespace Diva.Utilities
 {
     class DestinationMarker : GMapMarker
     {
-        public static GMapOverlay overlay;
-        public static GMapOverlay DistanceOverlay
-            => overlay ?? (overlay = Planner.GetPlannerInstance()?.GMapControl?.Overlays.First(o => o.Id == "Commons"));
+        private static GMapOverlay overlay;
+        public static GMapOverlay DistanceOverlay => overlay ??
+            (overlay = Planner.GetPlannerInstance()?.GMapControl?.
+                Overlays.First(o => o.Id == "Commons"));
         public static Font Font = new Font(FontFamily.GenericMonospace, SystemFonts.DefaultFont.Size, FontStyle.Bold);
+        public static Size MarkerSize = new Size(60, 60);
 
         public static readonly Color NormalColor = Color.White;
         public static readonly Color BrakeColor = Color.Red;
@@ -68,12 +70,16 @@ namespace Diva.Utilities
             }
         }
 
+        private bool Reached = false;
+        public void SetReached() { Reached = true; }
+
         private string GetDescriptionText()
         {
             string toFixed(double d, int digits = 1) { return d.ToString($"N{digits}"); }
-            string Lat(double lat) { return toFixed(System.Math.Abs(lat)) + (lat < 0 ? "S" : "N");  }
-            string Lng(double lng) { return toFixed(System.Math.Abs(lng)) + (lng < 0 ? "W" : "E");  }
+            string Lat(double lat) { return toFixed(System.Math.Abs(lat), 2) + (lat < 0 ? " S" : " N");  }
+            string Lng(double lng) { return toFixed(System.Math.Abs(lng), 2) + (lng < 0 ? " W" : " E");  }
             if (Overlay == null) return "";
+            if (Reached) return $"To: ({Lat(To.Lat)},{Lng(To.Lng)})\nReached";
             var distkm = Overlay.Control.MapProvider.Projection.GetDistance(From, To);
             return $"To: ({Lat(To.Lat)},{Lng(To.Lng)})\nDistance: " +
                 (distkm > 10 ? $"{toFixed(distkm, 3)}km" : $"{toFixed(distkm * 1000)}m");
@@ -98,6 +104,7 @@ namespace Diva.Utilities
             }
             DistanceOverlay.Markers.Add(this);
             From = dest;
+            Size = MarkerSize;
         }
 
         public override void OnRender(Graphics g)

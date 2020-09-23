@@ -4,6 +4,7 @@ using System.Linq;
 using Diva.Mavlink;
 using Diva.Utilities;
 using PointLatLng = GMap.NET.PointLatLng;
+using TTMode = GMap.NET.WindowsForms.MarkerTooltipMode;
 
 namespace Diva.Mission
 {
@@ -23,6 +24,8 @@ namespace Diva.Mission
         public const int TrackUpdatePeriodMS = 5000;
 
         private static List<FlyTo> flyingTargets = new List<FlyTo>();
+        private static bool markerHandlerSet = false;
+
         public static void DropFlight(MavDrone drone)
             => flyingTargets.FindAll(f => f.Drone == drone || f.TrackTarget == drone).ForEach(f => f.Dispose());
         public static void DisposeAll()
@@ -83,6 +86,26 @@ namespace Diva.Mission
             flyingTargets.Add(this);
             State = FlyToState.Flying;
             Planner.GetPlannerInstance().BackgroundTimer += DetectDroneStatus;
+            if (!markerHandlerSet)
+            {
+                markerHandlerSet = true;
+                Planner.GetPlannerInstance().GMapControl.OnMarkerClick += GMapControl_OnMarkerClick;
+            }
+        }
+
+        private static void GMapControl_OnMarkerClick(GMap.NET.WindowsForms.GMapMarker item, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (item is DestinationMarker m)
+            {
+                var f = flyingTargets.Find(t => t.marker == m);
+                if (f != null)
+                    if (f.State != FlyToState.Reached)
+                        f.marker.ToolTipMode =
+                            f.marker.ToolTipMode == TTMode.Always ?
+                                TTMode.Never : TTMode.Always;
+                    else
+                        f.Dispose();
+            }
         }
 
         public bool Start()
@@ -249,6 +272,8 @@ namespace Diva.Mission
                         return;
                     }
                     State = FlyToState.Reached;
+                    marker.SetReached();
+                    marker.To = Drone.Status.Location;
                     p.BackgroundTimer -= DetectDroneStatus;
                     if (ShowReachedMessage)
                         FloatMessage.NewMessage(
@@ -256,8 +281,9 @@ namespace Diva.Mission
                             (int)MAVLink.MAV_SEVERITY.INFO,
                             "FlyTo destination reached.");
                     DestinationReached?.Invoke(this, null);
+                    // do not dispose on reached
                 }
-                else
+                else if (State != FlyToState.Reached)
                 {
                     p.BackgroundTimer -= DetectDroneStatus;
                     if (ShowReachedMessage)
@@ -265,8 +291,8 @@ namespace Diva.Mission
                             Drone.Name,
                             (int)MAVLink.MAV_SEVERITY.NOTICE,
                             "FlyTo canceled.");
+                    Dispose();
                 }
-                Dispose();
             }
             catch (Exception x)
             {
