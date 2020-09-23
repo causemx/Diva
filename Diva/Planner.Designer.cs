@@ -58,11 +58,6 @@ namespace Diva
             this.TSMainPanel = new System.Windows.Forms.ToolStrip();
             this.TSBtnConnect = new Diva.Controls.Components.MyTSButton();
             this.TSBtnConfigure = new Diva.Controls.Components.MyTSButton();
-            this.Btn_Rotation = new Diva.Controls.Components.MyTSButton();
-            this.TSBtnTagging = new Diva.Controls.Components.MyTSButton();
-            this.TSBtnSaveMission = new Diva.Controls.Components.MyTSButton();
-            this.TSBtnReadMission = new Diva.Controls.Components.MyTSButton();
-            this.TSBtnCusOverlay = new Diva.Controls.Components.MyTSButton();
             this.Map = new Diva.Controls.MyGMap();
             this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -374,12 +369,7 @@ namespace Diva
             this.TSMainPanel.ImageScalingSize = new System.Drawing.Size(0, 0);
             this.TSMainPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSBtnConnect,
-            this.TSBtnConfigure,
-            this.Btn_Rotation,
-            this.TSBtnTagging,
-            this.TSBtnSaveMission,
-            this.TSBtnReadMission,
-            this.TSBtnCusOverlay});
+            this.TSBtnConfigure});
             this.TSMainPanel.Name = "TSMainPanel";
             // 
             // TSBtnConnect
@@ -420,101 +410,6 @@ namespace Diva
             this.TSBtnConfigure.Image = global::Diva.Properties.Resources.icon_top_setting;
             this.TSBtnConfigure.Name = "TSBtnConfigure";
             this.TSBtnConfigure.Click += new System.EventHandler(this.BUT_Configure_Click);
-            // 
-            // Btn_Rotation
-            // 
-            resources.ApplyResources(this.Btn_Rotation, "Btn_Rotation");
-            this.Btn_Rotation.CheckedBackColor = System.Drawing.Color.Empty;
-            this.Btn_Rotation.CheckedForeColor = System.Drawing.Color.Empty;
-            this.Btn_Rotation.CheckedImage = null;
-            this.Btn_Rotation.CheckedText = null;
-            this.Btn_Rotation.ClickBackColor = System.Drawing.Color.Empty;
-            this.Btn_Rotation.ClickForeColor = System.Drawing.Color.Empty;
-            this.Btn_Rotation.ClickImage = null;
-            this.Btn_Rotation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Btn_Rotation.ForeColor = System.Drawing.Color.White;
-            this.Btn_Rotation.HoverBackColor = System.Drawing.Color.Empty;
-            this.Btn_Rotation.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.Btn_Rotation.HoverImage = global::Diva.Properties.Resources.icon_top_patrol_active;
-            this.Btn_Rotation.Image = global::Diva.Properties.Resources.icon_top_patrol;
-            this.Btn_Rotation.Name = "Btn_Rotation";
-            this.Btn_Rotation.Click += new System.EventHandler(this.Btn_Rotation_Click);
-            // 
-            // TSBtnTagging
-            // 
-            resources.ApplyResources(this.TSBtnTagging, "TSBtnTagging");
-            this.TSBtnTagging.CheckedBackColor = System.Drawing.Color.Empty;
-            this.TSBtnTagging.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnTagging.CheckedImage = null;
-            this.TSBtnTagging.CheckedText = null;
-            this.TSBtnTagging.ClickBackColor = System.Drawing.Color.Empty;
-            this.TSBtnTagging.ClickForeColor = System.Drawing.Color.Empty;
-            this.TSBtnTagging.ClickImage = null;
-            this.TSBtnTagging.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSBtnTagging.ForeColor = System.Drawing.Color.White;
-            this.TSBtnTagging.HoverBackColor = System.Drawing.Color.Empty;
-            this.TSBtnTagging.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnTagging.HoverImage = global::Diva.Properties.Resources.icon_top_mark_active;
-            this.TSBtnTagging.Image = global::Diva.Properties.Resources.icon_top_mark;
-            this.TSBtnTagging.Name = "TSBtnTagging";
-            this.TSBtnTagging.Click += new System.EventHandler(this.BUT_Tagging_Click);
-            // 
-            // TSBtnSaveMission
-            // 
-            resources.ApplyResources(this.TSBtnSaveMission, "TSBtnSaveMission");
-            this.TSBtnSaveMission.CheckedBackColor = System.Drawing.Color.Empty;
-            this.TSBtnSaveMission.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnSaveMission.CheckedImage = null;
-            this.TSBtnSaveMission.CheckedText = null;
-            this.TSBtnSaveMission.ClickBackColor = System.Drawing.Color.Empty;
-            this.TSBtnSaveMission.ClickForeColor = System.Drawing.Color.Empty;
-            this.TSBtnSaveMission.ClickImage = null;
-            this.TSBtnSaveMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSBtnSaveMission.ForeColor = System.Drawing.Color.White;
-            this.TSBtnSaveMission.HoverBackColor = System.Drawing.Color.Empty;
-            this.TSBtnSaveMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnSaveMission.HoverImage = global::Diva.Properties.Resources.icon_top_save_active;
-            this.TSBtnSaveMission.Image = global::Diva.Properties.Resources.icon_top_save;
-            this.TSBtnSaveMission.Name = "TSBtnSaveMission";
-            this.TSBtnSaveMission.Click += new System.EventHandler(this.BtnSaveMission_Click);
-            // 
-            // TSBtnReadMission
-            // 
-            resources.ApplyResources(this.TSBtnReadMission, "TSBtnReadMission");
-            this.TSBtnReadMission.CheckedBackColor = System.Drawing.Color.Empty;
-            this.TSBtnReadMission.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnReadMission.CheckedImage = null;
-            this.TSBtnReadMission.CheckedText = null;
-            this.TSBtnReadMission.ClickBackColor = System.Drawing.Color.Empty;
-            this.TSBtnReadMission.ClickForeColor = System.Drawing.Color.Empty;
-            this.TSBtnReadMission.ClickImage = null;
-            this.TSBtnReadMission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSBtnReadMission.ForeColor = System.Drawing.Color.White;
-            this.TSBtnReadMission.HoverBackColor = System.Drawing.Color.Empty;
-            this.TSBtnReadMission.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnReadMission.HoverImage = global::Diva.Properties.Resources.icon_top_read_active;
-            this.TSBtnReadMission.Image = global::Diva.Properties.Resources.icon_top_read;
-            this.TSBtnReadMission.Name = "TSBtnReadMission";
-            this.TSBtnReadMission.Click += new System.EventHandler(this.BtnReadMission_Click);
-            // 
-            // TSBtnCusOverlay
-            // 
-            resources.ApplyResources(this.TSBtnCusOverlay, "TSBtnCusOverlay");
-            this.TSBtnCusOverlay.CheckedBackColor = System.Drawing.Color.Empty;
-            this.TSBtnCusOverlay.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnCusOverlay.CheckedImage = null;
-            this.TSBtnCusOverlay.CheckedText = null;
-            this.TSBtnCusOverlay.ClickBackColor = System.Drawing.Color.Empty;
-            this.TSBtnCusOverlay.ClickForeColor = System.Drawing.Color.Empty;
-            this.TSBtnCusOverlay.ClickImage = null;
-            this.TSBtnCusOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSBtnCusOverlay.ForeColor = System.Drawing.Color.White;
-            this.TSBtnCusOverlay.HoverBackColor = System.Drawing.Color.Empty;
-            this.TSBtnCusOverlay.HoverForeColor = System.Drawing.Color.Aqua;
-            this.TSBtnCusOverlay.HoverImage = global::Diva.Properties.Resources.icon_top_custom_active;
-            this.TSBtnCusOverlay.Image = global::Diva.Properties.Resources.icon_top_custom;
-            this.TSBtnCusOverlay.Name = "TSBtnCusOverlay";
-            this.TSBtnCusOverlay.Click += new System.EventHandler(this.LoadCustomizedOverlay_Click);
             // 
             // Map
             // 
@@ -940,7 +835,6 @@ namespace Diva
 		private System.Windows.Forms.ToolStripMenuItem miClearAllMissions;
 		private System.Windows.Forms.ToolStrip TSMainPanel;
 		private MyTSButton TSBtnConnect;
-		private MyTSButton Btn_Rotation;
 		private MyTSButton TSBtnConfigure;
 		private MyGMap Map;
 		private MyButton BtnArm;
@@ -949,7 +843,6 @@ namespace Diva
 		private MyButton BtnAuto;
 		private MyButton BtnTakeOff;
 		private MyButton BtnLand;
-		private MyTSButton TSBtnTagging;
         private MyButton BtnVideo;
         private SplitContainer SplitContainer;
 		private Button BtnHome;
@@ -962,8 +855,6 @@ namespace Diva
 		private TextBox TxtHomeAltitude;
 		private TextBox TxtHomeLatitude;
 		private TextBox TxtHomeLongitude;
-		private MyTSButton TSBtnSaveMission;
-		private MyTSButton TSBtnReadMission;
         private DataGridViewComboBoxColumn colCommand;
         private DataGridViewTextBoxColumn colParam1;
         private DataGridViewTextBoxColumn colParam2;
@@ -988,7 +879,6 @@ namespace Diva
 		private ToolStripMenuItem loadFromFileToolStripMenuItem;
 		private ToolStripMenuItem saveToFileToolStripMenuItem;
 		private ToolStripMenuItem clearToolStripMenuItem;
-		private MyTSButton TSBtnCusOverlay;
         private DroneInfoPanel DroneInfoPanel;
 		private FlowLayoutPanel RotationInfoPanel;
 		private Label LblMode;

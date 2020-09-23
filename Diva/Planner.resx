@@ -699,99 +699,6 @@
   <data name="TSBtnConfigure.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>ImageAboveText</value>
   </data>
-  <data name="Btn_Rotation.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="Btn_Rotation.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="Btn_Rotation.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="Btn_Rotation.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="Btn_Rotation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="Btn_Rotation.Text" xml:space="preserve">
-    <value>Rotation</value>
-  </data>
-  <data name="Btn_Rotation.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="TSBtnTagging.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="TSBtnTagging.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="TSBtnTagging.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="TSBtnTagging.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="TSBtnTagging.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="TSBtnTagging.Text" xml:space="preserve">
-    <value>Tagging</value>
-  </data>
-  <data name="TSBtnTagging.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="TSBtnSaveMission.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="TSBtnSaveMission.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="TSBtnSaveMission.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="TSBtnSaveMission.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="TSBtnSaveMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="TSBtnSaveMission.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="TSBtnSaveMission.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="TSBtnReadMission.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="TSBtnReadMission.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="TSBtnReadMission.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="TSBtnReadMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="TSBtnReadMission.Text" xml:space="preserve">
-    <value>Load</value>
-  </data>
-  <data name="TSBtnReadMission.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="TSBtnCusOverlay.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="TSBtnCusOverlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="TSBtnCusOverlay.Text" xml:space="preserve">
-    <value>Customize</value>
-  </data>
-  <data name="TSBtnCusOverlay.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
   <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 9</value>
   </data>
@@ -799,7 +706,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="TSMainPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 83</value>
+    <value>193, 83</value>
   </data>
   <data name="TSMainPanel.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1577,36 +1484,6 @@
     <value>TSBtnConfigure</value>
   </data>
   <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;Btn_Rotation.Name" xml:space="preserve">
-    <value>Btn_Rotation</value>
-  </data>
-  <data name="&gt;&gt;Btn_Rotation.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnTagging.Name" xml:space="preserve">
-    <value>TSBtnTagging</value>
-  </data>
-  <data name="&gt;&gt;TSBtnTagging.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnSaveMission.Name" xml:space="preserve">
-    <value>TSBtnSaveMission</value>
-  </data>
-  <data name="&gt;&gt;TSBtnSaveMission.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnReadMission.Name" xml:space="preserve">
-    <value>TSBtnReadMission</value>
-  </data>
-  <data name="&gt;&gt;TSBtnReadMission.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSBtnCusOverlay.Name" xml:space="preserve">
-    <value>TSBtnCusOverlay</value>
-  </data>
-  <data name="&gt;&gt;TSBtnCusOverlay.Type" xml:space="preserve">
     <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;drawPolygonToolStripMenuItem.Name" xml:space="preserve">

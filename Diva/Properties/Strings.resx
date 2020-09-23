@@ -321,9 +321,6 @@
   <data name="StrActivateDrone" xml:space="preserve">
     <value>Click to activate drone</value>
   </data>
-  <data name="MsgCustomizeOverlayImport" xml:space="preserve">
-    <value>{0} overlay has been imported</value>
-  </data>
   <data name="MsgLowVoltageWarning" xml:space="preserve">
     <value>Low voltage level, Starting return to launch.</value>
   </data>

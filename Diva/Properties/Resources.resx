@@ -184,9 +184,6 @@
   <data name="icon_house_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_house_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_rotation_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-rotation-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon_power_medium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_power_medium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -255,9 +252,6 @@
   </data>
   <data name="icon_zoomin1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_zoomin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_rotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-rotation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_land" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-land.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -433,41 +427,11 @@
   <data name="icon_switch_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-switch-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_top_custom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-custom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_custom_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-custom-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_mark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-mark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_mark_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-mark-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_patrol" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-patrol.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_patrol_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-patrol-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon_top_power" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-top-power.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_top_power_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-top-power-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_read" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-read.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_read_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-read-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_save_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-save-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_top_setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-top-setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

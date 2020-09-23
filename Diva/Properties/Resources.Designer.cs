@@ -873,26 +873,6 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_rotation {
-            get {
-                object obj = ResourceManager.GetObject("icon_rotation", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_rotation_active {
-            get {
-                object obj = ResourceManager.GetObject("icon_rotation_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icon_setting_about {
             get {
                 object obj = ResourceManager.GetObject("icon_setting_about", resourceCulture);
@@ -1023,66 +1003,6 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_top_custom {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_custom", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_custom_active {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_custom_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_mark {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_mark", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_mark_active {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_mark_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_patrol {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_patrol", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_patrol_active {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_patrol_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icon_top_power {
             get {
                 object obj = ResourceManager.GetObject("icon_top_power", resourceCulture);
@@ -1096,46 +1016,6 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_top_power_active {
             get {
                 object obj = ResourceManager.GetObject("icon_top_power_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_read {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_read", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_read_active {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_read_active", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_save {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_save", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_top_save_active {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_save_active", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

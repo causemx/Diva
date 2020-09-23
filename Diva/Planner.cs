@@ -104,9 +104,6 @@ namespace Diva
 
 		private bool isMapFocusing = true;
 
-		private Rotation rotationMission = null;
-		private RotationInfo rotationInfo = null;
-
 		internal MyGMap GMapControl => Map;
         internal WayPoint GetHomeWP() => new WayPoint
         {
@@ -144,10 +141,6 @@ namespace Diva
 
 			DataGridView_Initialize();
 
-			//setup push toolstripbutton
-			TSBtnTagging.CheckOnClick = true;
-			TSBtnTagging.CheckedChanged += new EventHandler(BUT_Tagging_CheckedChanged);
-
 			//setup toolstrip
 			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
 			//Collect DroneInfoPanels
@@ -165,10 +158,6 @@ namespace Diva
                 Stroke = new Pen(Color.Red, 2),
                 Fill = Brushes.Transparent
             };
-
-            //setup rotationinfo panel
-            rotationInfo = new RotationInfo() { Visible = false };
-			RotationInfoPanel.Controls.Add(rotationInfo);
 
 			//set home
 			double lng = DefaultValues.Longitude, lat = DefaultValues.Latitude, zoom = DefaultValues.ZoomLevel;
@@ -2147,27 +2136,6 @@ namespace Diva
 			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
 		}
 
-		private void Btn_Rotation_Click(object sender, EventArgs e)
-		{
-			if (OnlineDrones.Count == 0) return;
-
-			if (rotationMission == null) { rotationMission = new Rotation(OnlineDrones, rotationInfo); }
-			try
-			{
-				if (rotationMission.IsActived()) {
-					MessageBox.Show(Strings.MsgWarnRotationExcuteing);
-					return;
-				}
-				rotationMission.ShowDialog();
-				rotationMission.Start();
-			}
-			catch (Exception e1)
-			{
-				log.Error(e1.ToString());
-			}
-
-		}
-
 		private void BUT_Land_Click(object sender, EventArgs e)
 		{
 			if (ActiveDrone.IsOpen)
@@ -2184,11 +2152,6 @@ namespace Diva
 		}
 
 		private bool isTagging = false;
-
-		private void BUT_Tagging_CheckedChanged(object sender, EventArgs e)
-		{
-			isTagging = !isTagging;
-		}
 
 		private void BUT_Tagging_Click(object sender, EventArgs e)
 		{
@@ -2243,42 +2206,7 @@ namespace Diva
 			}
 		}
 
-		private void BtnSaveMission_Click(object sender, EventArgs e)
-		{
-			WayPoint home = new WayPoint
-			{
-				Id = (ushort)MAV_CMD.WAYPOINT,
-				Latitude = (double.Parse(TxtHomeLatitude.Text)),
-				Longitude = (double.Parse(TxtHomeLongitude.Text)),
-				Altitude = (float.Parse(TxtHomeAltitude.Text)),
-			};
-
-            KMLFileUtility.SaveKMLMission(GetCommandList(), home);
-
-			WriteKMLV2();
-		}
-
-		private void BtnReadMission_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				List<WayPoint> cmds = KMLFileUtility.ReadKMLMission();
-                if (cmds != null)
-                {
-                    WPsToDataView(cmds, false);
-                    WriteKMLV2();
-                    Map.ZoomAndCenterMarkers("objects");
-                }
-            }
-			catch (Exception ex)
-			{
-				log.Warn(ex);
-                MessageBox.Show(Strings.MsgErrorReadingKmlFile + ex);
-			}
-
-		}
-
-		private void But_MapFocus_Click(object sender, EventArgs e)
+        private void But_MapFocus_Click(object sender, EventArgs e)
 		{
 			isMapFocusing = !isMapFocusing;
 		}
@@ -2817,76 +2745,6 @@ namespace Diva
             }
         }
 
-        #region customized overlay related functions
-
-        private void ReadCustomizedOverlayFile(string file)
-		{
-			List<Customizewp> cmds = new List<Customizewp>();
-
-			try
-			{
-				Dictionary<string, List<Customizewp>> items = Customizewp.ImportOverlayXML(file);
-				foreach (var k in items.Keys) { RenderToMap(k, items[k]); }
-
-				// myMap.ZoomAndCenterMarkers("objects");
-				string filename = (Path.GetFileName(file)).Split('.')[0];
-				MessageBox.Show(Strings.MsgCustomizeOverlayImport.FormatWith(filename));
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(Strings.MsgCantOpenFile.FormatWith(ex.Message));
-			}
-		}
-
-		public void RenderToMap(string areaname, List<Customizewp> cmds)
-		{
-			// quickadd is for when loading wps from eeprom or file, to prevent slow, loading times
-			if (quickadd)
-				return;
-			
-			// generate new polygon every time.
-			List<PointLatLng> polygonPointsCus = new List<PointLatLng>();
-			GMapCustomizedPolygonMarker customizePolygon = new GMapCustomizedPolygonMarker(polygonPointsCus, "customize", areaname);
-			customizePolygon.Stroke = new Pen(Color.Aqua, 2);
-			customizePolygon.Fill = Brushes.AliceBlue;
-
-			try
-			{
-				// cmds.ForEach(i => addpolygonmarker("", i.Lng, i.Lat, (int)i.Alt, Color.Aqua, overlays.customize));
-
-				cmds.ForEach(i => {
-					StringBuilder sb = new StringBuilder("_cus_");
-					customizePolygon.Points.Add(Customizewp.ConvertToPoint(i));
-					AddPolygonMarkerGrid(sb.Append(customizePolygon.Points.Count.ToString()).ToString(), i.Lng, i.Lat, 0);
-				});
-
-				Overlays.DrawnPolygons.Polygons.Add(customizePolygon);
-				Map.UpdatePolygonLocalPosition(customizePolygon);
-				Map.Invalidate();
-			}
-			catch (Exception ex)
-			{
-				log.Info(ex.ToString());
-			}
-		}
-
-		private void LoadCustomizedOverlay_Click(object o, EventArgs e)
-		{
-			using (OpenFileDialog op = new OpenFileDialog())
-			{
-				op.Filter = "All Supported Types|*.overlay;*.xml;";
-				DialogResult result = op.ShowDialog();
-				string file = op.FileName;
-
-				if (File.Exists(file))
-				{
-					ReadCustomizedOverlayFile(file);
-				}
-			}
-		}
-
-		#endregion
-
         public HUDPanel HUD = new HUDPanel
         {
             GroundLineColor = Color.Green,
@@ -3022,7 +2880,6 @@ namespace Diva
 
                 TSMainPanel.SuspendLayout();
                 var btns = TSMainPanel.Items;
-                Btn_Rotation.Visible = TSBtnTagging.Visible = TSBtnReadMission.Visible = TSBtnSaveMission.Visible = TSBtnCusOverlay.Visible = true;
                 if (value)
                 {
                     int max = scrollLeft = btns.Count;
@@ -3111,7 +2968,8 @@ namespace Diva
 
         private void SetupMIRDC()
         {
-            TSMainPanel.MaximumSize = TSMainPanel.Size;
+            tsMargin = 100 + DroneInfoPanel.Width;
+            TSMainPanel.MaximumSize = new Size(Map.Width - tsMargin, TSMainPanel.Height);
             tsMargin = Map.Width - TSMainPanel.Width;
             int bwIdx = 0;
             ScrollForward.Click += (o, e) =>
@@ -3157,11 +3015,6 @@ namespace Diva
             toggleButtons = new ToolStripItem[]
             {
                 TSBtnConfigure,
-                Btn_Rotation,
-                TSBtnTagging,
-                TSBtnReadMission,
-                TSBtnSaveMission,
-                TSBtnCusOverlay,
             };
             FullControl = false;
 

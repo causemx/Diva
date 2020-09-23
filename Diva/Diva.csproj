@@ -213,12 +213,6 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RotationInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\RotationInfo.Designer.cs">
-      <DependentUpon>RotationInfo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TrackerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,12 +267,16 @@
     <Compile Include="Mavlink\MavUtlities.cs" />
     <Compile Include="Mission\AltitudeControl.cs" />
     <Compile Include="Mission\FlyTo.cs" />
-    <Compile Include="Mission\Rotation.cs" />
     <Compile Include="Planner.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Planner.Designer.cs">
       <DependentUpon>Planner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Planner.zh-Hant.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Planner.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -304,7 +302,6 @@
     <Compile Include="Utilities\DefaultValues.cs" />
     <Compile Include="Utilities\DestinationMarker.cs" />
     <Compile Include="Utilities\FloatMessage.cs" />
-    <Compile Include="Utilities\KMLFileUtility.cs" />
     <Compile Include="Mission\WayPoint.cs" />
     <Compile Include="Mission\MissionFile.cs" />
     <Compile Include="Utilities\NotificationManager.cs" />
@@ -364,12 +361,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProgressDialogV2.zh-Hant.resx">
       <DependentUpon>ProgressDialogV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RotationInfo.resx">
-      <DependentUpon>RotationInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RotationInfo.zh-Hant.resx">
-      <DependentUpon>RotationInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SplashForm.zh-Hant.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>

@@ -406,15 +406,6 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} overlay has been imported.
-        /// </summary>
-        public static string MsgCustomizeOverlayImport {
-            get {
-                return ResourceManager.GetString("MsgCustomizeOverlayImport", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your default altitude is not valid.
         /// </summary>
         public static string MsgDefaultAltitudeInvalid {
