@@ -469,9 +469,6 @@
   <data name="logo-dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_top_power_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-power1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon_zoom_focus_locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_zoom_focus_locked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -510,5 +507,11 @@
   </data>
   <data name="icon_satellite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-satellite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="top_link" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\top-link.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="top_unlink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\top-unlink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

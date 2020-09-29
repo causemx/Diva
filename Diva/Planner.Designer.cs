@@ -381,7 +381,7 @@ namespace Diva
             resources.ApplyResources(this.TSBtnConnect, "TSBtnConnect");
             this.TSBtnConnect.CheckedBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.CheckedImage = global::Diva.Properties.Resources.icon_top_power_on;
+            this.TSBtnConnect.CheckedImage = global::Diva.Properties.Resources.top_link;
             this.TSBtnConnect.CheckOnClick = true;
             this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
@@ -391,7 +391,7 @@ namespace Diva
             this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
             this.TSBtnConnect.HoverImage = null;
-            this.TSBtnConnect.Image = global::Diva.Properties.Resources.icon_top_power;
+            this.TSBtnConnect.Image = global::Diva.Properties.Resources.top_unlink;
             this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
             this.TSBtnConnect.Name = "TSBtnConnect";
             this.TSBtnConnect.Click += new System.EventHandler(this.BUT_Connect_Click);

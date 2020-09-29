@@ -62,7 +62,8 @@ namespace Diva
 
         private bool LoginCheck()
         {
-            if (AccountManager.GetLoginAccount() == "")
+            if (!Planner.MIRDCMode &&
+                string.IsNullOrEmpty(AccountManager.GetLoginAccount()))
             {
                 if (AccountManager.GetAccounts().Count() == 0)
                 {
@@ -72,7 +73,8 @@ namespace Diva
                         btnSkip.Text = btnExit.Text;
                         btnSkip.Click -= btnSkip_Click;
                         btnSkip.Click += btnExit_Click;
-                    } else if (ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
+                    }
+                    else if (ConfigData.GetBoolOption(ConfigData.OptionName.SkipNoAccountAlert))
                         return true;
                     panelNewAccount.Visible = true;
                     lblProgress.Text = FormResx.GetString("CreateAccountNotification");
@@ -160,7 +162,8 @@ namespace Diva
                 timer.Stop();
                 btnLogin.Enabled = true;
                 lblLoginMessage.Text = "";
-            } else
+            }
+            else
             {
                 lblLoginMessage.Text = String.Format(
                     FormResx.GetString("TooManyTriesMessageFormat"),

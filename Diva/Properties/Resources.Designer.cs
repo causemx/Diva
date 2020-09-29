@@ -1063,16 +1063,6 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_top_power_on {
-            get {
-                object obj = ResourceManager.GetObject("icon_top_power_on", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icon_top_setting {
             get {
                 object obj = ResourceManager.GetObject("icon_top_setting", resourceCulture);
@@ -1403,6 +1393,26 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap red_octagon_small {
             get {
                 object obj = ResourceManager.GetObject("red_octagon_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_link {
+            get {
+                object obj = ResourceManager.GetObject("top_link", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_unlink {
+            get {
+                object obj = ResourceManager.GetObject("top_unlink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

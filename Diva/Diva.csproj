@@ -404,6 +404,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\top-unlink.png" />
+    <None Include="Resources\top-link.png" />
     <None Include="Resources\icon-battery-full.png" />
     <None Include="Resources\icon-battery-nopower.png" />
     <None Include="Resources\icon-battery-normal.png" />

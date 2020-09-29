@@ -2918,7 +2918,7 @@ namespace Diva
                 if (value && !BtnTrack.Enabled) BaseLocationInitialized(null, null);
             }
         }
-        public static bool MIRDCMode => !Instance?.FullControl ?? false;
+        public static bool MIRDCMode => !Instance?.FullControl ?? true;
 
         private MyTSButton BtnFullCtrl = new MyTSButton
         {
