@@ -58,8 +58,8 @@
             // lblProgress
             // 
             resources.ApplyResources(this.lblProgress, "lblProgress");
-            this.lblProgress.BackColor = System.Drawing.Color.Black;
-            this.lblProgress.ForeColor = System.Drawing.Color.White;
+            this.lblProgress.BackColor = System.Drawing.Color.White;
+            this.lblProgress.ForeColor = System.Drawing.Color.DodgerBlue;
             this.lblProgress.Name = "lblProgress";
             // 
             // panelNewAccount
@@ -228,6 +228,8 @@
             // BorderPanel
             // 
             resources.ApplyResources(this.BorderPanel, "BorderPanel");
+            this.BorderPanel.BackColor = System.Drawing.Color.White;
+            this.BorderPanel.BackgroundImage = global::Diva.Properties.Resources.logo_dark;
             this.BorderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.BorderPanel.Controls.Add(this.panelNewAccount);
             this.BorderPanel.Controls.Add(this.panelLogin);
@@ -238,7 +240,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.White;
             this.ControlBox = false;
             this.Controls.Add(this.BorderPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -39,6 +39,7 @@ namespace Diva.Mavlink
             {
                 DateTime connecttime = DateTime.Now;
                 Open();
+                Status.ArmedSince = null;
                 if (!IsOpen)
                 {
                     log.Info("comport is closed. existing connect");

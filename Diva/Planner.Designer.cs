@@ -39,6 +39,7 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.BtnBreakAction = new Diva.Controls.Components.MyButton();
             this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
             this.LblModeDesc = new System.Windows.Forms.Label();
             this.BtnZoomOut = new Diva.Controls.Components.MyButton();
@@ -49,7 +50,6 @@ namespace Diva
             this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
             this.BtnRTL = new Diva.Controls.Components.MyButton();
             this.BtnLand = new Diva.Controls.Components.MyButton();
-            this.BtnVideo = new Diva.Controls.Components.MyButton();
             this.BtnAuto = new Diva.Controls.Components.MyButton();
             this.BtnArm = new Diva.Controls.Components.MyButton();
             this.BtnReadWPs = new Diva.Controls.Components.MyButton();
@@ -100,6 +100,7 @@ namespace Diva
             this.BtnAltitude = new System.Windows.Forms.Button();
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
+            this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -117,6 +118,7 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
+            this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
             this.SplitContainer.Panel1.Controls.Add(this.AltitudeControlPanel);
             this.SplitContainer.Panel1.Controls.Add(this.LblModeDesc);
             this.SplitContainer.Panel1.Controls.Add(this.BtnZoomOut);
@@ -127,7 +129,6 @@ namespace Diva
             this.SplitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
             this.SplitContainer.Panel1.Controls.Add(this.BtnRTL);
             this.SplitContainer.Panel1.Controls.Add(this.BtnLand);
-            this.SplitContainer.Panel1.Controls.Add(this.BtnVideo);
             this.SplitContainer.Panel1.Controls.Add(this.BtnAuto);
             this.SplitContainer.Panel1.Controls.Add(this.BtnArm);
             this.SplitContainer.Panel1.Controls.Add(this.BtnReadWPs);
@@ -141,10 +142,25 @@ namespace Diva
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
             // 
+            // BtnBreakAction
+            // 
+            this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.ClickImage = null;
+            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
+            this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.HoverImage = null;
+            this.BtnBreakAction.Name = "BtnBreakAction";
+            this.TTButtonDescription.SetToolTip(this.BtnBreakAction, resources.GetString("BtnBreakAction.ToolTip"));
+            this.BtnBreakAction.UseVisualStyleBackColor = false;
+            this.BtnBreakAction.Click += new System.EventHandler(this.BtnBreakAction_Click);
+            // 
             // AltitudeControlPanel
             // 
             this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
-            this.AltitudeControlPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
             this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
@@ -179,6 +195,7 @@ namespace Diva
             this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
             this.BtnZoomOut.Image = global::Diva.Properties.Resources.icon_zoom_out;
             this.BtnZoomOut.Name = "BtnZoomOut";
+            this.TTButtonDescription.SetToolTip(this.BtnZoomOut, resources.GetString("BtnZoomOut.ToolTip"));
             this.BtnZoomOut.UseVisualStyleBackColor = true;
             this.BtnZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
             // 
@@ -193,6 +210,7 @@ namespace Diva
             this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
             this.BtnZoomIn.Image = global::Diva.Properties.Resources.icon_zoom_in;
             this.BtnZoomIn.Name = "BtnZoomIn";
+            this.TTButtonDescription.SetToolTip(this.BtnZoomIn, resources.GetString("BtnZoomIn.ToolTip"));
             this.BtnZoomIn.UseVisualStyleBackColor = true;
             this.BtnZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
             // 
@@ -207,8 +225,10 @@ namespace Diva
             this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;
             this.BtnMapFocus.Image = global::Diva.Properties.Resources.icon_zoom_focus;
             this.BtnMapFocus.Name = "BtnMapFocus";
+            this.TTButtonDescription.SetToolTip(this.BtnMapFocus, resources.GetString("BtnMapFocus.ToolTip"));
             this.BtnMapFocus.UseVisualStyleBackColor = true;
             this.BtnMapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
+            this.BtnMapFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMapFocus_MouseUp);
             // 
             // LblMode
             // 
@@ -263,22 +283,6 @@ namespace Diva
             this.BtnLand.Name = "BtnLand";
             this.BtnLand.UseVisualStyleBackColor = false;
             this.BtnLand.Click += new System.EventHandler(this.BUT_Land_Click);
-            // 
-            // BtnVideo
-            // 
-            this.BtnVideo.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnVideo.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnVideo.ClickImage = null;
-            this.BtnVideo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.BtnVideo, "BtnVideo");
-            this.BtnVideo.ForeColor = System.Drawing.Color.White;
-            this.BtnVideo.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnVideo.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.BtnVideo.HoverImage = global::Diva.Properties.Resources.icon_left_video_active;
-            this.BtnVideo.Image = global::Diva.Properties.Resources.icon_left_video;
-            this.BtnVideo.Name = "BtnVideo";
-            this.BtnVideo.UseVisualStyleBackColor = false;
-            this.BtnVideo.Click += new System.EventHandler(this.VideoDemo_Click);
             // 
             // BtnAuto
             // 
@@ -377,8 +381,8 @@ namespace Diva
             resources.ApplyResources(this.TSBtnConnect, "TSBtnConnect");
             this.TSBtnConnect.CheckedBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.CheckedImage = null;
-            this.TSBtnConnect.CheckedText = null;
+            this.TSBtnConnect.CheckedImage = global::Diva.Properties.Resources.icon_top_power_on;
+            this.TSBtnConnect.CheckOnClick = true;
             this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.ClickImage = null;
@@ -386,7 +390,7 @@ namespace Diva
             this.TSBtnConnect.ForeColor = System.Drawing.Color.White;
             this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
             this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnConnect.HoverImage = global::Diva.Properties.Resources.icon_top_power_active;
+            this.TSBtnConnect.HoverImage = null;
             this.TSBtnConnect.Image = global::Diva.Properties.Resources.icon_top_power;
             this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
             this.TSBtnConnect.Name = "TSBtnConnect";
@@ -398,7 +402,6 @@ namespace Diva
             this.TSBtnConfigure.CheckedBackColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.CheckedForeColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.CheckedImage = null;
-            this.TSBtnConfigure.CheckedText = null;
             this.TSBtnConfigure.ClickBackColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.ClickForeColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.ClickImage = null;
@@ -406,7 +409,7 @@ namespace Diva
             this.TSBtnConfigure.ForeColor = System.Drawing.Color.White;
             this.TSBtnConfigure.HoverBackColor = System.Drawing.Color.Empty;
             this.TSBtnConfigure.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnConfigure.HoverImage = global::Diva.Properties.Resources.icon_top_setting_active;
+            this.TSBtnConfigure.HoverImage = null;
             this.TSBtnConfigure.Image = global::Diva.Properties.Resources.icon_top_setting;
             this.TSBtnConfigure.Name = "TSBtnConfigure";
             this.TSBtnConfigure.Click += new System.EventHandler(this.BUT_Configure_Click);
@@ -445,6 +448,7 @@ namespace Diva
             this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
             this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
             this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
+            this.Map.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Map_KeyUp);
             this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
             this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
             this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
@@ -843,7 +847,6 @@ namespace Diva
 		private MyButton BtnAuto;
 		private MyButton BtnTakeOff;
 		private MyButton BtnLand;
-        private MyButton BtnVideo;
         private SplitContainer SplitContainer;
 		private Button BtnHome;
 		private MyButton BtnRTL;
@@ -888,5 +891,7 @@ namespace Diva
 		private MyButton BtnMapFocus;
 		private Label LblModeDesc;
         private AltitudeControlPanel AltitudeControlPanel;
+        private ToolTip TTButtonDescription;
+        private MyButton BtnBreakAction;
     }
 }

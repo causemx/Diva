@@ -77,7 +77,8 @@ namespace Diva.Controls
                     RBUdp.Checked = true;
                     TBoxComNo.Enabled = false;
                     TBoxPortValue.Text = PortNumber;
-                } else
+                }
+                else
                 {
                     RBSerial.Checked = true;
                     TBoxComNo.Enabled = true;
@@ -86,10 +87,12 @@ namespace Diva.Controls
                 }
                 TBoxStreamURI.Text = StreamURI;
                 NoTrigger = false;
-            } else
+            }
+            else
             {
                 TBoxDroneName.Text = TBoxComNo.Text = TBoxPortValue.Text = TBoxStreamURI.Text = "";
-                RBUdp.Checked = true;
+                RBSerial.Checked = Planner.MIRDCMode;
+                RBUdp.Checked = !Planner.MIRDCMode;
             }
             mode = m;
         }
@@ -112,19 +115,23 @@ namespace Diva.Controls
             if (newName == "")
             {
                 MessageBox.Show(Properties.Strings.DroneSetting_MsgNoName);
-            } else if (newName != DroneName &&
+            }
+            else if (newName != DroneName &&
                 (DroneList?.Exists(d => d.Name == newName) ?? false))
             {
                 MessageBox.Show(Properties.Strings.DroneSetting_MsgDuplicatedName);
-            } else if (!int.TryParse(TBoxComNo.Text, out int com) && RBSerial.Checked)
+            }
+            else if (!int.TryParse(TBoxComNo.Text, out int com) && RBSerial.Checked)
             {
                 MessageBox.Show(Properties.Strings.DroneSetting_MsgValueInvalid);
                 TBoxComNo.Focus();
-            } else if (!int.TryParse(TBoxPortValue.Text, out int value))
+            }
+            else if (!int.TryParse(TBoxPortValue.Text, out int value))
             {
                 MessageBox.Show(Properties.Strings.DroneSetting_MsgValueInvalid);
                 TBoxPortValue.Focus();
-            } else
+            }
+            else
             {
                 DroneSetting d = DroneList?.Find(e => e.Name == DroneName) ?? new DroneSetting();
                 DroneName = d.Name = newName;

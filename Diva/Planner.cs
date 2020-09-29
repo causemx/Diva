@@ -102,7 +102,15 @@ namespace Diva
 		private BackgroundLoop mainThread = null;
 		private DateTime mapupdate = DateTime.MinValue;
 
-		private bool isMapFocusing = true;
+		private bool IsMapFocusing
+        {
+            get => BtnMapFocus.FlatAppearance.BorderColor == Color.Red;
+            set
+            {
+                //BtnMapFocus.Image = value ? Resources.icon_zoom_focus_locked : Resources.icon_zoom_focus;
+                BtnMapFocus.FlatAppearance.BorderColor = value ? Color.Red : Color.Black;
+            }
+        }
 
 		internal MyGMap GMapControl => Map;
         internal WayPoint GetHomeWP() => new WayPoint
@@ -115,7 +123,8 @@ namespace Diva
             Frame = MAV_FRAME.GLOBAL
         };
 
-		public Planner()
+
+        public Planner()
 		{
 			InitializeComponent();
 			Instance = this;
@@ -205,6 +214,8 @@ namespace Diva
                 return (float.NaN, float.NaN, float.NaN);
             };
 
+            IsMapFocusing = true;
+
             SetupMIRDC();
 
             mainThread = BackgroundLoop.Start(MainLoop);
@@ -247,6 +258,7 @@ namespace Diva
 
                 try
                 {
+                    if (Disposing) break;
                     if (ActiveDrone.IsOpen)
                     {
                         BeginInvoke((MethodInvoker)delegate
@@ -276,7 +288,7 @@ namespace Diva
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
-			if (!isMapFocusing) return;
+			if (!IsMapFocusing) return;
 
 			BeginInvoke((MethodInvoker)delegate
 			{
@@ -449,7 +461,17 @@ namespace Diva
                 try
                 {
                     if (e.Button == MouseButtons.Left)
-                        CurrentFlyTo?.Start();
+                    {
+                        if (CurrentFlyTo != null && CurrentFlyTo.Start())
+                        {
+                            BtnFlyTo.Image = Resources.left_free2_on;
+                            CurrentFlyTo.DestinationReached += (o, r) => BeginInvoke((MethodInvoker)(() =>
+                            {
+                                if (((FlyTo)o).Drone == ActiveDrone)
+                                    BtnFlyTo.Image = Resources.left_free2_off;
+                            }));
+                        }
+                    }
                     else if (e.Button == MouseButtons.Right)
                         CurrentFlyTo?.Dispose();
                     CurrentFlyTo = null;
@@ -1086,20 +1108,20 @@ namespace Diva
 			}
 
 			DataGridViewTextBoxCell cell;
-			if (DGVWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4] /*"Lat"*/))
+			if (DGVWayPoints.Columns[colLatitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][4])) // Lat
 			{
 				cell = DGVWayPoints.Rows[selectedRow].Cells[colLatitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lat.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
-			if (DGVWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5] /*"Long"*/))
+			if (DGVWayPoints.Columns[colLongitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][5])) // Lng
 			{
 				cell = DGVWayPoints.Rows[selectedRow].Cells[colLongitude.Index] as DataGridViewTextBoxCell;
 				cell.Value = lng.ToString("0.0000000");
 				cell.DataGridView.EndEdit();
 			}
 			if (alt != -1 && alt != -2 &&
-				DGVWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6] /*"Alt"*/))
+				DGVWayPoints.Columns[colAltitude.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][6])) // Alt
 			{
 				cell = DGVWayPoints.Rows[selectedRow].Cells[colAltitude.Index] as DataGridViewTextBoxCell;
 
@@ -1147,7 +1169,7 @@ namespace Diva
 			// convertFromGeographic(lat, lng);
 
 			// Add more for other params
-			if (DGVWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1] /*"Delay"*/))
+			if (DGVWayPoints.Columns[colParam1.Index].HeaderText.Equals(cmdParamNames["WAYPOINT"][1])) // Delay
 			{
 				cell = DGVWayPoints.Rows[selectedRow].Cells[colParam1.Index] as DataGridViewTextBoxCell;
 				cell.Value = p1;
@@ -1272,7 +1294,7 @@ namespace Diva
                     d += Map.MapProvider.Projection.GetDistance(p, p1);
                     p1 = p;
                 }
-                DroneInfoPanel.UpdateEstmatedTime(d);
+                //DroneInfoPanel.UpdateEstmatedTime(d);
             }
 
             Map.HoldInvalidation = true;
@@ -1287,7 +1309,7 @@ namespace Diva
 					Map.Position = rect.Value.LocationMiddle;
 				}
 
-				DroneInfoPanel.ResetEstimatedTime();
+				//DroneInfoPanel.ResetEstimatedTime();
 
 				// myMap_OnMapZoomChanged();
 			}
@@ -1875,20 +1897,23 @@ namespace Diva
         private bool connectingDrones => droneConnectingCounter != 0;
 		private void BUT_Connect_Click(object sender, EventArgs e)
 		{
-            if (OnlineDrones.Count > 0)
+            // clicked event fires after state change
+            if (!TSBtnConnect.Checked)
             {
-                if (MessageBox.Show("Close existing connections before making new ones?", "Drones already connected",
-                        MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-                    return;
-                OnlineDrones.ForEach(d => d.Disconnect());
-                OnlineDrones.Clear();
-                DroneInfoPanel.Clear();
-                Overlays.Routes.Markers.Clear();
+                if (OnlineDrones.Count > 0)
+                {
+                    OnlineDrones.ForEach(d => d.Disconnect());
+                    OnlineDrones.Clear();
+                    DroneInfoPanel.Clear();
+                    Overlays.Routes.Markers.Clear();
+                }
+                return;
             }
             var dsettings = ConfigData.GetTypeList<DroneSetting>().Where(d => d.Checked);
             if (!dsettings.Any())
             {
                 BUT_Configure_Click("Vehicle", null);
+                TSBtnConnect.Checked = false;
                 return;
             }
             droneConnectingCounter = 0;
@@ -1932,6 +1957,7 @@ namespace Diva
                         };
                         readWPWorker.RunBackgroundOperationAsync();
                         readWPWorker.Dispose();
+                        if (MIRDCMode) break;
                     }
                 }
                 catch (Exception exception)
@@ -1943,7 +1969,11 @@ namespace Diva
             {
                 Interlocked.Increment(ref droneConnectingCounter);
                 WPsToScreen(ActiveDrone.Status.Mission);
-        }
+            }
+            else
+            {
+                TSBtnConnect.Checked = false;
+            }
         }
 
 		private void BUT_Arm_Click(object sender, EventArgs e)
@@ -2182,33 +2212,9 @@ namespace Diva
 			}
 		}
 
-		private void VideoDemo_Click(object sender, EventArgs e)
-		{
-			// string uri = Microsoft.VisualBasic.Interaction.InputBox(Strings.MsgSpecifyVideoURI);
-
-			var dsetting = ConfigData.GetTypeList<DroneSetting>()[0];
-			string streamUri = dsetting.StreamURI;
-
-			if (streamUri == null || streamUri.Length == 0)
-				return;
-
-			try
-			{
-				MyVideoForm form = new MyVideoForm();
-				VideoPlayer player = new VideoPlayer(streamUri);
-				form.Controls.Add(player);
-				player.Start();
-				form.Show();
-			}
-			catch (Exception ex)
-			{
-				log.Error(ex.ToString());
-			}
-		}
-
         private void But_MapFocus_Click(object sender, EventArgs e)
 		{
-			isMapFocusing = !isMapFocusing;
+			IsMapFocusing = !IsMapFocusing;
 		}
 
 		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2800,6 +2806,37 @@ namespace Diva
                 Map.Overlays.Add(overlay);
                 AltitudeControlPanel.SetSource(ActiveDrone);
             }
+            FlyToClicked = false;
+            SetButtonStates();
+        }
+
+        private void SetButtonStates()
+        {
+            BtnFlyTo.Image = Resources.left_free2_none;
+            if (BaseLocation.Ready || !MIRDCMode)
+            {
+                BtnTrack.Image = Resources.left_relative2_none;
+                BtnTrack.Text = Strings.BtnTrackText;
+            }
+            else
+            {
+                BtnTrack.Image = Resources.left_relative2_disabled;
+                BtnTrack.Text = Strings.BnTrackText_GPSNotReady;
+            }
+            var flyto = FlyTo.GetFlyToFrom(ActiveDrone);
+            if (flyto != null)
+            {
+                if (flyto.TrackMode)
+                {
+                    BtnTrack.Image = flyto.Reached ? Resources.left_free2_off
+                        : Resources.left_free2_on;
+                }
+                else
+                {
+                    BtnFlyTo.Image = flyto.Reached ? Resources.left_relative2_off
+                        : Resources.left_relative2_on;
+                }
+            }
         }
 
         public void UpdateDroneMode(object obj, FlightMode mode)
@@ -2851,7 +2888,6 @@ namespace Diva
 
         #region MIRDC features
         private bool fullControl;
-        private ToolStripItem[] fixedButtons, toggleButtons;
         public bool FullControl
         {
             get => fullControl;
@@ -2865,8 +2901,9 @@ namespace Diva
                 BtnReadWPs.Visible = value;
                 BtnWriteWPs.Visible = value;
                 BtnRTL.Visible = value;
-                BtnVideo.Visible = value;
-                BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left
+                LblMode.Visible = value;
+                LblModeDesc.Visible = value;
+                BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = BtnBreakAction.Left
                     = AltitudeControlPanel.Left = value ? 184 : 12;
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);
@@ -2878,39 +2915,10 @@ namespace Diva
                 SplitContainer.IsSplitterFixed = !value;
                 SplitContainer.FixedPanel = value ? FixedPanel.None : FixedPanel.Panel2;
 
-                TSMainPanel.SuspendLayout();
-                var btns = TSMainPanel.Items;
-                if (value)
-                {
-                    int max = scrollLeft = btns.Count;
-                    btns.AddRange(toggleButtons);
-                    TSMainPanel.ResumeLayout();
-                    max += toggleButtons.Length;
-                    for (scrollRight = scrollLeft;
-                        scrollRight < max &&
-                        TSMainPanel.Items[scrollRight].Visible;
-                        ++scrollRight) ;
-                    if (scrollRight < btns.Count)
-                    {
-                        TSMainPanel.SuspendLayout();
-                        btns.Insert(scrollLeft++, ScrollBackward);
-                        btns.Add(ScrollForward);
-                        TSMainPanel.ResumeLayout();
-                        max += 2;
-                        while (++scrollRight < max &&
-                            TSMainPanel.Items[scrollRight].Visible) ;
-                        ScrollBackward.Enabled = false;
-                        ScrollForward.Enabled = true;
-                    }
-                }
-                else
-                {
-                    btns.Clear();
-                    btns.AddRange(fixedButtons);
-                }
-                TSMainPanel.ResumeLayout();
+                if (value && !BtnTrack.Enabled) BaseLocationInitialized(null, null);
             }
         }
+        public static bool MIRDCMode => !Instance?.FullControl ?? false;
 
         private MyTSButton BtnFullCtrl = new MyTSButton
         {
@@ -2920,6 +2928,7 @@ namespace Diva
             Height = 80,
             Text = Strings.BtnFullControlText,
             Width = 80,
+            Visible = false
         };
         public bool FlyToClicked
         {
@@ -2929,28 +2938,28 @@ namespace Diva
         private MyTSButton BtnFlyTo = new MyTSButton
         {
             AutoSize = false,
-            CheckedForeColor = Color.Red,
             CheckedText = Strings.BtnChooseDestinationText,
             CheckOnClick = true,
             Height = 80,
+            Image = Resources.left_free2_none,
             Text = Strings.BtnFlyToText,
             Width = 80,
+            TextImageRelation = TextImageRelation.ImageAboveText,
+            DisplayStyle = ToolStripItemDisplayStyle.Image,
+            ImageScaling = ToolStripItemImageScaling.None,
         };
         private MyTSButton BtnTrack = new MyTSButton
         {
             AutoSize = false,
             Height = 80,
-            Text = "Track",
             Width = 80,
-            CheckedText = "Tracking",
-            CheckedForeColor = Color.Green
+            CheckedForeColor = Color.Green,
+            Enabled = false,
+            Image = Resources.left_relative2_disabled,
+            TextImageRelation = TextImageRelation.ImageAboveText,
+            DisplayStyle = ToolStripItemDisplayStyle.Image,
+            ImageScaling = ToolStripItemImageScaling.None,
         };
-
-        private int tsMargin;
-        private int scrollLeft;
-        private int scrollRight;
-        private ToolStripButton ScrollForward = new ToolStripButton("▹") { Overflow = ToolStripItemOverflow.Never, ToolTipText = "Scroll Forward" };
-        private ToolStripButton ScrollBackward = new ToolStripButton("◃") { Overflow = ToolStripItemOverflow.Never, ToolTipText = "Scroll Back" };
 
         private FlyTo CurrentFlyTo = null;
 
@@ -2968,64 +2977,21 @@ namespace Diva
 
         private void SetupMIRDC()
         {
-            tsMargin = 100 + DroneInfoPanel.Width;
-            TSMainPanel.MaximumSize = new Size(Map.Width - tsMargin, TSMainPanel.Height);
-            tsMargin = Map.Width - TSMainPanel.Width;
-            int bwIdx = 0;
-            ScrollForward.Click += (o, e) =>
-            {
-                var btns = TSMainPanel.Items;
-                btns[scrollLeft++].Visible = false;
-                btns[scrollRight++].Visible = true;
-                if (scrollRight == btns.Count - 1)
-                    ScrollForward.Enabled = false;
-                ScrollBackward.Enabled = true;
-            };
-            ScrollBackward.Click += (o, e) =>
-            {
-                var btns = TSMainPanel.Items;
-                btns[--scrollRight].Visible = false;
-                btns[--scrollLeft].Visible = true;
-                if (scrollLeft == btns.IndexOf(ScrollBackward) + 1)
-                    ScrollBackward.Enabled = false;
-                ScrollForward.Enabled = true;
-            };
-            SizeChanged += (o, e) =>
-            {
-                int ol = scrollLeft, or = scrollRight;
-                bool os = TSMainPanel.Items.Contains(ScrollForward);
-                TSMainPanel.MaximumSize = new Size(Map.Width - tsMargin, TSMainPanel.Height);
-                if (fullControl)
-                {
-                    FullControl = false;
-                    FullControl = true;
-                    if (os && TSMainPanel.Items.Contains(ScrollForward))
-                        while (scrollLeft < ol && ScrollForward.Enabled)
-                            ScrollForward.PerformClick();
-                }
-            };
-
-            fixedButtons = new ToolStripItem[]
-            {
-                TSBtnConnect,
-                BtnFullCtrl,
-                BtnFlyTo,
-                BtnTrack,
-            };
-            toggleButtons = new ToolStripItem[]
-            {
-                TSBtnConfigure,
-            };
             FullControl = false;
 
-            BtnFullCtrl.CheckedChanged += (o, e) => FullControl = BtnFullCtrl.Checked;
-            TSMainPanel.Items.Add(BtnFullCtrl);
             BtnFlyTo.CheckedChanged += BtnFlyTo_Clicked;
             TSMainPanel.Items.Add(BtnFlyTo);
             BtnTrack.Click += BtnTrack_Clicked;
             TSMainPanel.Items.Add(BtnTrack);
+            SetButtonStates();
+            BaseLocation.LocationChanged += BaseLocationInitialized;
+        }
 
-            bwIdx = TSMainPanel.Items.Count;
+        private void BaseLocationInitialized(object sender, EventArgs e)
+        {
+            BaseLocation.LocationChanged -= BaseLocationInitialized;
+            BtnTrack.Enabled = true;
+            BtnTrack.Image = Resources.left_relative2_none;
         }
 
         private void BtnFlyTo_Clicked(object sender, EventArgs e)
@@ -3056,6 +3022,29 @@ namespace Diva
             }
         }
 
+        private void Map_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (sender != Map) return;
+            if (FlyToClicked && e.KeyCode == Keys.Escape)
+            {
+                try
+                {
+                    CurrentFlyTo?.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                CurrentFlyTo = null;
+                FlyToClicked = false;
+            }
+            if (e.Modifiers == Keys.Alt &&
+                (e.KeyCode == Keys.Pause || e.KeyCode == Keys.Insert))
+            {
+                FullControl = !FullControl;
+            }
+        }
+
         private void BtnTrack_Clicked(object sender, EventArgs e)
         {
             if (!IsActiveDroneReady()) return;
@@ -3079,23 +3068,43 @@ namespace Diva
                         f.TrackUpdate += (o, r) => BeginInvoke((MethodInvoker)(() =>
                         {
                             if (f.Drone == ActiveDrone)
-                            {
-                                BtnTrack.CheckedForeColor =
-                                    r && BtnTrack.CheckedForeColor == Color.Green ?
-                                    Color.Red : Color.Green;
-                            }
-                                
+                                BtnTrack.Image = r ? Resources.left_relative2_off : Resources.left_relative2_on;
                         }));
                         f.TrackStopped += (o, v) => BeginInvoke((MethodInvoker)(() =>
                         {
                             if (f.Drone == ActiveDrone)
                             {
                                 BtnTrack.Checked = false;
-                                BtnTrack.CheckedForeColor = Color.Green;
+                                BtnTrack.Image = Resources.left_relative2_none;
                             }
                         }));
                     }
                 }
+            }
+        }
+
+        private void BtnBreakAction_Click(object sender, EventArgs e)
+        {
+            ActiveDrone.SetMode("BRAKE");
+        }
+
+        private void BtnMapFocus_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (sender != BtnMapFocus || e.Button != MouseButtons.Right) return;
+            var mpos = BtnMapFocus.PointToClient(Cursor.Position);
+            if (mpos.X >= 0 && mpos.X < BtnMapFocus.Width &&
+                mpos.Y >= 0 && mpos.Y < BtnMapFocus.Height)
+            {
+                IsMapFocusing = false;
+                if (BaseLocation.Ready)
+                    BeginInvoke((MethodInvoker)delegate
+                    {
+                        try
+                        {
+                            Map.Position = BaseLocation.Location;
+                        }
+                        catch { }
+                    });
             }
         }
         #endregion

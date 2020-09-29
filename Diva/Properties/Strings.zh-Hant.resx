@@ -210,9 +210,6 @@
   <data name="MsgModeChanged" xml:space="preserve">
     <value>模式: {0}</value>
   </data>
-  <data name="MsgSpecifyVideoURI" xml:space="preserve">
-    <value>請指定影像URI</value>
-  </data>
   <data name="MsgInvalidWaypointFile" xml:space="preserve">
     <value>不合法的任務檔</value>
   </data>
@@ -476,5 +473,14 @@
   </data>
   <data name="MsgLocationApiNotReadyTitle" xml:space="preserve">
     <value>定位API尚未就續</value>
+  </data>
+  <data name="MsgFailedReadingParametersPleaseCheckConnection" xml:space="preserve">
+    <value>讀取參數失敗，請檢查連線。</value>
+  </data>
+  <data name="BtnTrackText" xml:space="preserve">
+    <value>跟隨飛行</value>
+  </data>
+  <data name="BnTrackText_GPSNotReady" xml:space="preserve">
+    <value>GPS定位未就續</value>
   </data>
 </root>

@@ -8,8 +8,6 @@ namespace Diva.Mavlink
 {
 	public class MavStatus
 	{
-		static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public string VersionString { get; set; } = "";
         public string SoftwareVersions { get; set; } = "";
         public string SerialString { get; set; } = "";
@@ -96,8 +94,8 @@ namespace Diva.Mavlink
         public MAV_TYPE APType { get; set; } = 0;
         public MAV_AUTOPILOT APName { get; set; } = 0;
 
-		public Int64 TimeOffset_ns { get; set; }
-	}
+        public Int64 TimeOffset_ns { get; set; }
+    }
 
     public class DroneStatus : MavStatus
     {
@@ -159,7 +157,24 @@ namespace Diva.Mavlink
 
         public MAV_STATE State { get; set; }
 
-        public bool IsArmed { get; set; }
+        public DateTime? ArmedSince { get; set; }
+
+        private bool isArmed = false;
+        public bool IsArmed
+        {
+            get => isArmed;
+            set
+            {
+                if (value)
+                {
+                    if (!isArmed)
+                        ArmedSince = DateTime.Now;
+                }
+                else
+                    ArmedSince = null;
+                isArmed = value;
+            }
+        }
 
         public ulong Capabilities { get; set; } = (ulong)MAV_PROTOCOL_CAPABILITY.MISSION_FLOAT;
 

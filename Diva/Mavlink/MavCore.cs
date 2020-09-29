@@ -84,6 +84,7 @@ namespace Diva.Mavlink
 
 		public void OpenBg(object PRsender, ProgressWorkerEventArgs progressWorkerEventArgs, object param = null)
 		{
+            bool gotHearbeat = false;
 			frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MsgFormProgressMavlinkConnecting);
 
 			try
@@ -162,7 +163,10 @@ namespace Diva.Mavlink
                 frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MsgAskFlightControllerVersion);
                 GetVersion();
 
-				frmProgressReporter.UpdateProgressAndStatus(0,
+                gotHearbeat = true;
+
+
+                frmProgressReporter.UpdateProgressAndStatus(0,
 					Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));
 				GetParamListBG();
 
@@ -177,7 +181,10 @@ namespace Diva.Mavlink
 			{
 				try
 				{
-					BaseStream.Close();
+                    if (!gotHearbeat)
+                        BaseStream.Close();
+                    else
+                        progressWorkerEventArgs.ErrorMessage = Strings.MsgFailedReadingParametersPleaseCheckConnection;
 				}
 				catch {	}
 				if (string.IsNullOrEmpty(progressWorkerEventArgs.ErrorMessage))

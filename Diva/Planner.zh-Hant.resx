@@ -118,8 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="LblModeDesc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 24</value>
+  </data>
   <data name="LblModeDesc.Text" xml:space="preserve">
     <value>模式：</value>
+  </data>
+  <data name="BtnMapFocus.ToolTip" xml:space="preserve">
+    <value>切換鎖定無人機置中
+(右鍵解除鎖定並置中地面站)</value>
+  </data>
+  <data name="LblMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 24</value>
   </data>
   <data name="LblMode.Text" xml:space="preserve">
     <value>無</value>
@@ -128,9 +138,6 @@
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
   <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnVideo.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
   <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
@@ -153,6 +160,9 @@
   </data>
   <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnConnect.CheckedText" xml:space="preserve">
+    <value>中斷連線</value>
   </data>
   <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
@@ -335,11 +345,20 @@
   <data name="TxtHomeLongitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
+  <data name="TxtHomeLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 25</value>
+  </data>
   <data name="TxtHomeLatitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
+  <data name="TxtHomeLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 25</value>
+  </data>
   <data name="TxtHomeAltitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TxtHomeAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
   </data>
   <data name="LabelLongitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
@@ -374,8 +393,13 @@
   <data name="TxtAltitudeValue.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+  <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="BtnZoomIn.ToolTip" xml:space="preserve">
+    <value>地圖拉近</value>
+  </data>
+  <data name="BtnZoomOut.ToolTip" xml:space="preserve">
+    <value>縮小地圖</value>
   </data>
 </root>

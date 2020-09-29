@@ -118,260 +118,80 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="icon_readwps" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-readwps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_land_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-land-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_edit_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_edit_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_fence" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_fence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_drone_4axis_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-drone-4axis-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_w_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-w-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_close_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_close_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_information" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_info" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_readwps_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-readwps-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_configure_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-configure-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_adjust" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_adjust.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_tagging_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-tagging-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_takeoff_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-takeoff-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_c_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-c-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_emoticon_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_emoticon_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_arm" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-arm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_airplane_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_airplane_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_house_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_house_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_power_medium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_power_medium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_tagging" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-tagging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="point_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\point-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_drone_4axis" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-drone-4axis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_warn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-warn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_location" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_location.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_r" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-r.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_r_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-r-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_4_zoomin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-4_zoomin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_writewps" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-writewps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_battery_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-battery-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_4_zoomout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-4_zoomout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_c" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-c.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_add_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-add-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_drone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_drone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_configure" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-configure.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ParameterMetaData" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ParameterMetaData.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;big5</value>
-  </data>
-  <data name="icon_live" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-live.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_lighting_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_lighting_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_takeoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-takeoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_arm_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-arm-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_auto_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-auto-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_zoomin1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_zoomin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_land" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-land.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_connect_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-connect-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="capacity_signal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\capacity-signal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_flytime" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-flytime.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-connect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_power_full_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_power_full_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_writewps_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-writewps-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_power_low_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_power_low_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mavcmd" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mavcmd.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;big5</value>
-  </data>
-  <data name="icon_loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_loading.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="point_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\point-gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="point_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\point-green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="point_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\point-red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_battery" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-battery.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_btn_collapse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-btn-collapse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_btn_expand" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-btn-expand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_checbox_checked" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-checbox-checked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_checkbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-checkbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_checkbox_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-checkbox-disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_drone1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-drone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_drone2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-drone2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_failSafe" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-failSafe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_geofence" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-geofence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_homepoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-homepoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_left_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_left_auto_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-auto-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_setting_adjust" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-setting-adjust.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_left_home" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-left-home.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_left_home_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-home-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_left_input" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-input.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon_left_input_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-left-input-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_left_landing" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-landing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_homepoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-homepoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_left_landing_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-landing-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_drone_4axis" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-drone-4axis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_left_output" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-output.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_top_power_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-top-power-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_live" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-live.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_c" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-c.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_setting_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-setting-map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_setting_about" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-setting-about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_drone_4axis_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-drone-4axis-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_information" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParameterMetaData" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ParameterMetaData.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;big5</value>
+  </data>
+  <data name="icon_close_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_close_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_btn_collapse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-btn-collapse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_takeoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-takeoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_checkbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-checkbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_mode_stabilize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-mode-stabilize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_left_output_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-left-output-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_left_startup" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-startup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_geofence" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-geofence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_left_startup_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-startup-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_left_takeoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-left-takeoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_drone2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-drone2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_left_takeoff_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-left-takeoff-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_configure" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-configure.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_battery_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-battery-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_r_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-r-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_left_video" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-left-video.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -379,91 +199,316 @@
   <data name="icon_left_video_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-left-video-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_error" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon_login_title" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-login-title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_mode_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-mode-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_w_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-w-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_mode_stabilize" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-mode-stabilize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_power_low_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_power_low_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_mode_stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-mode-stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_airplane_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_airplane_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_radio" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-radio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_fish_boat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_fish_boat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_radio_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-radio-disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_left_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_radio_selected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-radio-selected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_setting_about" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-setting-about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_edit_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_edit_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_setting_adjust" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-setting-adjust.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_fence" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_fence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_setting_drone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-setting-drone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_drone1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-drone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_setting_geofence" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-setting-geofence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_land" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-land.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_setting_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-setting-map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_left_input" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-input.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_signal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-signal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_landing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-landing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_emoticon_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_emoticon_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_stopwatch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-stopwatch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_left_output" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-output.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_home_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-home-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_arm_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-arm-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_battery" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-battery.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_add_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-add-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_checbox_checked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-checbox-checked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_loading.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="point_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\point-red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon_switch_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-switch-off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_switch_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-switch-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_power" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-power.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_power_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-power-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_top_setting_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-top-setting-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_zoom_focus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-zoom-focus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_zoom_focus_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-zoom-focus-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_takeoff_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-takeoff-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_zoom_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-zoom-in.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_zoom_in_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-zoom-in-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="compass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\compass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_zoom_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon-zoom-out.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_flytime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-flytime.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_readwps_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-readwps-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_auto_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-auto-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_w" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-w.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_zoom_out_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon-zoom-out-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="compass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\compass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_failSafe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-failSafe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_signal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-signal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_house_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_house_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_switch_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-switch-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-connect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_takeoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-takeoff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_checkbox_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-checkbox-disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_landing_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-landing-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_setting_drone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-setting-drone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_lighting_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_lighting_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_power_full_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_power_full_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_radio_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-radio-disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_startup_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-startup-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_auto_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-auto-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_setting_geofence" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-setting-geofence.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_configure_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-configure-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="point_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\point-green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_top_setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-top-setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_land_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-land-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_top_setting_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-top-setting-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_tagging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-tagging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_location" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_location.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_radio_selected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-radio-selected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_top_power" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-top-power.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="capacity_signal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\capacity-signal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_btn_expand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-btn-expand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mavcmd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mavcmd.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;big5</value>
+  </data>
+  <data name="icon_zoomin1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_zoomin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_tagging_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-tagging-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoom_focus_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoom-focus-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_radio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-radio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_c_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-c-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_mode_stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-mode-stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_writewps_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-writewps-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_writewps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-writewps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_adjust" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_adjust.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoom_focus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoom-focus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_readwps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-readwps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="hud" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hud.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_fish_boat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_fish_boat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_zoom_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoom-out.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_4_zoomout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-4_zoomout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_r" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-r.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_mode_auto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-mode-auto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoom_in_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-zoom-in-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_power_medium_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_power_medium_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_drone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_drone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_arm" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-arm.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_4_zoomin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-4_zoomin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_connect_active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-connect-active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="point_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\point-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_left_startup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-left-startup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="point_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\point-gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_warn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-warn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logo-dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logo-dark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_top_power_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-top-power1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoom_focus_locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_zoom_focus_locked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_free2_none" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-free2-none.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_free2_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-free2-off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_free2_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-free2-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_relative2_none" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-relative2-none.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_relative2_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-relative2-off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_relative2_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-relative2-on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="left_relative2_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left-relative2-on-disable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red_octagon_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red-octagon-small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_battery_full" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-battery-full.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_battery_nopower" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-battery-nopower.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_battery_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-battery-normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_satellite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon-satellite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

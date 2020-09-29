@@ -49,6 +49,7 @@ namespace Diva.Controls
 		{
 			InitializeComponent();
 			TelemetryData.Visible = false;
+            TelemetryData.Height = 0; // disable display
 		}
 
 		public INotification battNotification;
@@ -66,7 +67,8 @@ namespace Diva.Controls
             };
 			dinfo.DoubleClick += (s, e) =>
 			{
-                if (e is MouseEventArgs m && m.Button == MouseButtons.Right)
+                if (e is MouseEventArgs m && m.Button == MouseButtons.Right
+                        || Planner.MIRDCMode)
                     return;
 				ThePanel.Controls.Remove(s as Control);
 				if (s == ActiveDroneInfo)
@@ -129,11 +131,11 @@ namespace Diva.Controls
             catch { }
 		}
 
-		public void UpdateEstmatedTime(double missionDistance) =>
+		/*public void UpdateEstmatedTime(double missionDistance) =>
             ActiveDroneInfo?.UpdateEstimatedTime(missionDistance);
 
 		public void ResetEstimatedTime() =>
-			ActiveDroneInfo?.ResetEstimatedTime();
+			ActiveDroneInfo?.ResetEstimatedTime();*/
 
         public void NotifyMissionChanged() => ActiveDroneInfo?.NotifyMissionChanged();
 

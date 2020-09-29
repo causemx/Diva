@@ -165,7 +165,7 @@ namespace Diva.Controls.Components
                     base.BackColor = value;
             }
         }
-        [Browsable(true)]
+        [Browsable(true), Localizable(true)]
         public string CheckedText
         {
             get => _CheckedText;
@@ -184,10 +184,14 @@ namespace Diva.Controls.Components
             set { _Text = base.Text = value; }
         }
 
-        public Color CheckStateColor => Checked ? CheckedForeColor : _ForeColor;
-        public Color CheckStateBackColor => Checked ? CheckedBackColor : _BackColor;
-        public Image CheckStateImage => Checked ? CheckedImage : _NormalImage;
-        public String CheckStateText => Checked ? CheckedText : _Text;
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public Color CheckStateColor => Checked && CheckedForeColor.A != 0 ? CheckedForeColor : _ForeColor;
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public Color CheckStateBackColor => Checked && CheckedBackColor.A != 0 ? CheckedBackColor : _BackColor;
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public Image CheckStateImage => Checked && CheckedImage != null ? CheckedImage : _NormalImage;
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public String CheckStateText => Checked && !string.IsNullOrEmpty(CheckedText) ? CheckedText : _Text;
 
         private void SetCheckedState()
         {

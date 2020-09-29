@@ -14,9 +14,6 @@ namespace Diva
         public string PortNumber = "";
         public string Baudrate = "";
         public string StreamURI = "";
-        public string PowerModel = "";
-        public string BatteryCapacity = "";
-        public string BatteryAvailability = "";
         public bool Checked = true;
 
         public DroneSetting GetCopy() =>
@@ -27,9 +24,6 @@ namespace Diva
                 PortNumber = PortNumber,
                 Baudrate = Baudrate,
                 StreamURI = StreamURI,
-                PowerModel = PowerModel,
-                BatteryCapacity = BatteryCapacity,
-                BatteryAvailability = BatteryAvailability,
                 Checked = Checked
             };
 
@@ -53,9 +47,6 @@ namespace Diva
                         xmlwriter.WriteElementString("PortNumber", d.PortNumber);
                         xmlwriter.WriteElementString("Baudrate", d.Baudrate);
                         xmlwriter.WriteElementString("StreamURI", d.StreamURI);
-                        xmlwriter.WriteElementString("PowerModel", d.PowerModel);
-                        xmlwriter.WriteElementString("BatteryCapacity", d.PowerModel);
-                        xmlwriter.WriteElementString("BatteryAvailability", d.PowerModel);
                         xmlwriter.WriteElementString("Checked", d.Checked.ToString());
                     }
                     catch (Exception e)
@@ -109,15 +100,6 @@ namespace Diva
                                                 break;
                                             case "StreamURI":
                                                 d.StreamURI = xmlreader.ReadString();
-                                                break;
-                                            case "PowerModel":
-                                                d.PowerModel = xmlreader.ReadString();
-                                                break;
-                                            case "BatteryCapacity":
-                                                d.BatteryCapacity = xmlreader.ReadString();
-                                                break;
-                                            case "BatteryAvailability":
-                                                d.BatteryAvailability = xmlreader.ReadString();
                                                 break;
                                             case "Checked":
                                                 bool.TryParse(xmlreader.ReadString(), out d.Checked);

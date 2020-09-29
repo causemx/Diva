@@ -213,6 +213,36 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_battery_full {
+            get {
+                object obj = ResourceManager.GetObject("icon_battery_full", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_battery_nopower {
+            get {
+                object obj = ResourceManager.GetObject("icon_battery_nopower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_battery_normal {
+            get {
+                object obj = ResourceManager.GetObject("icon_battery_normal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_btn_collapse {
             get {
                 object obj = ResourceManager.GetObject("icon_btn_collapse", resourceCulture);
@@ -873,6 +903,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_satellite {
+            get {
+                object obj = ResourceManager.GetObject("icon_satellite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_setting_about {
             get {
                 object obj = ResourceManager.GetObject("icon_setting_about", resourceCulture);
@@ -1023,6 +1063,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_top_power_on {
+            get {
+                object obj = ResourceManager.GetObject("icon_top_power_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_top_setting {
             get {
                 object obj = ResourceManager.GetObject("icon_top_setting", resourceCulture);
@@ -1113,6 +1163,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_zoom_focus_locked {
+            get {
+                object obj = ResourceManager.GetObject("icon_zoom_focus_locked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_zoom_in {
             get {
                 object obj = ResourceManager.GetObject("icon_zoom_in", resourceCulture);
@@ -1156,6 +1216,86 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_zoomin1 {
             get {
                 object obj = ResourceManager.GetObject("icon_zoomin1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_free2_none {
+            get {
+                object obj = ResourceManager.GetObject("left_free2_none", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_free2_off {
+            get {
+                object obj = ResourceManager.GetObject("left_free2_off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_free2_on {
+            get {
+                object obj = ResourceManager.GetObject("left_free2_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_relative2_disabled {
+            get {
+                object obj = ResourceManager.GetObject("left_relative2_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_relative2_none {
+            get {
+                object obj = ResourceManager.GetObject("left_relative2_none", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_relative2_off {
+            get {
+                object obj = ResourceManager.GetObject("left_relative2_off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap left_relative2_on {
+            get {
+                object obj = ResourceManager.GetObject("left_relative2_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logo_dark {
+            get {
+                object obj = ResourceManager.GetObject("logo-dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1253,6 +1393,16 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap point_red {
             get {
                 object obj = ResourceManager.GetObject("point_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red_octagon_small {
+            get {
+                object obj = ResourceManager.GetObject("red_octagon_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

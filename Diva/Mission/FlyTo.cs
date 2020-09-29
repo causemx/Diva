@@ -48,6 +48,8 @@ namespace Diva.Mission
             });
             return found;
         }
+        public static FlyTo GetFlyToFrom(MavDrone drone)
+            => flyingTargets.FirstOrDefault(f => f.Drone == drone);
 
         public PointLatLng To => marker.To;
         public PointLatLng From => marker.From;

@@ -61,6 +61,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GPS not ready..
+        /// </summary>
+        public static string BnTrackText_GPSNotReady {
+            get {
+                return ResourceManager.GetString("BnTrackText_GPSNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose
         ///Destination.
         /// </summary>
@@ -96,6 +105,15 @@ namespace Diva.Properties {
         public static string BtnSimplifiedControlText {
             get {
                 return ResourceManager.GetString("BtnSimplifiedControlText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow Mode.
+        /// </summary>
+        public static string BtnTrackText {
+            get {
+                return ResourceManager.GetString("BtnTrackText", resourceCulture);
             }
         }
         
@@ -541,6 +559,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed reading parameters, please check connection..
+        /// </summary>
+        public static string MsgFailedReadingParametersPleaseCheckConnection {
+            get {
+                return ResourceManager.GetString("MsgFailedReadingParametersPleaseCheckConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to send new fence points .
         /// </summary>
         public static string MsgFailedToSendNewFencePoints {
@@ -879,15 +906,6 @@ namespace Diva.Properties {
         public static string MsgSetHomeFirst {
             get {
                 return ResourceManager.GetString("MsgSetHomeFirst", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specify video stream URI..
-        /// </summary>
-        public static string MsgSpecifyVideoURI {
-            get {
-                return ResourceManager.GetString("MsgSpecifyVideoURI", resourceCulture);
             }
         }
         

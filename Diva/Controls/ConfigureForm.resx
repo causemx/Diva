@@ -351,39 +351,6 @@
   <data name="&gt;&gt;BtnLayoutPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="BtnLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="BtnLayoutPanel.FlowDirection" type="System.Windows.Forms.FlowDirection, System.Windows.Forms">
-    <value>TopDown</value>
-  </data>
-  <data name="BtnLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 0</value>
-  </data>
-  <data name="BtnLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="BtnLayoutPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 32, 0, 0</value>
-  </data>
-  <data name="BtnLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 641</value>
-  </data>
-  <data name="BtnLayoutPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Name" xml:space="preserve">
-    <value>BtnLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.Parent" xml:space="preserve">
-    <value>SidePanel</value>
-  </data>
-  <data name="&gt;&gt;BtnLayoutPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="IndicatorPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 32</value>
   </data>

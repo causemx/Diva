@@ -26,6 +26,7 @@ namespace Diva.Controls
         {
             InitializeComponent();
             TxtDroneName.Text = name;
+            TxtSystemID.Text = "";
             Margin = new Padding(0);
             m.Status.GuidedMode.z = (float)DefaultValues.TakeoffHeight;
             Drone = m;
@@ -36,12 +37,26 @@ namespace Diva.Controls
 
         public void UpdateTelemetryData()
         {
-            TxtSystemID.Text = Drone.SysId.ToString();
-            TxtBatteryHealth.Text = Drone.Status.BatteryVoltage.ToString("F2");
+            TxtBatteryHealth.Text = Drone.Status.BatteryVoltage.ToString("F2") + 'V';
             TxtSatelliteCount.Text = Drone.Status.SatteliteCount.ToString();
+            if (Drone.Status.ArmedSince != null)
+            {
+                var elapsed = DateTime.Now - Drone.Status.ArmedSince.Value;
+                if (elapsed < new TimeSpan(0, 1, 0))
+                    TxtEstimatedTime.Text = elapsed.Seconds + "s";
+                else if (elapsed < new TimeSpan(1, 0, 0))
+                    TxtEstimatedTime.Text = elapsed.Minutes + "m" + elapsed.Seconds + "s";
+                else
+                {
+                    int m = (int)elapsed.TotalMinutes;
+                    TxtEstimatedTime.Text = (m / 60) + "h" + (m % 60) + "m";
+                }
+            }
+            else
+                TxtEstimatedTime.Text = "-";
         }
 
-        public void UpdateEstimatedTime(double missionDistance)
+        /*public void UpdateEstimatedTime(double missionDistance)
         {
             // get the waypoint speed, default unit is mile/second
             // TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
@@ -51,7 +66,7 @@ namespace Diva.Controls
         public void ResetEstimatedTime()
         {
             TxtEstimatedTime.Text = "0.0m";
-        }
+        }*/
 
         public void LowVoltageWarning(bool isLowVoltage)
         {
@@ -61,9 +76,6 @@ namespace Diva.Controls
         private readonly Color EC_ColorNormal = Color.White;
         private readonly Color EC_ColorWarning = Color.Orange;
         private readonly Color EC_ColorError = Color.Red;
-
-        private double effectiveBatteryCapacity = 0.0;
-        private int tokenSerialNumber = 0;
 
         public void NotifyMissionChanged() {}
 

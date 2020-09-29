@@ -210,9 +210,6 @@
   <data name="MsgTakedOff" xml:space="preserve">
     <value>status: takeoff</value>
   </data>
-  <data name="MsgSpecifyVideoURI" xml:space="preserve">
-    <value>Specify video stream URI.</value>
-  </data>
   <data name="MsgInvalidWaypointFile" xml:space="preserve">
     <value>Invalid Waypoint file</value>
   </data>
@@ -479,5 +476,14 @@ Destination</value>
   </data>
   <data name="MsgLocationApiNotReadyTitle" xml:space="preserve">
     <value>Location API not ready yet</value>
+  </data>
+  <data name="MsgFailedReadingParametersPleaseCheckConnection" xml:space="preserve">
+    <value>Failed reading parameters, please check connection.</value>
+  </data>
+  <data name="BtnTrackText" xml:space="preserve">
+    <value>Follow Mode</value>
+  </data>
+  <data name="BnTrackText_GPSNotReady" xml:space="preserve">
+    <value>GPS not ready.</value>
   </data>
 </root>

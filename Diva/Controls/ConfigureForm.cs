@@ -30,11 +30,32 @@ namespace Diva.Controls
             pages = new Dictionary<Button, Control>()
             {
                 { BtnVehicle, VehicleConfigPanel },
-				{ BtnGeoFence, configGeoFencePage },
+                { BtnGeoFence, configGeoFencePage },
                 { BtnMap, configMapPage },
-				{ BtnAccount, configAccountPage },
+                { BtnAccount, configAccountPage },
                 { BtnAbout, AboutBoxPanel }
             };
+
+            if (Planner.MIRDCMode)
+            {
+                List<Control> mirdcPageKeys = new List<Control> { BtnVehicle, BtnAbout };
+                int rtop = pages.Keys.First().Top;
+                var keys = pages.Keys.ToList();
+                keys.ForEach(k =>
+                {
+                    if (mirdcPageKeys.Contains(k))
+                    {
+                        k.Top = rtop;
+                        rtop += k.Height;
+                    }
+                    else
+                    {
+                        k.Visible = false;
+                        pages[k].Visible = false;
+                        pages.Remove(k);
+                    }
+                });
+            }
         }
 
         private void ConfigureForm_Load(object sender, EventArgs e)
