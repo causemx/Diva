@@ -404,6 +404,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\logo-dark.png" />
+    <None Include="Resources\red-octagon-with-hand.png" />
     <None Include="Resources\top-unlink.png" />
     <None Include="Resources\top-link.png" />
     <None Include="Resources\icon-battery-full.png" />
@@ -420,7 +422,6 @@
     <None Include="Resources\left-relative2-none.png" />
     <None Include="Resources\red-octagon-small.png" />
     <None Include="Resources\icon-top-power1.png" />
-    <None Include="Resources\logo-dark.png" />
     <None Include="Resources\icon_fish_boat.png" />
     <None Include="Resources\compass.png" />
     <None Include="Resources\hud.png" />

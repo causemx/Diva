@@ -1285,7 +1285,7 @@ namespace Diva.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap logo_dark {
             get {
-                object obj = ResourceManager.GetObject("logo-dark", resourceCulture);
+                object obj = ResourceManager.GetObject("logo_dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1390,9 +1390,9 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap red_octagon_small {
+        internal static System.Drawing.Bitmap red_octagon_with_hand {
             get {
-                object obj = ResourceManager.GetObject("red_octagon_small", resourceCulture);
+                object obj = ResourceManager.GetObject("red_octagon_with_hand", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

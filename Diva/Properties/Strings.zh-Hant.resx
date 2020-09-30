@@ -454,7 +454,7 @@
     <value>選擇目的地</value>
   </data>
   <data name="BtnFlyToText" xml:space="preserve">
-    <value>飛至</value>
+    <value>隨點飛行</value>
   </data>
   <data name="BtnFullControlText" xml:space="preserve">
     <value>所有控制</value>
@@ -481,6 +481,9 @@
     <value>跟隨飛行</value>
   </data>
   <data name="BnTrackText_GPSNotReady" xml:space="preserve">
-    <value>GPS定位未就續</value>
+    <value>GPS定位未就緒</value>
+  </data>
+  <data name="MsgNoAvailableTrackSource" xml:space="preserve">
+    <value>無可用跟隨目標</value>
   </data>
 </root>

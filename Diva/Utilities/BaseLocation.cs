@@ -9,14 +9,15 @@ using Diva.Mavlink;
 
 namespace Diva.Utilities
 {
-    class BaseLocation
+    static class BaseLocation
     {
-        class BaseLocationStatus : DroneStatus
+        private class BaseLocationStatus : DroneStatus
         {
             public override GPoint Location => BaseLocation.Location;
         }
+
         public readonly static MavDrone AsDrone
-            = new MavDrone(new DroneSetting { Name = Diva.Properties.Strings.StrBase }) { Status = new BaseLocationStatus() };
+            = new MavDrone(new DroneSetting { Name = Properties.Strings.StrBase }) { Status = new BaseLocationStatus() };
 
         private readonly static GeoCoordinateWatcher LocationWatcher = new GeoCoordinateWatcher();
 

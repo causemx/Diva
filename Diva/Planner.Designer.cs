@@ -152,6 +152,7 @@ namespace Diva
             this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.HoverImage = null;
+            this.BtnBreakAction.Image = global::Diva.Properties.Resources.red_octagon_with_hand;
             this.BtnBreakAction.Name = "BtnBreakAction";
             this.TTButtonDescription.SetToolTip(this.BtnBreakAction, resources.GetString("BtnBreakAction.ToolTip"));
             this.BtnBreakAction.UseVisualStyleBackColor = false;

@@ -24,7 +24,7 @@ namespace Diva.Mission
         public const int TrackUpdatePeriodMS = 5000;
 
         private static List<FlyTo> flyingTargets = new List<FlyTo>();
-        private static bool markerHandlerSet = false;
+        private static bool markerHandlerSet;
 
         public static void DropFlight(MavDrone drone)
             => flyingTargets.FindAll(f => f.Drone == drone || f.TrackTarget == drone).ForEach(f => f.Dispose());
@@ -53,7 +53,7 @@ namespace Diva.Mission
 
         public PointLatLng To => marker.To;
         public PointLatLng From => marker.From;
-        public MavDrone Drone { get; private set; }
+        public MavDrone Drone { get; }
         public FlyToState State { get; private set; }
         public bool ShowReachedMessage { get; set; } = true;
         public bool TrackMode { get; private set; }
@@ -62,6 +62,8 @@ namespace Diva.Mission
 
         public bool Reached => (State == FlyToState.Reached) ||
             (Drone.Status.Location.DistanceTo(To) < DistanceTolerance);
+
+        private bool DisableNotify;
 
         private DestinationMarker marker;
 
@@ -84,7 +86,12 @@ namespace Diva.Mission
 
         private void RegisterDroneFlight()
         {
-            flyingTargets.FirstOrDefault(f => f.Drone == Drone)?.Dispose();
+            var prev = flyingTargets.Find(f => f.Drone == Drone);
+            if (prev != null)
+            {
+                prev.DisableNotify = true;
+                prev.Dispose();
+            }
             flyingTargets.Add(this);
             State = FlyToState.Flying;
             Planner.GetPlannerInstance().BackgroundTimer += DetectDroneStatus;
@@ -160,7 +167,7 @@ namespace Diva.Mission
                 .OffsetAngleDistance(TrackBearing, TrackDistance) :
             TrackTarget.Status.Location;
         public event EventHandler<bool> TrackUpdate;
-        public event EventHandler TrackStopped;
+        public event EventHandler Destroyed;
 
         private bool CheckTrackUpdate()
         {
@@ -308,8 +315,7 @@ namespace Diva.Mission
             Planner.GetPlannerInstance().BackgroundTimer -= DetectDroneStatus;
             marker?.Dispose();
             marker = null;
-            if (TrackMode)
-                TrackStopped?.Invoke(this, null);
+            if (!DisableNotify) Destroyed?.Invoke(this, null);
         }
     }
 }

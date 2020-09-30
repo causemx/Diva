@@ -137,24 +137,6 @@
   <data name="BtnBreakAction.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="BtnBreakAction.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAAd0SU1FB+QJGQcLEJoMVnoAAALNSURBVEhL7ZbdT9NQGIdPNxBuEKYiQhz7YGNj
-        3ZdbZF7Dv2KiiSR4od5pTLwTEy7wfzDhQ7I5QgZru26MkLGtdd3aVRMCJERDQEFjYKwfnoIkOpvgRvXK
-        iyfpOafnd/L2SdsXEAThKBQKKMuy3lgsZoNjJ10uu0qZjL9qMpEiovsm6fRfFeD1F/HH9c9jEUEOxEAg
-        sjI+7sWTyd/yOI7zAIqiUJIk+9PptHN1ddWRL7Eu+uVEQDCZCAkAuR6qdnv0fSQSijGMNb20dJxH0zQa
-        j8ftIJVKObPZ7ACccGM4bsskSQ+shJAQRDXsLKo9PUlmeiqY3dwcwDDMpuTDYgYALMu7uLBgx+EjJGXZ
-        KpjNWbWAehCt1mV87Lmb4TiXkh8Oh/sAPNXxluddXD7nFyyWvNrGRhD9/vjKizFPHGrhy2UPyJdKLnoC
-        OjGbE2obzgN0NvcuHA5FKcoCMnPRczk5C+iM5GZnbgIBRSNqN2iJaDIlwSGiw9QWtaQCkBwQLl1eVlvU
-        ErGtrQgqLa11v5j1ctTcTAGpuzujtqgpBgOnOIqrLmpIBUGy/x01xj91VO288tcdCe0XWbB9K3RbunBB
-        ULtBE/R6+XPgxiNQLpV8W0bjHam1VfPDZPih3h0eGp1Mpcwn/yNZdu5aLU9Evf5AbUND6HTyh1Bo5M3G
-        hoU/7RkSiUT/jCwb973eZ2JTU1V1Yx3AjIMdn+/hytqanc7na3oGinJP7e0Zd4LB+1JLi6gW8EdAJ5/8
-        vgc5jkMxgqjpGRYX7TiOO5hi0VVmWd9Wb+9duQFnx06Ghkfncjkrlkg4GIb5tWeAE6gyMT8/3wc7oRNn
-        FvPjupxBJx8HB+8pThjY153mKQXwPO8B8BC38gwVT7DlcipjWKHtlSxf3/d5nx5d7Zo97OiYPDQYpiqd
-        ndOVrmszteNKe8fr7WBgJLe+7igWCp7avGg02vcdqg9yJ1EGS3IAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="BtnBreakAction.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>

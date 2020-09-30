@@ -463,7 +463,7 @@ Control</value>
 Destination</value>
   </data>
   <data name="BtnFlyToText" xml:space="preserve">
-    <value>Fly To</value>
+    <value>Click and Go</value>
   </data>
   <data name="MsgActiveUnavailableOrNotReady" xml:space="preserve">
     <value>Active drone is unavailable or not ready to fly.</value>
@@ -481,9 +481,12 @@ Destination</value>
     <value>Failed reading parameters, please check connection.</value>
   </data>
   <data name="BtnTrackText" xml:space="preserve">
-    <value>Follow Mode</value>
+    <value>Follow Me</value>
   </data>
   <data name="BnTrackText_GPSNotReady" xml:space="preserve">
     <value>GPS not ready.</value>
+  </data>
+  <data name="MsgNoAvailableTrackSource" xml:space="preserve">
+    <value>No available track source.</value>
   </data>
 </root>

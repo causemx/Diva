@@ -80,7 +80,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fly To.
+        ///   Looks up a localized string similar to Click and Go.
         /// </summary>
         public static string BtnFlyToText {
             get {
@@ -109,7 +109,7 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Follow Mode.
+        ///   Looks up a localized string similar to Follow Me.
         /// </summary>
         public static string BtnTrackText {
             get {
@@ -816,6 +816,15 @@ namespace Diva.Properties {
         public static string MsgModeChanged {
             get {
                 return ResourceManager.GetString("MsgModeChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No available track source..
+        /// </summary>
+        public static string MsgNoAvailableTrackSource {
+            get {
+                return ResourceManager.GetString("MsgNoAvailableTrackSource", resourceCulture);
             }
         }
         

@@ -464,12 +464,17 @@ namespace Diva
                     {
                         if (CurrentFlyTo != null && CurrentFlyTo.Start())
                         {
-                            BtnFlyTo.Image = Resources.left_free2_on;
                             CurrentFlyTo.DestinationReached += (o, r) => BeginInvoke((MethodInvoker)(() =>
                             {
                                 if (((FlyTo)o).Drone == ActiveDrone)
                                     BtnFlyTo.Image = Resources.left_free2_off;
                             }));
+                            CurrentFlyTo.Destroyed += (o, v) => BeginInvoke((MethodInvoker)(() =>
+                            {
+                                if (((FlyTo)o).Drone == ActiveDrone)
+                                    BtnFlyTo.Image = Resources.left_free2_none;
+                            }));
+                            BtnFlyTo.Image = Resources.left_free2_on;
                         }
                     }
                     else if (e.Button == MouseButtons.Right)
@@ -3056,7 +3061,7 @@ namespace Diva
             {
                 if (form.Sources.Count < 1)
                 {
-                    MessageBox.Show("No available track source");
+                    MessageBox.Show(Strings.MsgNoAvailableTrackSource);
                     return;
                 }
                 if (form.ShowDialog() == DialogResult.OK)
@@ -3070,7 +3075,7 @@ namespace Diva
                             if (f.Drone == ActiveDrone)
                                 BtnTrack.Image = r ? Resources.left_relative2_off : Resources.left_relative2_on;
                         }));
-                        f.TrackStopped += (o, v) => BeginInvoke((MethodInvoker)(() =>
+                        f.Destroyed += (o, v) => BeginInvoke((MethodInvoker)(() =>
                         {
                             if (f.Drone == ActiveDrone)
                             {
@@ -3085,7 +3090,8 @@ namespace Diva
 
         private void BtnBreakAction_Click(object sender, EventArgs e)
         {
-            ActiveDrone.SetMode("BRAKE");
+            if (IsActiveDroneReady())
+                ActiveDrone.SetMode("BRAKE");
         }
 
         private void BtnMapFocus_MouseUp(object sender, MouseEventArgs e)
