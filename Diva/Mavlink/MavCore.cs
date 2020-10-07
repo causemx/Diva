@@ -1207,8 +1207,10 @@ namespace Diva.Mavlink
                 log.Info($"MavCore ({SysId},{CompId}) received foreign packet ({message.sysid},{message.compid}), dropped");
             }*/
             mavlinkVersion = hb.mavlink_version;
-			Status.APType = (MAV_TYPE)hb.type;
-			Status.APName = (MAV_AUTOPILOT)hb.autopilot;
+            MAV_TYPE type = (MAV_TYPE)hb.type;
+            MAV_AUTOPILOT name = (MAV_AUTOPILOT)hb.autopilot;
+            if (Status.APType != type || Status.APName != name)
+                SetAPType(type, name);
 			Status.recvPacketCount = message.seq;
 		}
 

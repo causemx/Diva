@@ -628,6 +628,7 @@ namespace Diva
             this.DGVWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.DGVWayPoints.RowTemplate.Height = 24;
             this.DGVWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
+            this.DGVWayPoints.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DGVWayPoints_DataError);
             this.DGVWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
             this.DGVWayPoints.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Commands_RowsAdded);
             this.DGVWayPoints.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.Commands_RowValidating);
@@ -810,6 +811,7 @@ namespace Diva
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.SplitContainer);
+            this.KeyPreview = true;
             this.Name = "Planner";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Planner_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Planner_FormClosed);

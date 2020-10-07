@@ -2797,6 +2797,7 @@ namespace Diva
             if ((ActiveDrone = (sender as DroneInfo)?.Drone) != null)
             {
                 UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
+                UpdateCMDParams();
                 WPsToScreen(ActiveDrone.Status.Mission);
                 // add marker again to ensure drone icon is topmost
                 var marker = Overlays.Routes.Markers.SingleOrDefault(
@@ -3114,5 +3115,12 @@ namespace Diva
             }
         }
         #endregion
+
+        private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            Console.WriteLine("DataGridError: " + e.Exception);
+            Console.WriteLine("StackTrace: " + e.Exception.StackTrace);
+            e.Cancel = true;
+        }
     }
 }
