@@ -1298,6 +1298,8 @@ namespace Diva.Mavlink
 					}
 					break;
 			}
+            if (Status is DroneStatus status)
+                status.FlightModeType = FlightMode.GetFlightMode(Status.Firmware);
 		}
 
 		public bool GetVersion()

@@ -22,6 +22,7 @@ namespace Diva.Mission
         public const double DistanceTolerance = 5.0;
         public static readonly TimeSpan TimeTolerance = new TimeSpan(0, 0, 30);
         public const int TrackUpdatePeriodMS = 5000;
+        public const int ModeChangeDelayTolerance = 1000;
 
         private static List<FlyTo> flyingTargets = new List<FlyTo>();
         private static bool markerHandlerSet;
@@ -64,8 +65,9 @@ namespace Diva.Mission
             (Drone.Status.Location.DistanceTo(To) < DistanceTolerance);
 
         private bool DisableNotify;
-
         private DestinationMarker marker;
+        private uint previousMode;
+        private DateTime modeChangeDue;
 
         public FlyTo(MavDrone drone, bool isTracker = false)
         {
@@ -94,6 +96,9 @@ namespace Diva.Mission
             }
             flyingTargets.Add(this);
             State = FlyToState.Flying;
+            // Mode change may be delayed for planes
+            previousMode = Drone.Status.FlightMode;
+            modeChangeDue = DateTime.Now.AddMilliseconds(ModeChangeDelayTolerance);
             Planner.GetPlannerInstance().BackgroundTimer += DetectDroneStatus;
             if (!markerHandlerSet)
             {
@@ -119,9 +124,10 @@ namespace Diva.Mission
 
         public bool Start()
         {
-            if (State != FlyToState.Setting && State != FlyToState.Canceled
+            if ((State != FlyToState.Setting && State != FlyToState.Canceled)
                 || !Drone.Status.IsArmed
-                || Drone.Status.State != MAVLink.MAV_STATE.ACTIVE)
+                || (Drone.Status.State != MAVLink.MAV_STATE.ACTIVE
+                    && Drone.Status.Firmware == Firmwares.ArduCopter2))
                 return false;
             if (!Drone.SetGuidedModeWP(new WayPoint
             {
@@ -132,7 +138,7 @@ namespace Diva.Mission
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
-                Drone.SetMode("BRAKE");
+                Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
                 System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
                 return false;
@@ -145,8 +151,7 @@ namespace Diva.Mission
 
         public bool UpdateAltitude()
         {
-            if (State != FlyToState.Flying || TrackMode ||
-                    Drone.Status.FlightMode != FlightMode.GUIDED)
+            if (State != FlyToState.Flying || TrackMode || !Drone.IsMode("GUIDED"))
                 return false;
             return Drone.SetGuidedModeWP(new WayPoint
             {
@@ -195,7 +200,7 @@ namespace Diva.Mission
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
-                Drone.SetMode("BRAKE");
+                Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
                 System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
                 return false;
@@ -209,7 +214,7 @@ namespace Diva.Mission
         {
             if (State != FlyToState.Flying) return false;
             State = FlyToState.Canceled;
-            Drone.SetMode("BRAKE");
+            Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
             marker.SetBrakeMode(true);
             return true;
         }
@@ -233,12 +238,17 @@ namespace Diva.Mission
             try
             {
                 var p = o as Planner;
-                if (State == FlyToState.Flying &&
-                        Drone.Status.FlightMode == FlightMode.GUIDED &&
-                        Drone.Status.State == MAVLink.MAV_STATE.ACTIVE
-                    || State == FlyToState.Canceled &&
-                        Drone.Status.FlightMode == FlightMode.BRAKE &&
-                        Drone.Status.State == MAVLink.MAV_STATE.ACTIVE)
+                bool active = Drone.Status.State == MAVLink.MAV_STATE.ACTIVE;
+                bool flying = State == FlyToState.Flying;
+                bool canceled = State == FlyToState.Canceled &&
+                    Drone.IsMode(Drone.Status.FlightModeType.PauseMode);
+
+                // Mode change may be delayed for planes
+                if (!Drone.IsMode("GUIDED"))
+                    flying &= DateTime.Now < modeChangeDue
+                        && previousMode == Drone.Status.FlightMode;
+
+                if (active && (flying || canceled))
                 {
                     if (TrackMode)
                     {

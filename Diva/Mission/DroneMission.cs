@@ -36,8 +36,15 @@ namespace Diva.Mission
             bool found = Overlays.ContainsKey(drone);
             if (found)
             {
-                Planner.GetPlannerInstance().GMapControl?.Overlays.Remove(Overlays[drone].Overlay);
-                Overlays.Remove(drone);
+                try
+                {
+                    Planner.GetPlannerInstance().GMapControl?.Overlays.Remove(Overlays[drone].Overlay);
+                    Overlays.Remove(drone);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("RemoveMission exception: " + e);
+                }
             }
             return found;
         }

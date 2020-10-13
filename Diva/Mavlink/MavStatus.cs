@@ -133,7 +133,8 @@ namespace Diva.Mavlink
             }
         }
 
-        public FlightMode FlightMode { get; set; }
+        public uint FlightMode { get; set; }
+        public FlightMode FlightModeType { get; set; } = Diva.Mavlink.FlightMode.CopterMode;
 
         public float NAVBearing { get; set; } = float.NaN;
 

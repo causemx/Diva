@@ -21,13 +21,13 @@ namespace Diva.Mission
 		public float Altitude;          // Altitude in centimeters (meters * 100)
 		public MAV_FRAME Frame;
 
-		public MAVLink.mavlink_mission_item_t ToMissionItem<T>(MavCore<T> mav) where T : MavStatus
+		public MAVLink.mavlink_mission_item_t ToMissionItem<T>(MavCore<T> mav, byte current) where T : MavStatus
             => new MAVLink.mavlink_mission_item_t
             {
                 target_system = mav?.SysId ?? 0,
                 target_component = mav?.CompId ?? 0,
-                autocontinue = (byte)((mav.Status.Firmware == Firmwares.ArduPlane) ? 2 : 1),
-                current = 0,
+                autocontinue = 1,
+                current = current,
                 command = Id,
                 param1 = Param1,
                 param2 = Param2,
@@ -40,7 +40,7 @@ namespace Diva.Mission
                 frame = (byte)Frame.ToFloatFrame()
             };
 
-        public MAVLink.mavlink_mission_item_int_t ToMissionItemInt<T>(MavCore<T> mav) where T : MavStatus
+        public MAVLink.mavlink_mission_item_int_t ToMissionItemInt<T>(MavCore<T> mav, byte current) where T : MavStatus
         {
             bool camControl = Id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONTROL ||
                 Id == (ushort)MAVLink.MAV_CMD.DO_DIGICAM_CONFIGURE;
@@ -48,8 +48,8 @@ namespace Diva.Mission
             {
                 target_system = mav?.SysId ?? 0,
                 target_component = mav?.CompId ?? 0,
-                autocontinue = (byte)((mav.Status.Firmware == Firmwares.ArduPlane) ? 2 : 1),
-                current = 0,
+                autocontinue = 1,
+                current = current,
                 command = Id,
                 param1 = Param1,
                 param2 = Param2,

@@ -15,7 +15,7 @@ namespace Diva.Mavlink
         public bool IsOpen => BaseStream?.IsOpen ?? false;
         public bool IsRotationStandby = true;
         public EventHandler<MAV_STATE> StateChangedEvent;
-        public EventHandler<FlightMode> FlightModeChanged;
+        public EventHandler<uint> FlightModeChanged;
 
         public MavDrone(DroneSetting setting = null)
         {
@@ -85,7 +85,7 @@ namespace Diva.Mavlink
             int wpno = wpCur.seq;
             int lastautowp = 0;
 
-            if (Status.FlightMode == FlightMode.GUIDED && wpno != 0)
+            if (this.IsMode("GUIDED") && wpno != 0)
             {
                 lastautowp = (int)wpno;
             }
@@ -102,7 +102,7 @@ namespace Diva.Mavlink
             var hb = GetMessage<mavlink_heartbeat_t>(packet, ref holder);
             if (hb.type != (byte)MAV_TYPE.GCS)
             {
-                var mode = (FlightMode)hb.custom_mode;
+                uint mode = hb.custom_mode;
                 bool armed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
                 bool modechange = Status.FlightMode != mode || armed != Status.IsArmed;
                 Status.FlightMode = mode;
@@ -168,7 +168,8 @@ namespace Diva.Mavlink
 
         public void SetMode(string targetModeName)
         {
-            if (MavUtlities.GetByName(targetModeName, out FlightMode targetMode))
+            uint targetMode = Status.FlightModeType[targetModeName];
+            if (targetMode != Status.FlightMode)
             {
                 bool verify(MAVLinkMessage p, ref bool more) =>
                     p.ToStructure<mavlink_command_ack_t>().command == (ushort)MAVLINK_MSG_ID.SET_MODE;
@@ -179,7 +180,7 @@ namespace Diva.Mavlink
                 {
                     target_system = SysId,
                     base_mode = (byte)MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
-                    custom_mode = (uint)targetMode
+                    custom_mode = targetMode
                 };
                 Console.WriteLine("mode switching");
                 if (!accepted(SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, mode,
@@ -386,12 +387,12 @@ namespace Diva.Mavlink
                 });
         }
 
-        public MAV_MISSION_RESULT SetWP(WayPoint loc, int index)
+        public MAV_MISSION_RESULT SetWP(WayPoint loc, int index, byte current = 0)
         {
-            byte contMode = (byte)((Status.Firmware == Firmwares.ArduPlane) ? 2 : 1);
+            //byte contMode = (byte)((Status.Firmware == Firmwares.ArduPlane) ? 2 : 1);
             bool useint = Status.MissionIntSupport;
             var req = useint ?
-                (object)loc.ToMissionItemInt(this) : loc.ToMissionItem(this);
+                (object)loc.ToMissionItemInt(this, current) : loc.ToMissionItem(this, current);
             var msgid = useint ?
                 MAVLINK_MSG_ID.MISSION_ITEM_INT : MAVLINK_MSG_ID.MISSION_ITEM;
 
@@ -634,7 +635,7 @@ namespace Diva.Mavlink
                         Math.Abs(1 - (float)result.lat_int / target.lat_int) < tolerance &&
                         Math.Abs(1 - (float)result.lon_int / target.lon_int) < tolerance;
             }
-            bool ae = altEquals(), ce = coordEquals(2e-5);
+            bool ae = altEquals(), ce = coordEquals(1e-4);
             return target.type_mask == result.type_mask &&
                 // frame type changed results in altitude not comparable
                 (target.coordinate_frame != result.coordinate_frame || ae) && ce;
@@ -648,17 +649,16 @@ namespace Diva.Mavlink
             try
             {
                 dest.Id = (ushort)MAV_CMD.WAYPOINT;
-                // Must be Guided mode.s
-                if (Status.FlightMode != FlightMode.GUIDED)
-                    if (setmode)
-                        SetMode("GUIDED");
-                    else
-                        return false;
+                // Must be Guided mode.
+                if (setmode)
+                    SetMode("GUIDED");
+                else
+                    return false;
                 log.InfoFormat($"SetGuidedModeWP {SysId}:{CompId}" +
                     $" lat {dest.Latitude} lng {dest.Longitude} alt {dest.Altitude}");
                 if (Status.Firmware == Firmwares.ArduPlane)
                 {
-                    MAV_MISSION_RESULT ans = SetWP(dest, 0);
+                    MAV_MISSION_RESULT ans = SetWP(dest, 0, 2);
                     if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                         throw new Exception("Guided Mode Failed");
                     return true;

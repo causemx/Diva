@@ -195,8 +195,6 @@ namespace Diva
 			TxtHomeLongitude.Text = lng.ToString();
             TxtHomeAltitude.Text = DefaultValues.TakeoffHeight.ToString();
 
-			ComBoxModeSwitch.DataSource = Enum.GetValues(typeof(FlightMode)).Cast<FlightMode>().ToList();
-
             HUD.BorderColor = BackColor;
             HUD.TextFont = Font;
             HUD.GetReferencePoint = () => {
@@ -351,9 +349,12 @@ namespace Diva
 			cmds.Add("UNKNOWN");
 
 			colCommand.DataSource = cmds;
-		}
 
-		Dictionary<string, string[]> ReadCMDXML()
+            ComBoxModeSwitch.DataSource = ActiveDrone?.Status.FlightModeType?.Values ?? FlightMode.CopterMode.Values;
+            ComBoxModeSwitch_SelectedIndexChanged(ActiveDrone, null);
+        }
+
+        Dictionary<string, string[]> ReadCMDXML()
 		{
 			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
 
@@ -1907,7 +1908,7 @@ namespace Diva
             {
                 if (OnlineDrones.Count > 0)
                 {
-                    OnlineDrones.ForEach(d => d.Disconnect());
+                    OnlineDrones.ForEach(DroneDisconnect);
                     OnlineDrones.Clear();
                     DroneInfoPanel.Clear();
                     Overlays.Routes.Markers.Clear();
@@ -1994,8 +1995,7 @@ namespace Diva
             // arm the MAV
             try
             {
-                if (ActiveDrone.Status.FlightMode != FlightMode.GUIDED)
-                    ActiveDrone.SetMode("GUIDED");
+                ActiveDrone.SetMode("GUIDED");
 				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.IsArmed);
 				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.IsArmed);
 				if (ans == false)
@@ -2766,18 +2766,30 @@ namespace Diva
         private void DroneInfoPanel_DroneClosed(object sender, EventArgs e)
         {
             var drone = (sender as DroneInfo)?.Drone;
+            DroneDisconnect(drone);
+            OnlineDrones.Remove(drone);
+        }
+
+        private void DroneDisconnect(MavDrone drone)
+        {
             try
             {
-                OnlineDrones.Remove(drone);
-                DroneMission.RemoveMission(drone);
-                FlyTo.DropFlight(drone);
-                AltitudeControl.Remove(drone);
-                AltitudeControlPanel.ClearSource();
-                Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
-                    x => (x as GMapDroneMarker).Drone == drone));
+                if (drone != null)
+                {
+                    if (drone == ActiveDrone)
+                    {
+                        AltitudeControl.Remove(drone);
+                        AltitudeControlPanel.ClearSource();
+                    }
+                    DroneMission.RemoveMission(drone);
+                    FlyTo.DropFlight(drone);
+                    Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
+                        x => (x as GMapDroneMarker)?.Drone == drone));
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine("Exception on drone close: " + ex);
             }
         }
 
@@ -2796,8 +2808,8 @@ namespace Diva
             }
             if ((ActiveDrone = (sender as DroneInfo)?.Drone) != null)
             {
-                UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
                 UpdateCMDParams();
+                UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
                 WPsToScreen(ActiveDrone.Status.Mission);
                 // add marker again to ensure drone icon is topmost
                 var marker = Overlays.Routes.Markers.SingleOrDefault(
@@ -2845,13 +2857,13 @@ namespace Diva
             }
         }
 
-        public void UpdateDroneMode(object obj, FlightMode mode)
+        public void UpdateDroneMode(object obj, uint mode)
         {
             void updateText(MavDrone drone)
             {
-                string modename = mode.GetName();
+                string modename = drone.Status.FlightModeType[mode];
                 LblMode.Text = drone.Status.IsArmed ? modename : "DISARMED";
-                int modeidx = ComBoxModeSwitch.Items.IndexOf(mode);
+                int modeidx = ComBoxModeSwitch.Items.IndexOf(modename);
                 if (ComBoxModeSwitch.SelectedIndex != modeidx)
                     ComBoxModeSwitch.SelectedIndex = modeidx;
             }
@@ -2864,14 +2876,29 @@ namespace Diva
             }
         }
 
+        private bool comboChangedByUser;
+        private void ComBoxModeSwitch_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            comboChangedByUser = true;
+        }
+
         private void ComBoxModeSwitch_SelectedIndexChanged(object sender, EventArgs e)
         {
+            bool commit = comboChangedByUser;
+            comboChangedByUser = false;
             if (!ActiveDrone.IsOpen || !(sender is ComboBox modeSwitch))
                 return;
 
-            string modename = modeSwitch.SelectedItem.ToString();
-            if (ActiveDrone.Status.FlightMode.ToString() != modename)
-                ActiveDrone.SetMode(modename);
+            try
+            {
+                string modename = modeSwitch.SelectedItem.ToString();
+                if (commit && !ActiveDrone.IsMode(modename))
+                    ActiveDrone.SetMode(modename);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public void NotifyDroneState(object obj, MAV_STATE state)
@@ -2973,7 +3000,8 @@ namespace Diva
         {
             if (ActiveDrone == null || ActiveDrone == DummyDrone
                 || !ActiveDrone.Status.IsArmed
-                || ActiveDrone.Status.State != MAV_STATE.ACTIVE)
+                || ActiveDrone.Status.State != MAV_STATE.ACTIVE &&
+                ActiveDrone.Status.Firmware == Firmwares.ArduCopter2)
             {
                 MessageBox.Show(Strings.MsgActiveUnavailableOrNotReady);
                 return false;
@@ -3092,7 +3120,7 @@ namespace Diva
         private void BtnBreakAction_Click(object sender, EventArgs e)
         {
             if (IsActiveDroneReady())
-                ActiveDrone.SetMode("BRAKE");
+                ActiveDrone.SetMode(ActiveDrone.Status.FlightModeType.PauseMode);
         }
 
         private void BtnMapFocus_MouseUp(object sender, MouseEventArgs e)

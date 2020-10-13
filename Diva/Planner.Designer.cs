@@ -733,6 +733,7 @@ namespace Diva
             this.ComBoxModeSwitch.FormattingEnabled = true;
             this.ComBoxModeSwitch.Name = "ComBoxModeSwitch";
             this.ComBoxModeSwitch.SelectedIndexChanged += new System.EventHandler(this.ComBoxModeSwitch_SelectedIndexChanged);
+            this.ComBoxModeSwitch.SelectionChangeCommitted += new System.EventHandler(this.ComBoxModeSwitch_SelectionChangeCommitted);
             // 
             // TxtHomeLongitude
             // 

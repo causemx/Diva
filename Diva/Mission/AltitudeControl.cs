@@ -20,7 +20,7 @@ namespace Diva.Mission
                     if (ac.IsTargeting)
                     {
                         var d = ac.Drone;
-                        if (d == null || d.Status.FlightMode != FlightMode.GUIDED
+                        if (d == null || !d.IsMode("GUIDED")
                                 || d.Status.State != MAVLink.MAV_STATE.ACTIVE)
                             ac.IsTargeting = false;
                     }
