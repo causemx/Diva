@@ -120,14 +120,14 @@ namespace Diva.Controls
         public Brush ScaleBackBrush = Brushes.White;
         public Font ScaleFont { get; set; } = SystemFonts.SmallCaptionFont;
         public Point ScalePosition { get; set; } = new Point(10, -50);
-        public Size ScaleSize { get; set; } = new Size(20, 10);
+        public Size ScaleSize { get; set; } = new Size(100, 10);
 
-        private void DrawScale(Graphics g, int x, int y, int scale, int rezs, bool fg, ref bool first)
+        private void DrawScale(Graphics g, int x, int y, int scale, int rezs, bool fg, bool drawBg)
         {
             var brush = fg ? ScaleForeBrush : ScaleBackBrush;
             g.FillRectangle(brush, x, y, rezs, ScaleSize.Height);
-            var str = scale > 1000 ? $"{scale / 1000}km" : $"{scale}m";
-            if (first)
+            var str = scale > 800 ? $"{(float)scale / 1000}km" : $"{(float)scale}m";
+            if (drawBg)
             {
                 var sz = g.MeasureString(str, ScaleFont);
                 using (var bgBrush = new SolidBrush(Color.FromArgb(
@@ -136,7 +136,7 @@ namespace Diva.Controls
                     g.FillRectangle(bgBrush, x - 5.25f, y + ScaleSize.Height + 0.75f,
                         sz.Width + rezs + 0.5f, sz.Height + 0.5f);
                 }
-                first = false;
+                drawBg = false;
             }
             g.DrawString(str, ScaleFont, ScaleForeBrush,
                 x + rezs - 5, y + ScaleSize.Height + 1);
@@ -146,26 +146,18 @@ namespace Diva.Controls
         {
             double rez = MapProvider.Projection.GetGroundResolution((int)Zoom, Position.Lat);
             int maxw = Width / 3, minw = ScaleSize.Width;
-            int scale = 10000000, rezs;
-            bool minproof = true, first = true;
+            int scale = 10000000;
             int x = ScalePosition.X, y = ScalePosition.Y;
             if (x < 0) x += Width;
             if (y < 0) y += Height;
 
-            do
-            {
-                scale /= 2;
-                rezs = (int)(scale / rez);
-                if (minw > rezs) break;
-                if (maxw > rezs) DrawScale(g, x, y, scale, rezs, false, ref first);
-                minproof = false;
-                scale /= 5;
-                rezs = (int)(scale / rez);
-                if (minw > rezs) break;
-                if (maxw > rezs) DrawScale(g, x, y, scale, rezs, true, ref first);
-                minproof = false;
-            } while (scale > 1);
-            if (minproof) DrawScale(g, x, y, scale, rezs, true, ref first);
+            while (scale / rez > maxw && scale > 1) scale /= 10;
+            if (scale / rez < minw) scale *= 10;
+            DrawScale(g, x, y, scale, (int)(scale / rez), false, true);
+            DrawScale(g, x, y, scale * 3 / 4, (int)(scale * 3 / 4 / rez), true, false);
+            DrawScale(g, x, y, scale / 2, (int)(scale / 2 / rez), false, false);
+            DrawScale(g, x, y, scale / 4, (int)(scale / 4 / rez), true, false);
+
             g.DrawString(scale > 500 ? "0km" : "0m",
                 ScaleFont, ScaleForeBrush, x - 5, y + ScaleSize.Height + 1);
         }

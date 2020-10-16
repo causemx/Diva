@@ -288,7 +288,6 @@
     <Compile Include="Utilities\FloatMessage.cs" />
     <Compile Include="Mission\WayPoint.cs" />
     <Compile Include="Mission\MissionFile.cs" />
-    <Compile Include="Utilities\NotificationManager.cs" />
     <Compile Include="Mission\DroneMission.cs" />
     <Compile Include="Mavlink\MavParamRepository.cs" />
     <Compile Include="Utilities\PointLatLngAlt.cs" />

@@ -52,8 +52,6 @@ namespace Diva.Controls
             TelemetryData.Height = 0; // disable display
 		}
 
-		public INotification battNotification;
-
 		public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
 		{
 			var dinfo = new DroneInfo(drone, drone.Name);
@@ -84,11 +82,11 @@ namespace Diva.Controls
 				if (s is DroneInfo d)
 				{
 					ActiveDroneInfo = d;
-					TelemetryData.Visible = !TelemetryData.Visible;
+					bool expanded = TelemetryData.Visible = !TelemetryData.Visible;
+                    foreach (var c in ThePanel.Controls)
+                        (c as DroneInfo)?.SetExpanded(expanded);
                 }
 			};
-
-			battNotification = new BatteryNotification(dinfo);
 
 			ThePanel.Controls.Remove(TelemetryData);
 			ThePanel.Controls.Add(dinfo);
@@ -122,7 +120,7 @@ namespace Diva.Controls
 {getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}
 ({status.Latitude}, {status.Longitude})");
 
-				battNotification.Notify();
+                //UpdateBattery();
 
 				MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.Params;
                 if (paramList["FENCE_ENABLE"] != null)
@@ -131,7 +129,36 @@ namespace Diva.Controls
             catch { }
 		}
 
-		/*public void UpdateEstmatedTime(double missionDistance) =>
+        /*private void UpdateBattery()
+        {
+            var drone = activeDrone.Drone;
+            if (drone.Status.BatteryVoltage == 0.0d) return;
+
+            var isShowing = TelemetryData.Visible;
+            try
+            {
+                if (!isShowing && drone.Status.BatteryVoltage < drone.Status.BatteryLowVoltage)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        activeDrone.LowVoltageWarning(true);
+                        MessageBox.Show(Diva.Properties.Strings.MsgLowVoltageWarning, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
+                    });
+                    isShowing = true;
+                }
+                else if (drone.Status.BatteryVoltage > drone.Status.BatteryLowVoltage)
+                {
+                    activeDrone.LowVoltageWarning(false);
+                    isShowing = false;
+                }
+            }
+            catch (Exception e)
+            {
+                Planner.log.Error(e.ToString());
+            }
+        }*.
+
+        /*public void UpdateEstmatedTime(double missionDistance) =>
             ActiveDroneInfo?.UpdateEstimatedTime(missionDistance);
 
 		public void ResetEstimatedTime() =>

@@ -652,8 +652,6 @@ namespace Diva.Mavlink
                 // Must be Guided mode.
                 if (setmode)
                     SetMode("GUIDED");
-                else
-                    return false;
                 log.InfoFormat($"SetGuidedModeWP {SysId}:{CompId}" +
                     $" lat {dest.Latitude} lng {dest.Longitude} alt {dest.Altitude}");
                 if (Status.Firmware == Firmwares.ArduPlane)

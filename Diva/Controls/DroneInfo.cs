@@ -21,6 +21,7 @@ namespace Diva.Controls
             }
         }
         public MavDrone Drone { get; private set; }
+        private bool IsLowVoltage => Drone.Status.BatteryVoltage != 0 && Drone.Status.BatteryLowVoltage > Drone.Status.BatteryVoltage;
 
         public DroneInfo(MavDrone m, string name)
         {
@@ -37,7 +38,26 @@ namespace Diva.Controls
 
         public void UpdateTelemetryData()
         {
-            TxtBatteryHealth.Text = Drone.Status.BatteryVoltage.ToString("F2") + 'V';
+            if (Drone.Status.BatteryVoltage == 0)
+            {
+                TxtBatteryHealth.Text = "N/A";
+                TxtBatteryHealth.ForeColor = Color.White;
+                IconBattery.Image = Properties.Resources.icon_battery_normal;
+            }
+            else
+            {
+                TxtBatteryHealth.Text = Drone.Status.BatteryVoltage.ToString("F2") + 'V';
+                if (IsLowVoltage)
+                {
+                    TxtBatteryHealth.ForeColor = Color.White;
+                    IconBattery.Image = Properties.Resources.icon_battery_normal;
+                }
+                else
+                {
+                    TxtBatteryHealth.ForeColor = Color.Red;
+                    IconBattery.Image = Properties.Resources.icon_battery_nopower;
+                }
+            }
             TxtSatelliteCount.Text = Drone.Status.SatteliteCount.ToString();
             if (Drone.Status.ArmedSince != null)
             {
@@ -68,10 +88,10 @@ namespace Diva.Controls
             TxtEstimatedTime.Text = "0.0m";
         }*/
 
-        public void LowVoltageWarning(bool isLowVoltage)
+        /*public void LowVoltageWarning(bool isLowVoltage)
         {
             TxtBatteryHealth.ForeColor = isLowVoltage ? Color.Red : Color.White;
-        }
+        }*/
 
         private readonly Color EC_ColorNormal = Color.White;
         private readonly Color EC_ColorWarning = Color.Orange;
@@ -83,7 +103,12 @@ namespace Diva.Controls
 		public event EventHandler ToggleTelemetryInfo;
 		private void BtnExpand_Click(object sender, EventArgs e)
 		{
-			ToggleTelemetryInfo?.Invoke(this, e) ;
+			ToggleTelemetryInfo?.Invoke(this, e);
 		}
+
+        public void SetExpanded(bool expanded) {
+            BtnExpand.Image = expanded ? Properties.Resources.icon_btn_collapse
+                : Properties.Resources.icon_btn_expand;
+        }
 	}
 }

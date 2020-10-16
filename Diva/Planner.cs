@@ -3056,10 +3056,10 @@ namespace Diva
             }
         }
 
-        private void Map_KeyUp(object sender, KeyEventArgs e)
+        private void Planner_KeyUp(object sender, KeyEventArgs e)
         {
-            if (sender != Map) return;
-            if (FlyToClicked && e.KeyCode == Keys.Escape)
+            bool keyOnMap = sender == Map;
+            if (keyOnMap && FlyToClicked && e.KeyCode == Keys.Escape)
             {
                 try
                 {
@@ -3072,7 +3072,7 @@ namespace Diva
                 CurrentFlyTo = null;
                 FlyToClicked = false;
             }
-            if (e.Modifiers == Keys.Alt &&
+            else if (e.Modifiers == Keys.Alt &&
                 (e.KeyCode == Keys.Pause || e.KeyCode == Keys.Insert))
             {
                 FullControl = !FullControl;

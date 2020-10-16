@@ -441,7 +441,7 @@ namespace Diva
             this.Map.ScaleFont = new System.Drawing.Font("Microsoft JhengHei UI", 9F);
             this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.Map.ScalePosition = new System.Drawing.Point(10, -50);
-            this.Map.ScaleSize = new System.Drawing.Size(20, 10);
+            this.Map.ScaleSize = new System.Drawing.Size(100, 10);
             this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.Map.ShowTileGridLines = false;
             this.Map.Zoom = 15D;
@@ -449,7 +449,6 @@ namespace Diva
             this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
             this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
             this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
-            this.Map.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Map_KeyUp);
             this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
             this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
             this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
@@ -816,6 +815,7 @@ namespace Diva
             this.Name = "Planner";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Planner_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Planner_FormClosed);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Planner_KeyUp);
             this.SplitContainer.Panel1.ResumeLayout(false);
             this.SplitContainer.Panel1.PerformLayout();
             this.SplitContainer.Panel2.ResumeLayout(false);
