@@ -982,7 +982,8 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Low altitiude on WP#{0}\nPlease reduce the altitude warning, or increase the altitude.
+        ///   Looks up a localized string similar to Low altitiude on WP#{0}
+        ///Please reduce the altitude warning, or increase the altitude.
         /// </summary>
         public static string MsgWarnWPAltitiude {
             get {

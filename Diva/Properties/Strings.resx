@@ -178,7 +178,8 @@
     <value>Not Supported</value>
   </data>
   <data name="MsgWarnWPAltitiude" xml:space="preserve">
-    <value>Low altitiude on WP#{0}\nPlease reduce the altitude warning, or increase the altitude</value>
+    <value>Low altitiude on WP#{0}
+Please reduce the altitude warning, or increase the altitude</value>
   </data>
   <data name="StrAnonymousAccount" xml:space="preserve">
     <value>(Anonymous)</value>
