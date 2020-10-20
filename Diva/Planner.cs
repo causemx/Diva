@@ -1307,8 +1307,8 @@ namespace Diva
 
 			mission.Overlay.ForceUpdate();
 
-			if (OnlineDrones.Contains(ActiveDrone) &&
-                !IsMapFocusing && mission.Waypoints.Count <= 1)
+			if (!(OnlineDrones.Contains(ActiveDrone) && IsMapFocusing)
+                && mission.Waypoints.Count <= 1)
 			{
 				RectLatLng? rect = Map.GetRectOfAllMarkers(mission.Overlay.Id);
 				if (rect.HasValue)

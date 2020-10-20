@@ -39,7 +39,7 @@ namespace Diva.Mavlink
 
         public byte SysId { get; private set; }
         public byte CompId { get; private set; }
-        public virtual string Name { get => baseStream.StreamDescription; }
+        public virtual string Name { get => baseStream?.StreamDescription ?? ""; }
 
         public BufferedStream LogFile { get; set; }
 		public BufferedStream RawLogFile { get; set; }
