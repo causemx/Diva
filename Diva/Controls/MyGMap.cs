@@ -285,9 +285,11 @@ namespace Diva.Controls
                 return;
             RectLatLng sel = SelectedArea;
             if (sel.IsEmpty) return;
-            //int zmax = MapProvider.MaxZoom ?? 20;
-            //for (var z = MapProvider.MinZoom; z < zmax; z++)
-            int z = 19;
+            var dlg = new CacheZoomSelectDialog(MapProvider.MaxZoom ?? 20);
+            dlg.ShowDialog();
+            if (dlg.DialogResult != DialogResult.OK)
+                return;
+            for (var z = dlg.Min; z < dlg.Max; z++)
             {
                 using (TilePrefetcher pf = new TilePrefetcher())
                 {
