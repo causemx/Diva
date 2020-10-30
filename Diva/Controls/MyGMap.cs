@@ -282,13 +282,19 @@ namespace Diva.Controls
         {
             if (!(GMaps.Instance.PrimaryCache is
                 GMap.NET.CacheProviders.SQLitePureImageCache cache))
+            {
+                SelectedArea = RectLatLng.Empty;
                 return;
+            }
             RectLatLng sel = SelectedArea;
             if (sel.IsEmpty) return;
-            var dlg = new CacheZoomSelectDialog(MapProvider.MaxZoom ?? 20);
+            var dlg = new CacheZoomSelectDialog(MapProvider.MaxZoom ?? 18);
             dlg.ShowDialog();
             if (dlg.DialogResult != DialogResult.OK)
+            {
+                SelectedArea = RectLatLng.Empty;
                 return;
+            }
             for (var z = dlg.Min; z < dlg.Max; z++)
             {
                 using (TilePrefetcher pf = new TilePrefetcher())
