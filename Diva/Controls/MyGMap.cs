@@ -290,12 +290,13 @@ namespace Diva.Controls
             if (sel.IsEmpty) return;
             var dlg = new CacheZoomSelectDialog(MapProvider.MaxZoom ?? 18);
             dlg.ShowDialog();
-            if (dlg.DialogResult != DialogResult.OK)
+            if (dlg.DialogResult != DialogResult.OK ||
+                dlg.Min < 0 || dlg.Max < 0 || dlg.Max < dlg.Min)
             {
                 SelectedArea = RectLatLng.Empty;
                 return;
             }
-            for (var z = dlg.Min; z < dlg.Max; z++)
+            for (var z = dlg.Min; z <= dlg.Max; z++)
             {
                 using (TilePrefetcher pf = new TilePrefetcher())
                 {
