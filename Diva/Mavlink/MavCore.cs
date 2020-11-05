@@ -980,6 +980,9 @@ namespace Diva.Mavlink
             ushort packetdropremote = sysstatus.drop_rate_comm;
 
             Status.BatteryVoltage = battery_voltage;
+            Status.SensorEnabled = sysstatus.onboard_control_sensors_enabled;
+            Status.SensorHealth = sysstatus.onboard_control_sensors_health;
+            Status.SensorPresent = sysstatus.onboard_control_sensors_present;
         }
 
         private void StatusTextPacketHandler(object holder, MAVLinkMessage packet)

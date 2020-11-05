@@ -38,7 +38,15 @@ namespace Diva.Mavlink
 
         private FlightMode() { }
 
-        public uint this[string name] => modes[name];
+        public uint this[string name]
+        {
+            get
+            {
+                if (!modes.TryGetValue(name, out uint result))
+                    return uint.MaxValue;
+                return result;
+            }
+        }
         public string this[uint value] => modes.FirstOrDefault(p => p.Value == value).Key;
 
         public string[] Values => modes.Keys.ToArray();

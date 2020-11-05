@@ -266,6 +266,10 @@ namespace Diva
                             if (mode != null)
                                 LBLMode.Text = mode;*/
                             DroneInfoPanel.UpdateDisplayInfo();
+
+                            if (IconModeWarning.BackgroundImage == Resources.rc_controlling &&
+                                0 != (ActiveDrone.Status.SensorError & (UInt32)MAV_SYS_STATUS_SENSOR.RC_RECEIVER))
+                                BeginInvoke((MethodInvoker)(() => IconModeWarning.Text = "No Signal"));
                         });
 
                         PointLatLng currentloc = ActiveDrone.Status.Location;
@@ -282,7 +286,7 @@ namespace Diva
             }
             Invoke((MethodInvoker)(() => Close()));
 		}
-		
+
 		DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
@@ -351,14 +355,20 @@ namespace Diva
 			colCommand.DataSource = cmds;
 
             ComBoxModeSwitch.DataSource = ActiveDrone?.Status.FlightModeType?.Values ?? FlightMode.CopterMode.Values;
-            ComBoxModeSwitch_SelectedIndexChanged(ActiveDrone, null);
         }
 
+        private static Dictionary<string, string[]> PlaneCmds, CopterCmds;
         Dictionary<string, string[]> ReadCMDXML()
 		{
-			Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
+            if ((ActiveDrone.Status.Firmware == Firmwares.ArduPlane ||
+                ActiveDrone.Status.Firmware == Firmwares.Ateryx) && PlaneCmds != null)
+                return PlaneCmds;
+            if (ActiveDrone.Status.Firmware == Firmwares.ArduCopter2
+                && CopterCmds != null)
+                return CopterCmds;
 
-			using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
+            Dictionary<string, string[]> cmd = new Dictionary<string, string[]>();
+            using (var file = new MemoryStream(Encoding.UTF8.GetBytes(Resources.mavcmd)))
 			using (XmlReader reader = XmlReader.Create(file))
 			{
 				reader.Read();
@@ -367,7 +377,9 @@ namespace Diva
 					ActiveDrone.Status.Firmware == Firmwares.Ateryx)
 				{
 					reader.ReadToFollowing("APM");
-				}
+                    PlaneCmds = cmd;
+
+                }
 				else if (ActiveDrone.Status.Firmware == Firmwares.ArduRover)
 				{
 					reader.ReadToFollowing("APRover");
@@ -375,6 +387,7 @@ namespace Diva
 				else
 				{
 					reader.ReadToFollowing("AC2");
+                    CopterCmds = cmd;
 				}
 
 				XmlReader inner = reader.ReadSubtree();
@@ -2769,6 +2782,8 @@ namespace Diva
             var drone = (sender as DroneInfo)?.Drone;
             DroneDisconnect(drone);
             OnlineDrones.Remove(drone);
+            if (OnlineDrones.Count == 0)
+                TSBtnConnect.Checked = false;
         }
 
         private void DroneDisconnect(MavDrone drone)
@@ -2867,6 +2882,7 @@ namespace Diva
                 int modeidx = ComBoxModeSwitch.Items.IndexOf(modename);
                 if (ComBoxModeSwitch.SelectedIndex != modeidx)
                     ComBoxModeSwitch.SelectedIndex = modeidx;
+                UpdateWarningIcon();
             }
             if (obj is MavDrone d && d == ActiveDrone)
             {
@@ -3012,6 +3028,7 @@ namespace Diva
 
         private void SetupMIRDC()
         {
+            Icon = Resources.logo;
             FullControl = false;
 
             BtnFlyTo.CheckedChanged += BtnFlyTo_Clicked;
@@ -3121,7 +3138,22 @@ namespace Diva
         private void BtnBreakAction_Click(object sender, EventArgs e)
         {
             if (IsActiveDroneReady())
-                ActiveDrone.SetMode(ActiveDrone.Status.FlightModeType.PauseMode);
+            {
+                var fly = FlyTo.GetFlyToFrom(ActiveDrone);
+                if (fly != null)
+                    fly.Stop();
+                else if (ActiveDrone.Status.Firmware == Firmwares.ArduPlane)
+                    ActiveDrone.SetGuidedModeWP(new WayPoint
+                    {
+                        Id = (ushort)MAV_CMD.WAYPOINT,
+                        Altitude = AltitudeControl.TargetAltitudes[ActiveDrone],
+                        Latitude = ActiveDrone.Status.Latitude,
+                        Longitude = ActiveDrone.Status.Longitude,
+                        Frame = MAV_FRAME.GLOBAL_RELATIVE_ALT
+                    });
+                else
+                    ActiveDrone.SetMode(ActiveDrone.Status.FlightModeType.PauseMode);
+            }
         }
 
         private void BtnMapFocus_MouseUp(object sender, MouseEventArgs e)
@@ -3132,15 +3164,40 @@ namespace Diva
                 mpos.Y >= 0 && mpos.Y < BtnMapFocus.Height)
             {
                 IsMapFocusing = false;
-                if (BaseLocation.Ready)
-                    BeginInvoke((MethodInvoker)delegate
-                    {
-                        try
-                        {
-                            Map.Position = BaseLocation.Location;
-                        }
-                        catch { }
-                    });
+                PointLatLng loc = PointLatLng.Empty;
+                if (!MIRDCMode && OnlineDrones.Any(d => d.Name.StartsWith("ship", StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    MavDrone drone = null;
+                    OnlineDrones.Any(d => d.IsOpen &&
+                        d.Name.StartsWith("ship", StringComparison.InvariantCultureIgnoreCase) &&
+                        (drone = d) != null);
+                    if (drone != null)
+                        loc = drone.Status.Location;
+                }
+                if (loc != PointLatLng.Empty && BaseLocation.Ready)
+                    loc = BaseLocation.Location;
+                if (loc != PointLatLng.Empty)
+                    try { Map.Position = loc; } catch { }
+            }
+        }
+
+        private void UpdateWarningIcon()
+        {
+            IconModeWarning.Visible = false;
+            if (ActiveDrone?.IsOpen == true)
+            {
+                if (ActiveDrone.Status.Firmware == Firmwares.ArduPlane && ActiveDrone.IsMode("QLAND") ||
+                    ActiveDrone.Status.Firmware == Firmwares.ArduCopter2 && ActiveDrone.IsMode("LAND"))
+                {
+                    IconModeWarning.Visible = true;
+                    IconModeWarning.BackgroundImage = Resources.VTOL_landing;
+                    IconModeWarning.Text = "";
+                }
+                else if (ActiveDrone.Status.IsArmed && !ActiveDrone.IsMode("GUIDED"))
+                {
+                    IconModeWarning.Visible = true;
+                    IconModeWarning.BackgroundImage = Resources.rc_controlling;
+                }
             }
         }
         #endregion

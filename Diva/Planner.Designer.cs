@@ -39,6 +39,7 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.IconModeWarning = new System.Windows.Forms.Button();
             this.BtnBreakAction = new Diva.Controls.Components.MyButton();
             this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
             this.LblModeDesc = new System.Windows.Forms.Label();
@@ -118,6 +119,7 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
+            this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
             this.SplitContainer.Panel1.Controls.Add(this.AltitudeControlPanel);
             this.SplitContainer.Panel1.Controls.Add(this.LblModeDesc);
@@ -141,6 +143,17 @@ namespace Diva
             // 
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
+            // 
+            // IconModeWarning
+            // 
+            this.IconModeWarning.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.IconModeWarning, "IconModeWarning");
+            this.IconModeWarning.FlatAppearance.BorderSize = 0;
+            this.IconModeWarning.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.IconModeWarning.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.IconModeWarning.ForeColor = System.Drawing.Color.Red;
+            this.IconModeWarning.Name = "IconModeWarning";
+            this.IconModeWarning.UseVisualStyleBackColor = false;
             // 
             // BtnBreakAction
             // 
@@ -897,5 +910,6 @@ namespace Diva
         private AltitudeControlPanel AltitudeControlPanel;
         private ToolTip TTButtonDescription;
         private MyButton BtnBreakAction;
+        private Button IconModeWarning;
     }
 }

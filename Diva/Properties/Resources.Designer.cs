@@ -741,6 +741,16 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon logo {
+            get {
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap logo_dark {
@@ -850,6 +860,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap rc_controlling {
+            get {
+                object obj = ResourceManager.GetObject("rc_controlling", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap red_octagon_with_hand {
             get {
                 object obj = ResourceManager.GetObject("red_octagon_with_hand", resourceCulture);
@@ -873,6 +893,16 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap top_unlink {
             get {
                 object obj = ResourceManager.GetObject("top_unlink", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VTOL_landing {
+            get {
+                object obj = ResourceManager.GetObject("VTOL_landing", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

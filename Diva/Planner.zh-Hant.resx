@@ -118,11 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="IconModeWarning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnBreakAction.ToolTip" xml:space="preserve">
+    <value>取消任務</value>
+  </data>
   <data name="LblModeDesc.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 24</value>
   </data>
   <data name="LblModeDesc.Text" xml:space="preserve">
     <value>模式：</value>
+  </data>
+  <data name="BtnZoomOut.ToolTip" xml:space="preserve">
+    <value>縮小地圖</value>
+  </data>
+  <data name="BtnZoomIn.ToolTip" xml:space="preserve">
+    <value>地圖拉近</value>
   </data>
   <data name="BtnMapFocus.ToolTip" xml:space="preserve">
     <value>切換鎖定無人機置中
@@ -160,114 +172,6 @@
   </data>
   <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnConnect.CheckedText" xml:space="preserve">
-    <value>中斷連線</value>
-  </data>
-  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnConnect.Text" xml:space="preserve">
-    <value>連線</value>
-  </data>
-  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="TSBtnConfigure.Text" xml:space="preserve">
-    <value>設定頁面</value>
-  </data>
-  <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
-    <value>多邊形加點</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>清除多邊形</value>
-  </data>
-  <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>儲存多邊形</value>
-  </data>
-  <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>載入多邊形</value>
-  </data>
-  <data name="areaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 22</value>
-  </data>
-  <data name="areaToolStripMenuItem.Text" xml:space="preserve">
-    <value>區域</value>
-  </data>
-  <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>多邊形</value>
-  </data>
-  <data name="uploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
-    <value>上傳</value>
-  </data>
-  <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="setReturnLocationToolStripMenuItem.Text" xml:space="preserve">
-    <value>設返航點</value>
-  </data>
-  <data name="loadFromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="loadFromFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>載入檔案</value>
-  </data>
-  <data name="saveToFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="saveToFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>寫至檔案</value>
-  </data>
-  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
-    <value>清除</value>
-  </data>
-  <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
-    <value>禁飛區</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 6</value>
-  </data>
-  <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="miClearMission.Text" xml:space="preserve">
-    <value>起飛至此</value>
-  </data>
-  <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="miSetHomeHere.Text" xml:space="preserve">
-    <value>設為原點</value>
-  </data>
-  <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 22</value>
-  </data>
-  <data name="miClearAllMissions.Text" xml:space="preserve">
-    <value>清除所有任務</value>
   </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
     <value>147, 120</value>
@@ -342,6 +246,114 @@
   <data name="colTagData.Width" type="System.Int32, mscorlib">
     <value>70</value>
   </data>
+  <data name="TSBtnConnect.CheckedText" xml:space="preserve">
+    <value>中斷連線</value>
+  </data>
+  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnConnect.Text" xml:space="preserve">
+    <value>連線</value>
+  </data>
+  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="TSBtnConfigure.Text" xml:space="preserve">
+    <value>設定頁面</value>
+  </data>
+  <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>多邊形</value>
+  </data>
+  <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
+    <value>多邊形加點</value>
+  </data>
+  <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>清除多邊形</value>
+  </data>
+  <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>儲存多邊形</value>
+  </data>
+  <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>載入多邊形</value>
+  </data>
+  <data name="areaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="areaToolStripMenuItem.Text" xml:space="preserve">
+    <value>區域</value>
+  </data>
+  <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
+    <value>禁飛區</value>
+  </data>
+  <data name="uploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 22</value>
+  </data>
+  <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
+    <value>上傳</value>
+  </data>
+  <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 22</value>
+  </data>
+  <data name="setReturnLocationToolStripMenuItem.Text" xml:space="preserve">
+    <value>設返航點</value>
+  </data>
+  <data name="loadFromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 22</value>
+  </data>
+  <data name="loadFromFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>載入檔案</value>
+  </data>
+  <data name="saveToFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 22</value>
+  </data>
+  <data name="saveToFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>寫至檔案</value>
+  </data>
+  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 22</value>
+  </data>
+  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="miClearMission.Text" xml:space="preserve">
+    <value>起飛至此</value>
+  </data>
+  <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="miSetHomeHere.Text" xml:space="preserve">
+    <value>設為原點</value>
+  </data>
+  <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="miClearAllMissions.Text" xml:space="preserve">
+    <value>清除所有任務</value>
+  </data>
   <data name="TxtHomeLongitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft JhengHei UI, 10.2pt</value>
   </data>
@@ -395,11 +407,5 @@
   </data>
   <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 25</value>
-  </data>
-  <data name="BtnZoomIn.ToolTip" xml:space="preserve">
-    <value>地圖拉近</value>
-  </data>
-  <data name="BtnZoomOut.ToolTip" xml:space="preserve">
-    <value>縮小地圖</value>
   </data>
 </root>

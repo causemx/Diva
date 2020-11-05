@@ -417,6 +417,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\logo.ico" />
+    <None Include="Resources\VTOL-landing.png" />
+    <None Include="Resources\rc-controlling.png" />
     <None Include="Resources\logo-dark.png" />
     <None Include="Resources\red-octagon-with-hand.png" />
     <None Include="Resources\top-unlink.png" />

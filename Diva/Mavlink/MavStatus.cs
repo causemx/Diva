@@ -95,6 +95,12 @@ namespace Diva.Mavlink
         public MAV_AUTOPILOT APName { get; set; } = 0;
 
         public Int64 TimeOffset_ns { get; set; }
+
+        public UInt32 SensorPresent { get; set; }
+        public UInt32 SensorEnabled { get; set; }
+        public UInt32 SensorHealth { get; set; }
+
+        public UInt32 SensorError => SensorEnabled & SensorPresent & ~SensorHealth;
     }
 
     public class DroneStatus : MavStatus
