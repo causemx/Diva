@@ -88,9 +88,9 @@ namespace Diva
 		// polygon
 		internal GMapPolygon geofencePolygon;
 		internal GMapPolygon drawnPolygon;
-		internal GMapPolygon wpPolygon;
-		
-		private bool quickadd = false;
+        internal GMapPolygon wpPolygon;
+
+        private bool quickadd = false;
 		private int selectedRow = 0;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
@@ -122,7 +122,6 @@ namespace Diva
             Tag = "H",
             Frame = MAV_FRAME.GLOBAL
         };
-
 
         public Planner()
 		{
@@ -245,6 +244,7 @@ namespace Diva
 		}
 
         public event EventHandler BackgroundTimer;
+        private GMapDroneMarker BaseMarker = new GMapDroneMarker(BaseLocation.AsDrone);
 		private void MainLoop(CancellationToken token)
 		{
             DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(500);
@@ -253,6 +253,23 @@ namespace Diva
                 Thread.Sleep(100);
                 if (DateTime.Now < nextUpdateTime) continue;
                 nextUpdateTime = DateTime.Now.AddMilliseconds(500);
+
+                try
+                {
+                    bool shipFound;
+                    lock (OnlineDrones)
+                        shipFound = OnlineDrones.Count > 1 &&
+                            OnlineDrones.Any(d => MIRDCHelper.IsShip(d.Name, true));
+                    bool markerShown = Overlays.Commons.Markers.Contains(BaseMarker);
+                    if (!shipFound && BaseLocation.Ready)
+                    {
+                        if (!markerShown)
+                            Overlays.Commons.Markers.Add(BaseMarker);
+                    }
+                    else if (markerShown)
+                        Overlays.Commons.Markers.Remove(BaseMarker);
+                }
+                catch { }
 
                 try
                 {
@@ -287,7 +304,7 @@ namespace Diva
             Invoke((MethodInvoker)(() => Close()));
 		}
 
-		DateTime lastmapposchange = DateTime.MinValue;
+		private DateTime lastmapposchange = DateTime.MinValue;
 		private void UpdateMapPosition(PointLatLng currentloc)
 		{
 			if (!IsMapFocusing) return;
@@ -358,7 +375,7 @@ namespace Diva
         }
 
         private static Dictionary<string, string[]> PlaneCmds, CopterCmds;
-        Dictionary<string, string[]> ReadCMDXML()
+        private Dictionary<string, string[]> ReadCMDXML()
 		{
             if ((ActiveDrone.Status.Firmware == Firmwares.ArduPlane ||
                 ActiveDrone.Status.Firmware == Firmwares.Ateryx) && PlaneCmds != null)
@@ -1954,7 +1971,7 @@ namespace Diva
                         drone?.Disconnect();
                         drone = null;
                     }
-                    if (drone != null && drone.IsOpen)
+                    if (drone?.IsOpen == true)
                     {
                         Interlocked.Increment(ref droneConnectingCounter);
                         drone.FlightModeChanged += UpdateDroneMode;
@@ -2824,6 +2841,7 @@ namespace Diva
             }
             if ((ActiveDrone = (sender as DroneInfo)?.Drone) != null)
             {
+                DGVWayPoints.Rows.Clear();
                 UpdateCMDParams();
                 UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
                 WPsToScreen(ActiveDrone.Status.Mission);
@@ -3036,14 +3054,21 @@ namespace Diva
             BtnTrack.Click += BtnTrack_Clicked;
             TSMainPanel.Items.Add(BtnTrack);
             SetButtonStates();
-            BaseLocation.LocationChanged += BaseLocationInitialized;
+            BackgroundTimer += BaseLocationInitialized;
         }
 
         private void BaseLocationInitialized(object sender, EventArgs e)
         {
-            BaseLocation.LocationChanged -= BaseLocationInitialized;
-            BtnTrack.Enabled = true;
-            BtnTrack.Image = Resources.left_relative2_none;
+            if (BaseLocation.Ready)
+            {
+                BackgroundTimer -= BaseLocationInitialized;
+                BeginInvoke((MethodInvoker)(() =>
+                {
+                    BtnTrack.Enabled = true;
+                    BtnTrack.Image = Resources.left_relative2_none;
+                    SetButtonStates();
+                }));
+            }
         }
 
         private void BtnFlyTo_Clicked(object sender, EventArgs e)
@@ -3174,7 +3199,7 @@ namespace Diva
                     if (drone != null)
                         loc = drone.Status.Location;
                 }
-                if (loc != PointLatLng.Empty && BaseLocation.Ready)
+                if (loc == PointLatLng.Empty && BaseLocation.Ready)
                     loc = BaseLocation.Location;
                 if (loc != PointLatLng.Empty)
                     try { Map.Position = loc; } catch { }

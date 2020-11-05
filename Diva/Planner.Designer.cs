@@ -157,11 +157,11 @@ namespace Diva
             // 
             // BtnBreakAction
             // 
+            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
             this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.ClickImage = null;
-            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
             this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.HoverImage = null;
@@ -174,10 +174,10 @@ namespace Diva
             // AltitudeControlPanel
             // 
             this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
+            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
             this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
             this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
             this.AltitudeControlPanel.ForeColor = System.Drawing.Color.White;
             this.AltitudeControlPanel.HoverGrow = System.Drawing.ContentAlignment.TopRight;
             this.AltitudeControlPanel.HoverSize = new System.Drawing.Size(60, 200);
@@ -200,10 +200,10 @@ namespace Diva
             // 
             // BtnZoomOut
             // 
+            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
             this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.ClickImage = null;
-            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
             this.BtnZoomOut.HoverBackColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
@@ -215,10 +215,10 @@ namespace Diva
             // 
             // BtnZoomIn
             // 
+            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
             this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.ClickImage = null;
-            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
             this.BtnZoomIn.HoverBackColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
@@ -230,10 +230,10 @@ namespace Diva
             // 
             // BtnMapFocus
             // 
+            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
             this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.ClickImage = null;
-            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
             this.BtnMapFocus.HoverBackColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;

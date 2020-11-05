@@ -63,6 +63,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boat_side {
+            get {
+                object obj = ResourceManager.GetObject("boat_side", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap compass {
             get {
                 object obj = ResourceManager.GetObject("compass", resourceCulture);
@@ -893,6 +903,26 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap top_unlink {
             get {
                 object obj = ResourceManager.GetObject("top_unlink", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VTOL {
+            get {
+                object obj = ResourceManager.GetObject("VTOL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VTOL_front {
+            get {
+                object obj = ResourceManager.GetObject("VTOL_front", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

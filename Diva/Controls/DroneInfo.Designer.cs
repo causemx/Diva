@@ -47,10 +47,10 @@
             // PBDroneView
             // 
             this.PBDroneView.BackColor = System.Drawing.Color.Transparent;
-            this.PBDroneView.Image = global::Diva.Properties.Resources.icon_drone1;
+            this.PBDroneView.Image = global::Diva.Properties.Resources.VTOL;
             this.PBDroneView.Location = new System.Drawing.Point(8, 10);
             this.PBDroneView.Name = "PBDroneView";
-            this.PBDroneView.Size = new System.Drawing.Size(54, 54);
+            this.PBDroneView.Size = new System.Drawing.Size(50, 50);
             this.PBDroneView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.PBDroneView.TabIndex = 0;
             this.PBDroneView.TabStop = false;

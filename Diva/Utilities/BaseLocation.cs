@@ -56,6 +56,6 @@ namespace Diva.Utilities
             => DateTime.Now - LastPositionTime <= GPSTimeout
             && LocationWatcher.Status == GeoPositionStatus.Ready;
 
-        public static GPoint Location => new GPoint(geoCoordinate.Latitude, geoCoordinate.Longitude);
+        public static GPoint Location => geoCoordinate == null ? GPoint.Empty : new GPoint(geoCoordinate.Latitude, geoCoordinate.Longitude);
     }
 }

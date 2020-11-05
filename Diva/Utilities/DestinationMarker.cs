@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Diva.Utilities
 {
-    class DestinationMarker : GMapMarker
+    internal class DestinationMarker : GMapMarker
     {
         private static GMapOverlay overlay;
         public static GMapOverlay DistanceOverlay => overlay ??

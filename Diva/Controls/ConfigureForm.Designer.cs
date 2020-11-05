@@ -81,10 +81,11 @@
             // 
             // BtnVehicle
             // 
-            this.BtnVehicle.FlatAppearance.BorderSize = 0;
+            this.BtnVehicle.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.BtnVehicle.FlatAppearance.BorderSize = 12;
             resources.ApplyResources(this.BtnVehicle, "BtnVehicle");
             this.BtnVehicle.ForeColor = System.Drawing.Color.White;
-            this.BtnVehicle.Image = global::Diva.Properties.Resources.icon_drone;
+            this.BtnVehicle.Image = global::Diva.Properties.Resources.VTOL_front;
             this.BtnVehicle.Name = "BtnVehicle";
             this.BtnVehicle.UseVisualStyleBackColor = true;
             this.BtnVehicle.Click += new System.EventHandler(this.MenuButton_Click);

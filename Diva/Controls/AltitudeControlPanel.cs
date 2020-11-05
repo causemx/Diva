@@ -205,7 +205,7 @@ namespace Diva.Controls
                     TextBrush = new SolidBrush(ForeColor);
                 brush = TextBrush;
             }
-            float sz = Font.Size;
+            float sz = Font.Size * base.Size.Width / Size.Width;
             SizeF ssize;
             Font f = null;
             do

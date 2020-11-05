@@ -362,55 +362,6 @@
   <data name="&gt;&gt;LabelPortName.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="PBDronePhoto.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        qtEAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="PBDronePhoto.Location" type="System.Drawing.Point, System.Drawing">
     <value>21, 14</value>
   </data>

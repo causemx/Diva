@@ -88,7 +88,7 @@ namespace Diva.Utilities
 	[Serializable]
 	public class GMapDroneMarker : GMapMarker
 	{
-		public Bitmap Icon = Resources.icon_drone_4axis;
+		public Bitmap Icon;
         public readonly MavDrone Drone;
 
 		float Yaw => Drone.Status.Yaw;
@@ -98,69 +98,55 @@ namespace Diva.Utilities
 		public float warn = -1;
 		public float danger = -1;
 
-        private bool IsShip => Drone.Name.StartsWith("ship", StringComparison.InvariantCultureIgnoreCase);
+        private readonly bool IsShip;
 
         public GMapDroneMarker(MavDrone drone)
 			: base(drone.Status.Location)
 		{
             Drone = drone;
-            if (IsShip)
-            {
-                Icon = Resources.icon_fish_boat;
-                Size = new Size(Icon.Size.Width / 10, Icon.Size.Height / 10);
-                Icon.SetResolution(1000, 1000);
-            }
-            else
-            {
-                Size = Icon.Size;
-                Icon.SetResolution(100, 100);
-            }
+            IsShip = drone == BaseLocation.AsDrone || drone.IsShip();
+            Icon = IsShip ? Resources.boat_side : Resources.VTOL;
+            Size = Icon.Size;
+            //Icon.SetResolution(100, 100);
         }
 
-		public override void OnRender(Graphics g)
+        public override void OnRender(Graphics g)
 		{
             Position = Drone.Status.Location;
             Matrix temp = g.Transform;
 			g.TranslateTransform(LocalPosition.X, LocalPosition.Y);
 
-			int length = 500;
-			// anti NaN
-			try
-			{
-				g.DrawLine(new Pen(Color.Red, 2), 0.0f, 0.0f, (float)Math.Cos((Yaw - 90) * MathHelper.deg2rad) * length,
-					(float)Math.Sin((Yaw - 90) * MathHelper.deg2rad) * length);
-			}
-			catch
-			{
-			}
+			const int length = 500;
 
             if (!IsShip)
             {
                 g.DrawLine(new Pen(Color.Green, 2), 0.0f, 0.0f, (float)Math.Cos((CoG - 90) * MathHelper.deg2rad) * length,
                     (float)Math.Sin((CoG - 90) * MathHelper.deg2rad) * length);
-                Pen dashpen = new Pen(Color.Orange, 2)
-                {
-                    DashStyle = DashStyle.Dash
-                };
-
-                g.DrawLine(dashpen, 0.0f, 0.0f, (float)Math.Cos((Bearing - 90) * MathHelper.deg2rad) * length,
-                    (float)Math.Sin((Bearing - 90) * MathHelper.deg2rad) * length);
+                using (Pen dashpen = new Pen(Color.Orange, 2) { DashStyle = DashStyle.Dash })
+                    g.DrawLine(dashpen, 0.0f, 0.0f,
+                        (float)Math.Cos((Bearing - 90) * MathHelper.deg2rad) * length,
+                        (float)Math.Sin((Bearing - 90) * MathHelper.deg2rad) * length);
             }
+
             // anti NaN
             try
-			{
+            {
                 if (!IsShip)
-				    g.RotateTransform(Yaw);
-			}
-			catch
+                {
+                    g.DrawLine(new Pen(Color.Red, 2), 0.0f, 0.0f, (float)Math.Cos((Yaw - 90) * MathHelper.deg2rad) * length,
+                        (float)Math.Sin((Yaw - 90) * MathHelper.deg2rad) * length);
+                    g.RotateTransform(Yaw);
+                }
+            }
+            catch
 			{
 			}
-
-			g.DrawImageUnscaled(Icon, Size.Width / -2 + 2, Size.Height / -2);
-
+            g.DrawImageUnscaled(Icon, -Size.Width / 2 + 1, -Size.Height / 2);
 
 			// Show name on the drone icon.
             string name = Drone.Name;
+            // shift text for ship name for clarity
+            if (IsShip) name = Environment.NewLine + Environment.NewLine + name;
             Font font = new Font(FontFamily.GenericMonospace, SystemFonts.DefaultFont.Size, FontStyle.Bold);
             SizeF textSize = g.MeasureString(name, font);
             if (textSize.Width > Icon.Width + 8)
@@ -170,7 +156,6 @@ namespace Diva.Utilities
                     name = name.Substring(0, name.Length - 1);
                 } while ((textSize = g.MeasureString(name, font)).Width > Size.Width);
                 name += "...";
-                
             }
             using (GraphicsPath p = new GraphicsPath())
             {
@@ -193,21 +178,18 @@ namespace Diva.Utilities
 				GPoint loc = new GPoint((int)(LocalPosition.X - (m2pixelwidth * warn * 2)), LocalPosition.Y);
 
 				if (m2pixelwidth > 0.001 && warn > 0)
-					g.DrawArc(Pens.Orange,
-						new System.Drawing.Rectangle(
-							LocalPosition.X - Offset.X - (int)(Math.Abs(loc.X - LocalPosition.X) / 2),
-							LocalPosition.Y - Offset.Y - (int)Math.Abs(loc.X - LocalPosition.X) / 2,
-							(int)Math.Abs(loc.X - LocalPosition.X), (int)Math.Abs(loc.X - LocalPosition.X)), 0, 360);
+					g.DrawArc(Pens.Orange, new Rectangle(
+						LocalPosition.X - Offset.X - (int)(Math.Abs(loc.X - LocalPosition.X) / 2),
+						LocalPosition.Y - Offset.Y - (int)(Math.Abs(loc.X - LocalPosition.X) / 2),
+						(int)Math.Abs(loc.X - LocalPosition.X), (int)Math.Abs(loc.X - LocalPosition.X)), 0, 360);
 
 				loc = new GPoint((int)(LocalPosition.X - (m2pixelwidth * danger * 2)), LocalPosition.Y);
 
 				if (m2pixelwidth > 0.001 && danger > 0)
-					g.DrawArc(Pens.Red,
-						new System.Drawing.Rectangle(
-							LocalPosition.X - Offset.X - (int)(Math.Abs(loc.X - LocalPosition.X) / 2),
-							LocalPosition.Y - Offset.Y - (int)Math.Abs(loc.X - LocalPosition.X) / 2,
-							(int)Math.Abs(loc.X - LocalPosition.X), (int)Math.Abs(loc.X - LocalPosition.X)), 0, 360);
-
+					g.DrawArc(Pens.Red, new Rectangle(
+						LocalPosition.X - Offset.X - (int)(Math.Abs(loc.X - LocalPosition.X) / 2),
+						LocalPosition.Y - Offset.Y - (int)(Math.Abs(loc.X - LocalPosition.X) / 2),
+						(int)Math.Abs(loc.X - LocalPosition.X), (int)Math.Abs(loc.X - LocalPosition.X)), 0, 360);
 			}
 		}
 	}

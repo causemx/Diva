@@ -168,6 +168,9 @@
   <data name="&gt;&gt;IconModeWarning.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="BtnBreakAction.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="BtnBreakAction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -178,7 +181,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnBreakAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 468</value>
+    <value>184, 410</value>
   </data>
   <data name="BtnBreakAction.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -204,11 +207,14 @@
   <data name="&gt;&gt;BtnBreakAction.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="AltitudeControlPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="AltitudeControlPanel.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9pt</value>
   </data>
   <data name="AltitudeControlPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 204</value>
+    <value>184, 146</value>
   </data>
   <data name="AltitudeControlPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>40, 120</value>
@@ -273,6 +279,9 @@
   <data name="&gt;&gt;LblModeDesc.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="BtnZoomOut.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="BtnZoomOut.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -283,7 +292,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnZoomOut.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 422</value>
+    <value>184, 364</value>
   </data>
   <data name="BtnZoomOut.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -306,6 +315,9 @@
   <data name="&gt;&gt;BtnZoomOut.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="BtnZoomIn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="BtnZoomIn.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -316,7 +328,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnZoomIn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 376</value>
+    <value>184, 318</value>
   </data>
   <data name="BtnZoomIn.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -339,6 +351,9 @@
   <data name="&gt;&gt;BtnZoomIn.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="BtnMapFocus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="BtnMapFocus.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -349,7 +364,7 @@
     <value>NoControl</value>
   </data>
   <data name="BtnMapFocus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 330</value>
+    <value>184, 272</value>
   </data>
   <data name="BtnMapFocus.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>

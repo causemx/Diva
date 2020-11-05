@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using static Diva.Utilities.ResourceHelper;
+using Diva.Utilities;
 
 namespace Diva.Controls
 {
@@ -171,7 +171,12 @@ namespace Diva.Controls
         public string DroneName
 		{
             get => ChkDroneNameText.Text;
-			set => ChkDroneNameText.Text = value;
+            set
+            {
+                ChkDroneNameText.Text = value;
+                PBDronePhoto.Image = MIRDCHelper.IsShip(value) ?
+                    Properties.Resources.boat_side : Properties.Resources.VTOL;
+            }
 		}
         public string PortName
 		{

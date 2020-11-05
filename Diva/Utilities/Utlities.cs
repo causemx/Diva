@@ -134,4 +134,13 @@ namespace Diva.Utilities
             }
         }
     }
+
+    public static class MIRDCHelper
+    {
+        public static bool IsShip(string str, bool ignoreMIRDC = false) =>
+            (ignoreMIRDC || !Planner.MIRDCMode) &&
+            str.StartsWith("ship", StringComparison.InvariantCultureIgnoreCase);
+
+        public static bool IsShip(this Mavlink.MavDrone drone) => IsShip(drone.Name);
+    }
 }

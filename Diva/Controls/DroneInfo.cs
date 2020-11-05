@@ -31,6 +31,8 @@ namespace Diva.Controls
             Margin = new Padding(0);
             m.Status.GuidedMode.z = (float)DefaultValues.TakeoffHeight;
             Drone = m;
+            if (MIRDCHelper.IsShip(name))
+                PBDroneView.Image = Properties.Resources.boat_side;
         }
 
         public void Activate() => IsActive = true;

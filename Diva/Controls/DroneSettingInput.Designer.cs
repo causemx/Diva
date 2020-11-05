@@ -125,6 +125,7 @@
             // PBDronePhoto
             // 
             this.PBDronePhoto.BackColor = System.Drawing.Color.Transparent;
+            this.PBDronePhoto.Image = global::Diva.Properties.Resources.VTOL;
             resources.ApplyResources(this.PBDronePhoto, "PBDronePhoto");
             this.PBDronePhoto.Name = "PBDronePhoto";
             this.PBDronePhoto.TabStop = false;

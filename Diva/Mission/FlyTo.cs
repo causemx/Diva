@@ -8,7 +8,7 @@ using TTMode = GMap.NET.WindowsForms.MarkerTooltipMode;
 
 namespace Diva.Mission
 {
-    enum FlyToState
+    internal enum FlyToState
     {
         Setting,
         Flying,
@@ -16,7 +16,7 @@ namespace Diva.Mission
         Canceled,
     }
 
-    class FlyTo : IDisposable
+    internal class FlyTo : IDisposable
     {
         public const double AngleTolerance = 0.5;
         public const double DistanceTolerance = 5.0;
