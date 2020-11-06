@@ -248,6 +248,8 @@ namespace Diva
 		private void MainLoop(CancellationToken token)
 		{
             DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(500);
+            BaseMarker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+            BaseMarker.ToolTip = new GMapToolTip(BaseMarker);
 			while (!token.IsCancellationRequested)
 			{
                 Thread.Sleep(100);
@@ -261,13 +263,59 @@ namespace Diva
                         shipFound = OnlineDrones.Count > 1 &&
                             OnlineDrones.Any(d => MIRDCHelper.IsShip(d.Name, true));
                     bool markerShown = Overlays.Commons.Markers.Contains(BaseMarker);
+                    var overlay = Overlays.Commons;
                     if (!shipFound && BaseLocation.Ready)
                     {
                         if (!markerShown)
-                            Overlays.Commons.Markers.Add(BaseMarker);
+                            overlay.Markers.Add(BaseMarker);
                     }
                     else if (markerShown)
-                        Overlays.Commons.Markers.Remove(BaseMarker);
+                        overlay.Markers.Remove(BaseMarker);
+
+                    string toFixed(double d, int digits = 1) => d.ToString($"N{digits}");
+                    GMapDroneMarker findMarker(MavDrone drone)
+                    {
+                        GMapDroneMarker marker = null;
+                        try
+                        {
+                            if (drone != null)
+                                marker = Overlays.Routes.Markers.FirstOrDefault(m =>
+                                    (m as GMapDroneMarker)?.Drone == drone) as GMapDroneMarker;
+                        }
+                        catch { }
+                        return marker;
+                    }
+
+                    if (overlay.Markers.Contains(BaseMarker))
+                    {
+                        BaseMarker.ToolTipText = "";
+                        if (OnlineDrones.Count > 0)
+                        {
+                            var from = BaseLocation.AsDrone.Status.Location;
+                            var to = OnlineDrones[0].Status.Location;
+                            var kms = overlay.Control.MapProvider.Projection.GetDistance(from, to);
+                            var d = (kms > 10 ? $"{toFixed(kms, 3)}km" : $"{toFixed(kms * 1000)}m");
+                            BaseMarker.ToolTipText = "To drone: " + d;
+                            var marker = findMarker(OnlineDrones.FirstOrDefault());
+                            if (marker != null) marker.ToolTipText = "To ship: " + d;
+                        }
+                    }
+                    else
+                    {
+                        var ship = OnlineDrones.FirstOrDefault(d => d.IsShip());
+                        var drone = OnlineDrones.FirstOrDefault(d => d != ship);
+                        if (ship != null && drone != null)
+                        {
+                            var from = ship.Status.Location;
+                            var to = drone.Status.Location;
+                            var kms = overlay.Control.MapProvider.Projection.GetDistance(from, to);
+                            var d = (kms > 10 ? $"{toFixed(kms, 3)}km" : $"{toFixed(kms * 1000)}m");
+                            var marker = findMarker(ship);
+                            if (marker != null) marker.ToolTipText = "To drone: " + d;
+                            marker = findMarker(drone);
+                            if (marker != null) marker.ToolTipText = "To ship: " + d;
+                        }
+                    }
                 }
                 catch { }
 
@@ -505,7 +553,7 @@ namespace Diva
                                 if (((FlyTo)o).Drone == ActiveDrone)
                                     BtnFlyTo.Image = Resources.left_free2_none;
                             }));
-                            BtnFlyTo.Image = Resources.left_free2_on;
+                            SetButtonStates();
                         }
                     }
                     else if (e.Button == MouseButtons.Right)
@@ -1978,7 +2026,9 @@ namespace Diva
                         drone.StateChangedEvent += NotifyDroneState;
                         DroneInfoPanel.AddDrone(drone);
                         OnlineDrones.Add(drone);
-                        Overlays.Routes.Markers.Add(new GMapDroneMarker(drone));
+                        var marker = new GMapDroneMarker(drone) { ToolTipMode = MarkerTooltipMode.OnMouseOver };
+                        marker.ToolTip = new GMapToolTip(marker);
+                        Overlays.Routes.Markers.Add(marker);
                         var readWPWorker = new ProgressDialogV2
                         {
                             StartPosition = FormStartPosition.CenterScreen,
@@ -2021,15 +2071,17 @@ namespace Diva
 				return;
 			}
 
-            if (ActiveDrone.Status.IsArmed) return;
+            if (ActiveDrone.Status.IsArmed &&
+                MessageBox.Show("Already armed, disarm?", "Warning",
+                        MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
 
             // arm the MAV
             try
             {
                 ActiveDrone.SetMode("GUIDED");
 				log.InfoFormat("mav armed: {0}", ActiveDrone.Status.IsArmed);
-				bool ans = ActiveDrone.DoArm(!ActiveDrone.Status.IsArmed);
-				if (ans == false)
+				if (!ActiveDrone.DoArm(!ActiveDrone.Status.IsArmed))
 					log.Error("arm failed");
 			}
 			catch
@@ -2862,35 +2914,6 @@ namespace Diva
             SetButtonStates();
         }
 
-        private void SetButtonStates()
-        {
-            BtnFlyTo.Image = Resources.left_free2_none;
-            if (BaseLocation.Ready || !MIRDCMode)
-            {
-                BtnTrack.Image = Resources.left_relative2_none;
-                BtnTrack.Text = Strings.BtnTrackText;
-            }
-            else
-            {
-                BtnTrack.Image = Resources.left_relative2_disabled;
-                BtnTrack.Text = Strings.BnTrackText_GPSNotReady;
-            }
-            var flyto = FlyTo.GetFlyToFrom(ActiveDrone);
-            if (flyto != null)
-            {
-                if (flyto.TrackMode)
-                {
-                    BtnTrack.Image = flyto.Reached ? Resources.left_free2_off
-                        : Resources.left_free2_on;
-                }
-                else
-                {
-                    BtnFlyTo.Image = flyto.Reached ? Resources.left_relative2_off
-                        : Resources.left_relative2_on;
-                }
-            }
-        }
-
         public void UpdateDroneMode(object obj, uint mode)
         {
             void updateText(MavDrone drone)
@@ -2983,7 +3006,7 @@ namespace Diva
                 SplitContainer.IsSplitterFixed = !value;
                 SplitContainer.FixedPanel = value ? FixedPanel.None : FixedPanel.Panel2;
 
-                if (value && !BtnTrack.Enabled) BaseLocationInitialized(null, null);
+                SetButtonStates();
             }
         }
         public static bool MIRDCMode => !Instance?.FullControl ?? true;
@@ -3141,20 +3164,13 @@ namespace Diva
                     var f = new FlyTo(ActiveDrone, true);
                     if (f.StartTracking(form.Target, form.Distance, form.BearingAngle))
                     {
-                        BtnTrack.Checked = true;
+                        SetButtonStates();
                         f.TrackUpdate += (o, r) => BeginInvoke((MethodInvoker)(() =>
                         {
                             if (f.Drone == ActiveDrone)
                                 BtnTrack.Image = r ? Resources.left_relative2_off : Resources.left_relative2_on;
                         }));
-                        f.Destroyed += (o, v) => BeginInvoke((MethodInvoker)(() =>
-                        {
-                            if (f.Drone == ActiveDrone)
-                            {
-                                BtnTrack.Checked = false;
-                                BtnTrack.Image = Resources.left_relative2_none;
-                            }
-                        }));
+                        f.Destroyed += (o, v) => BeginInvoke((MethodInvoker)SetButtonStates);
                     }
                 }
             }
@@ -3166,7 +3182,10 @@ namespace Diva
             {
                 var fly = FlyTo.GetFlyToFrom(ActiveDrone);
                 if (fly != null)
+                {
                     fly.Stop();
+                    SetButtonStates();
+                }
                 else if (ActiveDrone.Status.Firmware == Firmwares.ArduPlane)
                     ActiveDrone.SetGuidedModeWP(new WayPoint
                     {
@@ -3206,6 +3225,42 @@ namespace Diva
             }
         }
 
+        private void SetButtonStates()
+        {
+            BtnFlyTo.Image = Resources.left_free2_none;
+            if (BaseLocation.Ready || !MIRDCMode &&
+                OnlineDrones.Any(d => d != ActiveDrone && d.IsShip()))
+            {
+                BtnTrack.Image = Resources.left_relative2_none;
+                BtnTrack.Text = Strings.BtnTrackText;
+                BtnTrack.Enabled = true;
+            }
+            else
+            {
+                BtnTrack.Image = Resources.left_relative2_disabled;
+                BtnTrack.Text = Strings.BnTrackText_GPSNotReady;
+                BtnTrack.Enabled = false;
+            }
+            var flyto = FlyTo.GetFlyToFrom(ActiveDrone);
+            if (flyto != null)
+            {
+                if (flyto.TrackMode)
+                {
+                    BtnTrack.Enabled = true;
+                    BtnTrack.Image = flyto.Reached ? Resources.left_relative2_off
+                        : Resources.left_relative2_on;
+                    BtnFlyTo.Image = Resources.left_free2_none;
+                }
+                else
+                {
+                    BtnFlyTo.Image = flyto.Reached ? Resources.left_free2_off
+                        : Resources.left_free2_on;
+                    if (BtnTrack.Enabled)
+                        BtnTrack.Image = Resources.left_relative2_none;
+                }
+            }
+        }
+
         private void UpdateWarningIcon()
         {
             IconModeWarning.Visible = false;
@@ -3218,7 +3273,8 @@ namespace Diva
                     IconModeWarning.BackgroundImage = Resources.VTOL_landing;
                     IconModeWarning.Text = "";
                 }
-                else if (ActiveDrone.Status.IsArmed && !ActiveDrone.IsMode("GUIDED"))
+                else if (ActiveDrone.Status.IsArmed && !ActiveDrone.IsMode("GUIDED")
+                    && (ActiveDrone.Status.Firmware != Firmwares.ArduCopter2 || !ActiveDrone.IsMode("BRAKE")))
                 {
                     IconModeWarning.Visible = true;
                     IconModeWarning.BackgroundImage = Resources.rc_controlling;

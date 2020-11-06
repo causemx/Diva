@@ -107,7 +107,7 @@ namespace Diva.Utilities
             Size = MarkerSize;
         }
 
-        public override void OnRender(Graphics g)
+        /*public override void OnRender(Graphics g)
         {
             base.OnRender(g);
             if (ToolTipMode == MarkerTooltipMode.Never)
@@ -119,7 +119,7 @@ namespace Diva.Utilities
                     TrackTargetRadius + DefaultLineWidth, TrackTargetRadius + DefaultLineWidth);
                 g.Transform = temp;
             }
-        }
+        }*/
 
         public void SetBrakeMode(bool brake)
         {
