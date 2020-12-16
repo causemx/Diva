@@ -51,7 +51,6 @@ namespace Diva.Mavlink
 		private bool GPSLocationMode = false;
 		private ProgressDialogV2 frmProgressReporter;
 
-
         #region Core
         public MavCore()
 		{
@@ -121,36 +120,35 @@ namespace Diva.Mavlink
 				};
 				countDown.Start();
 
-				while (true)
-				{
-					if (progressWorkerEventArgs.CancelRequested)
-					{
-						progressWorkerEventArgs.CancelAcknowledged = true;
-						countDown.Stop();
-						if (BaseStream.IsOpen)
-							BaseStream.Close();
-						return;
-					}
-					log.Info(DateTime.Now.Millisecond + " Start connect loop ");
-					if (DateTime.Now > deadline)
-					{
-						countDown.Stop();
+                do
+                {
+                    if (progressWorkerEventArgs.CancelRequested)
+                    {
+                        progressWorkerEventArgs.CancelAcknowledged = true;
+                        countDown.Stop();
                         if (BaseStream.IsOpen)
                             BaseStream.Close();
-						progressWorkerEventArgs.ErrorMessage = Strings.MsgNoHeartBeat;
-						throw new Exception("Can not establish a connection\n");
-					}
-					Thread.Sleep(1);
+                        return;
+                    }
+                    log.Info(DateTime.Now.Millisecond + " Start connect loop ");
+                    if (DateTime.Now > deadline)
+                    {
+                        countDown.Stop();
+                        if (BaseStream.IsOpen)
+                            BaseStream.Close();
+                        progressWorkerEventArgs.ErrorMessage = Strings.MsgNoHeartBeat;
+                        throw new Exception("Can not establish a connection\n");
+                    }
+                    Thread.Sleep(1);
 
                     frmProgressReporter.UpdateProgressAndStatus(-1, Strings.MsgWaitHeartBeat);
                     // since we're having only 1 sysid/compid in this link, skip id checks
                     if (buffer.Length == 0)
-						buffer = GetHeartBeat(true);
-                    if (buffer.Length > 0)
-                        break;
-					// skip 2 hbs match test
-				}
-				countDown.Stop();
+                        buffer = GetHeartBeat(true);
+                    // skip 2 hbs match test
+                }
+                while (buffer.Length <= 0);
+                countDown.Stop();
 
 				byte[] temp = ASCIIEncoding.ASCII.GetBytes("Diva GCS " + Assembly.GetEntryAssembly().GetName().Version + "\0");
 				Array.Resize(ref temp, 50);
@@ -165,12 +163,11 @@ namespace Diva.Mavlink
 
                 gotHearbeat = true;
 
-
                 frmProgressReporter.UpdateProgressAndStatus(0,
 					Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));
 				GetParamListBG();
 
-				if (frmProgressReporter.doWorkArgs.CancelAcknowledged == true)
+				if (frmProgressReporter.doWorkArgs.CancelAcknowledged)
 				{
 					if (BaseStream.IsOpen)
 						BaseStream.Close();
@@ -190,8 +187,8 @@ namespace Diva.Mavlink
 				if (string.IsNullOrEmpty(progressWorkerEventArgs.ErrorMessage))
 					progressWorkerEventArgs.ErrorMessage = Strings.MsgConnectionFailed;
 				log.Error(e);
-				throw e;
-			}
+                throw;
+            }
 			//frmProgressReporter.Close();
 			frmProgressReporter.UpdateProgressAndStatus(100, Strings.MsgFormProgressDone);
 			log.Info($"Done open {SysId} {CompId}");
@@ -240,7 +237,7 @@ namespace Diva.Mavlink
 					if (BaseStream.IsOpen)
 					{
 						BaseStream.Read(buffer, count, 1);
-						if (RawLogFile != null && RawLogFile.CanWrite)
+						if (RawLogFile?.CanWrite == true)
 							RawLogFile.WriteByte(buffer[count]);
 					}
 				}
@@ -253,7 +250,8 @@ namespace Diva.Mavlink
 				// check if looks like a mavlink packet and check for exclusions and write to console
 				if (buffer[0] != 0xfe && buffer[0] != 'U' && buffer[0] != 0xfd)
 				{
-					if (buffer[0] >= 0x20 && buffer[0] <= 127 || buffer[0] == '\n' || buffer[0] == '\r')
+					if ((buffer[0] >= 0x20 && buffer[0] <= 127) ||
+                        buffer[0] == '\n' || buffer[0] == '\r')
 					{
 						// check for line termination
 						if (buffer[0] == '\r' || buffer[0] == '\n')
@@ -266,7 +264,6 @@ namespace Diva.Mavlink
 							// reset for next line
 							plainTextLine = "";
 						}
-						
 						plainTextLine += (char)buffer[0];
 					}
 					count = 0;
@@ -277,7 +274,7 @@ namespace Diva.Mavlink
 
                 if (buffer[0] == 0xfe || buffer[0] == 0xfd || buffer[0] == 'U')
 				{
-					var mavlinkv2 = buffer[0] == MAVLINK_STX ? true : false;
+					var mavlinkv2 = buffer[0] == MAVLINK_STX;
 
 					int headerlength = mavlinkv2 ? MAVLINK_CORE_HEADER_LEN : MAVLINK_CORE_HEADER_MAVLINK1_LEN;
 					int headerlengthstx = headerlength + 1;
@@ -299,7 +296,7 @@ namespace Diva.Mavlink
 						}
 						int read = BaseStream.Read(buffer, 1, headerlength);
 						count = read;
-						if (RawLogFile != null && RawLogFile.CanWrite)
+						if (RawLogFile?.CanWrite == true)
 							RawLogFile.Write(buffer, 1, read);
 					}
 
@@ -339,7 +336,7 @@ namespace Diva.Mavlink
 								if (read != (length - headerlengthstx))
 									log.InfoFormat("MAVLINK: bad read hdrlen {0}, expecting {1}, read {2}, receiving {3}",
                                         headerlengthstx, length, count, read);
-								if (RawLogFile != null && RawLogFile.CanWrite)
+								if (RawLogFile?.CanWrite == true)
 								{
 									// write only what we read, temp is the whole packet, so 6-end
 									RawLogFile.Write(buffer, headerlengthstx, read);
@@ -487,7 +484,7 @@ namespace Diva.Mavlink
 
 					try
 					{
-						if (LogFile != null && LogFile.CanWrite)
+						if (LogFile?.CanWrite == true)
 						{
 							lock (LogFile)
 							{
@@ -575,7 +572,7 @@ namespace Diva.Mavlink
             MAVLinkMessage reply = null;
             using (AutoResetEvent ev = new AutoResetEvent(false))
             {
-                void eh(object o, MAVLinkMessage p)
+                void eh(object _, MAVLinkMessage p)
                 {
                     if (filter == null || filter(p))
                     {
@@ -610,7 +607,7 @@ namespace Diva.Mavlink
                 for (var i = msgids.Length; i > 0;)
                 {
                     int ival = --i;
-                    ehs[ival] = (object o, MAVLinkMessage p) =>
+                    ehs[ival] = (object _, MAVLinkMessage p) =>
                     {
                         if (filters[ival] == null || filters[ival](p))
                         {
@@ -655,7 +652,7 @@ namespace Diva.Mavlink
             long dueticks = 0;
             using (ManualResetEvent ev = new ManualResetEvent(false))
             {
-                void eh(object o, MAVLinkMessage p)
+                void eh(object _, MAVLinkMessage p)
                 {
                     bool more = false;
                     if (filter == null || filter(p, ref more))
@@ -724,7 +721,7 @@ namespace Diva.Mavlink
                 for (var i = rids.Length; i > 0; )
                 {
                     int ival = --i;
-                    ehs[ival] = (object o, MAVLinkMessage p) =>
+                    ehs[ival] = (object _, MAVLinkMessage p) =>
                     {
                         bool more = false;
                         if (filters[ival] == null || filters[ival](p, ref more))
@@ -857,7 +854,7 @@ namespace Diva.Mavlink
 
         protected void HandleMavLinkMessage(MAVLinkMessage message)
         {
-            if (message != null && message.msgid < MAX_MAVLINK_MSGID)
+            if (message?.msgid < MAX_MAVLINK_MSGID)
                 (message.IsGCSPacket() ? gcsMsgMap : msgMap)[message.msgid]?.
                     Invoke(new MessageHolder(), message);
         }
@@ -998,7 +995,7 @@ namespace Diva.Mavlink
         {
             mavlink_param_value_t pv = new mavlink_param_value_t();
             if (SendPacketWaitReply(MAVLINK_MSG_ID.PARAM_SET, outp,
-                MAVLINK_MSG_ID.PARAM_VALUE, (MAVLinkMessage p, ref bool more) =>
+                MAVLINK_MSG_ID.PARAM_VALUE, (MAVLinkMessage p, ref bool _) =>
                 {
                     pv = p.ToStructure<mavlink_param_value_t>();
                     string st = ASCIIEncoding.ASCII.GetString(pv.param_id).Split('\0')[0];
@@ -1203,7 +1200,7 @@ namespace Diva.Mavlink
 		}
         #endregion Parameters
 
-		void SetupMavConnect(MAVLinkMessage message, mavlink_heartbeat_t hb)
+		private void SetupMavConnect(MAVLinkMessage message, mavlink_heartbeat_t hb)
 		{
             /*if (SysId != message.sysid || CompId != message.compid)
             {
@@ -1245,17 +1242,9 @@ namespace Diva.Mavlink
                             Status.Firmware = Firmwares.ArduPlane;
 							break;
 						case MAV_TYPE.QUADROTOR:
-                            Status.Firmware = Firmwares.ArduCopter2;
-							break;
 						case MAV_TYPE.TRICOPTER:
-                            Status.Firmware = Firmwares.ArduCopter2;
-							break;
 						case MAV_TYPE.HEXAROTOR:
-                            Status.Firmware = Firmwares.ArduCopter2;
-							break;
 						case MAV_TYPE.OCTOROTOR:
-                            Status.Firmware = Firmwares.ArduCopter2;
-							break;
 						case MAV_TYPE.HELICOPTER:
                             Status.Firmware = Firmwares.ArduCopter2;
 							break;
@@ -1307,12 +1296,13 @@ namespace Diva.Mavlink
 
 		public bool GetVersion()
 		{
-            return null != SendPacketWaitReply(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST,
+            return SendPacketWaitReply(MAVLINK_MSG_ID.AUTOPILOT_VERSION_REQUEST,
                     new mavlink_autopilot_version_request_t
                     {
                         target_component = CompId,
                         target_system = SysId
-                    }, MAVLINK_MSG_ID.AUTOPILOT_VERSION, null, 1000, 3);
+                    },
+                    MAVLINK_MSG_ID.AUTOPILOT_VERSION, null, 1000, 3) != null;
 		}
 
         public void SendCommand(MAV_CMD cmd, float p1, float p2, float p3, float p4, float p5, float p6, float p7)
@@ -1350,7 +1340,7 @@ namespace Diva.Mavlink
                         param6 = p6,
                         param7 = p7
                     }, MAVLINK_MSG_ID.COMMAND_ACK,
-                    (MAVLinkMessage p, ref bool more) =>
+                    (MAVLinkMessage p, ref bool _) =>
                         (MAV_CMD)p.ToStructure<mavlink_command_ack_t>().command == cmd,
                     1000, 3);
             if (ack == null)

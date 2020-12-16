@@ -40,7 +40,9 @@ namespace Diva.Mission
             bool found = false;
             flyingTargets.Any(f =>
             {
-                if (f.Drone == drone)
+                if (f.Drone == drone &&
+                    f.Drone.Status.Firmware == Firmwares.ArduPlane ||
+                    f.State == FlyToState.Flying)
                 {
                     f.UpdateAltitude();
                     found = true;
@@ -250,15 +252,13 @@ namespace Diva.Mission
                 var p = o as Planner;
                 bool active = Drone.Status.State == MAVLink.MAV_STATE.ACTIVE;
                 bool flying = State == FlyToState.Flying;
-                bool canceled = State == FlyToState.Canceled &&
-                    Drone.IsMode(Drone.Status.FlightModeType.PauseMode);
 
                 // Mode change may be delayed for planes
                 if (!Drone.IsMode("GUIDED"))
                     flying &= DateTime.Now < modeChangeDue
                         && previousMode == Drone.Status.FlightMode;
 
-                if (active && (flying || canceled))
+                if (active && flying)
                 {
                     if (TrackMode)
                     {
