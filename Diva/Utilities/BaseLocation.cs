@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Device.Location;
 using GPoint = GMap.NET.PointLatLng;
@@ -37,25 +38,56 @@ namespace Diva.Utilities
         public static double AccuracyLimit { get; set; } = 30;
         public static TimeSpan GPSTimeout { get; set; } = new TimeSpan(0, 3, 0);
         public static DateTime LastPositionTime { get; private set; }
-        public static EventHandler LocationChanged = null;
+        public static EventHandler LocationChanged;
 
         private static GeoCoordinate geoCoordinate;
+        private static DateTime sentinelTimestamp = DateTime.Now;
+        private static GeoCoordinateWatcher sentinelWatcher;
+        private static readonly TimeSpan SentinelTimeout = TimeSpan.FromSeconds(60);
+
+        private static void SentinelCheck()
+        {
+            if (DateTime.Now - sentinelTimestamp > SentinelTimeout)
+            {
+                sentinelWatcher?.Dispose();
+                Task.Run(() => (sentinelWatcher = new GeoCoordinateWatcher()).Start());
+                sentinelTimestamp = DateTime.Now;
+            }
+        }
 
         private static void LocationWatcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
             if (e.Position.Location.IsUnknown ||
                 e.Position.Location.HorizontalAccuracy > AccuracyLimit)
-                // possibly not gps result, drop
+            {
+                SentinelCheck();
+                Console.WriteLine("Not valid location");
                 return;
-            LastPositionTime = DateTime.Now;
+            }
+            Console.WriteLine("Got valid location");
+            LastPositionTime = sentinelTimestamp = DateTime.Now;
             geoCoordinate = e.Position.Location;
             LocationChanged?.Invoke(null, e);
         }
 
         public static bool Ready
-            => DateTime.Now - LastPositionTime <= GPSTimeout
-            && LocationWatcher.Status == GeoPositionStatus.Ready;
+        {
+            get
+            {
+                SentinelCheck();
+                return DateTime.Now - LastPositionTime <= GPSTimeout
+                    && LocationWatcher.Status == GeoPositionStatus.Ready;
+            }
+        }
 
-        public static GPoint Location => geoCoordinate == null ? GPoint.Empty : new GPoint(geoCoordinate.Latitude, geoCoordinate.Longitude);
+        public static GPoint Location
+        {
+            get
+            {
+                SentinelCheck();
+                return geoCoordinate == null ? GPoint.Empty :
+                    new GPoint(geoCoordinate.Latitude, geoCoordinate.Longitude);
+            }
+        }
     }
 }
