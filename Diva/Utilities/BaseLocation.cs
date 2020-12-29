@@ -43,7 +43,7 @@ namespace Diva.Utilities
         private static GeoCoordinate geoCoordinate;
         private static DateTime sentinelTimestamp = DateTime.Now;
         private static GeoCoordinateWatcher sentinelWatcher;
-        private static readonly TimeSpan SentinelTimeout = TimeSpan.FromSeconds(60);
+        private static readonly TimeSpan SentinelTimeout = TimeSpan.FromSeconds(45);
 
         private static void SentinelCheck()
         {
@@ -61,10 +61,8 @@ namespace Diva.Utilities
                 e.Position.Location.HorizontalAccuracy > AccuracyLimit)
             {
                 SentinelCheck();
-                Console.WriteLine("Not valid location");
                 return;
             }
-            Console.WriteLine("Got valid location");
             LastPositionTime = sentinelTimestamp = DateTime.Now;
             geoCoordinate = e.Position.Location;
             LocationChanged?.Invoke(null, e);

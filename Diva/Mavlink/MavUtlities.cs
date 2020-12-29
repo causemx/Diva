@@ -9,6 +9,7 @@ namespace Diva.Mavlink
     {
         private readonly Dictionary<string, uint> modes = new Dictionary<string, uint>();
         public string PauseMode { get; private set; }
+        public string LandMode { get; private set; }
 
         public static readonly FlightMode CopterMode;
         public static readonly FlightMode PlaneMode;
@@ -27,11 +28,11 @@ namespace Diva.Mavlink
 
         static FlightMode()
         {
-            CopterMode = new FlightMode { PauseMode = "BRAKE" };
+            CopterMode = new FlightMode { PauseMode = "BRAKE", LandMode = "LAND" };
             foreach (var m in Enum.GetValues(typeof(COPTER_MODE)))
                 CopterMode.modes.Add(m.ToString(), (uint)m);
 
-            PlaneMode = new FlightMode { PauseMode = "LOITER" };
+            PlaneMode = new FlightMode { PauseMode = "LOITER", LandMode = "QLAND" };
             foreach (var m in Enum.GetValues(typeof(PLANE_MODE)))
                 PlaneMode.modes.Add(m.ToString(), (uint)m);
         }

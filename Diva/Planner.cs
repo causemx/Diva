@@ -253,6 +253,7 @@ namespace Diva
 			while (!token.IsCancellationRequested)
 			{
                 Thread.Sleep(100);
+                if (Disposing) break;
                 if (DateTime.Now < nextUpdateTime) continue;
                 nextUpdateTime = DateTime.Now.AddMilliseconds(500);
 
@@ -321,7 +322,6 @@ namespace Diva
 
                 try
                 {
-                    if (Disposing) break;
                     if (ActiveDrone.IsOpen)
                     {
                         BeginInvoke((MethodInvoker)delegate
@@ -541,7 +541,7 @@ namespace Diva
                 {
                     if (e.Button == MouseButtons.Left)
                     {
-                        if (CurrentFlyTo != null && CurrentFlyTo.Start())
+                        if (CurrentFlyTo?.Start() == true)
                         {
                             CurrentFlyTo.DestinationReached += (o, r) => BeginInvoke((MethodInvoker)(() =>
                             {
@@ -766,7 +766,7 @@ namespace Diva
 
             if (FlyToClicked)
             {
-                CurrentFlyTo.SetDestination(point);
+                CurrentFlyTo?.SetDestination(point);
                 return;
             }
 
@@ -2258,7 +2258,7 @@ namespace Diva
 		{
 			if (ActiveDrone.IsOpen)
 			{
-                ActiveDrone.SetMode("LAND");
+                ActiveDrone.SetMode(ActiveDrone.Status.FlightModeType.LandMode);
 			}
 		}
 
@@ -3052,7 +3052,7 @@ namespace Diva
             ImageScaling = ToolStripItemImageScaling.None,
         };
 
-        private FlyTo CurrentFlyTo = null;
+        private FlyTo CurrentFlyTo;
 
         private bool IsActiveDroneReady()
         {
@@ -3072,7 +3072,7 @@ namespace Diva
             Icon = Resources.logo;
             FullControl = false;
 
-            BtnFlyTo.CheckedChanged += BtnFlyTo_Clicked;
+            BtnFlyTo.Click += BtnFlyTo_Clicked;
             TSMainPanel.Items.Add(BtnFlyTo);
             BtnTrack.Click += BtnTrack_Clicked;
             TSMainPanel.Items.Add(BtnTrack);
@@ -3103,10 +3103,15 @@ namespace Diva
                     FlyToClicked = false;
                     return;
                 }
+                CurrentFlyTo?.Dispose();
                 CurrentFlyTo = new FlyTo(ActiveDrone);
             }
-            else if (CurrentFlyTo != null)
+            else
+            {
+                CurrentFlyTo?.Dispose();
                 CurrentFlyTo = null;
+                FlyToClicked = false;
+            }
         }
 
         private void AltitudeControlPanel_MouseClick(object sender, MouseEventArgs e)
