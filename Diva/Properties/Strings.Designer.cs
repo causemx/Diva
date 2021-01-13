@@ -361,7 +361,9 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can not establish a connection\n\n{0}.
+        ///   Looks up a localized string similar to Can not establish connection
+        ///
+        ///{0}.
         /// </summary>
         public static string MsgCannotEstablishConnection {
             get {
@@ -694,7 +696,8 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An invalid entry has been detected\n{0}.
+        ///   Looks up a localized string similar to An invalid entry has been detected
+        ///{0}.
         /// </summary>
         public static string MsgInvalidEntry {
             get {
@@ -992,6 +995,16 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///Packet lost for {0} seconds..
+        /// </summary>
+        public static string PacketLostForSeconds {
+            get {
+                return ResourceManager.GetString("PacketLostForSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click to activate drone.
         /// </summary>
         public static string StrActivateDrone {
@@ -1082,7 +1095,8 @@ namespace Diva.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rally Point\nAlt: {0}.
+        ///   Looks up a localized string similar to Rally Point
+        ///Alt: {0}.
         /// </summary>
         public static string StrRallyPointToolTipText {
             get {

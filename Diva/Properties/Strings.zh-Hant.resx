@@ -136,7 +136,8 @@
     <value>座標值發生錯誤</value>
   </data>
   <data name="MsgInvalidEntry" xml:space="preserve">
-    <value>發現錯誤的數值\n{0}</value>
+    <value>發現錯誤的數值
+{0}</value>
   </data>
   <data name="MsgInvalidHomeOrWPAltitide" xml:space="preserve">
     <value>無效的原點或航點高度</value>
@@ -187,7 +188,8 @@
     <value>(未登入)</value>
   </data>
   <data name="StrRallyPointToolTipText" xml:space="preserve">
-    <value>會合點\n高: {0}</value>
+    <value>會合點
+高: {0}</value>
   </data>
   <data name="MsgCantGetPosition" xml:space="preserve">
     <value>無法取得位置</value>
@@ -259,7 +261,9 @@
     <value>變更帳號{0}的密碼？</value>
   </data>
   <data name="MsgCannotEstablishConnection" xml:space="preserve">
-    <value>無法建立連線\n\n{0}</value>
+    <value>無法建立連線
+
+{0}</value>
   </data>
   <data name="DroneSettingInput.NewBtn.Text" xml:space="preserve">
     <value>新增</value>
@@ -485,5 +489,9 @@
   </data>
   <data name="MsgNoAvailableTrackSource" xml:space="preserve">
     <value>無可用跟隨目標</value>
+  </data>
+  <data name="PacketLostForSeconds" xml:space="preserve">
+    <value>
+超過{0}秒無回應</value>
   </data>
 </root>

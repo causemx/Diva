@@ -15,7 +15,7 @@ namespace Diva.Controls
 {
 	public partial class DroneInfoPanel : UserControl
 	{
-		private DroneInfo activeDrone = null;
+		private DroneInfo activeDrone;
         [Browsable(true)]
         public event EventHandler ActiveDroneChanged;
 		public DroneInfo ActiveDroneInfo
@@ -107,62 +107,33 @@ namespace Diva.Controls
 
 		public void UpdateDisplayInfo()
 		{
-			if (ActiveDroneInfo != null) try
-			{
-				DroneStatus status = ActiveDroneInfo.Drone.Status;
-				ActiveDroneInfo.UpdateTelemetryData();
-				TelemetryData.UpdateTelemetryData(status.Altitude,
-                    status.VerticalSpeed, status.GroundSpeed);
-				string getText(string name) =>
-					TelemetryData.Controls.Find(name, true)[0].Text;
-				DroneInfoTip.SetToolTip(ActiveDroneInfo, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
+            foreach (var i in ThePanel.Controls.Cast<Control>().Where(c => c is DroneInfo))
+            {
+                try
+                {
+                    var di = i as DroneInfo;
+
+                    if (di == ActiveDroneInfo)
+                    {
+                        var status = di.Drone.Status;
+                        TelemetryData.UpdateTelemetryData(status.Altitude,
+                            status.VerticalSpeed, status.GroundSpeed);
+                        string getText(string name) =>
+                            TelemetryData.Controls.Find(name, true)[0].Text;
+                        DroneInfoTip.SetToolTip(di, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
 {getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
 {getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}
 ({status.Latitude}, {status.Longitude})");
+                    }
 
-                //UpdateBattery();
-
-				MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.Params;
-                if (paramList["FENCE_ENABLE"] != null)
-    				TelemetryData.UpdateStatusChecker(true, paramList["FENCE_ENABLE"].Value == 1 ? true : false);
-			}
-            catch { }
+                    di.UpdateTelemetryData(DroneInfoTip);
+                    MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.Params;
+                    if (paramList["FENCE_ENABLE"] != null)
+                        TelemetryData.UpdateStatusChecker(true, paramList["FENCE_ENABLE"].Value == 1 ? true : false);
+                }
+                catch { }
+            }
 		}
-
-        /*private void UpdateBattery()
-        {
-            var drone = activeDrone.Drone;
-            if (drone.Status.BatteryVoltage == 0.0d) return;
-
-            var isShowing = TelemetryData.Visible;
-            try
-            {
-                if (!isShowing && drone.Status.BatteryVoltage < drone.Status.BatteryLowVoltage)
-                {
-                    Task.Factory.StartNew(() =>
-                    {
-                        activeDrone.LowVoltageWarning(true);
-                        MessageBox.Show(Diva.Properties.Strings.MsgLowVoltageWarning, Diva.Properties.Strings.DialogTitleWarning, MessageBoxButtons.OK);
-                    });
-                    isShowing = true;
-                }
-                else if (drone.Status.BatteryVoltage > drone.Status.BatteryLowVoltage)
-                {
-                    activeDrone.LowVoltageWarning(false);
-                    isShowing = false;
-                }
-            }
-            catch (Exception e)
-            {
-                Planner.log.Error(e.ToString());
-            }
-        }*.
-
-        /*public void UpdateEstmatedTime(double missionDistance) =>
-            ActiveDroneInfo?.UpdateEstimatedTime(missionDistance);
-
-		public void ResetEstimatedTime() =>
-			ActiveDroneInfo?.ResetEstimatedTime();*/
 
         public void NotifyMissionChanged() => ActiveDroneInfo?.NotifyMissionChanged();
 

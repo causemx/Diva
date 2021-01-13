@@ -136,7 +136,8 @@
     <value>Invalid coordinate, How did you do this?</value>
   </data>
   <data name="MsgInvalidEntry" xml:space="preserve">
-    <value>An invalid entry has been detected\n{0}</value>
+    <value>An invalid entry has been detected
+{0}</value>
   </data>
   <data name="MsgInvalidHomeOrWPAltitide" xml:space="preserve">
     <value>Invalid Home or wp Alt</value>
@@ -185,7 +186,8 @@ Please reduce the altitude warning, or increase the altitude</value>
     <value>(Anonymous)</value>
   </data>
   <data name="StrRallyPointToolTipText" xml:space="preserve">
-    <value>Rally Point\nAlt: {0}</value>
+    <value>Rally Point
+Alt: {0}</value>
   </data>
   <data name="MsgNoConnection" xml:space="preserve">
     <value>no connection</value>
@@ -260,7 +262,9 @@ Please reduce the altitude warning, or increase the altitude</value>
     <value>Delete account '{0}'?</value>
   </data>
   <data name="MsgCannotEstablishConnection" xml:space="preserve">
-    <value>Can not establish a connection\n\n{0}</value>
+    <value>Can not establish connection
+
+{0}</value>
   </data>
   <data name="DroneSettingInput.NewBtn.Text" xml:space="preserve">
     <value>New</value>
@@ -489,5 +493,9 @@ Destination</value>
   </data>
   <data name="MsgNoAvailableTrackSource" xml:space="preserve">
     <value>No available track source.</value>
+  </data>
+  <data name="PacketLostForSeconds" xml:space="preserve">
+    <value>
+Packet lost for {0} seconds.</value>
   </data>
 </root>

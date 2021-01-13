@@ -322,7 +322,10 @@ namespace Diva
 
                 try
                 {
-                    if (ActiveDrone.IsOpen)
+                    // drone info panel must be updated whether active drone presents or not
+                    BeginInvoke((MethodInvoker)DroneInfoPanel.UpdateDisplayInfo);
+
+                    if (ActiveDrone?.IsOpen == true)
                     {
                         BeginInvoke((MethodInvoker)delegate
                         {
@@ -330,8 +333,6 @@ namespace Diva
                             /*string mode = ActiveDrone.Status.FlightMode.GetName();
                             if (mode != null)
                                 LBLMode.Text = mode;*/
-                            DroneInfoPanel.UpdateDisplayInfo();
-
                             if (IconModeWarning.BackgroundImage == Resources.rc_controlling &&
                                 0 != (ActiveDrone.Status.SensorError & (UInt32)MAV_SYS_STATUS_SENSOR.RC_RECEIVER))
                                 BeginInvoke((MethodInvoker)(() => IconModeWarning.Text = "No Signal"));
@@ -2861,15 +2862,17 @@ namespace Diva
             {
                 if (drone != null)
                 {
-                    if (drone == ActiveDrone)
-                    {
-                        AltitudeControl.Remove(drone);
-                        AltitudeControlPanel.ClearSource();
-                    }
                     DroneMission.RemoveMission(drone);
                     FlyTo.DropFlight(drone);
                     Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
                         x => (x as GMapDroneMarker)?.Drone == drone));
+                    if (drone == ActiveDrone)
+                    {
+                        AltitudeControl.Remove(drone);
+                        AltitudeControlPanel.ClearSource();
+                        ActiveDrone = null;
+                        SetButtonStates();
+                    }
                 }
             }
             catch (Exception ex)
@@ -3264,6 +3267,7 @@ namespace Diva
                         BtnTrack.Image = Resources.left_relative2_none;
                 }
             }
+            UpdateWarningIcon();
         }
 
         private void UpdateWarningIcon()

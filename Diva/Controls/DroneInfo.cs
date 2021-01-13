@@ -9,14 +9,21 @@ namespace Diva.Controls
 {
     public partial class DroneInfo : UserControl
     {
-        private bool isActive = false;
+        public static readonly Color InactiveBGColor = Color.FromArgb(128, 128, 128);
+        public static readonly Color ActiveBGColor = Color.FromArgb(37, 54, 98);
+        public static readonly Color InactiveBGTOColor = Color.FromArgb(192, 128, 128);
+        public static readonly Color ActiveBGTOColor = Color.FromArgb(165, 54, 98);
+        public const int DroneInfoTimeout = 4;
+        private Color BGColor => isActive ? ActiveBGColor : InactiveBGColor;
+
+        private bool isActive;
         public bool IsActive
         {
             get => isActive;
             private set
             {
                 isActive = value;
-                BackColor = isActive ? Color.FromArgb(37, 54, 98) : Color.FromArgb(128, 128, 128);
+                BackColor = BGColor;
                 Parent?.Invalidate(Bounds, true);
             }
         }
@@ -38,7 +45,7 @@ namespace Diva.Controls
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
 
-        public void UpdateTelemetryData()
+        public void UpdateTelemetryData(ToolTip toolTip)
         {
             if (Drone.Status.BatteryVoltage == 0)
             {
@@ -76,24 +83,35 @@ namespace Diva.Controls
             }
             else
                 TxtEstimatedTime.Text = "-";
+
+            var now = DateTime.Now;
+            var to = (int)(now - Drone.Status.LastPacket).TotalSeconds;
+            var tts = toolTip.GetToolTip(this).Split('\n');
+            Color c = BGColor;
+            if (to > DroneInfoTimeout)
+            {
+                if (isActive)
+                {
+                    if (now.Second % 2 == 0)
+                        c = ActiveBGTOColor;
+                    toolTip.SetToolTip(this, toolTip.GetToolTip(this) + Properties.Strings.PacketLostForSeconds.FormatWith(to));
+                }
+                else
+                {
+                    if (now.Second % 2 == 1)
+                        c = InactiveBGTOColor;
+                    toolTip.SetToolTip(this, tts[0] + Properties.Strings.PacketLostForSeconds.FormatWith(to));
+                }
+            }
+            else if (!isActive && tts.Length > 1)
+                toolTip.SetToolTip(this, tts[0]);
+
+            if (c != BackColor)
+            {
+                BackColor = c;
+                Parent?.Invalidate(Bounds, true);
+            }
         }
-
-        /*public void UpdateEstimatedTime(double missionDistance)
-        {
-            // get the waypoint speed, default unit is mile/second
-            // TxtAssumeTime.Text = (missionDistance / (GetParam("WPNAV_SPEED")*60/1000)).ToString("f1");
-            TxtEstimatedTime.Text = (missionDistance / 0.72).ToString("f1") + "m";
-        }
-
-        public void ResetEstimatedTime()
-        {
-            TxtEstimatedTime.Text = "0.0m";
-        }*/
-
-        /*public void LowVoltageWarning(bool isLowVoltage)
-        {
-            TxtBatteryHealth.ForeColor = isLowVoltage ? Color.Red : Color.White;
-        }*/
 
         private readonly Color EC_ColorNormal = Color.White;
         private readonly Color EC_ColorWarning = Color.Orange;

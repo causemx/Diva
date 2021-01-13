@@ -63,17 +63,26 @@ namespace Diva.Mavlink
             // re-request streams
             try
             {
-                GetDataStream(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-                GetDataStream(MAV_DATA_STREAM.POSITION, 2);
-                GetDataStream(MAV_DATA_STREAM.EXTRA1, 4);
-                GetDataStream(MAV_DATA_STREAM.EXTRA2, 4);
-                GetDataStream(MAV_DATA_STREAM.EXTRA3, 2);
-                GetDataStream(MAV_DATA_STREAM.RAW_SENSORS, 2);
-                GetDataStream(MAV_DATA_STREAM.RC_CHANNELS, 2);
+                // diva actually handles position/raw sensors/raw controllers only
+                SetDataStreamFrequency(MAV_DATA_STREAM.ALL, 2);
+                /*SetDataStreamFrequency(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+                SetDataStreamFrequency(MAV_DATA_STREAM.POSITION, 2);
+                SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA1, 4);
+                SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA2, 4);
+                SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA3, 2);
+                SetDataStreamFrequency(MAV_DATA_STREAM.RAW_SENSORS, 2);
+                SetDataStreamFrequency(MAV_DATA_STREAM.RAW_CONTROLLER, 2);
+                SetDataStreamFrequency(MAV_DATA_STREAM.RC_CHANNELS, 2);*/
+
+                // REQUEST_DATA_STREAM is replaced by SET_MESSAGE_INTERVAL
+                /*SetMessageInterval(MAVLINK_MSG_ID.MISSION_CURRENT, 500000);
+                SetMessageInterval(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, 500000);
+                SetMessageInterval(MAVLINK_MSG_ID.GPS_RAW_INT, 500000);
+                SetMessageInterval(MAVLINK_MSG_ID.ATTITUDE, 500000);*/
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to request rates: " + e);
+                Console.WriteLine("Failed to set request rates: " + e);
             }
         }
 
@@ -147,15 +156,9 @@ namespace Diva.Mavlink
         #endregion Message packet handlers
 
         #region Drone modes
-        public bool DoArm(bool arm) =>
-            SendCommandWaitAck(MAV_CMD.COMPONENT_ARM_DISARM, 1,
-                arm ?
-#if FORCE_ARM
-                    2989.0f
-#else
-                    0
-#endif
-                : 21196.0f, 0, 0, 0, 0, 0, 10000);
+        public bool DoArm(bool arm, bool force = false) =>
+            SendCommandWaitAck(MAV_CMD.COMPONENT_ARM_DISARM, arm ? 1 : 0,
+                force ? (arm ? 2989.0f : 21196.0f) : 0, 0, 0, 0, 0, 0, 10000);
 
         public bool TakeOff(float height) =>
             SendCommandWaitAck(MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, height);

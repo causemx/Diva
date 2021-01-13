@@ -976,7 +976,7 @@ namespace Diva.Mavlink
 
             ushort packetdropremote = sysstatus.drop_rate_comm;
 
-            Status.BatteryVoltage = battery_voltage;
+            Status.BatteryVoltage = sysstatus.voltage_battery == ushort.MaxValue ? 0 : battery_voltage;
             Status.SensorEnabled = sysstatus.onboard_control_sensors_enabled;
             Status.SensorHealth = sysstatus.onboard_control_sensors_health;
             Status.SensorPresent = sysstatus.onboard_control_sensors_present;
@@ -1348,7 +1348,7 @@ namespace Diva.Mavlink
             return (MAV_RESULT)ack.ToStructure<mavlink_command_ack_t>().result == MAV_RESULT.ACCEPTED;
         }
 
-        public void GetDataStream(MAV_DATA_STREAM id, byte hzrate)
+        public void SetDataStreamFrequency(MAV_DATA_STREAM id, byte hzrate)
 		{
 			mavlink_request_data_stream_t req = new mavlink_request_data_stream_t
             {
@@ -1363,5 +1363,11 @@ namespace Diva.Mavlink
 			SendPacket(MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req);
 			SendPacket(MAVLINK_MSG_ID.REQUEST_DATA_STREAM, req);
 		}
-	}
+
+        public bool SetMessageInterval(MAVLINK_MSG_ID id, int intervalUs)
+        {
+            return SendCommandWaitAck(MAV_CMD.SET_MESSAGE_INTERVAL,
+                (ushort)id, intervalUs, 0, 0, 0, 0, 0);
+        }
+    }
 }
