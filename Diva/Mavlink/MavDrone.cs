@@ -57,32 +57,57 @@ namespace Diva.Mavlink
 
         public void Disconnect() => Close();
 
+        private const int SetRequestStreamPeriod = 30;
+        private const int HomePositionUpdatePeriod = 5;
+        private int SetRequestStreamCounter = 30;
+        private int HomePositionUpdateCounter = 0;
+
         protected override void DoBackgroundWork()
         {
+            ++SetRequestStreamCounter;
+            ++HomePositionUpdateCounter;
+
             if (!BaseStream.IsOpen) return;
             // re-request streams
             try
             {
-                // diva actually handles position/raw sensors/raw controllers only
-                SetDataStreamFrequency(MAV_DATA_STREAM.ALL, 2);
-                /*SetDataStreamFrequency(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
-                SetDataStreamFrequency(MAV_DATA_STREAM.POSITION, 2);
-                SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA1, 4);
-                SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA2, 4);
-                SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA3, 2);
-                SetDataStreamFrequency(MAV_DATA_STREAM.RAW_SENSORS, 2);
-                SetDataStreamFrequency(MAV_DATA_STREAM.RAW_CONTROLLER, 2);
-                SetDataStreamFrequency(MAV_DATA_STREAM.RC_CHANNELS, 2);*/
+                if (HomePositionUpdateCounter >= HomePositionUpdatePeriod)
+                {
+                    HomePositionUpdateCounter = 0;
+                    if (!Status.IsArmed || Status.State != MAV_STATE.ACTIVE) return;
+                    var planner = Planner.GetPlannerInstance();
+                    if (!planner.FullControl || !this.IsShip())
+                    {
+                        var loc = planner.HomeLocation;
+                        if (loc != GMap.NET.PointLatLng.Empty)
+                            SetHome(loc.Lat, loc.Lng);
+                    }
+                    return;
+                }
+                if (SetRequestStreamCounter >= SetRequestStreamPeriod)
+                {
+                    // diva actually handles position/raw sensors/raw controllers only
+                    SetDataStreamFrequency(MAV_DATA_STREAM.ALL, 2);
+                    /*SetDataStreamFrequency(MAV_DATA_STREAM.EXTENDED_STATUS, 2);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.POSITION, 2);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA1, 4);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA2, 4);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.EXTRA3, 2);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.RAW_SENSORS, 2);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.RAW_CONTROLLER, 2);
+                    SetDataStreamFrequency(MAV_DATA_STREAM.RC_CHANNELS, 2);*/
 
-                // REQUEST_DATA_STREAM is replaced by SET_MESSAGE_INTERVAL
-                /*SetMessageInterval(MAVLINK_MSG_ID.MISSION_CURRENT, 500000);
-                SetMessageInterval(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, 500000);
-                SetMessageInterval(MAVLINK_MSG_ID.GPS_RAW_INT, 500000);
-                SetMessageInterval(MAVLINK_MSG_ID.ATTITUDE, 500000);*/
+                    // REQUEST_DATA_STREAM is replaced by SET_MESSAGE_INTERVAL
+                    /*SetMessageInterval(MAVLINK_MSG_ID.MISSION_CURRENT, 500000);
+                    SetMessageInterval(MAVLINK_MSG_ID.NAV_CONTROLLER_OUTPUT, 500000);
+                    SetMessageInterval(MAVLINK_MSG_ID.GPS_RAW_INT, 500000);
+                    SetMessageInterval(MAVLINK_MSG_ID.ATTITUDE, 500000);*/
+                    SetRequestStreamCounter = 0;
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to set request rates: " + e);
+                Console.WriteLine("MavDrone background loop exception: " + e);
             }
         }
 
@@ -163,10 +188,10 @@ namespace Diva.Mavlink
         public bool TakeOff(float height) =>
             SendCommandWaitAck(MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, height);
 
-        public void StartMission() =>
+        public bool StartMission() =>
             SendCommandWaitAck(MAV_CMD.MISSION_START, 0, 0, 0, 0, 0, 0, 0);
 
-        public void ReturnToLaunch() =>
+        public bool ReturnToLaunch() =>
             SendCommandWaitAck(MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 
         public void SetMode(string targetModeName)
@@ -200,6 +225,30 @@ namespace Diva.Mavlink
                 Console.WriteLine("No Mode Changed");
         }
         #endregion Drone modes
+
+        public void SetHome(PointLatLngAlt home, MAV_FRAME frame = MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, bool useCurrent = false) =>
+             SetHome(home.Lat, home.Lng, home.Alt, frame, useCurrent);
+
+        public void SetHome(double lat, double lng, double alt = 0, MAV_FRAME frame = MAV_FRAME.GLOBAL_RELATIVE_ALT_INT, bool useCurrent = false)
+        {
+            log.Info($"Send SetHome with CommandInt cmd lat {lat} lng {lng} alt {alt}");
+            SendPacket(MAVLINK_MSG_ID.COMMAND_INT, new mavlink_command_int_t
+            {
+                target_system = SysId,
+                target_component = CompId,
+                frame = (byte)frame,
+                command = (ushort)MAV_CMD.DO_SET_HOME,
+                current = 0,
+                autocontinue = 0,
+                param1 = useCurrent ? 1 : 0,
+                param2 = 0,
+                param3 = 0,
+                param4 = 0,
+                x = (int)(lat * 1e7),
+                y = (int)(lng * 1e7),
+                z = (float)(alt / 100)
+            });
+        }
 
         #region Waypoints, RallyPoints and Fencepoints
         public PointLatLngAlt GetRallyPoint(int no, ref int total)

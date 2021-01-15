@@ -96,7 +96,6 @@ namespace Diva
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<WayPoint>> history = new List<List<WayPoint>>();
 		private List<int> groupmarkers = new List<int>();
-		private object thisLock = new object();
 
 		// Thread setup
 		private BackgroundLoop mainThread = null;
@@ -259,13 +258,12 @@ namespace Diva
 
                 try
                 {
-                    bool shipFound;
-                    lock (OnlineDrones)
-                        shipFound = OnlineDrones.Count > 1 &&
-                            OnlineDrones.Any(d => MIRDCHelper.IsShip(d.Name, true));
+                    var ship = FullControl ? OnlineDrones.Find(d => d.IsShip()) : null;
+                    HomeLocation = ship?.Status.Location ?? BaseLocation.Location;
+
                     bool markerShown = Overlays.Commons.Markers.Contains(BaseMarker);
                     var overlay = Overlays.Commons;
-                    if (!shipFound && BaseLocation.Ready)
+                    if (ship == null && BaseLocation.Ready)
                     {
                         if (!markerShown)
                             overlay.Markers.Add(BaseMarker);
@@ -292,7 +290,7 @@ namespace Diva
                         BaseMarker.ToolTipText = "";
                         if (OnlineDrones.Count > 0)
                         {
-                            var from = BaseLocation.AsDrone.Status.Location;
+                            var from = BaseLocation.Location;
                             var to = OnlineDrones[0].Status.Location;
                             var kms = overlay.Control.MapProvider.Projection.GetDistance(from, to);
                             var d = (kms > 10 ? $"{toFixed(kms, 3)}km" : $"{toFixed(kms * 1000)}m");
@@ -301,21 +299,21 @@ namespace Diva
                             if (marker != null) marker.ToolTipText = "To ship: " + d;
                         }
                     }
-                    else
+                    else if (ship != null)
                     {
-                        var ship = OnlineDrones.FirstOrDefault(d => d.IsShip());
-                        var drone = OnlineDrones.FirstOrDefault(d => d != ship);
-                        if (ship != null && drone != null)
-                        {
-                            var from = ship.Status.Location;
-                            var to = drone.Status.Location;
-                            var kms = overlay.Control.MapProvider.Projection.GetDistance(from, to);
-                            var d = (kms > 10 ? $"{toFixed(kms, 3)}km" : $"{toFixed(kms * 1000)}m");
-                            var marker = findMarker(ship);
-                            if (marker != null) marker.ToolTipText = "To drone: " + d;
-                            marker = findMarker(drone);
-                            if (marker != null) marker.ToolTipText = "To ship: " + d;
-                        }
+                        var from = ship.Status.Location;
+                        OnlineDrones.ForEach(d => {
+                            if (d != ship)
+                            {
+                                var to = d.Status.Location;
+                                var kms = overlay.Control.MapProvider.Projection.GetDistance(from, to);
+                                var dist = (kms > 10 ? $"{toFixed(kms, 3)}km" : $"{toFixed(kms * 1000)}m");
+                                var marker = findMarker(ship);
+                                if (marker != null) marker.ToolTipText = "To drone: " + dist;
+                                marker = findMarker(d);
+                                if (marker != null) marker.ToolTipText = "To ship: " + dist;
+                            }
+                        });
                     }
                 }
                 catch { }
@@ -518,7 +516,7 @@ namespace Diva
 			CenterMarker.Position = point;
 		}
 
-		void AddGroupMarkers(GMapMarker marker)
+		private void AddGroupMarkers(GMapMarker marker)
 		{
 			Debug.WriteLine("add marker " + marker.Tag.ToString());
 			groupmarkers.Add(int.Parse(marker.Tag.ToString()));
@@ -760,8 +758,9 @@ namespace Diva
 			}
 		}
 
-		// move current marker with left holding
-		private void MainMap_MouseMove(object sender, MouseEventArgs e)
+        private object dragLock = new object();
+        // move current marker with left holding
+        private void MainMap_MouseMove(object sender, MouseEventArgs e)
 		{
 			PointLatLng point = Map.FromLocalToLatLng(e.X, e.Y);
 
@@ -857,7 +856,7 @@ namespace Diva
 								if (pIndex < wpPolygon.Points.Count)
 								{
 									wpPolygon.Points[pIndex.Value] = pnew;
-									lock (thisLock)
+									lock (dragLock)
 									{
 										Map.UpdatePolygonLocalPosition(wpPolygon);
 									}
@@ -910,7 +909,7 @@ namespace Diva
 
 					try
 					{
-						lock (thisLock)
+						lock (dragLock)
 						{
 							Map.Position = new PointLatLng(CenterMarker.Position.Lat + latdif,
 								CenterMarker.Position.Lng + lngdif);
@@ -2759,11 +2758,6 @@ namespace Diva
 			}
 		}
 
-		private void powerConsumptionToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-            DroneInfoPanel.NotifyMissionChanged();
-        }
-
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//FENCE_ENABLE ON COPTER
@@ -3054,6 +3048,8 @@ namespace Diva
             DisplayStyle = ToolStripItemDisplayStyle.Image,
             ImageScaling = ToolStripItemImageScaling.None,
         };
+
+        public PointLatLng HomeLocation = PointLatLng.Empty;
 
         private FlyTo CurrentFlyTo;
 

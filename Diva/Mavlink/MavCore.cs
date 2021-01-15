@@ -381,7 +381,7 @@ namespace Diva.Mavlink
 			}
 
 			// check message length size vs table (mavlink1 explicit size check | mavlink2 oversize check, no undersize because of 0 trimming)
-			if ((!message.ismavlink2 && message.payloadlength != msginfo.minlength) || (message.ismavlink2 && message.payloadlength > msginfo.length))
+			if ((!message.ismavlink2 && message.payloadlength != msginfo.minlength)/* || (message.ismavlink2 && message.payloadlength > msginfo.length)*/)
 			{
 				if (msginfo.length == 0) // pass for unknown packets
 				{
@@ -389,7 +389,7 @@ namespace Diva.Mavlink
 				}
 				else
 				{
-					log.InfoFormat("Mavlink Bad Packet (Len Fail) len {0} pkno {1}", buffer.Length, message.msgid);
+					log.InfoFormat("Mavlinkv{2} Bad Packet Length {0} pkno {1} msgid {3}", buffer.Length, message.msgid, message.ismavlink2 ? 2 : 1, message.msgid);
 					return MAVLinkMessage.Invalid;
 				}
 			}
@@ -771,7 +771,7 @@ namespace Diva.Mavlink
         private static void MavCoreBackgroundLoop(CancellationToken token)
         {
             DateTime lastHeartBeatSent = DateTime.Now;
-            DateTime nextUpdateTime = DateTime.Now.AddSeconds(30);
+            DateTime nextUpdateTime = DateTime.Now.AddSeconds(1);
             DateTime lastUpdatedTime = DateTime.MinValue;
 
             while (!token.IsCancellationRequested)
@@ -818,7 +818,7 @@ namespace Diva.Mavlink
 
                     if (now > nextUpdateTime)
                     {
-                        nextUpdateTime = now.AddSeconds(30);
+                        nextUpdateTime = now.AddSeconds(1);
                         lock (mavs) foreach (var mav in mavs) mav.DoBackgroundWork();
                     }
 
