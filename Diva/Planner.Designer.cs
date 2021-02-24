@@ -102,6 +102,7 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.IconGPSLostWarning = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -119,6 +120,7 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
+            this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
             this.SplitContainer.Panel1.Controls.Add(this.AltitudeControlPanel);
@@ -819,6 +821,17 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
+            // IconGPSLostWarning
+            // 
+            this.IconGPSLostWarning.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.IconGPSLostWarning, "IconGPSLostWarning");
+            this.IconGPSLostWarning.FlatAppearance.BorderSize = 0;
+            this.IconGPSLostWarning.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.IconGPSLostWarning.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.IconGPSLostWarning.ForeColor = System.Drawing.Color.Red;
+            this.IconGPSLostWarning.Name = "IconGPSLostWarning";
+            this.IconGPSLostWarning.UseVisualStyleBackColor = false;
+            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -911,5 +924,6 @@ namespace Diva
         private ToolTip TTButtonDescription;
         private MyButton BtnBreakAction;
         private Button IconModeWarning;
+        private Button IconGPSLostWarning;
     }
 }

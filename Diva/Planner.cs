@@ -267,9 +267,23 @@ namespace Diva
                     {
                         if (!markerShown)
                             overlay.Markers.Add(BaseMarker);
+                        else
+                            BaseMarker.Position = BaseLocation.Location;
                     }
                     else if (markerShown)
                         overlay.Markers.Remove(BaseMarker);
+
+                    BeginInvoke((MethodInvoker)(() =>
+                    {
+                        if (ship == null && !(BaseLocation.Initialized && BaseLocation.Ready))
+                        {
+                            IconGPSLostWarning.Visible = true;
+                            IconGPSLostWarning.Text = DateTime.Now.Second % 4 < 2 ?
+                                "GPS lost or not ready" : "Retry within 1 minute";
+                        }
+                        else
+                            IconGPSLostWarning.Visible = false;
+                    }));
 
                     string toFixed(double d, int digits = 1) => d.ToString($"N{digits}");
                     GMapDroneMarker findMarker(MavDrone drone)
@@ -1910,7 +1924,7 @@ namespace Diva
 			}
 
 			Overlays.Commons.Markers.Clear();
-			
+
 			AddPolygonMarker("Click & GO", gotohere.Longitude,
 								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, Overlays.Commons);
 		}
