@@ -273,17 +273,9 @@ namespace Diva
                     else if (markerShown)
                         overlay.Markers.Remove(BaseMarker);
 
-                    BeginInvoke((MethodInvoker)(() =>
-                    {
-                        if (ship == null && !(BaseLocation.Initialized && BaseLocation.Ready))
-                        {
-                            IconGPSLostWarning.Visible = true;
-                            IconGPSLostWarning.Text = DateTime.Now.Second % 4 < 2 ?
-                                "GPS lost or not ready" : "Retry within 1 minute";
-                        }
-                        else
-                            IconGPSLostWarning.Visible = false;
-                    }));
+                    bool noGPS = ship == null && !(BaseLocation.Initialized && BaseLocation.Ready);
+                    if (noGPS != IconGPSLostWarning.Visible)
+                        BeginInvoke((MethodInvoker)(() => IconGPSLostWarning.Visible = noGPS));
 
                     string toFixed(double d, int digits = 1) => d.ToString($"N{digits}");
                     GMapDroneMarker findMarker(MavDrone drone)

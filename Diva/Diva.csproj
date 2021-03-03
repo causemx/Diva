@@ -417,6 +417,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\waiting-gps.png" />
     <None Include="Resources\VTOL-front.png" />
     <None Include="Resources\VTOL.png" />
     <None Include="Resources\boat-side.png" />
