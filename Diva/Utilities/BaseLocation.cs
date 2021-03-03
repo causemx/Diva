@@ -36,7 +36,7 @@ namespace Diva.Utilities
         }
 
         public static double AccuracyLimit { get; set; } = 30;
-        public static TimeSpan GPSTimeout { get; set; } = new TimeSpan(0, 3, 0);
+        public static TimeSpan GPSTimeout { get; set; } = new TimeSpan(0, 0, 10);
         public static DateTime LastPositionTime { get; private set; }
         public static EventHandler LocationChanged;
 
