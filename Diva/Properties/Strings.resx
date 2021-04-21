@@ -498,4 +498,7 @@ Destination</value>
     <value>
 Packet lost for {0} seconds.</value>
   </data>
+  <data name="GuidedWPAltitude" xml:space="preserve">
+    <value>WP Altitude</value>
+  </data>
 </root>

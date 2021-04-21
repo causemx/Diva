@@ -240,43 +240,59 @@
   <data name="&gt;&gt;BtnMap.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="BtnAccount.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="BtnSettings.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="BtnAccount.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="BtnSettings.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 12pt</value>
   </data>
-  <data name="BtnAccount.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="BtnSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAAd0SU1FB+UEFQMDD6HO0fcAAAJbSURBVHhe7ZlLTgQxDAW5BUgzJ+CIc3nokZ5Q
+        D5QTf9TJwjypNoXtvF4hxNuR2z8voOwMys6g7AzKzqDsDMrOoOwMys6g7AzKzqDsDMolfBmh2YWgvBx9
+        uxnaWQTKy9F3m6GdRaC8HH23GdpZBMpLeTwen/ruYWh3AShT6Dt+crj775kn+vE03l2aK4AyjLphvHMU
+        7+55rgjKEOq0PdQtAcoQ6rM91C0ByhDqsz3ULQHKEOqzPdQtAcoQ6rM1Rw/8jZYAZRj1codunNGYO3Qj
+        CcoU6jYM7Y3Q2jC0VwBlCvUzQzsetG6GdgqgTKF+GJqPoDMYmi+AMoy6YWg+g85haD4JyhDqZIZ2Muic
+        mecfjbQXBOWMd3WYBnZL6KwrtO8A5YgPvecK7JfQWXfoxgSUJnrHHbpRQWfdoRsTUJroHXfoRgWddYdu
+        TEBponfcoRsVdNYdujEBpYnecYduVNBZd+jGBJQmescdulFBZ92hGxNQDtFbrtB+BZ11hfYdoHShd6eh
+        3Qw6NwztBUEZRn0wNJ9B5zA0nwRlCnXD0HwEncHQfAGUKdTPDO140LoZ2imAMoX6DUN7I7Q2DO0VQBlG
+        3dyhG2c05g7dSIIyyl29tgZ6ZUAZQn22h7olQBlCfbaHuiVAGUJ9toe6JUAZQn22h7olQBlGnTDeOYp3
+        9zxXBGUKdXuJd45Cuwd/fqPBTAWUl6NvGYb2FoDycvTNw9DeAlBejr7ZDO0sAuUKhv/bgflVoFwF/o8H
+        5laCsjMoO4OyMyg7g7IzKDuDsjMoO4OyMyg7g7IzKJvydvsGWDyGxFfX1v0AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnSettings.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="BtnAccount.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="BtnSettings.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="BtnAccount.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="BtnSettings.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 302</value>
   </data>
-  <data name="BtnAccount.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="BtnSettings.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 5, 6, 5</value>
   </data>
-  <data name="BtnAccount.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="BtnSettings.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 85</value>
   </data>
-  <data name="BtnAccount.TabIndex" type="System.Int32, mscorlib">
+  <data name="BtnSettings.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="BtnAccount.Text" xml:space="preserve">
-    <value>Account</value>
+  <data name="BtnSettings.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
-  <data name="&gt;&gt;BtnAccount.Name" xml:space="preserve">
-    <value>BtnAccount</value>
+  <data name="&gt;&gt;BtnSettings.Name" xml:space="preserve">
+    <value>BtnSettings</value>
   </data>
-  <data name="&gt;&gt;BtnAccount.Type" xml:space="preserve">
+  <data name="&gt;&gt;BtnSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BtnAccount.Parent" xml:space="preserve">
+  <data name="&gt;&gt;BtnSettings.Parent" xml:space="preserve">
     <value>BtnLayoutPanel</value>
   </data>
-  <data name="&gt;&gt;BtnAccount.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;BtnSettings.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="BtnAbout.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
@@ -885,34 +901,34 @@
   <data name="&gt;&gt;configGeoFencePage.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="configAccountPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="configSettingsPage.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="configAccountPage.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="configSettingsPage.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 10.8pt</value>
   </data>
-  <data name="configAccountPage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="configSettingsPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>266, 0</value>
   </data>
-  <data name="configAccountPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="configSettingsPage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="configAccountPage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="configSettingsPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>784, 641</value>
   </data>
-  <data name="configAccountPage.TabIndex" type="System.Int32, mscorlib">
+  <data name="configSettingsPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;configAccountPage.Name" xml:space="preserve">
-    <value>configAccountPage</value>
+  <data name="&gt;&gt;configSettingsPage.Name" xml:space="preserve">
+    <value>configSettingsPage</value>
   </data>
-  <data name="&gt;&gt;configAccountPage.Type" xml:space="preserve">
+  <data name="&gt;&gt;configSettingsPage.Type" xml:space="preserve">
     <value>Diva.Controls.ConfigAccountPage, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;configAccountPage.Parent" xml:space="preserve">
+  <data name="&gt;&gt;configSettingsPage.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;configAccountPage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;configSettingsPage.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

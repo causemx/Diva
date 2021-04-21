@@ -98,7 +98,7 @@ namespace Diva.Utilities
 		public float warn = -1;
 		public float danger = -1;
 
-        private readonly bool IsShip;
+        public readonly bool IsShip;
 
         public GMapDroneMarker(MavDrone drone)
 			: base(drone.Status.Location)

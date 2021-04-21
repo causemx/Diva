@@ -8,10 +8,16 @@ namespace Diva.Utilities
 {
     internal class DestinationMarker : GMapMarker
     {
+        private static GMapControl mapControl;
+        private static PureProjection projection;
         private static GMapOverlay overlay;
+        private static GMapControl MapControl => mapControl ??
+            (mapControl = Planner.GetPlannerInstance()?.GMapControl);
+        private static PureProjection Projection => projection ??
+            (projection = MapControl?.MapProvider.Projection);
         public static GMapOverlay DistanceOverlay => overlay ??
-            (overlay = Planner.GetPlannerInstance()?.GMapControl?.
-                Overlays.First(o => o.Id == "Commons"));
+            (overlay = MapControl?.Overlays.First(o => o.Id == "Commons"));
+
         public static Font Font = new Font(FontFamily.GenericMonospace, SystemFonts.DefaultFont.Size, FontStyle.Bold);
         public static Size MarkerSize = new Size(60, 60);
 
@@ -19,10 +25,12 @@ namespace Diva.Utilities
         public static readonly Color BrakeColor = Color.Red;
         public const float DefaultLineWidth = 5.0f;
         public const float TrackTargetRadius = 15.0f;
+        public const float LoiterCircleWidth = 3.0f;
 
         public Color LineColor { get; set; } = NormalColor;
         public Brush TextBrush { get; set; } = Brushes.White;
         public Brush FillBrush { get; set; } = Brushes.Navy;
+        public Pen LoiterCirclePen { get; set; } = new Pen(Color.Violet, LoiterCircleWidth);
         public float Width = DefaultLineWidth;
         public PointLatLng To
         {
@@ -69,6 +77,7 @@ namespace Diva.Utilities
                     ToolTipText = GetDescriptionText();
             }
         }
+        public int LoiterRadius;
 
         private bool Reached = false;
         public void SetReached() { Reached = true; }
@@ -76,11 +85,11 @@ namespace Diva.Utilities
         private string GetDescriptionText()
         {
             string toFixed(double d, int digits = 1) { return d.ToString($"N{digits}"); }
-            string Lat(double lat) { return toFixed(System.Math.Abs(lat), 2) + (lat < 0 ? " S" : " N");  }
-            string Lng(double lng) { return toFixed(System.Math.Abs(lng), 2) + (lng < 0 ? " W" : " E");  }
+            string Lat(double lat) { return toFixed(System.Math.Abs(lat), 4) + (lat < 0 ? " S" : " N");  }
+            string Lng(double lng) { return toFixed(System.Math.Abs(lng), 4) + (lng < 0 ? " W" : " E");  }
             if (Overlay == null) return "";
             if (Reached) return $"To: ({Lat(To.Lat)},{Lng(To.Lng)})\nReached";
-            var distkm = Overlay.Control.MapProvider.Projection.GetDistance(From, To);
+            var distkm = Projection.GetDistance(From, To);
             return $"To: ({Lat(To.Lat)},{Lng(To.Lng)})\nDistance: " +
                 (distkm > 10 ? $"{toFixed(distkm, 3)}km" : $"{toFixed(distkm * 1000)}m");
         }
@@ -107,19 +116,18 @@ namespace Diva.Utilities
             Size = MarkerSize;
         }
 
-        /*public override void OnRender(Graphics g)
+        public override void OnRender(Graphics g)
         {
-            base.OnRender(g);
-            if (ToolTipMode == MarkerTooltipMode.Never)
+            if (LoiterRadius > 0)
             {
-                var temp = g.Transform;
-                g.TranslateTransform(LocalPosition.X, LocalPosition.Y);
-                g.FillEllipse(TextBrush,
-                    -TrackTargetRadius + DefaultLineWidth, -TrackTargetRadius + DefaultLineWidth,
-                    TrackTargetRadius + DefaultLineWidth, TrackTargetRadius + DefaultLineWidth);
-                g.Transform = temp;
+                int zoom = (int)MapControl.Zoom;
+                var end = route.LocalPoints[1];
+                float radius = (float)(LoiterRadius / Projection.GetGroundResolution(zoom, To.Lat));
+                g.DrawArc(LoiterCirclePen, end.X - radius,
+                     end.Y - radius, 2 * radius, 2 * radius, 0, 360);
             }
-        }*/
+            base.OnRender(g);
+        }
 
         public void SetBrakeMode(bool brake)
         {

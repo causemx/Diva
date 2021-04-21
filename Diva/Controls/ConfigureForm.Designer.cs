@@ -34,7 +34,7 @@
             this.BtnVehicle = new System.Windows.Forms.Button();
             this.BtnGeoFence = new System.Windows.Forms.Button();
             this.BtnMap = new System.Windows.Forms.Button();
-            this.BtnAccount = new System.Windows.Forms.Button();
+            this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnAbout = new System.Windows.Forms.Button();
             this.IndicatorPanel = new System.Windows.Forms.Panel();
             this.VehicleSettingsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -52,7 +52,7 @@
             this.TBoxLicenseTerms = new System.Windows.Forms.TextBox();
             this.configMapPage = new Diva.Controls.ConfigMapPage();
             this.configGeoFencePage = new Diva.Controls.ConfigGeoFencePage();
-            this.configAccountPage = new Diva.Controls.ConfigAccountPage();
+            this.configSettingsPage = new Diva.Controls.ConfigSettingsPage();
             this.SidePanel.SuspendLayout();
             this.BtnLayoutPanel.SuspendLayout();
             this.VehicleConfigPanel.SuspendLayout();
@@ -74,7 +74,7 @@
             this.BtnLayoutPanel.Controls.Add(this.BtnVehicle);
             this.BtnLayoutPanel.Controls.Add(this.BtnGeoFence);
             this.BtnLayoutPanel.Controls.Add(this.BtnMap);
-            this.BtnLayoutPanel.Controls.Add(this.BtnAccount);
+            this.BtnLayoutPanel.Controls.Add(this.BtnSettings);
             this.BtnLayoutPanel.Controls.Add(this.BtnAbout);
             resources.ApplyResources(this.BtnLayoutPanel, "BtnLayoutPanel");
             this.BtnLayoutPanel.Name = "BtnLayoutPanel";
@@ -110,15 +110,14 @@
             this.BtnMap.UseVisualStyleBackColor = true;
             this.BtnMap.Click += new System.EventHandler(this.MenuButton_Click);
             // 
-            // BtnAccount
+            // BtnSettings
             // 
-            this.BtnAccount.FlatAppearance.BorderSize = 0;
-            resources.ApplyResources(this.BtnAccount, "BtnAccount");
-            this.BtnAccount.ForeColor = System.Drawing.Color.White;
-            this.BtnAccount.Image = global::Diva.Properties.Resources.icon_emoticon_48;
-            this.BtnAccount.Name = "BtnAccount";
-            this.BtnAccount.UseVisualStyleBackColor = true;
-            this.BtnAccount.Click += new System.EventHandler(this.MenuButton_Click);
+            this.BtnSettings.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.BtnSettings, "BtnSettings");
+            this.BtnSettings.ForeColor = System.Drawing.Color.White;
+            this.BtnSettings.Name = "BtnSettings";
+            this.BtnSettings.UseVisualStyleBackColor = true;
+            this.BtnSettings.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // BtnAbout
             // 
@@ -247,12 +246,12 @@
             resources.ApplyResources(this.configGeoFencePage, "configGeoFencePage");
             this.configGeoFencePage.Name = "configGeoFencePage";
             // 
-            // configAccountPage
+            // configSettingsPage
             // 
-            this.configAccountPage.BackColor = System.Drawing.Color.Black;
-            resources.ApplyResources(this.configAccountPage, "configAccountPage");
-            this.configAccountPage.ForeColor = System.Drawing.Color.White;
-            this.configAccountPage.Name = "configAccountPage";
+            this.configSettingsPage.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.configSettingsPage, "configSettingsPage");
+            this.configSettingsPage.ForeColor = System.Drawing.Color.White;
+            this.configSettingsPage.Name = "configSettingsPage";
             // 
             // ConfigureForm
             // 
@@ -263,7 +262,7 @@
             this.Controls.Add(this.VehicleConfigPanel);
             this.Controls.Add(this.configGeoFencePage);
             this.Controls.Add(this.configMapPage);
-            this.Controls.Add(this.configAccountPage);
+            this.Controls.Add(this.configSettingsPage);
             this.Controls.Add(this.AboutBoxPanel);
             this.Controls.Add(this.SidePanel);
             this.Name = "ConfigureForm";
@@ -305,7 +304,7 @@
         private System.Windows.Forms.Label LabelProject;
         private System.Windows.Forms.Label LabelLicense;
 		private ConfigGeoFencePage configGeoFencePage;
-		private ConfigAccountPage configAccountPage;
-		private System.Windows.Forms.Button BtnAccount;
+		private ConfigSettingsPage configSettingsPage;
+		private System.Windows.Forms.Button BtnSettings;
 	}
 }

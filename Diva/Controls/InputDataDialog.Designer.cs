@@ -70,6 +70,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ControlBox = false;
             this.Controls.Add(this.Lbl_Hint);
             this.Controls.Add(this.Btn_Cancel);
             this.Controls.Add(this.Btn_Confirm);

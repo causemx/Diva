@@ -65,7 +65,7 @@ namespace Diva.Mavlink
             try { BaseStream.Close(); } catch { }
         }
 
-		public void Open()
+        public void Open()
 		{
 			frmProgressReporter = new ProgressDialogV2
 			{
@@ -482,32 +482,7 @@ namespace Diva.Mavlink
                     // store packet history
                     Status.AddPacket(message);
 
-					try
-					{
-						if (LogFile?.CanWrite == true)
-						{
-							lock (LogFile)
-							{
-								byte[] datearray =
-									BitConverter.GetBytes(
-										(UInt64)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds * 1000));
-								Array.Reverse(datearray);
-								LogFile.Write(datearray, 0, datearray.Length);
-								LogFile.Write(buffer, 0, buffer.Length);
-
-								if (msgid == 0)
-								{
-									// flush on heartbeat - 1 seconds
-									LogFile.Flush();
-									RawLogFile.Flush();
-								}
-							}
-						}
-					}
-					catch (Exception ex)
-					{
-						log.Error(ex);
-					}
+                    LogPacket(buffer, msgid == 0);
 				}
 			}
 			catch (Exception ex)
@@ -520,6 +495,31 @@ namespace Diva.Mavlink
 
 			return message;
 		}
+
+        private void LogPacket(byte[] packet, bool flush = false)
+        {
+            try
+            {
+                if (LogFile?.CanWrite == true)
+                {
+                    lock (LogFile)
+                    {
+                        byte[] timestamp =
+                            BitConverter.GetBytes(
+                                (UInt64)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds * 1000));
+                        Array.Reverse(timestamp);
+                        LogFile.Write(timestamp, 0, timestamp.Length);
+                        LogFile.Write(packet, 0, packet.Length);
+                        if (flush)
+                            LogFile.Flush();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
 
         private byte[] PreparePacket(MAVLINK_MSG_ID msgid, object indata)
         {
@@ -554,6 +554,8 @@ namespace Diva.Mavlink
             checksum = MavlinkCRC.crc_accumulate(MAVLINK_MESSAGE_INFOS.GetMessageInfo((uint)messageType).crc, checksum);
             packet[packet.Length - 2] = (byte)(checksum & 0xFF);
             packet[packet.Length - 1] = (byte)(checksum >> 8);
+
+            LogPacket(packet);
             return packet;
         }
 
@@ -642,11 +644,11 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage SendPacketWaitReply(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 1000, int retries = 1)
+            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter = null, int timeoutms = 500, int retries = 1)
                 => SendPacketWaitReply(msgid, indata, replyid, filter, false, timeoutms, retries);
 
         public MAVLinkMessage SendPacketWaitReply(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter, bool gcs, int timeoutms = 1000, int retries = 1)
+            MAVLINK_MSG_ID replyid, ReplyPacketFilter filter, bool gcs, int timeoutms = 500, int retries = 1)
         {
             MAVLinkMessage reply = null;
             long dueticks = 0;
@@ -700,11 +702,11 @@ namespace Diva.Mavlink
         }
 
         public MAVLinkMessage SendPacketWaitReplies(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters = null, int timeoutms = 1000, int retries = 1)
+            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters = null, int timeoutms = 500, int retries = 1)
                 => SendPacketWaitReplies(msgid, indata, rids, filters, null, timeoutms, retries);
 
         public MAVLinkMessage SendPacketWaitReplies(MAVLINK_MSG_ID msgid, object indata,
-            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters, bool[] gcs = null, int timeoutms = 1000, int retries = 1)
+            MAVLINK_MSG_ID[] rids, ReplyPacketFilter[] filters, bool[] gcs, int timeoutms = 500, int retries = 1)
         {
             if (rids == null || filters == null || filters.Length == 0 
                 || rids.Length != filters.Length)
@@ -1139,7 +1141,7 @@ namespace Diva.Mavlink
                             }
                             return more = true;
                         }
-                    }, 500);
+                    });
                 if (paramTotal > 0 && indices.Count == paramTotal)
                 {
                     Status.Params.Clear();
@@ -1175,7 +1177,8 @@ namespace Diva.Mavlink
                         if (indices.Contains(i)) continue;
                         targetIndex = req.param_index = i;
                         SendPacketWaitReply(MAVLINK_MSG_ID.PARAM_REQUEST_READ, req,
-                            MAVLINK_MSG_ID.PARAM_VALUE, ParamValueHandler);
+                            MAVLINK_MSG_ID.PARAM_VALUE, ParamValueHandler,
+                            GET_PARAM_TIMEOUT);
                         if (!indices.Contains(i)) break;
                     }
                 }

@@ -273,6 +273,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_gear {
+            get {
+                object obj = ResourceManager.GetObject("icon_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_geofence {
             get {
                 object obj = ResourceManager.GetObject("icon_geofence", resourceCulture);

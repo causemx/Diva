@@ -308,15 +308,15 @@ namespace Diva
                     else if (ship != null)
                     {
                         var from = ship.Status.Location;
+                        var smarker = findMarker(ship);
                         OnlineDrones.ForEach(d => {
                             if (d != ship)
                             {
                                 var to = d.Status.Location;
                                 var kms = overlay.Control.MapProvider.Projection.GetDistance(from, to);
                                 var dist = (kms > 10 ? $"{toFixed(kms, 3)}km" : $"{toFixed(kms * 1000)}m");
-                                var marker = findMarker(ship);
-                                if (marker != null) marker.ToolTipText = "To drone: " + dist;
-                                marker = findMarker(d);
+                                if (smarker != null) smarker.ToolTipText = "To drone: " + dist;
+                                var marker = findMarker(d);
                                 if (marker != null) marker.ToolTipText = "To ship: " + dist;
                             }
                         });
@@ -3237,9 +3237,15 @@ namespace Diva
 
         private void SetButtonStates()
         {
+            bool isValidShip(GMapMarker m)
+            {
+                if (m is GMapDroneMarker d)
+                    return d.IsShip && d.Drone != ActiveDrone;
+                return false;
+            }
+
             BtnFlyTo.Image = Resources.left_free2_none;
-            if (BaseLocation.Ready || !MIRDCMode &&
-                OnlineDrones.Any(d => d != ActiveDrone && d.IsShip()))
+            if (BaseLocation.Ready || Overlays.Routes.Markers.Any(isValidShip))
             {
                 BtnTrack.Image = Resources.left_relative2_none;
                 BtnTrack.Text = Strings.BtnTrackText;

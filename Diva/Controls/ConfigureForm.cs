@@ -32,13 +32,13 @@ namespace Diva.Controls
                 { BtnVehicle, VehicleConfigPanel },
                 { BtnGeoFence, configGeoFencePage },
                 { BtnMap, configMapPage },
-                { BtnAccount, configAccountPage },
+                { BtnSettings, configSettingsPage },
                 { BtnAbout, AboutBoxPanel }
             };
 
             if (Planner.MIRDCMode)
             {
-                List<Control> mirdcPageKeys = new List<Control> { BtnVehicle, BtnAbout };
+                List<Control> mirdcPageKeys = new List<Control> { BtnVehicle, BtnSettings, BtnAbout };
                 int rtop = pages.Keys.First().Top;
                 var keys = pages.Keys.ToList();
                 keys.ForEach(k =>

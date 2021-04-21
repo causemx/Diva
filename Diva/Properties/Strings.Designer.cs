@@ -325,6 +325,15 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WP Altitude.
+        /// </summary>
+        public static string GuidedWPAltitude {
+            get {
+                return ResourceManager.GetString("GuidedWPAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active drone is unavailable or not ready to fly..
         /// </summary>
         public static string MsgActiveUnavailableOrNotReady {

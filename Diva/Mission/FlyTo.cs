@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using Diva.Controls;
 using Diva.Mavlink;
 using Diva.Utilities;
 using PointLatLng = GMap.NET.PointLatLng;
@@ -22,7 +24,7 @@ namespace Diva.Mission
         public const double DistanceTolerance = 5.0;
         public static readonly TimeSpan TimeTolerance = new TimeSpan(0, 0, 30);
         public const int TrackUpdatePeriodMS = 5000;
-        public const int ModeChangeDelayTolerance = 1000;
+        public const int ModeChangeDelayTolerance = 3000;
 
         private static List<FlyTo> flyingTargets = new List<FlyTo>();
         private static bool markerHandlerSet;
@@ -74,7 +76,10 @@ namespace Diva.Mission
         public FlyTo(MavDrone drone, bool isTracker = false)
         {
             Drone = drone;
-            marker = new DestinationMarker(Drone.Status.Location, isTracker);
+            marker = new DestinationMarker(Drone.Status.Location, isTracker)
+            {
+                LoiterRadius = (int?)drone.Status.Params["WP_LOITER_RAD"]?.GetValue() ?? 0
+            };
             State = FlyToState.Setting;
         }
 
@@ -109,7 +114,7 @@ namespace Diva.Mission
             }
         }
 
-        private static void GMapControl_OnMarkerClick(GMap.NET.WindowsForms.GMapMarker item, System.Windows.Forms.MouseEventArgs e)
+        private static void GMapControl_OnMarkerClick(GMap.NET.WindowsForms.GMapMarker item, MouseEventArgs e)
         {
             if (item is DestinationMarker m)
             {
@@ -124,6 +129,45 @@ namespace Diva.Mission
             }
         }
 
+        private float GetWPAltitude(float prefAlt = 0)
+        {
+            int mode = ConfigData.GetIntOption("GuidedWPAltMode");
+            string alttext = ConfigData.GetOption("GuidedWPAltitude");
+            float alt = prefAlt == 0 ? AltitudeControl.TargetAltitudes[Drone] : prefAlt;
+            if (!float.TryParse(alttext, out float defAlt))
+                defAlt = prefAlt == 0 ? 50 : prefAlt;
+
+            if (prefAlt != 0)
+                return mode == 2 && prefAlt < defAlt ? defAlt : prefAlt;
+
+            switch (mode)
+            {
+                case 3:
+                    InputDataDialog dlg = new InputDataDialog()
+                    {
+                        Text = Properties.Strings.GuidedWPAltitude,
+                        Hint = Properties.Strings.MsgInputDialogHeightHint,
+                        Unit = "m",
+                        Value = alt.ToString(),
+                        Required = true
+                    };
+                    dlg.DoClick += (o, e) => float.TryParse(dlg.Value, out alt);
+                    dlg.ShowDialog();
+                    break;
+                case 2:
+                    alt = defAlt;
+                    break;
+                case 1:
+                    if (alt < defAlt)
+                        alt = defAlt;
+                    break;
+                default:
+                    alt = AltitudeControl.TargetAltitudes[Drone];
+                    break;
+            }
+            return alt;
+        }
+
         public bool Start()
         {
             if ((State != FlyToState.Setting && State != FlyToState.Canceled)
@@ -134,14 +178,14 @@ namespace Diva.Mission
             if (!Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = AltitudeControl.TargetAltitudes[Drone],
+                Altitude = GetWPAltitude(),
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
-                System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
+                MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
                 return false;
             }
@@ -158,7 +202,7 @@ namespace Diva.Mission
             return Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = AltitudeControl.GetActualTarget(Drone),
+                Altitude = GetWPAltitude(AltitudeControl.GetActualTarget(Drone)),
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
@@ -196,14 +240,14 @@ namespace Diva.Mission
             if (!Drone.SetGuidedModeWP(new WayPoint
             {
                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = AltitudeControl.TargetAltitudes[Drone],
+                Altitude = GetWPAltitude(),
                 Latitude = To.Lat,
                 Longitude = To.Lng,
                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
             }))
             {
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
-                System.Windows.Forms.MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
+                MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();
                 return false;
             }
@@ -220,7 +264,7 @@ namespace Diva.Mission
                 Drone.SetGuidedModeWP(new WayPoint
                 {
                     Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                    Altitude = AltitudeControl.TargetAltitudes[Drone],
+                    Altitude = GetWPAltitude(),
                     Latitude = Drone.Status.Latitude,
                     Longitude = Drone.Status.Longitude,
                     Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
@@ -269,7 +313,7 @@ namespace Diva.Mission
                             Drone.SetGuidedModeWP(new WayPoint
                             {
                                 Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                                Altitude = AltitudeControl.TargetAltitudes[Drone],
+                                Altitude = GetWPAltitude(),
                                 Latitude = pos.Lat,
                                 Longitude = pos.Lng,
                                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
@@ -282,20 +326,24 @@ namespace Diva.Mission
                     else if (!Reached)
                     {
                         var pos = Drone.Status.Location;
-                        if (State == FlyToState.Flying &&
-                            pos.DistanceTo(lastPos) < DistanceTolerance)
+                        if (lastPos != PointLatLng.Empty && State == FlyToState.Flying)
                         {
-                            var now = DateTime.Now;
-                            if (now - lastPosTime > TimeTolerance)
+                            if (pos.DistanceTo(lastPos) < DistanceTolerance)
                             {
-                                p.BackgroundTimer -= DetectDroneStatus;
-                                FloatMessage.NewMessage(
-                                    Drone.Name,
-                                    (int)MAVLink.MAV_SEVERITY.WARNING,
-                                    "FlyTo command applied but drone is not moving.");
-                                Dispose();
-                                return;
+                                var now = DateTime.Now;
+                                if (now - lastPosTime > TimeTolerance)
+                                {
+                                    p.BackgroundTimer -= DetectDroneStatus;
+                                    FloatMessage.NewMessage(
+                                        Drone.Name,
+                                        (int)MAVLink.MAV_SEVERITY.WARNING,
+                                        "FlyTo command applied but drone is not moving.");
+                                    Dispose();
+                                    return;
+                                }
                             }
+                            else
+                                lastPos = PointLatLng.Empty;
                         }
                         marker.From = pos;
                         return;

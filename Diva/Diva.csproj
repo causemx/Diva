@@ -185,6 +185,12 @@
     <Compile Include="Controls\ConfigMapPage.Designer.cs">
       <DependentUpon>ConfigMapPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ConfigSettingsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigSettingsPage.Designer.cs">
+      <DependentUpon>ConfigSettingsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConfigureForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -323,6 +329,12 @@
     <EmbeddedResource Include="Controls\ConfigMapPage.zh-Hant.resx">
       <DependentUpon>ConfigMapPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigSettingsPage.resx">
+      <DependentUpon>ConfigSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigSettingsPage.zh-Hant.resx">
+      <DependentUpon>ConfigSettingsPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +429,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_gear.png" />
     <None Include="Resources\waiting-gps.png" />
     <None Include="Resources\VTOL-front.png" />
     <None Include="Resources\VTOL.png" />

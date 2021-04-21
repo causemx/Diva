@@ -494,4 +494,7 @@
     <value>
 超過{0}秒無回應</value>
   </data>
+  <data name="GuidedWPAltitude" xml:space="preserve">
+    <value>設定高度</value>
+  </data>
 </root>

@@ -37,25 +37,31 @@ namespace Diva.Mavlink
             BaseStream = MavStream.CreateStream(Setting);
             try
             {
-                DateTime connecttime = DateTime.Now;
+                if (ConfigData.GetBoolOption("GenerateTLog"))
+                    LogFile = new System.IO.BufferedStream(System.IO.File.Open(DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".tlog", System.IO.FileMode.OpenOrCreate));
                 Open();
                 Status.ArmedSince = null;
                 if (!IsOpen)
                 {
-                    log.Info("comport is closed. existing connect");
-                    Close();
+                    log.Info("port not opened. existing connect");
+                    Disconnect();
                     return false;
                 }
             }
             catch (Exception e)
             {
-                Close();
-                throw e;
+                Disconnect();
+                throw;
             }
             return true;
         }
 
-        public void Disconnect() => Close();
+        public void Disconnect()
+        {
+            Close();
+            try { LogFile?.Close(); } catch { }
+            LogFile = null;
+        }
 
         private const int SetRequestStreamPeriod = 30;
         private const int HomePositionUpdatePeriod = 5;
@@ -194,32 +200,41 @@ namespace Diva.Mavlink
         public bool ReturnToLaunch() =>
             SendCommandWaitAck(MAV_CMD.RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0);
 
-        public void SetMode(string targetModeName)
+        public void SetMode(string targetModeName, bool waitReply = true)
         {
             uint targetMode = Status.FlightModeType[targetModeName];
             if (targetMode != Status.FlightMode)
             {
-                bool verify(MAVLinkMessage p, ref bool more) =>
-                    p.ToStructure<mavlink_command_ack_t>().command == (ushort)MAVLINK_MSG_ID.SET_MODE;
-                bool accepted(MAVLinkMessage p) =>
-                    p != null && MAV_RESULT.ACCEPTED ==
-                        (MAV_RESULT)p.ToStructure<mavlink_command_ack_t>().result;
-                var mode = new mavlink_set_mode_t
+                var modePkt = new mavlink_set_mode_t
                 {
                     target_system = SysId,
                     base_mode = (byte)MAV_MODE_FLAG.CUSTOM_MODE_ENABLED,
                     custom_mode = targetMode
                 };
                 Console.WriteLine("mode switching");
-                if (!accepted(SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, mode,
-                    MAVLINK_MSG_ID.COMMAND_ACK, verify)))
+                if (waitReply)
                 {
-                    var ack = SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, mode,
-                        MAVLINK_MSG_ID.COMMAND_ACK, verify);
-                    Console.WriteLine("SetMode retry ack: " + (accepted(ack) ? "ok" : "failed"));
+                    bool verify(MAVLinkMessage p, ref bool more) =>
+                        p.ToStructure<mavlink_command_ack_t>().command == (ushort)MAVLINK_MSG_ID.SET_MODE;
+                    bool accepted(MAVLinkMessage p) =>
+                        p != null && MAV_RESULT.ACCEPTED ==
+                            (MAV_RESULT)p.ToStructure<mavlink_command_ack_t>().result;
+                    if (!accepted(SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, modePkt,
+                        MAVLINK_MSG_ID.COMMAND_ACK, verify)))
+                    {
+                        var ack = SendPacketWaitReply(MAVLINK_MSG_ID.SET_MODE, modePkt,
+                            MAVLINK_MSG_ID.COMMAND_ACK, verify);
+                        Console.WriteLine("SetMode retry ack: " + (accepted(ack) ? "ok" : "failed"));
+                    }
+                    else
+                        Console.WriteLine("SetMode ack: ok");
                 }
                 else
-                    Console.WriteLine("SetMode ack: ok");
+                {
+                    SendPacket(MAVLINK_MSG_ID.SET_MODE, modePkt);
+                    System.Threading.Thread.Sleep(10);
+                    SendPacket(MAVLINK_MSG_ID.SET_MODE, modePkt);
+                }
             }
             else
                 Console.WriteLine("No Mode Changed");
@@ -428,6 +443,7 @@ namespace Diva.Mavlink
             }
             throw new TimeoutException("Timeout on read - GetRequestedWPNo");
         }
+
         public void SetWayPointAck()
         {
             SendPacket(MAVLINK_MSG_ID.MISSION_ACK,
@@ -703,7 +719,7 @@ namespace Diva.Mavlink
                 dest.Id = (ushort)MAV_CMD.WAYPOINT;
                 // Must be Guided mode.
                 if (setmode)
-                    SetMode("GUIDED");
+                    SetMode("GUIDED", false);
                 log.InfoFormat($"SetGuidedModeWP {SysId}:{CompId}" +
                     $" lat {dest.Latitude} lng {dest.Longitude} alt {dest.Altitude}");
                 if (Status.Firmware == Firmwares.ArduPlane)

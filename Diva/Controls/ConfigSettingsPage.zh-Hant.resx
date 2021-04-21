@@ -118,92 +118,107 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnVehicle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 13.8pt</value>
+  <data name="lblAltitudeUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>222, 52</value>
   </data>
-  <data name="BtnVehicle.Text" xml:space="preserve">
-    <value>無人機</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblAltitudeUnit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
   </data>
-  <data name="BtnGeoFence.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 13.8pt</value>
+  <data name="lblAltitudeUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 13</value>
   </data>
-  <data name="BtnGeoFence.Text" xml:space="preserve">
-    <value>電子圍籬</value>
+  <data name="lblAltitudeUnit.Text" xml:space="preserve">
+    <value>公尺</value>
   </data>
-  <data name="BtnMap.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 13.8pt</value>
+  <data name="numWPAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>171, 50</value>
   </data>
-  <data name="BtnMap.Text" xml:space="preserve">
-    <value>地圖</value>
+  <data name="numWPAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="BtnSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAAd0SU1FB+UEFQMDD6HO0fcAAAJbSURBVHhe7ZlLTgQxDAW5BUgzJ+CIc3nokZ5Q
-        D5QTf9TJwjypNoXtvF4hxNuR2z8voOwMys6g7AzKzqDsDMrOoOwMys6g7AzKzqDsDMolfBmh2YWgvBx9
-        uxnaWQTKy9F3m6GdRaC8HH23GdpZBMpLeTwen/ruYWh3AShT6Dt+crj775kn+vE03l2aK4AyjLphvHMU
-        7+55rgjKEOq0PdQtAcoQ6rM91C0ByhDqsz3ULQHKEOqzPdQtAcoQ6rM1Rw/8jZYAZRj1codunNGYO3Qj
-        CcoU6jYM7Y3Q2jC0VwBlCvUzQzsetG6GdgqgTKF+GJqPoDMYmi+AMoy6YWg+g85haD4JyhDqZIZ2Muic
-        mecfjbQXBOWMd3WYBnZL6KwrtO8A5YgPvecK7JfQWXfoxgSUJnrHHbpRQWfdoRsTUJroHXfoRgWddYdu
-        TEBponfcoRsVdNYdujEBpYnecYduVNBZd+jGBJQmescdulFBZ92hGxNQDtFbrtB+BZ11hfYdoHShd6eh
-        3Qw6NwztBUEZRn0wNJ9B5zA0nwRlCnXD0HwEncHQfAGUKdTPDO140LoZ2imAMoX6DUN7I7Q2DO0VQBlG
-        3dyhG2c05g7dSIIyyl29tgZ6ZUAZQn22h7olQBlCfbaHuiVAGUJ9toe6JUAZQn22h7olQBlGnTDeOYp3
-        9zxXBGUKdXuJd45Cuwd/fqPBTAWUl6NvGYb2FoDycvTNw9DeAlBejr7ZDO0sAuUKhv/bgflVoFwF/o8H
-        5laCsjMoO4OyMyg7g7IzKDuDsjMoO4OyMyg7g7IzKJvydvsGWDyGxFfX1v0AAAAASUVORK5CYII=
-</value>
+  <data name="numWPAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 23</value>
   </data>
-  <data name="BtnSettings.Text" xml:space="preserve">
-    <value>設定</value>
+  <data name="rbAlwaysPrompt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 83</value>
   </data>
-  <data name="BtnAbout.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 13.8pt</value>
+  <data name="rbAlwaysPrompt.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="BtnAbout.Text" xml:space="preserve">
-    <value>關於</value>
+  <data name="rbAlwaysPrompt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 17</value>
   </data>
-  <data name="BtnVConfReset.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="rbAlwaysPrompt.Text" xml:space="preserve">
+    <value>總是提示輸入高度</value>
   </data>
-  <data name="BtnVConfReset.Text" xml:space="preserve">
-    <value>重設</value>
+  <data name="rbDefaultAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 61</value>
   </data>
-  <data name="BtnVConfApply.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="rbDefaultAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="BtnVConfApply.Text" xml:space="preserve">
-    <value>套用</value>
+  <data name="rbDefaultAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 17</value>
   </data>
-  <data name="BtnVConfExport.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="rbDefaultAltitude.Text" xml:space="preserve">
+    <value>總是將飛行高度設為</value>
   </data>
-  <data name="BtnVConfExport.Text" xml:space="preserve">
-    <value>匯出</value>
+  <data name="rbMinimumAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 39</value>
   </data>
-  <data name="BtnVConfImport.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
+  <data name="rbMinimumAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="BtnVConfImport.Text" xml:space="preserve">
-    <value>匯入</value>
+  <data name="rbMinimumAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
   </data>
-  <data name="LabelProject.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 17</value>
+  <data name="rbMinimumAltitude.Text" xml:space="preserve">
+    <value>使用現在高度但不小於</value>
   </data>
-  <data name="LabelProject.Text" xml:space="preserve">
-    <value>名稱</value>
+  <data name="rbDroneCurrent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 17</value>
   </data>
-  <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 17</value>
+  <data name="rbDroneCurrent.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="LabelLicense.Text" xml:space="preserve">
-    <value>授權</value>
+  <data name="rbDroneCurrent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 17</value>
   </data>
-  <data name="LabelAboutSoftware.Size" type="System.Drawing.Size, System.Drawing">
-    <value>372, 17</value>
+  <data name="rbDroneCurrent.Text" xml:space="preserve">
+    <value>使用無人機現在高度</value>
   </data>
-  <data name="LabelAboutSoftware.Text" xml:space="preserve">
-    <value>此軟體之開發運用了第三方開放原始碼軟體，其列表如下：</value>
+  <data name="grpGuidedWPAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>設定</value>
+  <data name="grpGuidedWPAltitude.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="grpGuidedWPAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>336, 112</value>
+  </data>
+  <data name="grpGuidedWPAltitude.Text" xml:space="preserve">
+    <value>引導飛行高度</value>
+  </data>
+  <data name="cbCreateTLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 128</value>
+  </data>
+  <data name="cbCreateTLog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cbCreateTLog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 17</value>
+  </data>
+  <data name="cbCreateTLog.Text" xml:space="preserve">
+    <value>與無人機連線時建立紀錄檔</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 13</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>PMingLiU, 9.75pt</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>360, 160</value>
   </data>
 </root>
