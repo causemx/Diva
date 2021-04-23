@@ -58,7 +58,8 @@ namespace Diva
 			public GMapOverlay DrawnPolygons;
 			public GMapOverlay Geofence;
 			public GMapOverlay POI;
-			public GMapOverlay Routes;
+			public GMapOverlay Drones;
+            public GMapOverlay Routes;
 			internal PlannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
@@ -68,8 +69,8 @@ namespace Diva
 					});
 		}
 		private PlannerOverlays Overlays;
-        private Dictionary<MavDrone, (Color Color, GMapOverlay Overlay)> DroneOverlays =
-            new Dictionary<MavDrone, (Color Color, GMapOverlay Overlay)>();
+        private Dictionary<MavDrone, GMapRoute> DroneRoutes =
+            new Dictionary<MavDrone, GMapRoute>();
 
 		private GMapRectMarker CurrentRectMarker;
 		private GMapMarkerRallyPt CurrentRallyPt;
@@ -193,6 +194,8 @@ namespace Diva
 			TxtHomeLongitude.Text = lng.ToString();
             TxtHomeAltitude.Text = DefaultValues.TakeoffHeight.ToString();
 
+            Overlays.Routes.IsVisibile = ConfigData.GetBoolOption("DisplayDroneRoute");
+
             HUD.BorderColor = BackColor;
             HUD.TextFont = Font;
             HUD.GetReferencePoint = () => {
@@ -284,7 +287,7 @@ namespace Diva
                         try
                         {
                             if (drone != null)
-                                marker = Overlays.Routes.Markers.FirstOrDefault(m =>
+                                marker = Overlays.Drones.Markers.FirstOrDefault(m =>
                                     (m as GMapDroneMarker)?.Drone == drone) as GMapDroneMarker;
                         }
                         catch { }
@@ -1996,7 +1999,8 @@ namespace Diva
                     OnlineDrones.ForEach(DroneDisconnect);
                     OnlineDrones.Clear();
                     DroneInfoPanel.Clear();
-                    Overlays.Routes.Markers.Clear();
+                    Overlays.Drones.Markers.Clear();
+                    Overlays.Routes.Routes.Clear();
                 }
                 return;
             }
@@ -2034,7 +2038,11 @@ namespace Diva
                         OnlineDrones.Add(drone);
                         var marker = new GMapDroneMarker(drone) { ToolTipMode = MarkerTooltipMode.OnMouseOver };
                         marker.ToolTip = new GMapToolTip(marker);
-                        Overlays.Routes.Markers.Add(marker);
+                        Overlays.Drones.Markers.Add(marker);
+                        var route = new GMapRoute("DroneRoute_" + drone.GetHashCode())
+                        {    Stroke = new Pen(Color.FromArgb(drone.GetHashCode() | unchecked((int)0xFF000000)), 2) };
+                        DroneRoutes.Add(drone, route);
+                        Overlays.Routes.Routes.Add(route);
                         var readWPWorker = new ProgressDialogV2
                         {
                             StartPosition = FormStartPosition.CenterScreen,
@@ -2815,14 +2823,36 @@ namespace Diva
                 // altitude control panel
                 AltitudeControlPanel.SetSource(ActiveDrone);
 
-                // overlay marks has to be touched for updating
-                if (Overlays.Routes.Markers.Count > 0)
-                    BeginInvoke((MethodInvoker)delegate
+                int maxPoints = ConfigData.GetIntOption("MaxRouteEntries");
+                if (maxPoints == 0) maxPoints = 200;
+                OnlineDrones.ForEach(d =>
+                {
+                    GMapRoute r = DroneRoutes[d];
+                    r.Points.Add(d.Status.Location);
+
+                    int pts = r.Points.Count;
+                    if (pts > maxPoints)
+                        r.Points.RemoveRange(0, pts - maxPoints);
+                });
+
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    // overlay marks has to be touched for updating
+                    try
                     {
-                        lock (Overlays)
-                            if (Overlays.Routes.Markers.Count > 0)
-                                Overlays.Routes.Markers[0] = Overlays.Routes.Markers[0];
-                    });
+                        if (Overlays.Drones.Markers.Count > 0)
+                            Overlays.Drones.Markers[0] = Overlays.Drones.Markers[0];
+                    }
+                    catch { }
+                    foreach (var r in Overlays.Routes.Routes)
+                    {
+                        try
+                        {
+                            Map.UpdateRouteLocalPosition(r);
+                        }
+                        catch { }
+                    }
+                });
 
                 //autopan
                 if (Autopan)
@@ -2864,8 +2894,11 @@ namespace Diva
                 {
                     DroneMission.RemoveMission(drone);
                     FlyTo.DropFlight(drone);
-                    Overlays.Routes.Markers.Remove(Overlays.Routes.Markers.Single(
+                    Overlays.Drones.Markers.Remove(Overlays.Drones.Markers.Single(
                         x => (x as GMapDroneMarker)?.Drone == drone));
+                    var r = DroneRoutes[drone];
+                    Overlays.Routes.Routes.Remove(r);
+                    DroneRoutes.Remove(drone);
                     if (drone == ActiveDrone)
                     {
                         AltitudeControl.Remove(drone);
@@ -2901,12 +2934,12 @@ namespace Diva
                 UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
                 WPsToScreen(ActiveDrone.Status.Mission);
                 // add marker again to ensure drone icon is topmost
-                var marker = Overlays.Routes.Markers.SingleOrDefault(
+                var marker = Overlays.Drones.Markers.SingleOrDefault(
                     x => (x as GMapDroneMarker).Drone == ActiveDrone);
                 if (marker != null)
                 {
-                    Overlays.Routes.Markers.Remove(marker);
-                    Overlays.Routes.Markers.Add(marker);
+                    Overlays.Drones.Markers.Remove(marker);
+                    Overlays.Drones.Markers.Add(marker);
                 }
                 var overlay = ActiveDrone.GetOverlay();
                 Map.Overlays.Remove(overlay);
@@ -3245,7 +3278,7 @@ namespace Diva
             }
 
             BtnFlyTo.Image = Resources.left_free2_none;
-            if (BaseLocation.Ready || Overlays.Routes.Markers.Any(isValidShip))
+            if (BaseLocation.Ready || Overlays.Drones.Markers.Any(isValidShip))
             {
                 BtnTrack.Image = Resources.left_relative2_none;
                 BtnTrack.Text = Strings.BtnTrackText;

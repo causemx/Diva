@@ -37,12 +37,17 @@
             this.rbMinimumAltitude = new System.Windows.Forms.RadioButton();
             this.rbDroneCurrent = new System.Windows.Forms.RadioButton();
             this.cbCreateTLog = new System.Windows.Forms.CheckBox();
+            this.cbDisplayDroneRoute = new System.Windows.Forms.CheckBox();
+            this.lblMaxEntriesDescription = new System.Windows.Forms.Label();
+            this.numRouteEntriesMax = new System.Windows.Forms.NumericUpDown();
             this.grpGuidedWPAltitude.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWPAltitude)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRouteEntriesMax)).BeginInit();
             this.SuspendLayout();
             // 
             // grpGuidedWPAltitude
             // 
+            resources.ApplyResources(this.grpGuidedWPAltitude, "grpGuidedWPAltitude");
             this.grpGuidedWPAltitude.Controls.Add(this.lblAltitudeUnit);
             this.grpGuidedWPAltitude.Controls.Add(this.numWPAltitude);
             this.grpGuidedWPAltitude.Controls.Add(this.rbAlwaysPrompt);
@@ -50,7 +55,6 @@
             this.grpGuidedWPAltitude.Controls.Add(this.rbMinimumAltitude);
             this.grpGuidedWPAltitude.Controls.Add(this.rbDroneCurrent);
             this.grpGuidedWPAltitude.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.grpGuidedWPAltitude, "grpGuidedWPAltitude");
             this.grpGuidedWPAltitude.Name = "grpGuidedWPAltitude";
             this.grpGuidedWPAltitude.TabStop = false;
             // 
@@ -61,8 +65,8 @@
             // 
             // numWPAltitude
             // 
-            this.numWPAltitude.DecimalPlaces = 1;
             resources.ApplyResources(this.numWPAltitude, "numWPAltitude");
+            this.numWPAltitude.DecimalPlaces = 1;
             this.numWPAltitude.Maximum = new decimal(new int[] {
             200,
             0,
@@ -115,17 +119,54 @@
             this.cbCreateTLog.Name = "cbCreateTLog";
             this.cbCreateTLog.UseVisualStyleBackColor = true;
             // 
+            // cbDisplayDroneRoute
+            // 
+            resources.ApplyResources(this.cbDisplayDroneRoute, "cbDisplayDroneRoute");
+            this.cbDisplayDroneRoute.ForeColor = System.Drawing.Color.White;
+            this.cbDisplayDroneRoute.Name = "cbDisplayDroneRoute";
+            this.cbDisplayDroneRoute.UseVisualStyleBackColor = true;
+            // 
+            // lblMaxEntriesDescription
+            // 
+            resources.ApplyResources(this.lblMaxEntriesDescription, "lblMaxEntriesDescription");
+            this.lblMaxEntriesDescription.ForeColor = System.Drawing.Color.White;
+            this.lblMaxEntriesDescription.Name = "lblMaxEntriesDescription";
+            // 
+            // numRouteEntriesMax
+            // 
+            resources.ApplyResources(this.numRouteEntriesMax, "numRouteEntriesMax");
+            this.numRouteEntriesMax.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numRouteEntriesMax.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numRouteEntriesMax.Name = "numRouteEntriesMax";
+            this.numRouteEntriesMax.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            // 
             // ConfigSettingsPage
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.lblMaxEntriesDescription);
+            this.Controls.Add(this.numRouteEntriesMax);
+            this.Controls.Add(this.cbDisplayDroneRoute);
             this.Controls.Add(this.cbCreateTLog);
             this.Controls.Add(this.grpGuidedWPAltitude);
             this.Name = "ConfigSettingsPage";
             this.grpGuidedWPAltitude.ResumeLayout(false);
             this.grpGuidedWPAltitude.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numWPAltitude)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRouteEntriesMax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,5 +182,8 @@
         private System.Windows.Forms.RadioButton rbMinimumAltitude;
         private System.Windows.Forms.RadioButton rbDroneCurrent;
         private System.Windows.Forms.CheckBox cbCreateTLog;
+        private System.Windows.Forms.CheckBox cbDisplayDroneRoute;
+        private System.Windows.Forms.Label lblMaxEntriesDescription;
+        private System.Windows.Forms.NumericUpDown numRouteEntriesMax;
     }
 }

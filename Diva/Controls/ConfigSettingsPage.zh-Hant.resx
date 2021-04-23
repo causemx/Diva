@@ -201,7 +201,7 @@
     <value>引導飛行高度</value>
   </data>
   <data name="cbCreateTLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>24, 128</value>
+    <value>24, 131</value>
   </data>
   <data name="cbCreateTLog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -212,6 +212,30 @@
   <data name="cbCreateTLog.Text" xml:space="preserve">
     <value>與無人機連線時建立紀錄檔</value>
   </data>
+  <data name="cbDisplayDroneRoute.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 159</value>
+  </data>
+  <data name="cbDisplayDroneRoute.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 17</value>
+  </data>
+  <data name="cbDisplayDroneRoute.Text" xml:space="preserve">
+    <value>顯示無人機路徑，最多</value>
+  </data>
+  <data name="lblMaxEntriesDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 160</value>
+  </data>
+  <data name="lblMaxEntriesDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 13</value>
+  </data>
+  <data name="lblMaxEntriesDescription.Text" xml:space="preserve">
+    <value>筆紀錄</value>
+  </data>
+  <data name="numRouteEntriesMax.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 153</value>
+  </data>
+  <data name="numRouteEntriesMax.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 23</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>7, 13</value>
   </data>
@@ -219,6 +243,6 @@
     <value>PMingLiU, 9.75pt</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>360, 160</value>
+    <value>360, 192</value>
   </data>
 </root>

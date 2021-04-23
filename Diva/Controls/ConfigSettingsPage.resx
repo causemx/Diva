@@ -117,64 +117,218 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;numWPAltitude.Parent" xml:space="preserve">
+    <value>grpGuidedWPAltitude</value>
+  </data>
+  <data name="&gt;&gt;cbCreateTLog.Name" xml:space="preserve">
+    <value>cbCreateTLog</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lblAltitudeUnit.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="numWPAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblAltitudeUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 67</value>
-  </data>
-  <data name="lblAltitudeUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 18</value>
-  </data>
-  <data name="lblAltitudeUnit.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="lblAltitudeUnit.Text" xml:space="preserve">
-    <value>meters</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeUnit.Name" xml:space="preserve">
-    <value>lblAltitudeUnit</value>
-  </data>
-  <data name="&gt;&gt;lblAltitudeUnit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="rbMinimumAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;lblAltitudeUnit.Parent" xml:space="preserve">
     <value>grpGuidedWPAltitude</value>
   </data>
-  <data name="&gt;&gt;lblAltitudeUnit.ZOrder" xml:space="preserve">
+  <data name="cbDisplayDroneRoute.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblMaxEntriesDescription.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="rbAlwaysPrompt.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 22</value>
+  </data>
+  <data name="&gt;&gt;rbDroneCurrent.Name" xml:space="preserve">
+    <value>rbDroneCurrent</value>
+  </data>
+  <data name="&gt;&gt;grpGuidedWPAltitude.Name" xml:space="preserve">
+    <value>grpGuidedWPAltitude</value>
+  </data>
+  <data name="rbDefaultAltitude.Text" xml:space="preserve">
+    <value>Always set WP altitude to</value>
+  </data>
+  <data name="rbMinimumAltitude.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="&gt;&gt;grpGuidedWPAltitude.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="grpGuidedWPAltitude.Text" xml:space="preserve">
+    <value>Guided Waypoint Altitude</value>
+  </data>
+  <data name="rbDroneCurrent.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="numWPAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>233, 65</value>
+  <data name="&gt;&gt;cbCreateTLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblAltitudeUnit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbDisplayDroneRoute.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rbDefaultAltitude.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 10.8pt</value>
+  </data>
+  <data name="lblMaxEntriesDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 18</value>
+  </data>
+  <data name="&gt;&gt;numRouteEntriesMax.Name" xml:space="preserve">
+    <value>numRouteEntriesMax</value>
+  </data>
+  <data name="lblMaxEntriesDescription.Text" xml:space="preserve">
+    <value>entries.</value>
+  </data>
+  <data name="&gt;&gt;rbDefaultAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rbMinimumAltitude.Text" xml:space="preserve">
+    <value>Apply current, but at least</value>
+  </data>
+  <data name="&gt;&gt;lblMaxEntriesDescription.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cbCreateTLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 154</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>400, 220</value>
   </data>
   <data name="numWPAltitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 24</value>
   </data>
-  <data name="numWPAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="rbMinimumAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 22</value>
   </data>
-  <data name="&gt;&gt;numWPAltitude.Name" xml:space="preserve">
-    <value>numWPAltitude</value>
+  <data name="lblAltitudeUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
-  <data name="&gt;&gt;numWPAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;cbDisplayDroneRoute.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;numWPAltitude.Parent" xml:space="preserve">
+  <data name="cbDisplayDroneRoute.Size" type="System.Drawing.Size, System.Drawing">
+    <value>249, 22</value>
+  </data>
+  <data name="rbDroneCurrent.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;rbMinimumAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbAlwaysPrompt.Parent" xml:space="preserve">
     <value>grpGuidedWPAltitude</value>
+  </data>
+  <data name="rbDroneCurrent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 23</value>
+  </data>
+  <data name="&gt;&gt;cbCreateTLog.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;numWPAltitude.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="rbAlwaysPrompt.AutoSize" type="System.Boolean, mscorlib">
+  <data name="&gt;&gt;grpGuidedWPAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbDroneCurrent.Parent" xml:space="preserve">
+    <value>grpGuidedWPAltitude</value>
+  </data>
+  <data name="lblAltitudeUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 18</value>
+  </data>
+  <data name="&gt;&gt;lblMaxEntriesDescription.Name" xml:space="preserve">
+    <value>lblMaxEntriesDescription</value>
+  </data>
+  <data name="&gt;&gt;rbDroneCurrent.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;rbDefaultAltitude.Parent" xml:space="preserve">
+    <value>grpGuidedWPAltitude</value>
+  </data>
+  <data name="numWPAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 65</value>
+  </data>
+  <data name="cbCreateTLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lblAltitudeUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>303, 67</value>
+  </data>
+  <data name="rbDroneCurrent.Text" xml:space="preserve">
+    <value>Apply drone current altitude</value>
+  </data>
+  <data name="cbDisplayDroneRoute.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 182</value>
+  </data>
+  <data name="&gt;&gt;rbMinimumAltitude.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;rbDroneCurrent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbCreateTLog.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;numRouteEntriesMax.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbDisplayDroneRoute.Text" xml:space="preserve">
+    <value>Display drone route history, max </value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeUnit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grpGuidedWPAltitude.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="rbAlwaysPrompt.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 107</value>
   </data>
-  <data name="rbAlwaysPrompt.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 22</value>
+  <data name="rbDefaultAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 22</value>
+  </data>
+  <data name="&gt;&gt;rbAlwaysPrompt.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="grpGuidedWPAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>376, 136</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 17</value>
+  </data>
+  <data name="rbDefaultAltitude.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="grpGuidedWPAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="lblAltitudeUnit.Text" xml:space="preserve">
+    <value>meters</value>
+  </data>
+  <data name="numRouteEntriesMax.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 24</value>
+  </data>
+  <data name="lblMaxEntriesDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>324, 182</value>
+  </data>
+  <data name="&gt;&gt;numRouteEntriesMax.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;numWPAltitude.Name" xml:space="preserve">
+    <value>numWPAltitude</value>
   </data>
   <data name="rbAlwaysPrompt.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -182,170 +336,97 @@
   <data name="rbAlwaysPrompt.Text" xml:space="preserve">
     <value>Always prompt for value</value>
   </data>
-  <data name="&gt;&gt;rbAlwaysPrompt.Name" xml:space="preserve">
-    <value>rbAlwaysPrompt</value>
-  </data>
-  <data name="&gt;&gt;rbAlwaysPrompt.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbAlwaysPrompt.Parent" xml:space="preserve">
-    <value>grpGuidedWPAltitude</value>
-  </data>
-  <data name="&gt;&gt;rbAlwaysPrompt.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="rbDefaultAltitude.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lblMaxEntriesDescription.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rbDefaultAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 79</value>
-  </data>
-  <data name="rbDefaultAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>195, 22</value>
-  </data>
-  <data name="rbDefaultAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="rbDefaultAltitude.Text" xml:space="preserve">
-    <value>Always set WP altitude to</value>
-  </data>
-  <data name="&gt;&gt;rbDefaultAltitude.Name" xml:space="preserve">
-    <value>rbDefaultAltitude</value>
-  </data>
-  <data name="&gt;&gt;rbDefaultAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbDefaultAltitude.Parent" xml:space="preserve">
-    <value>grpGuidedWPAltitude</value>
-  </data>
-  <data name="&gt;&gt;rbDefaultAltitude.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="rbMinimumAltitude.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="numRouteEntriesMax.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="rbMinimumAltitude.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 51</value>
   </data>
-  <data name="rbMinimumAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
-  </data>
-  <data name="rbMinimumAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="rbMinimumAltitude.Text" xml:space="preserve">
-    <value>Apply current, but at least</value>
-  </data>
-  <data name="&gt;&gt;rbMinimumAltitude.Name" xml:space="preserve">
-    <value>rbMinimumAltitude</value>
-  </data>
-  <data name="&gt;&gt;rbMinimumAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbMinimumAltitude.Parent" xml:space="preserve">
-    <value>grpGuidedWPAltitude</value>
-  </data>
-  <data name="&gt;&gt;rbMinimumAltitude.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="rbDroneCurrent.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rbDroneCurrent.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 23</value>
-  </data>
-  <data name="rbDroneCurrent.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 22</value>
-  </data>
-  <data name="rbDroneCurrent.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="rbDroneCurrent.Text" xml:space="preserve">
-    <value>Apply drone current altitude</value>
-  </data>
-  <data name="&gt;&gt;rbDroneCurrent.Name" xml:space="preserve">
-    <value>rbDroneCurrent</value>
-  </data>
-  <data name="&gt;&gt;rbDroneCurrent.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rbDroneCurrent.Parent" xml:space="preserve">
-    <value>grpGuidedWPAltitude</value>
-  </data>
-  <data name="&gt;&gt;rbDroneCurrent.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="grpGuidedWPAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="grpGuidedWPAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>376, 136</value>
-  </data>
-  <data name="grpGuidedWPAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="grpGuidedWPAltitude.Text" xml:space="preserve">
-    <value>Guided Waypoint Altitude</value>
-  </data>
-  <data name="&gt;&gt;grpGuidedWPAltitude.Name" xml:space="preserve">
-    <value>grpGuidedWPAltitude</value>
-  </data>
-  <data name="&gt;&gt;grpGuidedWPAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grpGuidedWPAltitude.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grpGuidedWPAltitude.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="cbCreateTLog.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="cbCreateTLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 154</value>
-  </data>
-  <data name="cbCreateTLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 22</value>
-  </data>
-  <data name="cbCreateTLog.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="cbCreateTLog.Text" xml:space="preserve">
-    <value>Create telemetry log on drone connection.</value>
-  </data>
-  <data name="&gt;&gt;cbCreateTLog.Name" xml:space="preserve">
-    <value>cbCreateTLog</value>
-  </data>
-  <data name="&gt;&gt;cbCreateTLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cbCreateTLog.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cbCreateTLog.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 17</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 10.8pt</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>400, 200</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ConfigSettingsPage</value>
+  <data name="&gt;&gt;numWPAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;cbDisplayDroneRoute.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;cbDisplayDroneRoute.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ConfigSettingsPage</value>
+  </data>
+  <data name="rbDefaultAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 79</value>
+  </data>
+  <data name="grpGuidedWPAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblMaxEntriesDescription.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;numRouteEntriesMax.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;cbDisplayDroneRoute.Name" xml:space="preserve">
+    <value>cbDisplayDroneRoute</value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeUnit.Name" xml:space="preserve">
+    <value>lblAltitudeUnit</value>
+  </data>
+  <data name="rbAlwaysPrompt.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbDisplayDroneRoute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbCreateTLog.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblAltitudeUnit.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblMaxEntriesDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="rbDroneCurrent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="numRouteEntriesMax.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 180</value>
+  </data>
+  <data name="&gt;&gt;rbAlwaysPrompt.Name" xml:space="preserve">
+    <value>rbAlwaysPrompt</value>
+  </data>
+  <data name="&gt;&gt;rbMinimumAltitude.Parent" xml:space="preserve">
+    <value>grpGuidedWPAltitude</value>
+  </data>
+  <data name="&gt;&gt;rbAlwaysPrompt.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbCreateTLog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 22</value>
+  </data>
+  <data name="&gt;&gt;rbMinimumAltitude.Name" xml:space="preserve">
+    <value>rbMinimumAltitude</value>
+  </data>
+  <data name="&gt;&gt;lblMaxEntriesDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbDefaultAltitude.Name" xml:space="preserve">
+    <value>rbDefaultAltitude</value>
+  </data>
+  <data name="cbCreateTLog.Text" xml:space="preserve">
+    <value>Create telemetry log on drone connection.</value>
+  </data>
+  <data name="rbDefaultAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

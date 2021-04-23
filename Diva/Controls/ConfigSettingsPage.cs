@@ -29,25 +29,21 @@ namespace Diva.Controls
             numWPAltitude.Value = float.TryParse(ConfigData.GetOption("GuidedWPAltitude"),
                 out float altitudeValue) ? (decimal)altitudeValue : 50;
             cbCreateTLog.Checked = ConfigData.GetBoolOption("GenerateTLog");
+            int maxEntries = ConfigData.GetIntOption("MaxRouteEntries");
+            numRouteEntriesMax.Value = maxEntries < numRouteEntriesMax.Minimum ? 200 : maxEntries;
+            cbDisplayDroneRoute.Checked = ConfigData.GetBoolOption("DisplayDroneRoute");
 
             rbDroneCurrent.CheckedChanged += AltitudeModeChanged;
             rbMinimumAltitude.CheckedChanged += AltitudeModeChanged;
             rbDefaultAltitude.CheckedChanged += AltitudeModeChanged;
             rbAlwaysPrompt.CheckedChanged += AltitudeModeChanged;
-            numWPAltitude.ValueChanged += NumWPAltitude_ValueChanged;
-            cbCreateTLog.CheckedChanged += CbCreateTLog_CheckedChanged;
-        }
-
-        private void NumWPAltitude_ValueChanged(object sender, EventArgs e)
-        {
-            if (sender is NumericUpDown num)
-                ConfigData.SetOption("GuidedWPAltitude", num.Value.ToString());
-        }
-
-        private void CbCreateTLog_CheckedChanged(object sender, EventArgs e)
-        {
-            if (sender is CheckBox cb)
-                ConfigData.SetBoolOption("GenerateTLog", cb.Checked);
+            numWPAltitude.ValueChanged += (o, e) =>
+                ConfigData.SetOption("GuidedWPAltitude", numWPAltitude.Value.ToString());
+            cbCreateTLog.CheckedChanged += (o,e) =>
+                ConfigData.SetBoolOption("GenerateTLog", cbCreateTLog.Checked);
+            numRouteEntriesMax.ValueChanged += (o, e) =>
+                ConfigData.SetIntOption("MaxRouteEntries", (int)numRouteEntriesMax.Value);
+            cbDisplayDroneRoute.CheckedChanged += SetRouteDisplayEnabled;
         }
 
         private void AltitudeModeChanged(object sender, EventArgs e)
@@ -64,6 +60,14 @@ namespace Diva.Controls
                 mode = 3;
 
             ConfigData.SetIntOption("GuidedWPAltMode", mode);
+        }
+
+        private void SetRouteDisplayEnabled(object sender, EventArgs e)
+        {
+            bool enabled = cbDisplayDroneRoute.Checked;
+            ConfigData.SetBoolOption("DisplayDroneRoute", enabled);
+            Planner.GetPlannerInstance().GMapControl.Overlays.
+                First(o => o.Id == "Routes").IsVisibile = enabled;
         }
     }
 }
