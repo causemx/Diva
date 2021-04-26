@@ -727,6 +727,7 @@ namespace Diva.Mavlink
                     MAV_MISSION_RESULT ans = SetWP(dest, 0, 2);
                     if (ans != MAV_MISSION_RESULT.MAV_MISSION_ACCEPTED)
                         throw new Exception("Guided Mode Failed");
+                    AltitudeControl.UpdateDroneTargetAltitude(this, dest.Altitude);
                     return true;
                 }
                 else

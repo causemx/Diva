@@ -259,19 +259,19 @@ namespace Diva.Mission
         public bool Stop()
         {
             if (State != FlyToState.Flying) return false;
-            State = FlyToState.Canceled;
             if (Drone.Status.Firmware == Firmwares.ArduPlane)
                 Drone.SetGuidedModeWP(new WayPoint
                 {
                     Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                    Altitude = GetWPAltitude(),
+                    Altitude = GetWPAltitude(AltitudeControl.TargetAltitudes[Drone]),
                     Latitude = Drone.Status.Latitude,
                     Longitude = Drone.Status.Longitude,
                     Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
                 });
             else
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
-            marker.SetBrakeMode(true);
+            State = FlyToState.Canceled;
+            marker?.SetBrakeMode(true);
             return true;
         }
 

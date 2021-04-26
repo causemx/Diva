@@ -121,13 +121,13 @@ namespace Diva.Controls
             Visible = false;
         }
 
-        public void SetSource(Diva.Mavlink.MavDrone drone)
+        public void SetSource(Mavlink.MavDrone drone)
         {
             BeginInvoke((MethodInvoker)(() =>
             {
                 Value = drone?.Status.Altitude ?? 0;
-                Target = Diva.Mission.AltitudeControl.TargetAltitudes[drone];
-                Targeting = Diva.Mission.AltitudeControl.Has(drone);
+                Target = Mission.AltitudeControl.TargetAltitudes[drone];
+                Targeting = Mission.AltitudeControl.Has(drone);
                 Visible = Value != 0;
             }));
         }

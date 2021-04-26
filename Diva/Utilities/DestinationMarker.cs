@@ -137,8 +137,7 @@ namespace Diva.Utilities
                 var s = route.Stroke;
                 route.Stroke = new Pen(LineColor, Width);
                 s.Dispose();
-            }
-            
+            }      
         }
 
         private bool disposing = false;

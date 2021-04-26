@@ -65,6 +65,28 @@ namespace Diva.Mission
             return ac == null ? drone.Status.Altitude : ac.targetAltitude;
         }
 
+        public static void UpdateDroneTargetAltitude(MavDrone drone, float alt)
+        {
+            try
+            {
+                var ac = instances.FirstOrDefault(i => i.Drone == drone);
+                if (ac == null)
+                {
+                    lock (instances)
+                        instances.Add(ac = new AltitudeControl(drone));
+                    ac.targetAltitude = alt;
+                }
+                else if (Math.Abs(ac.targetAltitude - alt) > 0.05f)
+                    ac.targetAltitude = alt;
+                ac.targetSet = true;
+                if (drone == Planner.GetActiveDrone())
+                {
+                    Planner.GetPlannerInstance().AltitudeControlPanel.SetSource(drone);
+                }
+            }
+            catch { }
+        }
+
         public static bool Has(MavDrone drone)
             => instances.Any(a => a.Drone == drone);
 
@@ -73,7 +95,26 @@ namespace Diva.Mission
             lock (instances) instances.RemoveAll(ac => ac.Drone == drone);
         }
 
-        public MavDrone Drone { get; private set; }
+        public static bool VerifyDroneStates(MavDrone active)
+        {
+            bool activeRemoved = false;
+            lock (instances)
+            {
+                instances.ForEach(ac =>
+                {
+                    try
+                    {
+                        if (ac.Drone.IsMode("GUIDED")) return;
+                        if (ac.Drone == active) activeRemoved = true;
+                    }
+                    catch { }
+                    instances.Remove(ac);
+                });
+            }
+            return activeRemoved;
+        }
+
+        public MavDrone Drone { get; }
 
         private float targetAltitude = 0;
         private bool targetSet = false;

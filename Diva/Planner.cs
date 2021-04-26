@@ -50,14 +50,10 @@ namespace Diva
 
 		private class PlannerOverlays
 		{
-			public GMapOverlay KMLPolygons;
 			public GMapOverlay RallyPoints;
-			public GMapOverlay Polygons;
-			public GMapOverlay Airports;
 			public GMapOverlay Commons;
 			public GMapOverlay DrawnPolygons;
 			public GMapOverlay Geofence;
-			public GMapOverlay POI;
 			public GMapOverlay Drones;
             public GMapOverlay Routes;
 			internal PlannerOverlays(MyGMap map)
@@ -329,6 +325,9 @@ namespace Diva
 
                 try
                 {
+                    if (AltitudeControl.VerifyDroneStates(ActiveDrone))
+                        AltitudeControlPanel.Targeting = false;
+
                     // drone info panel must be updated whether active drone presents or not
                     BeginInvoke((MethodInvoker)DroneInfoPanel.UpdateDisplayInfo);
 
@@ -580,36 +579,6 @@ namespace Diva
                 return;
             }
 
-			// check if the mouse up happend over our button
-			/*
-			if (polyicon.Rectangle.Contains(e.Location))
-			{
-				polyicon.IsSelected = !polyicon.IsSelected;
-
-				if (e.Button == MouseButtons.Right)
-				{
-					polyicon.IsSelected = false;
-					clearPolygonToolStripMenuItem_Click(this, null);
-
-					contextMenuStrip1.Visible = false;
-
-					return;
-				}
-
-				if (polyicon.IsSelected)
-				{
-					polygongridmode = true;
-				}
-				else
-				{
-					polygongridmode = false;
-				}
-
-				return;
-			}*/
-
-			// Console.WriteLine("MainMap MU");
-
 			if (e.Button == MouseButtons.Right) // ignore right clicks
 			{
 				return;
@@ -617,14 +586,6 @@ namespace Diva
 
 			if (isMouseDown) // mouse down on some other object and dragged to here.
 			{
-				// drag finished, update poi db
-				/*
-				if (CurrentPOIMarker != null)
-				{
-					POI.POIMove(CurrentPOIMarker);
-					CurrentPOIMarker = null;
-				}*/
-
 				if (e.Button == MouseButtons.Left)
 				{
 					isMouseDown = false;
@@ -890,12 +851,6 @@ namespace Diva
 						CurrentRectMarker.InnerMarker.Position = pnew;
 					}
 				}
-				/**else if (currentPOIMarker != null)
-				{
-					PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-					CurrentPOIMarker.Position = pnew;
-				}**/
 				else if (CurrentGMapMarker != null)
 				{
 					PointLatLng pnew = Map.FromLocalToLatLng(e.X, e.Y);
@@ -2119,13 +2074,17 @@ namespace Diva
 			};
 
 			_dialog.DoClick += (s2, e2) => {
-				ActiveDrone.SetMode("GUIDED");
-				ActiveDrone.TakeOff(float.Parse(_dialog.Value));
-			};
+                if (float.TryParse(_dialog.Value, out float alt))
+                {
+                    ActiveDrone.SetMode("GUIDED");
+                    ActiveDrone.TakeOff(alt);
+                    AltitudeControl.UpdateDroneTargetAltitude(ActiveDrone, alt);
+                }
+                else
+                    MessageBox.Show(Strings.DroneSetting_MsgValueInvalid, Strings.DialogTitleError);
+            };
 
 			_dialog.ShowDialog();
-
-
 		}
 
 		private void BUT_Auto_Click(object sender, EventArgs e)
@@ -2565,7 +2524,6 @@ namespace Diva
 			// points + return + close
 			byte pointcount = (byte)(drawnPolygon.Points.Count + 2);
 
-
 			try
 			{
 				ActiveDrone.SetParam("FENCE_TOTAL", pointcount);
@@ -2603,8 +2561,6 @@ namespace Diva
 				}
 
 				// clear everything
-				Overlays.Polygons.Polygons.Clear();
-				Overlays.Polygons.Markers.Clear();
 				Overlays.Geofence.Polygons.Clear();
 				geofencePolygon.Points.Clear();
 
@@ -3240,6 +3196,8 @@ namespace Diva
                     });
                 else
                     ActiveDrone.SetMode(ActiveDrone.Status.FlightModeType.PauseMode);
+                AltitudeControl.Remove(ActiveDrone);
+                AltitudeControlPanel.Targeting = false;
             }
         }
 

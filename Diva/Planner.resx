@@ -117,47 +117,843 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;TxtHomeLongitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnRTL.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="SplitContainer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="SplitContainer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="SplitContainer.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
+    <value>Horizontal</value>
+  </data>
+  <data name="IconGPSLostWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="IconGPSLostWarning.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="IconGPSLostWarning.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="&gt;&gt;LblModeDesc.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="IconGPSLostWarning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;BtnAltitude.Name" xml:space="preserve">
-    <value>BtnAltitude</value>
+  <data name="IconGPSLostWarning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>423, 9</value>
   </data>
-  <data name="&gt;&gt;colAngle.Name" xml:space="preserve">
-    <value>colAngle</value>
+  <data name="IconGPSLostWarning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 83</value>
   </data>
-  <data name="&gt;&gt;loadPolygonToolStripMenuItem.Name" xml:space="preserve">
-    <value>loadPolygonToolStripMenuItem</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="IconGPSLostWarning.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="IconGPSLostWarning.Text" xml:space="preserve">
+    <value>Waiting for positioning</value>
+  </data>
+  <data name="IconGPSLostWarning.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>BottomCenter</value>
+  </data>
+  <data name="IconGPSLostWarning.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;IconGPSLostWarning.Name" xml:space="preserve">
+    <value>IconGPSLostWarning</value>
+  </data>
+  <data name="&gt;&gt;IconGPSLostWarning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IconGPSLostWarning.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;IconGPSLostWarning.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="IconModeWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="IconModeWarning.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
+  </data>
+  <data name="IconModeWarning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="IconModeWarning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="IconModeWarning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 9</value>
+  </data>
+  <data name="IconModeWarning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 83</value>
+  </data>
+  <data name="IconModeWarning.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="IconModeWarning.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;IconModeWarning.Name" xml:space="preserve">
+    <value>IconModeWarning</value>
+  </data>
+  <data name="&gt;&gt;IconModeWarning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IconModeWarning.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;IconModeWarning.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="BtnBreakAction.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="BtnBreakAction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnBreakAction.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnBreakAction.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnBreakAction.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 410</value>
+  </data>
+  <data name="BtnBreakAction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BtnBreakAction.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <metadata name="TTButtonDescription.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>240, 17</value>
+  </metadata>
+  <data name="BtnBreakAction.ToolTip" xml:space="preserve">
+    <value>Cancel guided flight</value>
+  </data>
+  <data name="&gt;&gt;BtnBreakAction.Name" xml:space="preserve">
+    <value>BtnBreakAction</value>
   </data>
   <data name="&gt;&gt;BtnBreakAction.Type" xml:space="preserve">
     <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SplitContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>506</value>
+  <data name="&gt;&gt;BtnBreakAction.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
   </data>
-  <data name="&gt;&gt;BtnArm.Type" xml:space="preserve">
+  <data name="&gt;&gt;BtnBreakAction.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="AltitudeControlPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="AltitudeControlPanel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9pt</value>
+  </data>
+  <data name="AltitudeControlPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 146</value>
+  </data>
+  <data name="AltitudeControlPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>40, 120</value>
+  </data>
+  <data name="AltitudeControlPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="AltitudeControlPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 120</value>
+  </data>
+  <data name="AltitudeControlPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="AltitudeControlPanel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;AltitudeControlPanel.Name" xml:space="preserve">
+    <value>AltitudeControlPanel</value>
+  </data>
+  <data name="&gt;&gt;AltitudeControlPanel.Type" xml:space="preserve">
+    <value>Diva.Controls.AltitudeControlPanel, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;AltitudeControlPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;AltitudeControlPanel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LblModeDesc.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblModeDesc.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14.249999pt</value>
+  </data>
+  <data name="LblModeDesc.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblModeDesc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 466</value>
+  </data>
+  <data name="LblModeDesc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 24</value>
+  </data>
+  <data name="LblModeDesc.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="LblModeDesc.Text" xml:space="preserve">
+    <value>Mode:</value>
+  </data>
+  <data name="LblModeDesc.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;LblModeDesc.Name" xml:space="preserve">
+    <value>LblModeDesc</value>
+  </data>
+  <data name="&gt;&gt;LblModeDesc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblModeDesc.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;LblModeDesc.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="BtnZoomOut.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="BtnZoomOut.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnZoomOut.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnZoomOut.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnZoomOut.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 364</value>
+  </data>
+  <data name="BtnZoomOut.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BtnZoomOut.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="BtnZoomOut.ToolTip" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomOut.Name" xml:space="preserve">
+    <value>BtnZoomOut</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomOut.Type" xml:space="preserve">
     <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="colCommand.HeaderText" xml:space="preserve">
-    <value>Command</value>
+  <data name="&gt;&gt;BtnZoomOut.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomOut.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="BtnZoomIn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="BtnZoomIn.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnZoomIn.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnZoomIn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnZoomIn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 318</value>
+  </data>
+  <data name="BtnZoomIn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BtnZoomIn.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="BtnZoomIn.ToolTip" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomIn.Name" xml:space="preserve">
+    <value>BtnZoomIn</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomIn.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomIn.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnZoomIn.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="BtnMapFocus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="BtnMapFocus.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnMapFocus.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnMapFocus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnMapFocus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 272</value>
+  </data>
+  <data name="BtnMapFocus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BtnMapFocus.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="BtnMapFocus.ToolTip" xml:space="preserve">
+    <value>Toggle map focus lock on drone.
+(Right click unlocks and center on groundstation.)</value>
+  </data>
+  <data name="&gt;&gt;BtnMapFocus.Name" xml:space="preserve">
+    <value>BtnMapFocus</value>
+  </data>
+  <data name="&gt;&gt;BtnMapFocus.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnMapFocus.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnMapFocus.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="LblMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblMode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14.249999pt</value>
+  </data>
+  <data name="LblMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 466</value>
+  </data>
+  <data name="LblMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 24</value>
+  </data>
+  <data name="LblMode.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="LblMode.Text" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="LblMode.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;LblMode.Name" xml:space="preserve">
+    <value>LblMode</value>
+  </data>
+  <data name="&gt;&gt;LblMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LblMode.Parent" xml:space="preserve">
     <value>SplitContainer.Panel1</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="IconModeWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
+  <data name="&gt;&gt;LblMode.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
-  <data name="&gt;&gt;colLatitude.Name" xml:space="preserve">
-    <value>colLatitude</value>
+  <data name="RotationInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="RotationInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>936, 494</value>
+  </data>
+  <data name="RotationInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="RotationInfoPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;RotationInfoPanel.Name" xml:space="preserve">
+    <value>RotationInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;RotationInfoPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RotationInfoPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;RotationInfoPanel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="DroneInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="DroneInfoPanel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DroneInfoPanel.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="DroneInfoPanel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9.75pt</value>
+  </data>
+  <data name="DroneInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>936, 9</value>
+  </data>
+  <data name="DroneInfoPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="DroneInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="DroneInfoPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;DroneInfoPanel.Name" xml:space="preserve">
+    <value>DroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;DroneInfoPanel.Type" xml:space="preserve">
+    <value>Diva.Controls.DroneInfoPanel, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;DroneInfoPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;DroneInfoPanel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="BtnRTL.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnRTL.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnRTL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnRTL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 383</value>
+  </data>
+  <data name="BtnRTL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnRTL.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="BtnRTL.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnRTL.Name" xml:space="preserve">
+    <value>BtnRTL</value>
+  </data>
+  <data name="&gt;&gt;BtnRTL.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnRTL.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnRTL.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="BtnLand.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnLand.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnLand.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 211</value>
+  </data>
+  <data name="BtnLand.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnLand.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="BtnLand.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnLand.Name" xml:space="preserve">
+    <value>BtnLand</value>
+  </data>
+  <data name="&gt;&gt;BtnLand.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnLand.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnLand.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="BtnAuto.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnAuto.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnAuto.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 211</value>
+  </data>
+  <data name="BtnAuto.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnAuto.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="BtnAuto.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnAuto.Name" xml:space="preserve">
+    <value>BtnAuto</value>
+  </data>
+  <data name="&gt;&gt;BtnAuto.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnAuto.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnAuto.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="BtnArm.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnArm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 125</value>
+  </data>
+  <data name="BtnArm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnArm.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="BtnArm.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnArm.Name" xml:space="preserve">
+    <value>BtnArm</value>
+  </data>
+  <data name="&gt;&gt;BtnArm.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnArm.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnArm.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="BtnReadWPs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnReadWPs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnReadWPs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnReadWPs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 297</value>
+  </data>
+  <data name="BtnReadWPs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnReadWPs.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="BtnReadWPs.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnReadWPs.Name" xml:space="preserve">
+    <value>BtnReadWPs</value>
+  </data>
+  <data name="&gt;&gt;BtnReadWPs.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnReadWPs.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnReadWPs.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="BtnTakeOff.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnTakeOff.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnTakeOff.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
+    <value>98, 125</value>
+  </data>
+  <data name="BtnTakeOff.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnTakeOff.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="BtnTakeOff.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnTakeOff.Name" xml:space="preserve">
+    <value>BtnTakeOff</value>
+  </data>
+  <data name="&gt;&gt;BtnTakeOff.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnTakeOff.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnTakeOff.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="BtnWriteWPs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="BtnWriteWPs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnWriteWPs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 297</value>
+  </data>
+  <data name="BtnWriteWPs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="BtnWriteWPs.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="BtnWriteWPs.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="&gt;&gt;BtnWriteWPs.Name" xml:space="preserve">
+    <value>BtnWriteWPs</value>
+  </data>
+  <data name="&gt;&gt;BtnWriteWPs.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BtnWriteWPs.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;BtnWriteWPs.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <metadata name="TSMainPanel.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>113, 17</value>
+  </metadata>
+  <data name="TSMainPanel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="TSMainPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="TSBtnConnect.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TSBtnConnect.CheckedText" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9.75pt</value>
+  </data>
+  <data name="TSBtnConnect.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="TSBtnConnect.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TSBtnConnect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="TSBtnConnect.Text" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="TSBtnConnect.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="TSBtnConfigure.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TSBtnConfigure.CheckedText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9.75pt</value>
+  </data>
+  <data name="TSBtnConfigure.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="TSBtnConfigure.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="TSBtnConfigure.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 80</value>
+  </data>
+  <data name="TSBtnConfigure.Text" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="TSBtnConfigure.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageAboveText</value>
+  </data>
+  <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 9</value>
+  </data>
+  <data name="TSMainPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="TSMainPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 83</value>
+  </data>
+  <data name="TSMainPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="TSMainPanel.Text" xml:space="preserve">
+    <value>toolStrip2</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.Name" xml:space="preserve">
+    <value>TSMainPanel</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <metadata name="cmMap.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Polygon Point</value>
+  </data>
+  <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Clear Polygon</value>
+  </data>
+  <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Save Polygon</value>
+  </data>
+  <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Load Polygon</value>
+  </data>
+  <data name="areaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="areaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 22</value>
+  </data>
+  <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Draw Polygon</value>
+  </data>
+  <data name="uploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 22</value>
+  </data>
+  <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 22</value>
+  </data>
+  <data name="setReturnLocationToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set Return Location</value>
+  </data>
+  <data name="loadFromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 22</value>
+  </data>
+  <data name="loadFromFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Load from File</value>
+  </data>
+  <data name="saveToFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 22</value>
+  </data>
+  <data name="saveToFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>Save to File</value>
+  </data>
+  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 22</value>
+  </data>
+  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 22</value>
+  </data>
+  <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
+    <value>No-Fly Zone</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 6</value>
+  </data>
+  <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 22</value>
+  </data>
+  <data name="miClearMission.Text" xml:space="preserve">
+    <value>Takeoff to Here</value>
+  </data>
+  <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 22</value>
+  </data>
+  <data name="miSetHomeHere.Text" xml:space="preserve">
+    <value>Set Home Here</value>
+  </data>
+  <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 22</value>
+  </data>
+  <data name="miClearAllMissions.Text" xml:space="preserve">
+    <value>Clear All Missions</value>
+  </data>
+  <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 120</value>
+  </data>
+  <data name="&gt;&gt;cmMap.Name" xml:space="preserve">
+    <value>cmMap</value>
+  </data>
+  <data name="&gt;&gt;cmMap.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Map.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="Map.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9pt</value>
+  </data>
+  <data name="Map.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="Map.MsgWindowOffset" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -166,1314 +962,353 @@
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAAAAAAAAAL
 </value>
   </data>
-  <data name="LabelLatitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="TxtHomeAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
-  <data name="BtnHome.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt, style=Bold</value>
-  </data>
-  <data name="BtnZoomIn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;DroneInfoPanel.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="LabelAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;areaToolStripMenuItem.Name" xml:space="preserve">
-    <value>areaToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;clearToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="IconGPSLostWarning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>423, 9</value>
-  </data>
-  <data name="TSBtnConfigure.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="LabelAltitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeAltitude.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Panel2.Name" xml:space="preserve">
-    <value>SplitContainer.Panel2</value>
-  </data>
-  <data name="BtnAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>420, 0</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 9</value>
-  </data>
-  <data name="&gt;&gt;RotationInfoPanel.Name" xml:space="preserve">
-    <value>RotationInfoPanel</value>
-  </data>
-  <data name="TSBtnConnect.CheckedText" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
-  <data name="DroneInfoPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="&gt;&gt;BtnMapFocus.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;colParam1.Name" xml:space="preserve">
-    <value>colParam1</value>
-  </data>
-  <data name="IconModeWarning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="LblModeDesc.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="loadPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="BtnBreakAction.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="&gt;&gt;BtnMapFocus.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="LabelLongitude.Text" xml:space="preserve">
-    <value>Lng:</value>
-  </data>
-  <data name="BtnZoomOut.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="LblModeDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 466</value>
-  </data>
-  <data name="BtnArm.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="areaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="TxtHomeAltitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="colAngle.HeaderText" xml:space="preserve">
-    <value>Angle</value>
-  </data>
-  <data name="IconGPSLostWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConnect.Name" xml:space="preserve">
-    <value>TSBtnConnect</value>
-  </data>
-  <data name="&gt;&gt;BtnRTL.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="BtnBreakAction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="colLatitude.MinimumWidth" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="colTagData.HeaderText" xml:space="preserve">
-    <value>TagData</value>
-  </data>
-  <data name="&gt;&gt;IconGPSLostWarning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Panel2.Parent" xml:space="preserve">
-    <value>SplitContainer</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
-  </data>
-  <data name="AltitudeControlPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
-  </data>
-  <data name="LblMode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;BtnReadWPs.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>71</value>
+  <data name="Map.Size" type="System.Drawing.Size, System.Drawing">
+    <value>948, 506</value>
   </data>
   <data name="Map.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="colParam1.HeaderText" xml:space="preserve">
-    <value>Param1</value>
-  </data>
-  <data name="colLatitude.HeaderText" xml:space="preserve">
-    <value>Latitude</value>
-  </data>
-  <data name="miClearMission.Text" xml:space="preserve">
-    <value>Takeoff to Here</value>
-  </data>
-  <data name="TxtAltitudeValue.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="colLatitude.Width" type="System.Int32, mscorlib">
-    <value>67</value>
-  </data>
-  <data name="BtnDroneMode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="BtnAltitude.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Diva Groundstation</value>
-  </data>
-  <data name="BtnHome.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="IconModeWarning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>334, 9</value>
-  </data>
-  <data name="BtnWriteWPs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;colAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAltitude.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;savePolygonToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnZoomOut.Name" xml:space="preserve">
-    <value>BtnZoomOut</value>
-  </data>
-  <data name="RotationInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;BtnAuto.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="DroneInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="LabelLongitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="BtnAltitude.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="loadFromFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Load from File</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnTakeOff.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="DGVWayPoints.ColumnHeadersHeight" type="System.Int32, mscorlib">
-    <value>30</value>
-  </data>
-  <data name="RotationInfoPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>29</value>
-  </data>
-  <data name="BtnRTL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="BtnAuto.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;colAngle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnBreakAction.ToolTip" xml:space="preserve">
-    <value>Cancel guided flight</value>
-  </data>
-  <data name="&gt;&gt;colLongitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnDroneMode.Name" xml:space="preserve">
-    <value>BtnDroneMode</value>
-  </data>
-  <data name="AltitudeControlPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 120</value>
-  </data>
-  <data name="&gt;&gt;clearToolStripMenuItem.Name" xml:space="preserve">
-    <value>clearToolStripMenuItem</value>
-  </data>
-  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
-    <value>Clear</value>
-  </data>
-  <data name="ActiveDroneInfoPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;LabelLongitude.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="TxtHomeLongitude.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
-  </data>
   <data name="&gt;&gt;Map.Name" xml:space="preserve">
     <value>Map</value>
-  </data>
-  <data name="BtnLand.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeAltitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnTakeOff.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;AltitudeControlPanel.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="AltitudeControlPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 24</value>
-  </data>
-  <data name="&gt;&gt;LabelLongitude.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="BtnLand.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnLand.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="BtnLand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Name" xml:space="preserve">
-    <value>SplitContainer</value>
-  </data>
-  <data name="colDelete.MinimumWidth" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="BtnTakeOff.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;setReturnLocationToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="IconModeWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
-  </data>
-  <data name="BtnAltitude.Text" xml:space="preserve">
-    <value>Default WP Altitude</value>
-  </data>
-  <data name="BtnAuto.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnBreakAction.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;miClearMission.Name" xml:space="preserve">
-    <value>miClearMission</value>
-  </data>
-  <data name="BtnAuto.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="BtnTakeOff.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;TxtHomeLatitude.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;LabelLatitude.Name" xml:space="preserve">
-    <value>LabelLatitude</value>
-  </data>
-  <data name="BtnLand.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 211</value>
-  </data>
-  <data name="colParam4.Width" type="System.Int32, mscorlib">
-    <value>62</value>
-  </data>
-  <data name="&gt;&gt;DGVWayPoints.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblMode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TSMainPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RotationInfoPanel.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="ActiveDroneInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 51</value>
-  </data>
-  <data name="&gt;&gt;drawPolygonToolStripMenuItem.Name" xml:space="preserve">
-    <value>drawPolygonToolStripMenuItem</value>
-  </data>
-  <data name="BtnMapFocus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="BtnRTL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;DroneInfoPanel.Name" xml:space="preserve">
-    <value>DroneInfoPanel</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeLongitude.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="TSBtnConnect.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="&gt;&gt;colParam3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LabelLongitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TSBtnConfigure.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
-  <data name="BtnZoomOut.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 364</value>
-  </data>
-  <data name="BtnMapFocus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="BtnZoomOut.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="IconModeWarning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 83</value>
-  </data>
-  <data name="ComBoxModeSwitch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 26</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeAltitude.Name" xml:space="preserve">
-    <value>TxtHomeAltitude</value>
-  </data>
-  <data name="&gt;&gt;Map.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;colLatitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TxtHomeAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>338, 10</value>
-  </data>
-  <data name="BtnZoomOut.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="loadFromFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
   </data>
   <data name="&gt;&gt;Map.Type" xml:space="preserve">
     <value>Diva.Controls.MyGMap, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;DroneInfoPanel.Type" xml:space="preserve">
-    <value>Diva.Controls.DroneInfoPanel, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="BtnArm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="setReturnLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
-  </data>
-  <data name="TxtAltitudeValue.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="BtnZoomIn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 40</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnLand.Name" xml:space="preserve">
-    <value>BtnLand</value>
-  </data>
-  <data name="colAngle.Width" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="&gt;&gt;RotationInfoPanel.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="colParam2.HeaderText" xml:space="preserve">
-    <value>Param2</value>
-  </data>
-  <data name="TSBtnConfigure.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="&gt;&gt;saveToFileToolStripMenuItem.Name" xml:space="preserve">
-    <value>saveToFileToolStripMenuItem</value>
-  </data>
-  <data name="LabelAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="saveToFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
-  </data>
-  <data name="&gt;&gt;TSMainPanel.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;BtnMapFocus.Name" xml:space="preserve">
-    <value>BtnMapFocus</value>
-  </data>
-  <data name="colAngle.MinimumWidth" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="&gt;&gt;TxtAltitudeValue.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="LblMode.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="TxtHomeLatitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;colLongitude.Name" xml:space="preserve">
-    <value>colLongitude</value>
-  </data>
-  <data name="&gt;&gt;BtnDroneMode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SplitContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 662</value>
-  </data>
-  <data name="BtnHome.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="AltitudeControlPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 146</value>
-  </data>
-  <data name="DGVWayPoints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 101</value>
-  </data>
-  <data name="colParam4.HeaderText" xml:space="preserve">
-    <value>Param4</value>
-  </data>
-  <data name="&gt;&gt;ComBoxModeSwitch.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ComBoxModeSwitch.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 11.249999pt</value>
-  </data>
-  <data name="DroneInfoPanel.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="&gt;&gt;IconModeWarning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TxtHomeLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 10</value>
-  </data>
-  <data name="LblMode.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="&gt;&gt;DroneInfoPanel.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="BtnTakeOff.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="addPolygonPointToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="BtnZoomIn.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
-  </data>
-  <data name="BtnLand.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="TxtHomeLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>204, 10</value>
-  </data>
-  <data name="BtnDroneMode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="DGVWayPoints.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="IconGPSLostWarning.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>BottomCenter</value>
-  </data>
-  <data name="BtnMapFocus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 272</value>
-  </data>
-  <data name="&gt;&gt;savePolygonToolStripMenuItem.Name" xml:space="preserve">
-    <value>savePolygonToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;BtnMapFocus.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="Map.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9pt</value>
-  </data>
-  <data name="BtnDroneMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
-  </data>
-  <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;clearPolygonToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LblMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LabelLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 36</value>
-  </data>
-  <data name="&gt;&gt;BtnHome.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="DroneInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>936, 9</value>
-  </data>
-  <data name="TSBtnConnect.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="DroneInfoPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;LblMode.Name" xml:space="preserve">
-    <value>LblMode</value>
-  </data>
-  <data name="TxtHomeLongitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 21</value>
-  </data>
-  <data name="BtnMapFocus.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="BtnReadWPs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;colParam2.Name" xml:space="preserve">
-    <value>colParam2</value>
-  </data>
-  <data name="BtnReadWPs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConfigure.Name" xml:space="preserve">
-    <value>TSBtnConfigure</value>
-  </data>
-  <data name="DGVWayPoints.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LblModeDesc.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TxtHomeAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 21</value>
-  </data>
-  <data name="BtnZoomIn.ToolTip" xml:space="preserve">
-    <value>Zoom In</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeLongitude.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="LabelLongitude.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
-  </data>
-  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 125</value>
-  </data>
-  <data name="&gt;&gt;TxtAltitudeValue.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnZoomIn.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="BtnArm.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="colParam1.MinimumWidth" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="uploadToolStripMenuItem.Text" xml:space="preserve">
-    <value>Upload</value>
-  </data>
-  <data name="&gt;&gt;LabelAltitude.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeLatitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnTakeOff.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;BtnHome.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="ComBoxModeSwitch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="LblModeDesc.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;colCommand.Name" xml:space="preserve">
-    <value>colCommand</value>
-  </data>
-  <data name="BtnRTL.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="&gt;&gt;colAltitude.Name" xml:space="preserve">
-    <value>colAltitude</value>
-  </data>
-  <data name="&gt;&gt;noFlyZoneToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnWriteWPs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnAltitude.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="AltitudeControlPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="BtnZoomIn.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="BtnTakeOff.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="DroneInfoPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="&gt;&gt;BtnWriteWPs.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="TxtHomeAltitude.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="BtnBreakAction.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="&gt;&gt;colCommand.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="colParam2.Width" type="System.Int32, mscorlib">
-    <value>62</value>
-  </data>
-  <data name="&gt;&gt;BtnArm.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeLatitude.Name" xml:space="preserve">
-    <value>TxtHomeLatitude</value>
-  </data>
-  <data name="ComBoxModeSwitch.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
-  </data>
-  <data name="colCommand.MinimumWidth" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="&gt;&gt;IconModeWarning.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;colDelete.Name" xml:space="preserve">
-    <value>colDelete</value>
-  </data>
-  <data name="LabelLatitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;BtnTakeOff.Name" xml:space="preserve">
-    <value>BtnTakeOff</value>
-  </data>
-  <data name="BtnZoomIn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="TxtHomeAltitude.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;colTagData.Name" xml:space="preserve">
-    <value>colTagData</value>
-  </data>
-  <data name="BtnDroneMode.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="saveToFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save to File</value>
-  </data>
-  <data name="&gt;&gt;BtnReadWPs.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="TSBtnConfigure.CheckedText" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="&gt;&gt;SplitContainer.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="BtnTakeOff.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="IconGPSLostWarning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>962, 644</value>
-  </data>
-  <data name="DGVWayPoints.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="&gt;&gt;LblModeDesc.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="LabelLongitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="colParam3.Width" type="System.Int32, mscorlib">
-    <value>62</value>
-  </data>
-  <data name="BtnWriteWPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 297</value>
-  </data>
-  <data name="&gt;&gt;uploadToolStripMenuItem.Name" xml:space="preserve">
-    <value>uploadToolStripMenuItem</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 6</value>
-  </data>
-  <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 21</value>
-  </data>
-  <data name="TSMainPanel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save Polygon</value>
-  </data>
-  <data name="&gt;&gt;LabelLongitude.Name" xml:space="preserve">
-    <value>LabelLongitude</value>
-  </data>
-  <data name="BtnDroneMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>692, 0</value>
-  </data>
-  <data name="TxtAltitudeValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>550, 10</value>
-  </data>
-  <data name="BtnAltitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 48</value>
-  </data>
-  <data name="BtnReadWPs.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="loadPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Load Polygon</value>
-  </data>
-  <data name="TSBtnConfigure.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="BtnAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="BtnReadWPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 297</value>
-  </data>
-  <data name="BtnDroneMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 48</value>
-  </data>
-  <data name="LabelLongitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;LblMode.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="IconModeWarning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="TSMainPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>162, 83</value>
-  </data>
-  <data name="DroneInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="BtnHome.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="BtnMapFocus.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="TSBtnConfigure.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnBreakAction.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
   <data name="&gt;&gt;Map.Parent" xml:space="preserve">
     <value>SplitContainer.Panel1</value>
   </data>
-  <data name="BtnAuto.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="DroneInfoPanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="&gt;&gt;BtnAuto.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;colParam1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Draw Polygon</value>
-  </data>
-  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 125</value>
-  </data>
-  <data name="BtnWriteWPs.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;Map.ZOrder" xml:space="preserve">
+    <value>19</value>
   </data>
   <data name="&gt;&gt;SplitContainer.Panel1.Name" xml:space="preserve">
     <value>SplitContainer.Panel1</value>
   </data>
-  <data name="&gt;&gt;ComBoxModeSwitch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TSMainPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;ComBoxModeSwitch.Name" xml:space="preserve">
-    <value>ComBoxModeSwitch</value>
-  </data>
-  <data name="BtnAuto.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="LblMode.Text" xml:space="preserve">
-    <value>N/A</value>
-  </data>
-  <data name="IconGPSLostWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="&gt;&gt;cmMap.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnMapFocus.ToolTip" xml:space="preserve">
-    <value>Toggle map focus lock on drone.
-(Right click unlocks and center on groundstation.)</value>
-  </data>
-  <data name="&gt;&gt;BtnArm.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="LblMode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 14.249999pt</value>
-  </data>
-  <data name="TSBtnConnect.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9.75pt</value>
-  </data>
-  <data name="&gt;&gt;miClearMission.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="IconGPSLostWarning.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;BtnLand.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="SplitContainer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="TxtHomeLatitude.TabIndex" type="System.Int32, mscorlib">
-    <value>31</value>
-  </data>
-  <data name="&gt;&gt;LblModeDesc.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="colDelete.ToolTipText" xml:space="preserve">
-    <value>Delete the row</value>
-  </data>
-  <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;areaToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Map.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;BtnHome.Name" xml:space="preserve">
-    <value>BtnHome</value>
-  </data>
-  <data name="ComBoxModeSwitch.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;colDelete.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewButtonColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Name" xml:space="preserve">
-    <value>addPolygonPointToolStripMenuItem</value>
-  </data>
-  <data name="RotationInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>936, 494</value>
-  </data>
-  <data name="BtnRTL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 383</value>
-  </data>
-  <data name="&gt;&gt;BtnZoomOut.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="TxtHomeLongitude.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="colLongitude.Width" type="System.Int32, mscorlib">
-    <value>81</value>
-  </data>
-  <data name="&gt;&gt;RotationInfoPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LblMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>81, 466</value>
-  </data>
-  <data name="&gt;&gt;BtnReadWPs.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;BtnReadWPs.Name" xml:space="preserve">
-    <value>BtnReadWPs</value>
+  <data name="&gt;&gt;SplitContainer.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SplitContainer.Panel1.Parent" xml:space="preserve">
     <value>SplitContainer</value>
   </data>
-  <data name="&gt;&gt;LabelAltitude.Name" xml:space="preserve">
-    <value>LabelAltitude</value>
-  </data>
-  <data name="TxtHomeLatitude.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 120</value>
-  </data>
-  <data name="IconGPSLostWarning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Clear Polygon</value>
-  </data>
-  <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="&gt;&gt;miSetHomeHere.Name" xml:space="preserve">
-    <value>miSetHomeHere</value>
-  </data>
-  <data name="&gt;&gt;LabelLatitude.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnDroneMode.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="uploadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 22</value>
-  </data>
-  <data name="savePolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="&gt;&gt;ActiveDroneInfoPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LabelLongitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>164, 8</value>
-  </data>
-  <data name="LblModeDesc.Text" xml:space="preserve">
-    <value>Mode:</value>
-  </data>
-  <data name="BtnAuto.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 211</value>
-  </data>
-  <data name="IconGPSLostWarning.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnZoomIn.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnHome.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 48</value>
-  </data>
-  <data name="&gt;&gt;colParam3.Name" xml:space="preserve">
-    <value>colParam3</value>
-  </data>
-  <data name="LabelAltitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>290, 8</value>
-  </data>
-  <data name="&gt;&gt;cmMap.Name" xml:space="preserve">
-    <value>cmMap</value>
-  </data>
-  <data name="&gt;&gt;LblModeDesc.Name" xml:space="preserve">
-    <value>LblModeDesc</value>
-  </data>
-  <data name="BtnLand.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="DGVWayPoints.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 51</value>
-  </data>
-  <data name="BtnMapFocus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;LabelLatitude.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="TSMainPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnRTL.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;BtnRTL.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;miClearAllMissions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DGVWayPoints.Name" xml:space="preserve">
-    <value>DGVWayPoints</value>
-  </data>
-  <data name="&gt;&gt;IconModeWarning.Name" xml:space="preserve">
-    <value>IconModeWarning</value>
-  </data>
-  <data name="&gt;&gt;BtnWriteWPs.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="SplitContainer.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;DGVWayPoints.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;noFlyZoneToolStripMenuItem.Name" xml:space="preserve">
-    <value>noFlyZoneToolStripMenuItem</value>
-  </data>
-  <data name="BtnWriteWPs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="BtnTakeOff.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
   <data name="&gt;&gt;SplitContainer.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;BtnHome.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="SplitContainer.Panel1MinSize" type="System.Int32, mscorlib">
+    <value>240</value>
   </data>
-  <data name="&gt;&gt;BtnArm.Name" xml:space="preserve">
-    <value>BtnArm</value>
+  <data name="DGVWayPoints.ColumnHeadersHeight" type="System.Int32, mscorlib">
+    <value>30</value>
   </data>
-  <data name="BtnRTL.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnBreakAction.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 410</value>
-  </data>
-  <data name="BtnAuto.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LabelLatitude.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="BtnHome.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="areaToolStripMenuItem.Text" xml:space="preserve">
-    <value>Area</value>
-  </data>
-  <data name="SplitContainer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;colParam2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;loadPolygonToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConnect.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="Map.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="TxtAltitudeValue.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="BtnArm.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;BtnZoomOut.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="LabelAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="&gt;&gt;BtnZoomOut.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="miClearAllMissions.Text" xml:space="preserve">
-    <value>Clear All Missions</value>
-  </data>
-  <data name="&gt;&gt;TSMainPanel.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="TSBtnConfigure.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="colLongitude.HeaderText" xml:space="preserve">
-    <value>Longitude</value>
-  </data>
-  <data name="LblModeDesc.AutoSize" type="System.Boolean, mscorlib">
+  <metadata name="colCommand.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <data name="colCommand.HeaderText" xml:space="preserve">
+    <value>Command</value>
   </data>
-  <data name="miSetHomeHere.Text" xml:space="preserve">
-    <value>Set Home Here</value>
+  <data name="colCommand.MinimumWidth" type="System.Int32, mscorlib">
+    <value>60</value>
   </data>
-  <data name="&gt;&gt;miSetHomeHere.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="colCommand.ToolTipText" xml:space="preserve">
+    <value>APM Command</value>
   </data>
-  <data name="ComBoxModeSwitch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>824, 8</value>
+  <data name="colCommand.Width" type="System.Int32, mscorlib">
+    <value>82</value>
   </data>
-  <data name="&gt;&gt;TxtHomeLatitude.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
+  <metadata name="colParam1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colParam1.HeaderText" xml:space="preserve">
+    <value>Param1</value>
   </data>
-  <data name="BtnBreakAction.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="TxtHomeLatitude.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;TSMainPanel.Name" xml:space="preserve">
-    <value>TSMainPanel</value>
-  </data>
-  <data name="TSBtnConnect.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="&gt;&gt;BtnRTL.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="Map.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="colParam1.MinimumWidth" type="System.Int32, mscorlib">
+    <value>50</value>
   </data>
   <data name="colParam1.Width" type="System.Int32, mscorlib">
     <value>62</value>
   </data>
-  <data name="LabelLongitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 36</value>
+  <metadata name="colParam2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colParam2.HeaderText" xml:space="preserve">
+    <value>Param2</value>
   </data>
-  <data name="TSBtnConnect.Text" xml:space="preserve">
-    <value>Connect</value>
+  <data name="colParam2.Width" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <metadata name="colParam3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colParam3.HeaderText" xml:space="preserve">
+    <value>Param3</value>
+  </data>
+  <data name="colParam3.Width" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <metadata name="colParam4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colParam4.HeaderText" xml:space="preserve">
+    <value>Param4</value>
+  </data>
+  <data name="colParam4.Width" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <metadata name="colLatitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colLatitude.HeaderText" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="colLatitude.MinimumWidth" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colLatitude.Width" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <metadata name="colLongitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colLongitude.HeaderText" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="colLongitude.Width" type="System.Int32, mscorlib">
+    <value>81</value>
+  </data>
+  <metadata name="colAltitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colAltitude.HeaderText" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="colAltitude.Width" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <metadata name="colAngle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colAngle.HeaderText" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="colAngle.MinimumWidth" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="colAngle.Width" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colDelete.HeaderText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="colDelete.MinimumWidth" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="colDelete.ToolTipText" xml:space="preserve">
+    <value>Delete the row</value>
+  </data>
+  <data name="colDelete.Width" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <metadata name="colTagData.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colTagData.HeaderText" xml:space="preserve">
+    <value>TagData</value>
+  </data>
+  <data name="colTagData.MinimumWidth" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="colTagData.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="colTagData.Width" type="System.Int32, mscorlib">
+    <value>71</value>
+  </data>
+  <data name="DGVWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="DGVWayPoints.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 51</value>
+  </data>
+  <data name="DGVWayPoints.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="DGVWayPoints.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="DGVWayPoints.Size" type="System.Drawing.Size, System.Drawing">
+    <value>948, 101</value>
+  </data>
+  <data name="DGVWayPoints.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;DGVWayPoints.Name" xml:space="preserve">
+    <value>DGVWayPoints</value>
+  </data>
+  <data name="&gt;&gt;DGVWayPoints.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DGVWayPoints.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;DGVWayPoints.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ActiveDroneInfoPanel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ComBoxModeSwitch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="ComBoxModeSwitch.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 11.249999pt</value>
+  </data>
+  <data name="ComBoxModeSwitch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>824, 8</value>
+  </data>
+  <data name="ComBoxModeSwitch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 26</value>
+  </data>
+  <data name="ComBoxModeSwitch.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;ComBoxModeSwitch.Name" xml:space="preserve">
+    <value>ComBoxModeSwitch</value>
+  </data>
+  <data name="&gt;&gt;ComBoxModeSwitch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ComBoxModeSwitch.Parent" xml:space="preserve">
     <value>ActiveDroneInfoPanel</value>
   </data>
-  <data name="TSBtnConnect.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;ComBoxModeSwitch.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;AltitudeControlPanel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="BtnReadWPs.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="BtnDroneMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="LblModeDesc.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 14.249999pt</value>
-  </data>
-  <data name="LblModeDesc.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
-  <data name="&gt;&gt;SplitContainer.Panel2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="SplitContainer.Panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnDroneMode.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="BtnZoomOut.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
-  </data>
-  <data name="SplitContainer.Panel2MinSize" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <data name="&gt;&gt;BtnWriteWPs.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;drawPolygonToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAltitude.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnDroneMode.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="&gt;&gt;saveToFileToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="DroneInfoPanel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="BtnReadWPs.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="TxtHomeLongitude.Font" type="System.Drawing.Font, System.Drawing">
     <value>Georgia, 9pt</value>
   </data>
-  <data name="&gt;&gt;BtnLand.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="TxtHomeLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 10</value>
   </data>
-  <data name="BtnHome.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+  <data name="TxtHomeLongitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 21</value>
   </data>
-  <data name="&gt;&gt;LabelAltitude.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="TxtHomeLongitude.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
   </data>
-  <data name="LabelAltitude.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="&gt;&gt;TxtHomeLongitude.Name" xml:space="preserve">
+    <value>TxtHomeLongitude</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLongitude.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLongitude.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TxtHomeLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="TxtHomeLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 10</value>
+  </data>
+  <data name="TxtHomeLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 21</value>
+  </data>
+  <data name="TxtHomeLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="TxtHomeLatitude.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLatitude.Name" xml:space="preserve">
+    <value>TxtHomeLatitude</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLatitude.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeLatitude.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TxtHomeAltitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="TxtHomeAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 10</value>
+  </data>
+  <data name="TxtHomeAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 21</value>
+  </data>
+  <data name="TxtHomeAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="TxtHomeAltitude.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeAltitude.Name" xml:space="preserve">
+    <value>TxtHomeAltitude</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeAltitude.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;TxtHomeAltitude.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LabelLongitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelLongitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LabelLongitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 8</value>
+  </data>
+  <data name="LabelLongitude.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 36</value>
   </data>
-  <data name="BtnHome.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
+  <data name="LabelLongitude.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
   </data>
-  <data name="colParam3.HeaderText" xml:space="preserve">
-    <value>Param3</value>
+  <data name="LabelLongitude.Text" xml:space="preserve">
+    <value>Lng:</value>
   </data>
-  <data name="AltitudeControlPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>40, 120</value>
+  <data name="LabelLongitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;BtnAuto.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
+  <data name="&gt;&gt;LabelLongitude.Name" xml:space="preserve">
+    <value>LabelLongitude</value>
   </data>
-  <data name="&gt;&gt;setReturnLocationToolStripMenuItem.Name" xml:space="preserve">
-    <value>setReturnLocationToolStripMenuItem</value>
+  <data name="&gt;&gt;LabelLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelLongitude.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelLongitude.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LabelLatitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="LabelLatitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LabelLatitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>42, 8</value>
+  </data>
+  <data name="LabelLatitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 36</value>
+  </data>
+  <data name="LabelLatitude.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
   </data>
   <data name="LabelLatitude.Text" xml:space="preserve">
     <value>Lat:</value>
@@ -1481,382 +1316,463 @@
   <data name="LabelLatitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="BtnAltitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt, style=Bold</value>
+  <data name="&gt;&gt;LabelLatitude.Name" xml:space="preserve">
+    <value>LabelLatitude</value>
   </data>
-  <data name="&gt;&gt;TxtHomeLongitude.Name" xml:space="preserve">
-    <value>TxtHomeLongitude</value>
-  </data>
-  <data name="DGVWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;IconModeWarning.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="colDelete.Width" type="System.Int32, mscorlib">
-    <value>56</value>
-  </data>
-  <data name="RotationInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="setReturnLocationToolStripMenuItem.Text" xml:space="preserve">
-    <value>Set Return Location</value>
-  </data>
-  <data name="BtnWriteWPs.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageAboveText</value>
-  </data>
-  <data name="AltitudeControlPanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9pt</value>
-  </data>
-  <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="&gt;&gt;BtnZoomIn.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;colParam4.Name" xml:space="preserve">
-    <value>colParam4</value>
-  </data>
-  <data name="IconGPSLostWarning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 83</value>
-  </data>
-  <data name="&gt;&gt;colParam4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BtnBreakAction.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
-  </data>
-  <data name="colCommand.ToolTipText" xml:space="preserve">
-    <value>APM Command</value>
-  </data>
-  <data name="LblMode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TSBtnConnect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="IconGPSLostWarning.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="SplitContainer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;DGVWayPoints.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel2</value>
-  </data>
-  <data name="BtnAltitude.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-    <value>ImageBeforeText</value>
-  </data>
-  <data name="&gt;&gt;BtnBreakAction.Name" xml:space="preserve">
-    <value>BtnBreakAction</value>
-  </data>
-  <data name="BtnZoomOut.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="BtnHome.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
-    <value>No-Fly Zone</value>
-  </data>
-  <data name="LabelLatitude.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="colCommand.Width" type="System.Int32, mscorlib">
-    <value>82</value>
-  </data>
-  <data name="LabelAltitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="Map.Size" type="System.Drawing.Size, System.Drawing">
-    <value>948, 506</value>
-  </data>
-  <data name="BtnMapFocus.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="&gt;&gt;TxtAltitudeValue.Parent" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="TSMainPanel.Text" xml:space="preserve">
-    <value>toolStrip2</value>
-  </data>
-  <data name="DGVWayPoints.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="IconModeWarning.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnWriteWPs.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="TxtHomeLongitude.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="SplitContainer.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
-    <value>Horizontal</value>
-  </data>
-  <data name="BtnDroneMode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt, style=Bold</value>
-  </data>
-  <data name="TSBtnConfigure.Text" xml:space="preserve">
-    <value>Configure</value>
-  </data>
-  <data name="&gt;&gt;BtnWriteWPs.Name" xml:space="preserve">
-    <value>BtnWriteWPs</value>
-  </data>
-  <data name="BtnReadWPs.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;miClearAllMissions.Name" xml:space="preserve">
-    <value>miClearAllMissions</value>
-  </data>
-  <data name="&gt;&gt;AltitudeControlPanel.Type" xml:space="preserve">
-    <value>Diva.Controls.AltitudeControlPanel, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="IconModeWarning.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="&gt;&gt;LabelAltitude.Type" xml:space="preserve">
+  <data name="&gt;&gt;LabelLatitude.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>948, 662</value>
-  </data>
-  <data name="BtnHome.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmMap.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TSMainPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="ActiveDroneInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;TxtAltitudeValue.Name" xml:space="preserve">
-    <value>TxtAltitudeValue</value>
-  </data>
-  <data name="BtnReadWPs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 80</value>
-  </data>
-  <data name="&gt;&gt;colTagData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;IconGPSLostWarning.Name" xml:space="preserve">
-    <value>IconGPSLostWarning</value>
-  </data>
-  <data name="BtnZoomIn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 318</value>
-  </data>
-  <data name="&gt;&gt;TxtHomeAltitude.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;ActiveDroneInfoPanel.Name" xml:space="preserve">
-    <value>ActiveDroneInfoPanel</value>
-  </data>
-  <data name="&gt;&gt;BtnTakeOff.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="addPolygonPointToolStripMenuItem.Text" xml:space="preserve">
-    <value>Add Polygon Point</value>
-  </data>
-  <data name="ActiveDroneInfoPanel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AltitudeControlPanel.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="BtnAltitude.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;BtnBreakAction.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LblModeDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 24</value>
-  </data>
-  <data name="colAltitude.HeaderText" xml:space="preserve">
-    <value>Altitude</value>
-  </data>
-  <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
-    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ActiveDroneInfoPanel.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel2</value>
-  </data>
-  <data name="&gt;&gt;clearPolygonToolStripMenuItem.Name" xml:space="preserve">
-    <value>clearPolygonToolStripMenuItem</value>
-  </data>
-  <data name="LabelLatitude.Location" type="System.Drawing.Point, System.Drawing">
-    <value>42, 8</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>Planner</value>
-  </data>
-  <data name="TSMainPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="IconModeWarning.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Popup</value>
-  </data>
-  <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RotationInfoPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnZoomOut.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Georgia, 9pt</value>
-  </data>
-  <data name="ActiveDroneInfoPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="&gt;&gt;loadFromFileToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnRTL.Name" xml:space="preserve">
-    <value>BtnRTL</value>
-  </data>
-  <data name="BtnArm.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;ActiveDroneInfoPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LabelAltitude.Text" xml:space="preserve">
-    <value>Alt:</value>
   </data>
   <data name="&gt;&gt;LabelLatitude.Parent" xml:space="preserve">
     <value>ActiveDroneInfoPanel</value>
   </data>
-  <data name="&gt;&gt;AltitudeControlPanel.Name" xml:space="preserve">
-    <value>AltitudeControlPanel</value>
+  <data name="&gt;&gt;LabelLatitude.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
-  <data name="IconGPSLostWarning.Text" xml:space="preserve">
-    <value>Waiting for positioning</value>
+  <data name="LabelAltitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
   </data>
-  <data name="BtnRTL.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="LabelAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="colTagData.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="LabelAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 8</value>
   </data>
-  <data name="colDelete.HeaderText" xml:space="preserve">
-    <value>Delete</value>
+  <data name="LabelAltitude.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
   </data>
-  <data name="BtnDroneMode.Text" xml:space="preserve">
-    <value>Drone Mode</value>
+  <data name="LabelAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 36</value>
   </data>
-  <data name="&gt;&gt;TTButtonDescription.Name" xml:space="preserve">
-    <value>TTButtonDescription</value>
+  <data name="LabelAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
   </data>
-  <data name="&gt;&gt;BtnLand.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
+  <data name="LabelAltitude.Text" xml:space="preserve">
+    <value>Alt:</value>
   </data>
-  <data name="&gt;&gt;BtnZoomIn.ZOrder" xml:space="preserve">
+  <data name="LabelAltitude.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;LabelAltitude.Name" xml:space="preserve">
+    <value>LabelAltitude</value>
+  </data>
+  <data name="&gt;&gt;LabelAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LabelAltitude.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;LabelAltitude.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="BtnZoomOut.ToolTip" xml:space="preserve">
-    <value>Zoom Out</value>
+  <data name="BtnDroneMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
-  <data name="&gt;&gt;BtnAuto.Name" xml:space="preserve">
-    <value>BtnAuto</value>
+  <data name="BtnDroneMode.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
-  <data name="&gt;&gt;uploadToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="BtnDroneMode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt, style=Bold</value>
   </data>
-  <data name="colTagData.MinimumWidth" type="System.Int32, mscorlib">
-    <value>50</value>
+  <data name="BtnDroneMode.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;loadFromFileToolStripMenuItem.Name" xml:space="preserve">
-    <value>loadFromFileToolStripMenuItem</value>
+  <data name="BtnDroneMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="BtnArm.ToolTip" xml:space="preserve">
-    <value />
+  <data name="BtnDroneMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>692, 0</value>
   </data>
-  <data name="&gt;&gt;BtnZoomIn.Name" xml:space="preserve">
-    <value>BtnZoomIn</value>
-  </data>
-  <data name="SplitContainer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TxtHomeLatitude.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 21</value>
-  </data>
-  <data name="&gt;&gt;IconGPSLostWarning.Parent" xml:space="preserve">
-    <value>SplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;IconGPSLostWarning.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="colAltitude.Width" type="System.Int32, mscorlib">
-    <value>66</value>
-  </data>
-  <data name="AltitudeControlPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="SplitContainer.Panel1MinSize" type="System.Int32, mscorlib">
-    <value>240</value>
+  <data name="BtnDroneMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 48</value>
   </data>
   <data name="BtnDroneMode.TabIndex" type="System.Int32, mscorlib">
     <value>35</value>
   </data>
-  <metadata name="colParam4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="BtnDroneMode.Text" xml:space="preserve">
+    <value>Drone Mode</value>
+  </data>
+  <data name="BtnDroneMode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;BtnDroneMode.Name" xml:space="preserve">
+    <value>BtnDroneMode</value>
+  </data>
+  <data name="&gt;&gt;BtnDroneMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnDroneMode.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;BtnDroneMode.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="BtnAltitude.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnAltitude.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt, style=Bold</value>
+  </data>
+  <data name="BtnAltitude.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnAltitude.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnAltitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>420, 0</value>
+  </data>
+  <data name="BtnAltitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 48</value>
+  </data>
+  <data name="BtnAltitude.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="BtnAltitude.Text" xml:space="preserve">
+    <value>Default WP Altitude</value>
+  </data>
+  <data name="BtnAltitude.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+    <value>ImageBeforeText</value>
+  </data>
+  <data name="&gt;&gt;BtnAltitude.Name" xml:space="preserve">
+    <value>BtnAltitude</value>
+  </data>
+  <data name="&gt;&gt;BtnAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnAltitude.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;BtnAltitude.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="BtnHome.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <metadata name="colParam1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="TTButtonDescription.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>240, 17</value>
-  </metadata>
-  <metadata name="colLatitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colCommand.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colParam2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colLongitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  </data>
+  <data name="BtnHome.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BtnHome.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt, style=Bold</value>
+  </data>
+  <data name="BtnHome.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="BtnHome.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BtnHome.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="BtnHome.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 48</value>
+  </data>
+  <data name="BtnHome.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="BtnHome.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;BtnHome.Name" xml:space="preserve">
+    <value>BtnHome</value>
+  </data>
+  <data name="&gt;&gt;BtnHome.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnHome.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;BtnHome.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="TxtAltitudeValue.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Georgia, 9pt</value>
+  </data>
+  <data name="TxtAltitudeValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>550, 10</value>
+  </data>
+  <data name="TxtAltitudeValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 21</value>
+  </data>
+  <data name="TxtAltitudeValue.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="TxtAltitudeValue.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;TxtAltitudeValue.Name" xml:space="preserve">
+    <value>TxtAltitudeValue</value>
+  </data>
+  <data name="&gt;&gt;TxtAltitudeValue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TxtAltitudeValue.Parent" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;TxtAltitudeValue.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="ActiveDroneInfoPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="ActiveDroneInfoPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="ActiveDroneInfoPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>948, 51</value>
+  </data>
+  <data name="ActiveDroneInfoPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;ActiveDroneInfoPanel.Name" xml:space="preserve">
+    <value>ActiveDroneInfoPanel</value>
+  </data>
+  <data name="&gt;&gt;ActiveDroneInfoPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ActiveDroneInfoPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;ActiveDroneInfoPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Panel2.Name" xml:space="preserve">
+    <value>SplitContainer.Panel2</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Panel2.Parent" xml:space="preserve">
+    <value>SplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SplitContainer.Panel2MinSize" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="SplitContainer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>948, 662</value>
+  </data>
+  <data name="SplitContainer.SplitterDistance" type="System.Int32, mscorlib">
+    <value>506</value>
+  </data>
+  <data name="SplitContainer.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Name" xml:space="preserve">
+    <value>SplitContainer</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;SplitContainer.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>77</value>
   </metadata>
-  <metadata name="colAltitude.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colParam3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cmMap.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="colTagData.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="TSMainPanel.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>113, 17</value>
-  </metadata>
-  <metadata name="colAngle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>948, 662</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>962, 644</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Diva Groundstation</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConnect.Name" xml:space="preserve">
+    <value>TSBtnConnect</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConnect.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConfigure.Name" xml:space="preserve">
+    <value>TSBtnConfigure</value>
+  </data>
+  <data name="&gt;&gt;TSBtnConfigure.Type" xml:space="preserve">
+    <value>Diva.Controls.Components.MyTSButton, Diva, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;drawPolygonToolStripMenuItem.Name" xml:space="preserve">
+    <value>drawPolygonToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;drawPolygonToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Name" xml:space="preserve">
+    <value>addPolygonPointToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;clearPolygonToolStripMenuItem.Name" xml:space="preserve">
+    <value>clearPolygonToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;clearPolygonToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;savePolygonToolStripMenuItem.Name" xml:space="preserve">
+    <value>savePolygonToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;savePolygonToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loadPolygonToolStripMenuItem.Name" xml:space="preserve">
+    <value>loadPolygonToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;loadPolygonToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;areaToolStripMenuItem.Name" xml:space="preserve">
+    <value>areaToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;areaToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;noFlyZoneToolStripMenuItem.Name" xml:space="preserve">
+    <value>noFlyZoneToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;noFlyZoneToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;uploadToolStripMenuItem.Name" xml:space="preserve">
+    <value>uploadToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;uploadToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;setReturnLocationToolStripMenuItem.Name" xml:space="preserve">
+    <value>setReturnLocationToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;setReturnLocationToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loadFromFileToolStripMenuItem.Name" xml:space="preserve">
+    <value>loadFromFileToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;loadFromFileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;saveToFileToolStripMenuItem.Name" xml:space="preserve">
+    <value>saveToFileToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;saveToFileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;clearToolStripMenuItem.Name" xml:space="preserve">
+    <value>clearToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;clearToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;miClearMission.Name" xml:space="preserve">
+    <value>miClearMission</value>
+  </data>
+  <data name="&gt;&gt;miClearMission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;miSetHomeHere.Name" xml:space="preserve">
+    <value>miSetHomeHere</value>
+  </data>
+  <data name="&gt;&gt;miSetHomeHere.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;miClearAllMissions.Name" xml:space="preserve">
+    <value>miClearAllMissions</value>
+  </data>
+  <data name="&gt;&gt;miClearAllMissions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colCommand.Name" xml:space="preserve">
+    <value>colCommand</value>
+  </data>
+  <data name="&gt;&gt;colCommand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colParam1.Name" xml:space="preserve">
+    <value>colParam1</value>
+  </data>
+  <data name="&gt;&gt;colParam1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colParam2.Name" xml:space="preserve">
+    <value>colParam2</value>
+  </data>
+  <data name="&gt;&gt;colParam2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colParam3.Name" xml:space="preserve">
+    <value>colParam3</value>
+  </data>
+  <data name="&gt;&gt;colParam3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colParam4.Name" xml:space="preserve">
+    <value>colParam4</value>
+  </data>
+  <data name="&gt;&gt;colParam4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colLatitude.Name" xml:space="preserve">
+    <value>colLatitude</value>
+  </data>
+  <data name="&gt;&gt;colLatitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colLongitude.Name" xml:space="preserve">
+    <value>colLongitude</value>
+  </data>
+  <data name="&gt;&gt;colLongitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colAltitude.Name" xml:space="preserve">
+    <value>colAltitude</value>
+  </data>
+  <data name="&gt;&gt;colAltitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colAngle.Name" xml:space="preserve">
+    <value>colAngle</value>
+  </data>
+  <data name="&gt;&gt;colAngle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colDelete.Name" xml:space="preserve">
+    <value>colDelete</value>
+  </data>
+  <data name="&gt;&gt;colDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewButtonColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colTagData.Name" xml:space="preserve">
+    <value>colTagData</value>
+  </data>
+  <data name="&gt;&gt;colTagData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TTButtonDescription.Name" xml:space="preserve">
+    <value>TTButtonDescription</value>
+  </data>
+  <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>Planner</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
