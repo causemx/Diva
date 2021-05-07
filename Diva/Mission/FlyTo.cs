@@ -83,6 +83,16 @@ namespace Diva.Mission
             State = FlyToState.Setting;
         }
 
+        public bool UpdateStartingPosition()
+        {
+            if (!TrackMode && State == FlyToState.Setting)
+            {
+                marker.From = Drone.Status.Location;
+                return true;
+            }
+            return false;
+        }
+
         public bool SetDestination(PointLatLng dest)
         {
             if (!TrackMode && State == FlyToState.Setting)
@@ -130,42 +140,25 @@ namespace Diva.Mission
         }
 
         private float GetWPAltitude(float prefAlt = 0)
+            => AltitudeControl.GetWPAltitude(Drone, prefAlt);
+
+        private bool FlyToWithAltitude(float alt, bool setMode = true)
         {
-            int mode = ConfigData.GetIntOption("GuidedWPAltMode");
-            string alttext = ConfigData.GetOption("GuidedWPAltitude");
-            float alt = prefAlt == 0 ? AltitudeControl.TargetAltitudes[Drone] : prefAlt;
-            if (!float.TryParse(alttext, out float defAlt))
-                defAlt = prefAlt == 0 ? 50 : prefAlt;
-
-            if (prefAlt != 0)
-                return mode == 2 && prefAlt < defAlt ? defAlt : prefAlt;
-
-            switch (mode)
+            float currentAlt = AltitudeControl.TargetAltitudes[Drone];
+            bool done = Drone.SetGuidedModeWP(new WayPoint
             {
-                case 3:
-                    InputDataDialog dlg = new InputDataDialog()
-                    {
-                        Text = Properties.Strings.GuidedWPAltitude,
-                        Hint = Properties.Strings.MsgInputDialogHeightHint,
-                        Unit = "m",
-                        Value = alt.ToString(),
-                        Required = true
-                    };
-                    dlg.DoClick += (o, e) => float.TryParse(dlg.Value, out alt);
-                    dlg.ShowDialog();
-                    break;
-                case 2:
-                    alt = defAlt;
-                    break;
-                case 1:
-                    if (alt < defAlt)
-                        alt = defAlt;
-                    break;
-                default:
-                    alt = AltitudeControl.TargetAltitudes[Drone];
-                    break;
-            }
-            return alt;
+                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
+                Altitude = alt,
+                Latitude = To.Lat,
+                Longitude = To.Lng,
+                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
+            }, setMode);
+
+            int mode = ConfigData.GetIntOption("GuidedWPAltMode");
+            if (done && mode != 0 && (mode != 1 || Math.Abs(alt - currentAlt) > 0.05f))
+                AltitudeControl.UpdateDroneTargetAltitude(Drone, alt);
+
+            return done;
         }
 
         public bool Start()
@@ -175,14 +168,7 @@ namespace Diva.Mission
                 || (Drone.Status.State != MAVLink.MAV_STATE.ACTIVE
                     && Drone.Status.Firmware == Firmwares.ArduCopter2))
                 return false;
-            if (!Drone.SetGuidedModeWP(new WayPoint
-            {
-                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = GetWPAltitude(),
-                Latitude = To.Lat,
-                Longitude = To.Lng,
-                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
-            }))
+            if (!FlyToWithAltitude(GetWPAltitude()))
             {
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
                 MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
@@ -199,14 +185,7 @@ namespace Diva.Mission
         {
             if (State != FlyToState.Flying || TrackMode || !Drone.IsMode("GUIDED"))
                 return false;
-            return Drone.SetGuidedModeWP(new WayPoint
-            {
-                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = GetWPAltitude(AltitudeControl.GetActualTarget(Drone)),
-                Latitude = To.Lat,
-                Longitude = To.Lng,
-                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
-            }, false);
+            return FlyToWithAltitude(GetWPAltitude(AltitudeControl.GetActualTarget(Drone)), false);
         }
 
         public MavDrone TrackTarget { get; private set; }
@@ -237,14 +216,7 @@ namespace Diva.Mission
             TrackBearing = bearing;
             trackUpdateTime = DateTime.Now.AddMilliseconds(TrackUpdatePeriodMS);
             marker.To = TrackLocation;
-            if (!Drone.SetGuidedModeWP(new WayPoint
-            {
-                Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                Altitude = GetWPAltitude(),
-                Latitude = To.Lat,
-                Longitude = To.Lng,
-                Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
-            }))
+            if (!FlyToWithAltitude(GetWPAltitude()))
             {
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
                 MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
@@ -263,7 +235,7 @@ namespace Diva.Mission
                 Drone.SetGuidedModeWP(new WayPoint
                 {
                     Id = (ushort)MAVLink.MAV_CMD.WAYPOINT,
-                    Altitude = GetWPAltitude(AltitudeControl.TargetAltitudes[Drone]),
+                    Altitude = GetWPAltitude(Drone.Status.Altitude),
                     Latitude = Drone.Status.Latitude,
                     Longitude = Drone.Status.Longitude,
                     Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT

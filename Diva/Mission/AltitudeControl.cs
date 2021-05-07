@@ -157,5 +157,52 @@ namespace Diva.Mission
         {
             Drone = drone;
         }
+
+        private static float lastInputAlt = 0;
+        public static float GetWPAltitude(MavDrone drone, float prefAlt = 0)
+        {
+            int mode = ConfigData.GetIntOption("GuidedWPAltMode");
+            string alttext = ConfigData.GetOption("GuidedWPAltitude");
+            float alt = prefAlt == 0 ? TargetAltitudes[drone] : prefAlt;
+            if (!float.TryParse(alttext, out float defAlt))
+                defAlt = prefAlt == 0 ? 50 : prefAlt;
+
+            if (lastInputAlt == 0)
+                lastInputAlt = defAlt;
+
+            if (prefAlt != 0)
+                return mode == 2 && prefAlt < defAlt ? defAlt : prefAlt;
+
+            switch (mode)
+            {
+                case 3:
+                    var dlg = new Controls.InputDataDialog()
+                    {
+                        Text = Properties.Strings.GuidedWPAltitude,
+                        Hint = Properties.Strings.MsgInputDialogHeightHint,
+                        Unit = "m",
+                        Value = (prefAlt == 0 ? lastInputAlt : defAlt).ToString("0.##"),
+                        Required = true
+                    };
+                    dlg.DoClick += (o, e) =>
+                    {
+                        if (float.TryParse(dlg.Value, out alt))
+                            lastInputAlt = alt;
+                    };
+                    dlg.ShowDialog();
+                    break;
+                case 2:
+                    alt = defAlt;
+                    break;
+                case 1:
+                    if (alt < defAlt)
+                        alt = defAlt;
+                    break;
+                default:
+                    alt = TargetAltitudes[drone];
+                    break;
+            }
+            return alt;
+        }
     }
 }

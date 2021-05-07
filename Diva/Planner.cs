@@ -3189,7 +3189,8 @@ namespace Diva
                     ActiveDrone.SetGuidedModeWP(new WayPoint
                     {
                         Id = (ushort)MAV_CMD.WAYPOINT,
-                        Altitude = AltitudeControl.TargetAltitudes[ActiveDrone],
+                        Altitude = AltitudeControl.GetWPAltitude(ActiveDrone,
+                                    ActiveDrone.Status.Altitude),
                         Latitude = ActiveDrone.Status.Latitude,
                         Longitude = ActiveDrone.Status.Longitude,
                         Frame = MAV_FRAME.GLOBAL_RELATIVE_ALT
