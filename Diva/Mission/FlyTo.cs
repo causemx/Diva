@@ -62,42 +62,50 @@ namespace Diva.Mission
         public FlyToState State { get; private set; }
         public bool ShowReachedMessage { get; set; } = true;
         public bool TrackMode { get; private set; }
+        public bool ValidTarget => State == FlyToState.Setting && marker.BeyondLoiterRadius;
 
         public event EventHandler DestinationReached;
 
-        public bool Reached => (State == FlyToState.Reached) ||
-            (Drone.Status.Location.DistanceTo(To) < DistanceTolerance);
+        public bool Reached
+        {
+            get
+            {
+                if (State == FlyToState.Reached ||
+                    Drone.Status.Location.DistanceTo(To) < DistanceTolerance)
+                    return true;
+                if (marker.BeyondLoiterRadius)
+                    loiterStart = DateTime.Now;
+                return DateTime.Now - loiterStart > TimeTolerance;
+            }
+        }
 
         private bool DisableNotify;
         private DestinationMarker marker;
         private uint previousMode;
         private DateTime modeChangeDue;
+        private DateTime loiterStart;
 
         public FlyTo(MavDrone drone, bool isTracker = false)
         {
             Drone = drone;
+            int radius = (int?)drone.Status.Params["WP_LOITER_RAD"]?.GetValue() ?? 0;
             marker = new DestinationMarker(Drone.Status.Location, isTracker)
             {
-                LoiterRadius = (int?)drone.Status.Params["WP_LOITER_RAD"]?.GetValue() ?? 0
+                LoiterRadius = radius,
+                CloseAreaAlert = radius > 0
             };
             State = FlyToState.Setting;
-        }
-
-        public bool UpdateStartingPosition()
-        {
-            if (!TrackMode && State == FlyToState.Setting)
-            {
-                marker.From = Drone.Status.Location;
-                return true;
-            }
-            return false;
         }
 
         public bool SetDestination(PointLatLng dest)
         {
             if (!TrackMode && State == FlyToState.Setting)
             {
+                marker.From = Drone.Status.Location;
                 marker.To = dest;
+                marker.LoiterCirclePen = marker.BeyondLoiterRadius
+                    ? DestinationMarker.NormalLoiterCirclePen
+                    : DestinationMarker.AlertLoiterCircleColorPen;
                 return true;
             }
             return false;
@@ -163,6 +171,7 @@ namespace Diva.Mission
 
         public bool Start()
         {
+            marker.CloseAreaAlert = false;
             if ((State != FlyToState.Setting && State != FlyToState.Canceled)
                 || !Drone.Status.IsArmed
                 || (Drone.Status.State != MAVLink.MAV_STATE.ACTIVE
@@ -201,6 +210,11 @@ namespace Diva.Mission
 
         private bool CheckTrackUpdate()
         {
+            bool tooClose = !marker.ValidDestination(TrackTarget.Status.Location);
+            marker.LoiterCirclePen = tooClose
+                ? DestinationMarker.AlertLoiterCircleColorPen
+                : DestinationMarker.NormalLoiterCirclePen;
+            if (tooClose) return false;
             var now = DateTime.Now;
             if (now < trackUpdateTime)
                 return false;
@@ -243,18 +257,6 @@ namespace Diva.Mission
             else
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
             State = FlyToState.Canceled;
-            marker?.SetBrakeMode(true);
-            return true;
-        }
-
-        public bool Resume()
-        {
-            if (State != FlyToState.Canceled) return false;
-            Drone.SetMode("GUIDED");
-            lastPosTime = DateTime.Now;
-            lastPos = Drone.Status.Location;
-            State = FlyToState.Flying;
-            marker.SetBrakeMode(false);
             return true;
         }
 
@@ -274,6 +276,7 @@ namespace Diva.Mission
                     flying &= DateTime.Now < modeChangeDue
                         && previousMode == Drone.Status.FlightMode;
 
+                marker.From = Drone.Status.Location;
                 if (active && flying)
                 {
                     if (TrackMode)
@@ -291,19 +294,16 @@ namespace Diva.Mission
                                 Frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT
                             }, false);
                         }
-                        marker.From = Drone.Status.Location;
                         TrackUpdate?.Invoke(this, Reached);
                         return;
                     }
                     else if (!Reached)
                     {
-                        var pos = Drone.Status.Location;
                         if (lastPos != PointLatLng.Empty && State == FlyToState.Flying)
                         {
-                            if (pos.DistanceTo(lastPos) < DistanceTolerance)
+                            if (Drone.Status.Location.DistanceTo(lastPos) < DistanceTolerance)
                             {
-                                var now = DateTime.Now;
-                                if (now - lastPosTime > TimeTolerance)
+                                if (DateTime.Now - lastPosTime > TimeTolerance)
                                 {
                                     p.BackgroundTimer -= DetectDroneStatus;
                                     FloatMessage.NewMessage(
@@ -317,20 +317,17 @@ namespace Diva.Mission
                             else
                                 lastPos = PointLatLng.Empty;
                         }
-                        marker.From = pos;
                         return;
                     }
                     State = FlyToState.Reached;
                     marker.SetReached();
-                    marker.To = Drone.Status.Location;
-                    p.BackgroundTimer -= DetectDroneStatus;
+                    //marker.To = Drone.Status.Location;
                     if (ShowReachedMessage)
                         FloatMessage.NewMessage(
                             Drone.Name,
                             (int)MAVLink.MAV_SEVERITY.INFO,
                             "FlyTo destination reached.");
-                    DestinationReached?.Invoke(this, null);
-                    // do not dispose on reached
+                    // postpone copter's timer removal to have maker updated
                 }
                 else if (State != FlyToState.Reached)
                 {
@@ -342,6 +339,12 @@ namespace Diva.Mission
                             "FlyTo canceled.");
                     Dispose();
                 }
+                else if (marker.LoiterRadius == 0)
+                {
+                    p.BackgroundTimer -= DetectDroneStatus;
+                    DestinationReached?.Invoke(this, null);
+                }
+                // do not dispose on reached
             }
             catch (Exception x)
             {

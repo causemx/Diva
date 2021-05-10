@@ -353,6 +353,10 @@ namespace Diva
                     }
                     UpdateMapItems();
                     BackgroundTimer?.Invoke(this, null);
+
+                    // update drone location
+                    if (CurrentFlyTo?.State == FlyToState.Setting)
+                        CurrentFlyTo.SetDestination(CurrentFlyTo.To);
                 }
                 catch { }
             }
@@ -548,7 +552,9 @@ namespace Diva
                 {
                     if (e.Button == MouseButtons.Left)
                     {
-                        if (CurrentFlyTo?.Start() == true)
+                        if (CurrentFlyTo?.ValidTarget != true)
+                            CurrentFlyTo?.Dispose();
+                        else if (CurrentFlyTo.Start())
                         {
                             CurrentFlyTo.DestinationReached += (o, r) => BeginInvoke((MethodInvoker)(() =>
                             {
