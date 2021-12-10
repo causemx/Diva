@@ -92,7 +92,7 @@ namespace Diva.Mission
             marker = new DestinationMarker(Drone.Status.Location, isTracker)
             {
                 LoiterRadius = radius,
-                CloseAreaAlert = radius > 0
+                CloseAreaAlert = radius > 0 && !isTracker
             };
             State = FlyToState.Setting;
         }
