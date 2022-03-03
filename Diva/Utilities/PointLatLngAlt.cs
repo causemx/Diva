@@ -1,4 +1,8 @@
-﻿using GMap.NET;
+﻿using GeoAPI.CoordinateSystems;
+using GeoAPI.CoordinateSystems.Transformations;
+using GMap.NET;
+using ProjNet.CoordinateSystems;
+using ProjNet.CoordinateSystems.Transformations;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -114,5 +118,62 @@ namespace Diva.Utilities
 
 		public double GetDistance(PointLatLngAlt p2)
             => MathHelper.DistanceBetween(Lat, Lng, p2.Lat, p2.Lng);
-    }
+
+		public double[] ToUTM() => ToUTM(GetUTMZone());
+
+		public double[] ToUTM(int utmzone)
+		{
+			ICoordinateTransformation trans = TryGetTransform(utmzone, Lat);
+
+			double[] pll = { Lng, Lat };
+
+			// get leader utm coords
+			double[] utmxy = trans.MathTransform.Transform(pll);
+
+			return utmxy;
+		}
+
+		public static List<double[]> ToUTM(int utmzone, List<PointLatLngAlt> list)
+		{
+			ICoordinateTransformation trans = TryGetTransform(utmzone, list[0].Lat);
+
+			List<double[]> data = new List<double[]>();
+
+			list.ForEach(x => { data.Add((double[])x); });
+
+			return trans.MathTransform.TransformList(data).ToList();
+		}
+
+		public int GetUTMZone()
+		{
+			int zone = (int)((Lng - -186.0) / 6.0);
+			if (Lat < 0)
+				zone *= -1;
+
+			return zone;
+		}
+
+		static CoordinateTransformationFactory ctfac = new CoordinateTransformationFactory();
+		static IGeographicCoordinateSystem wgs84 = GeographicCoordinateSystem.WGS84;
+		private static Dictionary<int, ICoordinateTransformation> coordtrans = new Dictionary<int, ICoordinateTransformation>();
+
+		static ICoordinateTransformation TryGetTransform(int utmzone, double lat)
+		{
+			if (lat < 0 && utmzone > 0)
+				utmzone *= -1;
+
+			lock (coordtrans)
+				if (coordtrans.ContainsKey(utmzone))
+					return coordtrans[utmzone];
+
+			IProjectedCoordinateSystem utm = ProjectedCoordinateSystem.WGS84_UTM(Math.Abs(utmzone), lat < 0 ? false : true);
+			ICoordinateTransformation trans = ctfac.CreateFromCoordinateSystems(wgs84, utm);
+
+			lock (coordtrans)
+				coordtrans[utmzone] = trans;
+
+			lock (coordtrans)
+				return coordtrans[utmzone];
+		}
+	}
 }
