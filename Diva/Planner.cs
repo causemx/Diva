@@ -1060,7 +1060,7 @@ namespace Diva
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.green)
+                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red)
                 {
                     ToolTipMode = MarkerTooltipMode.Never,
                     ToolTipText = "grid" + tag,
@@ -1883,6 +1883,33 @@ namespace Diva
 
 			AddPolygonMarker("Click & GO", gotohere.Longitude,
 								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, Overlays.Commons);
+		}
+
+		private async void gridToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (drawnPolygon.Points.Count > 2)
+            {
+				Grid grid = new Grid(currentDrone, 
+					new PointLatLngAlt(
+						(double.Parse(TxtHomeLatitude.Text)),
+						(double.Parse(TxtHomeLongitude.Text)),
+						(float.Parse(TxtHomeAltitude.Text))));
+
+				// await grid.Accept();
+				await grid.Accept();
+				
+			} else
+            {
+				DialogResult dialogResult = MessageBox.Show("No polygon defined. Load a file?", "Load File", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+                {
+					// grid.LoadGrid();
+                }
+				else if (dialogResult == DialogResult.No)
+                {
+					MessageBox.Show("Please define a polygon.", "Error");
+				}
+			}
 		}
 
 		public int AddCommand(MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
@@ -3297,6 +3324,8 @@ namespace Diva
             }
         }
         #endregion
+
+        
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {

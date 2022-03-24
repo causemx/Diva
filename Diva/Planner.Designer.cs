@@ -103,6 +103,8 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -489,7 +491,9 @@ namespace Diva
             this.toolStripSeparator1,
             this.miClearMission,
             this.miSetHomeHere,
-            this.miClearAllMissions});
+            this.miClearAllMissions,
+            this.toolStripSeparator2,
+            this.gridToolStripMenuItem});
             this.cmMap.Name = "contextMenuStrip1";
             resources.ApplyResources(this.cmMap, "cmMap");
             // 
@@ -833,6 +837,17 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            resources.ApplyResources(this.gridToolStripMenuItem, "gridToolStripMenuItem");
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -926,5 +941,7 @@ namespace Diva
         private Button IconGPSLostWarning;
         internal MyGMap Map;
         internal AltitudeControlPanel AltitudeControlPanel;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem gridToolStripMenuItem;
     }
 }

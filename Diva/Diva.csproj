@@ -312,6 +312,7 @@
     <Compile Include="Utilities\PointLatLngAlt.cs" />
     <Compile Include="Utilities\Utlities.cs" />
     <Compile Include="Utilities\GMapMarkers.cs" />
+    <Compile Include="Utilities\UTMpos.cs" />
     <EmbeddedResource Include="Controls\AltitudeControlPanel.resx">
       <DependentUpon>AltitudeControlPanel.cs</DependentUpon>
     </EmbeddedResource>
