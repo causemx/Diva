@@ -94,7 +94,7 @@ namespace Diva.Utilities
             angle = (double)(getAngleOfLongestSide(list) + 360) % 360;
         }
 
-        public async Task Accept()
+        public async Task Accept(double altitude, double distance, double spacing, double tangle, StartPosition startPos, PointLatLngAlt home)
         {
 			// quickadd = true;
 

@@ -131,6 +131,409 @@
   <data name="SplitContainer.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
   </data>
+  <data name="configGridPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="shrinkButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="shrinkButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="shrinkButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans SemCond, 9pt</value>
+  </data>
+  <data name="shrinkButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAFHSURBVEhLnZVRjoMwDEQRWlU9bT/57MV6sqoS7DxrwmYL
+        AZMnjeKEeOKkkA6wLMsoPaSn9BODXzAuTe7mUdI4zzPmb+mjeLMIfY1PzPFQnsp8UUzzkZ5+HKgf5jz0
+        UB7MZEzlZYFoJXZyUzvV407Lozy2jxmV19B/SVF5wWnXUB4/IDsJkyOc0gc7kfaOa409tQ953CSOpYmn
+        9qEK17elVA117KnXUF58RPVRtGKn5FHe+hGFywlOy6OcXfNSNdSx0/Ioh6uCI+I+OlVZjPYolii66+7K
+        EObS7sV5SKkUWrHoM4diRPsdS33HUhOObfhI757aR6kaduLNVX+ZYkp7EDf/GU8Jlz/eMuNYNld99yKl
+        UsPbcpf+XfWOYxGn5SFZ2rwtmEn1Vc+chx/nceLmPafPImo5rjCXRj/Oo6TmR8S4d2LzYfgFRj66S3Y6
+        NsgAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="shrinkButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="shrinkButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>180, 261</value>
+  </data>
+  <data name="shrinkButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 32</value>
+  </data>
+  <data name="shrinkButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;shrinkButton.Name" xml:space="preserve">
+    <value>shrinkButton</value>
+  </data>
+  <data name="&gt;&gt;shrinkButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;shrinkButton.Parent" xml:space="preserve">
+    <value>configGridPanel</value>
+  </data>
+  <data name="&gt;&gt;shrinkButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="gridAcceptbutton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="gridAcceptbutton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans SemCond, 9pt</value>
+  </data>
+  <data name="gridAcceptbutton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="gridAcceptbutton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 262</value>
+  </data>
+  <data name="gridAcceptbutton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 30</value>
+  </data>
+  <data name="gridAcceptbutton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="gridAcceptbutton.Text" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="&gt;&gt;gridAcceptbutton.Name" xml:space="preserve">
+    <value>gridAcceptbutton</value>
+  </data>
+  <data name="&gt;&gt;gridAcceptbutton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gridAcceptbutton.Parent" xml:space="preserve">
+    <value>configGridPanel</value>
+  </data>
+  <data name="&gt;&gt;gridAcceptbutton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans SemCond, 9pt</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 184</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 17</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>StartFrom</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="spacingNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 141</value>
+  </data>
+  <data name="spacingNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 22</value>
+  </data>
+  <data name="spacingNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;spacingNumericUpDown.Name" xml:space="preserve">
+    <value>spacingNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;spacingNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;spacingNumericUpDown.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;spacingNumericUpDown.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans SemCond, 9pt</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 138</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 17</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Spacing inline [m]</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="distanceNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 95</value>
+  </data>
+  <data name="distanceNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 22</value>
+  </data>
+  <data name="distanceNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;distanceNumericUpDown.Name" xml:space="preserve">
+    <value>distanceNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;distanceNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;distanceNumericUpDown.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;distanceNumericUpDown.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="angleNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 49</value>
+  </data>
+  <data name="angleNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 22</value>
+  </data>
+  <data name="angleNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;angleNumericUpDown.Name" xml:space="preserve">
+    <value>angleNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;angleNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;angleNumericUpDown.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;angleNumericUpDown.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 46</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 23</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>angle [deg]</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="altitudeNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 3</value>
+  </data>
+  <data name="altitudeNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 22</value>
+  </data>
+  <data name="altitudeNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;altitudeNumericUpDown.Name" xml:space="preserve">
+    <value>altitudeNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;altitudeNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;altitudeNumericUpDown.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;altitudeNumericUpDown.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="startFromComboBox.Items" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="startFromComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 187</value>
+  </data>
+  <data name="startFromComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 20</value>
+  </data>
+  <data name="startFromComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="startFromComboBox.Text" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="&gt;&gt;startFromComboBox.Name" xml:space="preserve">
+    <value>startFromComboBox</value>
+  </data>
+  <data name="&gt;&gt;startFromComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startFromComboBox.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;startFromComboBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans SemCond, 9pt</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 92</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 17</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Line spacing [m]</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Noto Sans SemCond, 9pt</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 0</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 17</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Altitude [m]</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 19</value>
+  </data>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>276, 231</value>
+  </data>
+  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>configGridPanel</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="label6" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="spacingNumericUpDown" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="distanceNumericUpDown" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="angleNumericUpDown" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="altitudeNumericUpDown" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="startFromComboBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,16.66667,Percent,16.66667,Percent,16.66667,Percent,16.66667,Percent,16.66667,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="configGridPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>639, 200</value>
+  </data>
+  <data name="configGridPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1, 1</value>
+  </data>
+  <data name="configGridPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;configGridPanel.Name" xml:space="preserve">
+    <value>configGridPanel</value>
+  </data>
+  <data name="&gt;&gt;configGridPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;configGridPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;configGridPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="IconGPSLostWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
   </data>
@@ -149,7 +552,6 @@
   <data name="IconGPSLostWarning.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 83</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="IconGPSLostWarning.TabIndex" type="System.Int32, mscorlib">
     <value>36</value>
   </data>
@@ -172,7 +574,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;IconGPSLostWarning.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="IconModeWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -208,7 +610,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;IconModeWarning.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="BtnBreakAction.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -247,7 +649,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnBreakAction.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="AltitudeControlPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -283,7 +685,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;AltitudeControlPanel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="LblModeDesc.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -319,7 +721,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;LblModeDesc.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="BtnZoomOut.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -355,7 +757,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnZoomOut.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="BtnZoomIn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -391,7 +793,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnZoomIn.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="BtnMapFocus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -428,7 +830,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnMapFocus.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="LblMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -464,7 +866,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;LblMode.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="RotationInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -488,7 +890,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;RotationInfoPanel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="DroneInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -524,7 +926,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;DroneInfoPanel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="BtnRTL.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -557,7 +959,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnRTL.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="BtnLand.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -590,7 +992,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnLand.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="BtnAuto.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -623,7 +1025,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnAuto.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="BtnArm.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -656,7 +1058,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnArm.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="BtnReadWPs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -689,7 +1091,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnReadWPs.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="BtnTakeOff.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -722,7 +1124,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnTakeOff.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="BtnWriteWPs.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -755,7 +1157,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnWriteWPs.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <metadata name="TSMainPanel.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>113, 17</value>
@@ -839,7 +1241,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;TSMainPanel.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <metadata name="cmMap.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -875,7 +1277,7 @@
     <value>Area</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Draw Polygon</value>
@@ -911,43 +1313,43 @@
     <value>Clear</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
     <value>No-Fly Zone</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>168, 6</value>
   </data>
   <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miClearMission.Text" xml:space="preserve">
     <value>Takeoff to Here</value>
   </data>
   <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miSetHomeHere.Text" xml:space="preserve">
     <value>Set Home Here</value>
   </data>
   <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miClearAllMissions.Text" xml:space="preserve">
     <value>Clear All Missions</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>168, 6</value>
   </data>
   <data name="gridToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="gridToolStripMenuItem.Text" xml:space="preserve">
-    <value>Grid</value>
+    <value>Simple Grid</value>
   </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 170</value>
+    <value>172, 148</value>
   </data>
   <data name="&gt;&gt;cmMap.Name" xml:space="preserve">
     <value>cmMap</value>
@@ -987,7 +1389,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;Map.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="&gt;&gt;SplitContainer.Panel1.Name" xml:space="preserve">
     <value>SplitContainer.Panel1</value>
@@ -1706,6 +2108,18 @@
   <data name="&gt;&gt;miClearAllMissions.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gridToolStripMenuItem.Name" xml:space="preserve">
+    <value>gridToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;gridToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;colCommand.Name" xml:space="preserve">
     <value>colCommand</value>
   </data>
@@ -1777,18 +2191,6 @@
   </data>
   <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
-    <value>toolStripSeparator2</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gridToolStripMenuItem.Name" xml:space="preserve">
-    <value>gridToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;gridToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Planner</value>

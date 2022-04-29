@@ -20,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Transitions;
 using static MAVLink;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
 
@@ -766,8 +767,10 @@ namespace Diva
 				if (CurrentRallyPt != null)
 				{
 					PointLatLng pnew = Map.FromLocalToLatLng(e.X, e.Y);
-
 					CurrentRallyPt.Position = pnew;
+					// Re-organize the poly grid
+					//gridAcceptbutton_Click(sender , e);
+
 				}
 				else if (groupmarkers.Count > 0)
 				{
@@ -1885,19 +1888,14 @@ namespace Diva
 								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, Overlays.Commons);
 		}
 
-		private async void gridToolStripMenuItem_Click(object sender, EventArgs e)
+		private void gridToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (drawnPolygon.Points.Count > 2)
             {
-				Grid grid = new Grid(currentDrone, 
-					new PointLatLngAlt(
-						(double.Parse(TxtHomeLatitude.Text)),
-						(double.Parse(TxtHomeLongitude.Text)),
-						(float.Parse(TxtHomeAltitude.Text))));
-
-				// await grid.Accept();
-				await grid.Accept();
-				
+				Transition t = new Transition(new TransitionType_EaseInEaseOut(1000));
+				t.add(configGridPanel, "Width", 300);
+				t.add(configGridPanel, "Height", 300);
+				t.run();
 			} else
             {
 				DialogResult dialogResult = MessageBox.Show("No polygon defined. Load a file?", "Load File", MessageBoxButtons.YesNo);
@@ -3323,9 +3321,41 @@ namespace Diva
                 }
             }
         }
+
+
+
+
         #endregion
 
-        
+		private void config_grid_button_click(object sender, EventArgs e)
+        {
+			Transition t = new Transition(new TransitionType_EaseInEaseOut(1000));
+			t.add(configGridPanel, "Width", 1);
+			t.add(configGridPanel, "Height", 1);
+			t.run();
+		}
+
+        private async void gridAcceptbutton_Click(object sender, EventArgs e)
+        {
+			// ClearMission();
+			log.Info(string.Format("Generateing grid"));
+
+			Grid grid = new Grid(currentDrone,
+					new PointLatLngAlt(
+						(double.Parse(TxtHomeLatitude.Text)),
+						(double.Parse(TxtHomeLongitude.Text)),
+						(float.Parse(TxtHomeAltitude.Text))));
+
+			// await grid.Accept();
+			await grid.Accept(
+				(double)altitudeNumericUpDown.Value,
+				(double)distanceNumericUpDown.Value,
+				(double)spacingNumericUpDown.Value,
+				(double)angleNumericUpDown.Value,
+				Grid.StartPosition.Home,
+				HomeLocation
+				);
+		}
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -3333,5 +3363,5 @@ namespace Diva
             Console.WriteLine("StackTrace: " + e.Exception.StackTrace);
             e.Cancel = true;
         }
-    }
+	}
 }
