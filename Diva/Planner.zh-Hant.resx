@@ -118,8 +118,219 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnArm.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRBKRIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVcJPVQXa9fML3DUtuxEK8AXBecL
+        hcIXeJsuSxchbEodQP+88s0FJCTTP/QAPBVZPuwVFRQX1fWrIH5SB4yecI72Ap0Ech+J59FRc7UIc2Gd
+        l73uUfQenfiEPevZA1ky4hGcg+geF9kmWj3zF0j2nJhVxgPy4xuxtki0kCE4r7X4lgLoDb1qCAsatwv+
+        mLZvierw76P0dajwZcZ6S+5vUk53i5oL6PQhKPC2xu2C/5rmJdJqCWbLW2EcVBG4cVfAzsAVYGIIzELq
+        F1HBIqMHwAnsBXRD1GctBuhSbOld6BbqpasTsv0CzwheRC+DdbAJeUcr1K7E8XsMzyWX6M0oCdxXxGyA
+        e+AWnKtMz6FHPB2GtkLVzzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PpdeB
+        Hr922t8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnTakeOff.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnTakeOff.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRMSEIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVef9FBdrF0zv8BR27ITrQBfFJwv
+        FApf4G26LF2EsCl1AP3zyjcXkJBM/9AD8FRk+bBXVFBcVNevgvhJHTB6wjnaC3QSyH0knkdHzdUizIV1
+        Xva6R9F7dOIz9qxnD2TJiEdwDqJ7XGSbaPXMXyDZc2JWGQ/Ij2/E2iLRQobgvNbiWwqgN/SqISxo3C74
+        Y9q+JarDv4/S16HClxnrLbm/STndLWouoNOHoMDbGrcL/mual0irJZgtb4VxUEXgxl0BOwNXgIkhMAup
+        X0QFi4weACewF9ANUZ+1GKBLsaV3oVuol65OyPYLPCN4Eb0M1sEm5B2tULsSx+8xPJdcojejJHBfEbMB
+        7oFbcK4yPYce8XQY2gpVkzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PtjeB
+        irU3oEEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnLand.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRMSEIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVef9FBdrF0zv8BR27ITrQBfFJwv
+        FApf4G26LF2EsCl1AP3zyjcXkJBM/9AD8FRk+bBXVFBcVNevgvhJHTB6wjnaC3QSyH0knkdHzdUizIV1
+        Xva6R9F7dOIz9qxnD2TJiEdwDqJ7XGSbaPXMXyDZc2JWGQ/Ij2/E2iLRQobgvNbiWwqgN/SqISxo3C74
+        Y9q+JarDv4/S16HClxnrLbm/STndLWouoNOHoMDbGrcL/mual0irJZgtb4VxUEXgxl0BOwNXgIkhMAup
+        X0QFi4weACewF9ANUZ+1GKBLsaV3oVuol65OyPYLPCN4Eb0M1sEm5B2tULsSx+8xPJdcojejJHBfEbMB
+        7oFbcK4yPYce8XQY2gpVkzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PtjeB
+        irU3oEEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnAuto.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRMSEIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVef9FBdrF0zv8BR27ITrQBfFJwv
+        FApf4G26LF2EsCl1AP3zyjcXkJBM/9AD8FRk+bBXVFBcVNevgvhJHTB6wjnaC3QSyH0knkdHzdUizIV1
+        Xva6R9F7dOIz9qxnD2TJiEdwDqJ7XGSbaPXMXyDZc2JWGQ/Ij2/E2iLRQobgvNbiWwqgN/SqISxo3C74
+        Y9q+JarDv4/S16HClxnrLbm/STndLWouoNOHoMDbGrcL/mual0irJZgtb4VxUEXgxl0BOwNXgIkhMAup
+        X0QFi4weACewF9ANUZ+1GKBLsaV3oVuol65OyPYLPCN4Eb0M1sEm5B2tULsSx+8xPJdcojejJHBfEbMB
+        7oFbcK4yPYce8XQY2gpVkzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PtjeB
+        irU3oEEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnWriteWPs.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRMSEIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVef9FBdrF0zv8BR27ITrQBfFJwv
+        FApf4G26LF2EsCl1AP3zyjcXkJBM/9AD8FRk+bBXVFBcVNevgvhJHTB6wjnaC3QSyH0knkdHzdUizIV1
+        Xva6R9F7dOIz9qxnD2TJiEdwDqJ7XGSbaPXMXyDZc2JWGQ/Ij2/E2iLRQobgvNbiWwqgN/SqISxo3C74
+        Y9q+JarDv4/S16HClxnrLbm/STndLWouoNOHoMDbGrcL/mual0irJZgtb4VxUEXgxl0BOwNXgIkhMAup
+        X0QFi4weACewF9ANUZ+1GKBLsaV3oVuol65OyPYLPCN4Eb0M1sEm5B2tULsSx+8xPJdcojejJHBfEbMB
+        7oFbcK4yPYce8XQY2gpVkzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PtjeB
+        irU3oEEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnReadWPs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnReadWPs.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRCSRIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVef9FBdrF0zv8BR27ITrQBfFJwv
+        FApf4G26LF2EsCl1AP3zyjcXkJBM/9AD8FRk+bBXVFBcVNevgvhJHTB6wjnaC3QSyH0knkdHzdUizIV1
+        Xva6R9F7dCKBPevZA1ky4hGcg+geF9kmWj3zF0j2nJhVxgPy4xuxtki0kCE4r7X4lgLoDb1qCAsatwv+
+        mLZvierw76P0dajwZcZ6S+5vUk53i5oL6PQhKPC2xu2C/5rmJdJqCWbLW2EcVBG4cVfAzsAVYGIIzELq
+        F1HBIqMHwAnsBXRD1GctBuhSbOld6BbqpasTsv0CzwheRC+DdbAJeUcr1K7E8XsMzyWX6M0oCdxXxGyA
+        e+AWnKtMz6FHPB2GtkLVzzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PBiGB
+        Znn3nXwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="BtnRTL.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft JhengHei UI, 10.2pt</value>
+  </data>
+  <data name="BtnRTL.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVEhL1ZQ/aNNREMd/hBKChBJKkSLFwbGUDkFKh9JB
+        JGMpRRxKhyLSQUREOkkXcSwiUkoQh1JEioiIiEMpUoo4FCkiIlIcRMSEIBKMCfmf+Pk+7xeTGENLBfHg
+        y92797279+798f6Z1Ov1QK1W67Xh3xUSj1Wr1YflcnkPvcR40KYOJ6y6n4SriUSiSvL3KpLP59OpVKqI
+        vU6hCe3M6AcTrbJSqezmcrlv2IskioAgidfQTlQIzjbzZ8H+2we5j8AdVvsVO2Zu7aiHAvFkMlkFZewn
+        7Oytxuh3cK8o1uidhSQBAu9mMpkc9ri5WwR/CATNDoDTxDxOp9N57Rh7mULDmnMBzcLEKREhrWGf3CdG
+        wRgJ59VWdD2bzX4nxyMVByFL73laiQjtQgKzDmarfRR9gTkHQp5uiUCh65DOdIEOVpgpFosptEtql+Ic
+        mAaT4CIFXtpN/OAKkHzFNuT6DUkt0JUMm7sh+AJ+WySlUukjKmLTThiHyHlHbfML3LQJ3Zo1bZMCdRJt
+        twdL8I1rleANvGlzNwTfsG5Zc4Eb/oRuk5L7QKZs7hj2r8P7g8DrZVef9FBdrF0zv8BR27ITrQBfFJwv
+        FApf4G26LF2EsCl1AP3zyjcXkJBM/9AD8FRk+bBXVFBcVNevgvhJHTB6wjnaC3QSyH0knkdHzdUizIV1
+        Xva6R9F7dOIz9qxnD2TJiEdwDqJ7XGSbaPXMXyDZc2JWGQ/Ij2/E2iLRQobgvNbiWwqgN/SqISxo3C74
+        Y9q+JarDv4/S16HClxnrLbm/STndLWouoNOHoMDbGrcL/mual0irJZgtb4VxUEXgxl0BOwNXgIkhMAup
+        X0QFi4weACewF9ANUZ+1GKBLsaV3oVuol65OyPYLPCN4Eb0M1sEm5B2tULsSx+8xPJdcojejJHBfEbMB
+        7oFbcK4yPYce8XQY2gpVkzp9xruQtoBWFQfq6yUwA2IgSvBx8Ns30lEgRgjSK1VbwsD9+/+JeN4PtjeB
+        irU3oEEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="flyToolStrip.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="shrinkButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAUdJREFUSEudlVGOgzAMRBFaVT1tP/nsxXqyqhLsPGvCZgsBkyeN4oR44qSQDrAs
+        yyg9pKf0E4NfMC5N7uZR0jjPM+Zv6aN4swh9jU/M8VCeynxRTPORnn4cqB/mPPRQHsxkTOVlgWgldnJT
+        O9XjTsujPLaPGZXX0H9JUXnBaddQHj8gOwmTI5zSBzuR9o5rjT21D3ncJI6liaf2oQrXt6VUDXXsqddQ
+        XnxE9VG0YqfkUd76EYXLCU7Lo5xd81I11LHT8iiHq4Ij4j46VVmM9iiWKLrr7soQ5tLuxXlIqRRasegz
+        h2JE+x1LfcdSE45t+EjvntpHqRp24s1Vf5liSnsQN/8ZTwmXP94y41g2V333IqVSw9tyl/5d9Y5jEafl
+        IVnavC2YSfVVz5yHH+dx4uY9p88iajmuMJdGP86jpOZHxLh3YvNh+AVGPrpLdjo2yAAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="shrinkButton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gridAcceptbutton.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="spacingNumericUpDown.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="distanceNumericUpDown.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="angleNumericUpDown.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="altitudeNumericUpDown.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="startFromComboBox.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="configGridPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="IconGPSLostWarning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft YaHei, 9.75pt</value>
+    <value>Microsoft YaHei UI, 9.75pt</value>
   </data>
   <data name="IconGPSLostWarning.Text" xml:space="preserve">
     <value>等待定位中</value>
@@ -168,54 +379,6 @@
     <value />
   </data>
   <data name="DroneInfoPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnRTL.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnRTL.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnLand.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnLand.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnAuto.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnAuto.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnArm.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnArm.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 128</value>
-  </data>
-  <data name="BtnArm.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnReadWPs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnReadWPs.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnTakeOff.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnTakeOff.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 128</value>
-  </data>
-  <data name="BtnTakeOff.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="BtnWriteWPs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft JhengHei UI, 10.2pt</value>
-  </data>
-  <data name="BtnWriteWPs.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="TSBtnConnect.CheckedText" xml:space="preserve">
@@ -329,8 +492,14 @@
   <data name="miClearAllMissions.Text" xml:space="preserve">
     <value>清除所有任務</value>
   </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="gridToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 120</value>
+    <value>147, 148</value>
   </data>
   <data name="cmMap.ToolTip" xml:space="preserve">
     <value />

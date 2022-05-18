@@ -206,6 +206,12 @@
     <Compile Include="Controls\ConfigureForm.Designer.cs">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Dialog\DroneinfoDetailDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Dialog\DroneinfoDetailDialog.Designer.cs">
+      <DependentUpon>DroneinfoDetailDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -352,6 +358,9 @@
     <EmbeddedResource Include="Controls\ConfigureForm.zh-Hant.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Dialog\DroneinfoDetailDialog.resx">
+      <DependentUpon>DroneinfoDetailDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfo.resx">
       <DependentUpon>DroneInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -440,6 +449,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_cancel_20.png" />
+    <None Include="Resources\icon_cancel_24.png" />
+    <None Include="Resources\icon_burger_24.png" />
+    <None Include="Resources\icon_cheese_32.png" />
+    <None Include="Resources\icon_cheese_24.png" />
+    <None Include="Resources\cheese-24.png" />
     <None Include="Resources\icon_gear.png" />
     <None Include="Resources\waiting-gps.png" />
     <None Include="Resources\VTOL-front.png" />

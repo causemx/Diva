@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -120,7 +121,8 @@ namespace Diva
             Frame = MAV_FRAME.GLOBAL
         };
 
-        public Planner()
+
+		public Planner()
 		{
 			InitializeComponent();
 			Instance = this;
@@ -147,11 +149,12 @@ namespace Diva
 			DataGridView_Initialize();
 
 			//setup toolstrip
-			TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
+			// TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
+			flyToolStrip.Renderer = new Controls.Components.MyTSRenderer();
 			//Collect DroneInfoPanels
 
 			// setup geofence
-            geofencePolygon = new GMapPolygon(new List<PointLatLng>(), "geofence")
+			geofencePolygon = new GMapPolygon(new List<PointLatLng>(), "geofence")
             {
                 Stroke = new Pen(Color.Pink, 5),
                 Fill = Brushes.Transparent
@@ -1888,29 +1891,7 @@ namespace Diva
 								  gotohere.Latitude, (int)gotohere.Altitude, Color.Blue, Overlays.Commons);
 		}
 
-		private void gridToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (drawnPolygon.Points.Count > 2)
-            {
-				Transition t = new Transition(new TransitionType_EaseInEaseOut(1000));
-				t.add(configGridPanel, "Width", 300);
-				t.add(configGridPanel, "Height", 300);
-				t.run();
-			} else
-            {
-				DialogResult dialogResult = MessageBox.Show("No polygon defined. Load a file?", "Load File", MessageBoxButtons.YesNo);
-				if (dialogResult == DialogResult.Yes)
-                {
-					// grid.LoadGrid();
-                }
-				else if (dialogResult == DialogResult.No)
-                {
-					MessageBox.Show("Please define a polygon.", "Error");
-				}
-			}
-		}
-
-		public int AddCommand(MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
+        public int AddCommand(MAV_CMD cmd, double p1, double p2, double p3, double p4, double x, double y,
 			double z, object tag = null)
 		{
 			selectedRow = DGVWayPoints.Rows.Add();
@@ -2327,7 +2308,7 @@ namespace Diva
 				Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
 			}
 
-			drawnPolygon.Fill = Brushes.AliceBlue;
+			drawnPolygon.Fill =  new SolidBrush(Color.FromArgb(30, 255, 255, 255));
 
 			// remove full loop is exists
 			if (drawnPolygon.Points.Count > 1 &&
@@ -3008,13 +2989,7 @@ namespace Diva
             set
             {
                 fullControl = value;
-                BtnArm.Visible = value;
-                BtnTakeOff.Visible = value;
-                BtnLand.Visible = value;
-                BtnAuto.Visible = value;
-                BtnReadWPs.Visible = value;
-                BtnWriteWPs.Visible = value;
-                BtnRTL.Visible = value;
+				flyToolStrip.Visible = value;
                 LblMode.Visible = value;
                 LblModeDesc.Visible = value;
                 BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = BtnBreakAction.Left
@@ -3356,6 +3331,7 @@ namespace Diva
 				HomeLocation
 				);
 		}
+
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {

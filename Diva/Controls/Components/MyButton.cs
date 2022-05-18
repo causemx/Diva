@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace Diva.Controls.Components
 {
@@ -85,11 +86,58 @@ namespace Diva.Controls.Components
         }
     }
 
-    class MyTSRenderer : ToolStripRenderer
+    class MyTSRenderer : ToolStripProfessionalRenderer
     {
         public MyTSRenderer() { }
+        
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) { }
-	}
+
+        protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+        {
+            int d = 10;
+            ToolStrip t = e.ToolStrip;
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            Rectangle bounds = e.AffectedBounds;
+            LinearGradientBrush lgbrush = new LinearGradientBrush(
+                new Point(0, 0), new Point(0, t.Height),
+                Color.FromArgb(200, Color.FromArgb(48, 61, 69)), Color.FromArgb(200, Color.FromArgb(48, 61, 69)));
+            
+            GraphicsPath p = new GraphicsPath();
+            Rectangle rect = new Rectangle(Point.Empty, t.Size);
+            Rectangle arcRect = new Rectangle(rect.Location, new Size(d, d));
+
+            p.AddLine(0, 0, 10, 0);
+            arcRect.X = rect.Right - d;
+            p.AddArc(arcRect, 270, 90);
+
+            arcRect.Y = rect.Bottom - d;
+            p.AddArc(arcRect, 0, 90);
+
+            arcRect.X = rect.Left;
+            p.AddArc(arcRect, 90, 90);
+            p.CloseFigure();
+            t.Region = new Region(p);
+            g.FillPath(lgbrush, p);
+
+            // base.OnRenderToolStripBackground(e);
+        }
+
+        protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e)
+        {
+            if (!e.Item.Selected)
+            {
+                base.OnRenderButtonBackground(e);
+            }
+            else
+            {
+                Brush brush = new SolidBrush(Color.FromArgb(64,255,255,255));
+                Rectangle rectangle = new Rectangle(0, 0, e.Item.Size.Width - 1, e.Item.Size.Height - 1);
+                e.Graphics.FillRectangle(brush, rectangle);
+            }
+        }
+
+    }
 
     public class MyTSButton : ToolStripButton
     {
