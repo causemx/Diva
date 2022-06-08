@@ -206,10 +206,10 @@
     <Compile Include="Controls\ConfigureForm.Designer.cs">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Dialog\DroneinfoDetailDialog.cs">
+    <Compile Include="Controls\Dialogs\DroneinfoDetailDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\Dialog\DroneinfoDetailDialog.Designer.cs">
+    <Compile Include="Controls\Dialogs\DroneinfoDetailDialog.Designer.cs">
       <DependentUpon>DroneinfoDetailDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DroneInfo.cs">
@@ -224,6 +224,7 @@
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Icons\Icon.cs" />
     <Compile Include="Controls\InputDataDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -358,7 +359,7 @@
     <EmbeddedResource Include="Controls\ConfigureForm.zh-Hant.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Dialog\DroneinfoDetailDialog.resx">
+    <EmbeddedResource Include="Controls\Dialogs\DroneinfoDetailDialog.resx">
       <DependentUpon>DroneinfoDetailDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfo.resx">
@@ -449,6 +450,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_polygon_24.png" />
+    <None Include="Resources\icon_mid_plus_32.png" />
+    <None Include="Resources\icon_ballon_32.png" />
+    <None Include="Resources\icon_mid_plus_24.png" />
+    <None Include="Resources\icon_ping_24.png" />
     <None Include="Resources\icon_cancel_20.png" />
     <None Include="Resources\icon_cancel_24.png" />
     <None Include="Resources\icon_burger_24.png" />

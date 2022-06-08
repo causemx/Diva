@@ -103,6 +103,9 @@ namespace Diva
             this.miSetHomeHere = new System.Windows.Forms.ToolStripMenuItem();
             this.miClearAllMissions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.planToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.surveyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.corridorScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DGVWayPoints = new System.Windows.Forms.DataGridView();
             this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -128,9 +131,6 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
-            this.planToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.surveyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.corridorScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -636,6 +636,7 @@ namespace Diva
             this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
             this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
             this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
+            this.Map.Paint += new System.Windows.Forms.PaintEventHandler(this.Map_Paint);
             this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
             this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
             this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
@@ -763,6 +764,26 @@ namespace Diva
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // planToolStripMenuItem
+            // 
+            this.planToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.surveyToolStripMenuItem,
+            this.corridorScanToolStripMenuItem});
+            this.planToolStripMenuItem.Name = "planToolStripMenuItem";
+            resources.ApplyResources(this.planToolStripMenuItem, "planToolStripMenuItem");
+            // 
+            // surveyToolStripMenuItem
+            // 
+            this.surveyToolStripMenuItem.Name = "surveyToolStripMenuItem";
+            resources.ApplyResources(this.surveyToolStripMenuItem, "surveyToolStripMenuItem");
+            this.surveyToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // corridorScanToolStripMenuItem
+            // 
+            this.corridorScanToolStripMenuItem.Name = "corridorScanToolStripMenuItem";
+            resources.ApplyResources(this.corridorScanToolStripMenuItem, "corridorScanToolStripMenuItem");
+            this.corridorScanToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // DGVWayPoints
             // 
@@ -999,24 +1020,6 @@ namespace Diva
             this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
-            // 
-            // planToolStripMenuItem
-            // 
-            this.planToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.surveyToolStripMenuItem,
-            this.corridorScanToolStripMenuItem});
-            this.planToolStripMenuItem.Name = "planToolStripMenuItem";
-            resources.ApplyResources(this.planToolStripMenuItem, "planToolStripMenuItem");
-            // 
-            // surveyToolStripMenuItem
-            // 
-            this.surveyToolStripMenuItem.Name = "surveyToolStripMenuItem";
-            resources.ApplyResources(this.surveyToolStripMenuItem, "surveyToolStripMenuItem");
-            // 
-            // corridorScanToolStripMenuItem
-            // 
-            this.corridorScanToolStripMenuItem.Name = "corridorScanToolStripMenuItem";
-            resources.ApplyResources(this.corridorScanToolStripMenuItem, "corridorScanToolStripMenuItem");
             // 
             // Planner
             // 

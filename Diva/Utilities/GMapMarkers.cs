@@ -85,7 +85,37 @@ namespace Diva.Utilities
 		}
 	}
 
-	[Serializable]
+    [Serializable]
+    public class GMapPlusMarker : GMapMarker
+    {
+        private static readonly Bitmap icong = new Bitmap(Resources.icon_mid_plus_32);
+
+        public GMapPlusMarker(PointLatLng p)
+            : base(p)
+        {
+            // used for hitarea
+            Size = icong.Size;
+            Offset = new Point(-Size.Width / 2, -Size.Height / 2);
+        }
+
+        public override void OnRender(Graphics g)
+        {
+            var temp = g.Transform;
+            g.TranslateTransform(LocalPosition.X, LocalPosition.Y);
+
+            if (IsMouseOver)
+            {
+                g.TranslateTransform(icong.Width / 2, icong.Height / -4);
+                g.RotateTransform(45);
+            }
+
+            g.DrawImageUnscaled(icong, 0, 0);// icong.Width / -2, icong.Height / -2);
+
+            g.Transform = temp;
+        }
+    }
+
+    [Serializable]
 	public class GMapDroneMarker : GMapMarker
 	{
 		public Bitmap Icon;
@@ -193,6 +223,7 @@ namespace Diva.Utilities
 			}
 		}
 	}
+
 
     [Serializable]
 	public class GMapTaggedMarker : GMarkerGoogle

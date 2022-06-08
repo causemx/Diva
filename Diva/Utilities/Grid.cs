@@ -73,6 +73,13 @@ namespace Diva.Utilities
             Point = 5,
         }
 
+        public enum ScanMode
+        {
+            Survey,
+            Corridor,
+            Rotatery
+        }
+
         public Grid(MavDrone drone, PointLatLngAlt home)
         {
             Drone = drone;
@@ -94,13 +101,20 @@ namespace Diva.Utilities
             angle = (double)(getAngleOfLongestSide(list) + 360) % 360;
         }
 
-        public async Task Accept(double altitude, double distance, double spacing, double tangle, StartPosition startPos, PointLatLngAlt home)
+        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double tangle, StartPosition startPos, PointLatLngAlt home)
         {
 			// quickadd = true;
 
 			// var gridobject = savegriddata();
-
-            grid = await CreateGridAsync(list, 100, 50, 0, angle, StartPosition.Home, Home).ConfigureAwait(true);
+            
+            if (mode == ScanMode.Survey)
+            {
+                grid = await CreateGridAsync(list, 30, 50, 0, angle, StartPosition.Home, Home).ConfigureAwait(true);
+            }
+            else if (mode == ScanMode.Corridor) {
+                grid = await CreateCorridorAsync(list, 30, 50, 0, angle, 0, 0, StartPosition.Home, false, 0, 100).ConfigureAwait(true);
+            }
+            
 
             foreach (var plla in grid)
             {
@@ -183,6 +197,63 @@ namespace Diva.Utilities
             catch (Exception ex)
             {
             }
+        }
+
+        public static async Task<List<PointLatLngAlt>> CreateCorridorAsync(List<PointLatLngAlt> polygon, double altitude,
+            double distance,
+            double spacing, double angle, double overshoot1, double overshoot2, StartPosition startpos, bool shutter,
+            float minLaneSeparation, double width, float leadin = 0)
+        {
+            return await Task.Run(() => CreateCorridor(polygon, altitude, distance, spacing, angle, overshoot1, overshoot2,
+                startpos, shutter, minLaneSeparation, width, leadin)).ConfigureAwait(false);
+        }
+
+        public static List<PointLatLngAlt> CreateCorridor(List<PointLatLngAlt> polygon, double altitude, double distance,
+            double spacing, double angle, double overshoot1, double overshoot2, StartPosition startpos, bool shutter,
+            float minLaneSeparation, double width, float leadin = 0)
+        {
+            if (spacing < 4 && spacing != 0)
+                spacing = 4;
+
+            if (distance < 0.1)
+                distance = 0.1;
+
+            if (polygon.Count == 0)
+                return new List<PointLatLngAlt>();
+
+            List<PointLatLngAlt> ans = new List<PointLatLngAlt>();
+
+            // utm zone distance calcs will be done in
+            int utmzone = polygon[0].GetUTMZone();
+
+            // utm position list
+            List<UTMpos> utmpositions = UTMpos.ToList(PointLatLngAlt.ToUTM(utmzone, polygon), utmzone);
+
+            var lanes = (width / distance);
+            var start = (int)((lanes / 2) * -1);
+            var end = start * -1;
+
+            for (int lane = start; lane <= end; lane++)
+            {
+                // correct side of the line we are on because of list reversal
+                int multi = 1;
+                if ((lane - start) % 2 == 1)
+                    multi = -1;
+
+                if (startpos != StartPosition.Home)
+                    utmpositions.Reverse();
+
+                GenerateOffsetPath(utmpositions, distance * multi * lane, spacing, utmzone)
+                    .ForEach(pnt => { ans.Add(pnt); });
+
+                if (startpos == StartPosition.Home)
+                    utmpositions.Reverse();
+            }
+
+            // set the altitude on all points
+            ans.ForEach(plla => { plla.Alt = altitude; });
+
+            return ans;
         }
 
         public static async Task<List<PointLatLngAlt>> CreateGridAsync(List<PointLatLngAlt> polygon, double altitude,

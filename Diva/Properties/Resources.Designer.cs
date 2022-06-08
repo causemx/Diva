@@ -103,6 +103,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_ballon_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_ballon_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_battery_full {
             get {
                 object obj = ResourceManager.GetObject("icon_battery_full", resourceCulture);
@@ -576,6 +586,26 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_map {
             get {
                 object obj = ResourceManager.GetObject("icon_map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_mid_plus_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_mid_plus_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_polygon_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon_polygon_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

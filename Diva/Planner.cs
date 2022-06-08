@@ -50,7 +50,19 @@ namespace Diva
 
 		private static readonly double WARN_ALT = 2D;
 
-		private class PlannerOverlays
+        private class PolyIcon : Controls.Icons.Icon
+        {
+            internal override void doPaint(Graphics g)
+            {
+				var bmp = new Bitmap(Resources.icon_polygon_24);
+				
+				g.DrawImage(bmp, (Width/2-bmp.Width/2), (Height/2-bmp.Height/2));
+			}
+        }
+
+		private PolyIcon polyicon = new PolyIcon();
+
+        private class PlannerOverlays
 		{
 			public GMapOverlay RallyPoints;
 			public GMapOverlay Commons;
@@ -72,6 +84,7 @@ namespace Diva
 
 		private GMapRectMarker CurrentRectMarker;
 		private GMapMarkerRallyPt CurrentRallyPt;
+		private GMapPlusMarker CurrentMidline;
 
 		private GMapMarker CurrentMarker;
 		private GMapMarker CenterMarker = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
@@ -91,6 +104,7 @@ namespace Diva
 
         private bool quickadd = false;
 		private int selectedRow = 0;
+		private bool polygongridmode;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<WayPoint>> history = new List<List<WayPoint>>();
@@ -100,12 +114,14 @@ namespace Diva
 		private BackgroundLoop mainThread = null;
 		private DateTime mapupdate = DateTime.MinValue;
 
+
 		private bool IsMapFocusing
         {
             get => BtnMapFocus.FlatAppearance.BorderColor == Color.Red;
             set
             {
-                //BtnMapFocus.Image = value ? Resources.icon_zoom_focus_locked : Resources.icon_zoom_focus;
+                //BtnMapFocus.Image = value ? Resources.
+				//_zoom_focus_locked : Resources.icon_zoom_focus;
                 BtnMapFocus.FlatAppearance.BorderColor = value ? Color.Red : Color.Black;
             }
         }
@@ -163,7 +179,7 @@ namespace Diva
             //setup drawnpolgon
             drawnPolygon = new GMapPolygon(new List<PointLatLng>(), "drawnpoly")
             {
-                Stroke = new Pen(Color.Red, 2),
+                Stroke = new Pen(Color.Tomato, 2),
                 Fill = Brushes.Transparent
             };
 
@@ -220,7 +236,13 @@ namespace Diva
             mainThread = BackgroundLoop.Start(MainLoop);
         }
 
-        private void DataGridView_Initialize()
+		private void Map_Paint(object sender, PaintEventArgs e)
+		{
+			polyicon.Location = new Point(25, 500);
+			polyicon.Paint(e.Graphics);
+		}
+
+		private void DataGridView_Initialize()
 		{
 			foreach (DataGridViewColumn commandsColumn in DGVWayPoints.Columns)
 			{
@@ -585,7 +607,24 @@ namespace Diva
                 return;
             }
 
-            if (!FullControl) {
+			// check if the mouse up happend over our button
+			if (polyicon.Rectangle.Contains(e.Location))
+			{
+				if (e.Button == MouseButtons.Left)
+				{
+					polyicon.IsSelected = true;
+					polygongridmode = true;
+					
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					polyicon.IsSelected = false;
+					clearPolygonToolStripMenuItem_Click(this, null);
+				}
+				return;
+			}
+
+			if (!FullControl) {
                 return;
             }
 
@@ -596,12 +635,32 @@ namespace Diva
 
 			if (isMouseDown) // mouse down on some other object and dragged to here.
 			{
+
+				if (CurrentMidline is GMapPlusMarker)
+				{
+					int pnt2 = 0;
+					var midline = CurrentMidline.Tag as midline;
+					var idx = drawnPolygon.Points.IndexOf(midline.now);
+
+					if (polygongridmode && midline.now != null)
+					{
+						drawnPolygon.Points.Insert(idx + 1,
+						new PointLatLng(CurrentMidline.Position.Lat, CurrentMidline.Position.Lng));
+
+						RedrawPolygonSurvey(drawnPolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+					}
+						
+					return;
+				}
+
 				if (e.Button == MouseButtons.Left)
 				{
 					isMouseDown = false;
 				}
+
 				if (ModifierKeys == Keys.Control)
 				{
+
 					// group select wps
 					GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
 
@@ -631,6 +690,7 @@ namespace Diva
 					isMouseDraging = false;
 					return;
 				}
+
 				if (!isMouseDraging)
 				{
 					if (CurrentRectMarker != null)
@@ -966,6 +1026,9 @@ namespace Diva
                         }
                         CurrentRectMarker = rc;
                         break;
+					case GMapPlusMarker ps:
+						CurrentMidline = ps;
+						break;
                     case GMapMarkerRallyPt rpt:
                         CurrentRallyPt = rpt;
                         break;
@@ -1066,15 +1129,16 @@ namespace Diva
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red)
-                {
-                    ToolTipMode = MarkerTooltipMode.Never,
-                    ToolTipText = "grid" + tag,
-                    Tag = "grid" + tag
-                };
 
-                //MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
-                GMapRectMarker mBorders = new GMapRectMarker(point) { InnerMarker = m };
+				GMarkerGoogle m = new GMarkerGoogle(point, new Bitmap(Resources.icon_ballon_32))
+				{
+					ToolTipMode = MarkerTooltipMode.Never,
+					ToolTipText = "grid" + tag,
+					Tag = "grid" + tag
+				};
+
+				//MissionPlanner.GMapMarkerRectWPRad mBorders = new MissionPlanner.GMapMarkerRectWPRad(point, (int)float.Parse(TXT_WPRad.Text), MainMap);
+				GMapRectMarker mBorders = new GMapRectMarker(point) { InnerMarker = m };
 
 				Overlays.DrawnPolygons.Markers.Add(m);
 				Overlays.DrawnPolygons.Markers.Add(mBorders);
@@ -1243,6 +1307,13 @@ namespace Diva
 
 		public void AddWPToMap(double lat, double lng, int alt)
 		{
+
+			if (polygongridmode)
+			{
+				addPolygonPointToolStripMenuItem_Click(null, null);
+				return;
+			}
+
 			// check home point setup.
 			if (IsHomeEmpty())
 			{
@@ -2292,15 +2363,12 @@ namespace Diva
 
 		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			/**
+			
 			if (polygongridmode == false)
-			{
-				CustomMessageBox.Show(
-					"You will remain in polygon mode until you clear the polygon or create a grid/upload a fence");
+            {
+				polygongridmode = true;
+				return;
 			}
-
-			polygongridmode = true;*/
-
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
 			if (Overlays.DrawnPolygons.Polygons.Count == 0)
 			{
@@ -2308,7 +2376,7 @@ namespace Diva
 				Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
 			}
 
-			drawnPolygon.Fill =  new SolidBrush(Color.FromArgb(30, 255, 255, 255));
+			drawnPolygon.Fill = Brushes.Transparent;
 
 			// remove full loop is exists
 			if (drawnPolygon.Points.Count > 1 &&
@@ -2317,16 +2385,55 @@ namespace Diva
 
 			drawnPolygon.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownStart.Lng));
 
-			AddPolygonMarkerGrid(drawnPolygon.Points.Count.ToString(), MouseDownStart.Lng, MouseDownStart.Lat, 0);
+			RedrawPolygonSurvey(drawnPolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
 
+			// AddPolygonMarkerGrid(drawnPolygon.Points.Count.ToString(), MouseDownStart.Lng, MouseDownStart.Lat, 0);
+			// Map.UpdatePolygonLocalPosition(drawnPolygon);
+
+			Map.Invalidate();
+		}
+
+		public class midline
+        {
+			public PointLatLngAlt now { get; set; }
+			public PointLatLngAlt next { get; set; }
+		}
+
+		public void RedrawPolygonSurvey(List<PointLatLngAlt> list)
+		{
+			drawnPolygon.Points.Clear();
+			Overlays.DrawnPolygons.Clear();
+
+			int tag = 0;
+			list.ForEach(x =>
+			{
+				tag++;
+				drawnPolygon.Points.Add(x);
+				AddPolygonMarkerGrid(tag.ToString(), x.Lng, x.Lat, 0);
+			});
+
+			Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
 			Map.UpdatePolygonLocalPosition(drawnPolygon);
+
+			var ps = drawnPolygon.Points.ToArray();
+
+			if (ps.Length < 2) return; // line include at least two points
+			for (int i = 1; i < ps.Length; i++)
+			{
+				var now = ps[i-1];
+				var next = ps[i];
+				var mid = new PointLatLngAlt((now.Lat + next.Lat) / 2, (now.Lng + next.Lng) / 2, 0);
+				var pnt = new GMapPlusMarker(mid);
+				pnt.Tag = new midline() { now = now, next = next };
+				Overlays.DrawnPolygons.Markers.Add(pnt);
+			}
 
 			Map.Invalidate();
 		}
 
 		private void clearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// polygongridmode = false;
+			polygongridmode = false;
 			if (drawnPolygon == null)
 				return;
 			drawnPolygon.Points.Clear();
@@ -3297,9 +3404,6 @@ namespace Diva
             }
         }
 
-
-
-
         #endregion
 
 		private void config_grid_button_click(object sender, EventArgs e)
@@ -3310,28 +3414,55 @@ namespace Diva
 			t.run();
 		}
 
-        private async void gridAcceptbutton_Click(object sender, EventArgs e)
+        private void gridAcceptbutton_Click(object sender, EventArgs e)
         {
-			// ClearMission();
-			log.Info(string.Format("Generateing grid"));
+			Grid grid = new Grid(currentDrone, HomeLocation);
+			AddGridWPsToMap(grid, Grid.ScanMode.Survey);
+		}
 
-			Grid grid = new Grid(currentDrone,
-					new PointLatLngAlt(
-						(double.Parse(TxtHomeLatitude.Text)),
-						(double.Parse(TxtHomeLongitude.Text)),
-						(float.Parse(TxtHomeAltitude.Text))));
+		private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			var t = (ToolStripMenuItem)sender;
+			Grid grid = new Grid(currentDrone, HomeLocation);
+			if (drawnPolygon.Points.Count < 2)
+            {
+				DialogResult dialogResult = MessageBox.Show("No polygon defined. Load a file?", "Load File", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					// grid.LoadGrid();
+					return;
+				}
+				else if (dialogResult == DialogResult.No)
+					MessageBox.Show("Please define a polygon.", "Error");
+			} else
+            {
+				switch (t.Name)
+				{
+					case "surveyToolStripMenuItem":
+						Transition transition = new Transition(new TransitionType_EaseInEaseOut(1000));
+						transition.add(configGridPanel, "Width", 300);
+						transition.add(configGridPanel, "Height", 300);
+						transition.run();
+						break;
+					case "corridorScanToolStripMenuItem":
+						AddGridWPsToMap(grid, Grid.ScanMode.Corridor);
+						break;
+				};
+			}
+		}
 
-			// await grid.Accept();
+		private async void AddGridWPsToMap(Grid grid, Grid.ScanMode scanMode)
+        {
 			await grid.Accept(
+				scanMode,
 				(double)altitudeNumericUpDown.Value,
 				(double)distanceNumericUpDown.Value,
 				(double)spacingNumericUpDown.Value,
 				(double)angleNumericUpDown.Value,
 				Grid.StartPosition.Home,
 				HomeLocation
-				);
+			);
 		}
-
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
