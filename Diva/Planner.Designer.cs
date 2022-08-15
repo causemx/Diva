@@ -41,7 +41,6 @@ namespace Diva
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
             this.flyToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnArm = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.BtnTakeOff = new System.Windows.Forms.ToolStripButton();
@@ -183,7 +182,6 @@ namespace Diva
             this.flyToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.flyToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.toolStripSeparator3,
             this.BtnArm,
             this.toolStripLabel8,
             this.BtnTakeOff,
@@ -207,11 +205,6 @@ namespace Diva
             resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
             this.toolStripLabel1.ForeColor = System.Drawing.Color.White;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
             // BtnArm
             // 
@@ -1147,7 +1140,6 @@ namespace Diva
         private ToolStripLabel toolStripLabel7;
         private ToolStripLabel toolStripLabel5;
         private ToolStripButton BtnArm;
-        private ToolStripSeparator toolStripSeparator3;
         private ToolStripLabel toolStripLabel8;
         private ToolStripMenuItem planToolStripMenuItem;
         private ToolStripMenuItem surveyToolStripMenuItem;

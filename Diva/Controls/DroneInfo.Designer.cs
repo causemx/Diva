@@ -30,22 +30,23 @@
 		{
             this.PBDroneView = new System.Windows.Forms.PictureBox();
             this.TxtDroneName = new System.Windows.Forms.Label();
-            this.IconFlightTime = new System.Windows.Forms.PictureBox();
+            this.IconTime = new System.Windows.Forms.PictureBox();
             this.IconBattery = new System.Windows.Forms.PictureBox();
-            this.IconSignalStrength = new System.Windows.Forms.PictureBox();
+            this.IconSignal = new System.Windows.Forms.PictureBox();
             this.TxtEstimatedTime = new System.Windows.Forms.Label();
             this.TxtBatteryHealth = new System.Windows.Forms.Label();
             this.TxtSatelliteCount = new System.Windows.Forms.Label();
             this.TxtSystemID = new System.Windows.Forms.Label();
             this.BtnExpand = new System.Windows.Forms.Button();
-            this.iconRemoteControl = new System.Windows.Forms.PictureBox();
+            this.iconRC = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.armStatusLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IconFlightTime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IconTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconBattery)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IconSignalStrength)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconRemoteControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IconSignal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconRC)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PBDroneView
@@ -64,48 +65,52 @@
             this.TxtDroneName.AutoSize = true;
             this.TxtDroneName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.TxtDroneName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.TxtDroneName.Location = new System.Drawing.Point(66, 22);
+            this.TxtDroneName.Location = new System.Drawing.Point(71, 31);
             this.TxtDroneName.Name = "TxtDroneName";
             this.TxtDroneName.Size = new System.Drawing.Size(49, 15);
             this.TxtDroneName.TabIndex = 1;
             this.TxtDroneName.Text = "APM-1";
             // 
-            // IconFlightTime
+            // IconTime
             // 
-            this.IconFlightTime.Image = global::Diva.Properties.Resources.icon_burger_24;
-            this.IconFlightTime.Location = new System.Drawing.Point(147, 14);
-            this.IconFlightTime.Name = "IconFlightTime";
-            this.IconFlightTime.Size = new System.Drawing.Size(24, 24);
-            this.IconFlightTime.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.IconFlightTime.TabIndex = 2;
-            this.IconFlightTime.TabStop = false;
+            this.IconTime.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.IconTime.Image = global::Diva.Properties.Resources.icon_burger_24;
+            this.IconTime.Location = new System.Drawing.Point(16, 5);
+            this.IconTime.Name = "IconTime";
+            this.IconTime.Size = new System.Drawing.Size(24, 24);
+            this.IconTime.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.IconTime.TabIndex = 2;
+            this.IconTime.TabStop = false;
             // 
             // IconBattery
             // 
+            this.IconBattery.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.IconBattery.Image = global::Diva.Properties.Resources.icon_burger_24;
-            this.IconBattery.Location = new System.Drawing.Point(211, 14);
+            this.IconBattery.Location = new System.Drawing.Point(73, 5);
             this.IconBattery.Name = "IconBattery";
             this.IconBattery.Size = new System.Drawing.Size(24, 24);
             this.IconBattery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.IconBattery.TabIndex = 3;
             this.IconBattery.TabStop = false;
             // 
-            // IconSignalStrength
+            // IconSignal
             // 
-            this.IconSignalStrength.Image = global::Diva.Properties.Resources.icon_burger_24;
-            this.IconSignalStrength.Location = new System.Drawing.Point(281, 14);
-            this.IconSignalStrength.Name = "IconSignalStrength";
-            this.IconSignalStrength.Size = new System.Drawing.Size(24, 24);
-            this.IconSignalStrength.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.IconSignalStrength.TabIndex = 4;
-            this.IconSignalStrength.TabStop = false;
+            this.IconSignal.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.IconSignal.Image = global::Diva.Properties.Resources.icon_burger_24;
+            this.IconSignal.Location = new System.Drawing.Point(130, 5);
+            this.IconSignal.Name = "IconSignal";
+            this.IconSignal.Size = new System.Drawing.Size(24, 24);
+            this.IconSignal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.IconSignal.TabIndex = 4;
+            this.IconSignal.TabStop = false;
             // 
             // TxtEstimatedTime
             // 
+            this.TxtEstimatedTime.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.TxtEstimatedTime.AutoSize = true;
             this.TxtEstimatedTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.TxtEstimatedTime.ForeColor = System.Drawing.Color.White;
-            this.TxtEstimatedTime.Location = new System.Drawing.Point(141, 40);
+            this.TxtEstimatedTime.Location = new System.Drawing.Point(11, 37);
             this.TxtEstimatedTime.Name = "TxtEstimatedTime";
             this.TxtEstimatedTime.Size = new System.Drawing.Size(35, 15);
             this.TxtEstimatedTime.TabIndex = 5;
@@ -113,10 +118,11 @@
             // 
             // TxtBatteryHealth
             // 
+            this.TxtBatteryHealth.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.TxtBatteryHealth.AutoSize = true;
             this.TxtBatteryHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.TxtBatteryHealth.ForeColor = System.Drawing.Color.White;
-            this.TxtBatteryHealth.Location = new System.Drawing.Point(205, 40);
+            this.TxtBatteryHealth.Location = new System.Drawing.Point(66, 37);
             this.TxtBatteryHealth.Name = "TxtBatteryHealth";
             this.TxtBatteryHealth.Size = new System.Drawing.Size(39, 15);
             this.TxtBatteryHealth.TabIndex = 6;
@@ -125,10 +131,11 @@
             // 
             // TxtSatelliteCount
             // 
+            this.TxtSatelliteCount.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.TxtSatelliteCount.AutoSize = true;
             this.TxtSatelliteCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.TxtSatelliteCount.ForeColor = System.Drawing.Color.White;
-            this.TxtSatelliteCount.Location = new System.Drawing.Point(273, 40);
+            this.TxtSatelliteCount.Location = new System.Drawing.Point(122, 37);
             this.TxtSatelliteCount.Name = "TxtSatelliteCount";
             this.TxtSatelliteCount.Size = new System.Drawing.Size(40, 15);
             this.TxtSatelliteCount.TabIndex = 7;
@@ -139,7 +146,7 @@
             this.TxtSystemID.AutoSize = true;
             this.TxtSystemID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.TxtSystemID.ForeColor = System.Drawing.Color.White;
-            this.TxtSystemID.Location = new System.Drawing.Point(78, 12);
+            this.TxtSystemID.Location = new System.Drawing.Point(85, 12);
             this.TxtSystemID.Name = "TxtSystemID";
             this.TxtSystemID.Size = new System.Drawing.Size(21, 15);
             this.TxtSystemID.TabIndex = 8;
@@ -152,69 +159,77 @@
             this.BtnExpand.FlatAppearance.BorderSize = 0;
             this.BtnExpand.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnExpand.Image = global::Diva.Properties.Resources.icon_btn_expand;
-            this.BtnExpand.Location = new System.Drawing.Point(562, 17);
+            this.BtnExpand.Location = new System.Drawing.Point(377, 16);
             this.BtnExpand.Name = "BtnExpand";
             this.BtnExpand.Size = new System.Drawing.Size(36, 30);
             this.BtnExpand.TabIndex = 9;
             this.BtnExpand.UseVisualStyleBackColor = true;
             this.BtnExpand.Click += new System.EventHandler(this.BtnExpand_Click);
             // 
-            // iconRemoteControl
+            // iconRC
             // 
-            this.iconRemoteControl.Image = global::Diva.Properties.Resources.icon_burger_24;
-            this.iconRemoteControl.Location = new System.Drawing.Point(349, 14);
-            this.iconRemoteControl.Name = "iconRemoteControl";
-            this.iconRemoteControl.Size = new System.Drawing.Size(24, 24);
-            this.iconRemoteControl.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.iconRemoteControl.TabIndex = 10;
-            this.iconRemoteControl.TabStop = false;
+            this.iconRC.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.iconRC.Image = global::Diva.Properties.Resources.icon_burger_24;
+            this.iconRC.Location = new System.Drawing.Point(188, 5);
+            this.iconRC.Name = "iconRC";
+            this.iconRC.Size = new System.Drawing.Size(24, 24);
+            this.iconRC.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.iconRC.TabIndex = 10;
+            this.iconRC.TabStop = false;
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(342, 40);
+            this.label1.Location = new System.Drawing.Point(180, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 15);
             this.label1.TabIndex = 11;
             this.label1.Text = "00 cut";
             // 
-            // armStatusLabel
+            // tableLayoutPanel1
             // 
-            this.armStatusLabel.AutoSize = true;
-            this.armStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.armStatusLabel.ForeColor = System.Drawing.Color.White;
-            this.armStatusLabel.Location = new System.Drawing.Point(456, 23);
-            this.armStatusLabel.Name = "armStatusLabel";
-            this.armStatusLabel.Size = new System.Drawing.Size(39, 15);
-            this.armStatusLabel.TabIndex = 12;
-            this.armStatusLabel.Text = "status";
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Controls.Add(this.label1, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.TxtEstimatedTime, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.iconRC, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.IconBattery, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.TxtBatteryHealth, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.IconSignal, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.TxtSatelliteCount, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.IconTime, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(141, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(230, 55);
+            this.tableLayoutPanel1.TabIndex = 12;
             // 
             // DroneInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
-            this.Controls.Add(this.armStatusLabel);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.iconRemoteControl);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.BtnExpand);
             this.Controls.Add(this.TxtSystemID);
-            this.Controls.Add(this.TxtSatelliteCount);
-            this.Controls.Add(this.TxtBatteryHealth);
-            this.Controls.Add(this.TxtEstimatedTime);
-            this.Controls.Add(this.IconSignalStrength);
-            this.Controls.Add(this.IconBattery);
-            this.Controls.Add(this.IconFlightTime);
             this.Controls.Add(this.TxtDroneName);
             this.Controls.Add(this.PBDroneView);
             this.Name = "DroneInfo";
-            this.Size = new System.Drawing.Size(601, 60);
+            this.Size = new System.Drawing.Size(426, 60);
             ((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IconFlightTime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IconTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconBattery)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IconSignalStrength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconRemoteControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IconSignal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconRC)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,16 +239,16 @@
 
 		private System.Windows.Forms.PictureBox PBDroneView;
 		private System.Windows.Forms.Label TxtDroneName;
-		private System.Windows.Forms.PictureBox IconFlightTime;
+		private System.Windows.Forms.PictureBox IconTime;
 		private System.Windows.Forms.PictureBox IconBattery;
-		private System.Windows.Forms.PictureBox IconSignalStrength;
+		private System.Windows.Forms.PictureBox IconSignal;
 		private System.Windows.Forms.Label TxtEstimatedTime;
 		private System.Windows.Forms.Label TxtBatteryHealth;
 		private System.Windows.Forms.Label TxtSatelliteCount;
 		private System.Windows.Forms.Label TxtSystemID;
 		private System.Windows.Forms.Button BtnExpand;
-        private System.Windows.Forms.PictureBox iconRemoteControl;
+        private System.Windows.Forms.PictureBox iconRC;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label armStatusLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
