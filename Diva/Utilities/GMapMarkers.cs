@@ -310,4 +310,70 @@ namespace Diva.Utilities
 			g.DrawImageUnscaled(Localcache2, LocalPosition.X, LocalPosition.Y);
 		}
 	}
+
+    [Serializable]
+    public class GMapRouteExtend : GMapRoute
+    {
+
+        float shift_X = 15;
+        float shift_Y = 15;
+
+        public GMapRouteExtend(IEnumerable<PointLatLng> ps, string n) : base(ps, n) { }
+
+        public GMapRouteExtend(string n) : base(n) { }
+
+        public override void OnRender(Graphics g)
+        {
+            base.OnRender(g);
+            int i = 0;
+
+            GPoint lastPoint = new GPoint();
+            PointLatLng lastPointLatLng = new PointLatLng();
+            while (i < LocalPoints.Count)
+            {
+                GPoint p = LocalPoints[i];
+                PointLatLng pl = Points[i];
+                if (i != 0)
+                {
+                    // Middle mileage annotation
+                    GPoint mid = new GPoint((lastPoint.X + p.X) / 2, (lastPoint.Y + p.Y) / 2);
+                    double mileage = Overlay.Control.MapProvider.Projection.GetDistance(pl, lastPointLatLng) * 1000.0;
+                    string text = string.Format("+{0}m", mileage.ToString(".##"));
+                    Font font = new Font("arial", 10, FontStyle.Bold);
+                    SizeF textSize = g.MeasureString(text, font);
+                    RectangleF rect = new RectangleF(new Point((int)mid.X, (int)mid.Y), textSize);
+                    // g.DrawArc(Pens.WhiteSmoke, rect, 0, 360);
+                    var angle = Math.Atan2(p.Y-lastPoint.Y, p.X-lastPoint.X)*(180/Math.PI);
+                    // g.DrawString(text, font, new SolidBrush(Color.Red), mid.X, mid.Y);
+                    g.DrawString(angle.ToString("####0.00"), font, new SolidBrush(Color.Red), mid.X, mid.Y);
+                    // Draw Curve
+                    if (angle > 160)
+                    {
+                        /*
+                        g.DrawBezier(Pens.DarkRed,
+                        lastPoint.X - shift_X, lastPoint.Y - shift_Y,
+                        lastPoint.X, lastPoint.Y,
+                        p.X - shift_X, p.Y - shift_Y,
+                        p.X, p.Y);*/
+
+                        double[] xs1 = { lastPoint.X, ((lastPoint.X + p.X) / 2)-1, (lastPoint.X + p.X) / 2, ((lastPoint.X + p.X) / 2)+1, p.X};
+                        double[] ys1 = { lastPoint.Y, ((lastPoint.Y + p.Y) / 2)-2, ((lastPoint.Y + p.Y) / 2)-10, ((lastPoint.Y + p.Y) / 2)-2, p.Y };
+                        (double[] xs2, double[] ys2) = Gird.Curve.Cubic.InterpolateXY(xs1, ys1, 5);
+                        PointF[] ps = new PointF[5];
+                        for (int k = 0; k < 5; k++)
+                        {
+                            ps[k] = new PointF((float)xs2[k], (float)ys2[k]);
+                            g.DrawEllipse(Pens.Red, (float)xs2[k], (float)ys2[k], 10, 10);
+                            g.FillEllipse(Brushes.Red, (float)xs2[k], (float)ys2[k], 10, 10);
+                        }   
+                        g.DrawCurve(Pens.WhiteSmoke, ps);
+                    }
+                }
+
+                lastPoint = p;
+                lastPointLatLng = pl;
+                i++;
+            }
+        }
+    }
 }

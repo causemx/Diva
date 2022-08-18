@@ -54,7 +54,7 @@ namespace Diva
         {
             internal override void doPaint(Graphics g)
             {
-				var bmp = new Bitmap(Resources.icon_polygon_24);
+				var bmp = new Bitmap(Resources.icon_fish_24);
 				
 				g.DrawImage(bmp, (Width/2-bmp.Width/2), (Height/2-bmp.Height/2));
 			}
@@ -238,7 +238,7 @@ namespace Diva
 
 		private void Map_Paint(object sender, PaintEventArgs e)
 		{
-			polyicon.Location = new Point(25, 500);
+			polyicon.Location = new Point(20, 575);
 			polyicon.Paint(e.Graphics);
 		}
 
@@ -1130,7 +1130,7 @@ namespace Diva
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
 
-				GMarkerGoogle m = new GMarkerGoogle(point, new Bitmap(Resources.icon_ballon_32))
+				GMarkerGoogle m = new GMarkerGoogle(point, new Bitmap(Resources.icon_fish_32))
 				{
 					ToolTipMode = MarkerTooltipMode.Never,
 					ToolTipText = "grid" + tag,

@@ -329,9 +329,9 @@ namespace Diva.Mission
             {
                 PointLatLngAlt first = wproute[0];
                 PointLatLngAlt last = wproute[wproute.Count - 1];
-                GMapRoute route = new GMapRoute("wp route")
+                GMapRouteExtend route = new GMapRouteExtend("wp route")
                 { Stroke = new Pen(RoutingPathColor, 4) { DashStyle = DashStyle.Custom } };
-                GMapRoute homeRoute = new GMapRoute("home route") { Stroke = new Pen(RoutingPathColor, 2) };
+                GMapRouteExtend homeRoute = new GMapRouteExtend("home route") { Stroke = new Pen(RoutingPathColor, 2) };
 
                 route.Points.AddRange(wproute);
 										

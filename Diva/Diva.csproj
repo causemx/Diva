@@ -269,6 +269,7 @@
     </Compile>
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="FlightRecorder.cs" />
+    <Compile Include="Gird\Curve.cs" />
     <Compile Include="HUDPanel.cs" />
     <Compile Include="Mavlink\MavStream.cs" />
     <Compile Include="Mavlink\MavDrone.cs" />
@@ -450,6 +451,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_fish_24.png" />
+    <None Include="Resources\icon_fish_32.png" />
     <None Include="Resources\icon_polygon_24.png" />
     <None Include="Resources\icon_mid_plus_32.png" />
     <None Include="Resources\icon_ballon_32.png" />
@@ -676,9 +679,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Gird\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

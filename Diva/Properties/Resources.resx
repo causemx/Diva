@@ -388,13 +388,13 @@
   <data name="icon_cancel_20" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_cancel_20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_ballon_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_ballon_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon_mid_plus_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_mid_plus_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_polygon_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_polygon_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_fish_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_fish_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_fish_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_fish_24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
