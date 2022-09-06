@@ -1,4 +1,5 @@
 ﻿using Diva.Controls;
+using Diva.Controls.Dialogs;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
@@ -21,7 +22,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using Transitions;
 using static MAVLink;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
 
@@ -3406,20 +3406,6 @@ namespace Diva
 
         #endregion
 
-		private void config_grid_button_click(object sender, EventArgs e)
-        {
-			Transition t = new Transition(new TransitionType_EaseInEaseOut(1000));
-			t.add(configGridPanel, "Width", 1);
-			t.add(configGridPanel, "Height", 1);
-			t.run();
-		}
-
-        private void gridAcceptbutton_Click(object sender, EventArgs e)
-        {
-			Grid grid = new Grid(currentDrone, HomeLocation);
-			AddGridWPsToMap(grid, Grid.ScanMode.Survey);
-		}
-
 		private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			var t = (ToolStripMenuItem)sender;
@@ -3439,32 +3425,19 @@ namespace Diva
 				switch (t.Name)
 				{
 					case "surveyToolStripMenuItem":
-						Transition transition = new Transition(new TransitionType_EaseInEaseOut(1000));
-						transition.add(configGridPanel, "Width", 300);
-						transition.add(configGridPanel, "Height", 300);
-						transition.run();
+						DialogConfigSimplegrid dcs = new DialogConfigSimplegrid(grid, HomeLocation);
+						dcs.ShowDialog();
 						break;
 					case "corridorScanToolStripMenuItem":
-						AddGridWPsToMap(grid, Grid.ScanMode.Corridor);
+						// AddGridWPsToMap(grid, Grid.ScanMode.Corridor);
 						break;
 				};
 			}
 		}
 
-		private async void AddGridWPsToMap(Grid grid, Grid.ScanMode scanMode)
-        {
-			await grid.Accept(
-				scanMode,
-				(double)altitudeNumericUpDown.Value,
-				(double)distanceNumericUpDown.Value,
-				(double)spacingNumericUpDown.Value,
-				(double)angleNumericUpDown.Value,
-				Grid.StartPosition.Home,
-				HomeLocation
-			);
-		}
+	
 
-        private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             Console.WriteLine("DataGridError: " + e.Exception);
             Console.WriteLine("StackTrace: " + e.Exception.StackTrace);

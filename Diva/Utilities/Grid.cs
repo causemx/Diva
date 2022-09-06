@@ -101,7 +101,7 @@ namespace Diva.Utilities
             angle = (double)(getAngleOfLongestSide(list) + 360) % 360;
         }
 
-        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double tangle, StartPosition startPos, PointLatLngAlt home)
+        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double angle, StartPosition startPos, PointLatLngAlt home)
         {
 			// quickadd = true;
 
@@ -109,7 +109,7 @@ namespace Diva.Utilities
             
             if (mode == ScanMode.Survey)
             {
-                grid = await CreateGridAsync(list, 30, 50, 0, angle, StartPosition.Home, Home).ConfigureAwait(true);
+                grid = await CreateGridAsync(list, altitude, distance, spacing, angle, StartPosition.Home, Home).ConfigureAwait(true);
             }
             else if (mode == ScanMode.Corridor) {
                 grid = await CreateCorridorAsync(list, 30, 50, 0, angle, 0, 0, StartPosition.Home, false, 0, 100).ConfigureAwait(true);

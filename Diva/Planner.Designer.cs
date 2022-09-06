@@ -55,20 +55,6 @@ namespace Diva
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
             this.BtnRTL = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.configGridPanel = new System.Windows.Forms.Panel();
-            this.shrinkButton = new System.Windows.Forms.Button();
-            this.gridAcceptbutton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.spacingNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.distanceNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.angleNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.altitudeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.startFromComboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.IconGPSLostWarning = new System.Windows.Forms.Button();
             this.IconModeWarning = new System.Windows.Forms.Button();
             this.BtnBreakAction = new Diva.Controls.Components.MyButton();
@@ -135,12 +121,6 @@ namespace Diva
             this.SplitContainer.Panel2.SuspendLayout();
             this.SplitContainer.SuspendLayout();
             this.flyToolStrip.SuspendLayout();
-            this.configGridPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spacingNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.distanceNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.altitudeNumericUpDown)).BeginInit();
             this.TSMainPanel.SuspendLayout();
             this.cmMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVWayPoints)).BeginInit();
@@ -155,7 +135,6 @@ namespace Diva
             // SplitContainer.Panel1
             // 
             this.SplitContainer.Panel1.Controls.Add(this.flyToolStrip);
-            this.SplitContainer.Panel1.Controls.Add(this.configGridPanel);
             this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
@@ -296,120 +275,6 @@ namespace Diva
             this.toolStripLabel5.ForeColor = System.Drawing.Color.White;
             this.toolStripLabel5.Name = "toolStripLabel5";
             resources.ApplyResources(this.toolStripLabel5, "toolStripLabel5");
-            // 
-            // configGridPanel
-            // 
-            resources.ApplyResources(this.configGridPanel, "configGridPanel");
-            this.configGridPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
-            this.configGridPanel.Controls.Add(this.shrinkButton);
-            this.configGridPanel.Controls.Add(this.gridAcceptbutton);
-            this.configGridPanel.Controls.Add(this.tableLayoutPanel1);
-            this.configGridPanel.Name = "configGridPanel";
-            // 
-            // shrinkButton
-            // 
-            resources.ApplyResources(this.shrinkButton, "shrinkButton");
-            this.shrinkButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.shrinkButton.FlatAppearance.BorderSize = 0;
-            this.shrinkButton.Name = "shrinkButton";
-            this.shrinkButton.UseVisualStyleBackColor = true;
-            this.shrinkButton.Click += new System.EventHandler(this.config_grid_button_click);
-            // 
-            // gridAcceptbutton
-            // 
-            resources.ApplyResources(this.gridAcceptbutton, "gridAcceptbutton");
-            this.gridAcceptbutton.ForeColor = System.Drawing.Color.White;
-            this.gridAcceptbutton.Name = "gridAcceptbutton";
-            this.gridAcceptbutton.UseVisualStyleBackColor = true;
-            this.gridAcceptbutton.Click += new System.EventHandler(this.gridAcceptbutton_Click);
-            // 
-            // tableLayoutPanel1
-            // 
-            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.spacingNumericUpDown, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.distanceNumericUpDown, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.angleNumericUpDown, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.altitudeNumericUpDown, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.startFromComboBox, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            // 
-            // label6
-            // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Name = "label6";
-            // 
-            // spacingNumericUpDown
-            // 
-            resources.ApplyResources(this.spacingNumericUpDown, "spacingNumericUpDown");
-            this.spacingNumericUpDown.Name = "spacingNumericUpDown";
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Name = "label4";
-            // 
-            // distanceNumericUpDown
-            // 
-            resources.ApplyResources(this.distanceNumericUpDown, "distanceNumericUpDown");
-            this.distanceNumericUpDown.Name = "distanceNumericUpDown";
-            this.distanceNumericUpDown.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            // 
-            // angleNumericUpDown
-            // 
-            resources.ApplyResources(this.angleNumericUpDown, "angleNumericUpDown");
-            this.angleNumericUpDown.Name = "angleNumericUpDown";
-            this.angleNumericUpDown.Value = new decimal(new int[] {
-            90,
-            0,
-            0,
-            0});
-            // 
-            // label2
-            // 
-            this.label2.ForeColor = System.Drawing.Color.White;
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // altitudeNumericUpDown
-            // 
-            resources.ApplyResources(this.altitudeNumericUpDown, "altitudeNumericUpDown");
-            this.altitudeNumericUpDown.Name = "altitudeNumericUpDown";
-            this.altitudeNumericUpDown.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // startFromComboBox
-            // 
-            this.startFromComboBox.FormattingEnabled = true;
-            this.startFromComboBox.Items.AddRange(new object[] {
-            resources.GetString("startFromComboBox.Items")});
-            resources.ApplyResources(this.startFromComboBox, "startFromComboBox");
-            this.startFromComboBox.Name = "startFromComboBox";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Name = "label1";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Name = "label3";
             // 
             // IconGPSLostWarning
             // 
@@ -1032,14 +897,6 @@ namespace Diva
             this.SplitContainer.ResumeLayout(false);
             this.flyToolStrip.ResumeLayout(false);
             this.flyToolStrip.PerformLayout();
-            this.configGridPanel.ResumeLayout(false);
-            this.configGridPanel.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.spacingNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.distanceNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.altitudeNumericUpDown)).EndInit();
             this.TSMainPanel.ResumeLayout(false);
             this.TSMainPanel.PerformLayout();
             this.cmMap.ResumeLayout(false);
@@ -1111,20 +968,6 @@ namespace Diva
         internal MyGMap Map;
         internal AltitudeControlPanel AltitudeControlPanel;
         private ToolStripSeparator toolStripSeparator2;
-        private Panel configGridPanel;
-        private Button gridAcceptbutton;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label6;
-        private NumericUpDown spacingNumericUpDown;
-        private Label label4;
-        private NumericUpDown distanceNumericUpDown;
-        private Label label3;
-        private NumericUpDown angleNumericUpDown;
-        private Label label2;
-        private Label label1;
-        private NumericUpDown altitudeNumericUpDown;
-        private ComboBox startFromComboBox;
-        private Button shrinkButton;
         private ToolStrip flyToolStrip;
         private ToolStripLabel toolStripLabel1;
         private ToolStripButton BtnTakeOff;

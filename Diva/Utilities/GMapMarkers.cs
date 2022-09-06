@@ -327,8 +327,8 @@ namespace Diva.Utilities
             base.OnRender(g);
             int i = 0;
 
-            GPoint lastPoint = new GPoint();
-            PointLatLng lastPointLatLng = new PointLatLng();
+            GPoint pp = new GPoint(); //previous_point
+            PointLatLng pptLatLng = new PointLatLng();
             while (i < LocalPoints.Count)
             {
                 GPoint p = LocalPoints[i];
@@ -336,43 +336,59 @@ namespace Diva.Utilities
                 if (i != 0)
                 {
                     // Middle mileage annotation
-                    GPoint mid = new GPoint((lastPoint.X + p.X) / 2, (lastPoint.Y + p.Y) / 2);
-                    double mileage = Overlay.Control.MapProvider.Projection.GetDistance(pl, lastPointLatLng) * 1000.0;
+                    GPoint mid = new GPoint((pp.X + p.X) / 2, (pp.Y + p.Y) / 2);
+                    double mileage = Overlay.Control.MapProvider.Projection.GetDistance(pl, pptLatLng) * 1000.0;
                     string text = string.Format("+{0}m", mileage.ToString(".##"));
                     Font font = new Font("arial", 10, FontStyle.Bold);
                     SizeF textSize = g.MeasureString(text, font);
                     RectangleF rect = new RectangleF(new Point((int)mid.X, (int)mid.Y), textSize);
                     // g.DrawArc(Pens.WhiteSmoke, rect, 0, 360);
-                    var angle = Math.Atan2(p.Y-lastPoint.Y, p.X-lastPoint.X)*(180/Math.PI);
+                    var angle = Math.Atan2(p.Y- pp.Y, p.X- pp.X)*(180/Math.PI);
                     // g.DrawString(text, font, new SolidBrush(Color.Red), mid.X, mid.Y);
-                    g.DrawString(angle.ToString("####0.00"), font, new SolidBrush(Color.Red), mid.X, mid.Y);
+                    g.DrawString(angle.ToString("####0.00"), font, new SolidBrush(Color.IndianRed), mid.X, mid.Y);
                     // Draw Curve
-                    if (angle > 160)
-                    {
-                        /*
-                        g.DrawBezier(Pens.DarkRed,
-                        lastPoint.X - shift_X, lastPoint.Y - shift_Y,
-                        lastPoint.X, lastPoint.Y,
-                        p.X - shift_X, p.Y - shift_Y,
-                        p.X, p.Y);*/
-
-                        double[] xs1 = { lastPoint.X, ((lastPoint.X + p.X) / 2)-1, (lastPoint.X + p.X) / 2, ((lastPoint.X + p.X) / 2)+1, p.X};
-                        double[] ys1 = { lastPoint.Y, ((lastPoint.Y + p.Y) / 2)-2, ((lastPoint.Y + p.Y) / 2)-10, ((lastPoint.Y + p.Y) / 2)-2, p.Y };
-                        (double[] xs2, double[] ys2) = Gird.Curve.Cubic.InterpolateXY(xs1, ys1, 5);
-                        PointF[] ps = new PointF[5];
-                        for (int k = 0; k < 5; k++)
-                        {
-                            ps[k] = new PointF((float)xs2[k], (float)ys2[k]);
-                            g.DrawEllipse(Pens.Red, (float)xs2[k], (float)ys2[k], 10, 10);
-                            g.FillEllipse(Brushes.Red, (float)xs2[k], (float)ys2[k], 10, 10);
-                        }   
-                        g.DrawCurve(Pens.WhiteSmoke, ps);
-                    }
+                    DrawArcBetweenTwoPoints(g, Pens.WhiteSmoke, new PointF(p.X, p.Y), new PointF(pp.X, pp.Y), 100, true);
                 }
 
-                lastPoint = p;
-                lastPointLatLng = pl;
+                pp = p;
+                pptLatLng = pl;
                 i++;
+            }
+        }
+
+        public void DrawArcBetweenTwoPoints(Graphics g, Pen pen, PointF a, PointF b, float radius, bool flip = false)
+        {
+            if (flip)
+            {
+                PointF temp = b;
+                b = a;
+                a = temp;
+            }
+
+            // get distance components
+            double x = b.X - a.X, y = b.Y - a.Y;
+            // get orientation angle
+            var θ = Math.Atan2(y, x);
+            // length between A and B
+            var l = Math.Sqrt(x * x + y * y);
+            if (2 * radius >= l)
+            {
+                // find the sweep angle (actually half the sweep angle)
+                var φ = Math.Asin(l / (2 * radius));
+                // triangle height from the chord to the center
+                var h = radius * Math.Cos(φ);
+                // get center point. 
+                // Use sin(θ)=y/l and cos(θ)=x/l
+                PointF C = new PointF(
+                    (float)(a.X + x / 2 - h * (y / l)),
+                    (float)(a.Y + y / 2 + h * (x / l)));
+
+                // Conversion factor between radians and degrees
+                const double to_deg = 180 / Math.PI;
+
+                // Draw arc based on square around center and start/sweep angles
+                g.DrawArc(pen, C.X - radius, C.Y - radius, 2 * radius, 2 * radius,
+                    (float)((θ - φ) * to_deg) - 90, (float)(2 * φ * to_deg));
             }
         }
     }

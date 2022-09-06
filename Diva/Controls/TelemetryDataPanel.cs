@@ -22,15 +22,15 @@ namespace Diva.Controls
 
         public void UpdateTelemetryData(double altitude, double verticalSpeed, double groundSpeed)
 		{
-			TxtVerticalSpeed.Text = verticalSpeed.ToString("F2");
-			TxtGroundSpeed.Text = groundSpeed.ToString("F2");
-			TxtAltitude.Text = altitude.ToString("F2");
+			labelVerticalspeed.Text = verticalSpeed.ToString("F2") + "m";
+			labelGroundspeed.Text = groundSpeed.ToString("F2") + "m/s";
+			labelAltitude.Text = altitude.ToString("F2") + "m/s";
 		}
 
 		public void UpdateStatusChecker(bool lowBattEnable, bool geoFenceEnable)
 		{
-			LBL_LowBatteryChecker.Text = lowBattEnable.ToString();
-			LBL_GeoFenceChecker.Text = geoFenceEnable.ToString();
+			// LBL_LowBatteryChecker.Text = lowBattEnable.ToString();
+			labelGeofenceEnable.Text = geoFenceEnable.ToString();
 				
 		}
 	}
