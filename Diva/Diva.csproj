@@ -485,6 +485,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_letter-v-48.png" />
+    <None Include="Resources\icon_letter-g-48.png" />
+    <None Include="Resources\icon_letter-f-48.png" />
+    <None Include="Resources\icon_letter-a-48.png" />
     <None Include="Resources\icon_fish_24.png" />
     <None Include="Resources\icon_fish_32.png" />
     <None Include="Resources\icon_polygon_24.png" />

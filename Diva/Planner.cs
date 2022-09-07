@@ -102,7 +102,7 @@ namespace Diva
 		internal GMapPolygon drawnPolygon;
         internal GMapPolygon wpPolygon;
 
-        private bool quickadd = false;
+        public bool quickadd = false;
 		private int selectedRow = 0;
 		private bool polygongridmode;
 

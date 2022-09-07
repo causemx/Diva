@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Diva.Mavlink;
 using GMap.NET;
 using GMap.NET.WindowsForms;
@@ -114,23 +115,36 @@ namespace Diva.Utilities
             else if (mode == ScanMode.Corridor) {
                 grid = await CreateCorridorAsync(list, 30, 50, 0, angle, 0, 0, StartPosition.Home, false, 0, 100).ConfigureAwait(true);
             }
-            
 
-            foreach (var plla in grid)
+
+            if (grid != null && grid.Count > 0)
             {
-                AddWP(plla.Lng, plla.Lat, plla.Alt, plla.Tag);
+                var planner = Planner.GetPlannerInstance();
+
+                planner.quickadd = true;
+
+                PointLatLngAlt lastpnt = PointLatLngAlt.Zero;
+
+                /*plugin.Host.AddWPtoList(MAVLink.MAV_CMD.DO_CHANGE_SPEED, 1,
+                    (int)((float)NUM_UpDownFlySpeed.Value / CurrentState.multiplierspeed), 0, 0, 0, 0, 0,
+                    null);*/
+
+                grid.ForEach(plla =>
+                {
+                    if (!(plla.Lat == lastpnt.Lat && plla.Lng == lastpnt.Lng && plla.Alt == lastpnt.Alt))
+                            AddWP(plla.Lng, plla.Lat, plla.Alt, plla.Tag);
+
+                        lastpnt = plla;
+                });
+
+                planner.quickadd = false;
+
+                planner.WriteKMLV2();
             }
-            // Redraw the polygon in MainMap
-            // plugin.Host.RedrawFPPolygon(list);
-            redrawPolygonSurvey(list);
-
-            // savesettings();
-
-            // MainV2.instance.FlightPlanner.quickadd = false;
-
-            // MainV2.instance.FlightPlanner.writeKML();
-            Planner.GetPlannerInstance()?.WriteKMLV2();
-
+            else
+            {
+                MessageBox.Show("Bad Grid", "Error");
+            }
         }
 
         private void AddWP(double Lng, double Lat, double Alt, string tag)
