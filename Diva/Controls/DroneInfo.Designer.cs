@@ -155,7 +155,6 @@
             this.TxtSystemID.Size = new System.Drawing.Size(19, 13);
             this.TxtSystemID.TabIndex = 8;
             this.TxtSystemID.Text = "00";
-            this.TxtSystemID.Visible = false;
             // 
             // BtnExpand
             // 

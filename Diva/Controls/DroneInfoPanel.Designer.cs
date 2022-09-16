@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.ThePanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.DroneInfoTip = new System.Windows.Forms.ToolTip(this.components);
             this.TelemetryData = new Diva.Controls.TelemetryDataPanel();
+            this.DroneInfoTip = new System.Windows.Forms.ToolTip(this.components);
             this.ThePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,11 +48,6 @@
             this.ThePanel.Size = new System.Drawing.Size(0, 402);
             this.ThePanel.TabIndex = 0;
             // 
-            // DroneInfoTip
-            // 
-            this.DroneInfoTip.UseAnimation = false;
-            this.DroneInfoTip.UseFading = false;
-            // 
             // TelemetryData
             // 
             this.TelemetryData.BackColor = System.Drawing.Color.Black;
@@ -62,6 +57,11 @@
             this.TelemetryData.Name = "TelemetryData";
             this.TelemetryData.Size = new System.Drawing.Size(0, 402);
             this.TelemetryData.TabIndex = 0;
+            // 
+            // DroneInfoTip
+            // 
+            this.DroneInfoTip.UseAnimation = false;
+            this.DroneInfoTip.UseFading = false;
             // 
             // DroneInfoPanel
             // 

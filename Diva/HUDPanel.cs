@@ -66,7 +66,7 @@ namespace Diva
             var pt = GetReferencePoint();
             if (pt == null) return;
 
-            int refx = pt.Value.X, refy = pt.Value.Y;
+            int refx = pt.Value.X, refy = -pt.Value.Y/4;
             var (roll, yaw, pitch) = GetAttitude();
 
             using (var bgbrush = new SolidBrush(BorderColor))
