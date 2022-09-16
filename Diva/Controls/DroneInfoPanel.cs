@@ -49,7 +49,7 @@ namespace Diva.Controls
 		{
 			InitializeComponent();
 			TelemetryData.Visible = false;
-            TelemetryData.Height = 0; // disable display
+            // TelemetryData.Height = 0; // disable display
 		}
 
 		public DroneInfo AddDrone(MavDrone drone, bool setActive = true)
@@ -112,26 +112,28 @@ namespace Diva.Controls
                 try
                 {
                     var di = i as DroneInfo;
+					bool arm_status = false;
 
                     if (di == ActiveDroneInfo)
                     {
                         var status = di.Drone.Status;
+						arm_status = status.IsArmed;
                         TelemetryData.UpdateTelemetryData(status.Altitude,
-                            status.VerticalSpeed, status.GroundSpeed);
+                            status.VerticalSpeed, status.GroundSpeed, status.AirSpeed);
                         string getText(string name) =>
                             TelemetryData.Controls.Find(name, true)[0].Text;
-                        DroneInfoTip.SetToolTip(di, $@"{getText("GBAltitude")}: {getText("TxtAltitude")}
-{getText("GBGroundSpeed")}: {getText("TxtGroundSpeed")}
-{getText("GBVerticalSpeed")}: {getText("TxtVerticalSpeed")}
+                        DroneInfoTip.SetToolTip(di, $@"{"Altitude"}: {getText("labelAltitude")}
+{"GroundSpeed"}: {getText("labelGroundspeed")}
+{"VerticalSpeed"}: {getText("labelVerticalspeed")}
 ({status.Latitude}, {status.Longitude})");
                     }
-
+					di.IsArming(arm_status);
                     di.UpdateTelemetryData(DroneInfoTip);
                     MAVLink.MAVLinkParamList paramList = ActiveDroneInfo.Drone.Status.Params;
                     if (paramList["FENCE_ENABLE"] != null)
                         TelemetryData.UpdateStatusChecker(true, paramList["FENCE_ENABLE"].Value == 1 ? true : false);
                 }
-                catch { }
+                catch(Exception e) { Planner.log.Error(e.ToString()); }
             }
 		}
 

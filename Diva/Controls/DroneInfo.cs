@@ -46,6 +46,9 @@ namespace Diva.Controls
         public void Activate() => IsActive = true;
         public void Deactivate() => IsActive = false;
 
+        public void IsArming(bool arming) => labelIsArm.Text = arming ? "ARM" : "DisARM";
+      
+
         public void UpdateTelemetryData(ToolTip toolTip)
         {
             if (Drone.Status.BatteryVoltage == 0)
@@ -155,6 +158,29 @@ namespace Diva.Controls
                     d.ShowDialog();
                     break;
             }
+        }
+
+        private void Pb_MouseHover(object sender, EventArgs e)
+        {
+            var pb = (PictureBox)sender;
+            ToolTip tt = new ToolTip();
+            
+            switch (pb.Name)
+            {
+                case "IconTime":
+                    tt.SetToolTip(pb, "Telemetry RSSI");
+                    break;
+                case "IconBattery":
+                    tt.SetToolTip(pb, "Battery");
+                    break;
+                case "IconGPS":
+                    tt.SetToolTip(pb, "GPS Status");
+                    break;
+                case "iconRC":
+                    tt.SetToolTip(pb, "RC RSSI");
+                    break;
+            }
+            
         }
     }
 }

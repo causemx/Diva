@@ -353,6 +353,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_gps_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon_gps_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_homepoint {
             get {
                 object obj = ResourceManager.GetObject("icon_homepoint", resourceCulture);
@@ -603,6 +613,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_letter_h_48 {
+            get {
+                object obj = ResourceManager.GetObject("icon_letter_h_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_letter_v_48 {
             get {
                 object obj = ResourceManager.GetObject("icon_letter_v_48", resourceCulture);
@@ -653,6 +673,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_rc_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon_rc_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_satellite {
             get {
                 object obj = ResourceManager.GetObject("icon_satellite", resourceCulture);
@@ -666,6 +696,16 @@ namespace Diva.Properties {
         internal static System.Drawing.Bitmap icon_stopwatch {
             get {
                 object obj = ResourceManager.GetObject("icon_stopwatch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_telegram_2_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon_telegram_2_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

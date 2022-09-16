@@ -325,10 +325,14 @@ namespace Diva.Utilities
         public override void OnRender(Graphics g)
         {
             base.OnRender(g);
-            int i = 0;
 
+            int i = 0;
             GPoint pp = new GPoint(); //previous_point
             PointLatLng pptLatLng = new PointLatLng();
+
+            var arr = GetDistanceList(LocalPoints);
+
+            
             while (i < LocalPoints.Count)
             {
                 GPoint p = LocalPoints[i];
@@ -343,11 +347,11 @@ namespace Diva.Utilities
                     SizeF textSize = g.MeasureString(text, font);
                     RectangleF rect = new RectangleF(new Point((int)mid.X, (int)mid.Y), textSize);
                     // g.DrawArc(Pens.WhiteSmoke, rect, 0, 360);
-                    var angle = Math.Atan2(p.Y- pp.Y, p.X- pp.X)*(180/Math.PI);
+                    var distance = GetDistance(p, pp);
                     // g.DrawString(text, font, new SolidBrush(Color.Red), mid.X, mid.Y);
-                    g.DrawString(angle.ToString("####0.00"), font, new SolidBrush(Color.IndianRed), mid.X, mid.Y);
+                    g.DrawString(distance.ToString("####0.00"), font, new SolidBrush(Color.Red), mid.X, mid.Y);
                     // Draw Curve
-                    DrawArcBetweenTwoPoints(g, Pens.WhiteSmoke, new PointF(p.X, p.Y), new PointF(pp.X, pp.Y), 100, true);
+                    DrawArcBetweenTwoPoints(g, new Pen(Color.GreenYellow, 5), new PointF(p.X, p.Y), new PointF(pp.X, pp.Y), 100, true);
                 }
 
                 pp = p;
@@ -355,6 +359,18 @@ namespace Diva.Utilities
                 i++;
             }
         }
+                
+        public double[] GetDistanceList(List<GPoint> plist)
+        {
+            List<double> li = new List<double>();
+            for (int i = 1; i < plist.Count; i++)
+            {
+                li.Add(GetDistance(plist[i - 1], plist[i]));
+            }
+            return li.ToArray();
+        }
+
+        public double GetDistance(GPoint p1, GPoint p2) => Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
 
         public void DrawArcBetweenTwoPoints(Graphics g, Pen pen, PointF a, PointF b, float radius, bool flip = false)
         {

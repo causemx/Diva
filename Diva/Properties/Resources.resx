@@ -409,4 +409,16 @@
   <data name="icon_letter_v_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_letter-v-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_letter_h_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_letter-h-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_gps_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_gps-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_rc_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_rc-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_telegram_2_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_telegram-2-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -139,6 +139,13 @@ namespace Diva.Mavlink
             }
         }
 
+        float airspeed = 0;
+        public float AirSpeed
+        {
+            get => airspeed*1; // multiplierspeed:1
+            set => airspeed = value;
+        }
+
         public uint FlightMode { get; set; }
         public FlightMode FlightModeType { get; set; } = Diva.Mavlink.FlightMode.CopterMode;
 

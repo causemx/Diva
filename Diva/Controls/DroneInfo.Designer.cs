@@ -32,7 +32,7 @@
             this.TxtDroneName = new System.Windows.Forms.Label();
             this.IconTime = new System.Windows.Forms.PictureBox();
             this.IconBattery = new System.Windows.Forms.PictureBox();
-            this.IconSignal = new System.Windows.Forms.PictureBox();
+            this.IconGPS = new System.Windows.Forms.PictureBox();
             this.TxtEstimatedTime = new System.Windows.Forms.Label();
             this.TxtBatteryHealth = new System.Windows.Forms.Label();
             this.TxtSatelliteCount = new System.Windows.Forms.Label();
@@ -41,10 +41,11 @@
             this.iconRC = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelIsArm = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconBattery)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IconSignal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IconGPS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconRC)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +66,7 @@
             this.TxtDroneName.AutoSize = true;
             this.TxtDroneName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.TxtDroneName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.TxtDroneName.Location = new System.Drawing.Point(71, 31);
+            this.TxtDroneName.Location = new System.Drawing.Point(77, 21);
             this.TxtDroneName.Name = "TxtDroneName";
             this.TxtDroneName.Size = new System.Drawing.Size(49, 15);
             this.TxtDroneName.TabIndex = 1;
@@ -74,35 +75,38 @@
             // IconTime
             // 
             this.IconTime.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.IconTime.Image = global::Diva.Properties.Resources.icon_burger_24;
+            this.IconTime.Image = global::Diva.Properties.Resources.icon_telegram_2_24;
             this.IconTime.Location = new System.Drawing.Point(16, 5);
             this.IconTime.Name = "IconTime";
             this.IconTime.Size = new System.Drawing.Size(24, 24);
             this.IconTime.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.IconTime.TabIndex = 2;
             this.IconTime.TabStop = false;
+            this.IconTime.MouseHover += new System.EventHandler(this.Pb_MouseHover);
             // 
             // IconBattery
             // 
             this.IconBattery.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.IconBattery.Image = global::Diva.Properties.Resources.icon_burger_24;
-            this.IconBattery.Location = new System.Drawing.Point(73, 5);
+            this.IconBattery.Image = global::Diva.Properties.Resources.icon_battery_normal;
+            this.IconBattery.Location = new System.Drawing.Point(71, 5);
             this.IconBattery.Name = "IconBattery";
-            this.IconBattery.Size = new System.Drawing.Size(24, 24);
+            this.IconBattery.Size = new System.Drawing.Size(28, 24);
             this.IconBattery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.IconBattery.TabIndex = 3;
             this.IconBattery.TabStop = false;
+            this.IconBattery.MouseHover += new System.EventHandler(this.Pb_MouseHover);
             // 
-            // IconSignal
+            // IconGPS
             // 
-            this.IconSignal.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.IconSignal.Image = global::Diva.Properties.Resources.icon_burger_24;
-            this.IconSignal.Location = new System.Drawing.Point(130, 5);
-            this.IconSignal.Name = "IconSignal";
-            this.IconSignal.Size = new System.Drawing.Size(24, 24);
-            this.IconSignal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.IconSignal.TabIndex = 4;
-            this.IconSignal.TabStop = false;
+            this.IconGPS.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.IconGPS.Image = global::Diva.Properties.Resources.icon_gps_24;
+            this.IconGPS.Location = new System.Drawing.Point(130, 5);
+            this.IconGPS.Name = "IconGPS";
+            this.IconGPS.Size = new System.Drawing.Size(24, 24);
+            this.IconGPS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.IconGPS.TabIndex = 4;
+            this.IconGPS.TabStop = false;
+            this.IconGPS.MouseHover += new System.EventHandler(this.Pb_MouseHover);
             // 
             // TxtEstimatedTime
             // 
@@ -144,11 +148,11 @@
             // TxtSystemID
             // 
             this.TxtSystemID.AutoSize = true;
-            this.TxtSystemID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.TxtSystemID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtSystemID.ForeColor = System.Drawing.Color.White;
-            this.TxtSystemID.Location = new System.Drawing.Point(85, 12);
+            this.TxtSystemID.Location = new System.Drawing.Point(92, 6);
             this.TxtSystemID.Name = "TxtSystemID";
-            this.TxtSystemID.Size = new System.Drawing.Size(21, 15);
+            this.TxtSystemID.Size = new System.Drawing.Size(19, 13);
             this.TxtSystemID.TabIndex = 8;
             this.TxtSystemID.Text = "00";
             this.TxtSystemID.Visible = false;
@@ -169,13 +173,14 @@
             // iconRC
             // 
             this.iconRC.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.iconRC.Image = global::Diva.Properties.Resources.icon_burger_24;
+            this.iconRC.Image = global::Diva.Properties.Resources.icon_rc_24;
             this.iconRC.Location = new System.Drawing.Point(188, 5);
             this.iconRC.Name = "iconRC";
             this.iconRC.Size = new System.Drawing.Size(24, 24);
             this.iconRC.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.iconRC.TabIndex = 10;
             this.iconRC.TabStop = false;
+            this.iconRC.MouseHover += new System.EventHandler(this.Pb_MouseHover);
             // 
             // label1
             // 
@@ -201,7 +206,7 @@
             this.tableLayoutPanel1.Controls.Add(this.iconRC, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.IconBattery, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.TxtBatteryHealth, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.IconSignal, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.IconGPS, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.TxtSatelliteCount, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.IconTime, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(141, 3);
@@ -212,10 +217,22 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(230, 55);
             this.tableLayoutPanel1.TabIndex = 12;
             // 
+            // labelIsArm
+            // 
+            this.labelIsArm.AutoSize = true;
+            this.labelIsArm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.labelIsArm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(144)))), ((int)(((byte)(255)))), ((int)(((byte)(88)))));
+            this.labelIsArm.Location = new System.Drawing.Point(72, 38);
+            this.labelIsArm.Name = "labelIsArm";
+            this.labelIsArm.Size = new System.Drawing.Size(58, 15);
+            this.labelIsArm.TabIndex = 13;
+            this.labelIsArm.Text = "DisARM";
+            // 
             // DroneInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
+            this.Controls.Add(this.labelIsArm);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.BtnExpand);
             this.Controls.Add(this.TxtSystemID);
@@ -226,7 +243,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IconBattery)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IconSignal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IconGPS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconRC)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -241,7 +258,7 @@
 		private System.Windows.Forms.Label TxtDroneName;
 		private System.Windows.Forms.PictureBox IconTime;
 		private System.Windows.Forms.PictureBox IconBattery;
-		private System.Windows.Forms.PictureBox IconSignal;
+		private System.Windows.Forms.PictureBox IconGPS;
 		private System.Windows.Forms.Label TxtEstimatedTime;
 		private System.Windows.Forms.Label TxtBatteryHealth;
 		private System.Windows.Forms.Label TxtSatelliteCount;
@@ -250,5 +267,6 @@
         private System.Windows.Forms.PictureBox iconRC;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label labelIsArm;
     }
 }

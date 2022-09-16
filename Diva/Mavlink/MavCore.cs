@@ -990,6 +990,7 @@ namespace Diva.Mavlink
             string s = ASCIIEncoding.ASCII.GetString(m.text).Split('\0')[0];
             FloatMessage.NewMessage(Name, m.severity, s);
         }
+
         #endregion Retrieve sensor data from flight control
 
         #region Parameters

@@ -27,6 +27,7 @@ namespace Diva.Mavlink
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.AUTOPILOT_VERSION, AutopilotVersionHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.ATTITUDE, AttitudePacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.VFR_HUD, VfrHUDPacketHandler);
         }
 
         protected override bool IsValidId(MAVLinkMessage message)
@@ -183,6 +184,13 @@ namespace Diva.Mavlink
         {
             var ver = GetMessage<mavlink_autopilot_version_t>(packet, ref holder);
             Status.Capabilities = ver.capabilities;
+        }
+
+        private void VfrHUDPacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var vh = GetMessage<mavlink_vfr_hud_t>(packet, ref holder);
+            float airspeed = vh.airspeed;
+            Status.AirSpeed = airspeed;
         }
         #endregion Message packet handlers
 

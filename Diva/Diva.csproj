@@ -485,6 +485,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_telegram-2-24.png" />
+    <None Include="Resources\icon_gps-24.png" />
+    <None Include="Resources\icon_rc-24.png" />
+    <None Include="Resources\icon_letter-h-48.png" />
     <None Include="Resources\icon_letter-v-48.png" />
     <None Include="Resources\icon_letter-g-48.png" />
     <None Include="Resources\icon_letter-f-48.png" />
