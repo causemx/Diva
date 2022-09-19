@@ -169,6 +169,14 @@ namespace Diva.Mavlink
             set { groundCourse = value < 0 ? value + 360 : value; }
         }
 
+        public float ekfvelv { get; set; }
+
+        public float ekfcompv { get; set; }
+
+        public float ekfposhor { get; set; }
+
+        public float ekfposvert { get; set; }
+
         public MAV_STATE State { get; set; }
 
         public DateTime? ArmedSince { get; set; }

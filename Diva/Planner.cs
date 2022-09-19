@@ -66,7 +66,7 @@ namespace Diva
         }
 
 		private FloatingIcon polyicon = new FloatingIcon(Resources.icon_fish_24);
-		private FloatingIcon ekficon = new FloatingIcon(Resources.icon_ekf_24);
+		private FloatingIcon ekficon = new FloatingIcon(Resources.icon_airplane_32);
 
         private class PlannerOverlays
 		{
@@ -244,9 +244,8 @@ namespace Diva
 
 		private void Map_Paint(object sender, PaintEventArgs e)
 		{
-			polyicon.Location = new Point(20, 575);
-			polyicon.Paint(e.Graphics);
-
+			// polyicon.Location = new Point(20, 575);
+			// polyicon.Paint(e.Graphics);
 			ekficon.Location = new Point(20, 585);
 			ekficon.Paint(e.Graphics);
 		}
@@ -632,6 +631,15 @@ namespace Diva
 				}
 				return;
 			}
+
+			if (ekficon.Rectangle.Contains(e.Location))
+            {
+				if (e.Button == MouseButtons.Left)
+                {
+					DialogEKF de = new DialogEKF();
+					de.Show();
+                }
+            }
 
 			if (!FullControl) {
                 return;

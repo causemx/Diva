@@ -28,6 +28,7 @@ namespace Diva.Mavlink
             RegisterMavMessageHandler(MAVLINK_MSG_ID.AUTOPILOT_VERSION, AutopilotVersionHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.ATTITUDE, AttitudePacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.VFR_HUD, VfrHUDPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.EKF_STATUS_REPORT, EKFStatusReportHandler);
         }
 
         protected override bool IsValidId(MAVLinkMessage message)
@@ -191,6 +192,15 @@ namespace Diva.Mavlink
             var vh = GetMessage<mavlink_vfr_hud_t>(packet, ref holder);
             float airspeed = vh.airspeed;
             Status.AirSpeed = airspeed;
+        }
+
+        private void EKFStatusReportHandler(object holder, MAVLinkMessage packet)
+        {
+            var status = GetMessage<mavlink_ekf_status_report_t>(packet, ref holder);
+            Status.ekfvelv = status.velocity_variance;
+            Status.ekfposhor = status.pos_horiz_variance;
+            Status.ekfposvert = status.pos_vert_variance;
+            Status.ekfcompv = status.compass_variance;
         }
         #endregion Message packet handlers
 
