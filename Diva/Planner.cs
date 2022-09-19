@@ -50,17 +50,23 @@ namespace Diva
 
 		private static readonly double WARN_ALT = 2D;
 
-        private class PolyIcon : Controls.Icons.Icon
+        public class FloatingIcon : Controls.Icons.Icon
         {
-            internal override void doPaint(Graphics g)
+			private Bitmap bmp = null;
+
+			public FloatingIcon(Bitmap _bmp)
             {
-				var bmp = new Bitmap(Resources.icon_fish_24);
-				
+				this.bmp = _bmp;
+            }
+
+            internal override void doPaint(Graphics g)
+            {	
 				g.DrawImage(bmp, (Width/2-bmp.Width/2), (Height/2-bmp.Height/2));
 			}
         }
 
-		private PolyIcon polyicon = new PolyIcon();
+		private FloatingIcon polyicon = new FloatingIcon(Resources.icon_fish_24);
+		private FloatingIcon ekficon = new FloatingIcon(Resources.icon_ekf_24);
 
         private class PlannerOverlays
 		{
@@ -240,6 +246,9 @@ namespace Diva
 		{
 			polyicon.Location = new Point(20, 575);
 			polyicon.Paint(e.Graphics);
+
+			ekficon.Location = new Point(20, 585);
+			ekficon.Paint(e.Graphics);
 		}
 
 		private void DataGridView_Initialize()
