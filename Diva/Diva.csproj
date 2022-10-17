@@ -246,6 +246,11 @@
     <Compile Include="Controls\InputDataDialog.Designer.cs">
       <DependentUpon>InputDataDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Menu\DropdownMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Menu\MenuColorTable.cs" />
+    <Compile Include="Controls\Menu\MenuRenderer.cs" />
     <Compile Include="Controls\Pages\Page1.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -503,6 +508,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_settings-7-32.png" />
+    <None Include="Resources\icon_connect-32.png" />
+    <None Include="Resources\icon_switch-2-24.png" />
+    <None Include="Resources\icon_chess-queen-24.png" />
+    <None Include="Resources\icon_chess-knight-24.png" />
+    <None Include="Resources\icon_chess-king-24.png" />
+    <None Include="Resources\icon_chess-castel-24.png" />
+    <None Include="Resources\icon_menu-48.png" />
     <None Include="Resources\icon_ekf_24.png" />
     <None Include="Resources\icon_telegram-2-24.png" />
     <None Include="Resources\icon_gps-24.png" />
@@ -623,7 +636,6 @@
     <None Include="Resources\icon_lighting_24.png" />
     <None Include="Resources\ParameterMetaData.xml" />
     <None Include="Resources\icon_location.png" />
-    <None Include="Resources\icon_lock.png" />
     <None Include="Resources\icon-warn.png" />
     <None Include="Resources\icon-info.png" />
     <None Include="Resources\icon-error.png" />
@@ -669,38 +681,14 @@
     <None Include="Resources\icon-add.png" />
     <None Include="Resources\icon-arm-active.png" />
     <None Include="Resources\icon-arm.png" />
-    <None Include="Resources\icon-debug.png" />
     <None Include="Resources\icon_house_32.png" />
     <None Include="Resources\icon_edit_32.png" />
     <None Include="Resources\icon_airplane_32.png" />
     <None Include="Resources\icon_emoticon_48.png" />
     <None Include="Resources\icon_emoticon_64.png" />
     <None Include="Resources\icon-live.png" />
-    <None Include="Resources\icon_home_64.png" />
-    <None Include="Resources\icon-battery-100.png" />
-    <None Include="Resources\icon-signal-100.png" />
-    <None Include="Resources\size_height_edit-32.png" />
-    <None Include="Resources\news-32.png" />
-    <None Include="Resources\size_height_settings-64.png" />
-    <None Include="Resources\news-64.png" />
-    <None Include="Resources\if_Psyduck_3151565.png" />
-    <None Include="Resources\icon-drone-6axis.png" />
-    <None Include="Resources\if_SVG_LINE_TECHNOLOGY-05_2897338.png" />
     <None Include="Resources\mavcmd.xml" />
-    <None Include="Resources\if_price_tag_2639892.png" />
-    <None Include="Resources\if_camera_1055100.png" />
-    <None Include="Resources\if_pear_2003196.png" />
-    <None Include="Resources\if_apple_2003193.png" />
-    <None Include="Resources\if_code-fork_1608638.png" />
     <None Include="Resources\if_warning_32.png" />
-    <None Include="Resources\if_settings_32.png" />
-    <None Include="Resources\if_rotation_32.png" />
-    <None Include="Resources\if_drone_xxx_48.png" />
-    <None Include="Resources\if_drone_xxx_24.png" />
-    <None Include="Resources\if_drone_24.png" />
-    <None Include="Resources\if_airplane_32.png" />
-    <None Include="Resources\if_location_32.png" />
-    <None Include="Resources\if_paper-plane_32.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExLibs\GMap.NET.Core\GMap.NET.Core.csproj">
@@ -715,18 +703,6 @@
       <Project>{6F701732-2517-46EA-9D37-3B37D0C38B95}</Project>
       <Name>MAVLink</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_50_111142.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_battery-reduce-energy-charge_2203543.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_mountain_biking_310319.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\if_performance-clock-speed_353431.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

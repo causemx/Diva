@@ -40,5 +40,10 @@ namespace Diva
         {
             MyView.ShowScreen("page2");
         }
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            dropdownMenu1.Show(iconButton1, iconButton1.Width, 0);
+        }
     }
 }

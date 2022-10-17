@@ -34,8 +34,8 @@ namespace Diva
             }
             Application.Run(new SplashForm());
             if (SplashForm.InitOk)
-                Application.Run(new Planner());
-                // Application.Run(new Main());
+                // Application.Run(new Planner());
+                Application.Run(new Main());
         }
 	}
 }
