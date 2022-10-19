@@ -41,17 +41,23 @@ namespace Diva
             this.panelTitlebar = new System.Windows.Forms.Panel();
             this.myButton2 = new Diva.Controls.Components.MyButton();
             this.myButton1 = new Diva.Controls.Components.MyButton();
-            this.dropdownMenu1 = new Diva.Controls.Menu.DropdownMenu(this.components);
+            this.dropdownMenuOperation = new Diva.Controls.Menu.DropdownMenu(this.components);
             this.item1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.takeoffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.landToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.missionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dropdownMenuPlanning = new Diva.Controls.Menu.DropdownMenu(this.components);
+            this.writeMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelTitlebar.SuspendLayout();
-            this.dropdownMenu1.SuspendLayout();
+            this.dropdownMenuOperation.SuspendLayout();
+            this.dropdownMenuPlanning.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMenu
@@ -88,7 +94,7 @@ namespace Diva
             this.iconButton5.Padding = new System.Windows.Forms.Padding(10, 0, 0, 10);
             this.iconButton5.Size = new System.Drawing.Size(182, 40);
             this.iconButton5.TabIndex = 7;
-            this.iconButton5.Text = "iconButton5";
+            this.iconButton5.Text = "Switch View";
             this.iconButton5.TextColor = System.Drawing.Color.White;
             this.iconButton5.UseVisualStyleBackColor = false;
             // 
@@ -157,9 +163,10 @@ namespace Diva
             this.iconButton2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.iconButton2.Size = new System.Drawing.Size(182, 40);
             this.iconButton2.TabIndex = 4;
-            this.iconButton2.Text = "Basic Planning";
+            this.iconButton2.Text = "Planning";
             this.iconButton2.TextColor = System.Drawing.Color.White;
             this.iconButton2.UseVisualStyleBackColor = false;
+            this.iconButton2.Click += new System.EventHandler(this.iconButton2_Click);
             // 
             // iconButton1
             // 
@@ -180,7 +187,7 @@ namespace Diva
             this.iconButton1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.iconButton1.Size = new System.Drawing.Size(182, 40);
             this.iconButton1.TabIndex = 3;
-            this.iconButton1.Text = "Baisc Operation";
+            this.iconButton1.Text = "Operation";
             this.iconButton1.TextColor = System.Drawing.Color.White;
             this.iconButton1.UseVisualStyleBackColor = false;
             this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
@@ -253,28 +260,28 @@ namespace Diva
             this.myButton1.TabIndex = 0;
             this.myButton1.UseVisualStyleBackColor = false;
             // 
-            // dropdownMenu1
+            // dropdownMenuOperation
             // 
-            this.dropdownMenu1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.dropdownMenu1.IsMainMenu = false;
-            this.dropdownMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dropdownMenuOperation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.dropdownMenuOperation.IsMainMenu = false;
+            this.dropdownMenuOperation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.item1ToolStripMenuItem,
             this.takeoffToolStripMenuItem,
             this.landToolStripMenuItem,
             this.missionToolStripMenuItem,
             this.rTLToolStripMenuItem});
-            this.dropdownMenu1.MenuItemHeight = 25;
-            this.dropdownMenu1.MenuItemTextColor = System.Drawing.Color.Empty;
-            this.dropdownMenu1.Name = "dropdownMenu1";
-            this.dropdownMenu1.PrimaryColor = System.Drawing.Color.Transparent;
-            this.dropdownMenu1.Size = new System.Drawing.Size(118, 114);
+            this.dropdownMenuOperation.MenuItemHeight = 25;
+            this.dropdownMenuOperation.MenuItemTextColor = System.Drawing.Color.Empty;
+            this.dropdownMenuOperation.Name = "dropdownMenu1";
+            this.dropdownMenuOperation.PrimaryColor = System.Drawing.Color.Transparent;
+            this.dropdownMenuOperation.Size = new System.Drawing.Size(118, 114);
             // 
             // item1ToolStripMenuItem
             // 
             this.item1ToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.item1ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
-            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.item1ToolStripMenuItem.Text = "Throttle";
             // 
             // takeoffToolStripMenuItem
@@ -282,7 +289,7 @@ namespace Diva
             this.takeoffToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.takeoffToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.takeoffToolStripMenuItem.Name = "takeoffToolStripMenuItem";
-            this.takeoffToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.takeoffToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.takeoffToolStripMenuItem.Text = "Takeoff";
             // 
             // landToolStripMenuItem
@@ -290,7 +297,7 @@ namespace Diva
             this.landToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.landToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.landToolStripMenuItem.Name = "landToolStripMenuItem";
-            this.landToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.landToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.landToolStripMenuItem.Text = "Land";
             // 
             // missionToolStripMenuItem
@@ -298,7 +305,7 @@ namespace Diva
             this.missionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.missionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.missionToolStripMenuItem.Name = "missionToolStripMenuItem";
-            this.missionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.missionToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.missionToolStripMenuItem.Text = "Mission";
             // 
             // rTLToolStripMenuItem
@@ -306,8 +313,55 @@ namespace Diva
             this.rTLToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rTLToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
-            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.rTLToolStripMenuItem.Text = "RTL";
+            // 
+            // dropdownMenuPlanning
+            // 
+            this.dropdownMenuPlanning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.dropdownMenuPlanning.IsMainMenu = false;
+            this.dropdownMenuPlanning.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.writeMissionToolStripMenuItem,
+            this.readMissionToolStripMenuItem,
+            this.importMissionToolStripMenuItem,
+            this.exportMissionToolStripMenuItem});
+            this.dropdownMenuPlanning.MenuItemHeight = 25;
+            this.dropdownMenuPlanning.MenuItemTextColor = System.Drawing.Color.Empty;
+            this.dropdownMenuPlanning.Name = "dropdownMenuPlanning";
+            this.dropdownMenuPlanning.PrimaryColor = System.Drawing.Color.Empty;
+            this.dropdownMenuPlanning.Size = new System.Drawing.Size(156, 92);
+            // 
+            // writeMissionToolStripMenuItem
+            // 
+            this.writeMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.writeMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.writeMissionToolStripMenuItem.Name = "writeMissionToolStripMenuItem";
+            this.writeMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.writeMissionToolStripMenuItem.Text = "Write Mission";
+            // 
+            // readMissionToolStripMenuItem
+            // 
+            this.readMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.readMissionToolStripMenuItem.Name = "readMissionToolStripMenuItem";
+            this.readMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readMissionToolStripMenuItem.Text = "Read Mission";
+            // 
+            // importMissionToolStripMenuItem
+            // 
+            this.importMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.importMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.importMissionToolStripMenuItem.Name = "importMissionToolStripMenuItem";
+            this.importMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importMissionToolStripMenuItem.Text = "Import Mission";
+            // 
+            // exportMissionToolStripMenuItem
+            // 
+            this.exportMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exportMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportMissionToolStripMenuItem.Name = "exportMissionToolStripMenuItem";
+            this.exportMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportMissionToolStripMenuItem.Text = "Export Mission";
             // 
             // Main
             // 
@@ -323,7 +377,8 @@ namespace Diva
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelTitlebar.ResumeLayout(false);
-            this.dropdownMenu1.ResumeLayout(false);
+            this.dropdownMenuOperation.ResumeLayout(false);
+            this.dropdownMenuPlanning.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -340,11 +395,16 @@ namespace Diva
         private System.Windows.Forms.Panel panel1;
         private Controls.Components.MyButton myButton2;
         private Controls.Components.MyButton myButton1;
-        private Controls.Menu.DropdownMenu dropdownMenu1;
+        private Controls.Menu.DropdownMenu dropdownMenuOperation;
         private System.Windows.Forms.ToolStripMenuItem item1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem takeoffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem landToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem missionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rTLToolStripMenuItem;
+        private Controls.Menu.DropdownMenu dropdownMenuPlanning;
+        private System.Windows.Forms.ToolStripMenuItem writeMissionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readMissionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importMissionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportMissionToolStripMenuItem;
     }
 }

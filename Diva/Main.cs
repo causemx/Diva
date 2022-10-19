@@ -43,7 +43,12 @@ namespace Diva
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            dropdownMenu1.Show(iconButton1, iconButton1.Width, 0);
+            dropdownMenuOperation.Show(iconButton1, iconButton1.Width, 0);
+        }
+
+        private void iconButton2_Click(object sender, EventArgs e)
+        {
+            dropdownMenuPlanning.Show(iconButton2, iconButton2.Width, 0);
         }
     }
 }
