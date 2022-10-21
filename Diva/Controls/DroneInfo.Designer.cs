@@ -131,7 +131,6 @@
             this.TxtBatteryHealth.Size = new System.Drawing.Size(39, 15);
             this.TxtBatteryHealth.TabIndex = 6;
             this.TxtBatteryHealth.Text = "00 vol";
-            this.TxtBatteryHealth.Click += new System.EventHandler(this.DetailValue_Click);
             // 
             // TxtSatelliteCount
             // 

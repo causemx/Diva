@@ -16,6 +16,7 @@ namespace Diva
         public Page1 page1;
         public Page2 page2;
         PageManager MyView;
+        bool isPanelExpand = true;
 
         public Main()
         {
@@ -29,6 +30,8 @@ namespace Diva
             MyView.AddScreen(new PageManager.Screen("page2", page2, true));
 
             MyView.ShowScreen("page1");
+            myPanel1.SettingClick += MyPanelSetting_Click;
+            myPanel1.ExpandClick += MyPanelExpand_Click;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,6 +52,19 @@ namespace Diva
         private void iconButton2_Click(object sender, EventArgs e)
         {
             dropdownMenuPlanning.Show(iconButton2, iconButton2.Width, 0);
+        }
+
+        private void MyPanelExpand_Click(object sender, EventArgs e)
+        {
+            if (isPanelExpand)
+                myPanel1.Height = 24;
+            else
+                myPanel1.Height += 30;
+            isPanelExpand = !isPanelExpand;
+        }
+        private void MyPanelSetting_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

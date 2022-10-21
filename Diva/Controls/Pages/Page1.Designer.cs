@@ -37,7 +37,7 @@ namespace Diva.Controls.Pages
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Red;
             this.Name = "Page1";
-            this.Size = new System.Drawing.Size(150, 378);
+            this.Size = new System.Drawing.Size(342, 378);
             this.ResumeLayout(false);
 
         }

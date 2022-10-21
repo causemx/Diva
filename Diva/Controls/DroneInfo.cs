@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Diva.Controls.Dialog;
 using Diva.Mavlink;
 using Diva.Utilities;
 
@@ -135,30 +134,6 @@ namespace Diva.Controls
                 : Properties.Resources.icon_btn_expand;
         }
 
-        private void DetailValue_Click(object sender, EventArgs e)
-        {
-            var l = (Label)sender;
-            switch (l.Name)
-            {
-                case "TxtBatteryHealth":
-                    DroneinfoDetailDialog d = new DroneinfoDetailDialog() { Title = "Battery Info" };
-                    Tuple<string, string>[] b_info =
-                    {
-                        Tuple.Create("Battery", "OK"),
-                        Tuple.Create("Charge State", "100%"),
-                        Tuple.Create("YYYYY", "50%"),
-                        Tuple.Create("YYYYY", "50%"),
-                        Tuple.Create("YYYYY", "50%"),
-                        Tuple.Create("YYYYY", "50%"),
-                        Tuple.Create("YYYYY", "50%"),
-                    };
-                    d.AddRowToPanel(b_info);
-                    d.StartPosition = FormStartPosition.Manual;
-                    d.Location = new Point(l.PointToScreen(Point.Empty).X-20, l.PointToScreen(Point.Empty).Y+20);
-                    d.ShowDialog();
-                    break;
-            }
-        }
 
         private void Pb_MouseHover(object sender, EventArgs e)
         {

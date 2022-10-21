@@ -173,6 +173,9 @@
     <Compile Include="Controls\Components\MyNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\Components\MyPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ConfigAccountPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -220,12 +223,6 @@
     </Compile>
     <Compile Include="Controls\Dialogs\DialogEKF.Designer.cs">
       <DependentUpon>DialogEKF.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Dialogs\DroneinfoDetailDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\Dialogs\DroneinfoDetailDialog.Designer.cs">
-      <DependentUpon>DroneinfoDetailDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
@@ -408,9 +405,6 @@
     <EmbeddedResource Include="Controls\Dialogs\DialogEKF.resx">
       <DependentUpon>DialogEKF.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Dialogs\DroneinfoDetailDialog.resx">
-      <DependentUpon>DroneinfoDetailDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfo.resx">
       <DependentUpon>DroneInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -508,6 +502,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_panel_setting_24.png" />
+    <None Include="Resources\icon_panel_expand_24.png" />
     <None Include="Resources\icon_settings-7-32.png" />
     <None Include="Resources\icon_connect-32.png" />
     <None Include="Resources\icon_switch-2-24.png" />

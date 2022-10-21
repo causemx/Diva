@@ -52,6 +52,7 @@ namespace Diva
             this.readMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.myPanel1 = new Diva.Controls.Components.MyPanel();
             this.panelMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -336,7 +337,7 @@ namespace Diva
             this.writeMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.writeMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.writeMissionToolStripMenuItem.Name = "writeMissionToolStripMenuItem";
-            this.writeMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.writeMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.writeMissionToolStripMenuItem.Text = "Write Mission";
             // 
             // readMissionToolStripMenuItem
@@ -344,7 +345,7 @@ namespace Diva
             this.readMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.readMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.readMissionToolStripMenuItem.Name = "readMissionToolStripMenuItem";
-            this.readMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.readMissionToolStripMenuItem.Text = "Read Mission";
             // 
             // importMissionToolStripMenuItem
@@ -352,7 +353,7 @@ namespace Diva
             this.importMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.importMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.importMissionToolStripMenuItem.Name = "importMissionToolStripMenuItem";
-            this.importMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.importMissionToolStripMenuItem.Text = "Import Mission";
             // 
             // exportMissionToolStripMenuItem
@@ -360,14 +361,23 @@ namespace Diva
             this.exportMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exportMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exportMissionToolStripMenuItem.Name = "exportMissionToolStripMenuItem";
-            this.exportMissionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.exportMissionToolStripMenuItem.Text = "Export Mission";
+            // 
+            // myPanel1
+            // 
+            this.myPanel1.Location = new System.Drawing.Point(588, 367);
+            this.myPanel1.Name = "myPanel1";
+            this.myPanel1.Size = new System.Drawing.Size(200, 100);
+            this.myPanel1.TabIndex = 3;
+            this.myPanel1.Title = "title";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(986, 601);
+            this.Controls.Add(this.myPanel1);
             this.Controls.Add(this.panelTitlebar);
             this.Controls.Add(this.panelMenu);
             this.Name = "Main";
@@ -406,5 +416,6 @@ namespace Diva
         private System.Windows.Forms.ToolStripMenuItem readMissionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importMissionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportMissionToolStripMenuItem;
+        private Controls.Components.MyPanel myPanel1;
     }
 }
