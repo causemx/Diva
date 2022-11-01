@@ -39,22 +39,6 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
-            this.flyToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnArm = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnTakeOff = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnLand = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnAuto = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnWriteWPs = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnReadWPs = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
-            this.BtnRTL = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.IconGPSLostWarning = new System.Windows.Forms.Button();
             this.IconModeWarning = new System.Windows.Forms.Button();
             this.BtnBreakAction = new Diva.Controls.Components.MyButton();
@@ -116,11 +100,18 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
             this.SplitContainer.SuspendLayout();
-            this.flyToolStrip.SuspendLayout();
             this.TSMainPanel.SuspendLayout();
             this.cmMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVWayPoints)).BeginInit();
@@ -134,7 +125,14 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
-            this.SplitContainer.Panel1.Controls.Add(this.flyToolStrip);
+            this.SplitContainer.Panel1.Controls.Add(this.button8);
+            this.SplitContainer.Panel1.Controls.Add(this.button7);
+            this.SplitContainer.Panel1.Controls.Add(this.button6);
+            this.SplitContainer.Panel1.Controls.Add(this.button5);
+            this.SplitContainer.Panel1.Controls.Add(this.button4);
+            this.SplitContainer.Panel1.Controls.Add(this.button3);
+            this.SplitContainer.Panel1.Controls.Add(this.button2);
+            this.SplitContainer.Panel1.Controls.Add(this.button1);
             this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
@@ -153,128 +151,6 @@ namespace Diva
             // 
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
-            // 
-            // flyToolStrip
-            // 
-            resources.ApplyResources(this.flyToolStrip, "flyToolStrip");
-            this.flyToolStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(32)))), ((int)(((byte)(35)))));
-            this.flyToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.flyToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.BtnArm,
-            this.toolStripLabel8,
-            this.BtnTakeOff,
-            this.toolStripLabel2,
-            this.BtnLand,
-            this.toolStripLabel3,
-            this.BtnAuto,
-            this.toolStripLabel4,
-            this.BtnWriteWPs,
-            this.toolStripLabel6,
-            this.BtnReadWPs,
-            this.toolStripLabel7,
-            this.BtnRTL,
-            this.toolStripLabel5});
-            this.flyToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.flyToolStrip.Name = "flyToolStrip";
-            this.flyToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            // 
-            // toolStripLabel1
-            // 
-            resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
-            this.toolStripLabel1.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            // 
-            // BtnArm
-            // 
-            this.BtnArm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnArm, "BtnArm");
-            this.BtnArm.Name = "BtnArm";
-            this.BtnArm.Click += new System.EventHandler(this.BUT_Arm_Click);
-            // 
-            // toolStripLabel8
-            // 
-            this.toolStripLabel8.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel8.Name = "toolStripLabel8";
-            resources.ApplyResources(this.toolStripLabel8, "toolStripLabel8");
-            // 
-            // BtnTakeOff
-            // 
-            this.BtnTakeOff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnTakeOff, "BtnTakeOff");
-            this.BtnTakeOff.Name = "BtnTakeOff";
-            this.BtnTakeOff.Click += new System.EventHandler(this.BUT_Takeoff_Click);
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
-            // 
-            // BtnLand
-            // 
-            this.BtnLand.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnLand, "BtnLand");
-            this.BtnLand.Name = "BtnLand";
-            this.BtnLand.Click += new System.EventHandler(this.BUT_Land_Click);
-            // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            resources.ApplyResources(this.toolStripLabel3, "toolStripLabel3");
-            // 
-            // BtnAuto
-            // 
-            this.BtnAuto.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnAuto, "BtnAuto");
-            this.BtnAuto.Name = "BtnAuto";
-            this.BtnAuto.Click += new System.EventHandler(this.BUT_Auto_Click);
-            // 
-            // toolStripLabel4
-            // 
-            this.toolStripLabel4.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            resources.ApplyResources(this.toolStripLabel4, "toolStripLabel4");
-            // 
-            // BtnWriteWPs
-            // 
-            this.BtnWriteWPs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnWriteWPs, "BtnWriteWPs");
-            this.BtnWriteWPs.Name = "BtnWriteWPs";
-            this.BtnWriteWPs.Click += new System.EventHandler(this.BUT_write_Click);
-            // 
-            // toolStripLabel6
-            // 
-            this.toolStripLabel6.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel6.Name = "toolStripLabel6";
-            resources.ApplyResources(this.toolStripLabel6, "toolStripLabel6");
-            // 
-            // BtnReadWPs
-            // 
-            this.BtnReadWPs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnReadWPs, "BtnReadWPs");
-            this.BtnReadWPs.Name = "BtnReadWPs";
-            this.BtnReadWPs.Click += new System.EventHandler(this.BUT_read_Click);
-            // 
-            // toolStripLabel7
-            // 
-            this.toolStripLabel7.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel7.Name = "toolStripLabel7";
-            resources.ApplyResources(this.toolStripLabel7, "toolStripLabel7");
-            // 
-            // BtnRTL
-            // 
-            this.BtnRTL.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.BtnRTL, "BtnRTL");
-            this.BtnRTL.Name = "BtnRTL";
-            this.BtnRTL.Click += new System.EventHandler(this.BUT_RTL_Click);
-            // 
-            // toolStripLabel5
-            // 
-            this.toolStripLabel5.ForeColor = System.Drawing.Color.White;
-            this.toolStripLabel5.Name = "toolStripLabel5";
-            resources.ApplyResources(this.toolStripLabel5, "toolStripLabel5");
             // 
             // IconGPSLostWarning
             // 
@@ -879,6 +755,54 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            resources.ApplyResources(this.button2, "button2");
+            this.button2.Name = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            resources.ApplyResources(this.button3, "button3");
+            this.button3.Name = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            resources.ApplyResources(this.button4, "button4");
+            this.button4.Name = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            resources.ApplyResources(this.button5, "button5");
+            this.button5.Name = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            resources.ApplyResources(this.button6, "button6");
+            this.button6.Name = "button6";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            resources.ApplyResources(this.button7, "button7");
+            this.button7.Name = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            resources.ApplyResources(this.button8, "button8");
+            this.button8.Name = "button8";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -895,8 +819,6 @@ namespace Diva
             this.SplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).EndInit();
             this.SplitContainer.ResumeLayout(false);
-            this.flyToolStrip.ResumeLayout(false);
-            this.flyToolStrip.PerformLayout();
             this.TSMainPanel.ResumeLayout(false);
             this.TSMainPanel.PerformLayout();
             this.cmMap.ResumeLayout(false);
@@ -968,24 +890,16 @@ namespace Diva
         internal MyGMap Map;
         internal AltitudeControlPanel AltitudeControlPanel;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStrip flyToolStrip;
-        private ToolStripLabel toolStripLabel1;
-        private ToolStripButton BtnTakeOff;
-        private ToolStripButton BtnLand;
-        private ToolStripButton BtnAuto;
-        private ToolStripButton BtnWriteWPs;
-        private ToolStripButton BtnReadWPs;
-        private ToolStripButton BtnRTL;
-        private ToolStripLabel toolStripLabel2;
-        private ToolStripLabel toolStripLabel3;
-        private ToolStripLabel toolStripLabel4;
-        private ToolStripLabel toolStripLabel6;
-        private ToolStripLabel toolStripLabel7;
-        private ToolStripLabel toolStripLabel5;
-        private ToolStripButton BtnArm;
-        private ToolStripLabel toolStripLabel8;
         private ToolStripMenuItem planToolStripMenuItem;
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
+        private Button button8;
+        private Button button7;
+        private Button button6;
+        private Button button5;
+        private Button button4;
+        private Button button3;
+        private Button button2;
+        private Button button1;
     }
 }

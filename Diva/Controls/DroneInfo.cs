@@ -70,22 +70,25 @@ namespace Diva.Controls
                     IconBattery.Image = Properties.Resources.icon_battery_nopower;
                 }
             }
-            TxtSatelliteCount.Text = Drone.Status.SatteliteCount.ToString();
+            TxtCurrent.Text = Drone.Status.current.ToString("F2");
+            TxtGPS.Text = Drone.Status.SatteliteCount.ToString() + "|" + Drone.Status.gpshdop.ToString();
+            TxRcRSSI.Text = Drone.Status.rxrssi.ToString();
+
             if (Drone.Status.ArmedSince != null)
             {
                 var elapsed = DateTime.Now - Drone.Status.ArmedSince.Value;
                 if (elapsed < new TimeSpan(0, 1, 0))
-                    TxtEstimatedTime.Text = elapsed.Seconds + "s";
+                    TxtCurrent.Text = elapsed.Seconds + "s";
                 else if (elapsed < new TimeSpan(1, 0, 0))
-                    TxtEstimatedTime.Text = elapsed.Minutes + "m" + elapsed.Seconds + "s";
+                    TxtCurrent.Text = elapsed.Minutes + "m" + elapsed.Seconds + "s";
                 else
                 {
                     int m = (int)elapsed.TotalMinutes;
-                    TxtEstimatedTime.Text = (m / 60) + "h" + (m % 60) + "m";
+                    TxtCurrent.Text = (m / 60) + "h" + (m % 60) + "m";
                 }
             }
             else
-                TxtEstimatedTime.Text = "-";
+                TxtCurrent.Text = "-";
 
             var now = DateTime.Now;
             var to = (int)(now - Drone.Status.LastPacket).TotalSeconds;

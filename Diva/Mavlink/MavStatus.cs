@@ -25,7 +25,29 @@ namespace Diva.Mavlink
         }
 
         public double BatteryLowVoltage { get; set; }
+        private double _current;
+        private DateTime _lastcurrent = DateTime.MinValue;
+        public double battery_usedmah { get; set; }
 
+        public double current
+        {
+            get => _current;
+            set
+            {
+                if (_lastcurrent == DateTime.MinValue) _lastcurrent = PacketTime;
+                // break; case for no sensor
+                if (value == -0.01f)
+                {
+                    _current = 0;
+                    return;
+                }
+
+                battery_usedmah += value * 1000.0 * (PacketTime - _lastcurrent).TotalHours;
+                _current = value;
+                _lastcurrent = PacketTime;
+            }
+        } //current may to be below zero - recuperation in arduplane
+        public int rxrssi { get; set; }
         public double Latitude { get; set; }
 		public double Longitude { get; set; }
         public virtual GMap.NET.PointLatLng Location => new GMap.NET.PointLatLng(Latitude, Longitude);
@@ -35,8 +57,9 @@ namespace Diva.Mavlink
         public Firmwares Firmware = Firmwares.ArduCopter2;
 
 		public int SatteliteCount { get; set; }
+        public float gpshdop { get; set; }
 
-		public bool MavLinkV2 = false;
+        public bool MavLinkV2 = false;
 
 		public MAVLinkParamList Params { get; set; } = new MAVLinkParamList();
 

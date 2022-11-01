@@ -502,6 +502,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_amp_24.png" />
     <None Include="Resources\icon_panel_setting_24.png" />
     <None Include="Resources\icon_panel_expand_24.png" />
     <None Include="Resources\icon_settings-7-32.png" />

@@ -870,6 +870,7 @@ namespace Diva.Mavlink
             RegisterMavMessageHandler(MAVLINK_MSG_ID.GPS_RAW_INT, GPSRawPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.SYS_STATUS, SysStatusPacketHandler);
             RegisterMavMessageHandler(MAVLINK_MSG_ID.STATUSTEXT, StatusTextPacketHandler);
+            RegisterMavMessageHandler(MAVLINK_MSG_ID.RC_CHANNELS_RAW, RcChannelsRawPacketHandler);
         }
 
         private void HeartBeatPacketHandler(object holder, MAVLinkMessage packet) =>
@@ -963,6 +964,9 @@ namespace Diva.Mavlink
             }
 
             Status.SatteliteCount = gps.satellites_visible;
+
+            if (gps.eph != ushort.MaxValue)
+                Status.gpshdop = (float)Math.Round(gps.eph / 100.0, 2);
         }
 
         private void SysStatusPacketHandler(object holder, MAVLinkMessage packet)
@@ -978,6 +982,7 @@ namespace Diva.Mavlink
 
             ushort packetdropremote = sysstatus.drop_rate_comm;
 
+            Status.current = current;
             Status.BatteryVoltage = sysstatus.voltage_battery == ushort.MaxValue ? 0 : battery_voltage;
             Status.SensorEnabled = sysstatus.onboard_control_sensors_enabled;
             Status.SensorHealth = sysstatus.onboard_control_sensors_health;
@@ -989,6 +994,22 @@ namespace Diva.Mavlink
             var m = GetMessage<mavlink_statustext_t>(packet, ref holder);
             string s = ASCIIEncoding.ASCII.GetString(m.text).Split('\0')[0];
             FloatMessage.NewMessage(Name, m.severity, s);
+        }
+
+        private void RcChannelsRawPacketHandler(object holder, MAVLinkMessage packet)
+        {
+            var rcin = GetMessage<mavlink_rc_channels_raw_t>(packet, ref holder);
+            /*
+            ch1in = rcin.chan1_raw;
+            ch2in = rcin.chan2_raw;
+            ch3in = rcin.chan3_raw;
+            ch4in = rcin.chan4_raw;
+            ch5in = rcin.chan5_raw;
+            ch6in = rcin.chan6_raw;
+            ch7in = rcin.chan7_raw;
+            ch8in = rcin.chan8_raw;
+            */
+            Status.rxrssi = (int)(rcin.rssi / 255.0 * 100.0);
         }
 
         #endregion Retrieve sensor data from flight control

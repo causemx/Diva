@@ -33,13 +33,13 @@
             this.IconTime = new System.Windows.Forms.PictureBox();
             this.IconBattery = new System.Windows.Forms.PictureBox();
             this.IconGPS = new System.Windows.Forms.PictureBox();
-            this.TxtEstimatedTime = new System.Windows.Forms.Label();
+            this.TxtCurrent = new System.Windows.Forms.Label();
             this.TxtBatteryHealth = new System.Windows.Forms.Label();
-            this.TxtSatelliteCount = new System.Windows.Forms.Label();
+            this.TxtGPS = new System.Windows.Forms.Label();
             this.TxtSystemID = new System.Windows.Forms.Label();
             this.BtnExpand = new System.Windows.Forms.Button();
             this.iconRC = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.TxRcRSSI = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelIsArm = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PBDroneView)).BeginInit();
@@ -75,7 +75,7 @@
             // IconTime
             // 
             this.IconTime.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.IconTime.Image = global::Diva.Properties.Resources.icon_telegram_2_24;
+            this.IconTime.Image = global::Diva.Properties.Resources.icon_amp_24;
             this.IconTime.Location = new System.Drawing.Point(16, 5);
             this.IconTime.Name = "IconTime";
             this.IconTime.Size = new System.Drawing.Size(24, 24);
@@ -108,17 +108,17 @@
             this.IconGPS.TabStop = false;
             this.IconGPS.MouseHover += new System.EventHandler(this.Pb_MouseHover);
             // 
-            // TxtEstimatedTime
+            // TxtCurrent
             // 
-            this.TxtEstimatedTime.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.TxtEstimatedTime.AutoSize = true;
-            this.TxtEstimatedTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.TxtEstimatedTime.ForeColor = System.Drawing.Color.White;
-            this.TxtEstimatedTime.Location = new System.Drawing.Point(11, 37);
-            this.TxtEstimatedTime.Name = "TxtEstimatedTime";
-            this.TxtEstimatedTime.Size = new System.Drawing.Size(35, 15);
-            this.TxtEstimatedTime.TabIndex = 5;
-            this.TxtEstimatedTime.Text = "0.0m";
+            this.TxtCurrent.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.TxtCurrent.AutoSize = true;
+            this.TxtCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.TxtCurrent.ForeColor = System.Drawing.Color.White;
+            this.TxtCurrent.Location = new System.Drawing.Point(21, 37);
+            this.TxtCurrent.Name = "TxtCurrent";
+            this.TxtCurrent.Size = new System.Drawing.Size(15, 15);
+            this.TxtCurrent.TabIndex = 5;
+            this.TxtCurrent.Text = "--";
             // 
             // TxtBatteryHealth
             // 
@@ -132,17 +132,17 @@
             this.TxtBatteryHealth.TabIndex = 6;
             this.TxtBatteryHealth.Text = "00 vol";
             // 
-            // TxtSatelliteCount
+            // TxtGPS
             // 
-            this.TxtSatelliteCount.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.TxtSatelliteCount.AutoSize = true;
-            this.TxtSatelliteCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.TxtSatelliteCount.ForeColor = System.Drawing.Color.White;
-            this.TxtSatelliteCount.Location = new System.Drawing.Point(122, 37);
-            this.TxtSatelliteCount.Name = "TxtSatelliteCount";
-            this.TxtSatelliteCount.Size = new System.Drawing.Size(40, 15);
-            this.TxtSatelliteCount.TabIndex = 7;
-            this.TxtSatelliteCount.Text = "00 cut";
+            this.TxtGPS.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.TxtGPS.AutoSize = true;
+            this.TxtGPS.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.TxtGPS.ForeColor = System.Drawing.Color.White;
+            this.TxtGPS.Location = new System.Drawing.Point(135, 37);
+            this.TxtGPS.Name = "TxtGPS";
+            this.TxtGPS.Size = new System.Drawing.Size(15, 15);
+            this.TxtGPS.TabIndex = 7;
+            this.TxtGPS.Text = "--";
             // 
             // TxtSystemID
             // 
@@ -180,17 +180,17 @@
             this.iconRC.TabStop = false;
             this.iconRC.MouseHover += new System.EventHandler(this.Pb_MouseHover);
             // 
-            // label1
+            // TxRcRSSI
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(180, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 15);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "00 cut";
+            this.TxRcRSSI.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.TxRcRSSI.AutoSize = true;
+            this.TxRcRSSI.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.TxRcRSSI.ForeColor = System.Drawing.Color.White;
+            this.TxRcRSSI.Location = new System.Drawing.Point(193, 37);
+            this.TxRcRSSI.Name = "TxRcRSSI";
+            this.TxRcRSSI.Size = new System.Drawing.Size(15, 15);
+            this.TxRcRSSI.TabIndex = 11;
+            this.TxRcRSSI.Text = "--";
             // 
             // tableLayoutPanel1
             // 
@@ -199,13 +199,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.TxtEstimatedTime, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.TxRcRSSI, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.TxtCurrent, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.iconRC, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.IconBattery, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.TxtBatteryHealth, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.IconGPS, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.TxtSatelliteCount, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.TxtGPS, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.IconTime, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(141, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -257,13 +257,13 @@
 		private System.Windows.Forms.PictureBox IconTime;
 		private System.Windows.Forms.PictureBox IconBattery;
 		private System.Windows.Forms.PictureBox IconGPS;
-		private System.Windows.Forms.Label TxtEstimatedTime;
+		private System.Windows.Forms.Label TxtCurrent;
 		private System.Windows.Forms.Label TxtBatteryHealth;
-		private System.Windows.Forms.Label TxtSatelliteCount;
+		private System.Windows.Forms.Label TxtGPS;
 		private System.Windows.Forms.Label TxtSystemID;
 		private System.Windows.Forms.Button BtnExpand;
         private System.Windows.Forms.PictureBox iconRC;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label TxRcRSSI;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label labelIsArm;
     }
