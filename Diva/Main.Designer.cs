@@ -52,7 +52,7 @@ namespace Diva
             this.readMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.myPanel1 = new Diva.Controls.Components.MyPanel();
+            this.thePanel = new System.Windows.Forms.Panel();
             this.panelMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -364,20 +364,20 @@ namespace Diva
             this.exportMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.exportMissionToolStripMenuItem.Text = "Export Mission";
             // 
-            // myPanel1
+            // thePanel
             // 
-            this.myPanel1.Location = new System.Drawing.Point(588, 367);
-            this.myPanel1.Name = "myPanel1";
-            this.myPanel1.Size = new System.Drawing.Size(200, 100);
-            this.myPanel1.TabIndex = 3;
-            this.myPanel1.Title = "title";
+            this.thePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thePanel.Location = new System.Drawing.Point(182, 66);
+            this.thePanel.Name = "thePanel";
+            this.thePanel.Size = new System.Drawing.Size(804, 535);
+            this.thePanel.TabIndex = 3;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(986, 601);
-            this.Controls.Add(this.myPanel1);
+            this.Controls.Add(this.thePanel);
             this.Controls.Add(this.panelTitlebar);
             this.Controls.Add(this.panelMenu);
             this.Name = "Main";
@@ -416,6 +416,6 @@ namespace Diva
         private System.Windows.Forms.ToolStripMenuItem readMissionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importMissionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportMissionToolStripMenuItem;
-        private Controls.Components.MyPanel myPanel1;
+        private System.Windows.Forms.Panel thePanel;
     }
 }

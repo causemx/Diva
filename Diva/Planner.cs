@@ -27,7 +27,7 @@ using MyTSButton = Diva.Controls.Components.MyTSButton;
 
 namespace Diva
 {
-	public partial class Planner : Form
+	public partial class Planner : UserControl
 	{
 		public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		public const int CURRENTSTATE_MULTIPLERDIST = 1;
@@ -172,7 +172,6 @@ namespace Diva
 
 			//setup toolstrip
 			// TSMainPanel.Renderer = new Controls.Components.MyTSRenderer();
-			flyToolStrip.Renderer = new Controls.Components.MyTSRenderer();
 			//Collect DroneInfoPanels
 
 			// setup geofence
@@ -260,7 +259,7 @@ namespace Diva
 			DGVWayPoints.Columns[colDelete.Index].CellTemplate.Value = "X";
 		}
 
-        private void Planner_FormClosing(object sender, FormClosingEventArgs e)
+        public void Planner_FormClosing()
 		{
             if (mainThread?.IsRunning ?? false)
             {
@@ -269,7 +268,7 @@ namespace Diva
             }
         }
 
-		private void Planner_FormClosed(object sender, FormClosedEventArgs e)
+		public void Planner_FormClosed()
 		{
             OnlineDrones.ForEach(d => d.Disconnect());
             BackgroundLoop.FreeTasks(5000);
@@ -394,7 +393,7 @@ namespace Diva
                 }
                 catch { }
             }
-            Invoke((MethodInvoker)(() => Close()));
+            // Invoke((MethodInvoker)(() => Close()));
 		}
 
 		private DateTime lastmapposchange = DateTime.MinValue;
@@ -3113,7 +3112,6 @@ namespace Diva
             set
             {
                 fullControl = value;
-				flyToolStrip.Visible = value;
                 LblMode.Visible = value;
                 LblModeDesc.Visible = value;
                 BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = BtnBreakAction.Left
@@ -3193,7 +3191,7 @@ namespace Diva
 
         private void SetupMIRDC()
         {
-            Icon = Resources.logo;
+            // Icon = Resources.logo;
             FullControl = false;
 
             BtnFlyTo.Click += BtnFlyTo_Clicked;

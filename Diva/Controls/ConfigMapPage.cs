@@ -37,9 +37,9 @@ namespace Diva.Controls
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
                 Control c = Parent;
-                Form f;
+                Control f;
                 while (c != null && !(c is Form)) c = c.Parent;
-                for (f = c as Form; f != null; f = f.Owner)
+                for (f = c; f != null;)
                     if (f is Planner)
                     {
                         gmap = (f as Planner).GMapControl;

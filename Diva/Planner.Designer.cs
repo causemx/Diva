@@ -808,10 +808,8 @@ namespace Diva
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.SplitContainer);
-            this.KeyPreview = true;
+            //this.KeyPreview = true;
             this.Name = "Planner";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Planner_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Planner_FormClosed);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Planner_KeyUp);
             this.SplitContainer.Panel1.ResumeLayout(false);
             this.SplitContainer.Panel1.PerformLayout();

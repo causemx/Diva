@@ -173,9 +173,6 @@
     <Compile Include="Controls\Components\MyNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Components\MyPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\ConfigAccountPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -317,7 +314,7 @@
     <Compile Include="Mission\AltitudeControl.cs" />
     <Compile Include="Mission\FlyTo.cs" />
     <Compile Include="Planner.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Planner.Designer.cs">
       <DependentUpon>Planner.cs</DependentUpon>

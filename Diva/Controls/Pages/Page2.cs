@@ -16,5 +16,11 @@ namespace Diva.Controls.Pages
         {
             InitializeComponent();
         }
+
+        protected override void OnLeave(EventArgs e)
+        {
+            base.OnLeave(e);
+            Console.WriteLine("on leave");
+        }
     }
 }

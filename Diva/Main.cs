@@ -13,30 +13,27 @@ namespace Diva
 {
     public partial class Main : Form
     {
-        public Page1 page1;
+        public Planner planner;
         public Page2 page2;
         PageManager MyView;
-        bool isPanelExpand = true;
 
         public Main()
         {
             InitializeComponent();
 
-            MyView = new PageManager(this);
-            page1 = new Page1();
+            MyView = new PageManager(thePanel);
+            planner = new Planner();
             page2 = new Page2();
 
-            MyView.AddScreen(new PageManager.Screen("page1", page1, true));
+            MyView.AddScreen(new PageManager.Screen("planner", planner, true));
             MyView.AddScreen(new PageManager.Screen("page2", page2, true));
 
-            MyView.ShowScreen("page1");
-            myPanel1.SettingClick += MyPanelSetting_Click;
-            myPanel1.ExpandClick += MyPanelExpand_Click;
+            MyView.ShowScreen("planner");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MyView.ShowScreen("page1");
+            MyView.ShowScreen("planner");
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -54,17 +51,19 @@ namespace Diva
             dropdownMenuPlanning.Show(iconButton2, iconButton2.Width, 0);
         }
 
-        private void MyPanelExpand_Click(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (isPanelExpand)
-                myPanel1.Height = 24;
-            else
-                myPanel1.Height += 30;
-            isPanelExpand = !isPanelExpand;
+            base.OnFormClosing(e);
+            planner.Planner_FormClosing();
         }
-        private void MyPanelSetting_Click(object sender, EventArgs e)
-        {
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            planner.Planner_FormClosed();
         }
+
+        
+
     }
 }
