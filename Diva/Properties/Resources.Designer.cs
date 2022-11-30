@@ -253,6 +253,16 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_connected_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_connected_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_drone {
             get {
                 object obj = ResourceManager.GetObject("icon_drone", resourceCulture);

@@ -10,7 +10,7 @@ using System.Drawing.Drawing2D;
 
 namespace Diva.Controls.Components
 {
-    class MyButton : Button
+    public class MyButton : Button
     {
         private Image _NormalImage;
         public new Image Image
@@ -32,6 +32,23 @@ namespace Diva.Controls.Components
             get => _BackColor;
             set { _BackColor = base.BackColor = value; }
         }
+
+        private Image _CheckedImage;
+        public bool Checked { get; set; }
+        [Browsable(true)]
+        public Image CheckedImage
+        {
+            get => _CheckedImage;
+            set
+            {
+                _CheckedImage = value;
+                if (Checked)
+                    base.Image = value;
+            }
+        }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public Image CheckStateImage => Checked && CheckedImage != null ? CheckedImage : _NormalImage;
 
         [Browsable(true)]
         public Image HoverImage { get; set; }

@@ -119,7 +119,7 @@ namespace Diva
 		// Thread setup
 		private BackgroundLoop mainThread = null;
 		private DateTime mapupdate = DateTime.MinValue;
-
+		
 
 		private bool IsMapFocusing
         {
@@ -236,7 +236,7 @@ namespace Diva
 
             IsMapFocusing = true;
 
-            SetupMIRDC();
+			// SetupMIRDC();
 
             mainThread = BackgroundLoop.Start(MainLoop);
         }
@@ -2043,10 +2043,11 @@ namespace Diva
         #region Button click event handlers
         private int droneConnectingCounter;
         private bool connectingDrones => droneConnectingCounter != 0;
-		private void BUT_Connect_Click(object sender, EventArgs e)
+		public void BUT_Connect_Click(object sender, EventArgs e)
 		{
-            // clicked event fires after state change
-            if (!TSBtnConnect.Checked)
+            
+			// clicked event fires after state change
+            if (Main.GetInstance().ConnectState)
             {
                 if (OnlineDrones.Count > 0)
                 {
@@ -2062,7 +2063,7 @@ namespace Diva
             if (!dsettings.Any())
             {
                 BUT_Configure_Click("Vehicle", null);
-                TSBtnConnect.Checked = false;
+				Main.GetInstance().ConnectState = false;
                 return;
             }
             droneConnectingCounter = 0;
@@ -2127,11 +2128,13 @@ namespace Diva
             }
             else
             {
-                TSBtnConnect.Checked = false;
+				Main.GetInstance().ConnectState = false;
             }
         }
 
-		private void BUT_Arm_Click(object sender, EventArgs e)
+		
+
+		public void BUT_Arm_Click(object sender, EventArgs e)
 		{
 			if (!ActiveDrone.IsOpen)
 			{
@@ -2158,7 +2161,7 @@ namespace Diva
 			}
 		}
 
-		private void BUT_Takeoff_Click(object sender, EventArgs e)
+		public void BUT_Takeoff_Click(object sender, EventArgs e)
 		{
 			if (!ActiveDrone.IsOpen)
 			{
@@ -2186,7 +2189,7 @@ namespace Diva
 			_dialog.ShowDialog();
 		}
 
-		private void BUT_Auto_Click(object sender, EventArgs e)
+		public void BUT_Auto_Click(object sender, EventArgs e)
 		{
 			if (!ActiveDrone.IsOpen)
 			{
@@ -2200,7 +2203,7 @@ namespace Diva
             }
 		}
 
-		private void BUT_RTL_Click(object sender, EventArgs e)
+		public void BUT_RTL_Click(object sender, EventArgs e)
 		{
 			if (!ActiveDrone.IsOpen)
 			{
@@ -2326,7 +2329,7 @@ namespace Diva
 			TxtHomeLongitude.Text = MouseDownStart.Lng.ToString();
 		}
 
-		private void BUT_Land_Click(object sender, EventArgs e)
+		public void BUT_Land_Click(object sender, EventArgs e)
 		{
 			if (ActiveDrone.IsOpen)
 			{
@@ -2334,7 +2337,7 @@ namespace Diva
 			}
 		}
 
-		private void BUT_Configure_Click(object sender, EventArgs e)
+		public void BUT_Configure_Click(object sender, EventArgs e)
 		{
             ConfigureForm.InitPage = sender as string;
             ConfigureForm config = new ConfigureForm();
@@ -2974,7 +2977,7 @@ namespace Diva
             DroneDisconnect(drone);
             OnlineDrones.Remove(drone);
             if (OnlineDrones.Count == 0)
-                TSBtnConnect.Checked = false;
+				Main.GetInstance().ConnectState = false;
         }
 
         private void DroneDisconnect(MavDrone drone)
@@ -3188,11 +3191,12 @@ namespace Diva
             }
             return true;
         }
-
+		/*
         private void SetupMIRDC()
         {
-            // Icon = Resources.logo;
-            FullControl = false;
+			// Icon = Resources.logo;
+			// FullControl = false;
+			FullControl = true;
 
             BtnFlyTo.Click += BtnFlyTo_Clicked;
             TSMainPanel.Items.Add(BtnFlyTo);
@@ -3200,7 +3204,7 @@ namespace Diva
             TSMainPanel.Items.Add(BtnTrack);
             SetButtonStates();
             BackgroundTimer += BaseLocationInitialized;
-        }
+        }*/
 
         private void BaseLocationInitialized(object sender, EventArgs e)
         {
@@ -3249,7 +3253,8 @@ namespace Diva
             }
         }
 
-        private void Planner_KeyUp(object sender, KeyEventArgs e)
+		/*
+        public void Planner_KeyUp(object sender, KeyEventArgs e)
         {
             bool keyOnMap = sender == Map;
             if (keyOnMap && FlyToClicked && e.KeyCode == Keys.Escape)
@@ -3270,7 +3275,7 @@ namespace Diva
             {
                 FullControl = !FullControl;
             }
-        }
+        }*/
 
         private void BtnTrack_Clicked(object sender, EventArgs e)
         {

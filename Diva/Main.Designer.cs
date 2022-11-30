@@ -31,28 +31,26 @@ namespace Diva
         {
             this.components = new System.ComponentModel.Container();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.iconButton5 = new Diva.Controls.Components.IconButton();
-            this.iconButton4 = new Diva.Controls.Components.IconButton();
-            this.iconButton3 = new Diva.Controls.Components.IconButton();
-            this.iconButton2 = new Diva.Controls.Components.IconButton();
-            this.iconButton1 = new Diva.Controls.Components.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelTitlebar = new System.Windows.Forms.Panel();
-            this.myButton2 = new Diva.Controls.Components.MyButton();
-            this.myButton1 = new Diva.Controls.Components.MyButton();
-            this.dropdownMenuOperation = new Diva.Controls.Menu.DropdownMenu(this.components);
-            this.item1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.takeoffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.landToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.missionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dropdownMenuPlanning = new Diva.Controls.Menu.DropdownMenu(this.components);
-            this.writeMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thePanel = new System.Windows.Forms.Panel();
+            this.configButton = new Diva.Controls.Components.MyButton();
+            this.connectButton = new Diva.Controls.Components.MyButton();
+            this.iconButton5 = new Diva.Controls.Components.IconButton();
+            this.iconButton2 = new Diva.Controls.Components.IconButton();
+            this.iconButton1 = new Diva.Controls.Components.IconButton();
+            this.dropdownMenuOperation = new Diva.Controls.Menu.DropdownMenu(this.components);
+            this.throttleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.takeoffMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.landMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rtlMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dropdownMenuPlanning = new Diva.Controls.Menu.DropdownMenu(this.components);
+            this.writeMissionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readMissionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importMissionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportMissionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -65,16 +63,93 @@ namespace Diva
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.panelMenu.Controls.Add(this.iconButton5);
-            this.panelMenu.Controls.Add(this.iconButton4);
-            this.panelMenu.Controls.Add(this.iconButton3);
             this.panelMenu.Controls.Add(this.iconButton2);
             this.panelMenu.Controls.Add(this.iconButton1);
             this.panelMenu.Controls.Add(this.panel1);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(182, 601);
+            this.panelMenu.Size = new System.Drawing.Size(152, 601);
             this.panelMenu.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(152, 89);
+            this.panel1.TabIndex = 2;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Diva.Properties.Resources.icon_menu_48;
+            this.pictureBox1.Location = new System.Drawing.Point(45, 18);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // panelTitlebar
+            // 
+            this.panelTitlebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.panelTitlebar.Controls.Add(this.configButton);
+            this.panelTitlebar.Controls.Add(this.connectButton);
+            this.panelTitlebar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTitlebar.Location = new System.Drawing.Point(152, 0);
+            this.panelTitlebar.Name = "panelTitlebar";
+            this.panelTitlebar.Size = new System.Drawing.Size(834, 66);
+            this.panelTitlebar.TabIndex = 2;
+            // 
+            // thePanel
+            // 
+            this.thePanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.thePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thePanel.Location = new System.Drawing.Point(152, 66);
+            this.thePanel.Name = "thePanel";
+            this.thePanel.Size = new System.Drawing.Size(834, 535);
+            this.thePanel.TabIndex = 3;
+            // 
+            // configButton
+            // 
+            this.configButton.Checked = false;
+            this.configButton.CheckedImage = null;
+            this.configButton.ClickBackColor = System.Drawing.Color.Empty;
+            this.configButton.ClickForeColor = System.Drawing.Color.Empty;
+            this.configButton.ClickImage = null;
+            this.configButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.configButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.configButton.HoverBackColor = System.Drawing.Color.Empty;
+            this.configButton.HoverForeColor = System.Drawing.Color.Empty;
+            this.configButton.HoverImage = null;
+            this.configButton.Image = global::Diva.Properties.Resources.icon_settings_7_32;
+            this.configButton.Location = new System.Drawing.Point(75, 0);
+            this.configButton.Name = "configButton";
+            this.configButton.Size = new System.Drawing.Size(75, 66);
+            this.configButton.TabIndex = 1;
+            this.configButton.UseVisualStyleBackColor = true;
+            this.configButton.Click += new System.EventHandler(this.MenuButtons_Click);
+            // 
+            // connectButton
+            // 
+            this.connectButton.Checked = false;
+            this.connectButton.CheckedImage = global::Diva.Properties.Resources.icon_connected_32;
+            this.connectButton.ClickBackColor = System.Drawing.Color.Empty;
+            this.connectButton.ClickForeColor = System.Drawing.Color.Empty;
+            this.connectButton.ClickImage = null;
+            this.connectButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.connectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.connectButton.HoverBackColor = System.Drawing.Color.Empty;
+            this.connectButton.HoverForeColor = System.Drawing.Color.Empty;
+            this.connectButton.HoverImage = null;
+            this.connectButton.Image = global::Diva.Properties.Resources.icon_connect_32;
+            this.connectButton.Location = new System.Drawing.Point(0, 0);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(75, 66);
+            this.connectButton.TabIndex = 0;
+            this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.MenuButtons_Click);
             // 
             // iconButton5
             // 
@@ -93,57 +168,11 @@ namespace Diva
             this.iconButton5.Location = new System.Drawing.Point(0, 561);
             this.iconButton5.Name = "iconButton5";
             this.iconButton5.Padding = new System.Windows.Forms.Padding(10, 0, 0, 10);
-            this.iconButton5.Size = new System.Drawing.Size(182, 40);
+            this.iconButton5.Size = new System.Drawing.Size(152, 40);
             this.iconButton5.TabIndex = 7;
             this.iconButton5.Text = "Switch View";
             this.iconButton5.TextColor = System.Drawing.Color.White;
             this.iconButton5.UseVisualStyleBackColor = false;
-            // 
-            // iconButton4
-            // 
-            this.iconButton4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.iconButton4.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.iconButton4.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.iconButton4.BorderRadius = 0;
-            this.iconButton4.BorderSize = 0;
-            this.iconButton4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.iconButton4.FlatAppearance.BorderSize = 0;
-            this.iconButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton4.ForeColor = System.Drawing.Color.White;
-            this.iconButton4.Image = global::Diva.Properties.Resources.icon_chess_knight_24;
-            this.iconButton4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton4.Location = new System.Drawing.Point(0, 209);
-            this.iconButton4.Name = "iconButton4";
-            this.iconButton4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.iconButton4.Size = new System.Drawing.Size(182, 40);
-            this.iconButton4.TabIndex = 6;
-            this.iconButton4.Text = "iconButton4";
-            this.iconButton4.TextColor = System.Drawing.Color.White;
-            this.iconButton4.UseVisualStyleBackColor = false;
-            // 
-            // iconButton3
-            // 
-            this.iconButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.iconButton3.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.iconButton3.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.iconButton3.BorderRadius = 0;
-            this.iconButton3.BorderSize = 0;
-            this.iconButton3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.iconButton3.FlatAppearance.BorderSize = 0;
-            this.iconButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.iconButton3.ForeColor = System.Drawing.Color.White;
-            this.iconButton3.Image = global::Diva.Properties.Resources.icon_chess_castel_24;
-            this.iconButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.iconButton3.Location = new System.Drawing.Point(0, 169);
-            this.iconButton3.Name = "iconButton3";
-            this.iconButton3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.iconButton3.Size = new System.Drawing.Size(182, 40);
-            this.iconButton3.TabIndex = 5;
-            this.iconButton3.Text = "iconButton3";
-            this.iconButton3.TextColor = System.Drawing.Color.White;
-            this.iconButton3.UseVisualStyleBackColor = false;
             // 
             // iconButton2
             // 
@@ -157,12 +186,12 @@ namespace Diva
             this.iconButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.iconButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton2.ForeColor = System.Drawing.Color.White;
-            this.iconButton2.Image = global::Diva.Properties.Resources.icon_chess_queen_24;
+            this.iconButton2.Image = global::Diva.Properties.Resources.icon_chess_knight_24;
             this.iconButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton2.Location = new System.Drawing.Point(0, 129);
             this.iconButton2.Name = "iconButton2";
             this.iconButton2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.iconButton2.Size = new System.Drawing.Size(182, 40);
+            this.iconButton2.Size = new System.Drawing.Size(152, 40);
             this.iconButton2.TabIndex = 4;
             this.iconButton2.Text = "Planning";
             this.iconButton2.TextColor = System.Drawing.Color.White;
@@ -181,196 +210,126 @@ namespace Diva
             this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.iconButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton1.ForeColor = System.Drawing.Color.White;
-            this.iconButton1.Image = global::Diva.Properties.Resources.icon_chess_king_24;
+            this.iconButton1.Image = global::Diva.Properties.Resources.icon_chess_castel_24;
             this.iconButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton1.Location = new System.Drawing.Point(0, 89);
             this.iconButton1.Name = "iconButton1";
             this.iconButton1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.iconButton1.Size = new System.Drawing.Size(182, 40);
+            this.iconButton1.Size = new System.Drawing.Size(152, 40);
             this.iconButton1.TabIndex = 3;
             this.iconButton1.Text = "Operation";
             this.iconButton1.TextColor = System.Drawing.Color.White;
             this.iconButton1.UseVisualStyleBackColor = false;
             this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(182, 89);
-            this.panel1.TabIndex = 2;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Diva.Properties.Resources.icon_menu_48;
-            this.pictureBox1.Location = new System.Drawing.Point(61, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // panelTitlebar
-            // 
-            this.panelTitlebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.panelTitlebar.Controls.Add(this.myButton2);
-            this.panelTitlebar.Controls.Add(this.myButton1);
-            this.panelTitlebar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTitlebar.Location = new System.Drawing.Point(182, 0);
-            this.panelTitlebar.Name = "panelTitlebar";
-            this.panelTitlebar.Size = new System.Drawing.Size(804, 66);
-            this.panelTitlebar.TabIndex = 2;
-            // 
-            // myButton2
-            // 
-            this.myButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.myButton2.ClickBackColor = System.Drawing.Color.Empty;
-            this.myButton2.ClickForeColor = System.Drawing.Color.Empty;
-            this.myButton2.ClickImage = null;
-            this.myButton2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.myButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.myButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.myButton2.HoverBackColor = System.Drawing.Color.Empty;
-            this.myButton2.HoverForeColor = System.Drawing.Color.Empty;
-            this.myButton2.HoverImage = null;
-            this.myButton2.Image = global::Diva.Properties.Resources.icon_settings_7_32;
-            this.myButton2.Location = new System.Drawing.Point(75, 0);
-            this.myButton2.Name = "myButton2";
-            this.myButton2.Size = new System.Drawing.Size(75, 66);
-            this.myButton2.TabIndex = 1;
-            this.myButton2.UseVisualStyleBackColor = false;
-            // 
-            // myButton1
-            // 
-            this.myButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.myButton1.ClickBackColor = System.Drawing.Color.Empty;
-            this.myButton1.ClickForeColor = System.Drawing.Color.Empty;
-            this.myButton1.ClickImage = null;
-            this.myButton1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.myButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.myButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.myButton1.HoverBackColor = System.Drawing.Color.Empty;
-            this.myButton1.HoverForeColor = System.Drawing.Color.Empty;
-            this.myButton1.HoverImage = null;
-            this.myButton1.Image = global::Diva.Properties.Resources.icon_connect_32;
-            this.myButton1.Location = new System.Drawing.Point(0, 0);
-            this.myButton1.Name = "myButton1";
-            this.myButton1.Size = new System.Drawing.Size(75, 66);
-            this.myButton1.TabIndex = 0;
-            this.myButton1.UseVisualStyleBackColor = false;
-            // 
             // dropdownMenuOperation
             // 
             this.dropdownMenuOperation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.dropdownMenuOperation.IsMainMenu = false;
             this.dropdownMenuOperation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.item1ToolStripMenuItem,
-            this.takeoffToolStripMenuItem,
-            this.landToolStripMenuItem,
-            this.missionToolStripMenuItem,
-            this.rTLToolStripMenuItem});
+            this.throttleMenuItem,
+            this.takeoffMenuItem,
+            this.landMenuItem,
+            this.autoMenuItem,
+            this.rtlMenuItem});
             this.dropdownMenuOperation.MenuItemHeight = 25;
             this.dropdownMenuOperation.MenuItemTextColor = System.Drawing.Color.Empty;
             this.dropdownMenuOperation.Name = "dropdownMenu1";
             this.dropdownMenuOperation.PrimaryColor = System.Drawing.Color.Transparent;
-            this.dropdownMenuOperation.Size = new System.Drawing.Size(118, 114);
+            this.dropdownMenuOperation.Size = new System.Drawing.Size(116, 114);
             // 
-            // item1ToolStripMenuItem
+            // throttleMenuItem
             // 
-            this.item1ToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.item1ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
-            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.item1ToolStripMenuItem.Text = "Throttle";
+            this.throttleMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throttleMenuItem.ForeColor = System.Drawing.Color.White;
+            this.throttleMenuItem.Name = "throttleMenuItem";
+            this.throttleMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.throttleMenuItem.Text = "Throttle";
+            this.throttleMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
-            // takeoffToolStripMenuItem
+            // takeoffMenuItem
             // 
-            this.takeoffToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.takeoffToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.takeoffToolStripMenuItem.Name = "takeoffToolStripMenuItem";
-            this.takeoffToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.takeoffToolStripMenuItem.Text = "Takeoff";
+            this.takeoffMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.takeoffMenuItem.ForeColor = System.Drawing.Color.White;
+            this.takeoffMenuItem.Name = "takeoffMenuItem";
+            this.takeoffMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.takeoffMenuItem.Text = "Takeoff";
+            this.takeoffMenuItem.Visible = false;
+            this.takeoffMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
-            // landToolStripMenuItem
+            // landMenuItem
             // 
-            this.landToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.landToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.landToolStripMenuItem.Name = "landToolStripMenuItem";
-            this.landToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.landToolStripMenuItem.Text = "Land";
+            this.landMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.landMenuItem.ForeColor = System.Drawing.Color.White;
+            this.landMenuItem.Name = "landMenuItem";
+            this.landMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.landMenuItem.Text = "Land";
+            this.landMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
-            // missionToolStripMenuItem
+            // autoMenuItem
             // 
-            this.missionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.missionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.missionToolStripMenuItem.Name = "missionToolStripMenuItem";
-            this.missionToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.missionToolStripMenuItem.Text = "Mission";
+            this.autoMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoMenuItem.ForeColor = System.Drawing.Color.White;
+            this.autoMenuItem.Name = "autoMenuItem";
+            this.autoMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.autoMenuItem.Text = "Auto";
+            this.autoMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
-            // rTLToolStripMenuItem
+            // rtlMenuItem
             // 
-            this.rTLToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rTLToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
-            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.rTLToolStripMenuItem.Text = "RTL";
+            this.rtlMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtlMenuItem.ForeColor = System.Drawing.Color.White;
+            this.rtlMenuItem.Name = "rtlMenuItem";
+            this.rtlMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.rtlMenuItem.Text = "RTL";
+            this.rtlMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
             // dropdownMenuPlanning
             // 
             this.dropdownMenuPlanning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.dropdownMenuPlanning.IsMainMenu = false;
             this.dropdownMenuPlanning.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.writeMissionToolStripMenuItem,
-            this.readMissionToolStripMenuItem,
-            this.importMissionToolStripMenuItem,
-            this.exportMissionToolStripMenuItem});
+            this.writeMissionMenuItem,
+            this.readMissionMenuItem,
+            this.importMissionMenuItem,
+            this.exportMissionMenuItem});
             this.dropdownMenuPlanning.MenuItemHeight = 25;
             this.dropdownMenuPlanning.MenuItemTextColor = System.Drawing.Color.Empty;
             this.dropdownMenuPlanning.Name = "dropdownMenuPlanning";
             this.dropdownMenuPlanning.PrimaryColor = System.Drawing.Color.Empty;
             this.dropdownMenuPlanning.Size = new System.Drawing.Size(156, 92);
             // 
-            // writeMissionToolStripMenuItem
+            // writeMissionMenuItem
             // 
-            this.writeMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.writeMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.writeMissionToolStripMenuItem.Name = "writeMissionToolStripMenuItem";
-            this.writeMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.writeMissionToolStripMenuItem.Text = "Write Mission";
+            this.writeMissionMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.writeMissionMenuItem.ForeColor = System.Drawing.Color.White;
+            this.writeMissionMenuItem.Name = "writeMissionMenuItem";
+            this.writeMissionMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.writeMissionMenuItem.Text = "Write Mission";
             // 
-            // readMissionToolStripMenuItem
+            // readMissionMenuItem
             // 
-            this.readMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.readMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.readMissionToolStripMenuItem.Name = "readMissionToolStripMenuItem";
-            this.readMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.readMissionToolStripMenuItem.Text = "Read Mission";
+            this.readMissionMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.readMissionMenuItem.ForeColor = System.Drawing.Color.White;
+            this.readMissionMenuItem.Name = "readMissionMenuItem";
+            this.readMissionMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.readMissionMenuItem.Text = "Read Mission";
             // 
-            // importMissionToolStripMenuItem
+            // importMissionMenuItem
             // 
-            this.importMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.importMissionToolStripMenuItem.Name = "importMissionToolStripMenuItem";
-            this.importMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.importMissionToolStripMenuItem.Text = "Import Mission";
+            this.importMissionMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.importMissionMenuItem.ForeColor = System.Drawing.Color.White;
+            this.importMissionMenuItem.Name = "importMissionMenuItem";
+            this.importMissionMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.importMissionMenuItem.Text = "Import Mission";
             // 
-            // exportMissionToolStripMenuItem
+            // exportMissionMenuItem
             // 
-            this.exportMissionToolStripMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exportMissionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.exportMissionToolStripMenuItem.Name = "exportMissionToolStripMenuItem";
-            this.exportMissionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.exportMissionToolStripMenuItem.Text = "Export Mission";
-            // 
-            // thePanel
-            // 
-            this.thePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.thePanel.Location = new System.Drawing.Point(182, 66);
-            this.thePanel.Name = "thePanel";
-            this.thePanel.Size = new System.Drawing.Size(804, 535);
-            this.thePanel.TabIndex = 3;
+            this.exportMissionMenuItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exportMissionMenuItem.ForeColor = System.Drawing.Color.White;
+            this.exportMissionMenuItem.Name = "exportMissionMenuItem";
+            this.exportMissionMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.exportMissionMenuItem.Text = "Export Mission";
             // 
             // Main
             // 
@@ -398,24 +357,22 @@ namespace Diva
         private System.Windows.Forms.Panel panelTitlebar;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Controls.Components.IconButton iconButton5;
-        private Controls.Components.IconButton iconButton4;
-        private Controls.Components.IconButton iconButton3;
         private Controls.Components.IconButton iconButton2;
-        private Controls.Components.IconButton iconButton1;
         private System.Windows.Forms.Panel panel1;
-        private Controls.Components.MyButton myButton2;
-        private Controls.Components.MyButton myButton1;
         private Controls.Menu.DropdownMenu dropdownMenuOperation;
-        private System.Windows.Forms.ToolStripMenuItem item1ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem takeoffToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem landToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem missionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rTLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem throttleMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem takeoffMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem landMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rtlMenuItem;
         private Controls.Menu.DropdownMenu dropdownMenuPlanning;
-        private System.Windows.Forms.ToolStripMenuItem writeMissionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readMissionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importMissionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportMissionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem writeMissionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readMissionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importMissionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportMissionMenuItem;
         private System.Windows.Forms.Panel thePanel;
+        private Controls.Components.IconButton iconButton1;
+        private Controls.Components.MyButton configButton;
+        private Controls.Components.MyButton connectButton;
     }
 }

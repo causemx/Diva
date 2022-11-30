@@ -50,9 +50,6 @@ namespace Diva
             this.LblMode = new System.Windows.Forms.Label();
             this.RotationInfoPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
-            this.TSMainPanel = new System.Windows.Forms.ToolStrip();
-            this.TSBtnConnect = new Diva.Controls.Components.MyTSButton();
-            this.TSBtnConfigure = new Diva.Controls.Components.MyTSButton();
             this.Map = new Diva.Controls.MyGMap();
             this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,19 +97,10 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
             this.SplitContainer.SuspendLayout();
-            this.TSMainPanel.SuspendLayout();
             this.cmMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVWayPoints)).BeginInit();
             this.ActiveDroneInfoPanel.SuspendLayout();
@@ -125,14 +113,6 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
-            this.SplitContainer.Panel1.Controls.Add(this.button8);
-            this.SplitContainer.Panel1.Controls.Add(this.button7);
-            this.SplitContainer.Panel1.Controls.Add(this.button6);
-            this.SplitContainer.Panel1.Controls.Add(this.button5);
-            this.SplitContainer.Panel1.Controls.Add(this.button4);
-            this.SplitContainer.Panel1.Controls.Add(this.button3);
-            this.SplitContainer.Panel1.Controls.Add(this.button2);
-            this.SplitContainer.Panel1.Controls.Add(this.button1);
             this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
@@ -144,7 +124,6 @@ namespace Diva
             this.SplitContainer.Panel1.Controls.Add(this.LblMode);
             this.SplitContainer.Panel1.Controls.Add(this.RotationInfoPanel);
             this.SplitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
-            this.SplitContainer.Panel1.Controls.Add(this.TSMainPanel);
             this.SplitContainer.Panel1.Controls.Add(this.Map);
             // 
             // SplitContainer.Panel2
@@ -178,6 +157,8 @@ namespace Diva
             // BtnBreakAction
             // 
             this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.BtnBreakAction.Checked = false;
+            this.BtnBreakAction.CheckedImage = null;
             this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.ClickImage = null;
@@ -220,6 +201,8 @@ namespace Diva
             // 
             // BtnZoomOut
             // 
+            this.BtnZoomOut.Checked = false;
+            this.BtnZoomOut.CheckedImage = null;
             this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.ClickImage = null;
@@ -235,6 +218,8 @@ namespace Diva
             // 
             // BtnZoomIn
             // 
+            this.BtnZoomIn.Checked = false;
+            this.BtnZoomIn.CheckedImage = null;
             this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.ClickImage = null;
@@ -250,6 +235,8 @@ namespace Diva
             // 
             // BtnMapFocus
             // 
+            this.BtnMapFocus.Checked = false;
+            this.BtnMapFocus.CheckedImage = null;
             this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.ClickImage = null;
@@ -286,64 +273,14 @@ namespace Diva
             this.DroneInfoPanel.ActiveDroneChanged += new System.EventHandler(this.DroneInfoPanel_ActiveDroneChanged);
             this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
             // 
-            // TSMainPanel
-            // 
-            this.TSMainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            resources.ApplyResources(this.TSMainPanel, "TSMainPanel");
-            this.TSMainPanel.GripMargin = new System.Windows.Forms.Padding(0);
-            this.TSMainPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.TSMainPanel.ImageScalingSize = new System.Drawing.Size(0, 0);
-            this.TSMainPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSBtnConnect,
-            this.TSBtnConfigure});
-            this.TSMainPanel.Name = "TSMainPanel";
-            // 
-            // TSBtnConnect
-            // 
-            resources.ApplyResources(this.TSBtnConnect, "TSBtnConnect");
-            this.TSBtnConnect.CheckedBackColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.CheckedImage = global::Diva.Properties.Resources.top_link;
-            this.TSBtnConnect.CheckOnClick = true;
-            this.TSBtnConnect.ClickBackColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.ClickForeColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.ClickImage = null;
-            this.TSBtnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSBtnConnect.ForeColor = System.Drawing.Color.White;
-            this.TSBtnConnect.HoverBackColor = System.Drawing.Color.Empty;
-            this.TSBtnConnect.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnConnect.HoverImage = null;
-            this.TSBtnConnect.Image = global::Diva.Properties.Resources.top_unlink;
-            this.TSBtnConnect.Margin = new System.Windows.Forms.Padding(0);
-            this.TSBtnConnect.Name = "TSBtnConnect";
-            this.TSBtnConnect.Click += new System.EventHandler(this.BUT_Connect_Click);
-            // 
-            // TSBtnConfigure
-            // 
-            resources.ApplyResources(this.TSBtnConfigure, "TSBtnConfigure");
-            this.TSBtnConfigure.CheckedBackColor = System.Drawing.Color.Empty;
-            this.TSBtnConfigure.CheckedForeColor = System.Drawing.Color.Empty;
-            this.TSBtnConfigure.CheckedImage = null;
-            this.TSBtnConfigure.ClickBackColor = System.Drawing.Color.Empty;
-            this.TSBtnConfigure.ClickForeColor = System.Drawing.Color.Empty;
-            this.TSBtnConfigure.ClickImage = null;
-            this.TSBtnConfigure.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSBtnConfigure.ForeColor = System.Drawing.Color.White;
-            this.TSBtnConfigure.HoverBackColor = System.Drawing.Color.Empty;
-            this.TSBtnConfigure.HoverForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            this.TSBtnConfigure.HoverImage = null;
-            this.TSBtnConfigure.Image = global::Diva.Properties.Resources.icon_top_setting;
-            this.TSBtnConfigure.Name = "TSBtnConfigure";
-            this.TSBtnConfigure.Click += new System.EventHandler(this.BUT_Configure_Click);
-            // 
             // Map
             // 
+            resources.ApplyResources(this.Map, "Map");
             this.Map.BackColor = System.Drawing.SystemColors.Control;
             this.Map.Bearing = 0F;
             this.Map.CanDragMap = true;
             this.Map.ContextMenuStrip = this.cmMap;
             this.Map.DebugMode = true;
-            resources.ApplyResources(this.Map, "Map");
             this.Map.EmptyTileColor = System.Drawing.Color.Navy;
             this.Map.GrayScaleMode = false;
             this.Map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
@@ -755,70 +692,18 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            resources.ApplyResources(this.button2, "button2");
-            this.button2.Name = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            resources.ApplyResources(this.button3, "button3");
-            this.button3.Name = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            resources.ApplyResources(this.button4, "button4");
-            this.button4.Name = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            resources.ApplyResources(this.button5, "button5");
-            this.button5.Name = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            resources.ApplyResources(this.button6, "button6");
-            this.button6.Name = "button6";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            resources.ApplyResources(this.button7, "button7");
-            this.button7.Name = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            resources.ApplyResources(this.button8, "button8");
-            this.button8.Name = "button8";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-            resources.ApplyResources(this, "$this");
             this.Controls.Add(this.SplitContainer);
-            //this.KeyPreview = true;
+            resources.ApplyResources(this, "$this");
             this.Name = "Planner";
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Planner_KeyUp);
             this.SplitContainer.Panel1.ResumeLayout(false);
             this.SplitContainer.Panel1.PerformLayout();
             this.SplitContainer.Panel2.ResumeLayout(false);
             this.SplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).EndInit();
             this.SplitContainer.ResumeLayout(false);
-            this.TSMainPanel.ResumeLayout(false);
-            this.TSMainPanel.PerformLayout();
             this.cmMap.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVWayPoints)).EndInit();
             this.ActiveDroneInfoPanel.ResumeLayout(false);
@@ -836,9 +721,6 @@ namespace Diva
 		private System.Windows.Forms.ToolStripMenuItem miClearMission;
 		private System.Windows.Forms.ToolStripMenuItem miSetHomeHere;
 		private System.Windows.Forms.ToolStripMenuItem miClearAllMissions;
-		private System.Windows.Forms.ToolStrip TSMainPanel;
-		private MyTSButton TSBtnConnect;
-		private MyTSButton TSBtnConfigure;
         private SplitContainer SplitContainer;
 		private Button BtnHome;
 		private Button BtnAltitude;
@@ -891,13 +773,5 @@ namespace Diva
         private ToolStripMenuItem planToolStripMenuItem;
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
-        private Button button8;
-        private Button button7;
-        private Button button6;
-        private Button button5;
-        private Button button4;
-        private Button button3;
-        private Button button2;
-        private Button button1;
     }
 }
