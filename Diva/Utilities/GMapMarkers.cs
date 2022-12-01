@@ -351,7 +351,7 @@ namespace Diva.Utilities
                     // g.DrawString(text, font, new SolidBrush(Color.Red), mid.X, mid.Y);
                     g.DrawString(distance.ToString("####0.00"), font, new SolidBrush(Color.Red), mid.X, mid.Y);
                     // Draw Curve
-                    DrawArcBetweenTwoPoints(g, new Pen(Color.GreenYellow, 5), new PointF(p.X, p.Y), new PointF(pp.X, pp.Y), 100, true);
+                    // DrawArcBetweenTwoPoints(g, new Pen(Color.GreenYellow, 5), new PointF(p.X, p.Y), new PointF(pp.X, pp.Y), 100, true);
                 }
 
                 pp = p;

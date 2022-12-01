@@ -237,8 +237,9 @@ namespace Diva
             IsMapFocusing = true;
 
 			// SetupMIRDC();
+			FullControl = true;
 
-            mainThread = BackgroundLoop.Start(MainLoop);
+			mainThread = BackgroundLoop.Start(MainLoop);
         }
 
 		private void Map_Paint(object sender, PaintEventArgs e)
@@ -3191,7 +3192,8 @@ namespace Diva
             }
             return true;
         }
-		/*
+		
+
         private void SetupMIRDC()
         {
 			// Icon = Resources.logo;
@@ -3199,12 +3201,12 @@ namespace Diva
 			FullControl = true;
 
             BtnFlyTo.Click += BtnFlyTo_Clicked;
-            TSMainPanel.Items.Add(BtnFlyTo);
+            //TSMainPanel.Items.Add(BtnFlyTo);
             BtnTrack.Click += BtnTrack_Clicked;
-            TSMainPanel.Items.Add(BtnTrack);
+            //TSMainPanel.Items.Add(BtnTrack);
             SetButtonStates();
             BackgroundTimer += BaseLocationInitialized;
-        }*/
+        }
 
         private void BaseLocationInitialized(object sender, EventArgs e)
         {

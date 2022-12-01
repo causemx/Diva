@@ -31,15 +31,15 @@ namespace Diva
         {
             this.components = new System.ComponentModel.Container();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panelTitlebar = new System.Windows.Forms.Panel();
-            this.thePanel = new System.Windows.Forms.Panel();
-            this.configButton = new Diva.Controls.Components.MyButton();
-            this.connectButton = new Diva.Controls.Components.MyButton();
             this.iconButton5 = new Diva.Controls.Components.IconButton();
             this.iconButton2 = new Diva.Controls.Components.IconButton();
             this.iconButton1 = new Diva.Controls.Components.IconButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panelTitlebar = new System.Windows.Forms.Panel();
+            this.configButton = new Diva.Controls.Components.MyButton();
+            this.connectButton = new Diva.Controls.Components.MyButton();
+            this.thePanel = new System.Windows.Forms.Panel();
             this.dropdownMenuOperation = new Diva.Controls.Menu.DropdownMenu(this.components);
             this.throttleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.takeoffMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,85 +71,6 @@ namespace Diva
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(152, 601);
             this.panelMenu.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(152, 89);
-            this.panel1.TabIndex = 2;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Diva.Properties.Resources.icon_menu_48;
-            this.pictureBox1.Location = new System.Drawing.Point(45, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // panelTitlebar
-            // 
-            this.panelTitlebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.panelTitlebar.Controls.Add(this.configButton);
-            this.panelTitlebar.Controls.Add(this.connectButton);
-            this.panelTitlebar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTitlebar.Location = new System.Drawing.Point(152, 0);
-            this.panelTitlebar.Name = "panelTitlebar";
-            this.panelTitlebar.Size = new System.Drawing.Size(834, 66);
-            this.panelTitlebar.TabIndex = 2;
-            // 
-            // thePanel
-            // 
-            this.thePanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.thePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.thePanel.Location = new System.Drawing.Point(152, 66);
-            this.thePanel.Name = "thePanel";
-            this.thePanel.Size = new System.Drawing.Size(834, 535);
-            this.thePanel.TabIndex = 3;
-            // 
-            // configButton
-            // 
-            this.configButton.Checked = false;
-            this.configButton.CheckedImage = null;
-            this.configButton.ClickBackColor = System.Drawing.Color.Empty;
-            this.configButton.ClickForeColor = System.Drawing.Color.Empty;
-            this.configButton.ClickImage = null;
-            this.configButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.configButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.configButton.HoverBackColor = System.Drawing.Color.Empty;
-            this.configButton.HoverForeColor = System.Drawing.Color.Empty;
-            this.configButton.HoverImage = null;
-            this.configButton.Image = global::Diva.Properties.Resources.icon_settings_7_32;
-            this.configButton.Location = new System.Drawing.Point(75, 0);
-            this.configButton.Name = "configButton";
-            this.configButton.Size = new System.Drawing.Size(75, 66);
-            this.configButton.TabIndex = 1;
-            this.configButton.UseVisualStyleBackColor = true;
-            this.configButton.Click += new System.EventHandler(this.MenuButtons_Click);
-            // 
-            // connectButton
-            // 
-            this.connectButton.Checked = false;
-            this.connectButton.CheckedImage = global::Diva.Properties.Resources.icon_connected_32;
-            this.connectButton.ClickBackColor = System.Drawing.Color.Empty;
-            this.connectButton.ClickForeColor = System.Drawing.Color.Empty;
-            this.connectButton.ClickImage = null;
-            this.connectButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.connectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.connectButton.HoverBackColor = System.Drawing.Color.Empty;
-            this.connectButton.HoverForeColor = System.Drawing.Color.Empty;
-            this.connectButton.HoverImage = null;
-            this.connectButton.Image = global::Diva.Properties.Resources.icon_connect_32;
-            this.connectButton.Location = new System.Drawing.Point(0, 0);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(75, 66);
-            this.connectButton.TabIndex = 0;
-            this.connectButton.UseVisualStyleBackColor = true;
-            this.connectButton.Click += new System.EventHandler(this.MenuButtons_Click);
             // 
             // iconButton5
             // 
@@ -221,6 +142,86 @@ namespace Diva
             this.iconButton1.TextColor = System.Drawing.Color.White;
             this.iconButton1.UseVisualStyleBackColor = false;
             this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(152, 89);
+            this.panel1.TabIndex = 2;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Diva.Properties.Resources.icon_menu_48;
+            this.pictureBox1.Location = new System.Drawing.Point(45, 18);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // panelTitlebar
+            // 
+            this.panelTitlebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.panelTitlebar.Controls.Add(this.configButton);
+            this.panelTitlebar.Controls.Add(this.connectButton);
+            this.panelTitlebar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTitlebar.Location = new System.Drawing.Point(152, 0);
+            this.panelTitlebar.Name = "panelTitlebar";
+            this.panelTitlebar.Size = new System.Drawing.Size(834, 66);
+            this.panelTitlebar.TabIndex = 2;
+            // 
+            // configButton
+            // 
+            this.configButton.Checked = false;
+            this.configButton.CheckedImage = null;
+            this.configButton.ClickBackColor = System.Drawing.Color.Empty;
+            this.configButton.ClickForeColor = System.Drawing.Color.Empty;
+            this.configButton.ClickImage = null;
+            this.configButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.configButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.configButton.HoverBackColor = System.Drawing.Color.Empty;
+            this.configButton.HoverForeColor = System.Drawing.Color.Empty;
+            this.configButton.HoverImage = null;
+            this.configButton.Image = global::Diva.Properties.Resources.icon_settings_7_32;
+            this.configButton.Location = new System.Drawing.Point(75, 0);
+            this.configButton.Name = "configButton";
+            this.configButton.Size = new System.Drawing.Size(75, 66);
+            this.configButton.TabIndex = 1;
+            this.configButton.UseVisualStyleBackColor = true;
+            this.configButton.Click += new System.EventHandler(this.MenuButtons_Click);
+            // 
+            // connectButton
+            // 
+            this.connectButton.Checked = false;
+            this.connectButton.CheckedImage = global::Diva.Properties.Resources.icon_connected_32;
+            this.connectButton.ClickBackColor = System.Drawing.Color.Empty;
+            this.connectButton.ClickForeColor = System.Drawing.Color.Empty;
+            this.connectButton.ClickImage = null;
+            this.connectButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.connectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.connectButton.HoverBackColor = System.Drawing.Color.Empty;
+            this.connectButton.HoverForeColor = System.Drawing.Color.Empty;
+            this.connectButton.HoverImage = null;
+            this.connectButton.Image = global::Diva.Properties.Resources.icon_connect_32;
+            this.connectButton.Location = new System.Drawing.Point(0, 0);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(75, 66);
+            this.connectButton.TabIndex = 0;
+            this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.MenuButtons_Click);
+            // 
+            // thePanel
+            // 
+            this.thePanel.AutoSize = true;
+            this.thePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.thePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thePanel.Location = new System.Drawing.Point(152, 66);
+            this.thePanel.Name = "thePanel";
+            this.thePanel.Size = new System.Drawing.Size(834, 535);
+            this.thePanel.TabIndex = 3;
             // 
             // dropdownMenuOperation
             // 
@@ -306,6 +307,7 @@ namespace Diva
             this.writeMissionMenuItem.Name = "writeMissionMenuItem";
             this.writeMissionMenuItem.Size = new System.Drawing.Size(155, 22);
             this.writeMissionMenuItem.Text = "Write Mission";
+            this.writeMissionMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
             // readMissionMenuItem
             // 
@@ -314,6 +316,7 @@ namespace Diva
             this.readMissionMenuItem.Name = "readMissionMenuItem";
             this.readMissionMenuItem.Size = new System.Drawing.Size(155, 22);
             this.readMissionMenuItem.Text = "Read Mission";
+            this.readMissionMenuItem.Click += new System.EventHandler(this.MenuItems_Click);
             // 
             // importMissionMenuItem
             // 
@@ -349,6 +352,7 @@ namespace Diva
             this.dropdownMenuOperation.ResumeLayout(false);
             this.dropdownMenuPlanning.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -370,9 +374,9 @@ namespace Diva
         private System.Windows.Forms.ToolStripMenuItem readMissionMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importMissionMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportMissionMenuItem;
-        private System.Windows.Forms.Panel thePanel;
         private Controls.Components.IconButton iconButton1;
         private Controls.Components.MyButton configButton;
         private Controls.Components.MyButton connectButton;
+        private System.Windows.Forms.Panel thePanel;
     }
 }

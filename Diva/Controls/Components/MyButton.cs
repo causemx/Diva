@@ -47,9 +47,6 @@ namespace Diva.Controls.Components
             }
         }
 
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        public Image CheckStateImage => Checked && CheckedImage != null ? CheckedImage : _NormalImage;
-
         [Browsable(true)]
         public Image HoverImage { get; set; }
         [Browsable(true)]
