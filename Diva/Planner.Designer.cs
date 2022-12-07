@@ -41,9 +41,16 @@ namespace Diva
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
             this.IconGPSLostWarning = new System.Windows.Forms.Button();
             this.IconModeWarning = new System.Windows.Forms.Button();
+            this.BtnBreakAction = new Diva.Controls.Components.MyButton();
+            this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
             this.LblModeDesc = new System.Windows.Forms.Label();
+            this.BtnZoomOut = new Diva.Controls.Components.MyButton();
+            this.BtnZoomIn = new Diva.Controls.Components.MyButton();
+            this.BtnMapFocus = new Diva.Controls.Components.MyButton();
             this.LblMode = new System.Windows.Forms.Label();
             this.RotationInfoPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
+            this.Map = new Diva.Controls.MyGMap();
             this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,13 +97,7 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
-            this.BtnBreakAction = new Diva.Controls.Components.MyButton();
-            this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
-            this.BtnZoomOut = new Diva.Controls.Components.MyButton();
-            this.BtnZoomIn = new Diva.Controls.Components.MyButton();
-            this.BtnMapFocus = new Diva.Controls.Components.MyButton();
-            this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
-            this.Map = new Diva.Controls.MyGMap();
+            this.fooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -154,12 +155,102 @@ namespace Diva
             this.IconModeWarning.Name = "IconModeWarning";
             this.IconModeWarning.UseVisualStyleBackColor = false;
             // 
+            // BtnBreakAction
+            // 
+            this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.BtnBreakAction.Checked = false;
+            this.BtnBreakAction.CheckedImage = null;
+            this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.ClickImage = null;
+            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
+            this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.HoverImage = null;
+            this.BtnBreakAction.Image = global::Diva.Properties.Resources.red_octagon_with_hand;
+            this.BtnBreakAction.Name = "BtnBreakAction";
+            this.TTButtonDescription.SetToolTip(this.BtnBreakAction, resources.GetString("BtnBreakAction.ToolTip"));
+            this.BtnBreakAction.UseVisualStyleBackColor = false;
+            this.BtnBreakAction.Click += new System.EventHandler(this.BtnBreakAction_Click);
+            // 
+            // AltitudeControlPanel
+            // 
+            this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
+            this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
+            this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
+            this.AltitudeControlPanel.ForeColor = System.Drawing.Color.White;
+            this.AltitudeControlPanel.HoverGrow = System.Drawing.ContentAlignment.TopRight;
+            this.AltitudeControlPanel.HoverSize = new System.Drawing.Size(60, 200);
+            this.AltitudeControlPanel.Maximum = 120F;
+            this.AltitudeControlPanel.Minimum = 10F;
+            this.AltitudeControlPanel.Name = "AltitudeControlPanel";
+            this.AltitudeControlPanel.PointingColor = System.Drawing.Color.Red;
+            this.AltitudeControlPanel.Target = 0F;
+            this.AltitudeControlPanel.TargetColor = System.Drawing.Color.Yellow;
+            this.AltitudeControlPanel.Targeting = false;
+            this.AltitudeControlPanel.Value = 0F;
+            this.AltitudeControlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AltitudeControlPanel_MouseClick);
+            // 
             // LblModeDesc
             // 
             resources.ApplyResources(this.LblModeDesc, "LblModeDesc");
             this.LblModeDesc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
             this.LblModeDesc.ForeColor = System.Drawing.Color.White;
             this.LblModeDesc.Name = "LblModeDesc";
+            // 
+            // BtnZoomOut
+            // 
+            this.BtnZoomOut.Checked = false;
+            this.BtnZoomOut.CheckedImage = null;
+            this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.ClickImage = null;
+            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
+            this.BtnZoomOut.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
+            this.BtnZoomOut.Image = global::Diva.Properties.Resources.icon_zoom_out;
+            this.BtnZoomOut.Name = "BtnZoomOut";
+            this.TTButtonDescription.SetToolTip(this.BtnZoomOut, resources.GetString("BtnZoomOut.ToolTip"));
+            this.BtnZoomOut.UseVisualStyleBackColor = true;
+            this.BtnZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
+            // 
+            // BtnZoomIn
+            // 
+            this.BtnZoomIn.Checked = false;
+            this.BtnZoomIn.CheckedImage = null;
+            this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.ClickImage = null;
+            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
+            this.BtnZoomIn.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
+            this.BtnZoomIn.Image = global::Diva.Properties.Resources.icon_zoom_in;
+            this.BtnZoomIn.Name = "BtnZoomIn";
+            this.TTButtonDescription.SetToolTip(this.BtnZoomIn, resources.GetString("BtnZoomIn.ToolTip"));
+            this.BtnZoomIn.UseVisualStyleBackColor = true;
+            this.BtnZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
+            // 
+            // BtnMapFocus
+            // 
+            this.BtnMapFocus.Checked = false;
+            this.BtnMapFocus.CheckedImage = null;
+            this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.ClickImage = null;
+            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
+            this.BtnMapFocus.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;
+            this.BtnMapFocus.Image = global::Diva.Properties.Resources.icon_zoom_focus;
+            this.BtnMapFocus.Name = "BtnMapFocus";
+            this.TTButtonDescription.SetToolTip(this.BtnMapFocus, resources.GetString("BtnMapFocus.ToolTip"));
+            this.BtnMapFocus.UseVisualStyleBackColor = true;
+            this.BtnMapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
+            this.BtnMapFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMapFocus_MouseUp);
             // 
             // LblMode
             // 
@@ -173,6 +264,54 @@ namespace Diva
             resources.ApplyResources(this.RotationInfoPanel, "RotationInfoPanel");
             this.RotationInfoPanel.Name = "RotationInfoPanel";
             this.RotationInfoPanel.SizeChanged += new System.EventHandler(this.RotationInfoPanel_SizeChanged);
+            // 
+            // DroneInfoPanel
+            // 
+            this.DroneInfoPanel.ActiveDroneInfo = null;
+            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
+            this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
+            this.DroneInfoPanel.Name = "DroneInfoPanel";
+            this.DroneInfoPanel.ActiveDroneChanged += new System.EventHandler(this.DroneInfoPanel_ActiveDroneChanged);
+            this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
+            // 
+            // Map
+            // 
+            resources.ApplyResources(this.Map, "Map");
+            this.Map.BackColor = System.Drawing.SystemColors.Control;
+            this.Map.Bearing = 0F;
+            this.Map.CanDragMap = true;
+            this.Map.ContextMenuStrip = this.cmMap;
+            this.Map.DebugMode = true;
+            this.Map.EmptyTileColor = System.Drawing.Color.Navy;
+            this.Map.GrayScaleMode = false;
+            this.Map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.Map.LevelsKeepInMemmory = 5;
+            this.Map.MarkersEnabled = true;
+            this.Map.MaxZoom = 24;
+            this.Map.MinZoom = 0;
+            this.Map.MouseWheelZoomEnabled = true;
+            this.Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+            this.Map.MsgWindowOffset = ((System.Drawing.PointF)(resources.GetObject("Map.MsgWindowOffset")));
+            this.Map.Name = "Map";
+            this.Map.NegativeMode = false;
+            this.Map.PolygonsEnabled = true;
+            this.Map.RetryLoadTile = 0;
+            this.Map.RoutesEnabled = true;
+            this.Map.ScaleFont = new System.Drawing.Font("Microsoft JhengHei UI", 9F);
+            this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.Map.ScalePosition = new System.Drawing.Point(10, -50);
+            this.Map.ScaleSize = new System.Drawing.Size(100, 10);
+            this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.Map.ShowTileGridLines = false;
+            this.Map.Zoom = 15D;
+            this.Map.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
+            this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
+            this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
+            this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
+            this.Map.Paint += new System.Windows.Forms.PaintEventHandler(this.Map_Paint);
+            this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
+            this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
+            this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
             // 
             // cmMap
             // 
@@ -302,7 +441,8 @@ namespace Diva
             // 
             this.planToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.surveyToolStripMenuItem,
-            this.corridorScanToolStripMenuItem});
+            this.corridorScanToolStripMenuItem,
+            this.fooToolStripMenuItem});
             this.planToolStripMenuItem.Name = "planToolStripMenuItem";
             resources.ApplyResources(this.planToolStripMenuItem, "planToolStripMenuItem");
             // 
@@ -554,143 +694,10 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
-            // BtnBreakAction
+            // fooToolStripMenuItem
             // 
-            this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.BtnBreakAction.Checked = false;
-            this.BtnBreakAction.CheckedImage = null;
-            this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnBreakAction.ClickImage = null;
-            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
-            this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnBreakAction.HoverImage = null;
-            this.BtnBreakAction.Image = global::Diva.Properties.Resources.red_octagon_with_hand;
-            this.BtnBreakAction.Name = "BtnBreakAction";
-            this.TTButtonDescription.SetToolTip(this.BtnBreakAction, resources.GetString("BtnBreakAction.ToolTip"));
-            this.BtnBreakAction.UseVisualStyleBackColor = false;
-            this.BtnBreakAction.Click += new System.EventHandler(this.BtnBreakAction_Click);
-            // 
-            // AltitudeControlPanel
-            // 
-            this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
-            this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
-            this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
-            this.AltitudeControlPanel.ForeColor = System.Drawing.Color.White;
-            this.AltitudeControlPanel.HoverGrow = System.Drawing.ContentAlignment.TopRight;
-            this.AltitudeControlPanel.HoverSize = new System.Drawing.Size(60, 200);
-            this.AltitudeControlPanel.Maximum = 120F;
-            this.AltitudeControlPanel.Minimum = 10F;
-            this.AltitudeControlPanel.Name = "AltitudeControlPanel";
-            this.AltitudeControlPanel.PointingColor = System.Drawing.Color.Red;
-            this.AltitudeControlPanel.Target = 0F;
-            this.AltitudeControlPanel.TargetColor = System.Drawing.Color.Yellow;
-            this.AltitudeControlPanel.Targeting = false;
-            this.AltitudeControlPanel.Value = 0F;
-            this.AltitudeControlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AltitudeControlPanel_MouseClick);
-            // 
-            // BtnZoomOut
-            // 
-            this.BtnZoomOut.Checked = false;
-            this.BtnZoomOut.CheckedImage = null;
-            this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.ClickImage = null;
-            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
-            this.BtnZoomOut.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
-            this.BtnZoomOut.Image = global::Diva.Properties.Resources.icon_zoom_out;
-            this.BtnZoomOut.Name = "BtnZoomOut";
-            this.TTButtonDescription.SetToolTip(this.BtnZoomOut, resources.GetString("BtnZoomOut.ToolTip"));
-            this.BtnZoomOut.UseVisualStyleBackColor = true;
-            this.BtnZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
-            // 
-            // BtnZoomIn
-            // 
-            this.BtnZoomIn.Checked = false;
-            this.BtnZoomIn.CheckedImage = null;
-            this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.ClickImage = null;
-            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
-            this.BtnZoomIn.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
-            this.BtnZoomIn.Image = global::Diva.Properties.Resources.icon_zoom_in;
-            this.BtnZoomIn.Name = "BtnZoomIn";
-            this.TTButtonDescription.SetToolTip(this.BtnZoomIn, resources.GetString("BtnZoomIn.ToolTip"));
-            this.BtnZoomIn.UseVisualStyleBackColor = true;
-            this.BtnZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
-            // 
-            // BtnMapFocus
-            // 
-            this.BtnMapFocus.Checked = false;
-            this.BtnMapFocus.CheckedImage = null;
-            this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.ClickImage = null;
-            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
-            this.BtnMapFocus.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;
-            this.BtnMapFocus.Image = global::Diva.Properties.Resources.icon_zoom_focus;
-            this.BtnMapFocus.Name = "BtnMapFocus";
-            this.TTButtonDescription.SetToolTip(this.BtnMapFocus, resources.GetString("BtnMapFocus.ToolTip"));
-            this.BtnMapFocus.UseVisualStyleBackColor = true;
-            this.BtnMapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
-            this.BtnMapFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMapFocus_MouseUp);
-            // 
-            // DroneInfoPanel
-            // 
-            this.DroneInfoPanel.ActiveDroneInfo = null;
-            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
-            this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
-            this.DroneInfoPanel.Name = "DroneInfoPanel";
-            this.DroneInfoPanel.ActiveDroneChanged += new System.EventHandler(this.DroneInfoPanel_ActiveDroneChanged);
-            this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
-            // 
-            // Map
-            // 
-            resources.ApplyResources(this.Map, "Map");
-            this.Map.BackColor = System.Drawing.SystemColors.Control;
-            this.Map.Bearing = 0F;
-            this.Map.CanDragMap = true;
-            this.Map.ContextMenuStrip = this.cmMap;
-            this.Map.DebugMode = true;
-            this.Map.EmptyTileColor = System.Drawing.Color.Navy;
-            this.Map.GrayScaleMode = false;
-            this.Map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.Map.LevelsKeepInMemmory = 5;
-            this.Map.MarkersEnabled = true;
-            this.Map.MaxZoom = 24;
-            this.Map.MinZoom = 0;
-            this.Map.MouseWheelZoomEnabled = true;
-            this.Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
-            this.Map.MsgWindowOffset = ((System.Drawing.PointF)(resources.GetObject("Map.MsgWindowOffset")));
-            this.Map.Name = "Map";
-            this.Map.NegativeMode = false;
-            this.Map.PolygonsEnabled = true;
-            this.Map.RetryLoadTile = 0;
-            this.Map.RoutesEnabled = true;
-            this.Map.ScaleFont = new System.Drawing.Font("Microsoft JhengHei UI", 9F);
-            this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.Map.ScalePosition = new System.Drawing.Point(10, -50);
-            this.Map.ScaleSize = new System.Drawing.Size(100, 10);
-            this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.Map.ShowTileGridLines = false;
-            this.Map.Zoom = 15D;
-            this.Map.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
-            this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
-            this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
-            this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
-            this.Map.Paint += new System.Windows.Forms.PaintEventHandler(this.Map_Paint);
-            this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
-            this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
-            this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
+            this.fooToolStripMenuItem.Name = "fooToolStripMenuItem";
+            resources.ApplyResources(this.fooToolStripMenuItem, "fooToolStripMenuItem");
             // 
             // Planner
             // 
@@ -773,5 +780,6 @@ namespace Diva
         private ToolStripMenuItem planToolStripMenuItem;
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
+        private ToolStripMenuItem fooToolStripMenuItem;
     }
 }
