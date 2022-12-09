@@ -97,7 +97,6 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
-            this.fooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -441,8 +440,7 @@ namespace Diva
             // 
             this.planToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.surveyToolStripMenuItem,
-            this.corridorScanToolStripMenuItem,
-            this.fooToolStripMenuItem});
+            this.corridorScanToolStripMenuItem});
             this.planToolStripMenuItem.Name = "planToolStripMenuItem";
             resources.ApplyResources(this.planToolStripMenuItem, "planToolStripMenuItem");
             // 
@@ -694,11 +692,6 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
-            // fooToolStripMenuItem
-            // 
-            this.fooToolStripMenuItem.Name = "fooToolStripMenuItem";
-            resources.ApplyResources(this.fooToolStripMenuItem, "fooToolStripMenuItem");
-            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -780,6 +773,5 @@ namespace Diva
         private ToolStripMenuItem planToolStripMenuItem;
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
-        private ToolStripMenuItem fooToolStripMenuItem;
     }
 }

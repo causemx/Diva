@@ -221,14 +221,11 @@
     <Compile Include="Controls\Dialogs\DialogEKF.Designer.cs">
       <DependentUpon>DialogEKF.cs</DependentUpon>
     </Compile>
-    <None Include="Controls\Dialogs\DialogGird.cs">
+    <Compile Include="Controls\Dialogs\DialogGrid.cs">
       <SubType>Form</SubType>
-    </None>
-    <None Include="Controls\Dialogs\DialogOrigin.cs">
+    </Compile>
+    <Compile Include="Controls\Dialogs\DialogOrigin.cs">
       <SubType>Form</SubType>
-    </None>
-    <Compile Include="Controls\Dialogs\DialogOrigin.Designer.cs">
-      <DependentUpon>DialogOrigin.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
@@ -411,8 +408,8 @@
     <EmbeddedResource Include="Controls\Dialogs\DialogEKF.resx">
       <DependentUpon>DialogEKF.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Dialogs\DialogGird.resx">
-      <DependentUpon>DialogGird.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Dialogs\DialogGrid.resx">
+      <DependentUpon>DialogGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Dialogs\DialogOrigin.resx">
       <DependentUpon>DialogOrigin.cs</DependentUpon>

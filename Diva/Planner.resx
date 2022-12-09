@@ -625,12 +625,6 @@
   <data name="corridorScanToolStripMenuItem.Text" xml:space="preserve">
     <value>Corridor Scan</value>
   </data>
-  <data name="fooToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
-  <data name="fooToolStripMenuItem.Text" xml:space="preserve">
-    <value>Foo</value>
-  </data>
   <data name="planToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
@@ -1474,12 +1468,6 @@
   </data>
   <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fooToolStripMenuItem.Name" xml:space="preserve">
-    <value>fooToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;fooToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Planner</value>

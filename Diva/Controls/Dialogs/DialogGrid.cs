@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Diva.Controls.Dialogs
 {
-    public class DialogGird : DialogOrigin
+    class DialogGrid : DialogOrigin
     {
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.Label label5;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private ComboBox comboBox1;
+        private ComboBox comboBox2;
+        private ComboBox comboBox3;
+        private ComboBox comboBox4;
+        private ComboBox comboBox5;
+        private Label label5;
 
         private void InitializeComponent()
         {
@@ -40,6 +41,7 @@ namespace Diva.Controls.Dialogs
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -170,12 +172,12 @@ namespace Diva.Controls.Dialogs
             this.comboBox5.Size = new System.Drawing.Size(121, 23);
             this.comboBox5.TabIndex = 9;
             // 
-            // DialogGird
+            // DialogGrid
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.ClientSize = new System.Drawing.Size(336, 353);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "DialogGird";
+            this.Name = "DialogGrid";
             this.Controls.SetChildIndex(this.tableLayoutPanel1, 0);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -183,11 +185,27 @@ namespace Diva.Controls.Dialogs
 
         }
 
-        public DialogGird(string caption, MessageBoxButtons mb) : base(caption, mb)
+        public DialogGrid(string t) : base(t)
         {
-
+            InitializeComponent();
         }
 
+        protected override void SetFormSize()
+        {
+            int widht = tableLayoutPanel1?.Width ?? 500;
+            this.Size = new Size(widht, Height);
+        }
 
+        #region -> Drag Form
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        private void panelTitleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+        #endregion
     }
 }

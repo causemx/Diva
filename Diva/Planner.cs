@@ -236,8 +236,7 @@ namespace Diva
 
             IsMapFocusing = true;
 
-			// SetupMIRDC();
-			FullControl = true;
+			SetupMIRDC();
 
 			mainThread = BackgroundLoop.Start(MainLoop);
         }
@@ -3133,7 +3132,8 @@ namespace Diva
                 SetButtonStates();
             }
         }
-        public static bool MIRDCMode => !Instance?.FullControl ?? true;
+
+		public static bool MIRDCMode => Instance?.FullControl ?? true;
 
         private MyTSButton BtnFullCtrl = new MyTSButton
         {
@@ -3451,7 +3451,8 @@ namespace Diva
 						dcs.ShowDialog();
 						break;
 					case "corridorScanToolStripMenuItem":
-						// AddGridWPsToMap(grid, Grid.ScanMode.Corridor);
+						using (var dg = new DialogGrid("This is foo"))
+							dg.ShowDialog();
 						break;
 				};
 			}
