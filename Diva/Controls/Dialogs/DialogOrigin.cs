@@ -164,6 +164,7 @@ namespace Diva.Controls.Dialogs
         }
 
         protected abstract void SetFormSize();
+        protected abstract void Button_Click(object sender, EventArgs e);
 
         //Fields
         private Color primaryColor = Color.CornflowerBlue;
@@ -182,7 +183,7 @@ namespace Diva.Controls.Dialogs
         }
 
         //Constructors
-        public DialogOrigin(string text)
+        public DialogOrigin()
         {
             InitializeComponent();
             InitializeItems();
@@ -191,7 +192,7 @@ namespace Diva.Controls.Dialogs
             SetFormSize();
             SetButtons(MessageBoxButtons.OK, MessageBoxDefaultButton.Button1);//Set Default Buttons
         }
-        public DialogOrigin(string text, string caption)
+        public DialogOrigin(string caption)
         {
             InitializeComponent();
             InitializeItems();
@@ -200,7 +201,7 @@ namespace Diva.Controls.Dialogs
             SetFormSize();
             SetButtons(MessageBoxButtons.OK, MessageBoxDefaultButton.Button1);//Set Default Buttons
         }
-        public DialogOrigin(string text, string caption, MessageBoxButtons buttons)
+        public DialogOrigin(string caption, MessageBoxButtons buttons)
         {
             InitializeComponent();
             InitializeItems();
@@ -209,7 +210,7 @@ namespace Diva.Controls.Dialogs
             SetFormSize();
             SetButtons(buttons, MessageBoxDefaultButton.Button1);//Set [Default Button 1]
         }
-        public DialogOrigin(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        public DialogOrigin(string caption, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
             InitializeComponent();
             InitializeItems();
@@ -219,7 +220,7 @@ namespace Diva.Controls.Dialogs
             SetButtons(buttons, MessageBoxDefaultButton.Button1);//Set [Default Button 1]
             SetIcon(icon);
         }
-        public DialogOrigin(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+        public DialogOrigin(string caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
         {
             InitializeComponent();
             InitializeItems();
@@ -363,6 +364,8 @@ namespace Diva.Controls.Dialogs
             {
                 case MessageBoxDefaultButton.Button1://Focus button 1
                     button1.Select();
+                    button1.Click -= Button_Click;
+                    button1.Click += Button_Click;
                     button1.ForeColor = Color.White;
                     button1.Font = new Font(button1.Font, FontStyle.Underline);
                     break;

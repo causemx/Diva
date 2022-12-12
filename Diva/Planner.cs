@@ -3447,12 +3447,11 @@ namespace Diva
 				switch (t.Name)
 				{
 					case "surveyToolStripMenuItem":
-						DialogConfigSimplegrid dcs = new DialogConfigSimplegrid(grid, HomeLocation);
-						dcs.ShowDialog();
+						using (var dg = new DialogGrid("This is foo", MessageBoxButtons.OK))
+							dg.ShowDialog();
 						break;
 					case "corridorScanToolStripMenuItem":
-						using (var dg = new DialogGrid("This is foo"))
-							dg.ShowDialog();
+						
 						break;
 				};
 			}
