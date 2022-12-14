@@ -209,12 +209,6 @@
     <Compile Include="Controls\CustomProgressBar.Designer.cs">
       <DependentUpon>CustomProgressBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Dialogs\DialogConfigSimplegrid.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\Dialogs\DialogConfigSimplegrid.Designer.cs">
-      <DependentUpon>DialogConfigSimplegrid.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Dialogs\DialogEKF.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,7 +233,7 @@
     <Compile Include="Controls\DroneInfoPanel.Designer.cs">
       <DependentUpon>DroneInfoPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Icons\Icon.cs" />
+    <Compile Include="Controls\Icons\Badges.cs" />
     <Compile Include="Controls\InputDataDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -402,9 +396,6 @@
     <EmbeddedResource Include="Controls\CustomProgressBar.resx">
       <DependentUpon>CustomProgressBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Dialogs\DialogConfigSimplegrid.resx">
-      <DependentUpon>DialogConfigSimplegrid.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Dialogs\DialogEKF.resx">
       <DependentUpon>DialogEKF.cs</DependentUpon>
     </EmbeddedResource>
@@ -511,6 +502,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_fish_stamp-32.png" />
+    <None Include="Resources\icon_fish-32.png" />
     <None Include="Resources\icon_info-5-24.png" />
     <None Include="Resources\icon_connected-32.png" />
     <None Include="Resources\icon_amp_24.png" />

@@ -1,5 +1,6 @@
 ﻿using Diva.Controls;
 using Diva.Controls.Dialogs;
+using Diva.Controls.Icons;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
@@ -50,23 +51,8 @@ namespace Diva
 
 		private static readonly double WARN_ALT = 2D;
 
-        public class FloatingIcon : Controls.Icons.Icon
-        {
-			private Bitmap bmp = null;
+		private Badges badges = new Badges(Resources.icon_fish_stamp_32, Resources.icon_airplane_32);
 
-			public FloatingIcon(Bitmap _bmp)
-            {
-				this.bmp = _bmp;
-            }
-
-            internal override void doPaint(Graphics g)
-            {	
-				g.DrawImage(bmp, (Width/2-bmp.Width/2), (Height/2-bmp.Height/2));
-			}
-        }
-
-		private FloatingIcon polyicon = new FloatingIcon(Resources.icon_fish_24);
-		private FloatingIcon ekficon = new FloatingIcon(Resources.icon_airplane_32);
 
         private class PlannerOverlays
 		{
@@ -239,14 +225,15 @@ namespace Diva
 			SetupMIRDC();
 
 			mainThread = BackgroundLoop.Start(MainLoop);
-        }
+
+		}
 
 		private void Map_Paint(object sender, PaintEventArgs e)
 		{
 			// polyicon.Location = new Point(20, 575);
 			// polyicon.Paint(e.Graphics);
-			ekficon.Location = new Point(20, 585);
-			ekficon.Paint(e.Graphics);
+			badges.Location = new Point(20, 500);
+			badges.Paint(e.Graphics);
 		}
 
 		private void DataGridView_Initialize()
@@ -615,6 +602,28 @@ namespace Diva
             }
 
 			// check if the mouse up happend over our button
+			var badgesRects = badges.Rectangle;
+			for (int i = 0; i < badgesRects.Length; i++)
+            {
+				if (badgesRects[i].Contains(e.Location))
+                {
+					if (e.Button == MouseButtons.Left)
+						badges.IsSelected = i;
+					switch (badges.IsSelected)
+                    {
+						case (int)Badges.Type.EKF:
+							DialogEKF de = new DialogEKF();
+							de.Show();
+							break;
+						case (int)Badges.Type.FISH_STAMP:
+							
+							break;
+
+					}
+				}
+            }
+
+			/*
 			if (polyicon.Rectangle.Contains(e.Location))
 			{
 				if (e.Button == MouseButtons.Left)
@@ -638,7 +647,7 @@ namespace Diva
 					DialogEKF de = new DialogEKF();
 					de.Show();
                 }
-            }
+            }*/
 
 			if (!FullControl) {
                 return;
@@ -1146,7 +1155,7 @@ namespace Diva
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
 
-				GMarkerGoogle m = new GMarkerGoogle(point, new Bitmap(Resources.icon_fish_32))
+				GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red_dot)
 				{
 					ToolTipMode = MarkerTooltipMode.Never,
 					ToolTipText = "grid" + tag,

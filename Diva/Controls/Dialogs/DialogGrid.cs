@@ -17,12 +17,13 @@ namespace Diva.Controls.Dialogs
         private Label label2;
         private Label label3;
         private Label label4;
+        private Label label5;
         private ComboBox comboBoxStartfrom;
         private NumericUpDown numericUpDownAlt;
         private NumericUpDown numericUpDownAngle;
         private NumericUpDown numericUpDownDistance;
         private NumericUpDown numericUpDownSpace;
-        private Label label5;
+        
 
         private void InitializeComponent()
         {

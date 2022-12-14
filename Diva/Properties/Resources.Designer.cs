@@ -373,29 +373,19 @@ namespace Diva.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap icon_fish_24 {
-            get {
-                object obj = ResourceManager.GetObject("icon_fish_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_fish_32 {
-            get {
-                object obj = ResourceManager.GetObject("icon_fish_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
         internal static System.Drawing.Bitmap icon_fish_boat {
             get {
                 object obj = ResourceManager.GetObject("icon_fish_boat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_fish_stamp_32 {
+            get {
+                object obj = ResourceManager.GetObject("icon_fish_stamp_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
