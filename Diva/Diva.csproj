@@ -295,6 +295,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Fishery\FishUtils.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Gird\Curve.cs" />
     <Compile Include="HUDPanel.cs" />

@@ -1,6 +1,7 @@
 ﻿using Diva.Controls;
 using Diva.Controls.Dialogs;
 using Diva.Controls.Icons;
+using Diva.Fishery;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
@@ -62,6 +63,7 @@ namespace Diva
 			public GMapOverlay Geofence;
 			public GMapOverlay Drones;
             public GMapOverlay Routes;
+			public GMapOverlay Fish;
 			internal PlannerOverlays(MyGMap map)
 				=> GetType().GetFields().ToList().ForEach(f =>
 					{
@@ -96,7 +98,7 @@ namespace Diva
 
         public bool quickadd = false;
 		private int selectedRow = 0;
-		private bool polygongridmode;
+		private bool polygongridmode = true;
 
 		private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
 		private List<List<WayPoint>> history = new List<List<WayPoint>>();
@@ -611,43 +613,19 @@ namespace Diva
 						badges.IsSelected = i;
 					switch (badges.IsSelected)
                     {
+						
 						case (int)Badges.Type.EKF:
 							DialogEKF de = new DialogEKF();
 							de.Show();
 							break;
 						case (int)Badges.Type.FISH_STAMP:
-							
+							var loc = ActiveDrone.Status.Location;
+							AddFishMarker("fish_", "geopoint_", loc);
 							break;
 
 					}
 				}
             }
-
-			/*
-			if (polyicon.Rectangle.Contains(e.Location))
-			{
-				if (e.Button == MouseButtons.Left)
-				{
-					polyicon.IsSelected = true;
-					polygongridmode = true;
-					
-				}
-				else if (e.Button == MouseButtons.Right)
-				{
-					polyicon.IsSelected = false;
-					clearPolygonToolStripMenuItem_Click(this, null);
-				}
-				return;
-			}
-
-			if (ekficon.Rectangle.Contains(e.Location))
-            {
-				if (e.Button == MouseButtons.Left)
-                {
-					DialogEKF de = new DialogEKF();
-					de.Show();
-                }
-            }*/
 
 			if (!FullControl) {
                 return;
@@ -666,15 +644,6 @@ namespace Diva
 					int pnt2 = 0;
 					var midline = CurrentMidline.Tag as midline;
 					var idx = drawnPolygon.Points.IndexOf(midline.now);
-
-					if (polygongridmode && midline.now != null)
-					{
-						drawnPolygon.Points.Insert(idx + 1,
-						new PointLatLng(CurrentMidline.Position.Lat, CurrentMidline.Position.Lng));
-
-						RedrawPolygonSurvey(drawnPolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
-					}
-						
 					return;
 				}
 
@@ -1120,6 +1089,28 @@ namespace Diva
 		}
 		#endregion
 
+		private void AddFishMarker(string tag, string content, PointLatLng p)
+        {
+			try
+			{
+				GMarkerGoogle m = new GMarkerGoogle(p, GMarkerGoogleType.orange_dot)
+				{
+					ToolTipMode = MarkerTooltipMode.Always,
+					ToolTipText = content,
+					Tag = tag
+				};
+
+				GMapRectMarker mBorders = new GMapRectMarker(p){ InnerMarker = m, };
+
+				Overlays.Fish.Markers.Add(m);
+				Overlays.Fish.Markers.Add(mBorders);
+			}
+			catch (Exception ex)
+			{
+				log.Error(ex.ToString());
+			}
+		}
+
 		private void AddPolygonMarker(string tag, double lng, double lat, int alt, Color color, GMapOverlay overlay)
 		{
 			try
@@ -1330,14 +1321,13 @@ namespace Diva
             DGVWayPoints.EndEdit();
 		}
 
+		public void AddFPToMAP(double lat, double lng, int alt)
+        {
+
+        }
+
 		public void AddWPToMap(double lat, double lng, int alt)
 		{
-
-			if (polygongridmode)
-			{
-				addPolygonPointToolStripMenuItem_Click(null, null);
-				return;
-			}
 
 			// check home point setup.
 			if (IsHomeEmpty())
@@ -2391,12 +2381,6 @@ namespace Diva
 
 		private void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
-			if (polygongridmode == false)
-            {
-				polygongridmode = true;
-				return;
-			}
 			List<PointLatLng> polygonPoints = new List<PointLatLng>();
 			if (Overlays.DrawnPolygons.Polygons.Count == 0)
 			{
@@ -2461,7 +2445,6 @@ namespace Diva
 
 		private void clearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			polygongridmode = false;
 			if (drawnPolygon == null)
 				return;
 			drawnPolygon.Points.Clear();
