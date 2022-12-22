@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Diva.Controls.Dialogs
 {
-    public abstract class DialogOrigin : Form
+    public class DialogOrigin : Form
     {
         #region component
         private Panel panelButtons;
@@ -35,16 +35,16 @@ namespace Diva.Controls.Dialogs
         private void InitializeComponent()
         {
             this.panelTitleBar = new System.Windows.Forms.Panel();
-            this.panelButtons = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.labelCaption = new System.Windows.Forms.Label();
             this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
+            this.labelCaption = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.panelButtons = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelTitleBar.SuspendLayout();
-            this.panelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
+            this.panelButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTitleBar
@@ -55,8 +55,44 @@ namespace Diva.Controls.Dialogs
             this.panelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTitleBar.Location = new System.Drawing.Point(0, 0);
             this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(350, 32);
+            this.panelTitleBar.Size = new System.Drawing.Size(350, 36);
             this.panelTitleBar.TabIndex = 0;
+            // 
+            // pictureBoxIcon
+            // 
+            this.pictureBoxIcon.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBoxIcon.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxIcon.Name = "pictureBoxIcon";
+            this.pictureBoxIcon.Size = new System.Drawing.Size(36, 36);
+            this.pictureBoxIcon.TabIndex = 6;
+            this.pictureBoxIcon.TabStop = false;
+            // 
+            // labelCaption
+            // 
+            this.labelCaption.AutoSize = true;
+            this.labelCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCaption.ForeColor = System.Drawing.Color.White;
+            this.labelCaption.Location = new System.Drawing.Point(46, 9);
+            this.labelCaption.Name = "labelCaption";
+            this.labelCaption.Size = new System.Drawing.Size(86, 17);
+            this.labelCaption.TabIndex = 5;
+            this.labelCaption.Text = "labelCaption";
+            // 
+            // btnClose
+            // 
+            this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnClose.FlatAppearance.BorderSize = 0;
+            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(79)))), ((int)(((byte)(95)))));
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.White;
+            this.btnClose.Location = new System.Drawing.Point(310, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(40, 36);
+            this.btnClose.TabIndex = 4;
+            this.btnClose.Text = "X";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // panelButtons
             // 
@@ -69,34 +105,6 @@ namespace Diva.Controls.Dialogs
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(350, 55);
             this.panelButtons.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.SeaGreen;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.button1.Location = new System.Drawing.Point(20, 11);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 32);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.SeaGreen;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.button2.Location = new System.Drawing.Point(127, 11);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 32);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = false;
             // 
             // button3
             // 
@@ -112,41 +120,33 @@ namespace Diva.Controls.Dialogs
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = false;
             // 
-            // btnClose
+            // button2
             // 
-            this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(79)))), ((int)(((byte)(95)))));
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(310, 0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(40, 32);
-            this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "X";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.button2.BackColor = System.Drawing.Color.SeaGreen;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.button2.Location = new System.Drawing.Point(127, 11);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(100, 32);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = false;
             // 
-            // labelCaption
+            // button1
             // 
-            this.labelCaption.AutoSize = true;
-            this.labelCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCaption.ForeColor = System.Drawing.Color.White;
-            this.labelCaption.Location = new System.Drawing.Point(46, 9);
-            this.labelCaption.Name = "labelCaption";
-            this.labelCaption.Size = new System.Drawing.Size(86, 17);
-            this.labelCaption.TabIndex = 5;
-            this.labelCaption.Text = "labelCaption";
-            // 
-            // pictureBoxIcon
-            // 
-            this.pictureBoxIcon.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBoxIcon.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxIcon.Name = "pictureBoxIcon";
-            this.pictureBoxIcon.Size = new System.Drawing.Size(40, 32);
-            this.pictureBoxIcon.TabIndex = 6;
-            this.pictureBoxIcon.TabStop = false;
+            this.button1.BackColor = System.Drawing.Color.SeaGreen;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.button1.Location = new System.Drawing.Point(20, 11);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 32);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // DialogOrigin
             // 
@@ -157,14 +157,11 @@ namespace Diva.Controls.Dialogs
             this.Name = "DialogOrigin";
             this.panelTitleBar.ResumeLayout(false);
             this.panelTitleBar.PerformLayout();
-            this.panelButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
+            this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
-
-        protected abstract void SetFormSize();
-        protected abstract void Button_Click(object sender, EventArgs e);
 
         //Fields
         private Color primaryColor = Color.CornflowerBlue;
@@ -230,6 +227,8 @@ namespace Diva.Controls.Dialogs
             SetButtons(buttons, defaultButton);
             SetIcon(icon);
         }
+
+       
 
         private void SetButtons(MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton)
         {
@@ -382,29 +381,39 @@ namespace Diva.Controls.Dialogs
             }
         }
 
+        protected virtual void Button_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Default button clicked.");
+        }
+        protected virtual void SetFormSize()
+        {
+            this.Width = panelTitleBar.Width;
+            this.Height = panelTitleBar.Height + panelButtons.Height;
+        }
+
         private void SetIcon(MessageBoxIcon icon)
         {
             switch (icon)
             {
                 case MessageBoxIcon.Error: //Error
-                    this.pictureBoxIcon.Image = Properties.Resources.icon_info;
+                    this.pictureBoxIcon.Image = Properties.Resources.icon_dialog_error;
                     PrimaryColor = Color.FromArgb(224, 79, 95);
                     this.btnClose.FlatAppearance.MouseOverBackColor = Color.Crimson;
                     break;
                 case MessageBoxIcon.Information: //Information
-                    this.pictureBoxIcon.Image = Properties.Resources.icon_info;
+                    this.pictureBoxIcon.Image = Properties.Resources.icon_dialog_information;
                     PrimaryColor = Color.FromArgb(38, 191, 166);
                     break;
                 case MessageBoxIcon.Question://Question
-                    this.pictureBoxIcon.Image = Properties.Resources.icon_info;
+                    this.pictureBoxIcon.Image = Properties.Resources.icon_dialog_question;
                     PrimaryColor = Color.FromArgb(10, 119, 232);
                     break;
                 case MessageBoxIcon.Exclamation://Exclamation
-                    this.pictureBoxIcon.Image = Properties.Resources.icon_info;
+                    this.pictureBoxIcon.Image = Properties.Resources.icon_dialog_exclamation;
                     PrimaryColor = Color.FromArgb(255, 140, 0);
                     break;
                 case MessageBoxIcon.None: //None
-                    this.pictureBoxIcon.Image = Properties.Resources.icon_info;
+                    this.pictureBoxIcon.Image = Properties.Resources.icon_dialog_none;
                     PrimaryColor = Color.CornflowerBlue;
                     break;
             }

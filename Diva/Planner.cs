@@ -234,7 +234,7 @@ namespace Diva
 		{
 			// polyicon.Location = new Point(20, 575);
 			// polyicon.Paint(e.Graphics);
-			badges.Location = new Point(20, 500);
+			badges.Location = new Point(20, 400);
 			badges.Paint(e.Graphics);
 		}
 
@@ -3439,11 +3439,12 @@ namespace Diva
 				switch (t.Name)
 				{
 					case "surveyToolStripMenuItem":
-						using (var dg = new DialogGrid("This is foo", MessageBoxButtons.OK))
+						using (var dg = new DialogGrid("Simple Grid Scanning", MessageBoxButtons.OK, MessageBoxIcon.None))
 							dg.ShowDialog();
 						break;
 					case "corridorScanToolStripMenuItem":
-						
+						using (var dg = new DialogCorridor("Corridor Flight Scanning", MessageBoxButtons.OK, MessageBoxIcon.None))
+							dg.ShowDialog();
 						break;
 				};
 			}

@@ -15,7 +15,6 @@ namespace Diva.Fishery
     {
         public static void AddFishMarkerGrid(string tag, string context, PointLatLng p)
         {
-			/**
 			try
 			{
 				var overlays = Planner.GetPlannerInstance().GMapControl?.Overlays;
@@ -39,7 +38,7 @@ namespace Diva.Fishery
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
-			}*/
+			}
 		}
     }
 }

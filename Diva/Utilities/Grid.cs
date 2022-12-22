@@ -102,7 +102,7 @@ namespace Diva.Utilities
             angle = (double)(getAngleOfLongestSide(list) + 360) % 360;
         }
 
-        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double angle, StartPosition startPos, PointLatLngAlt home)
+        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double angle, StartPosition startPos, int width=100)
         {
 			// quickadd = true;
 
@@ -113,7 +113,7 @@ namespace Diva.Utilities
                 grid = await CreateGridAsync(list, altitude, distance, spacing, angle, StartPosition.Home, Home).ConfigureAwait(true);
             }
             else if (mode == ScanMode.Corridor) {
-                grid = await CreateCorridorAsync(list, 30, 50, 0, angle, 0, 0, StartPosition.Home, false, 0, 100).ConfigureAwait(true);
+                grid = await CreateCorridorAsync(list, altitude, distance, spacing, angle, 0, 0, StartPosition.Home, false, 0, width).ConfigureAwait(true);
             }
 
 
@@ -132,9 +132,15 @@ namespace Diva.Utilities
                 grid.ForEach(plla =>
                 {
                     if (!(plla.Lat == lastpnt.Lat && plla.Lng == lastpnt.Lng && plla.Alt == lastpnt.Alt))
-                            AddWP(plla.Lng, plla.Lat, plla.Alt, plla.Tag);
-
-                        lastpnt = plla;
+                    {
+                        /*Add different elevation wps*/
+                        AddWP(plla.Lng, plla.Lat, plla.Alt + 200, plla.Tag);
+                        AddWP(plla.Lng, plla.Lat, plla.Alt + 150, plla.Tag);
+                        AddWP(plla.Lng, plla.Lat, plla.Alt + 100, plla.Tag);
+                        AddWP(plla.Lng, plla.Lat, plla.Alt + 50, plla.Tag);
+                        AddWP(plla.Lng, plla.Lat, plla.Alt, plla.Tag);
+                    }
+                    lastpnt = plla;
                 });
 
                 planner.quickadd = false;
@@ -149,7 +155,6 @@ namespace Diva.Utilities
 
         private void AddWP(double Lng, double Lat, double Alt, string tag)
         {
-            // plugin.Host.AddWPtoList(MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0, Lng, Lat, (int)Alt);
             Planner.GetPlannerInstance()?.AddCommand(MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0, Lng, Lat, (int)Alt);
         }
 
