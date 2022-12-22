@@ -229,7 +229,7 @@ namespace Diva.Controls.Dialogs
             this.Size = new Size(Width, Height);
         }
 
-        protected async override void Button_Click(object sender, EventArgs e)
+        protected async override void OK_Click(object sender, EventArgs e)
         {
             var drone = Planner.GetActiveDrone();
             var home = Planner.GetPlannerInstance().HomeLocation;

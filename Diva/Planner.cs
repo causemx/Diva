@@ -1579,7 +1579,7 @@ namespace Diva
 
 		private void SaveWPsToDrone(object sender, ProgressWorkerEventArgs e, object passdata)
         {
-            Action<int, string> updateStatus = ((ProgressDialogV2)sender).UpdateProgressAndStatus;
+            Action<int, string> updateStatus = ((DialogProgress)sender).UpdateProgressAndStatus;
             try
             {
                 if (!ActiveDrone.IsOpen)
@@ -1592,7 +1592,7 @@ namespace Diva
 				// log
 				log.Info("cmd rows " + (DGVWayPoints.Rows.Count + 1)); // + home
 
-                var dlg = sender as ProgressDialogV2;
+                var dlg = sender as DialogProgress;
                 dlg.UpdateProgressAndStatus(0, Strings.MsgDialogSetTotalWps);
 
                 try
@@ -1638,7 +1638,7 @@ namespace Diva
                 return;
             }
 
-            var dlg = sender as ProgressDialogV2;
+            var dlg = sender as DialogProgress;
             int totalWps = -1;
 
             dlg.UpdateProgressAndStatus(0, Strings.MsgDialogDownloadWps);
@@ -2097,10 +2097,9 @@ namespace Diva
                         {    Stroke = new Pen(Color.FromArgb(drone.GetHashCode() | unchecked((int)0xFF000000)), 2) };
                         DroneRoutes.Add(drone, route);
                         Overlays.Routes.Routes.Add(route);
-                        var readWPWorker = new ProgressDialogV2
+                        var readWPWorker = new DialogProgress("Read WPs", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         {
                             StartPosition = FormStartPosition.CenterScreen,
-                            HintImage = Resources.icon_info,
                             Text = Strings.MsgDialogDownloadWps,
                         };
 
@@ -2235,10 +2234,9 @@ namespace Diva
 
 			}
 
-			var downloadWPReporter = new ProgressDialogV2
+			var downloadWPReporter = new DialogProgress("Download WPs", MessageBoxButtons.OK, MessageBoxIcon.Information)
 			{
 				StartPosition = FormStartPosition.CenterScreen,
-				HintImage = Resources.icon_info,
 				Text = Strings.MsgDialogDownloadWps,
 			};
 
@@ -2307,10 +2305,9 @@ namespace Diva
 				}
 			}
 
-			var uploadWPReporter = new ProgressDialogV2
+			var uploadWPReporter = new DialogProgress("Upload WPs", MessageBoxButtons.OK, MessageBoxIcon.Information)
 			{
 				StartPosition = FormStartPosition.CenterScreen,
-				HintImage = Resources.icon_info,
 				Text = Strings.MsgDialogUploadWps,
 			};
 

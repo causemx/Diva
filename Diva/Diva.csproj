@@ -224,6 +224,9 @@
     <Compile Include="Controls\Dialogs\DialogOrigin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Controls\Dialogs\DialogProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Controls\DroneInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -281,12 +284,6 @@
     </Compile>
     <Compile Include="Controls\Components\MyGroupBox.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ProgressDialogV2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\ProgressDialogV2.Designer.cs">
-      <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TelemetryDataPanel.cs">
       <SubType>UserControl</SubType>
@@ -412,6 +409,9 @@
     <EmbeddedResource Include="Controls\Dialogs\DialogOrigin.resx">
       <DependentUpon>DialogOrigin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Dialogs\DialogProgress.resx">
+      <DependentUpon>DialogProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DroneInfo.resx">
       <DependentUpon>DroneInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -435,12 +435,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Pages\Page2.resx">
       <DependentUpon>Page2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressDialogV2.resx">
-      <DependentUpon>ProgressDialogV2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ProgressDialogV2.zh-Hant.resx">
-      <DependentUpon>ProgressDialogV2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SplashForm.zh-Hant.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
@@ -509,11 +503,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
-    <None Include="Resources\icon_dialog_warning.png" />
     <None Include="Resources\icon_dialog_question.png" />
     <None Include="Resources\icon_dialog_none.png" />
+    <None Include="Resources\icon_dialog_information.png" />
     <None Include="Resources\icon_dialog_exclamation.png" />
     <None Include="Resources\icon_dialog_error.png" />
+    <None Include="Resources\icon_dialog_warning.png" />
     <None Include="Resources\icon_fish_stamp-32.png" />
     <None Include="Resources\icon_fish-32.png" />
     <None Include="Resources\icon_info-5-24.png" />

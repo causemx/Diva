@@ -13,6 +13,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 using static MAVLink;
+using Diva.Controls.Dialogs;
 
 namespace Diva.Mavlink
 {
@@ -49,7 +50,7 @@ namespace Diva.Mavlink
 		private int pacCount = 0;
 		private byte mavlinkVersion = 0;
 		private bool GPSLocationMode = false;
-		private ProgressDialogV2 frmProgressReporter;
+		private DialogProgress frmProgressReporter;
 
         #region Core
         public MavCore()
@@ -67,10 +68,9 @@ namespace Diva.Mavlink
 
         public void Open()
 		{
-			frmProgressReporter = new ProgressDialogV2
+			frmProgressReporter = new DialogProgress("Connect", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning)
 			{
 				StartPosition = FormStartPosition.CenterScreen,
-				HintImage = Resources.icon_warn,
 				Text = Strings.TextFormProgressConnection.FormatWith(
                         (this as MavDrone).Name ?? ""),
 			};

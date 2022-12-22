@@ -72,7 +72,7 @@ namespace Diva.Controls.Dialogs
             this.labelCaption.AutoSize = true;
             this.labelCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCaption.ForeColor = System.Drawing.Color.White;
-            this.labelCaption.Location = new System.Drawing.Point(46, 9);
+            this.labelCaption.Location = new System.Drawing.Point(41, 9);
             this.labelCaption.Name = "labelCaption";
             this.labelCaption.Size = new System.Drawing.Size(86, 17);
             this.labelCaption.TabIndex = 5;
@@ -242,6 +242,7 @@ namespace Diva.Controls.Dialogs
                     button1.Visible = true;
                     button1.Location = new Point(xCenter, yCenter);
                     button1.Text = "Ok";
+                    button1.Click += OK_Click;
                     button1.DialogResult = DialogResult.OK;//Set DialogResult
 
                     //Set Default Button
@@ -252,12 +253,14 @@ namespace Diva.Controls.Dialogs
                     button1.Visible = true;
                     button1.Location = new Point(xCenter - (button1.Width / 2) - 5, yCenter);
                     button1.Text = "Ok";
+                    button1.Click += OK_Click;
                     button1.DialogResult = DialogResult.OK;//Set DialogResult
 
                     //Cancel Button
                     button2.Visible = true;
                     button2.Location = new Point(xCenter + (button2.Width / 2) + 5, yCenter);
                     button2.Text = "Cancel";
+                    button2.Click += Cancel_Click;
                     button2.DialogResult = DialogResult.Cancel;//Set DialogResult
                     button2.BackColor = Color.DimGray;
 
@@ -272,12 +275,14 @@ namespace Diva.Controls.Dialogs
                     button1.Visible = true;
                     button1.Location = new Point(xCenter - (button1.Width / 2) - 5, yCenter);
                     button1.Text = "Retry";
+                    button1.Click += Retry_Click;
                     button1.DialogResult = DialogResult.Retry;//Set DialogResult
 
                     //Cancel Button
                     button2.Visible = true;
                     button2.Location = new Point(xCenter + (button2.Width / 2) + 5, yCenter);
                     button2.Text = "Cancel";
+                    button2.Click += Cancel_Click;
                     button2.DialogResult = DialogResult.Cancel;//Set DialogResult
                     button2.BackColor = Color.DimGray;
 
@@ -363,8 +368,6 @@ namespace Diva.Controls.Dialogs
             {
                 case MessageBoxDefaultButton.Button1://Focus button 1
                     button1.Select();
-                    button1.Click -= Button_Click;
-                    button1.Click += Button_Click;
                     button1.ForeColor = Color.White;
                     button1.Font = new Font(button1.Font, FontStyle.Underline);
                     break;
@@ -381,10 +384,10 @@ namespace Diva.Controls.Dialogs
             }
         }
 
-        protected virtual void Button_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("Default button clicked.");
-        }
+        protected virtual void OK_Click(object sender, EventArgs e) { }
+        protected virtual void Retry_Click(object sender, EventArgs e) { }
+        protected virtual void Cancel_Click(object sender, EventArgs e) { }
+
         protected virtual void SetFormSize()
         {
             this.Width = panelTitleBar.Width;
