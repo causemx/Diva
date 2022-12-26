@@ -65,9 +65,9 @@ namespace Diva.Controls
             };
 			dinfo.DoubleClick += (s, e) =>
 			{
-                if (e is MouseEventArgs m && m.Button == MouseButtons.Right
-                        || Planner.MIRDCMode)
-                    return;
+                // if (e is MouseEventArgs m && m.Button == MouseButtons.Right || Planner.MIRDCMode)
+                if (e is MouseEventArgs m && m.Button == MouseButtons.Right)
+					return;
 				ThePanel.Controls.Remove(s as Control);
 				if (s == ActiveDroneInfo)
                 {

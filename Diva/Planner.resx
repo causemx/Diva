@@ -289,7 +289,7 @@
     <value>NoControl</value>
   </data>
   <data name="LblModeDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 526</value>
+    <value>62, 413</value>
   </data>
   <data name="LblModeDesc.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 24</value>
@@ -425,7 +425,7 @@
     <value>NoControl</value>
   </data>
   <data name="LblMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>84, 526</value>
+    <value>132, 413</value>
   </data>
   <data name="LblMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 24</value>
@@ -548,7 +548,7 @@
     <value>Area</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="drawPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>Draw Polygon</value>
@@ -584,55 +584,55 @@
     <value>Clear</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="noFlyZoneToolStripMenuItem.Text" xml:space="preserve">
     <value>No-Fly Zone</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>168, 6</value>
   </data>
   <data name="miClearMission.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miClearMission.Text" xml:space="preserve">
     <value>Takeoff to Here</value>
   </data>
   <data name="miSetHomeHere.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miSetHomeHere.Text" xml:space="preserve">
     <value>Set Home Here</value>
   </data>
   <data name="miClearAllMissions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="miClearAllMissions.Text" xml:space="preserve">
     <value>Clear All Missions</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>168, 6</value>
   </data>
   <data name="surveyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>153, 22</value>
   </data>
   <data name="surveyToolStripMenuItem.Text" xml:space="preserve">
     <value>Simple Survey</value>
   </data>
   <data name="corridorScanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>153, 22</value>
   </data>
   <data name="corridorScanToolStripMenuItem.Text" xml:space="preserve">
     <value>Corridor Scan</value>
   </data>
   <data name="planToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="planToolStripMenuItem.Text" xml:space="preserve">
     <value>Plan</value>
   </data>
   <data name="cmMap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 170</value>
+    <value>172, 148</value>
   </data>
   <data name="&gt;&gt;cmMap.Name" xml:space="preserve">
     <value>cmMap</value>

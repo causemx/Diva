@@ -69,7 +69,7 @@ namespace Diva
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(152, 601);
+            this.panelMenu.Size = new System.Drawing.Size(168, 601);
             this.panelMenu.TabIndex = 1;
             // 
             // iconButton5
@@ -82,14 +82,14 @@ namespace Diva
             this.iconButton5.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.iconButton5.FlatAppearance.BorderSize = 0;
             this.iconButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iconButton5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton5.ForeColor = System.Drawing.Color.White;
             this.iconButton5.Image = global::Diva.Properties.Resources.icon_switch_2_24;
             this.iconButton5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton5.Location = new System.Drawing.Point(0, 561);
             this.iconButton5.Name = "iconButton5";
             this.iconButton5.Padding = new System.Windows.Forms.Padding(10, 0, 0, 10);
-            this.iconButton5.Size = new System.Drawing.Size(152, 40);
+            this.iconButton5.Size = new System.Drawing.Size(168, 40);
             this.iconButton5.TabIndex = 7;
             this.iconButton5.Text = "Switch View";
             this.iconButton5.TextColor = System.Drawing.Color.White;
@@ -105,14 +105,14 @@ namespace Diva
             this.iconButton2.Dock = System.Windows.Forms.DockStyle.Top;
             this.iconButton2.FlatAppearance.BorderSize = 0;
             this.iconButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iconButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton2.ForeColor = System.Drawing.Color.White;
             this.iconButton2.Image = global::Diva.Properties.Resources.icon_chess_knight_24;
             this.iconButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton2.Location = new System.Drawing.Point(0, 129);
             this.iconButton2.Name = "iconButton2";
             this.iconButton2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.iconButton2.Size = new System.Drawing.Size(152, 40);
+            this.iconButton2.Size = new System.Drawing.Size(168, 40);
             this.iconButton2.TabIndex = 4;
             this.iconButton2.Text = "Planning";
             this.iconButton2.TextColor = System.Drawing.Color.White;
@@ -129,14 +129,14 @@ namespace Diva
             this.iconButton1.Dock = System.Windows.Forms.DockStyle.Top;
             this.iconButton1.FlatAppearance.BorderSize = 0;
             this.iconButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.iconButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.iconButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.iconButton1.ForeColor = System.Drawing.Color.White;
             this.iconButton1.Image = global::Diva.Properties.Resources.icon_chess_castel_24;
             this.iconButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.iconButton1.Location = new System.Drawing.Point(0, 89);
             this.iconButton1.Name = "iconButton1";
             this.iconButton1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.iconButton1.Size = new System.Drawing.Size(152, 40);
+            this.iconButton1.Size = new System.Drawing.Size(168, 40);
             this.iconButton1.TabIndex = 3;
             this.iconButton1.Text = "Operation";
             this.iconButton1.TextColor = System.Drawing.Color.White;
@@ -149,7 +149,7 @@ namespace Diva
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(152, 89);
+            this.panel1.Size = new System.Drawing.Size(168, 89);
             this.panel1.TabIndex = 2;
             // 
             // pictureBox1
@@ -168,9 +168,9 @@ namespace Diva
             this.panelTitlebar.Controls.Add(this.configButton);
             this.panelTitlebar.Controls.Add(this.connectButton);
             this.panelTitlebar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTitlebar.Location = new System.Drawing.Point(152, 0);
+            this.panelTitlebar.Location = new System.Drawing.Point(168, 0);
             this.panelTitlebar.Name = "panelTitlebar";
-            this.panelTitlebar.Size = new System.Drawing.Size(834, 66);
+            this.panelTitlebar.Size = new System.Drawing.Size(818, 66);
             this.panelTitlebar.TabIndex = 2;
             // 
             // configButton
@@ -181,6 +181,7 @@ namespace Diva
             this.configButton.ClickForeColor = System.Drawing.Color.Empty;
             this.configButton.ClickImage = null;
             this.configButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.configButton.FlatAppearance.BorderSize = 0;
             this.configButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.configButton.HoverBackColor = System.Drawing.Color.Empty;
             this.configButton.HoverForeColor = System.Drawing.Color.Empty;
@@ -201,6 +202,7 @@ namespace Diva
             this.connectButton.ClickForeColor = System.Drawing.Color.Empty;
             this.connectButton.ClickImage = null;
             this.connectButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.connectButton.FlatAppearance.BorderSize = 0;
             this.connectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.connectButton.HoverBackColor = System.Drawing.Color.Empty;
             this.connectButton.HoverForeColor = System.Drawing.Color.Empty;
@@ -218,9 +220,9 @@ namespace Diva
             this.thePanel.AutoSize = true;
             this.thePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.thePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.thePanel.Location = new System.Drawing.Point(152, 66);
+            this.thePanel.Location = new System.Drawing.Point(168, 66);
             this.thePanel.Name = "thePanel";
-            this.thePanel.Size = new System.Drawing.Size(834, 535);
+            this.thePanel.Size = new System.Drawing.Size(818, 535);
             this.thePanel.TabIndex = 3;
             // 
             // dropdownMenuOperation

@@ -52,7 +52,10 @@ namespace Diva
 
 		private static readonly double WARN_ALT = 2D;
 
-		private Badges badges = new Badges(Resources.icon_fish_stamp_32, Resources.icon_airplane_32);
+		private Badges badges = new Badges(
+			Resources.icon_polygon_plot_32, 
+			Resources.icon_airplane_32,
+			Resources.icon_fish_stamp_32);
 
 
         private class PlannerOverlays
@@ -234,7 +237,7 @@ namespace Diva
 		{
 			// polyicon.Location = new Point(20, 575);
 			// polyicon.Paint(e.Graphics);
-			badges.Location = new Point(20, 400);
+			badges.Location = new Point(20, 600);
 			badges.Paint(e.Graphics);
 		}
 
@@ -3106,8 +3109,7 @@ namespace Diva
                 fullControl = value;
                 LblMode.Visible = value;
                 LblModeDesc.Visible = value;
-                BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = BtnBreakAction.Left
-                    = AltitudeControlPanel.Left = value ? 184 : 12;
+                
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);
 
@@ -3124,7 +3126,8 @@ namespace Diva
 
 		public static bool MIRDCMode => Instance?.FullControl ?? true;
 
-        private MyTSButton BtnFullCtrl = new MyTSButton
+
+		private MyTSButton BtnFullCtrl = new MyTSButton
         {
             AutoSize = false,
             CheckedText = Strings.BtnSimplifiedControlText,
@@ -3189,7 +3192,10 @@ namespace Diva
 			// FullControl = false;
 			FullControl = true;
 
-            BtnFlyTo.Click += BtnFlyTo_Clicked;
+			BtnMapFocus.Left = BtnZoomIn.Left = BtnZoomOut.Left = BtnBreakAction.Left
+					= AltitudeControlPanel.Left = 12;
+
+			BtnFlyTo.Click += BtnFlyTo_Clicked;
             //TSMainPanel.Items.Add(BtnFlyTo);
             BtnTrack.Click += BtnTrack_Clicked;
             //TSMainPanel.Items.Add(BtnTrack);

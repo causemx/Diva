@@ -158,7 +158,6 @@ namespace Diva.Controls
                     tt.SetToolTip(pb, "RC RSSI");
                     break;
             }
-            
         }
     }
 }

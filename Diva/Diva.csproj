@@ -503,6 +503,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_polygon_plot_32.png" />
     <None Include="Resources\icon_dialog_question.png" />
     <None Include="Resources\icon_dialog_none.png" />
     <None Include="Resources\icon_dialog_information.png" />

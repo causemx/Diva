@@ -40,9 +40,9 @@ namespace Diva.Controls.Dialogs
             // progressBar
             // 
             this.progressBar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.progressBar.Location = new System.Drawing.Point(95, 133);
+            this.progressBar.Location = new System.Drawing.Point(49, 133);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(165, 23);
+            this.progressBar.Size = new System.Drawing.Size(247, 23);
             this.progressBar.TabIndex = 4;
             // 
             // lbl_progress_message
@@ -50,11 +50,11 @@ namespace Diva.Controls.Dialogs
             this.lbl_progress_message.AutoEllipsis = true;
             this.lbl_progress_message.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_progress_message.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lbl_progress_message.Location = new System.Drawing.Point(118, 14);
+            this.lbl_progress_message.Location = new System.Drawing.Point(100, 13);
             this.lbl_progress_message.MaximumSize = new System.Drawing.Size(150, 112);
             this.lbl_progress_message.MinimumSize = new System.Drawing.Size(0, 112);
             this.lbl_progress_message.Name = "lbl_progress_message";
-            this.lbl_progress_message.Size = new System.Drawing.Size(118, 112);
+            this.lbl_progress_message.Size = new System.Drawing.Size(141, 112);
             this.lbl_progress_message.TabIndex = 3;
             this.lbl_progress_message.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
