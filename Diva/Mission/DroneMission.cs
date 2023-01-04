@@ -55,7 +55,8 @@ namespace Diva.Mission
                 p.Value.Overlay.IsVisibile = visible;
         }
 
-        public Color RoutingPathColor { get; private set; } = Color.FromArgb(RNG.Next(256), RNG.Next(256), RNG.Next(256));
+        // public Color RoutingPathColor { get; private set; } = Color.FromArgb(RNG.Next(256), RNG.Next(256), RNG.Next(256));
+        public Color RoutingPathColor { get; private set; } = Color.WhiteSmoke;
         public double WPRadius { get; set; } = 30.0d;
         public double LoiterRadius { get; set; } = 30.0d;
         public readonly MavDrone Drone;

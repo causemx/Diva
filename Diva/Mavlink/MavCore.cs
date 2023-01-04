@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 using static MAVLink;
 using Diva.Controls.Dialogs;
+using System.Threading.Tasks;
 
 namespace Diva.Mavlink
 {
@@ -198,7 +199,7 @@ namespace Diva.Mavlink
 
         protected virtual bool IsValidId(MAVLinkMessage message) => false;
 
-		public MAVLinkMessage ReadPacket()
+		public async Task<MAVLinkMessage> ReadPacket()
 		{
 			byte[] buffer = new byte[MAVLINK_MAX_PACKET_LEN + 25];
 			int count = 0;
@@ -232,7 +233,7 @@ namespace Diva.Mavlink
 								length);
 							throw new TimeoutException("Timeout");
 						}
-						Thread.Sleep(1);
+						await Task.Delay(1).ConfigureAwait(false);
 					}
 					if (BaseStream.IsOpen)
 					{
@@ -292,8 +293,8 @@ namespace Diva.Mavlink
 									length);
 								throw new TimeoutException("Timeout");
 							}
-							Thread.Sleep(1);
-						}
+                            await Task.Delay(1).ConfigureAwait(false);
+                        }
 						int read = BaseStream.Read(buffer, 1, headerlength);
 						count = read;
 						if (RawLogFile?.CanWrite == true)
@@ -328,8 +329,8 @@ namespace Diva.Mavlink
 										BaseStream.BytesAvailable, length);
 									break;
 								}
-								Thread.Sleep(1);
-							}
+                                await Task.Delay(1).ConfigureAwait(false);
+                            }
 							if (BaseStream.IsOpen)
 							{
 								int read = BaseStream.Read(buffer, headerlengthstx, length - headerlengthstx);
@@ -770,7 +771,7 @@ namespace Diva.Mavlink
 
         protected virtual void DoBackgroundWork() { }
 
-        private static void MavCoreBackgroundLoop(CancellationToken token)
+        private static async void MavCoreBackgroundLoop(CancellationToken token)
         {
             DateTime lastHeartBeatSent = DateTime.Now;
             DateTime nextUpdateTime = DateTime.Now.AddSeconds(1);
@@ -782,14 +783,14 @@ namespace Diva.Mavlink
                 {
                     var loopStart = DateTime.Now;
 
-                    lock (mavs) foreach (var mav in mavs)
+                    foreach (var mav in mavs)
                     {
                         if (!mav.BaseStream.IsOpen) continue;
                         try
                         {
                             while (mav.BaseStream.BytesAvailable > 5)
                             {
-                                MAVLinkMessage packet = mav.ReadPacket();
+                                MAVLinkMessage packet = await mav.ReadPacket().ConfigureAwait(false);
                                 if (packet == MAVLinkMessage.Invalid || packet.Length < 5) break;
                                 mav.HandleMavLinkMessage(packet);
                             }
@@ -802,7 +803,7 @@ namespace Diva.Mavlink
                     if (lastHeartBeatSent.Second != now.Second)
                     {
                         lastHeartBeatSent = now;
-                        lock (mavs) foreach (var mav in mavs)
+                        foreach (var mav in mavs)
                         {
                             if (!mav.BaseStream.IsOpen) continue;
                             try
