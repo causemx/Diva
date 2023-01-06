@@ -199,7 +199,7 @@ namespace Diva.Mavlink
 
         protected virtual bool IsValidId(MAVLinkMessage message) => false;
 
-		public async Task<MAVLinkMessage> ReadPacket()
+		public async Task<MAVLinkMessage> ReadPacketAsync()
 		{
 			byte[] buffer = new byte[MAVLINK_MAX_PACKET_LEN + 25];
 			int count = 0;
@@ -790,7 +790,7 @@ namespace Diva.Mavlink
                         {
                             while (mav.BaseStream.BytesAvailable > 5)
                             {
-                                MAVLinkMessage packet = await mav.ReadPacket().ConfigureAwait(false);
+                                MAVLinkMessage packet = await mav.ReadPacketAsync().ConfigureAwait(false);
                                 if (packet == MAVLinkMessage.Invalid || packet.Length < 5) break;
                                 mav.HandleMavLinkMessage(packet);
                             }
@@ -1132,39 +1132,38 @@ namespace Diva.Mavlink
                 return true;
             }
 
+            bool StatusValueHandler(MAVLinkMessage m, ref bool more)
+            {
+                mavlink_statustext_t pv = m.ToStructure<mavlink_statustext_t>();
+                string st = ASCIIEncoding.ASCII.GetString(pv.text).Split('\0')[0];
+                switch (st)
+                {
+                    case string c when c.Contains("copter"):
+                    case string r when r.Contains("rover"):
+                    case string p when p.Contains("plane"):
+                        Status.VersionString = st;
+                        break;
+                    case string n when n.Contains("nuttx"):
+                        Status.SoftwareVersions = st;
+                        break;
+                    case string x when x.Contains("px4v2"):
+                        Status.SerialString = st;
+                        break;
+                    case string f when f.Contains("frame"):
+                        Status.FrameString = st;
+                        break;
+                }
+                return more = true;
+            }
+                  
             int retries = 6;
             var lreq = new mavlink_param_request_list_t { target_system = SysId, target_component = CompId };
             do
             {
                 SendPacketWaitReplies(MAVLINK_MSG_ID.PARAM_REQUEST_LIST, lreq,
                     new MAVLINK_MSG_ID[] { MAVLINK_MSG_ID.PARAM_VALUE, MAVLINK_MSG_ID.STATUSTEXT },
-                    new ReplyPacketFilter[]
-                    {
-                        ParamValueHandler,
-                        (MAVLinkMessage m, ref bool more) =>
-                        {
-                            mavlink_statustext_t pv = m.ToStructure<mavlink_statustext_t>();
-                            string st = ASCIIEncoding.ASCII.GetString(pv.text).Split('\0')[0];
-                            switch (st)
-                            {
-                                case string c when c.Contains("copter"):
-                                case string r when r.Contains("rover"):
-                                case string p when p.Contains("plane"):
-                                    Status.VersionString = st;
-                                    break;
-                                case string n when n.Contains("nuttx"):
-                                    Status.SoftwareVersions = st;
-                                    break;
-                                case string x when x.Contains("px4v2"):
-                                    Status.SerialString = st;
-                                    break;
-                                case string f when f.Contains("frame"):
-                                    Status.FrameString = st;
-                                    break;
-                            }
-                            return more = true;
-                        }
-                    });
+                    new ReplyPacketFilter[] { ParamValueHandler, StatusValueHandler, });
+
                 if (paramTotal > 0 && indices.Count == paramTotal)
                 {
                     Status.Params.Clear();

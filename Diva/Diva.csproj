@@ -451,6 +451,9 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main.zh-TW.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Planner.resx">
       <DependentUpon>Planner.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -503,6 +506,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_logo_toucan_48.png" />
     <None Include="Resources\icon_polygon_plot_32.png" />
     <None Include="Resources\icon_dialog_question.png" />
     <None Include="Resources\icon_dialog_none.png" />
