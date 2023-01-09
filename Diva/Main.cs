@@ -89,6 +89,17 @@ namespace Diva
             }
         }
 
+        private void Buttons_Click(object sender, EventArgs e)
+        {
+            var btn = (IconButton)sender;
+            switch (btn.Name)
+            {
+                case "BtnStreaming":
+                    planner.BUT_Live_Click(sender, e);
+                    break;
+            }
+        }
+
         private void MenuItems_Click(object sender, EventArgs e)
         {
             var btn = (ToolStripMenuItem)sender;

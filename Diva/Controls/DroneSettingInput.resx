@@ -254,9 +254,6 @@
   <data name="LabelStreamURI.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="LabelStreamURI.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="&gt;&gt;LabelStreamURI.Name" xml:space="preserve">
     <value>LabelStreamURI</value>
   </data>
@@ -587,9 +584,6 @@
   </data>
   <data name="TBoxStreamURI.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="TBoxStreamURI.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;TBoxStreamURI.Name" xml:space="preserve">
     <value>TBoxStreamURI</value>

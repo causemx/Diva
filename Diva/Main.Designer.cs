@@ -35,7 +35,7 @@ namespace Diva
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.iconButton5 = new Diva.Controls.Components.IconButton();
+            this.BtnStreaming = new Diva.Controls.Components.IconButton();
             this.iconButton2 = new Diva.Controls.Components.IconButton();
             this.iconButton1 = new Diva.Controls.Components.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -69,15 +69,15 @@ namespace Diva
             // 
             // panelMenu
             // 
+            resources.ApplyResources(this.panelMenu, "panelMenu");
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
             this.panelMenu.Controls.Add(this.panel4);
             this.panelMenu.Controls.Add(this.panel3);
             this.panelMenu.Controls.Add(this.panel2);
-            this.panelMenu.Controls.Add(this.iconButton5);
+            this.panelMenu.Controls.Add(this.BtnStreaming);
             this.panelMenu.Controls.Add(this.iconButton2);
             this.panelMenu.Controls.Add(this.iconButton1);
             this.panelMenu.Controls.Add(this.panel1);
-            resources.ApplyResources(this.panelMenu, "panelMenu");
             this.panelMenu.Name = "panelMenu";
             // 
             // panel4
@@ -88,34 +88,36 @@ namespace Diva
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.panel3.Name = "panel3";
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             resources.ApplyResources(this.panel2, "panel2");
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.panel2.Name = "panel2";
             // 
-            // iconButton5
+            // BtnStreaming
             // 
-            this.iconButton5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
-            this.iconButton5.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
-            this.iconButton5.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.iconButton5.BorderRadius = 0;
-            this.iconButton5.BorderSize = 0;
-            resources.ApplyResources(this.iconButton5, "iconButton5");
-            this.iconButton5.FlatAppearance.BorderSize = 0;
-            this.iconButton5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.iconButton5.ForeColor = System.Drawing.Color.White;
-            this.iconButton5.Image = global::Diva.Properties.Resources.icon_switch_2_24;
-            this.iconButton5.Name = "iconButton5";
-            this.iconButton5.TextColor = System.Drawing.Color.White;
-            this.iconButton5.UseVisualStyleBackColor = false;
+            resources.ApplyResources(this.BtnStreaming, "BtnStreaming");
+            this.BtnStreaming.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
+            this.BtnStreaming.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
+            this.BtnStreaming.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.BtnStreaming.BorderRadius = 0;
+            this.BtnStreaming.BorderSize = 0;
+            this.BtnStreaming.FlatAppearance.BorderSize = 0;
+            this.BtnStreaming.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.BtnStreaming.ForeColor = System.Drawing.Color.White;
+            this.BtnStreaming.Image = global::Diva.Properties.Resources.icon_switch_2_24;
+            this.BtnStreaming.Name = "BtnStreaming";
+            this.BtnStreaming.TextColor = System.Drawing.Color.White;
+            this.BtnStreaming.UseVisualStyleBackColor = false;
+            this.BtnStreaming.Click += new System.EventHandler(this.Buttons_Click);
             // 
             // iconButton2
             // 
+            resources.ApplyResources(this.iconButton2, "iconButton2");
             this.iconButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
             this.iconButton2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
             this.iconButton2.BorderColor = System.Drawing.Color.PaleVioletRed;
@@ -123,7 +125,6 @@ namespace Diva
             this.iconButton2.BorderSize = 0;
             this.iconButton2.FlatAppearance.BorderSize = 0;
             this.iconButton2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.iconButton2, "iconButton2");
             this.iconButton2.ForeColor = System.Drawing.Color.White;
             this.iconButton2.Image = global::Diva.Properties.Resources.icon_chess_knight_24;
             this.iconButton2.Name = "iconButton2";
@@ -133,6 +134,7 @@ namespace Diva
             // 
             // iconButton1
             // 
+            resources.ApplyResources(this.iconButton1, "iconButton1");
             this.iconButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
             this.iconButton1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
             this.iconButton1.BorderColor = System.Drawing.Color.PaleVioletRed;
@@ -140,7 +142,6 @@ namespace Diva
             this.iconButton1.BorderSize = 0;
             this.iconButton1.FlatAppearance.BorderSize = 0;
             this.iconButton1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.iconButton1, "iconButton1");
             this.iconButton1.ForeColor = System.Drawing.Color.White;
             this.iconButton1.Image = global::Diva.Properties.Resources.icon_chess_castel_24;
             this.iconButton1.Name = "iconButton1";
@@ -150,11 +151,11 @@ namespace Diva
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(10)))), ((int)(((byte)(13)))));
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.pictureBox1);
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // label2
@@ -171,35 +172,36 @@ namespace Diva
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::Diva.Properties.Resources.icon_logo_toucan_64;
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Image = global::Diva.Properties.Resources.icon_logo_toucan_64;
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
             // 
             // panelTitlebar
             // 
+            resources.ApplyResources(this.panelTitlebar, "panelTitlebar");
             this.panelTitlebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
             this.panelTitlebar.Controls.Add(this.panel6);
             this.panelTitlebar.Controls.Add(this.panel5);
             this.panelTitlebar.Controls.Add(this.configButton);
             this.panelTitlebar.Controls.Add(this.connectButton);
-            resources.ApplyResources(this.panelTitlebar, "panelTitlebar");
             this.panelTitlebar.Name = "panelTitlebar";
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             resources.ApplyResources(this.panel6, "panel6");
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.panel6.Name = "panel6";
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             resources.ApplyResources(this.panel5, "panel5");
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.panel5.Name = "panel5";
             // 
             // configButton
             // 
+            resources.ApplyResources(this.configButton, "configButton");
             this.configButton.Checked = false;
             this.configButton.CheckedImage = null;
             this.configButton.ClickBackColor = System.Drawing.Color.Empty;
@@ -207,7 +209,6 @@ namespace Diva
             this.configButton.ClickImage = null;
             this.configButton.FlatAppearance.BorderSize = 0;
             this.configButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.configButton, "configButton");
             this.configButton.HoverBackColor = System.Drawing.Color.Empty;
             this.configButton.HoverForeColor = System.Drawing.Color.Empty;
             this.configButton.HoverImage = null;
@@ -218,6 +219,7 @@ namespace Diva
             // 
             // connectButton
             // 
+            resources.ApplyResources(this.connectButton, "connectButton");
             this.connectButton.Checked = false;
             this.connectButton.CheckedImage = global::Diva.Properties.Resources.icon_connected_32;
             this.connectButton.ClickBackColor = System.Drawing.Color.Empty;
@@ -225,7 +227,6 @@ namespace Diva
             this.connectButton.ClickImage = null;
             this.connectButton.FlatAppearance.BorderSize = 0;
             this.connectButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.connectButton, "connectButton");
             this.connectButton.HoverBackColor = System.Drawing.Color.Empty;
             this.connectButton.HoverForeColor = System.Drawing.Color.Empty;
             this.connectButton.HoverImage = null;
@@ -241,6 +242,7 @@ namespace Diva
             // 
             // dropdownMenuOperation
             // 
+            resources.ApplyResources(this.dropdownMenuOperation, "dropdownMenuOperation");
             this.dropdownMenuOperation.BackColor = System.Drawing.Color.WhiteSmoke;
             this.dropdownMenuOperation.IsMainMenu = false;
             this.dropdownMenuOperation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -253,7 +255,6 @@ namespace Diva
             this.dropdownMenuOperation.MenuItemTextColor = System.Drawing.Color.Empty;
             this.dropdownMenuOperation.Name = "dropdownMenu1";
             this.dropdownMenuOperation.PrimaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.dropdownMenuOperation, "dropdownMenuOperation");
             // 
             // throttleMenuItem
             // 
@@ -292,6 +293,7 @@ namespace Diva
             // 
             // dropdownMenuPlanning
             // 
+            resources.ApplyResources(this.dropdownMenuPlanning, "dropdownMenuPlanning");
             this.dropdownMenuPlanning.BackColor = System.Drawing.Color.WhiteSmoke;
             this.dropdownMenuPlanning.IsMainMenu = false;
             this.dropdownMenuPlanning.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -303,7 +305,6 @@ namespace Diva
             this.dropdownMenuPlanning.MenuItemTextColor = System.Drawing.Color.Empty;
             this.dropdownMenuPlanning.Name = "dropdownMenuPlanning";
             this.dropdownMenuPlanning.PrimaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.dropdownMenuPlanning, "dropdownMenuPlanning");
             // 
             // writeMissionMenuItem
             // 
@@ -355,7 +356,7 @@ namespace Diva
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Panel panelTitlebar;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private Controls.Components.IconButton iconButton5;
+        private Controls.Components.IconButton BtnStreaming;
         private Controls.Components.IconButton iconButton2;
         private System.Windows.Forms.Panel panel1;
         private Controls.Menu.DropdownMenu dropdownMenuOperation;

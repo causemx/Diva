@@ -34,10 +34,10 @@ namespace Diva
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
             this.IconGPSLostWarning = new System.Windows.Forms.Button();
             this.IconModeWarning = new System.Windows.Forms.Button();
@@ -113,7 +113,6 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
-            resources.ApplyResources(this.SplitContainer.Panel1, "SplitContainer.Panel1");
             this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
@@ -126,50 +125,44 @@ namespace Diva
             this.SplitContainer.Panel1.Controls.Add(this.RotationInfoPanel);
             this.SplitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
             this.SplitContainer.Panel1.Controls.Add(this.Map);
-            this.TTButtonDescription.SetToolTip(this.SplitContainer.Panel1, resources.GetString("SplitContainer.Panel1.ToolTip"));
             // 
             // SplitContainer.Panel2
             // 
-            resources.ApplyResources(this.SplitContainer.Panel2, "SplitContainer.Panel2");
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
-            this.TTButtonDescription.SetToolTip(this.SplitContainer.Panel2, resources.GetString("SplitContainer.Panel2.ToolTip"));
-            this.TTButtonDescription.SetToolTip(this.SplitContainer, resources.GetString("SplitContainer.ToolTip"));
             // 
             // IconGPSLostWarning
             // 
-            resources.ApplyResources(this.IconGPSLostWarning, "IconGPSLostWarning");
             this.IconGPSLostWarning.BackColor = System.Drawing.Color.Transparent;
             this.IconGPSLostWarning.BackgroundImage = global::Diva.Properties.Resources.waiting_gps;
+            resources.ApplyResources(this.IconGPSLostWarning, "IconGPSLostWarning");
             this.IconGPSLostWarning.FlatAppearance.BorderSize = 0;
             this.IconGPSLostWarning.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.IconGPSLostWarning.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.IconGPSLostWarning.ForeColor = System.Drawing.Color.Gold;
             this.IconGPSLostWarning.Name = "IconGPSLostWarning";
-            this.TTButtonDescription.SetToolTip(this.IconGPSLostWarning, resources.GetString("IconGPSLostWarning.ToolTip"));
             this.IconGPSLostWarning.UseVisualStyleBackColor = false;
             // 
             // IconModeWarning
             // 
-            resources.ApplyResources(this.IconModeWarning, "IconModeWarning");
             this.IconModeWarning.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.IconModeWarning, "IconModeWarning");
             this.IconModeWarning.FlatAppearance.BorderSize = 0;
             this.IconModeWarning.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.IconModeWarning.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.IconModeWarning.ForeColor = System.Drawing.Color.Red;
             this.IconModeWarning.Name = "IconModeWarning";
-            this.TTButtonDescription.SetToolTip(this.IconModeWarning, resources.GetString("IconModeWarning.ToolTip"));
             this.IconModeWarning.UseVisualStyleBackColor = false;
             // 
             // BtnBreakAction
             // 
-            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
             this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.BtnBreakAction.Checked = false;
             this.BtnBreakAction.CheckedImage = null;
             this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.ClickImage = null;
+            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
             this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnBreakAction.HoverImage = null;
@@ -182,10 +175,10 @@ namespace Diva
             // AltitudeControlPanel
             // 
             this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
-            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
             this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
             this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
             this.AltitudeControlPanel.ForeColor = System.Drawing.Color.White;
             this.AltitudeControlPanel.HoverGrow = System.Drawing.ContentAlignment.TopRight;
             this.AltitudeControlPanel.HoverSize = new System.Drawing.Size(60, 200);
@@ -196,7 +189,6 @@ namespace Diva
             this.AltitudeControlPanel.Target = 0F;
             this.AltitudeControlPanel.TargetColor = System.Drawing.Color.Yellow;
             this.AltitudeControlPanel.Targeting = false;
-            this.TTButtonDescription.SetToolTip(this.AltitudeControlPanel, resources.GetString("AltitudeControlPanel.ToolTip"));
             this.AltitudeControlPanel.Value = 0F;
             this.AltitudeControlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AltitudeControlPanel_MouseClick);
             // 
@@ -206,16 +198,15 @@ namespace Diva
             this.LblModeDesc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
             this.LblModeDesc.ForeColor = System.Drawing.Color.White;
             this.LblModeDesc.Name = "LblModeDesc";
-            this.TTButtonDescription.SetToolTip(this.LblModeDesc, resources.GetString("LblModeDesc.ToolTip"));
             // 
             // BtnZoomOut
             // 
-            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
             this.BtnZoomOut.Checked = false;
             this.BtnZoomOut.CheckedImage = null;
             this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.ClickImage = null;
+            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
             this.BtnZoomOut.HoverBackColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
@@ -227,12 +218,12 @@ namespace Diva
             // 
             // BtnZoomIn
             // 
-            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
             this.BtnZoomIn.Checked = false;
             this.BtnZoomIn.CheckedImage = null;
             this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.ClickImage = null;
+            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
             this.BtnZoomIn.HoverBackColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
@@ -244,12 +235,12 @@ namespace Diva
             // 
             // BtnMapFocus
             // 
-            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
             this.BtnMapFocus.Checked = false;
             this.BtnMapFocus.CheckedImage = null;
             this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.ClickImage = null;
+            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
             this.BtnMapFocus.HoverBackColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.HoverForeColor = System.Drawing.Color.Empty;
             this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;
@@ -266,22 +257,19 @@ namespace Diva
             this.LblMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
             this.LblMode.ForeColor = System.Drawing.Color.White;
             this.LblMode.Name = "LblMode";
-            this.TTButtonDescription.SetToolTip(this.LblMode, resources.GetString("LblMode.ToolTip"));
             // 
             // RotationInfoPanel
             // 
             resources.ApplyResources(this.RotationInfoPanel, "RotationInfoPanel");
             this.RotationInfoPanel.Name = "RotationInfoPanel";
-            this.TTButtonDescription.SetToolTip(this.RotationInfoPanel, resources.GetString("RotationInfoPanel.ToolTip"));
             this.RotationInfoPanel.SizeChanged += new System.EventHandler(this.RotationInfoPanel_SizeChanged);
             // 
             // DroneInfoPanel
             // 
-            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
             this.DroneInfoPanel.ActiveDroneInfo = null;
+            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
             this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
             this.DroneInfoPanel.Name = "DroneInfoPanel";
-            this.TTButtonDescription.SetToolTip(this.DroneInfoPanel, resources.GetString("DroneInfoPanel.ToolTip"));
             this.DroneInfoPanel.ActiveDroneChanged += new System.EventHandler(this.DroneInfoPanel_ActiveDroneChanged);
             this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
             // 
@@ -314,7 +302,6 @@ namespace Diva
             this.Map.ScaleSize = new System.Drawing.Size(100, 10);
             this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.Map.ShowTileGridLines = false;
-            this.TTButtonDescription.SetToolTip(this.Map, resources.GetString("Map.ToolTip"));
             this.Map.Zoom = 15D;
             this.Map.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
             this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
@@ -327,7 +314,6 @@ namespace Diva
             // 
             // cmMap
             // 
-            resources.ApplyResources(this.cmMap, "cmMap");
             this.cmMap.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.cmMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.drawPolygonToolStripMenuItem,
@@ -339,11 +325,10 @@ namespace Diva
             this.toolStripSeparator2,
             this.planToolStripMenuItem});
             this.cmMap.Name = "contextMenuStrip1";
-            this.TTButtonDescription.SetToolTip(this.cmMap, resources.GetString("cmMap.ToolTip"));
+            resources.ApplyResources(this.cmMap, "cmMap");
             // 
             // drawPolygonToolStripMenuItem
             // 
-            resources.ApplyResources(this.drawPolygonToolStripMenuItem, "drawPolygonToolStripMenuItem");
             this.drawPolygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPolygonPointToolStripMenuItem,
             this.clearPolygonToolStripMenuItem,
@@ -351,39 +336,39 @@ namespace Diva
             this.loadPolygonToolStripMenuItem,
             this.areaToolStripMenuItem});
             this.drawPolygonToolStripMenuItem.Name = "drawPolygonToolStripMenuItem";
+            resources.ApplyResources(this.drawPolygonToolStripMenuItem, "drawPolygonToolStripMenuItem");
             // 
             // addPolygonPointToolStripMenuItem
             // 
-            resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
             this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
+            resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
             this.addPolygonPointToolStripMenuItem.Click += new System.EventHandler(this.addPolygonPointToolStripMenuItem_Click);
             // 
             // clearPolygonToolStripMenuItem
             // 
-            resources.ApplyResources(this.clearPolygonToolStripMenuItem, "clearPolygonToolStripMenuItem");
             this.clearPolygonToolStripMenuItem.Name = "clearPolygonToolStripMenuItem";
+            resources.ApplyResources(this.clearPolygonToolStripMenuItem, "clearPolygonToolStripMenuItem");
             this.clearPolygonToolStripMenuItem.Click += new System.EventHandler(this.clearPolygonToolStripMenuItem_Click);
             // 
             // savePolygonToolStripMenuItem
             // 
-            resources.ApplyResources(this.savePolygonToolStripMenuItem, "savePolygonToolStripMenuItem");
             this.savePolygonToolStripMenuItem.Name = "savePolygonToolStripMenuItem";
+            resources.ApplyResources(this.savePolygonToolStripMenuItem, "savePolygonToolStripMenuItem");
             this.savePolygonToolStripMenuItem.Click += new System.EventHandler(this.savePolygonToolStripMenuItem_Click);
             // 
             // loadPolygonToolStripMenuItem
             // 
-            resources.ApplyResources(this.loadPolygonToolStripMenuItem, "loadPolygonToolStripMenuItem");
             this.loadPolygonToolStripMenuItem.Name = "loadPolygonToolStripMenuItem";
+            resources.ApplyResources(this.loadPolygonToolStripMenuItem, "loadPolygonToolStripMenuItem");
             this.loadPolygonToolStripMenuItem.Click += new System.EventHandler(this.loadPolygonToolStripMenuItem_Click);
             // 
             // areaToolStripMenuItem
             // 
-            resources.ApplyResources(this.areaToolStripMenuItem, "areaToolStripMenuItem");
             this.areaToolStripMenuItem.Name = "areaToolStripMenuItem";
+            resources.ApplyResources(this.areaToolStripMenuItem, "areaToolStripMenuItem");
             // 
             // noFlyZoneToolStripMenuItem
             // 
-            resources.ApplyResources(this.noFlyZoneToolStripMenuItem, "noFlyZoneToolStripMenuItem");
             this.noFlyZoneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uploadToolStripMenuItem,
             this.setReturnLocationToolStripMenuItem,
@@ -391,88 +376,88 @@ namespace Diva
             this.saveToFileToolStripMenuItem,
             this.clearToolStripMenuItem});
             this.noFlyZoneToolStripMenuItem.Name = "noFlyZoneToolStripMenuItem";
+            resources.ApplyResources(this.noFlyZoneToolStripMenuItem, "noFlyZoneToolStripMenuItem");
             // 
             // uploadToolStripMenuItem
             // 
-            resources.ApplyResources(this.uploadToolStripMenuItem, "uploadToolStripMenuItem");
             this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
+            resources.ApplyResources(this.uploadToolStripMenuItem, "uploadToolStripMenuItem");
             this.uploadToolStripMenuItem.Click += new System.EventHandler(this.GeoFenceuploadToolStripMenuItem_Click);
             // 
             // setReturnLocationToolStripMenuItem
             // 
-            resources.ApplyResources(this.setReturnLocationToolStripMenuItem, "setReturnLocationToolStripMenuItem");
             this.setReturnLocationToolStripMenuItem.Name = "setReturnLocationToolStripMenuItem";
+            resources.ApplyResources(this.setReturnLocationToolStripMenuItem, "setReturnLocationToolStripMenuItem");
             this.setReturnLocationToolStripMenuItem.Click += new System.EventHandler(this.setReturnLocationToolStripMenuItem_Click);
             // 
             // loadFromFileToolStripMenuItem
             // 
-            resources.ApplyResources(this.loadFromFileToolStripMenuItem, "loadFromFileToolStripMenuItem");
             this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
+            resources.ApplyResources(this.loadFromFileToolStripMenuItem, "loadFromFileToolStripMenuItem");
             this.loadFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileToolStripMenuItem_Click);
             // 
             // saveToFileToolStripMenuItem
             // 
-            resources.ApplyResources(this.saveToFileToolStripMenuItem, "saveToFileToolStripMenuItem");
             this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
+            resources.ApplyResources(this.saveToFileToolStripMenuItem, "saveToFileToolStripMenuItem");
             this.saveToFileToolStripMenuItem.Click += new System.EventHandler(this.saveToFileToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
-            resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            resources.ApplyResources(this.clearToolStripMenuItem, "clearToolStripMenuItem");
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // miClearMission
             // 
-            resources.ApplyResources(this.miClearMission, "miClearMission");
             this.miClearMission.Name = "miClearMission";
+            resources.ApplyResources(this.miClearMission, "miClearMission");
             this.miClearMission.Click += new System.EventHandler(this.goHereToolStripMenuItem_Click);
             // 
             // miSetHomeHere
             // 
-            resources.ApplyResources(this.miSetHomeHere, "miSetHomeHere");
             this.miSetHomeHere.Name = "miSetHomeHere";
+            resources.ApplyResources(this.miSetHomeHere, "miSetHomeHere");
             this.miSetHomeHere.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
             // 
             // miClearAllMissions
             // 
-            resources.ApplyResources(this.miClearAllMissions, "miClearAllMissions");
             this.miClearAllMissions.Name = "miClearAllMissions";
+            resources.ApplyResources(this.miClearAllMissions, "miClearAllMissions");
             this.miClearAllMissions.Click += new System.EventHandler(this.clearMissionToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // planToolStripMenuItem
             // 
-            resources.ApplyResources(this.planToolStripMenuItem, "planToolStripMenuItem");
             this.planToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.surveyToolStripMenuItem,
             this.corridorScanToolStripMenuItem});
             this.planToolStripMenuItem.Name = "planToolStripMenuItem";
+            resources.ApplyResources(this.planToolStripMenuItem, "planToolStripMenuItem");
             // 
             // surveyToolStripMenuItem
             // 
-            resources.ApplyResources(this.surveyToolStripMenuItem, "surveyToolStripMenuItem");
             this.surveyToolStripMenuItem.Name = "surveyToolStripMenuItem";
+            resources.ApplyResources(this.surveyToolStripMenuItem, "surveyToolStripMenuItem");
             this.surveyToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // corridorScanToolStripMenuItem
             // 
-            resources.ApplyResources(this.corridorScanToolStripMenuItem, "corridorScanToolStripMenuItem");
             this.corridorScanToolStripMenuItem.Name = "corridorScanToolStripMenuItem";
+            resources.ApplyResources(this.corridorScanToolStripMenuItem, "corridorScanToolStripMenuItem");
             this.corridorScanToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // DGVWayPoints
             // 
-            resources.ApplyResources(this.DGVWayPoints, "DGVWayPoints");
             this.DGVWayPoints.AllowUserToAddRows = false;
             this.DGVWayPoints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DGVWayPoints.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
@@ -480,14 +465,15 @@ namespace Diva
             this.DGVWayPoints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DGVWayPoints.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.DGVWayPoints.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HotTrack;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVWayPoints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(this.DGVWayPoints, "DGVWayPoints");
             this.DGVWayPoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCommand,
             this.colParam1,
@@ -500,33 +486,32 @@ namespace Diva
             this.colAngle,
             this.colDelete,
             this.colTagData});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVWayPoints.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
             this.DGVWayPoints.EnableHeadersVisualStyles = false;
             this.DGVWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
             this.DGVWayPoints.Name = "DGVWayPoints";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.InfoText;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            this.DGVWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.DGVWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.DGVWayPoints.RowTemplate.Height = 24;
-            this.TTButtonDescription.SetToolTip(this.DGVWayPoints, resources.GetString("DGVWayPoints.ToolTip"));
             this.DGVWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
             this.DGVWayPoints.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DGVWayPoints_DataError);
             this.DGVWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
@@ -626,58 +611,50 @@ namespace Diva
             this.ActiveDroneInfoPanel.Controls.Add(this.BtnHome);
             this.ActiveDroneInfoPanel.Controls.Add(this.TxtAltitudeValue);
             this.ActiveDroneInfoPanel.Name = "ActiveDroneInfoPanel";
-            this.TTButtonDescription.SetToolTip(this.ActiveDroneInfoPanel, resources.GetString("ActiveDroneInfoPanel.ToolTip"));
             // 
             // ComBoxModeSwitch
             // 
             resources.ApplyResources(this.ComBoxModeSwitch, "ComBoxModeSwitch");
             this.ComBoxModeSwitch.FormattingEnabled = true;
             this.ComBoxModeSwitch.Name = "ComBoxModeSwitch";
-            this.TTButtonDescription.SetToolTip(this.ComBoxModeSwitch, resources.GetString("ComBoxModeSwitch.ToolTip"));
             this.ComBoxModeSwitch.SelectedIndexChanged += new System.EventHandler(this.ComBoxModeSwitch_SelectedIndexChanged);
             this.ComBoxModeSwitch.SelectionChangeCommitted += new System.EventHandler(this.ComBoxModeSwitch_SelectionChangeCommitted);
             // 
             // TxtHomeLongitude
             // 
-            resources.ApplyResources(this.TxtHomeLongitude, "TxtHomeLongitude");
             this.TxtHomeLongitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.TxtHomeLongitude, "TxtHomeLongitude");
             this.TxtHomeLongitude.Name = "TxtHomeLongitude";
-            this.TTButtonDescription.SetToolTip(this.TxtHomeLongitude, resources.GetString("TxtHomeLongitude.ToolTip"));
             // 
             // TxtHomeLatitude
             // 
-            resources.ApplyResources(this.TxtHomeLatitude, "TxtHomeLatitude");
             this.TxtHomeLatitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.TxtHomeLatitude, "TxtHomeLatitude");
             this.TxtHomeLatitude.Name = "TxtHomeLatitude";
-            this.TTButtonDescription.SetToolTip(this.TxtHomeLatitude, resources.GetString("TxtHomeLatitude.ToolTip"));
             // 
             // TxtHomeAltitude
             // 
-            resources.ApplyResources(this.TxtHomeAltitude, "TxtHomeAltitude");
             this.TxtHomeAltitude.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.TxtHomeAltitude, "TxtHomeAltitude");
             this.TxtHomeAltitude.Name = "TxtHomeAltitude";
-            this.TTButtonDescription.SetToolTip(this.TxtHomeAltitude, resources.GetString("TxtHomeAltitude.ToolTip"));
             // 
             // LabelLongitude
             // 
             resources.ApplyResources(this.LabelLongitude, "LabelLongitude");
             this.LabelLongitude.ForeColor = System.Drawing.Color.White;
             this.LabelLongitude.Name = "LabelLongitude";
-            this.TTButtonDescription.SetToolTip(this.LabelLongitude, resources.GetString("LabelLongitude.ToolTip"));
             // 
             // LabelLatitude
             // 
             resources.ApplyResources(this.LabelLatitude, "LabelLatitude");
             this.LabelLatitude.ForeColor = System.Drawing.Color.White;
             this.LabelLatitude.Name = "LabelLatitude";
-            this.TTButtonDescription.SetToolTip(this.LabelLatitude, resources.GetString("LabelLatitude.ToolTip"));
             // 
             // LabelAltitude
             // 
             resources.ApplyResources(this.LabelAltitude, "LabelAltitude");
             this.LabelAltitude.ForeColor = System.Drawing.Color.White;
             this.LabelAltitude.Name = "LabelAltitude";
-            this.TTButtonDescription.SetToolTip(this.LabelAltitude, resources.GetString("LabelAltitude.ToolTip"));
             // 
             // BtnDroneMode
             // 
@@ -687,18 +664,16 @@ namespace Diva
             this.BtnDroneMode.ForeColor = System.Drawing.Color.White;
             this.BtnDroneMode.Image = global::Diva.Properties.Resources.icon_airplane_32;
             this.BtnDroneMode.Name = "BtnDroneMode";
-            this.TTButtonDescription.SetToolTip(this.BtnDroneMode, resources.GetString("BtnDroneMode.ToolTip"));
             this.BtnDroneMode.UseVisualStyleBackColor = false;
             // 
             // BtnAltitude
             // 
-            resources.ApplyResources(this.BtnAltitude, "BtnAltitude");
             this.BtnAltitude.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(34)))), ((int)(((byte)(41)))));
             this.BtnAltitude.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.BtnAltitude, "BtnAltitude");
             this.BtnAltitude.ForeColor = System.Drawing.Color.White;
             this.BtnAltitude.Image = global::Diva.Properties.Resources.icon_edit_32;
             this.BtnAltitude.Name = "BtnAltitude";
-            this.TTButtonDescription.SetToolTip(this.BtnAltitude, resources.GetString("BtnAltitude.ToolTip"));
             this.BtnAltitude.UseVisualStyleBackColor = false;
             // 
             // BtnHome
@@ -709,23 +684,20 @@ namespace Diva
             this.BtnHome.ForeColor = System.Drawing.Color.White;
             this.BtnHome.Image = global::Diva.Properties.Resources.icon_house_32;
             this.BtnHome.Name = "BtnHome";
-            this.TTButtonDescription.SetToolTip(this.BtnHome, resources.GetString("BtnHome.ToolTip"));
             this.BtnHome.UseVisualStyleBackColor = false;
             // 
             // TxtAltitudeValue
             // 
-            resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
-            this.TTButtonDescription.SetToolTip(this.TxtAltitudeValue, resources.GetString("TxtAltitudeValue.ToolTip"));
             // 
             // Planner
             // 
-            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.SplitContainer);
+            resources.ApplyResources(this, "$this");
             this.Name = "Planner";
-            this.TTButtonDescription.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.SplitContainer.Panel1.ResumeLayout(false);
             this.SplitContainer.Panel1.PerformLayout();
             this.SplitContainer.Panel2.ResumeLayout(false);

@@ -55,6 +55,7 @@ namespace Diva.Controls.Icons
                 {
                     new Rectangle(Location.X, Location.Y, DefaultWidth, DefaultHeight),
                     new Rectangle(Location.X, Location.Y+DefaultHeight+Padding, DefaultWidth, DefaultHeight),
+                    new Rectangle(Location.X, Location.Y+DefaultHeight*2+Padding*2, DefaultWidth, DefaultHeight)
                 };
                 return rs;
             }
