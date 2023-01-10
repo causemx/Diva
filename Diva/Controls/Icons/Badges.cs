@@ -21,6 +21,7 @@ namespace Diva.Controls.Icons
         
         public enum Type
         {
+            NONE = -1,
             POLYGON = 0,
             EKF = 1,
             FISH_STAMP = 2,

@@ -619,21 +619,25 @@ namespace Diva
                 if (badgesRects[i].Contains(e.Location))
                 {
                     if (e.Button == MouseButtons.Left)
-                        badges.IsSelected = i;
+                        badges.IsSelected = (i == badges.IsSelected) ? -1 : i; 
+                    
                     switch (badges.IsSelected)
                     {
+                        case (int)Badges.Type.NONE:
+                            return;
 
                         case (int)Badges.Type.EKF:
                             DialogEKF de = new DialogEKF();
                             de.Show();
-                            break;
+                            return;
+
                         case (int)Badges.Type.FISH_STAMP:
                             var now = DateTime.Now;
                             var loc = ActiveDrone.Status.Location;
                             AddFishMarker("fish_stamp", 
                                 string.Format("time:{0}\nlocation:{1},{2}",now.ToString("HH:mm:ss"), loc.Lat, loc.Lng), 
                                 loc);
-                            break;
+                            return;
 
                     }
                 }
@@ -1108,7 +1112,7 @@ namespace Diva
             {
                 GMarkerGoogle m = new GMarkerGoogle(p, GMarkerGoogleType.orange_dot)
                 {
-                    ToolTipMode = MarkerTooltipMode.Always,
+                    ToolTipMode = MarkerTooltipMode.OnMouseOver,
                     ToolTipText = content,
                     Tag = tag
                 };
