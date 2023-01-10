@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using static MAVLink;
@@ -67,7 +68,7 @@ namespace Diva.Mavlink
 
         #region packets
         internal int recvPacketCount = 0;
-        private Dictionary<uint, MAVLinkMessage> Packets = new Dictionary<uint, MAVLinkMessage>();
+        private ConcurrentDictionary<uint, MAVLinkMessage> Packets = new ConcurrentDictionary<uint, MAVLinkMessage>();
         public DateTime LastPacket { get; set; } = DateTime.MinValue;
         public Dictionary<uint, double> PacketsPerSecond { get; } = new Dictionary<uint, double>();
         public Dictionary<uint, DateTime> PacketsPerSecondBuild { get; } = new Dictionary<uint, DateTime>();
@@ -82,36 +83,48 @@ namespace Diva.Mavlink
 
         public MAVLinkMessage GetPacket(uint id)
 		{
+           return Packets.GetOrAdd(id, (s) => null);
+            /*
 			lock (packetLock)
 			{
 				if (Packets.ContainsKey(id))
 				{
 					return Packets[id];
 				}
-			}
-			return null;
+			}*/
 		}
 
 		public void AddPacket(MAVLinkMessage msg)
 		{
+            Packets.AddOrUpdate(
+                msg.msgid,
+                (s) => new MAVLinkMessage(),
+                (i, m) => Packets[i] = m);
+            /*
 			lock (packetLock)
 			{
 				Packets[msg.msgid] = msg;
-			}
+			}*/
 		}
 
         public void ClearPacket(MAVLINK_MSG_ID id) => ClearPacket((uint)id);
 
         public void ClearPacket(uint mavlinkid)
 		{
+            Packets.AddOrUpdate(
+                mavlinkid,
+                (s) => null,
+                (i, m) => Packets[mavlinkid] = null);
+
+            /*
 			lock (packetLock)
 			{
 				if (Packets.ContainsKey(mavlinkid))
 				{
 					Packets[mavlinkid] = null;
 				}
-			}
-		}
+			}*/
+        }
         #endregion packets
 
         public MAV_TYPE APType { get; set; } = 0;
