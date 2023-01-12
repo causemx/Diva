@@ -48,17 +48,16 @@ namespace Diva.Controls.Icons
             }
         }
 
-        public Rectangle[] Rectangle
+        public List<Rectangle> Rectangle
         {
             get
             {
-                Rectangle[] rs =
+                return new List<Rectangle>
                 {
                     new Rectangle(Location.X, Location.Y, DefaultWidth, DefaultHeight),
-                    new Rectangle(Location.X, Location.Y+DefaultHeight+Padding, DefaultWidth, DefaultHeight),
-                    new Rectangle(Location.X, Location.Y+DefaultHeight*2+Padding*2, DefaultWidth, DefaultHeight)
+                    new Rectangle(Location.X, Location.Y+ DefaultHeight+ Padding, DefaultWidth, DefaultHeight),
+                    new Rectangle(Location.X, Location.Y+ DefaultHeight*2 + Padding*2, DefaultWidth, DefaultHeight)
                 };
-                return rs;
             }
         }
 

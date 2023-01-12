@@ -104,10 +104,12 @@ namespace Diva.Utilities
 
         public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double angle, StartPosition startPos, int width=100)
         {
-			// quickadd = true;
+            // quickadd = true;
 
-			// var gridobject = savegriddata();
+            // var gridobject = savegriddata();
+
             
+
             if (mode == ScanMode.Survey)
             {
                 grid = await CreateGridAsync(list, altitude, distance, spacing, angle, StartPosition.Home, Home).ConfigureAwait(true);
@@ -128,20 +130,20 @@ namespace Diva.Utilities
                 /*plugin.Host.AddWPtoList(MAVLink.MAV_CMD.DO_CHANGE_SPEED, 1,
                     (int)((float)NUM_UpDownFlySpeed.Value / CurrentState.multiplierspeed), 0, 0, 0, 0, 0,
                     null);*/
-
-                grid.ForEach(plla =>
+                const int SEGMENT = 5;
+                const int DIFFERENT_SEGMENTATION = 10;
+                int count = 0;
+                do
                 {
-                    if (!(plla.Lat == lastpnt.Lat && plla.Lng == lastpnt.Lng && plla.Alt == lastpnt.Alt))
+                    grid.ForEach(plla =>
                     {
-                        /*Add different elevation wps*/
-                        AddWP(plla.Lng, plla.Lat, plla.Alt + 200, plla.Tag);
-                        AddWP(plla.Lng, plla.Lat, plla.Alt + 150, plla.Tag);
-                        AddWP(plla.Lng, plla.Lat, plla.Alt + 100, plla.Tag);
-                        AddWP(plla.Lng, plla.Lat, plla.Alt + 50, plla.Tag);
-                        AddWP(plla.Lng, plla.Lat, plla.Alt, plla.Tag);
-                    }
-                    lastpnt = plla;
-                });
+                        if (!(plla.Lat == lastpnt.Lat && plla.Lng == lastpnt.Lng && plla.Alt == lastpnt.Alt))
+                            AddWP(plla.Lng, plla.Lat, plla.Alt + DIFFERENT_SEGMENTATION*count, plla.Tag);
+                        lastpnt = plla;
+                    });
+                    count++;
+                } while (count < SEGMENT);
+                
 
                 planner.quickadd = false;
 

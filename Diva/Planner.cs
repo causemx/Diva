@@ -614,7 +614,9 @@ namespace Diva
 
             // check if the mouse up happend over our button
             var badgesRects = badges.Rectangle;
-            for (int i = 0; i < badgesRects.Length; i++)
+      
+            
+            for (int i = 0; i < badgesRects.Count; i++)
             {
                 if (badgesRects[i].Contains(e.Location))
                 {
@@ -3452,7 +3454,6 @@ namespace Diva
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var t = (ToolStripMenuItem)sender;
-            Grid grid = new Grid(currentDrone, HomeLocation);
             if (drawnPolygon.Points.Count < 2)
             {
                 DialogResult dialogResult = MessageBox.Show("No polygon defined. Load a file?", "Load File", MessageBoxButtons.YesNo);
