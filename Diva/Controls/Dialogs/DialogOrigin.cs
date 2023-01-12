@@ -57,6 +57,7 @@ namespace Diva.Controls.Dialogs
             this.panelTitleBar.Name = "panelTitleBar";
             this.panelTitleBar.Size = new System.Drawing.Size(350, 36);
             this.panelTitleBar.TabIndex = 0;
+            this.panelTitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTitleBar_MouseDown);
             // 
             // pictureBoxIcon
             // 
@@ -424,6 +425,17 @@ namespace Diva.Controls.Dialogs
 
         private void btnClose_Click(object sender, EventArgs e) => Close();
 
-        
+        #region -> Drag Form
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        private void panelTitleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+        #endregion
     }
 }

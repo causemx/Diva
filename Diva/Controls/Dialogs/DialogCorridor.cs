@@ -204,11 +204,6 @@ namespace Diva.Controls.Dialogs
             this.numericUpDownWidth.Name = "numericUpDownWidth";
             this.numericUpDownWidth.Size = new System.Drawing.Size(120, 21);
             this.numericUpDownWidth.TabIndex = 14;
-            this.numericUpDownWidth.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
             // 
             // label5
             // 
