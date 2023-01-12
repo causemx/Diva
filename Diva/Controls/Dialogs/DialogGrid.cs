@@ -230,6 +230,7 @@ namespace Diva.Controls.Dialogs
                 (double)numericUpDownDistance.Value,
                 (double)numericUpDownSpace.Value,
                 (double)numericUpDownAngle.Value,
+                0,0,
                 Grid.StartPosition.Home);
         }
 

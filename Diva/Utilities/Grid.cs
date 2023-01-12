@@ -102,7 +102,8 @@ namespace Diva.Utilities
             angle = (double)(getAngleOfLongestSide(list) + 360) % 360;
         }
 
-        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double angle, StartPosition startPos, int width=100)
+        public async Task Accept(ScanMode mode, double altitude, double distance, double spacing, double angle,
+            double vertex, double layered, StartPosition startPos, int width = 100)
         {
             // quickadd = true;
 
@@ -130,19 +131,21 @@ namespace Diva.Utilities
                 /*plugin.Host.AddWPtoList(MAVLink.MAV_CMD.DO_CHANGE_SPEED, 1,
                     (int)((float)NUM_UpDownFlySpeed.Value / CurrentState.multiplierspeed), 0, 0, 0, 0, 0,
                     null);*/
-                const int SEGMENT = 5;
-                const int DIFFERENT_SEGMENTATION = 10;
+                const int DELAY = 5;
                 int count = 0;
+                int diff = (int) (vertex / layered);
+
                 do
                 {
+                    AddDelay(DELAY);
                     grid.ForEach(plla =>
                     {
                         if (!(plla.Lat == lastpnt.Lat && plla.Lng == lastpnt.Lng && plla.Alt == lastpnt.Alt))
-                            AddWP(plla.Lng, plla.Lat, plla.Alt + DIFFERENT_SEGMENTATION*count, plla.Tag);
+                            AddWP(plla.Lng, plla.Lat, plla.Alt + diff*count, plla.Tag);
                         lastpnt = plla;
                     });
                     count++;
-                } while (count < SEGMENT);
+                } while (count < layered);
                 
 
                 planner.quickadd = false;
@@ -155,10 +158,11 @@ namespace Diva.Utilities
             }
         }
 
-        private void AddWP(double Lng, double Lat, double Alt, string tag)
-        {
+        private void AddWP(double Lng, double Lat, double Alt, string tag) =>
             Planner.GetPlannerInstance()?.AddCommand(MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0, Lng, Lat, (int)Alt);
-        }
+
+        private void AddDelay(double delayTime) =>
+            Planner.GetPlannerInstance()?.AddCommand(MAVLink.MAV_CMD.DELAY, delayTime, 0, 0, 0, 0, 0, 0);
 
         public void redrawPolygonSurvey(List<PointLatLngAlt> list)
         {
