@@ -134,9 +134,6 @@
   <data name="LabelStreamURIText.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="LabelStreamURIText.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="&gt;&gt;LabelStreamURIText.Name" xml:space="preserve">
     <value>LabelStreamURIText</value>
   </data>

@@ -79,7 +79,6 @@ namespace Diva
 
         private GMapRectMarker CurrentRectMarker;
         private GMapMarkerRallyPt CurrentRallyPt;
-        private GMapPlusMarker CurrentMidline;
 
         private GMapMarker CurrentMarker;
         private GMapMarker CenterMarker = new GMarkerGoogle(new PointLatLng(0.0, 0.0), GMarkerGoogleType.none);
@@ -658,14 +657,6 @@ namespace Diva
             if (isMouseDown) // mouse down on some other object and dragged to here.
             {
 
-                if (CurrentMidline is GMapPlusMarker)
-                {
-                    int pnt2 = 0;
-                    var midline = CurrentMidline.Tag as midline;
-                    var idx = drawnPolygon.Points.IndexOf(midline.now);
-                    return;
-                }
-
                 if (e.Button == MouseButtons.Left)
                 {
                     isMouseDown = false;
@@ -1038,9 +1029,6 @@ namespace Diva
                             }
                         }
                         CurrentRectMarker = rc;
-                        break;
-                    case GMapPlusMarker ps:
-                        CurrentMidline = ps;
                         break;
                     case GMapMarkerRallyPt rpt:
                         CurrentRallyPt = rpt;
@@ -2358,9 +2346,9 @@ namespace Diva
             var dsettings = ConfigData.GetTypeList<DroneSetting>().Where(d => d.Checked);
             foreach (var d in dsettings)
             {
-                LivestreamForm lf = new LivestreamForm();
-                lf.Show();
-                lf.Play(d.StreamURI);
+                VideoStreamForm vf = new VideoStreamForm();
+                vf.Show();
+                vf.Play(d.StreamURI);
             }
         }
 
@@ -2454,7 +2442,7 @@ namespace Diva
 
             Overlays.DrawnPolygons.Polygons.Add(drawnPolygon);
             Map.UpdatePolygonLocalPosition(drawnPolygon);
-
+            /*
             var ps = drawnPolygon.Points.ToArray();
 
             if (ps.Length < 2) return; // line include at least two points
@@ -2467,7 +2455,7 @@ namespace Diva
                 pnt.Tag = new midline() { now = now, next = next };
                 Overlays.DrawnPolygons.Markers.Add(pnt);
             }
-
+            */
             Map.Invalidate();
         }
 
