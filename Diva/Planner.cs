@@ -3057,7 +3057,7 @@ namespace Diva
             void updateText(MavDrone drone)
             {
                 string modename = drone.Status.FlightModeType[mode];
-                LblMode.Text = drone.Status.IsArmed ? modename : "DISARMED";
+                // LblMode.Text = drone.Status.IsArmed ? modename : "DISARMED";
                 int modeidx = ComBoxModeSwitch.Items.IndexOf(modename);
                 if (ComBoxModeSwitch.SelectedIndex != modeidx)
                     ComBoxModeSwitch.SelectedIndex = modeidx;
@@ -3123,8 +3123,8 @@ namespace Diva
             set
             {
                 fullControl = value;
-                LblMode.Visible = value;
-                LblModeDesc.Visible = value;
+                // LblMode.Visible = value;
+                // LblModeDesc.Visible = value;
 
                 Map.ContextMenuStrip = value ? cmMap : null;
                 DroneMission.SetVisible(value);

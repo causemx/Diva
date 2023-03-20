@@ -39,15 +39,14 @@ namespace Diva
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
+            this.BtnStrartWsServer = new Diva.Controls.Components.MyButton();
             this.IconGPSLostWarning = new System.Windows.Forms.Button();
             this.IconModeWarning = new System.Windows.Forms.Button();
             this.BtnBreakAction = new Diva.Controls.Components.MyButton();
             this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
-            this.LblModeDesc = new System.Windows.Forms.Label();
             this.BtnZoomOut = new Diva.Controls.Components.MyButton();
             this.BtnZoomIn = new Diva.Controls.Components.MyButton();
             this.BtnMapFocus = new Diva.Controls.Components.MyButton();
-            this.LblMode = new System.Windows.Forms.Label();
             this.RotationInfoPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
             this.Map = new Diva.Controls.MyGMap();
@@ -113,15 +112,14 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
+            this.SplitContainer.Panel1.Controls.Add(this.BtnStrartWsServer);
             this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
             this.SplitContainer.Panel1.Controls.Add(this.BtnBreakAction);
             this.SplitContainer.Panel1.Controls.Add(this.AltitudeControlPanel);
-            this.SplitContainer.Panel1.Controls.Add(this.LblModeDesc);
             this.SplitContainer.Panel1.Controls.Add(this.BtnZoomOut);
             this.SplitContainer.Panel1.Controls.Add(this.BtnZoomIn);
             this.SplitContainer.Panel1.Controls.Add(this.BtnMapFocus);
-            this.SplitContainer.Panel1.Controls.Add(this.LblMode);
             this.SplitContainer.Panel1.Controls.Add(this.RotationInfoPanel);
             this.SplitContainer.Panel1.Controls.Add(this.DroneInfoPanel);
             this.SplitContainer.Panel1.Controls.Add(this.Map);
@@ -130,6 +128,23 @@ namespace Diva
             // 
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
+            // 
+            // BtnStrartWsServer
+            // 
+            this.BtnStrartWsServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.BtnStrartWsServer.Checked = false;
+            this.BtnStrartWsServer.CheckedImage = null;
+            this.BtnStrartWsServer.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.ClickImage = null;
+            resources.ApplyResources(this.BtnStrartWsServer, "BtnStrartWsServer");
+            this.BtnStrartWsServer.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.HoverImage = global::Diva.Properties.Resources.icon_server_24;
+            this.BtnStrartWsServer.Image = global::Diva.Properties.Resources.icon_server_24;
+            this.BtnStrartWsServer.Name = "BtnStrartWsServer";
+            this.TTButtonDescription.SetToolTip(this.BtnStrartWsServer, resources.GetString("BtnStrartWsServer.ToolTip"));
+            this.BtnStrartWsServer.UseVisualStyleBackColor = false;
             // 
             // IconGPSLostWarning
             // 
@@ -192,13 +207,6 @@ namespace Diva
             this.AltitudeControlPanel.Value = 0F;
             this.AltitudeControlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AltitudeControlPanel_MouseClick);
             // 
-            // LblModeDesc
-            // 
-            resources.ApplyResources(this.LblModeDesc, "LblModeDesc");
-            this.LblModeDesc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
-            this.LblModeDesc.ForeColor = System.Drawing.Color.White;
-            this.LblModeDesc.Name = "LblModeDesc";
-            // 
             // BtnZoomOut
             // 
             this.BtnZoomOut.Checked = false;
@@ -250,13 +258,6 @@ namespace Diva
             this.BtnMapFocus.UseVisualStyleBackColor = true;
             this.BtnMapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
             this.BtnMapFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMapFocus_MouseUp);
-            // 
-            // LblMode
-            // 
-            resources.ApplyResources(this.LblMode, "LblMode");
-            this.LblMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(54)))), ((int)(((byte)(98)))));
-            this.LblMode.ForeColor = System.Drawing.Color.White;
-            this.LblMode.Name = "LblMode";
             // 
             // RotationInfoPanel
             // 
@@ -757,12 +758,10 @@ namespace Diva
 		private ToolStripMenuItem clearToolStripMenuItem;
         private DroneInfoPanel DroneInfoPanel;
 		private FlowLayoutPanel RotationInfoPanel;
-		private Label LblMode;
 		private ComboBox ComBoxModeSwitch;
 		private MyButton BtnZoomOut;
 		private MyButton BtnZoomIn;
 		private MyButton BtnMapFocus;
-		private Label LblModeDesc;
         private ToolTip TTButtonDescription;
         private MyButton BtnBreakAction;
         private Button IconModeWarning;
@@ -773,5 +772,6 @@ namespace Diva
         private ToolStripMenuItem planToolStripMenuItem;
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
+        private MyButton BtnStrartWsServer;
     }
 }
