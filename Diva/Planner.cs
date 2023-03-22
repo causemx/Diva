@@ -1,4 +1,5 @@
 ﻿using Diva.Controls;
+using Diva.Controls.Components;
 using Diva.Controls.Dialogs;
 using Diva.Controls.Icons;
 using Diva.Mavlink;
@@ -3473,12 +3474,25 @@ namespace Diva
 
         private void BtnStrartWsServer_Click(object sender, EventArgs e)
         {
+            var btn = (MyButton)sender;
+            btn.Checked = !btn.Checked;
             var wssv = new WebSocketServer("ws://0.0.0.0:5566");
             wssv.AddWebSocketService<Behaviors.Echo>($"/{typeof(Behaviors.Echo).Name}");
-            wssv.Start();
-            Console.WriteLine("Waiting for connection...");
+            try
+            {
+                wssv.Start();
+
+                if (wssv.IsListening)
+                {
+                    Console.WriteLine("Listening on port {0}, " +
+                        "and providing WebSocket services:", wssv.Port);
+                }
+            } catch (InvalidOperationException ie)
+            {
+                log.Error(ie.ToString());
+            }
             // Console.ReadKey(true);
-            
+
             // wssv.Stop();
         }
 
