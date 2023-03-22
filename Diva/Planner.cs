@@ -4,6 +4,7 @@ using Diva.Controls.Icons;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
+using Diva.Server;
 using Diva.Utilities;
 using GMap.NET;
 using GMap.NET.WindowsForms;
@@ -22,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using WebSocketSharp.Server;
 using static MAVLink;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
 
@@ -3469,7 +3471,16 @@ namespace Diva
             }
         }
 
-
+        private void BtnStrartWsServer_Click(object sender, EventArgs e)
+        {
+            var wssv = new WebSocketServer("ws://0.0.0.0:5566");
+            wssv.AddWebSocketService<Behaviors.Echo>($"/{typeof(Behaviors.Echo).Name}");
+            wssv.Start();
+            Console.WriteLine("Waiting for connection...");
+            // Console.ReadKey(true);
+            
+            // wssv.Stop();
+        }
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -3477,5 +3488,7 @@ namespace Diva
             Console.WriteLine("StackTrace: " + e.Exception.StackTrace);
             e.Cancel = true;
         }
+
+        
     }
 }

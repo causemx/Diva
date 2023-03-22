@@ -145,6 +145,7 @@ namespace Diva
             this.BtnStrartWsServer.Name = "BtnStrartWsServer";
             this.TTButtonDescription.SetToolTip(this.BtnStrartWsServer, resources.GetString("BtnStrartWsServer.ToolTip"));
             this.BtnStrartWsServer.UseVisualStyleBackColor = false;
+            this.BtnStrartWsServer.Click += new System.EventHandler(this.BtnStrartWsServer_Click);
             // 
             // IconGPSLostWarning
             // 

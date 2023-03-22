@@ -153,6 +153,9 @@
     <Reference Include="Vlc.DotNet.Forms, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
       <HintPath>..\packages\Vlc.DotNet.Forms.3.1.0\lib\net45\Vlc.DotNet.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.1.0, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharp-netstandard.1.0.1\lib\net45\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +362,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
+    <Compile Include="Server\Behaviors.cs" />
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\BaseLocation.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
