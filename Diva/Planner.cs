@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using WebSocketSharp;
 using WebSocketSharp.Server;
 using static MAVLink;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
@@ -275,6 +276,7 @@ namespace Diva
 
         public event EventHandler BackgroundTimer;
         private GMapDroneMarker BaseMarker = new GMapDroneMarker(BaseLocation.AsDrone);
+        
         private void MainLoop(CancellationToken token)
         {
             DateTime nextUpdateTime = DateTime.Now.AddMilliseconds(500);
@@ -3472,6 +3474,16 @@ namespace Diva
             }
         }
 
+        private GMapTaggedMarker GpsMarker = new GMapTaggedMarker(new PointLatLng(0, 0), "GPS_");
+
+        public interface IMod
+        {
+            GMapOverlay overlay { get; }
+            GMapMarker marker { get; }
+            void Update(PointLatLng pt);
+        }
+
+ 
         private void BtnStrartWsServer_Click(object sender, EventArgs e)
         {
             var btn = (MyButton)sender;
@@ -3486,6 +3498,7 @@ namespace Diva
                 {
                     Console.WriteLine("Listening on port {0}, " +
                         "and providing WebSocket services:", wssv.Port);
+
                 }
             } catch (InvalidOperationException ie)
             {
