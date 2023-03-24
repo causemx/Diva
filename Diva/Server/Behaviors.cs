@@ -27,14 +27,16 @@ namespace Diva.Server
 
         public class Echo : WebSocketBehavior
         {
-            private const string OVERLAY_ID_GPS = "_GPS";
-            private const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
+            public const string OVERLAY_ID_GPS = "_GPS";
+            public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
 
-            private Planner _planner;
-            private GMapControl _mapControl;
-            private ObservableCollectionThreadSafe<GMapOverlay> _overlays;
-            private GMapOverlay _gpsOverlay;
-            private GMapMarker _gpsMarker;
+            public Planner planner;
+            public GMapControl mapControl;
+            public ObservableCollectionThreadSafe<GMapOverlay> overlays;
+            public GMapOverlay gpsOverlay;
+            public GMapMarker gpsMarker =
+                new GMarkerGoogle(new PointLatLng(0f, 0f), GMarkerGoogleType.blue_dot);
+
 
             /// <summary>
             /// Uer OnOpen to instead of constructor, Instance class and variable
@@ -45,21 +47,15 @@ namespace Diva.Server
 
                 log.Info("ws is open");
 
-                _planner = Planner.GetPlannerInstance();
-                _mapControl = _planner?.GMapControl;
-                _overlays = _mapControl.Overlays;
-                _gpsOverlay = new GMapOverlay(id: OVERLAY_ID_GPS);
-                _overlays.Add(_gpsOverlay);
-
-
-                // var _dummys = Parse(DUMMY_GPS_DATA);
-                // var _point = new PointLatLng(_dummys[0], _dummys[1]);
-                // var _point = new PointLatLng(24.776439, 121.042456);
-                // _gpsMarker = new GMarkerGoogle(_point, GMarkerGoogleType.arrow);
-                // _gpsOverlay.Markers.Add(_gpsMarker);
-                
+                planner = Planner.GetPlannerInstance();
+                mapControl = planner?.GMapControl;
+                overlays = mapControl.Overlays;
+                gpsOverlay = new GMapOverlay(id: OVERLAY_ID_GPS);
+                overlays.Add(gpsOverlay);
+                gpsOverlay.Markers.Add(gpsMarker);
             }
 
+ 
             protected override void OnMessage(MessageEventArgs e)
             {
 
@@ -68,9 +64,19 @@ namespace Diva.Server
 
                 var _coord = Parse(_data);
                 var _point = new PointLatLng(_coord[0], _coord[1]);
-                _gpsMarker = new GMarkerGoogle(_point, GMarkerGoogleType.arrow);
-                _gpsOverlay.Markers.Clear();
-                _gpsOverlay.Markers.Add(_gpsMarker);
+
+                // Update/Add gps marker.
+                gpsMarker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                gpsMarker.ToolTip = new GMapToolTip(gpsMarker);
+                bool _markerShown = gpsOverlay.Markers.Contains(gpsMarker);
+                var _overlay = gpsOverlay;
+
+                gpsMarker.Position = _point;
+
+                if (!_markerShown)
+                    _overlay.Markers.Add(gpsMarker);
+                else if (_markerShown)
+                    _overlay.Markers.Remove(gpsMarker);
 
                 Parse(_data);
                 // log.Info($"parsed: {Parse(_data)}");
