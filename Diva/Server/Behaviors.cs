@@ -81,7 +81,7 @@ namespace Diva.Server
                 Parse(_data);
                 // log.Info($"parsed: {Parse(_data)}");
                 
-                Send(e.Data);
+                Send(_data);
             }
 
             private double[] Parse(string input)
