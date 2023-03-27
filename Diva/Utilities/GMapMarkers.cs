@@ -85,6 +85,7 @@ namespace Diva.Utilities
 		}
 	}
 
+
     [Serializable]
     public class GMapPlusMarker : GMapMarker
     {

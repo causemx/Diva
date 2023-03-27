@@ -363,7 +363,6 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Server\Behaviors.cs" />
-    <Compile Include="Server\GpsLocation.cs" />
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\BaseLocation.cs" />
     <Compile Include="Utilities\Customizewp.cs" />
@@ -533,6 +532,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="if_seo3_65_417793.ico" />
+    <None Include="Resources\icon_gps_32.png" />
     <None Include="Resources\icon_logo_toucan_48.png" />
     <None Include="Resources\icon_polygon_plot_32.png" />
     <None Include="Resources\icon_dialog_question.png" />

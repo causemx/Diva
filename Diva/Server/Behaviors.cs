@@ -18,6 +18,7 @@ using Diva.Utilities;
 using GMap.NET.WindowsForms.Markers;
 using System.Reflection.Emit;
 using Newtonsoft.Json.Linq;
+using Diva.Properties;
 
 namespace Diva.Server
 {
@@ -34,8 +35,9 @@ namespace Diva.Server
             public GMapControl mapControl;
             public ObservableCollectionThreadSafe<GMapOverlay> overlays;
             public GMapOverlay gpsOverlay;
-            public GMapMarker gpsMarker =
-                new GMarkerGoogle(new PointLatLng(0f, 0f), GMarkerGoogleType.blue_dot);
+            // public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLng(0f, 0f), GMarkerGoogleType.blue_dot);
+            public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLngAlt(0f, 0f), 
+                new Bitmap(Resources.icon_gps_32));
 
 
             /// <summary>
