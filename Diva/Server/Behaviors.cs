@@ -19,6 +19,8 @@ using GMap.NET.WindowsForms.Markers;
 using System.Reflection.Emit;
 using Newtonsoft.Json.Linq;
 using Diva.Properties;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Printing;
 
 namespace Diva.Server
 {
@@ -36,9 +38,13 @@ namespace Diva.Server
             public ObservableCollectionThreadSafe<GMapOverlay> overlays;
             public GMapOverlay gpsOverlay;
             // public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLng(0f, 0f), GMarkerGoogleType.blue_dot);
-            public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLngAlt(0f, 0f), 
+            public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLngAlt(0f, 0f),
                 new Bitmap(Resources.icon_gps_32));
 
+            public PointLatLng dummyBaseLocation = (BaseLocation.Location == null) ? 
+                BaseLocation.Location : new PointLatLng(24.773306, 121.045633);
+            public GMapMarker dummyBaseMarker = new GMarkerGoogle(new PointLatLngAlt(0f, 0f),
+                GMarkerGoogleType.arrow);
 
             /// <summary>
             /// Uer OnOpen to instead of constructor, Instance class and variable
@@ -55,9 +61,13 @@ namespace Diva.Server
                 gpsOverlay = new GMapOverlay(id: OVERLAY_ID_GPS);
                 overlays.Add(gpsOverlay);
                 gpsOverlay.Markers.Add(gpsMarker);
+
+                // Dummy data marker
+                dummyBaseMarker.Position = dummyBaseLocation;
+                gpsOverlay.Markers.Add(dummyBaseMarker);
+
             }
 
- 
             protected override void OnMessage(MessageEventArgs e)
             {
 
@@ -66,6 +76,8 @@ namespace Diva.Server
 
                 var _coord = Parse(_data);
                 var _point = new PointLatLng(_coord[0], _coord[1]);
+
+                
 
                 // Update/Add gps marker.
                 gpsMarker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
