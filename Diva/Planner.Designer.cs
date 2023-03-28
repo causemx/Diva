@@ -35,21 +35,14 @@ namespace Diva
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Planner));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SplitContainer = new System.Windows.Forms.SplitContainer();
-            this.BtnStrartWsServer = new Diva.Controls.Components.MyButton();
             this.IconGPSLostWarning = new System.Windows.Forms.Button();
             this.IconModeWarning = new System.Windows.Forms.Button();
-            this.BtnBreakAction = new Diva.Controls.Components.MyButton();
-            this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
-            this.BtnZoomOut = new Diva.Controls.Components.MyButton();
-            this.BtnZoomIn = new Diva.Controls.Components.MyButton();
-            this.BtnMapFocus = new Diva.Controls.Components.MyButton();
             this.RotationInfoPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
-            this.Map = new Diva.Controls.MyGMap();
             this.cmMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.drawPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,17 +65,6 @@ namespace Diva
             this.surveyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.corridorScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DGVWayPoints = new System.Windows.Forms.DataGridView();
-            this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colParam2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colParam3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colParam4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLongitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAltitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colTagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ActiveDroneInfoPanel = new System.Windows.Forms.Panel();
             this.ComBoxModeSwitch = new System.Windows.Forms.ComboBox();
             this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
@@ -96,6 +78,27 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.BtnStrartWsServer = new Diva.Controls.Components.MyButton();
+            this.BtnBreakAction = new Diva.Controls.Components.MyButton();
+            this.AltitudeControlPanel = new Diva.Controls.AltitudeControlPanel();
+            this.BtnZoomOut = new Diva.Controls.Components.MyButton();
+            this.BtnZoomIn = new Diva.Controls.Components.MyButton();
+            this.BtnMapFocus = new Diva.Controls.Components.MyButton();
+            this.DroneInfoPanel = new Diva.Controls.DroneInfoPanel();
+            this.Map = new Diva.Controls.MyGMap();
+            this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colParam2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colParam3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colParam4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLongitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAltitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrev = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colNext = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colTagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -129,24 +132,6 @@ namespace Diva
             this.SplitContainer.Panel2.Controls.Add(this.DGVWayPoints);
             this.SplitContainer.Panel2.Controls.Add(this.ActiveDroneInfoPanel);
             // 
-            // BtnStrartWsServer
-            // 
-            this.BtnStrartWsServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.BtnStrartWsServer.Checked = false;
-            this.BtnStrartWsServer.CheckedImage = null;
-            this.BtnStrartWsServer.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnStrartWsServer.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnStrartWsServer.ClickImage = null;
-            resources.ApplyResources(this.BtnStrartWsServer, "BtnStrartWsServer");
-            this.BtnStrartWsServer.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnStrartWsServer.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnStrartWsServer.HoverImage = global::Diva.Properties.Resources.icon_server_24;
-            this.BtnStrartWsServer.Image = global::Diva.Properties.Resources.icon_server_24;
-            this.BtnStrartWsServer.Name = "BtnStrartWsServer";
-            this.TTButtonDescription.SetToolTip(this.BtnStrartWsServer, resources.GetString("BtnStrartWsServer.ToolTip"));
-            this.BtnStrartWsServer.UseVisualStyleBackColor = false;
-            this.BtnStrartWsServer.Click += new System.EventHandler(this.BtnStrartWsServer_Click);
-            // 
             // IconGPSLostWarning
             // 
             this.IconGPSLostWarning.BackColor = System.Drawing.Color.Transparent;
@@ -170,149 +155,11 @@ namespace Diva
             this.IconModeWarning.Name = "IconModeWarning";
             this.IconModeWarning.UseVisualStyleBackColor = false;
             // 
-            // BtnBreakAction
-            // 
-            this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.BtnBreakAction.Checked = false;
-            this.BtnBreakAction.CheckedImage = null;
-            this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnBreakAction.ClickImage = null;
-            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
-            this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
-            this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnBreakAction.HoverImage = null;
-            this.BtnBreakAction.Image = global::Diva.Properties.Resources.red_octagon_with_hand;
-            this.BtnBreakAction.Name = "BtnBreakAction";
-            this.TTButtonDescription.SetToolTip(this.BtnBreakAction, resources.GetString("BtnBreakAction.ToolTip"));
-            this.BtnBreakAction.UseVisualStyleBackColor = false;
-            this.BtnBreakAction.Click += new System.EventHandler(this.BtnBreakAction_Click);
-            // 
-            // AltitudeControlPanel
-            // 
-            this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
-            this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
-            this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
-            this.AltitudeControlPanel.ForeColor = System.Drawing.Color.White;
-            this.AltitudeControlPanel.HoverGrow = System.Drawing.ContentAlignment.TopRight;
-            this.AltitudeControlPanel.HoverSize = new System.Drawing.Size(60, 200);
-            this.AltitudeControlPanel.Maximum = 120F;
-            this.AltitudeControlPanel.Minimum = 10F;
-            this.AltitudeControlPanel.Name = "AltitudeControlPanel";
-            this.AltitudeControlPanel.PointingColor = System.Drawing.Color.Red;
-            this.AltitudeControlPanel.Target = 0F;
-            this.AltitudeControlPanel.TargetColor = System.Drawing.Color.Yellow;
-            this.AltitudeControlPanel.Targeting = false;
-            this.AltitudeControlPanel.Value = 0F;
-            this.AltitudeControlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AltitudeControlPanel_MouseClick);
-            // 
-            // BtnZoomOut
-            // 
-            this.BtnZoomOut.Checked = false;
-            this.BtnZoomOut.CheckedImage = null;
-            this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.ClickImage = null;
-            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
-            this.BtnZoomOut.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
-            this.BtnZoomOut.Image = global::Diva.Properties.Resources.icon_zoom_out;
-            this.BtnZoomOut.Name = "BtnZoomOut";
-            this.TTButtonDescription.SetToolTip(this.BtnZoomOut, resources.GetString("BtnZoomOut.ToolTip"));
-            this.BtnZoomOut.UseVisualStyleBackColor = true;
-            this.BtnZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
-            // 
-            // BtnZoomIn
-            // 
-            this.BtnZoomIn.Checked = false;
-            this.BtnZoomIn.CheckedImage = null;
-            this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.ClickImage = null;
-            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
-            this.BtnZoomIn.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
-            this.BtnZoomIn.Image = global::Diva.Properties.Resources.icon_zoom_in;
-            this.BtnZoomIn.Name = "BtnZoomIn";
-            this.TTButtonDescription.SetToolTip(this.BtnZoomIn, resources.GetString("BtnZoomIn.ToolTip"));
-            this.BtnZoomIn.UseVisualStyleBackColor = true;
-            this.BtnZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
-            // 
-            // BtnMapFocus
-            // 
-            this.BtnMapFocus.Checked = false;
-            this.BtnMapFocus.CheckedImage = null;
-            this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.ClickImage = null;
-            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
-            this.BtnMapFocus.HoverBackColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.HoverForeColor = System.Drawing.Color.Empty;
-            this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;
-            this.BtnMapFocus.Image = global::Diva.Properties.Resources.icon_zoom_focus;
-            this.BtnMapFocus.Name = "BtnMapFocus";
-            this.TTButtonDescription.SetToolTip(this.BtnMapFocus, resources.GetString("BtnMapFocus.ToolTip"));
-            this.BtnMapFocus.UseVisualStyleBackColor = true;
-            this.BtnMapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
-            this.BtnMapFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMapFocus_MouseUp);
-            // 
             // RotationInfoPanel
             // 
             resources.ApplyResources(this.RotationInfoPanel, "RotationInfoPanel");
             this.RotationInfoPanel.Name = "RotationInfoPanel";
             this.RotationInfoPanel.SizeChanged += new System.EventHandler(this.RotationInfoPanel_SizeChanged);
-            // 
-            // DroneInfoPanel
-            // 
-            this.DroneInfoPanel.ActiveDroneInfo = null;
-            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
-            this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
-            this.DroneInfoPanel.Name = "DroneInfoPanel";
-            this.DroneInfoPanel.ActiveDroneChanged += new System.EventHandler(this.DroneInfoPanel_ActiveDroneChanged);
-            this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
-            // 
-            // Map
-            // 
-            resources.ApplyResources(this.Map, "Map");
-            this.Map.BackColor = System.Drawing.SystemColors.Control;
-            this.Map.Bearing = 0F;
-            this.Map.CanDragMap = true;
-            this.Map.ContextMenuStrip = this.cmMap;
-            this.Map.DebugMode = true;
-            this.Map.EmptyTileColor = System.Drawing.Color.Navy;
-            this.Map.GrayScaleMode = false;
-            this.Map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.Map.LevelsKeepInMemmory = 5;
-            this.Map.MarkersEnabled = true;
-            this.Map.MaxZoom = 24;
-            this.Map.MinZoom = 0;
-            this.Map.MouseWheelZoomEnabled = true;
-            this.Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
-            this.Map.MsgWindowOffset = ((System.Drawing.PointF)(resources.GetObject("Map.MsgWindowOffset")));
-            this.Map.Name = "Map";
-            this.Map.NegativeMode = false;
-            this.Map.PolygonsEnabled = true;
-            this.Map.RetryLoadTile = 0;
-            this.Map.RoutesEnabled = true;
-            this.Map.ScaleFont = new System.Drawing.Font("Microsoft JhengHei UI", 9F);
-            this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.Map.ScalePosition = new System.Drawing.Point(10, -50);
-            this.Map.ScaleSize = new System.Drawing.Size(100, 10);
-            this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.Map.ShowTileGridLines = false;
-            this.Map.Zoom = 15D;
-            this.Map.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
-            this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
-            this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
-            this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
-            this.Map.Paint += new System.Windows.Forms.PaintEventHandler(this.Map_Paint);
-            this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
-            this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
-            this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
             // 
             // cmMap
             // 
@@ -486,116 +333,41 @@ namespace Diva
             this.colLongitude,
             this.colAltitude,
             this.colAngle,
+            this.colPrev,
+            this.colNext,
             this.colDelete,
             this.colTagData});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGVWayPoints.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGVWayPoints.DefaultCellStyle = dataGridViewCellStyle3;
             this.DGVWayPoints.EnableHeadersVisualStyles = false;
             this.DGVWayPoints.GridColor = System.Drawing.SystemColors.InactiveCaption;
             this.DGVWayPoints.Name = "DGVWayPoints";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.InfoText;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-            this.DGVWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVWayPoints.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.InfoText;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+            this.DGVWayPoints.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.DGVWayPoints.RowTemplate.Height = 24;
             this.DGVWayPoints.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_CellContentClick);
             this.DGVWayPoints.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DGVWayPoints_DataError);
             this.DGVWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
             this.DGVWayPoints.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Commands_RowsAdded);
             this.DGVWayPoints.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.Commands_RowValidating);
-            // 
-            // colCommand
-            // 
-            this.colCommand.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.colCommand.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            resources.ApplyResources(this.colCommand, "colCommand");
-            this.colCommand.Name = "colCommand";
-            // 
-            // colParam1
-            // 
-            this.colParam1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam1, "colParam1");
-            this.colParam1.Name = "colParam1";
-            this.colParam1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colParam2
-            // 
-            this.colParam2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam2, "colParam2");
-            this.colParam2.Name = "colParam2";
-            this.colParam2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colParam3
-            // 
-            this.colParam3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam3, "colParam3");
-            this.colParam3.Name = "colParam3";
-            this.colParam3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colParam4
-            // 
-            this.colParam4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam4, "colParam4");
-            this.colParam4.Name = "colParam4";
-            this.colParam4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colLatitude
-            // 
-            this.colLatitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colLatitude, "colLatitude");
-            this.colLatitude.Name = "colLatitude";
-            this.colLatitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colLongitude
-            // 
-            this.colLongitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colLongitude, "colLongitude");
-            this.colLongitude.Name = "colLongitude";
-            this.colLongitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colAltitude
-            // 
-            this.colAltitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colAltitude, "colAltitude");
-            this.colAltitude.Name = "colAltitude";
-            this.colAltitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colAngle
-            // 
-            this.colAngle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colAngle, "colAngle");
-            this.colAngle.Name = "colAngle";
-            this.colAngle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colDelete
-            // 
-            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colDelete, "colDelete");
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Text = "X";
-            // 
-            // colTagData
-            // 
-            this.colTagData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colTagData, "colTagData");
-            this.colTagData.Name = "colTagData";
-            this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ActiveDroneInfoPanel
             // 
@@ -694,6 +466,255 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
+            // BtnStrartWsServer
+            // 
+            this.BtnStrartWsServer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.BtnStrartWsServer.Checked = false;
+            this.BtnStrartWsServer.CheckedImage = null;
+            this.BtnStrartWsServer.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.ClickImage = null;
+            resources.ApplyResources(this.BtnStrartWsServer, "BtnStrartWsServer");
+            this.BtnStrartWsServer.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnStrartWsServer.HoverImage = global::Diva.Properties.Resources.icon_server_24;
+            this.BtnStrartWsServer.Image = global::Diva.Properties.Resources.icon_server_24;
+            this.BtnStrartWsServer.Name = "BtnStrartWsServer";
+            this.TTButtonDescription.SetToolTip(this.BtnStrartWsServer, resources.GetString("BtnStrartWsServer.ToolTip"));
+            this.BtnStrartWsServer.UseVisualStyleBackColor = false;
+            this.BtnStrartWsServer.Click += new System.EventHandler(this.BtnStrartWsServer_Click);
+            // 
+            // BtnBreakAction
+            // 
+            this.BtnBreakAction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.BtnBreakAction.Checked = false;
+            this.BtnBreakAction.CheckedImage = null;
+            this.BtnBreakAction.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.ClickImage = null;
+            resources.ApplyResources(this.BtnBreakAction, "BtnBreakAction");
+            this.BtnBreakAction.HoverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.BtnBreakAction.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnBreakAction.HoverImage = null;
+            this.BtnBreakAction.Image = global::Diva.Properties.Resources.red_octagon_with_hand;
+            this.BtnBreakAction.Name = "BtnBreakAction";
+            this.TTButtonDescription.SetToolTip(this.BtnBreakAction, resources.GetString("BtnBreakAction.ToolTip"));
+            this.BtnBreakAction.UseVisualStyleBackColor = false;
+            this.BtnBreakAction.Click += new System.EventHandler(this.BtnBreakAction_Click);
+            // 
+            // AltitudeControlPanel
+            // 
+            this.AltitudeControlPanel.AboveColor = System.Drawing.Color.SkyBlue;
+            this.AltitudeControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.AltitudeControlPanel.BelowColor = System.Drawing.Color.Navy;
+            this.AltitudeControlPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.AltitudeControlPanel, "AltitudeControlPanel");
+            this.AltitudeControlPanel.ForeColor = System.Drawing.Color.White;
+            this.AltitudeControlPanel.HoverGrow = System.Drawing.ContentAlignment.TopRight;
+            this.AltitudeControlPanel.HoverSize = new System.Drawing.Size(60, 200);
+            this.AltitudeControlPanel.Maximum = 120F;
+            this.AltitudeControlPanel.Minimum = 10F;
+            this.AltitudeControlPanel.Name = "AltitudeControlPanel";
+            this.AltitudeControlPanel.PointingColor = System.Drawing.Color.Red;
+            this.AltitudeControlPanel.Target = 0F;
+            this.AltitudeControlPanel.TargetColor = System.Drawing.Color.Yellow;
+            this.AltitudeControlPanel.Targeting = false;
+            this.AltitudeControlPanel.Value = 0F;
+            this.AltitudeControlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AltitudeControlPanel_MouseClick);
+            // 
+            // BtnZoomOut
+            // 
+            this.BtnZoomOut.Checked = false;
+            this.BtnZoomOut.CheckedImage = null;
+            this.BtnZoomOut.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.ClickImage = null;
+            resources.ApplyResources(this.BtnZoomOut, "BtnZoomOut");
+            this.BtnZoomOut.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomOut.HoverImage = global::Diva.Properties.Resources.icon_zoom_out_active;
+            this.BtnZoomOut.Image = global::Diva.Properties.Resources.icon_zoom_out;
+            this.BtnZoomOut.Name = "BtnZoomOut";
+            this.TTButtonDescription.SetToolTip(this.BtnZoomOut, resources.GetString("BtnZoomOut.ToolTip"));
+            this.BtnZoomOut.UseVisualStyleBackColor = true;
+            this.BtnZoomOut.Click += new System.EventHandler(this.But_ZoomOut_Click);
+            // 
+            // BtnZoomIn
+            // 
+            this.BtnZoomIn.Checked = false;
+            this.BtnZoomIn.CheckedImage = null;
+            this.BtnZoomIn.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.ClickImage = null;
+            resources.ApplyResources(this.BtnZoomIn, "BtnZoomIn");
+            this.BtnZoomIn.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnZoomIn.HoverImage = global::Diva.Properties.Resources.icon_zoom_in_active;
+            this.BtnZoomIn.Image = global::Diva.Properties.Resources.icon_zoom_in;
+            this.BtnZoomIn.Name = "BtnZoomIn";
+            this.TTButtonDescription.SetToolTip(this.BtnZoomIn, resources.GetString("BtnZoomIn.ToolTip"));
+            this.BtnZoomIn.UseVisualStyleBackColor = true;
+            this.BtnZoomIn.Click += new System.EventHandler(this.But_ZoomIn_Click);
+            // 
+            // BtnMapFocus
+            // 
+            this.BtnMapFocus.Checked = false;
+            this.BtnMapFocus.CheckedImage = null;
+            this.BtnMapFocus.ClickBackColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.ClickForeColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.ClickImage = null;
+            resources.ApplyResources(this.BtnMapFocus, "BtnMapFocus");
+            this.BtnMapFocus.HoverBackColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.HoverForeColor = System.Drawing.Color.Empty;
+            this.BtnMapFocus.HoverImage = global::Diva.Properties.Resources.icon_zoom_focus_active;
+            this.BtnMapFocus.Image = global::Diva.Properties.Resources.icon_zoom_focus;
+            this.BtnMapFocus.Name = "BtnMapFocus";
+            this.TTButtonDescription.SetToolTip(this.BtnMapFocus, resources.GetString("BtnMapFocus.ToolTip"));
+            this.BtnMapFocus.UseVisualStyleBackColor = true;
+            this.BtnMapFocus.Click += new System.EventHandler(this.But_MapFocus_Click);
+            this.BtnMapFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMapFocus_MouseUp);
+            // 
+            // DroneInfoPanel
+            // 
+            this.DroneInfoPanel.ActiveDroneInfo = null;
+            resources.ApplyResources(this.DroneInfoPanel, "DroneInfoPanel");
+            this.DroneInfoPanel.ForeColor = System.Drawing.Color.White;
+            this.DroneInfoPanel.Name = "DroneInfoPanel";
+            this.DroneInfoPanel.ActiveDroneChanged += new System.EventHandler(this.DroneInfoPanel_ActiveDroneChanged);
+            this.DroneInfoPanel.DroneClosed += new System.EventHandler(this.DroneInfoPanel_DroneClosed);
+            // 
+            // Map
+            // 
+            resources.ApplyResources(this.Map, "Map");
+            this.Map.BackColor = System.Drawing.SystemColors.Control;
+            this.Map.Bearing = 0F;
+            this.Map.CanDragMap = true;
+            this.Map.ContextMenuStrip = this.cmMap;
+            this.Map.DebugMode = true;
+            this.Map.EmptyTileColor = System.Drawing.Color.Navy;
+            this.Map.GrayScaleMode = false;
+            this.Map.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.Map.LevelsKeepInMemmory = 5;
+            this.Map.MarkersEnabled = true;
+            this.Map.MaxZoom = 24;
+            this.Map.MinZoom = 0;
+            this.Map.MouseWheelZoomEnabled = true;
+            this.Map.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+            this.Map.MsgWindowOffset = ((System.Drawing.PointF)(resources.GetObject("Map.MsgWindowOffset")));
+            this.Map.Name = "Map";
+            this.Map.NegativeMode = false;
+            this.Map.PolygonsEnabled = true;
+            this.Map.RetryLoadTile = 0;
+            this.Map.RoutesEnabled = true;
+            this.Map.ScaleFont = new System.Drawing.Font("Microsoft JhengHei UI", 9F);
+            this.Map.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.Map.ScalePosition = new System.Drawing.Point(10, -50);
+            this.Map.ScaleSize = new System.Drawing.Size(100, 10);
+            this.Map.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.Map.ShowTileGridLines = false;
+            this.Map.Zoom = 15D;
+            this.Map.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.MainMap_OnMarkerClick);
+            this.Map.OnMarkerEnter += new GMap.NET.WindowsForms.MarkerEnter(this.MainMap_OnMarkerEnter);
+            this.Map.OnMarkerLeave += new GMap.NET.WindowsForms.MarkerLeave(this.MainMap_OnMarkerLeave);
+            this.Map.OnPositionChanged += new GMap.NET.PositionChanged(this.MainMap_OnCurrentPositionChanged);
+            this.Map.Paint += new System.Windows.Forms.PaintEventHandler(this.Map_Paint);
+            this.Map.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseDown);
+            this.Map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
+            this.Map.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
+            // 
+            // colCommand
+            // 
+            this.colCommand.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.colCommand.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            resources.ApplyResources(this.colCommand, "colCommand");
+            this.colCommand.Name = "colCommand";
+            // 
+            // colParam1
+            // 
+            this.colParam1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam1, "colParam1");
+            this.colParam1.Name = "colParam1";
+            this.colParam1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colParam2
+            // 
+            this.colParam2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam2, "colParam2");
+            this.colParam2.Name = "colParam2";
+            this.colParam2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colParam3
+            // 
+            this.colParam3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam3, "colParam3");
+            this.colParam3.Name = "colParam3";
+            this.colParam3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colParam4
+            // 
+            this.colParam4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam4, "colParam4");
+            this.colParam4.Name = "colParam4";
+            this.colParam4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colLatitude
+            // 
+            this.colLatitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colLatitude, "colLatitude");
+            this.colLatitude.Name = "colLatitude";
+            this.colLatitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colLongitude
+            // 
+            this.colLongitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colLongitude, "colLongitude");
+            this.colLongitude.Name = "colLongitude";
+            this.colLongitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colAltitude
+            // 
+            this.colAltitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colAltitude, "colAltitude");
+            this.colAltitude.Name = "colAltitude";
+            this.colAltitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colAngle
+            // 
+            this.colAngle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colAngle, "colAngle");
+            this.colAngle.Name = "colAngle";
+            this.colAngle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colPrev
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colPrev.DefaultCellStyle = dataGridViewCellStyle2;
+            resources.ApplyResources(this.colPrev, "colPrev");
+            this.colPrev.Image = ((System.Drawing.Image)(resources.GetObject("colPrev.Image")));
+            this.colPrev.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.colPrev.Name = "colPrev";
+            // 
+            // colNext
+            // 
+            resources.ApplyResources(this.colNext, "colNext");
+            this.colNext.Image = ((System.Drawing.Image)(resources.GetObject("colNext.Image")));
+            this.colNext.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.colNext.Name = "colNext";
+            // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colDelete, "colDelete");
+            this.colDelete.Name = "colDelete";
+            this.colDelete.Text = "X";
+            // 
+            // colTagData
+            // 
+            this.colTagData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colTagData, "colTagData");
+            this.colTagData.Name = "colTagData";
+            this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -733,17 +754,6 @@ namespace Diva
 		private TextBox TxtHomeAltitude;
 		private TextBox TxtHomeLatitude;
 		private TextBox TxtHomeLongitude;
-        private DataGridViewComboBoxColumn colCommand;
-        private DataGridViewTextBoxColumn colParam1;
-        private DataGridViewTextBoxColumn colParam2;
-        private DataGridViewTextBoxColumn colParam3;
-        private DataGridViewTextBoxColumn colParam4;
-        private DataGridViewTextBoxColumn colLatitude;
-        private DataGridViewTextBoxColumn colLongitude;
-        private DataGridViewTextBoxColumn colAltitude;
-        private DataGridViewTextBoxColumn colAngle;
-        private DataGridViewButtonColumn colDelete;
-        private DataGridViewTextBoxColumn colTagData;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem drawPolygonToolStripMenuItem;
 		private ToolStripMenuItem addPolygonPointToolStripMenuItem;
@@ -774,5 +784,18 @@ namespace Diva
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
         private MyButton BtnStrartWsServer;
+        private DataGridViewComboBoxColumn colCommand;
+        private DataGridViewTextBoxColumn colParam1;
+        private DataGridViewTextBoxColumn colParam2;
+        private DataGridViewTextBoxColumn colParam3;
+        private DataGridViewTextBoxColumn colParam4;
+        private DataGridViewTextBoxColumn colLatitude;
+        private DataGridViewTextBoxColumn colLongitude;
+        private DataGridViewTextBoxColumn colAltitude;
+        private DataGridViewTextBoxColumn colAngle;
+        private DataGridViewImageColumn colPrev;
+        private DataGridViewImageColumn colNext;
+        private DataGridViewButtonColumn colDelete;
+        private DataGridViewTextBoxColumn colTagData;
     }
 }
