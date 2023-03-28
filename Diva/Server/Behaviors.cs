@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebSocketSharp.Server;
-using WebSocketSharp;
-using System.Drawing;
-using Diva.Mavlink;
-using GMap.NET.MapProviders;
-using GMap.NET.WindowsForms;
-using GMap.NET.ObjectModel;
-using log4net;
-using System.Reflection;
-using SharpKml.Dom;
-using GMap.NET;
+﻿using Diva.Properties;
 using Diva.Utilities;
+using GMap.NET;
+using GMap.NET.ObjectModel;
+using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using System.Reflection.Emit;
-using Newtonsoft.Json.Linq;
-using Diva.Properties;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing.Printing;
-using System.Device.Location;
+using log4net;
+using System;
+using System.Drawing;
+using System.Reflection;
+using System.Text;
+using WebSocketSharp;
+using WebSocketSharp.Server;
+
 
 namespace Diva.Server
 {
@@ -31,6 +21,7 @@ namespace Diva.Server
 
         public class Echo : WebSocketBehavior
         {
+
             public const string OVERLAY_ID_GPS = "_GPS";
             public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
 
@@ -43,7 +34,7 @@ namespace Diva.Server
                 new PointLatLngAlt(0f, 0f),
                 new Bitmap(Resources.icon_gps_32));
 
-            public GMapMarker dummyBaseMarker = new GMarkerGoogle(
+            public GMapMarker baseMarker = new GMarkerGoogle(
                 new PointLatLngAlt(0f, 0f),
                 GMarkerGoogleType.arrow);
 
@@ -62,26 +53,28 @@ namespace Diva.Server
             {
                 base.OnOpen();
 
-                log.Info("ws is open");
-
                 planner = Planner.GetPlannerInstance();
                 mapControl = planner?.GMapControl;
                 overlays = mapControl.Overlays;
                 gpsOverlay = new GMapOverlay(id: OVERLAY_ID_GPS);
                 overlays.Add(gpsOverlay);
-                gpsOverlay.Markers.Add(gpsMarker);
-
+                // gpsOverlay.Markers.Add(gpsMarker);
+#if !DEBUG
                 //  Enable dummy data marker
-                // dummyBaseMarker.Position = dummyBaseLocation;
-                // gpsOverlay.Markers.Add(dummyBaseMarker);
-
+                Console.WriteLine("DEBUG");
+                baseMarker.Position = dummyBaseLocation;
+#else
+                Console.WriteLine("RELEASE");
+                baseMarker.Position = BaseLocation.Location;
+#endif
+                gpsOverlay.Markers.Add(baseMarker);
             }
 
             protected override void OnMessage(MessageEventArgs e)
             {
 
                 var _data = Encoding.UTF8.GetString(e.RawData);
-                log.Info($"raw: {_data}");
+                log.Info($"recv: {_data}");
 
                 var _coord = Parse(_data);
                 var _point = new PointLatLng(_coord[0], _coord[1]);
