@@ -42,8 +42,7 @@ namespace Diva.Server
                 new PointLatLngAlt(0f, 0f),
                 GMarkerGoogleType.green_big_go);
 
-            public PointLatLng dummyBaseLocation = (BaseLocation.Location == null) ? 
-                BaseLocation.Location : new PointLatLng(24.773306, 121.045633);
+            public PointLatLng dummyBaseLocation = new PointLatLng(24.773306, 121.045633);
 
 
             /// <summary>
@@ -63,11 +62,9 @@ namespace Diva.Server
                 //  Enable dummy data marker
                 Console.WriteLine("DEBUG");
                 baseMarker.Position = dummyBaseLocation;
-#else
-                Console.WriteLine("RELEASE");
-                baseMarker.Position = BaseLocation.Location;
-#endif
                 gpsOverlay.Markers.Add(baseMarker);
+#endif
+
             }
 
             protected override void OnMessage(MessageEventArgs e)
@@ -75,6 +72,7 @@ namespace Diva.Server
 
                 var _data = Encoding.UTF8.GetString(e.RawData);
                 log.Info($"recv: {_data}");
+                Send(_data);
 
                 var _coord = Parse(_data);
                 var _point = new PointLatLng(_coord[0], _coord[1]);
@@ -88,26 +86,30 @@ namespace Diva.Server
 
                 // Generate base, gps_dongle and forecast position.
                 gpsMarker.Position = _point;
+#if !DEBUG
+                var _bearing = MathHelper.BearingOf(
+                    dummyBaseLocation.Lat, dummyBaseLocation.Lng, _point.Lat, _point.Lng);
+                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
+                forecastMarser.Position = _derivedPoint;
+                bool _isEmptyBase = (dummyBaseLocation.Lat == 0d && dummyBaseLocation.Lng == 0d);
+#else
                 var _bearing = MathHelper.BearingOf(
                     BaseLocation.Location.Lat, BaseLocation.Location.Lng, _point.Lat, _point.Lng);
                 var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
                 forecastMarser.Position = _derivedPoint;
+                bool _isEmptyBase = (BaseLocation.Location.Lat == 0d && BaseLocation.Location.Lng == 0d);
+#endif
 
                 if (!_markerShown)
                 {
                     _overlay.Markers.Add(gpsMarker);
-                    _overlay.Markers.Add(forecastMarser);
+                    if (!_isEmptyBase) _overlay.Markers.Add(forecastMarser);
                 }    
                 else if (_markerShown)
                 {
                     _overlay.Markers.Remove(gpsMarker);
-                    _overlay.Markers.Remove(forecastMarser);
+                    if (!_isEmptyBase) _overlay.Markers.Remove(forecastMarser);
                 }
-                    
-                Parse(_data);
-                // log.Info($"parsed: {Parse(_data)}");
-                
-                Send(_data);
             }
 
 
