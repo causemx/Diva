@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using Diva.Properties;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing.Printing;
+using System.Device.Location;
 
 namespace Diva.Server
 {
@@ -38,13 +39,21 @@ namespace Diva.Server
             public ObservableCollectionThreadSafe<GMapOverlay> overlays;
             public GMapOverlay gpsOverlay;
             // public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLng(0f, 0f), GMarkerGoogleType.blue_dot);
-            public GMapMarker gpsMarker = new GMarkerGoogle(new PointLatLngAlt(0f, 0f),
+            public GMapMarker gpsMarker = new GMarkerGoogle(
+                new PointLatLngAlt(0f, 0f),
                 new Bitmap(Resources.icon_gps_32));
+
+            public GMapMarker dummyBaseMarker = new GMarkerGoogle(
+                new PointLatLngAlt(0f, 0f),
+                GMarkerGoogleType.arrow);
+
+            public GMapMarker forecastMarser = new GMarkerGoogle(
+                new PointLatLngAlt(0f, 0f),
+                GMarkerGoogleType.green_big_go);
 
             public PointLatLng dummyBaseLocation = (BaseLocation.Location == null) ? 
                 BaseLocation.Location : new PointLatLng(24.773306, 121.045633);
-            public GMapMarker dummyBaseMarker = new GMarkerGoogle(new PointLatLngAlt(0f, 0f),
-                GMarkerGoogleType.arrow);
+
 
             /// <summary>
             /// Uer OnOpen to instead of constructor, Instance class and variable
@@ -62,9 +71,9 @@ namespace Diva.Server
                 overlays.Add(gpsOverlay);
                 gpsOverlay.Markers.Add(gpsMarker);
 
-                // Dummy data marker
-                dummyBaseMarker.Position = dummyBaseLocation;
-                gpsOverlay.Markers.Add(dummyBaseMarker);
+                //  Enable dummy data marker
+                // dummyBaseMarker.Position = dummyBaseLocation;
+                // gpsOverlay.Markers.Add(dummyBaseMarker);
 
             }
 
@@ -77,7 +86,6 @@ namespace Diva.Server
                 var _coord = Parse(_data);
                 var _point = new PointLatLng(_coord[0], _coord[1]);
 
-                
 
                 // Update/Add gps marker.
                 gpsMarker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
@@ -85,18 +93,30 @@ namespace Diva.Server
                 bool _markerShown = gpsOverlay.Markers.Contains(gpsMarker);
                 var _overlay = gpsOverlay;
 
+                // Generate base, gps_dongle and forecast position.
                 gpsMarker.Position = _point;
+                var _bearing = MathHelper.BearingOf(
+                    BaseLocation.Location.Lat, BaseLocation.Location.Lng, _point.Lat, _point.Lng);
+                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
+                forecastMarser.Position = _derivedPoint;
 
                 if (!_markerShown)
+                {
                     _overlay.Markers.Add(gpsMarker);
+                    _overlay.Markers.Add(forecastMarser);
+                }    
                 else if (_markerShown)
+                {
                     _overlay.Markers.Remove(gpsMarker);
-
+                    _overlay.Markers.Remove(forecastMarser);
+                }
+                    
                 Parse(_data);
                 // log.Info($"parsed: {Parse(_data)}");
                 
                 Send(_data);
             }
+
 
             private double[] Parse(string input)
             {

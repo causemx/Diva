@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
+using System.Device.Location;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using PointLatLng = GMap.NET.PointLatLng;
 
@@ -41,6 +44,39 @@ namespace Diva.Utilities
             return (6371 * num8) * 1000.0; // M
         }
 
+        /// <summary>
+        /// geoPoint, which is the current geopoint; 
+        /// bearing, which is the bearing angle in degrees; 
+        /// and distance, which is the distance in meters. 
+        /// </summary>
+        /// <param name="geoPoint"></param>
+        /// <param name="bearing"></param>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        public static PointLatLng GetNewGeoPoint(PointLatLng geoPoint, double bearing, double distance)
+        {
+            const double radius = 6371e3;
+
+            var lat1 = geoPoint.Lat * Math.PI / 180;
+            var lon1 = geoPoint.Lng * Math.PI / 180;
+            var brng = bearing * Math.PI / 180;
+            var d = distance / radius;
+
+            var lat2 = Math.Asin(Math.Sin(lat1) * Math.Cos(d) + Math.Cos(lat1) * Math.Sin(d) * Math.Cos(brng));
+            var lon2 = lon1 + Math.Atan2(Math.Sin(brng) * Math.Sin(d) * Math.Cos(lat1), Math.Cos(d) - Math.Sin(lat1) * Math.Sin(lat2));
+
+            return new PointLatLng(lat2 * 180 / Math.PI, lon2 * 180 / Math.PI);
+        }
+
+
+        /// <summary>
+        /// Get bearing from start, end geolocation.
+        /// </summary>
+        /// <param name="lat1"></param>
+        /// <param name="lng1"></param>
+        /// <param name="lat2"></param>
+        /// <param name="lng2"></param>
+        /// <returns></returns>
         public static double BearingOf(double lat1, double lng1, double lat2, double lng2)
         {
             var lngdiff = (lng2 - lng1) * deg2rad;
