@@ -749,6 +749,56 @@
   <data name="colAngle.Width" type="System.Int32, mscorlib">
     <value>60</value>
   </data>
+  <metadata name="colUp.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colUp.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="colUp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGuSURBVFhHvZaxSsNQGEZLh1KkiKM4iYODg4iDiIj4AD6A
+        D+ATiKOLsxQnpyLiWETEQURERMRJxKmTiIODg4OIk4jU8zV/oJRS7p+b9MAZ2uae/5akTUqxtNvtKjZx
+        yd4aHgwdwSsU37hiHxUPwzT8RpO7GM4mGFLD3uEpxW6CuIbfatIAitkE0ZDhKflugpiG36nsIJ9NEPF8
+        8160iWVL+WFxzPCUbJtgUR7DU74w/M+Kg/v9zmMJ2wQHafi1VhSANrFoo/rDARt4imddPmMWfvAc1TjB
+        Y2xgzcaFwYJdzELLEnEQ2kt6bpqWiIPQUdJzs2WJOAilt10vC5aIg9Br0nPxgWVLZIfIKP6p6KRhiTgI
+        rSY9N9nvAd0Q2kl6Lp7QCpFYzMu6LY+D0FzSc/GI8RefIHTYSYajizWfR3RCs/irqoO6LY+DkO6I3nN/
+        jxVLhMOiKZyxl3o9hpfo4QXHLeGDhWVs4QHu4zt60L/kpOWyQWCzk/LzgBOWyQ6RCuochqKLU7foqiXi
+        IaZzr6eXQehndoHztixfCMs11OPTG36irgk9I27jtB2aA6XSP/jlHiiPh2w3AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="colUp.MinimumWidth" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="colUp.Width" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <metadata name="colDown.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colDown.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="colDown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGsSURBVFhHtZa9SgNREEZDSBnEIqVYWFkHEUsJwQfwESyt
+        xFcQsbCwsLAMIsHCwkIsLURExDKFiIi1iJWIiEg8HzsLwZ8ks3P3wCmCe8/cbPbHyl/0+/02dvEen/EB
+        T3Edp+2w9BCv4zEO4xOPcNaWpYFgDc9wXD5wA2uWiEFoVdUCnGPDMsUgUMVbPMQOvqCHO5yynB8Wz2DT
+        PupzA/XNPOgLxM7EIMR0QfZUdqBNp7kmBLEmfqnsYMuWp4GgngcedJvO2/I4xHQWvFxj1RJxiHmvBbFs
+        y+MQ28yaLm5seRxirazpZsESMQhNovduEHuWiEPsMWu6eMI0FyMhz4tqkDlLxCC0n/XcrFkiBqGdrOem
+        a4kYhLaznpueJcaHRSuoR7Bez7l62xVB/7hovXoHqJ9yF+s27jf6I15iGbzioo36Hw6awCutSMgbjh6e
+        w8F6AOnFkgLf8BwWpdiEhrcs6YfFkU3EhucQKbIJDW9bIg4xzybSDs8hqk2MujveMf3wHOLDblENX7JD
+        y4Mh2sTPh5VOe/nDcximJ+aFJkM5v/koGKpNnGCBW61S+QbUwxgwlZk8QQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="colDown.MinimumWidth" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="colDown.Width" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
   <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -777,7 +827,7 @@
     <value>False</value>
   </data>
   <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>71</value>
+    <value>69</value>
   </data>
   <data name="DGVWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1230,7 +1280,7 @@
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>77</value>
+    <value>25</value>
   </metadata>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>962, 644</value>
@@ -1358,6 +1408,12 @@
   <data name="&gt;&gt;corridorScanToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;TTButtonDescription.Name" xml:space="preserve">
+    <value>TTButtonDescription</value>
+  </data>
+  <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;colCommand.Name" xml:space="preserve">
     <value>colCommand</value>
   </data>
@@ -1412,6 +1468,18 @@
   <data name="&gt;&gt;colAngle.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;colUp.Name" xml:space="preserve">
+    <value>colUp</value>
+  </data>
+  <data name="&gt;&gt;colUp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colDown.Name" xml:space="preserve">
+    <value>colDown</value>
+  </data>
+  <data name="&gt;&gt;colDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;colDelete.Name" xml:space="preserve">
     <value>colDelete</value>
   </data>
@@ -1423,12 +1491,6 @@
   </data>
   <data name="&gt;&gt;colTagData.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TTButtonDescription.Name" xml:space="preserve">
-    <value>TTButtonDescription</value>
-  </data>
-  <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Planner</value>

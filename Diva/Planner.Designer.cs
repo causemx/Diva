@@ -72,17 +72,6 @@ namespace Diva
             this.surveyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.corridorScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DGVWayPoints = new System.Windows.Forms.DataGridView();
-            this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colParam2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colParam3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colParam4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLongitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAltitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colTagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ActiveDroneInfoPanel = new System.Windows.Forms.Panel();
             this.ComBoxModeSwitch = new System.Windows.Forms.ComboBox();
             this.TxtHomeLongitude = new System.Windows.Forms.TextBox();
@@ -96,6 +85,19 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.colCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colParam1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colParam2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colParam3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colParam4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLatitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLongitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAltitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUp = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colDown = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colTagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -486,6 +488,8 @@ namespace Diva
             this.colLongitude,
             this.colAltitude,
             this.colAngle,
+            this.colUp,
+            this.colDown,
             this.colDelete,
             this.colTagData});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -519,83 +523,6 @@ namespace Diva
             this.DGVWayPoints.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.Commands_RowEnter);
             this.DGVWayPoints.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Commands_RowsAdded);
             this.DGVWayPoints.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.Commands_RowValidating);
-            // 
-            // colCommand
-            // 
-            this.colCommand.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.colCommand.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            resources.ApplyResources(this.colCommand, "colCommand");
-            this.colCommand.Name = "colCommand";
-            // 
-            // colParam1
-            // 
-            this.colParam1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam1, "colParam1");
-            this.colParam1.Name = "colParam1";
-            this.colParam1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colParam2
-            // 
-            this.colParam2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam2, "colParam2");
-            this.colParam2.Name = "colParam2";
-            this.colParam2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colParam3
-            // 
-            this.colParam3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam3, "colParam3");
-            this.colParam3.Name = "colParam3";
-            this.colParam3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colParam4
-            // 
-            this.colParam4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colParam4, "colParam4");
-            this.colParam4.Name = "colParam4";
-            this.colParam4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colLatitude
-            // 
-            this.colLatitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colLatitude, "colLatitude");
-            this.colLatitude.Name = "colLatitude";
-            this.colLatitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colLongitude
-            // 
-            this.colLongitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colLongitude, "colLongitude");
-            this.colLongitude.Name = "colLongitude";
-            this.colLongitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colAltitude
-            // 
-            this.colAltitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colAltitude, "colAltitude");
-            this.colAltitude.Name = "colAltitude";
-            this.colAltitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colAngle
-            // 
-            this.colAngle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colAngle, "colAngle");
-            this.colAngle.Name = "colAngle";
-            this.colAngle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colDelete
-            // 
-            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colDelete, "colDelete");
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Text = "X";
-            // 
-            // colTagData
-            // 
-            this.colTagData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            resources.ApplyResources(this.colTagData, "colTagData");
-            this.colTagData.Name = "colTagData";
-            this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ActiveDroneInfoPanel
             // 
@@ -694,6 +621,97 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
+            // colCommand
+            // 
+            this.colCommand.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.colCommand.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            resources.ApplyResources(this.colCommand, "colCommand");
+            this.colCommand.Name = "colCommand";
+            // 
+            // colParam1
+            // 
+            this.colParam1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam1, "colParam1");
+            this.colParam1.Name = "colParam1";
+            this.colParam1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colParam2
+            // 
+            this.colParam2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam2, "colParam2");
+            this.colParam2.Name = "colParam2";
+            this.colParam2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colParam3
+            // 
+            this.colParam3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam3, "colParam3");
+            this.colParam3.Name = "colParam3";
+            this.colParam3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colParam4
+            // 
+            this.colParam4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colParam4, "colParam4");
+            this.colParam4.Name = "colParam4";
+            this.colParam4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colLatitude
+            // 
+            this.colLatitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colLatitude, "colLatitude");
+            this.colLatitude.Name = "colLatitude";
+            this.colLatitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colLongitude
+            // 
+            this.colLongitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colLongitude, "colLongitude");
+            this.colLongitude.Name = "colLongitude";
+            this.colLongitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colAltitude
+            // 
+            this.colAltitude.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colAltitude, "colAltitude");
+            this.colAltitude.Name = "colAltitude";
+            this.colAltitude.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colAngle
+            // 
+            this.colAngle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colAngle, "colAngle");
+            this.colAngle.Name = "colAngle";
+            this.colAngle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colUp
+            // 
+            resources.ApplyResources(this.colUp, "colUp");
+            this.colUp.Image = ((System.Drawing.Image)(resources.GetObject("colUp.Image")));
+            this.colUp.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.colUp.Name = "colUp";
+            // 
+            // colDown
+            // 
+            resources.ApplyResources(this.colDown, "colDown");
+            this.colDown.Image = ((System.Drawing.Image)(resources.GetObject("colDown.Image")));
+            this.colDown.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.colDown.Name = "colDown";
+            // 
+            // colDelete
+            // 
+            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colDelete, "colDelete");
+            this.colDelete.Name = "colDelete";
+            this.colDelete.Text = "X";
+            // 
+            // colTagData
+            // 
+            this.colTagData.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            resources.ApplyResources(this.colTagData, "colTagData");
+            this.colTagData.Name = "colTagData";
+            this.colTagData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -733,17 +751,6 @@ namespace Diva
 		private TextBox TxtHomeAltitude;
 		private TextBox TxtHomeLatitude;
 		private TextBox TxtHomeLongitude;
-        private DataGridViewComboBoxColumn colCommand;
-        private DataGridViewTextBoxColumn colParam1;
-        private DataGridViewTextBoxColumn colParam2;
-        private DataGridViewTextBoxColumn colParam3;
-        private DataGridViewTextBoxColumn colParam4;
-        private DataGridViewTextBoxColumn colLatitude;
-        private DataGridViewTextBoxColumn colLongitude;
-        private DataGridViewTextBoxColumn colAltitude;
-        private DataGridViewTextBoxColumn colAngle;
-        private DataGridViewButtonColumn colDelete;
-        private DataGridViewTextBoxColumn colTagData;
 		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem drawPolygonToolStripMenuItem;
 		private ToolStripMenuItem addPolygonPointToolStripMenuItem;
@@ -774,5 +781,18 @@ namespace Diva
         private ToolStripMenuItem surveyToolStripMenuItem;
         private ToolStripMenuItem corridorScanToolStripMenuItem;
         private MyButton BtnStrartWsServer;
+        private DataGridViewComboBoxColumn colCommand;
+        private DataGridViewTextBoxColumn colParam1;
+        private DataGridViewTextBoxColumn colParam2;
+        private DataGridViewTextBoxColumn colParam3;
+        private DataGridViewTextBoxColumn colParam4;
+        private DataGridViewTextBoxColumn colLatitude;
+        private DataGridViewTextBoxColumn colLongitude;
+        private DataGridViewTextBoxColumn colAltitude;
+        private DataGridViewTextBoxColumn colAngle;
+        private DataGridViewImageColumn colUp;
+        private DataGridViewImageColumn colDown;
+        private DataGridViewButtonColumn colDelete;
+        private DataGridViewTextBoxColumn colTagData;
     }
 }

@@ -1196,6 +1196,22 @@ namespace Diva
                     WriteKMLV2();
                     DroneInfoPanel.NotifyMissionChanged();
                 }
+
+                if (e.ColumnIndex == colUp.Index && e.RowIndex != 0) // up
+                {
+                    DataGridViewRow myrow = DGVWayPoints.CurrentRow;
+                    DGVWayPoints.Rows.Remove(myrow);
+                    DGVWayPoints.Rows.Insert(e.RowIndex - 1, myrow);
+                    WriteKMLV2();
+                }
+
+                if (e.ColumnIndex == colDown.Index && e.RowIndex < DGVWayPoints.RowCount - 1) // down
+                {
+                    DataGridViewRow myrow = DGVWayPoints.CurrentRow;
+                    DGVWayPoints.Rows.Remove(myrow);
+                    DGVWayPoints.Rows.Insert(e.RowIndex + 1, myrow);
+                    WriteKMLV2();
+                }
                 // setgradanddistandaz();
             }
             catch (Exception)
@@ -3095,9 +3111,14 @@ namespace Diva
 
                 // TODO: Do intercept action.
                 if (modeChangeWatcher(mode, lastMode))
+                {
                     Console.WriteLine("Ready to intercept");
-                CurrentFlyTo?.SetDestination(d.Status.ForecastPosition);
+                    CurrentFlyTo?.SetDestination(d.Status.ForecastPosition);
+                }
+                    
             }
+
+            lastMode = mode;
 
         }
 
@@ -3151,7 +3172,7 @@ namespace Diva
             get => fullControl;
             set
             {
-                fullControl = value;
+                fullControl = true;
                 // LblMode.Visible = value;
                 // LblModeDesc.Visible = value;
 
