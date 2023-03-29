@@ -1,4 +1,5 @@
-﻿using Diva.Properties;
+﻿using Diva.Mavlink;
+using Diva.Properties;
 using Diva.Utilities;
 using GMap.NET;
 using GMap.NET.ObjectModel;
@@ -23,9 +24,10 @@ namespace Diva.Server
         {
 
             public const string OVERLAY_ID_GPS = "_GPS";
-            public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
+            // public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
 
             public Planner planner;
+            public MavDrone drone;
             public GMapControl mapControl;
             public ObservableCollectionThreadSafe<GMapOverlay> overlays;
             public GMapOverlay gpsOverlay;
@@ -53,6 +55,7 @@ namespace Diva.Server
                 base.OnOpen();
 
                 planner = Planner.GetPlannerInstance();
+                drone = Planner.GetActiveDrone();
                 mapControl = planner?.GMapControl;
                 overlays = mapControl.Overlays;
                 gpsOverlay = new GMapOverlay(id: OVERLAY_ID_GPS);
@@ -86,17 +89,21 @@ namespace Diva.Server
 
                 // Generate base, gps_dongle and forecast position.
                 gpsMarker.Position = _point;
-#if !DEBUG
+                drone.Status.GpsDonglePosition = _point;
+                
+#if DEBUG
                 var _bearing = MathHelper.BearingOf(
                     dummyBaseLocation.Lat, dummyBaseLocation.Lng, _point.Lat, _point.Lng);
                 var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
                 forecastMarser.Position = _derivedPoint;
+                drone.Status.ForecastPosition = _derivedPoint;
                 bool _isEmptyBase = (dummyBaseLocation.Lat == 0d && dummyBaseLocation.Lng == 0d);
 #else
                 var _bearing = MathHelper.BearingOf(
                     BaseLocation.Location.Lat, BaseLocation.Location.Lng, _point.Lat, _point.Lng);
                 var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
                 forecastMarser.Position = _derivedPoint;
+                drone.Status.ForecastPosition = _derivedPoint;
                 bool _isEmptyBase = (BaseLocation.Location.Lat == 0d && BaseLocation.Location.Lng == 0d);
 #endif
 

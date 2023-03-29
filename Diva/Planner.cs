@@ -3092,20 +3092,11 @@ namespace Diva
                     BeginInvoke((MethodInvoker)delegate { updateText(d); });
                 else
                     updateText(d);
-            }
 
-            try
-            {
+                // TODO: Do intercept action.
                 if (modeChangeWatcher(mode, lastMode))
                     Console.WriteLine("Ready to intercept");
-            }
-            catch
-            {
-                Console.WriteLine("foo");
-            }
-            finally
-            {
-                lastMode = mode;
+                CurrentFlyTo?.SetDestination(d.Status.ForecastPosition);
             }
 
         }

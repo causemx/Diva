@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using GMap.NET;
+using log4net;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -241,5 +242,9 @@ namespace Diva.Mavlink
         public List<Mission.WayPoint> Mission { get; set; } = new List<Mission.WayPoint>();
 
         public mavlink_mission_item_t GuidedMode = new mavlink_mission_item_t();
+
+        public PointLatLng GpsDonglePosition;
+
+        public PointLatLng ForecastPosition;
     }
 }
