@@ -19,6 +19,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +28,9 @@ using System.Xml;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using static MAVLink;
+using COPTER_MODE = Diva.Mavlink.COPTER_MODE;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
+using PLANE_MODE = Diva.Mavlink.PLANE_MODE;
 
 namespace Diva
 {
@@ -3057,8 +3060,22 @@ namespace Diva
             SetButtonStates();
         }
 
+        private uint lastMode;
+
         public void UpdateDroneMode(object obj, uint mode)
         {
+            bool modeChangeWatcher(uint c_mode, uint last_mode)
+            {
+                // For COPTER
+                if (last_mode == (uint)COPTER_MODE.RTL && c_mode == (uint)COPTER_MODE.GUIDED)
+                    return true;
+                // For PLNAE
+                else if (last_mode == (uint)PLANE_MODE.RTL && c_mode == (uint)PLANE_MODE.GUIDED)
+                    return true;
+                else
+                    return false;
+            }
+
             void updateText(MavDrone drone)
             {
                 string modename = drone.Status.FlightModeType[mode];
@@ -3068,6 +3085,7 @@ namespace Diva
                     ComBoxModeSwitch.SelectedIndex = modeidx;
                 UpdateWarningIcon();
             }
+
             if (obj is MavDrone d && d == ActiveDrone)
             {
                 if (InvokeRequired)
@@ -3075,6 +3093,21 @@ namespace Diva
                 else
                     updateText(d);
             }
+
+            try
+            {
+                if (modeChangeWatcher(mode, lastMode))
+                    Console.WriteLine("Ready to intercept");
+            }
+            catch
+            {
+                Console.WriteLine("foo");
+            }
+            finally
+            {
+                lastMode = mode;
+            }
+
         }
 
         private bool comboChangedByUser;
