@@ -711,9 +711,11 @@ namespace Diva.Mavlink
             Status.GuidedMode.z = (float)pos.Altitude;
 
             SendPacket(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target);
-
-            WaitPacket(MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT, null, 1000);
-            var result = WaitPacket(MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT, null, 1000).ToStructure<mavlink_position_target_global_int_t>();
+            return true;
+            //MAVLinkMessage msg = SendPacketWaitReply(MAVLINK_MSG_ID.SET_POSITION_TARGET_GLOBAL_INT, target, MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT);
+            //MAVLinkMessage msg = WaitPacket(MAVLINK_MSG_ID.POSITION_TARGET_GLOBAL_INT, null, 1000);
+#if !DEBUG
+            var result = msg.ToStructure<mavlink_position_target_global_int_t>();
             bool altEquals() { return (result.type_mask & MAVLINK_SET_POS_TYPE_MASK_ALT_IGNORE) != 0 || target.alt == result.alt; }
             bool coordEquals(double tolerance)
             {
@@ -725,6 +727,7 @@ namespace Diva.Mavlink
             return target.type_mask == result.type_mask &&
                 // frame type changed results in altitude not comparable
                 (target.coordinate_frame != result.coordinate_frame || ae) && ce;
+#endif
         }
 
         public bool SetGuidedModeWP(WayPoint dest, bool setmode = true)

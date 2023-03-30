@@ -98,7 +98,7 @@ namespace Diva.Mission
         }
 
         public bool SetDestination(PointLatLng dest)
-        {
+        { 
             if (!TrackMode && State == FlyToState.Setting)
             {
                 marker.From = Drone.Status.Location;

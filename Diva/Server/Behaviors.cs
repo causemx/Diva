@@ -24,6 +24,7 @@ namespace Diva.Server
         {
 
             public const string OVERLAY_ID_GPS = "_GPS";
+            public const int FORECASTE_DISTANCE = 100; //meter 
             // public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
 
             public Planner planner;
@@ -94,14 +95,14 @@ namespace Diva.Server
 #if DEBUG
                 var _bearing = MathHelper.BearingOf(
                     dummyBaseLocation.Lat, dummyBaseLocation.Lng, _point.Lat, _point.Lng);
-                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
+                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, FORECASTE_DISTANCE);
                 forecastMarser.Position = _derivedPoint;
                 drone.Status.ForecastPosition = _derivedPoint;
                 bool _isEmptyBase = (dummyBaseLocation.Lat == 0d && dummyBaseLocation.Lng == 0d);
 #else
                 var _bearing = MathHelper.BearingOf(
                     BaseLocation.Location.Lat, BaseLocation.Location.Lng, _point.Lat, _point.Lng);
-                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, 1000);
+                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, FORECASTE_DISTANCE);
                 forecastMarser.Position = _derivedPoint;
                 drone.Status.ForecastPosition = _derivedPoint;
                 bool _isEmptyBase = (BaseLocation.Location.Lat == 0d && BaseLocation.Location.Lng == 0d);

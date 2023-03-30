@@ -1,12 +1,8 @@
 ﻿using log4net;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Diva.Controls.Dialogs
@@ -63,6 +59,7 @@ namespace Diva.Controls.Dialogs
             this.ClientSize = new System.Drawing.Size(346, 290);
             this.Controls.Add(this.panel1);
             this.Name = "DialogProgress";
+            this.Load += new System.EventHandler(this.DialogProgress_Load);
             this.Controls.SetChildIndex(this.panel1, 0);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -329,6 +326,11 @@ namespace Diva.Controls.Dialogs
         private void ProgressReporterDialogue_Load(object sender, EventArgs e)
         {
             this.Focus();
+        }
+
+        private void DialogProgress_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

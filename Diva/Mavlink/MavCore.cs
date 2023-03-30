@@ -166,7 +166,7 @@ namespace Diva.Mavlink
 
                 frmProgressReporter.UpdateProgressAndStatus(0,
                     Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));
-                GetParamListBG();
+                //GetParamListBG();
 
                 if (frmProgressReporter.doWorkArgs.CancelAcknowledged)
                 {

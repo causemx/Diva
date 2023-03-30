@@ -19,23 +19,27 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using WebSocketSharp;
 using WebSocketSharp.Server;
 using static MAVLink;
 using COPTER_MODE = Diva.Mavlink.COPTER_MODE;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
 using PLANE_MODE = Diva.Mavlink.PLANE_MODE;
 
+
+
 namespace Diva
 {
+
+
     public partial class Planner : UserControl
     {
+
+
         public static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public const int CURRENTSTATE_MULTIPLERDIST = 1;
 
@@ -2393,9 +2397,16 @@ namespace Diva
             }
             else
             {
-                Task.Run(async () => await CleanupAsync());
+                Task.Run(async () => {
+                    try
+                    {
+                        await CleanupAsync();
+                    } catch (Exception _e)
+                    {
+                        Console.WriteLine(_e.ToString());
+                    }
+                });
             }
-
         }
 
         private CancellationTokenSource _tokenSource = new CancellationTokenSource();
@@ -3083,10 +3094,10 @@ namespace Diva
             bool modeChangeWatcher(uint c_mode, uint last_mode)
             {
                 // For COPTER
-                if (last_mode == (uint)COPTER_MODE.RTL && c_mode == (uint)COPTER_MODE.GUIDED)
+                if (last_mode == (uint)COPTER_MODE.AUTO && c_mode == (uint)COPTER_MODE.RTL)
                     return true;
                 // For PLNAE
-                else if (last_mode == (uint)PLANE_MODE.RTL && c_mode == (uint)PLANE_MODE.GUIDED)
+                else if (last_mode == (uint)PLANE_MODE.AUTO && c_mode == (uint)PLANE_MODE.RTL)
                     return true;
                 else
                     return false;
@@ -3111,15 +3122,32 @@ namespace Diva
 
                 // TODO: Do intercept action.
                 if (modeChangeWatcher(mode, lastMode))
-                {
-                    Console.WriteLine("Ready to intercept");
-                    CurrentFlyTo?.SetDestination(d.Status.ForecastPosition);
-                }
-                    
+                    Recycle(d, new PointLatLng[] {
+                        d.Status.ForecastPosition, 
+                        d.Status.GpsDonglePosition, 
+                        BaseLocation.Location});
             }
-
             lastMode = mode;
+        }
 
+        public void Recycle(MavDrone _drone, PointLatLng[] _destations)
+        {
+            Console.WriteLine("Start to intercept");
+            Thread.Sleep(1);
+            var flyTo = new FlyTo(_drone);
+            
+            
+            bool _setDest = flyTo.SetDestination(_destations[0]);
+            if (_setDest)
+            {
+                flyTo.DestinationReached += (o, r) => BeginInvoke((MethodInvoker)(() =>
+                {
+                    log.Warn("Destination has reached.");
+                    //if (((FlyTo)o).Drone == ActiveDrone)
+                    //    BtnFlyTo.Image = Resources.left_free2_off;
+                }));
+            }
+            flyTo.Start();
         }
 
         private bool comboChangedByUser;

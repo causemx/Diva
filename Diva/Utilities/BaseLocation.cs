@@ -46,7 +46,17 @@ namespace Diva.Utilities
             if (DateTime.Now - sentinelTimestamp > SentinelTimeout)
             {
                 sentinelWatcher?.Dispose();
-                Task.Run(() => (sentinelWatcher = new GeoCoordinateWatcher()).Start());
+                Task.Run(() => {
+                    try
+                    {
+                        sentinelWatcher = new GeoCoordinateWatcher();
+                        sentinelWatcher.Start();
+
+                    } catch (Exception _e)
+                    {
+                        Console.WriteLine(_e.ToString());
+                    }
+                });
                 sentinelTimestamp = DateTime.Now;
             }
         }
