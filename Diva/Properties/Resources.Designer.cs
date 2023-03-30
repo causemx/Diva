@@ -1208,6 +1208,26 @@ namespace Diva.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Params&gt;
+        ///	&lt;ArduCopter2&gt;
+        ///		&lt;ACCEL_Z_D&gt;
+        ///			&lt;DisplayName&gt;Throttle acceleration controller D gain&lt;/DisplayName&gt;
+        ///			&lt;Description&gt;Throttle acceleration controller D gain.  Compensates for short-term change in desired vertical acceleration vs actual acceleration&lt;/Description&gt;
+        ///			&lt;Range&gt;0.000 0.400&lt;/Range&gt;
+        ///			&lt;User&gt;Standard&lt;/User&gt;
+        ///		&lt;/ACCEL_Z_D&gt;
+        ///		&lt;ACCEL_Z_FILT&gt;
+        ///			&lt;DisplayName&gt;Throttle acceleration filter&lt;/DisplayName&gt;
+        ///			&lt;Description&gt;Filter applied to acceleration [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParameterMetaDataBackup {
+            get {
+                return ResourceManager.GetString("ParameterMetaDataBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap point_blue {
