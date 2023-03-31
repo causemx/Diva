@@ -1,8 +1,6 @@
 # Introduction
 DIVA is a lightning fast ground control system which extracts telemetry data from UAVs and execute multiple tasks.
 
-![](https://i.imgur.com/HKZ286z.png)
-
 # Components
 
 ## Friendly User Interface

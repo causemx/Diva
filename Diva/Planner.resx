@@ -749,6 +749,56 @@
   <data name="colAngle.Width" type="System.Int32, mscorlib">
     <value>60</value>
   </data>
+  <metadata name="colPrev.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colPrev.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="colPrev.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAAa5JREFUWEe9lrFKw1AYRkuHUqSIoziJg4ODiIOIiPgAPoAP4BOIo4uzFCenIuJY
+        RMRBRERExEnEqZOIg4ODg4iTiNTzNX+glFLun5v0wBna5p7/lqRNSrG02+0qNnHJ3hoeDB3BKxTfuGIf
+        FQ/DNPxGk7sYziYYUsPe4SnFboK4ht9q0gCK2QTRkOEp+W6CmIbfqewgn00Q8XzzXrSJZUv5YXHM8JRs
+        m2BRHsNTvjD8z4qD+/3OYwnbBAdp+LVWFIA2sWij+sMBG3iKZ10+YxZ+8BzVOMFjbGDNxoXBgl3MQssS
+        cRDaS3pumpaIg9BR0nOzZYk4CKW3XS8LloiD0GvSc/GBZUtkh8go/qnopGGJOAitJj032e8B3RDaSXou
+        ntAKkVjMy7otj4PQXNJz8YjxF58gdNhJhqOLNZ9HdEKz+Kuqg7otj4OQ7ojec3+PFUuEw6IpnLGXej2G
+        l+jhBcct4YOFZWzhAe7jO3rQv+Sk5bJBYLOT8vOAE5bJDpEK6hyGootTt+iqJeIhpnOvp5dB6Gd2gfO2
+        LF8IyzXU49MbfqKuCT0jbuO0HZoDpdI/+OUeKI+HbDcAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="colPrev.MinimumWidth" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="colPrev.Width" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <metadata name="colNext.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colNext.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="colNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wQAADsEBuJFr7QAAAahJREFUWEe9l6FKBFEUQIdlkywiIiaDGA2GDQYREaPZTzAbDP7BYjBtEINJREQM
+        BpNBFhExGDeImMQgYhIxiMh47swd2LCs77771gMnKHPPe8PO7MxmKcnzfBq38AKf8Q0f8QRXUY9MDOFZ
+        PMMfHMQ5juqYH2J1bOE3htLBuibiITKJ11KMYEMzcRCYwociFc4r7uMB3mNNczYYnNCAhUsc14Q05nBG
+        /wyHIfnMr9BCFxua8EFou0iGI3dFU8d9EJpHy9UuHOm4D0I1vCuSNpKd/VrZM9HVcT/EYs6+peM+CMln
+        H8OKJnwQ2i17JuTqH9NEPETk4nuRopEnTfgg1Cx7Zjqa8EFos+yZOdSED0LHZc9MWxM+CMn3eAw7mgiD
+        gQbuoZyxvD6dorzhfGEM8qiWRq/rulx/OGAB33EYyIvL309EDlrED5lIyA2GvwdycMpN3KL9JZShJfRu
+        Im7xCoY9m/AtXkFkGa2bSLN4BTHZxKeUA0i7eAXRkE3YrnYrxAdtQu7z4S1ewSL9NhH2JZMKFuu9MOU3
+        wv8tXsGicovKs2JE/xVJlv0CWY0bE4NOcUAAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="colNext.MinimumWidth" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="colNext.Width" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
   <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -777,7 +827,7 @@
     <value>False</value>
   </data>
   <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>69</value>
+    <value>71</value>
   </data>
   <data name="DGVWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1358,12 +1408,6 @@
   <data name="&gt;&gt;corridorScanToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TTButtonDescription.Name" xml:space="preserve">
-    <value>TTButtonDescription</value>
-  </data>
-  <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;colCommand.Name" xml:space="preserve">
     <value>colCommand</value>
   </data>
@@ -1418,6 +1462,18 @@
   <data name="&gt;&gt;colAngle.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;colPrev.Name" xml:space="preserve">
+    <value>colPrev</value>
+  </data>
+  <data name="&gt;&gt;colPrev.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colNext.Name" xml:space="preserve">
+    <value>colNext</value>
+  </data>
+  <data name="&gt;&gt;colNext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;colDelete.Name" xml:space="preserve">
     <value>colDelete</value>
   </data>
@@ -1429,6 +1485,12 @@
   </data>
   <data name="&gt;&gt;colTagData.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TTButtonDescription.Name" xml:space="preserve">
+    <value>TTButtonDescription</value>
+  </data>
+  <data name="&gt;&gt;TTButtonDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Planner</value>
