@@ -1200,22 +1200,6 @@ namespace Diva
                     WriteKMLV2();
                     DroneInfoPanel.NotifyMissionChanged();
                 }
-
-                if (e.ColumnIndex == colUp.Index && e.RowIndex != 0) // up
-                {
-                    DataGridViewRow myrow = DGVWayPoints.CurrentRow;
-                    DGVWayPoints.Rows.Remove(myrow);
-                    DGVWayPoints.Rows.Insert(e.RowIndex - 1, myrow);
-                    WriteKMLV2();
-                }
-
-                if (e.ColumnIndex == colDown.Index && e.RowIndex < DGVWayPoints.RowCount - 1) // down
-                {
-                    DataGridViewRow myrow = DGVWayPoints.CurrentRow;
-                    DGVWayPoints.Rows.Remove(myrow);
-                    DGVWayPoints.Rows.Insert(e.RowIndex + 1, myrow);
-                    WriteKMLV2();
-                }
                 // setgradanddistandaz();
             }
             catch (Exception)

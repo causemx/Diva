@@ -94,8 +94,6 @@ namespace Diva
             this.colLongitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAltitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAngle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUp = new System.Windows.Forms.DataGridViewImageColumn();
-            this.colDown = new System.Windows.Forms.DataGridViewImageColumn();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colTagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
@@ -488,8 +486,6 @@ namespace Diva
             this.colLongitude,
             this.colAltitude,
             this.colAngle,
-            this.colUp,
-            this.colDown,
             this.colDelete,
             this.colTagData});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -684,20 +680,6 @@ namespace Diva
             this.colAngle.Name = "colAngle";
             this.colAngle.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // colUp
-            // 
-            resources.ApplyResources(this.colUp, "colUp");
-            this.colUp.Image = ((System.Drawing.Image)(resources.GetObject("colUp.Image")));
-            this.colUp.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.colUp.Name = "colUp";
-            // 
-            // colDown
-            // 
-            resources.ApplyResources(this.colDown, "colDown");
-            this.colDown.Image = ((System.Drawing.Image)(resources.GetObject("colDown.Image")));
-            this.colDown.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.colDown.Name = "colDown";
-            // 
             // colDelete
             // 
             this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -790,8 +772,6 @@ namespace Diva
         private DataGridViewTextBoxColumn colLongitude;
         private DataGridViewTextBoxColumn colAltitude;
         private DataGridViewTextBoxColumn colAngle;
-        private DataGridViewImageColumn colUp;
-        private DataGridViewImageColumn colDown;
         private DataGridViewButtonColumn colDelete;
         private DataGridViewTextBoxColumn colTagData;
     }
