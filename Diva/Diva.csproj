@@ -334,6 +334,7 @@
     <Compile Include="Mavlink\MavUtlities.cs" />
     <Compile Include="Mission\AltitudeControl.cs" />
     <Compile Include="Mission\FlyTo.cs" />
+    <Compile Include="Mission\FlytoRecycle.cs" />
     <Compile Include="Planner.cs">
       <SubType>UserControl</SubType>
     </Compile>

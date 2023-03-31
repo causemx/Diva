@@ -3122,32 +3122,16 @@ namespace Diva
 
                 // TODO: Do intercept action.
                 if (modeChangeWatcher(mode, lastMode))
-                    Recycle(d, new PointLatLng[] {
-                        d.Status.ForecastPosition, 
-                        d.Status.GpsDonglePosition, 
-                        BaseLocation.Location});
+                {
+                    FlytoRecycle flytoR = new FlytoRecycle(d);
+                    flytoR.Destinations = new PointLatLng[] {
+                        d.Status.ForecastPosition,
+                        d.Status.GpsDonglePosition,
+                        BaseLocation.Location };
+                    flytoR.StartRecycle();
+                }
             }
             lastMode = mode;
-        }
-
-        public void Recycle(MavDrone _drone, PointLatLng[] _destations)
-        {
-            Console.WriteLine("Start to intercept");
-            Thread.Sleep(1);
-            var flyTo = new FlyTo(_drone);
-            
-            
-            bool _setDest = flyTo.SetDestination(_destations[0]);
-            if (_setDest)
-            {
-                flyTo.DestinationReached += (o, r) => BeginInvoke((MethodInvoker)(() =>
-                {
-                    log.Warn("Destination has reached.");
-                    //if (((FlyTo)o).Drone == ActiveDrone)
-                    //    BtnFlyTo.Image = Resources.left_free2_off;
-                }));
-            }
-            flyTo.Start();
         }
 
         private bool comboChangedByUser;

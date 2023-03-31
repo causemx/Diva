@@ -25,7 +25,7 @@ namespace Diva.Mavlink
                 }
                 catch (IOException)
                 {
-                    xdoc = XDocument.Parse(Properties.Resources.ParameterMetaData);
+                    xdoc = XDocument.Parse(Properties.Resources.ParameterMetaDataBackup);
                 }
                 catch (Exception _e)
                 {
