@@ -43,7 +43,7 @@ namespace Diva.Server
 
             public GMapMarker forecastMarser = new GMarkerGoogle(
                 new PointLatLngAlt(0f, 0f),
-                GMarkerGoogleType.green_big_go);
+                new Bitmap(Resources.icon_forecast_32));
 
             public PointLatLng dummyBaseLocation = new PointLatLng(24.773306, 121.045633);
 

@@ -219,7 +219,7 @@ namespace Diva.Utilities
                 Overlay.Markers.Add(m);
                 Overlay.Markers.Add(mBorders);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

@@ -316,8 +316,8 @@ namespace Diva.Utilities
     public class GMapRouteExtend : GMapRoute
     {
 
-        float shift_X = 15;
-        float shift_Y = 15;
+        // float shift_X = 15;
+        // float shift_Y = 15;
 
         public GMapRouteExtend(IEnumerable<PointLatLng> ps, string n) : base(ps, n) { }
 

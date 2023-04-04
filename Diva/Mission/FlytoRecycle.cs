@@ -12,7 +12,7 @@ namespace Diva.Mission
             LogManager.GetLogger(
                 MethodBase.GetCurrentMethod().DeclaringType);
         public MavDrone drone;
-        private FlyTo flyTo;
+        private FlyTo flyTo = null;
         private PointLatLng[] _destinations;
 
         public PointLatLng[] Destinations

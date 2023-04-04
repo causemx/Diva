@@ -50,7 +50,7 @@ namespace Diva.Mavlink
                     return false;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Disconnect();
                 throw;

@@ -61,21 +61,17 @@ namespace Diva
 
         private static readonly double WARN_ALT = 2D;
 
-        private Badges badges = new Badges(
-            Resources.icon_polygon_plot_32,
-            Resources.icon_airplane_32,
-            Resources.icon_fish_stamp_32);
 
 
         private class PlannerOverlays
         {
-            public GMapOverlay RallyPoints;
-            public GMapOverlay Commons;
-            public GMapOverlay DrawnPolygons;
-            public GMapOverlay Geofence;
-            public GMapOverlay Drones;
-            public GMapOverlay Routes;
-            public GMapOverlay Fish;
+            public GMapOverlay RallyPoints = null;
+            public GMapOverlay Commons = null;
+            public GMapOverlay DrawnPolygons = null;
+            public GMapOverlay Geofence = null;
+            public GMapOverlay Drones = null;
+            public GMapOverlay Routes = null;
+            public GMapOverlay Fish = null;
             internal PlannerOverlays(MyGMap map)
                 => GetType().GetFields().ToList().ForEach(f =>
                     {
@@ -105,11 +101,11 @@ namespace Diva
         // polygon
         internal GMapPolygon geofencePolygon;
         internal GMapPolygon drawnPolygon;
-        internal GMapPolygon wpPolygon;
+        internal GMapPolygon wpPolygon = null;
 
         public bool quickadd = false;
         private int selectedRow = 0;
-        private bool polygongridmode = true;
+        // private bool polygongridmode = true;
 
         private Dictionary<string, string[]> cmdParamNames = new Dictionary<string, string[]>();
         private List<List<WayPoint>> history = new List<List<WayPoint>>();
@@ -223,9 +219,9 @@ namespace Diva
             {
                 if (ActiveDrone.IsOpen)
                 {
-                    // return new Point(IconGPSLostWarning.Right, -575);
+                    return new Point(IconGPSLostWarning.Right+50, IconGPSLostWarning.Bottom-75);
                     // Debug.WriteLine("width: " + Width);
-                    return new Point(DroneInfoPanel.Left, DroneInfoPanel.Top + 500);
+                    // return new Point(DroneInfoPanel.Left, DroneInfoPanel.Top + 500);
                 }
                 return null;
             };
@@ -250,10 +246,7 @@ namespace Diva
 
         private void Map_Paint(object sender, PaintEventArgs e)
         {
-            // polyicon.Location = new Point(20, 575);
-            // polyicon.Paint(e.Graphics);
-            badges.Location = new Point(20, 600);
-            badges.Paint(e.Graphics);
+          
         }
 
         private void DataGridView_Initialize()
@@ -622,39 +615,7 @@ namespace Diva
                 FlyToClicked = false;
                 return;
             }
-
-            // check if the mouse up happend over our button
-            var badgesRects = badges.Rectangle;
-      
             
-            for (int i = 0; i < badgesRects.Count; i++)
-            {
-                if (badgesRects[i].Contains(e.Location))
-                {
-                    if (e.Button == MouseButtons.Left)
-                        badges.IsSelected = (i == badges.IsSelected) ? -1 : i; 
-                    
-                    switch (badges.IsSelected)
-                    {
-                        case (int)Badges.Type.NONE:
-                            return;
-
-                        case (int)Badges.Type.EKF:
-                            DialogEKF de = new DialogEKF();
-                            de.Show();
-                            return;
-
-                        case (int)Badges.Type.FISH_STAMP:
-                            var now = DateTime.Now;
-                            var loc = ActiveDrone.Status.Location;
-                            AddFishMarker("fish_stamp", 
-                                string.Format("time:{0}\nlocation:{1},{2}",now.ToString("HH:mm:ss"), loc.Lat, loc.Lng), 
-                                loc);
-                            return;
-
-                    }
-                }
-            }
 
             if (!FullControl)
             {
