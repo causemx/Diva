@@ -61,9 +61,8 @@ namespace Diva.Server
                 {
                     overlays.Add(gpsOverlay);
                     isContainOverlay = true;
+                    gpsOverlay.Markers.Add(gpsMarker);
                 }
-
-                gpsOverlay.Markers.Add(gpsMarker);
 #if DEBUG
                 //  Enable dummy data marker
                 Console.WriteLine("DEBUG");
@@ -109,8 +108,7 @@ namespace Diva.Server
                 bool _isEmptyBase = (BaseLocation.Location.Lat == 0d && BaseLocation.Location.Lng == 0d);
 #endif
 
-                gpsOverlay.Markers.Remove(gpsMarker);
-                if (!_isEmptyBase) gpsOverlay.Markers.Remove(forecastMarser);
+                gpsOverlay.Markers.Clear();
 
                 gpsOverlay.Markers.Add(gpsMarker);
                 if (!_isEmptyBase) gpsOverlay.Markers.Add(forecastMarser);
