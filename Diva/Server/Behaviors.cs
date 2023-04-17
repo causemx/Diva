@@ -25,7 +25,7 @@ namespace Diva.Server
         {
 
             public const string OVERLAY_ID_GPS = "_GPS";
-            public const int FORECASTE_DISTANCE = 100; //meter 
+            public const int FORECASTE_DISTANCE = 20; //meter 
             // public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
 
             public static Planner planner = Planner.GetPlannerInstance();
@@ -63,7 +63,7 @@ namespace Diva.Server
                     isContainOverlay = true;
                     gpsOverlay.Markers.Add(gpsMarker);
                 }
-#if DEBUG
+#if !DEBUG
                 //  Enable dummy data marker
                 Console.WriteLine("DEBUG");
                 baseMarker.Position = dummyBaseLocation;
@@ -92,7 +92,7 @@ namespace Diva.Server
                 gpsMarker.Position = _point;
                 drone.Status.GpsDonglePosition = _point;
                 
-#if DEBUG
+#if !DEBUG
                 var _bearing = MathHelper.BearingOf(
                     dummyBaseLocation.Lat, dummyBaseLocation.Lng, _point.Lat, _point.Lng);
                 var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, FORECASTE_DISTANCE);

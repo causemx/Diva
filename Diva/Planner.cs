@@ -3090,8 +3090,7 @@ namespace Diva
                     FlytoRecycle flytoR = new FlytoRecycle(d);
                     flytoR.Destinations = new PointLatLng[] {
                         d.Status.ForecastPosition,
-                        d.Status.GpsDonglePosition,
-                        BaseLocation.Location };
+                        d.Status.GpsDonglePosition,};
                     flytoR.StartRecycle();
                 }
             }
@@ -3218,8 +3217,8 @@ namespace Diva
         {
             if (ActiveDrone == null || ActiveDrone == DummyDrone
                 || !ActiveDrone.Status.IsArmed
-                || ActiveDrone.Status.State != MAV_STATE.ACTIVE &&
-                ActiveDrone.Status.Firmware == Firmwares.ArduCopter2)
+                || ActiveDrone.Status.State != MAV_STATE.ACTIVE) 
+                // && ActiveDrone.Status.Firmware == Firmwares.ArduCopter2)
             {
                 MessageBox.Show(Strings.MsgActiveUnavailableOrNotReady);
                 return false;
@@ -3238,7 +3237,7 @@ namespace Diva
                     = AltitudeControlPanel.Left = 12;
 
             BtnFlyTo.Click += BtnFlyTo_Clicked;
-            //TSMainPanel.Items.Add(BtnFlyTo);
+            TSMainPanel.Items.Add(BtnFlyTo);
             BtnTrack.Click += BtnTrack_Clicked;
             //TSMainPanel.Items.Add(BtnTrack);
             SetButtonStates();

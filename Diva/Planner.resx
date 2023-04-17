@@ -131,6 +131,37 @@
   <data name="SplitContainer.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
   </data>
+  <metadata name="TSMainPanel.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>411, 4</value>
+  </metadata>
+  <data name="TSMainPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="TSMainPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 18</value>
+  </data>
+  <data name="TSMainPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 25</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="TSMainPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="TSMainPanel.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.Name" xml:space="preserve">
+    <value>TSMainPanel</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.Parent" xml:space="preserve">
+    <value>SplitContainer.Panel1</value>
+  </data>
+  <data name="&gt;&gt;TSMainPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="BtnStrartWsServer.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -146,7 +177,6 @@
   <data name="BtnStrartWsServer.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BtnStrartWsServer.TabIndex" type="System.Int32, mscorlib">
     <value>37</value>
   </data>
@@ -166,7 +196,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnStrartWsServer.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="IconGPSLostWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -208,7 +238,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;IconGPSLostWarning.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="IconModeWarning.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -244,7 +274,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;IconModeWarning.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="BtnBreakAction.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -277,7 +307,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnBreakAction.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="AltitudeControlPanel.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9pt</value>
@@ -310,7 +340,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;AltitudeControlPanel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="BtnZoomOut.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -343,7 +373,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnZoomOut.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="BtnZoomIn.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -376,7 +406,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnZoomIn.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="BtnMapFocus.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -410,7 +440,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;BtnMapFocus.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="RotationInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -434,7 +464,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;RotationInfoPanel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="DroneInfoPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -470,7 +500,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;DroneInfoPanel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="Map.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -633,7 +663,7 @@
     <value>SplitContainer.Panel1</value>
   </data>
   <data name="&gt;&gt;Map.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="&gt;&gt;SplitContainer.Panel1.Name" xml:space="preserve">
     <value>SplitContainer.Panel1</value>
@@ -758,7 +788,7 @@
   <data name="colPrev.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAa5JREFUWEe9lrFKw1AYRkuHUqSIoziJg4ODiIOIiPgAPoAP4BOIo4uzFCenIuJY
+        vQAADr0BR/uQrQAAAa5JREFUWEe9lrFKw1AYRkuHUqSIoziJg4ODiIOIiPgAPoAP4BOIo4uzFCenIuJY
         RMRBRERExEnEqZOIg4ODg4iTiNTzNX+glFLun5v0wBna5p7/lqRNSrG02+0qNnHJ3hoeDB3BKxTfuGIf
         FQ/DNPxGk7sYziYYUsPe4SnFboK4ht9q0gCK2QTRkOEp+W6CmIbfqewgn00Q8XzzXrSJZUv5YXHM8JRs
         m2BRHsNTvjD8z4qD+/3OYwnbBAdp+LVWFIA2sWij+sMBG3iKZ10+YxZ+8BzVOMFjbGDNxoXBgl3MQssS
@@ -783,7 +813,7 @@
   <data name="colNext.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAAahJREFUWEe9l6FKBFEUQIdlkywiIiaDGA2GDQYREaPZTzAbDP7BYjBtEINJREQM
+        vQAADr0BR/uQrQAAAahJREFUWEe9l6FKBFEUQIdlkywiIiaDGA2GDQYREaPZTzAbDP7BYjBtEINJREQM
         BpNBFhExGDeImMQgYhIxiMh47swd2LCs77771gMnKHPPe8PO7MxmKcnzfBq38AKf8Q0f8QRXUY9MDOFZ
         PMMfHMQ5juqYH2J1bOE3htLBuibiITKJ11KMYEMzcRCYwociFc4r7uMB3mNNczYYnNCAhUsc14Q05nBG
         /wyHIfnMr9BCFxua8EFou0iGI3dFU8d9EJpHy9UuHOm4D0I1vCuSNpKd/VrZM9HVcT/EYs6+peM+CMln
@@ -827,7 +857,7 @@
     <value>False</value>
   </data>
   <data name="colTagData.Width" type="System.Int32, mscorlib">
-    <value>71</value>
+    <value>69</value>
   </data>
   <data name="DGVWayPoints.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

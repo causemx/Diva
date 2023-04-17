@@ -147,13 +147,13 @@
             // TxtSystemID
             // 
             this.TxtSystemID.AutoSize = true;
-            this.TxtSystemID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtSystemID.ForeColor = System.Drawing.Color.White;
+            this.TxtSystemID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSystemID.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.TxtSystemID.Location = new System.Drawing.Point(92, 6);
             this.TxtSystemID.Name = "TxtSystemID";
-            this.TxtSystemID.Size = new System.Drawing.Size(19, 13);
+            this.TxtSystemID.Size = new System.Drawing.Size(14, 13);
             this.TxtSystemID.TabIndex = 8;
-            this.TxtSystemID.Text = "00";
+            this.TxtSystemID.Text = "0";
             // 
             // BtnExpand
             // 

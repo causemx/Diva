@@ -34,7 +34,7 @@ namespace Diva.Controls
         {
             InitializeComponent();
             TxtDroneName.Text = name;
-            TxtSystemID.Text = "";
+            TxtSystemID.Text = (m.Status.FlightMode).ToString();
             Margin = new Padding(0);
             m.Status.GuidedMode.z = (float)DefaultValues.TakeoffHeight;
             Drone = m;
