@@ -381,6 +381,7 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Server\Behaviors.cs" />
+    <Compile Include="Server\ServerOverlay.cs" />
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\BaseLocation.cs" />
     <Compile Include="Utilities\Customizewp.cs" />

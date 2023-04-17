@@ -89,7 +89,8 @@ namespace Diva.Mission
 			try
 			{
 				PointLatLng point = new PointLatLng(lat, lng);
-                GMapTaggedMarker m = new GMapTaggedMarker(point, tag)
+                DefalutBitmapRender defaultRender = new DefalutBitmapRender();
+                GMapTaggedMarker m = new GMapTaggedMarker(point, tag, defaultRender)
                 {
                     ToolTipMode = MarkerTooltipMode.OnMouseOver,
                     ToolTipText = "Alt: " + alt.ToString("0"),
@@ -115,7 +116,8 @@ namespace Diva.Mission
         {
             try
             {
-                GMapTaggedMarker m = new GMapTaggedMarker(p, p.Tag)
+                DefalutBitmapRender defaultRender = new DefalutBitmapRender();
+                GMapTaggedMarker m = new GMapTaggedMarker(p, p.Tag, defaultRender)
                 {
                     ToolTipMode = MarkerTooltipMode.OnMouseOver,
                     ToolTipText = "Alt: " + p.Alt.ToString("0")

@@ -3087,11 +3087,7 @@ namespace Diva
                 // TODO: Do intercept action.
                 if (modeChangeWatcher(mode, lastMode))
                 {
-                    FlytoRecycle flytoR = new FlytoRecycle(d);
-                    flytoR.Destinations = new PointLatLng[] {
-                        d.Status.ForecastPosition,
-                        d.Status.GpsDonglePosition,};
-                    flytoR.StartRecycle();
+                    log.Info("Detected mode changed");
                 }
             }
             lastMode = mode;
@@ -3492,15 +3488,6 @@ namespace Diva
                         break;
                 };
             }
-        }
-
-        private GMapTaggedMarker GpsMarker = new GMapTaggedMarker(new PointLatLng(0, 0), "GPS_");
-
-        public interface IMod
-        {
-            GMapOverlay overlay { get; }
-            GMapMarker marker { get; }
-            void Update(PointLatLng pt);
         }
 
  

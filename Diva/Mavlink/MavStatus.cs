@@ -242,9 +242,5 @@ namespace Diva.Mavlink
         public List<Mission.WayPoint> Mission { get; set; } = new List<Mission.WayPoint>();
 
         public mavlink_mission_item_t GuidedMode = new mavlink_mission_item_t();
-
-        public PointLatLng GpsDonglePosition;
-
-        public PointLatLng ForecastPosition;
     }
 }

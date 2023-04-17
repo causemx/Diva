@@ -226,6 +226,19 @@ namespace Diva.Utilities
 	}
 
 
+    public interface IBitmapRender
+    {
+        Bitmap OnRender(); // default: Resources.point_blue
+    }
+
+    public class DefalutBitmapRender : IBitmapRender
+    {
+        public Bitmap OnRender()
+        {
+            return new Bitmap(Resources.icon_house_32);
+        }
+    }
+
     [Serializable]
 	public class GMapTaggedMarker : GMarkerGoogle
 	{
@@ -235,8 +248,8 @@ namespace Diva.Utilities
 		static Dictionary<string, Bitmap> fontBitmaps = new Dictionary<string, Bitmap>();
 		static Font font = SystemFonts.DefaultFont;
 
-		public GMapTaggedMarker(PointLatLng p, string tag)
-			: base(p, new Bitmap(Resources.point_blue))
+		public GMapTaggedMarker(PointLatLng p, string tag, IBitmapRender render)
+			: base(p, render.OnRender())
 		{
             Tag = tag;
             SizeF txtSize;
