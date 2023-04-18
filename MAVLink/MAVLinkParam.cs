@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 public partial class MAVLink
 {
@@ -12,10 +9,15 @@ public partial class MAVLink
         /// Paramater name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Over the wire storage format
+        /// </summary>
+        public MAV_PARAM_TYPE Type { get; set; }
+
         /// <summary>
         /// Value of paramter as a double
         /// </summary>
-
         public double Value
         {
             get
@@ -27,10 +29,11 @@ public partial class MAVLink
                 SetValue(value);
             }
         }
+
         /// <summary>
-        /// Over the wire storage format
+        /// Default value of parameter as a double, readonly, NaN if not available
         /// </summary>
-        public MAV_PARAM_TYPE Type { get; set; }
+        public readonly decimal? default_value = null;
 
         private MAV_PARAM_TYPE _typeap = 0;
         public MAV_PARAM_TYPE TypeAP {
@@ -53,13 +56,12 @@ public partial class MAVLink
         short int16_value { get { return BitConverter.ToInt16(data, 0); } }
         UInt32 uint32_value { get { return BitConverter.ToUInt32(data, 0); } }
         Int32 int32_value { get { return BitConverter.ToInt32(data, 0); } }
-		
-        //[ignoreDataMember]
+        [IgnoreDataMember]
         public float float_value { get { return BitConverter.ToSingle(data, 0); } }
 
         byte[] _data = new byte[4];
 
-        //[IgnoreDataMember]
+        [IgnoreDataMember]
         public byte[] data
         {
             get { return _data; }
@@ -70,16 +72,20 @@ public partial class MAVLink
             }
         }
 
+        private MAVLinkParam()
+        {
+        }
+
         /// <summary>
         /// used as a generic input to type the input data
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        /// <param name="type"></param>
-        public MAVLinkParam(string name, double value, MAV_PARAM_TYPE type)
+        /// <param name="wiretype"></param>
+        public MAVLinkParam(string name, double value, MAV_PARAM_TYPE wiretype)
         {
             Name = name;
-            Type = type;
+            Type = wiretype;
             Value = value;
         }
 
@@ -88,14 +94,15 @@ public partial class MAVLink
         /// </summary>
         /// <param name="name"></param>
         /// <param name="inputwire"></param>
-        /// <param name="type"></param>
+        /// <param name="wiretype"></param>
         /// <param name="typeap"></param>
-        public MAVLinkParam(string name, byte[] inputwire, MAV_PARAM_TYPE type, MAV_PARAM_TYPE typeap)
+        public MAVLinkParam(string name, byte[] inputwire, MAV_PARAM_TYPE wiretype, MAV_PARAM_TYPE typeap, decimal? _default_value = null)
         {
             Name = name;
-            Type = type;
+            Type = wiretype;
             TypeAP = typeap;
             Array.Copy(inputwire, _data, 4);
+            default_value = _default_value;
         }
 
         public double GetValue()
@@ -115,7 +122,13 @@ public partial class MAVLink
                 case MAV_PARAM_TYPE.INT32:
                     return (double)int32_value;
                 case MAV_PARAM_TYPE.REAL32:
-                    return (double)float_value;
+                    /*
+item.float_value
+0.8
+(double)item.float_value
+0.800000011920929
+ */
+                    return (double)(decimal)float_value;
             }
 
             throw new FormatException("invalid type");
@@ -198,6 +211,15 @@ public partial class MAVLink
             if (Type == MAV_PARAM_TYPE.REAL32)
                 return ((float)this).ToString();
             return Value.ToString();
+        }
+
+        public string default_value_to_string()
+        {
+            if (!default_value.HasValue)
+                return "NaN";
+            if (Type == MAV_PARAM_TYPE.REAL32)
+                return ((float)default_value).ToString();
+            return default_value.ToString();
         }
     }
 }

@@ -978,7 +978,7 @@ namespace Diva.Mavlink
 
             float battery_voltage = (float)sysstatus.voltage_battery / 1000.0f;
 
-            byte battery_remaining = sysstatus.battery_remaining;
+            // byte battery_remaining = sysstatus.battery_remaining;
             float current = (float)sysstatus.current_battery / 100.0f;
 
             ushort packetdropremote = sysstatus.drop_rate_comm;
