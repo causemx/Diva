@@ -11,11 +11,12 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Web.UI;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-
+using static Diva.Server.Tools;
 
 namespace Diva.Server
 {
@@ -29,14 +30,6 @@ namespace Diva.Server
             public const string OVERLAY_ID_GPS = "_GPS";
             public const int FORECASTE_DISTANCE = 20; //meter 
             public readonly PointLatLng dummyBaseLocation = new PointLatLng(24.773306, 121.045633);
-            // public const string DUMMY_GPS_DATA = "(24.84668179965741,121.00870604721274)";
-            /*
-            public static Planner planner = Planner.GetPlannerInstance();
-            public static MavDrone drone = Planner.GetActiveDrone();
-            public static GMapControl mapControl = planner?.GMapControl;
-            public static ObservableCollectionThreadSafe<GMapOverlay> overlays = mapControl?.Overlays;
-            public static GMapOverlay gpsOverlay = new GMapOverlay(id: OVERLAY_ID_GPS);
-            public static bool isContainOverlay = false;*/
 
             public static Planner planner = Planner.GetPlannerInstance();
             public static MavDrone drone = Planner.GetActiveDrone();
@@ -44,7 +37,12 @@ namespace Diva.Server
             public static GMapMarker baseMarker = ServerOverlay.GetGMapMarker(ServerOverlay.MarkerType.Base, "Base", 0d, 0d);
             public static GMapMarker gpsMarker = ServerOverlay.GetGMapMarker(ServerOverlay.MarkerType.GPS, "GPS", 0d, 0d);
             public static GMapMarker forecastMarker = ServerOverlay.GetGMapMarker(ServerOverlay.MarkerType.Forecast, "FORECAST", 0d, 0d);
-            public static bool isInitialize = false;
+            public bool isInitialize = false;
+
+            public event EventHandler<ExtendMessageEventArgs> onMessage;
+            public event EventHandler<ErrorEventArgs> onError;
+            public event EventHandler<CloseEventArgs> onClose;
+
 
             /// <summary>
             /// Uer OnOpen to instead of constructor, Instance class and variable
@@ -62,13 +60,6 @@ namespace Diva.Server
                     Overlay.Markers.Add(gpsMarker);
                     Overlay.Markers.Add(forecastMarker);
                 }
-#if !DEBUG
-                //  Enable dummy data marker
-                Console.WriteLine("DEBUG");
-                baseMarker.Position = dummyBaseLocation;
-                gpsOverlay.Markers.Add(baseMarker);
-#endif
-
             }
 
             protected override void OnMessage(MessageEventArgs e)
@@ -115,10 +106,18 @@ namespace Diva.Server
                     Overlay.Markers.Add(gpsMarker);
                     Overlay.Markers.Add(forecastMarker);
                 }
+
+                Tools.ExtendMessageEventArgs eme = new Tools.ExtendMessageEventArgs(e);
+                eme.GeoData = new PointLatLng[] { _gpsPoint, _derivedPoint, dummyBaseLocation };
+                onMessage?.Invoke(this, eme);
             }
 
+            protected override void OnError(ErrorEventArgs e) => onError?.Invoke(this, e);
 
-            private static double[] Parse(string input)
+            protected override void OnClose(CloseEventArgs e) => onClose?.Invoke(this, e);
+
+
+            private double[] Parse(string input)
             {
                 return Array.ConvertAll(input.Split(','), Double.Parse);
             }

@@ -1,7 +1,6 @@
 ﻿using Diva.Controls;
 using Diva.Controls.Components;
 using Diva.Controls.Dialogs;
-using Diva.Controls.Icons;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
@@ -18,15 +17,19 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using WebSocketSharp;
 using WebSocketSharp.Server;
+using static Diva.Server.Tools;
 using static MAVLink;
 using COPTER_MODE = Diva.Mavlink.COPTER_MODE;
+using ErrorEventArgs = WebSocketSharp.ErrorEventArgs;
 using MyTSButton = Diva.Controls.Components.MyTSButton;
 using PLANE_MODE = Diva.Mavlink.PLANE_MODE;
 
@@ -3490,15 +3493,20 @@ namespace Diva
             }
         }
 
+        public const int SERVER_PORT = 5566;
+        public const string SERVER_LISTEN = "0.0.0.0";
+        public WebSocketServer wssv = new WebSocketServer($"ws://{SERVER_LISTEN}:{SERVER_PORT}");
  
         private void BtnStrartWsServer_Click(object sender, EventArgs e)
         {
             var btn = (MyButton)sender;
             btn.Checked = !btn.Checked;
-            var wssv = new WebSocketServer("ws://0.0.0.0:5566");
-            wssv.AddWebSocketService<Behaviors.Echo>($"/{typeof(Behaviors.Echo).Name}");
+
+            // wssv.AddWebSocketService("/Echo", () => new Behaviors.Echo(OnOpen)); ;
             try
             {
+                Action<Behaviors.Echo> SetupService = this.AddBehaviorHandler;
+                wssv.AddWebSocketService("/Echo", SetupService);
                 wssv.Start();
 
                 if (wssv.IsListening)
@@ -3510,11 +3518,35 @@ namespace Diva
             } catch (InvalidOperationException ie)
             {
                 log.Error(ie.ToString());
+            } catch (ArgumentException ae)
+            {
+                log.Error(ae.ToString());
             }
             // Console.ReadKey(true);
 
             // wssv.Stop();
         }
+
+        private void AddBehaviorHandler(Behaviors.Echo behavior)
+        {
+            behavior.onMessage += OnMessage;
+        }
+ 
+        private void OnMessage(Object sender, ExtendMessageEventArgs e)
+        {
+            log.Debug("OnMessage");
+        }
+
+        private void OnError(Object sender, ErrorEventArgs e)
+        {
+            log.Debug("OnError");
+        }
+
+        public void OnClose(Object sender, CloseEventArgs e)
+        {
+            log.Debug("OnClose");
+        }
+
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
