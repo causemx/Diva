@@ -176,18 +176,13 @@ namespace Diva.Mission
                 || !Drone.Status.IsArmed
                 || (Drone.Status.State != MAVLink.MAV_STATE.ACTIVE))
             {
-#if DEBUG
-                Console.WriteLine("start failed at code:179");
-#endif
                 return false;
             }
                     //&& Drone.Status.Firmware == Firmwares.ArduCopter2))
                 
             if (!FlyToWithAltitude(GetWPAltitude()))
             {
-#if DEBUG
-                Console.WriteLine("start failed at code:185");
-#endif
+
                 Drone.SetMode(Drone.Status.FlightModeType.PauseMode);
                 MessageBox.Show(Properties.Strings.MsgFlyToTargetNotProperlySet);
                 Dispose();

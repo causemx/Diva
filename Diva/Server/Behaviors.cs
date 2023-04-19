@@ -65,7 +65,8 @@ namespace Diva.Server
             protected override void OnMessage(MessageEventArgs e)
             {
                 var _data = Encoding.UTF8.GetString(e.RawData);
-                log.Info($"recv: {_data}");
+                // log.Info($"recv: {_data}");
+
                 Send(_data);
 
                 var _coord = Parse(_data);
@@ -107,7 +108,7 @@ namespace Diva.Server
                     Overlay.Markers.Add(forecastMarker);
                 }
 
-                Tools.ExtendMessageEventArgs eme = new Tools.ExtendMessageEventArgs(e);
+                ExtendMessageEventArgs eme = new ExtendMessageEventArgs(e);
                 eme.GeoData = new PointLatLng[] { _gpsPoint, _derivedPoint, dummyBaseLocation };
                 onMessage?.Invoke(this, eme);
             }

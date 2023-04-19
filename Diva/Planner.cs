@@ -3055,21 +3055,11 @@ namespace Diva
         }
 
         private uint lastMode;
+        private FlytoPipe flytoPip;
+        private PointLatLng[] geoData;
 
         public void UpdateDroneMode(object obj, uint mode)
         {
-            bool modeChangeWatcher(uint c_mode, uint last_mode)
-            {
-                // For COPTER
-                if (last_mode == (uint)COPTER_MODE.AUTO && c_mode == (uint)COPTER_MODE.RTL)
-                    return true;
-                // For PLNAE
-                else if (last_mode == (uint)PLANE_MODE.AUTO && c_mode == (uint)PLANE_MODE.RTL)
-                    return true;
-                else
-                    return false;
-            }
-
             void updateText(MavDrone drone)
             {
                 string modename = drone.Status.FlightModeType[mode];
@@ -3087,11 +3077,17 @@ namespace Diva
                 else
                     updateText(d);
 
-                // TODO: Do intercept action.
-                if (modeChangeWatcher(mode, lastMode))
+                #region --FlytoDerive--
+                if (lastMode == (uint)COPTER_MODE.AUTO && mode == (uint)COPTER_MODE.RTL)
                 {
-                    log.Info("Detected mode changed");
+                    log.Debug("Detect the mode change from AUTO -> RTL");
+                    flytoPip = new FlytoPipe(d);
+                    if (flytoPip.SetDestinations(geoData))
+                        flytoPip.Start();
+                    
                 }
+                #endregion
+
             }
             lastMode = mode;
         }
@@ -3531,10 +3527,11 @@ namespace Diva
         {
             behavior.onMessage += OnMessage;
         }
- 
+
         private void OnMessage(Object sender, ExtendMessageEventArgs e)
         {
-            log.Debug("OnMessage");
+            log.Info("OnMessage");
+            geoData = e.GeoData;
         }
 
         private void OnError(Object sender, ErrorEventArgs e)

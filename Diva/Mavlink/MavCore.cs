@@ -167,7 +167,9 @@ namespace Diva.Mavlink
                 frmProgressReporter.UpdateProgressAndStatus(0,
                     Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));
                 // TODO: If wanna be quicker, mark parameter reader.
+#if !DEBUG
                 GetParamListBG();
+#endif
 
                 if (frmProgressReporter.doWorkArgs.CancelAcknowledged)
                 {
@@ -549,7 +551,8 @@ namespace Diva.Mavlink
             byte[] packet = new byte[data.Length + 6 + 2];
             packet[0] = MAVLINK_STX_MAVLINK1;
             packet[1] = (byte)data.Length;
-            packet[2] = (byte)++pacCount;
+            // TODO: Overflow exception here. fix it!
+            packet[2] = (byte)(++pacCount & 255);
             packet[3] = GROUNDCONTROLSTATION_SYSTEM_ID;
             packet[4] = (byte)MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER;
             packet[5] = (byte)messageType;
