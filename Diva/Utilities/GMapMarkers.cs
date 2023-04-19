@@ -235,7 +235,7 @@ namespace Diva.Utilities
     {
         public Bitmap OnRender()
         {
-            return new Bitmap(Resources.icon_house_32);
+            return new Bitmap(Resources.point_blue);
         }
     }
 

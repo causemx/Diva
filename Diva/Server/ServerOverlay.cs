@@ -89,10 +89,10 @@ namespace Diva.Server
                 IBitmapRender bitmapRender = null;
                 if (type == MarkerType.GPS)
                     bitmapRender = new GpsBitmapRender();
-                else if (type == MarkerType.Forecast)
+                if (type == MarkerType.Forecast)
                     bitmapRender = new ForecastBitmapRender();
-                else
-                    bitmapRender = new DefalutBitmapRender();
+                if (type == MarkerType.Base)
+                    bitmapRender = new BaseBitmapRender();
                 
 
                 PointLatLng point = new PointLatLng(lat, lng);
