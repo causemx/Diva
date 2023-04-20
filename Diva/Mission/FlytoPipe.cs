@@ -5,6 +5,8 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Policy;
+using System.Threading;
+using System.Threading.Tasks;
 using static System.Windows.Forms.AxHost;
 
 namespace Diva.Mission
@@ -21,7 +23,6 @@ namespace Diva.Mission
 
         public static readonly ILog log = 
             LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        public const int TOLERANCE = 10000;
         
         public MavDrone drone;
         public Planner planner = Planner.GetPlannerInstance();
@@ -46,7 +47,6 @@ namespace Diva.Mission
             if (drone.Status.State != MAVLink.MAV_STATE.ACTIVE
                 || !drone.IsMode(specificMode))
             {
-                log.Error("Mode error when ready.");
                 return false;
             }
             state = State.Ready;
@@ -62,12 +62,23 @@ namespace Diva.Mission
             {
                 if (flyTo.SetDestination(destinations[round]))
                 {
+                    /*
+                    DateTime updateTimeSpan = DateTime.Now.AddMilliseconds(3000);
+                    while (!drone.IsMode("GUIDED"))
+                    {
+                        drone.SetMode("GUIDED");
+                        Thread.Sleep(1000);
+                        Console.WriteLine(drone.Status.FlightModeType[drone.Status.FlightMode]);
+                        if (DateTime.Now < updateTimeSpan) continue;
+                        updateTimeSpan.AddMilliseconds(3000);
+                    }*/
+
                     if (flyTo.Start())
                     {
                         state = State.Active;
                         flyTo.DestinationReached += (o, r) =>
                         {
-                            log.Warn("Destination has reached.");
+                            log.Warn($"Destination[{round}] has reached.");
                             // flyTo.SetDestination(Destinations[1]);
                             Start(round + 1);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Diva.Events;
 using Diva.Mission;
 using Diva.Utilities;
 using static MAVLink;
@@ -15,7 +16,7 @@ namespace Diva.Mavlink
         public bool IsOpen => BaseStream?.IsOpen ?? false;
         public bool IsRotationStandby = true;
         public EventHandler<MAV_STATE> StateChangedEvent;
-        public EventHandler<uint> FlightModeChanged;
+        public EventHandler<ModeChangedEventArgs> FlightModeChanged;
 
         public MavDrone(DroneSetting setting = null)
         {
@@ -147,10 +148,13 @@ namespace Diva.Mavlink
                 uint mode = hb.custom_mode;
                 bool armed = hb.base_mode.HasFlag(MAV_MODE_FLAG.SAFETY_ARMED);
                 bool modechange = Status.FlightMode != mode || armed != Status.IsArmed;
-                Status.FlightMode = mode;
-                Status.IsArmed = armed;
                 if (modechange)
-                    FlightModeChanged?.Invoke(this, mode);
+                {
+                    ModeChangedEventArgs me = new ModeChangedEventArgs(Status.FlightMode, mode);
+                    Status.FlightMode = mode;
+                    Status.IsArmed = armed;
+                    FlightModeChanged?.Invoke(this, me);
+                }
                 var state = (MAV_STATE)hb.system_status;
                 if (Status.State != state)
                 {

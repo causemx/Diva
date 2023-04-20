@@ -1,6 +1,7 @@
 ﻿using Diva.Controls;
 using Diva.Controls.Components;
 using Diva.Controls.Dialogs;
+using Diva.Events;
 using Diva.Mavlink;
 using Diva.Mission;
 using Diva.Properties;
@@ -3036,7 +3037,8 @@ namespace Diva
             {
                 DGVWayPoints.Rows.Clear();
                 UpdateCMDParams();
-                UpdateDroneMode(ActiveDrone, ActiveDrone.Status.FlightMode);
+                UpdateDroneMode(ActiveDrone, 
+                    new ModeChangedEventArgs(0, ActiveDrone.Status.FlightMode));
                 WPsToScreen(ActiveDrone.Status.Mission);
                 // add marker again to ensure drone icon is topmost
                 var marker = Overlays.Drones.Markers.SingleOrDefault(
@@ -3059,11 +3061,11 @@ namespace Diva
         private FlytoPipe flytoPipe;
         private PointLatLng[] geoData;
 
-        public void UpdateDroneMode(object obj, uint mode)
+        public void UpdateDroneMode(object obj, ModeChangedEventArgs e)
         {
             void updateText(MavDrone drone)
             {
-                string modename = drone.Status.FlightModeType[mode];
+                string modename = drone.Status.FlightModeType[e.CurrentMode];
                 // LblMode.Text = drone.Status.IsArmed ? modename : "DISARMED";
                 int modeidx = ComBoxModeSwitch.Items.IndexOf(modename);
                 if (ComBoxModeSwitch.SelectedIndex != modeidx)
@@ -3079,9 +3081,10 @@ namespace Diva
                     updateText(d);
 
                 #region --FlytoDerive--
-                if (lastMode == (uint)COPTER_MODE.AUTO && mode == (uint)COPTER_MODE.RTL)
+                if (e.LastMode == (uint)COPTER_MODE.AUTO && e.CurrentMode == (uint)COPTER_MODE.RTL)
                 {
                     log.Debug("Detect the mode change from AUTO -> RTL");
+                    
                     flytoPipe = new FlytoPipe(d);
                     if (flytoPipe.Ready("RTL"))
                         if (flytoPipe.SetDestinations(geoData))
@@ -3090,7 +3093,6 @@ namespace Diva
                 #endregion
 
             }
-            lastMode = mode;
         }
 
         private bool comboChangedByUser;
@@ -3233,7 +3235,7 @@ namespace Diva
                     = AltitudeControlPanel.Left = 12;
 
             BtnFlyTo.Click += BtnFlyTo_Clicked;
-            TSMainPanel.Items.Add(BtnFlyTo);
+            //TSMainPanel.Items.Add(BtnFlyTo);
             BtnTrack.Click += BtnTrack_Clicked;
             //TSMainPanel.Items.Add(BtnTrack);
             SetButtonStates();
