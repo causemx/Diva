@@ -29,7 +29,7 @@ namespace Diva.Server
 
             public const string OVERLAY_ID_GPS = "_GPS";
             public const int FORECASTE_DISTANCE = 20; //meter 
-            public readonly PointLatLng dummyBaseLocation = new PointLatLng(24.773306, 121.045633);
+            public readonly PointLatLng dummyBaseLocation = new PointLatLng(24.7759514, 121.0420257);
 
             public static Planner planner = Planner.GetPlannerInstance();
             public static MavDrone drone = Planner.GetActiveDrone();
@@ -109,7 +109,7 @@ namespace Diva.Server
                 }
 
                 ExtendMessageEventArgs eme = new ExtendMessageEventArgs(e);
-                eme.GeoData = new PointLatLng[] { _gpsPoint, _derivedPoint, dummyBaseLocation };
+                eme.GeoData = new PointLatLng[] { _derivedPoint, _gpsPoint , dummyBaseLocation };
                 onMessage?.Invoke(this, eme);
             }
 

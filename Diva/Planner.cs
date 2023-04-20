@@ -1915,6 +1915,7 @@ namespace Diva
             DroneInfoPanel.NotifyMissionChanged();
         }
 
+        [Obsolete]
         private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ActiveDrone.IsOpen)
@@ -3055,7 +3056,7 @@ namespace Diva
         }
 
         private uint lastMode;
-        private FlytoPipe flytoPip;
+        private FlytoPipe flytoPipe;
         private PointLatLng[] geoData;
 
         public void UpdateDroneMode(object obj, uint mode)
@@ -3081,10 +3082,10 @@ namespace Diva
                 if (lastMode == (uint)COPTER_MODE.AUTO && mode == (uint)COPTER_MODE.RTL)
                 {
                     log.Debug("Detect the mode change from AUTO -> RTL");
-                    flytoPip = new FlytoPipe(d);
-                    if (flytoPip.SetDestinations(geoData))
-                        flytoPip.Start();
-                    
+                    flytoPipe = new FlytoPipe(d);
+                    if (flytoPipe.Ready("RTL"))
+                        if (flytoPipe.SetDestinations(geoData))
+                            flytoPipe.Start();
                 }
                 #endregion
 
@@ -3514,9 +3515,11 @@ namespace Diva
             } catch (InvalidOperationException ie)
             {
                 log.Error(ie.ToString());
+                wssv.Stop();
             } catch (ArgumentException ae)
             {
                 log.Error(ae.ToString());
+                wssv.Stop();
             }
             // Console.ReadKey(true);
 
@@ -3530,18 +3533,19 @@ namespace Diva
 
         private void OnMessage(Object sender, ExtendMessageEventArgs e)
         {
-            log.Info("OnMessage");
+            //log.Info("OnMessage");
             geoData = e.GeoData;
         }
 
         private void OnError(Object sender, ErrorEventArgs e)
         {
-            log.Debug("OnError");
+            log.Debug("ws server on error.");
+            wssv.Stop();
         }
 
         public void OnClose(Object sender, CloseEventArgs e)
         {
-            log.Debug("OnClose");
+            log.Debug("ws_server has closed.");
         }
 
 

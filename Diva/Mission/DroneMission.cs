@@ -138,6 +138,7 @@ namespace Diva.Mission
             }
         }
 
+        [Obsolete]
         public void DrawMission(bool isPlane = true, bool active = true)
         {
             Overlay.Clear();

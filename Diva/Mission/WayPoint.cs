@@ -21,7 +21,8 @@ namespace Diva.Mission
 		public float Altitude;          // Altitude in centimeters (meters * 100)
 		public MAV_FRAME Frame;
 
-		public MAVLink.mavlink_mission_item_t ToMissionItem<T>(MavCore<T> mav, byte current) where T : MavStatus
+        [System.Obsolete]
+        public MAVLink.mavlink_mission_item_t ToMissionItem<T>(MavCore<T> mav, byte current) where T : MavStatus
             => new MAVLink.mavlink_mission_item_t
             {
                 target_system = mav?.SysId ?? 0,
@@ -63,7 +64,8 @@ namespace Diva.Mission
             };
         }
 
-		public static implicit operator WayPoint(MAVLink.mavlink_mission_item_t input)
+        [System.Obsolete]
+        public static implicit operator WayPoint(MAVLink.mavlink_mission_item_t input)
             => new WayPoint
 			{
 				Id = input.command,

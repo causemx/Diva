@@ -61,12 +61,13 @@ namespace Diva.Server
         public readonly GMapOverlay Overlay;
   
         private readonly static Dictionary<MavDrone, ServerOverlay> Overlays = new Dictionary<MavDrone, ServerOverlay>();
+        private static ServerOverlay serverOverlay;
 
         public static ServerOverlay GetServerOverlay(MavDrone drone)
         {
-            if (!Overlays.ContainsKey(drone))
+            if (!Overlays.ContainsKey(drone) && serverOverlay == null)
             {
-                new ServerOverlay(drone);
+                serverOverlay = new ServerOverlay(drone);
                 Planner.GetPlannerInstance().GMapControl?.Overlays.Add(Overlays[drone].Overlay);
             }
             return Overlays[drone];
