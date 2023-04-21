@@ -1,22 +1,14 @@
-﻿using Diva.Mavlink;
-using Diva.Properties;
+﻿using Diva.Events;
+using Diva.Mavlink;
 using Diva.Utilities;
 using GMap.NET;
-using GMap.NET.ObjectModel;
 using GMap.NET.WindowsForms;
-using GMap.NET.WindowsForms.Markers;
 using log4net;
-using SharpKml.Dom;
 using System;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Web.UI;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using static Diva.Server.Tools;
 
 namespace Diva.Server
 {

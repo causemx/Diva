@@ -327,6 +327,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Events\ExtendMessageEventArgs.cs" />
     <Compile Include="Events\ModeChangedEventArgs.cs" />
     <Compile Include="Fishery\FishUtils.cs" />
     <Compile Include="FlightRecorder.cs" />
@@ -379,7 +380,6 @@
       <DependentUpon>Strings.zh-Hant.resx</DependentUpon>
     </Compile>
     <Compile Include="Server\Behaviors.cs" />
-    <Compile Include="Server\Tools.cs" />
     <Compile Include="Server\ServerOverlay.cs" />
     <Compile Include="Utilities\BackgroundLoop.cs" />
     <Compile Include="Utilities\BaseLocation.cs" />

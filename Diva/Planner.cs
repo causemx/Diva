@@ -27,7 +27,6 @@ using System.Windows.Forms;
 using System.Xml;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using static Diva.Server.Tools;
 using static MAVLink;
 using COPTER_MODE = Diva.Mavlink.COPTER_MODE;
 using ErrorEventArgs = WebSocketSharp.ErrorEventArgs;
@@ -3088,7 +3087,7 @@ namespace Diva
                     flytoPipe = new FlytoPipe(d);
                     if (flytoPipe.Ready("RTL"))
                         if (flytoPipe.SetDestinations(geoData))
-                            flytoPipe.Start();
+                            flytoPipe.StartPipe();
                 }
                 #endregion
 
@@ -3536,6 +3535,7 @@ namespace Diva
         private void OnMessage(Object sender, ExtendMessageEventArgs e)
         {
             //log.Info("OnMessage");
+            Thread.Sleep(1);
             geoData = e.GeoData;
         }
 
