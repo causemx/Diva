@@ -68,7 +68,7 @@ namespace Diva.Server
 
 
                 ExtendMessageEventArgs eme = new ExtendMessageEventArgs(e);
-                eme.GeoData = new PointLatLng[] { dummyBaseLocation, _gpsPoint, _derivedPoint };
+                eme.GeoData = new PointLatLng[] { _derivedPoint, _gpsPoint, dummyBaseLocation };
                 onMessage?.Invoke(this, eme);
             }
 

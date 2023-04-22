@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Diva.Mavlink;
+using System.Runtime.Serialization;
 
 namespace Diva.Utilities
 {
@@ -325,6 +326,37 @@ namespace Diva.Utilities
 		}
 	}
 
+    public class GMapRouteArrow : GMapRoute
+    {
+        public GMapRouteArrow(string name) : base(name) { }
+
+        public GMapRouteArrow(IEnumerable<PointLatLng> points, string name) : base(points, name) { }
+
+        protected GMapRouteArrow(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        public override void OnRender(Graphics g)
+        {
+            // base.OnRender(g);
+            using (Pen pen = new Pen(Color.Yellow, 5))
+            {
+                AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
+                pen.StartCap = LineCap.Round;
+                pen.CustomEndCap = bigArrow;
+
+                GPoint p = new GPoint();
+                for (int i = 0; i < LocalPoints.Count; i++)
+                {
+                    GPoint p2 = LocalPoints[i];
+                    if (i == 0)
+                        g.DrawLine(pen, p2.X, p2.Y, p2.X, p2.Y);
+                    else
+                        g.DrawLine(pen, p.X, p.Y, p2.X, p2.Y);
+                    p = p2;
+                }
+            }
+        }
+    }
+
     [Serializable]
     public class GMapRouteExtend : GMapRoute
     {
@@ -363,7 +395,7 @@ namespace Diva.Utilities
                     // g.DrawArc(Pens.WhiteSmoke, rect, 0, 360);
                     var distance = GetDistance(p, pp);
                     // g.DrawString(text, font, new SolidBrush(Color.Red), mid.X, mid.Y);
-                    g.DrawString(distance.ToString("####0.00"), font, new SolidBrush(Color.WhiteSmoke), mid.X, mid.Y);
+                    g.DrawString(distance.ToString("####0.00"), font, new SolidBrush(Color.GreenYellow), mid.X, mid.Y);
                     // Draw Curve
                     // DrawArcBetweenTwoPoints(g, new Pen(Color.GreenYellow, 5), new PointF(p.X, p.Y), new PointF(pp.X, pp.Y), 100, true);
                 }

@@ -116,8 +116,7 @@ namespace Diva.Server
 
         private void DrawRoute(PointLatLng[] pts)
         {
-            GMapRoute route = new GMapRoute("_server_route")
-            { Stroke = new Pen(Color.Yellow, 4) { DashStyle = DashStyle.Custom } };
+            GMapRouteArrow route = new GMapRouteArrow("_server_route");
             route.Points.AddRange(pts);
             Overlay.Routes.Add(route);
         }
@@ -125,9 +124,10 @@ namespace Diva.Server
         public void Draw(PointLatLng[] pts)
         {
             Overlay.Clear();
-            AddMarker(MarkerType.Base, "Base", pts[0].Lng, pts[0].Lat);
+            AddMarker(MarkerType.Forecast, "Forecast", pts[0].Lng, pts[0].Lat);
             AddMarker(MarkerType.GPS, "Gps", pts[1].Lng, pts[1].Lat);
-            AddMarker(MarkerType.Forecast, "Forecast", pts[2].Lng, pts[2].Lat);
+            AddMarker(MarkerType.Base, "Base", pts[2].Lng, pts[2].Lat);
+
 
             DrawRoute(pts);
         }
