@@ -26,9 +26,7 @@ namespace Diva.Server
             public static Planner planner = Planner.GetPlannerInstance();
             public static MavDrone drone = Planner.GetActiveDrone();
             public static GMapOverlay Overlay = (ServerOverlay.GetServerOverlay(drone)).Overlay;
-            public static GMapMarker baseMarker = ServerOverlay.GetGMapMarker(ServerOverlay.MarkerType.Base, "Base", 0d, 0d);
-            public static GMapMarker gpsMarker = ServerOverlay.GetGMapMarker(ServerOverlay.MarkerType.GPS, "GPS", 0d, 0d);
-            public static GMapMarker forecastMarker = ServerOverlay.GetGMapMarker(ServerOverlay.MarkerType.Forecast, "FORECAST", 0d, 0d);
+
             public bool isInitialize = false;
 
             public event EventHandler<ExtendMessageEventArgs> onMessage;
@@ -42,16 +40,6 @@ namespace Diva.Server
             protected override void OnOpen()
             {
                 base.OnOpen();
-
-                if (!isInitialize)
-                {
-                    var mapConteol = planner?.GMapControl;
-                    (mapConteol?.Overlays).Add(Overlay);
-                    isInitialize = true;
-                    Overlay.Markers.Add(baseMarker);
-                    Overlay.Markers.Add(gpsMarker);
-                    Overlay.Markers.Add(forecastMarker);
-                }
             }
 
             protected override void OnMessage(MessageEventArgs e)
@@ -63,16 +51,7 @@ namespace Diva.Server
 
                 var _coord = Parse(_data);
                 var _gpsPoint = new PointLatLng(_coord[0], _coord[1]);
-
-
-                // Update/Add gps marker.
-                gpsMarker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                gpsMarker.ToolTip = new GMapToolTip(gpsMarker);
-                bool _markerShown = Overlay.Markers.Contains(gpsMarker);
-
-                // Generate base, gps_dongle and forecast position.
-                
-                
+     
 #if DEBUG
                 var _bearing = MathHelper.BearingOf(
                     dummyBaseLocation.Lat, dummyBaseLocation.Lng, _gpsPoint.Lat, _gpsPoint.Lng);
@@ -87,21 +66,9 @@ namespace Diva.Server
                 bool _isEmptyBase = (BaseLocation.Location.Lat == 0d && BaseLocation.Location.Lng == 0d);
 #endif
 
-                gpsMarker.Position = _gpsPoint;
-                forecastMarker.Position = _derivedPoint;
-                baseMarker.Position = dummyBaseLocation;
-
-                Overlay.Markers.Clear();
-
-                if (!_isEmptyBase)
-                {
-                    Overlay.Markers.Add(baseMarker);
-                    Overlay.Markers.Add(gpsMarker);
-                    Overlay.Markers.Add(forecastMarker);
-                }
 
                 ExtendMessageEventArgs eme = new ExtendMessageEventArgs(e);
-                eme.GeoData = new PointLatLng[] { _derivedPoint, _gpsPoint , dummyBaseLocation };
+                eme.GeoData = new PointLatLng[] { dummyBaseLocation, _gpsPoint, _derivedPoint };
                 onMessage?.Invoke(this, eme);
             }
 

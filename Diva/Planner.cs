@@ -11,11 +11,13 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using SharpKml.Dom;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -222,7 +224,7 @@ namespace Diva
             {
                 if (ActiveDrone.IsOpen)
                 {
-                    return new Point(IconGPSLostWarning.Right+50, IconGPSLostWarning.Bottom-75);
+                    return new System.Drawing.Point(IconGPSLostWarning.Right+50, IconGPSLostWarning.Bottom-75);
                     // Debug.WriteLine("width: " + Width);
                     // return new Point(DroneInfoPanel.Left, DroneInfoPanel.Top + 500);
                 }
@@ -3083,7 +3085,6 @@ namespace Diva
                 if (e.LastMode == (uint)COPTER_MODE.AUTO && e.CurrentMode == (uint)COPTER_MODE.RTL)
                 {
                     log.Debug("Detect the mode change from AUTO -> RTL");
-                    
                     flytoPipe = new FlytoPipe(d);
                     if (flytoPipe.Ready("RTL"))
                         if (flytoPipe.SetDestinations(geoData))
@@ -3532,11 +3533,24 @@ namespace Diva
             behavior.onMessage += OnMessage;
         }
 
+
         private void OnMessage(Object sender, ExtendMessageEventArgs e)
         {
             //log.Info("OnMessage");
             Thread.Sleep(1);
             geoData = e.GeoData;
+            try
+            {
+                BeginInvoke((MethodInvoker)delegate
+                {
+                    ServerOverlay overlay = ServerOverlay.GetServerOverlay(ActiveDrone);
+                    overlay.Draw(geoData);
+                });
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void OnError(Object sender, ErrorEventArgs e)

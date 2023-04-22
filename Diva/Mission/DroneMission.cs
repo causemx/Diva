@@ -286,17 +286,6 @@ namespace Diva.Mission
             DrawRoute();
         }
 
-        private void DrawCurve(List<PointLatLngAlt> waypoints)
-        {
-            var pairs = waypoints.Where((e, i) => i < waypoints.Count - 1)
-                .Select((e, i) => new { A = e, B = waypoints[i + 1] });
-            var enumPairs = pairs.GetEnumerator();
-            while (enumPairs.MoveNext())
-            {
-                Console.WriteLine(enumPairs.Current.A+","+ enumPairs.Current.B);
-            }
-        }
-
 		private void DrawRoute()
         {
             PointLatLngAlt home = expandedWaypoints[expandedWaypoints.Count - 1];

@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Runtime.CompilerServices;
+using System.Web.Routing;
 using System.Windows.Forms;
 
 namespace Diva.Server
@@ -65,7 +67,7 @@ namespace Diva.Server
 
         public static ServerOverlay GetServerOverlay(MavDrone drone)
         {
-            if (!Overlays.ContainsKey(drone) && serverOverlay == null)
+            if (!Overlays.ContainsKey(drone))
             {
                 serverOverlay = new ServerOverlay(drone);
                 Planner.GetPlannerInstance().GMapControl?.Overlays.Add(Overlays[drone].Overlay);
@@ -83,7 +85,7 @@ namespace Diva.Server
             Overlays.Add(drone, this);
         }
         
-        public static GMapMarker GetGMapMarker(MarkerType type, string tag, double lng, double lat, double radius=10)
+        private void AddMarker(MarkerType type, string tag, double lng, double lat)
         {
             try
             {
@@ -104,13 +106,30 @@ namespace Diva.Server
                     ToolTipText = "Type: " + Enum.GetName(typeof(MarkerType), type)
                 };
 
-                return m;
+                Overlay.Markers.Add(m);
             }
             catch (ServerOverlayException se)
             {
                 Debug.WriteLine(se.ToString());
-                return null;
             }
+        }
+
+        private void DrawRoute(PointLatLng[] pts)
+        {
+            GMapRoute route = new GMapRoute("_server_route")
+            { Stroke = new Pen(Color.Yellow, 4) { DashStyle = DashStyle.Custom } };
+            route.Points.AddRange(pts);
+            Overlay.Routes.Add(route);
+        }
+
+        public void Draw(PointLatLng[] pts)
+        {
+            Overlay.Clear();
+            AddMarker(MarkerType.Base, "Base", pts[0].Lng, pts[0].Lat);
+            AddMarker(MarkerType.GPS, "Gps", pts[1].Lng, pts[1].Lat);
+            AddMarker(MarkerType.Forecast, "Forecast", pts[2].Lng, pts[2].Lat);
+
+            DrawRoute(pts);
         }
     }
 }
