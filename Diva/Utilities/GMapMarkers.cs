@@ -326,37 +326,6 @@ namespace Diva.Utilities
 		}
 	}
 
-    public class GMapRouteArrow : GMapRoute
-    {
-        public GMapRouteArrow(string name) : base(name) { }
-
-        public GMapRouteArrow(IEnumerable<PointLatLng> points, string name) : base(points, name) { }
-
-        protected GMapRouteArrow(SerializationInfo info, StreamingContext context) : base(info, context) { }
-
-        public override void OnRender(Graphics g)
-        {
-            // base.OnRender(g);
-            using (Pen pen = new Pen(Color.Yellow, 5))
-            {
-                AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5);
-                pen.StartCap = LineCap.Round;
-                pen.CustomEndCap = bigArrow;
-
-                GPoint p = new GPoint();
-                for (int i = 0; i < LocalPoints.Count; i++)
-                {
-                    GPoint p2 = LocalPoints[i];
-                    if (i == 0)
-                        g.DrawLine(pen, p2.X, p2.Y, p2.X, p2.Y);
-                    else
-                        g.DrawLine(pen, p.X, p.Y, p2.X, p2.Y);
-                    p = p2;
-                }
-            }
-        }
-    }
-
     [Serializable]
     public class GMapRouteExtend : GMapRoute
     {

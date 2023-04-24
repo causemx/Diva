@@ -116,7 +116,10 @@ namespace Diva.Server
 
         private void DrawRoute(PointLatLng[] pts)
         {
-            GMapRouteArrow route = new GMapRouteArrow("_server_route");
+            var pen = new Pen(Color.Yellow, 4) { DashStyle = DashStyle.Custom };
+            GMapRoute route = new GMapRoute("_server_route");
+            route.IsHitTestVisible = true;
+            route.Stroke = pen;
             route.Points.AddRange(pts);
             Overlay.Routes.Add(route);
         }
