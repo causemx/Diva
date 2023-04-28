@@ -62,18 +62,37 @@ namespace Diva.Server
         public readonly MavDrone Drone;
         public readonly GMapOverlay Overlay;
   
-        private readonly static Dictionary<MavDrone, ServerOverlay> Overlays = new Dictionary<MavDrone, ServerOverlay>();
+        // private readonly static Dictionary<MavDrone, ServerOverlay> Overlays = new Dictionary<MavDrone, ServerOverlay>();
         private static ServerOverlay serverOverlay;
 
         public static ServerOverlay GetServerOverlay(MavDrone drone)
         {
-            if (!Overlays.ContainsKey(drone))
+            if (serverOverlay == null)
             {
                 serverOverlay = new ServerOverlay(drone);
-                Planner.GetPlannerInstance().GMapControl?.Overlays.Add(Overlays[drone].Overlay);
+                Planner.GetPlannerInstance().GMapControl?.Overlays.Add(serverOverlay.Overlay);
             }
-            return Overlays[drone];
+            return serverOverlay;
         }
+
+        /*
+        public static bool RemoveServerOverlay(MavDrone drone)
+        {
+            bool found = Overlays.ContainsKey(drone);
+            if (found)
+            {
+                try
+                {
+                    Planner.GetPlannerInstance().GMapControl?.Overlays.Remove(Overlays[drone].Overlay);
+                    Overlays.Remove(drone);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Remove ServerOverlay exception:" + e);
+                }
+            }
+            return found;
+        }*/
 
         private ServerOverlay(MavDrone drone)
         {
@@ -82,7 +101,7 @@ namespace Diva.Server
             {
                 IsVisibile = true,
             };
-            Overlays.Add(drone, this);
+            Planner.GetPlannerInstance().GMapControl?.Overlays.Add(Overlay);
         }
         
         private void AddMarker(MarkerType type, string tag, double lng, double lat)
@@ -130,7 +149,6 @@ namespace Diva.Server
             AddMarker(MarkerType.Forecast, "Forecast", pts[0].Lng, pts[0].Lat);
             AddMarker(MarkerType.GPS, "Gps", pts[1].Lng, pts[1].Lat);
             AddMarker(MarkerType.Base, "Base", pts[2].Lng, pts[2].Lat);
-
 
             DrawRoute(pts);
         }

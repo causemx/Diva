@@ -56,14 +56,10 @@ namespace Diva.Server
                 var _bearing = MathHelper.BearingOf(
                     dummyBaseLocation.Lat, dummyBaseLocation.Lng, _gpsPoint.Lat, _gpsPoint.Lng);
                 var _derivedPoint = MathHelper.GetNewGeoPoint(_gpsPoint, _bearing, FORECASTE_DISTANCE);
-                bool _isEmptyBase = (dummyBaseLocation.Lat == 0d && dummyBaseLocation.Lng == 0d);
 #else
                 var _bearing = MathHelper.BearingOf(
-                    BaseLocation.Location.Lat, BaseLocation.Location.Lng, _point.Lat, _point.Lng);
-                var _derivedPoint = MathHelper.GetNewGeoPoint(_point, _bearing, FORECASTE_DISTANCE);
-                forecastMarser.Position = _derivedPoint;
-                drone.Status.ForecastPosition = _derivedPoint;
-                bool _isEmptyBase = (BaseLocation.Location.Lat == 0d && BaseLocation.Location.Lng == 0d);
+                    BaseLocation.Location.Lat, BaseLocation.Location.Lng, _gpsPoint.Lat, _gpsPoint.Lng);
+                var _derivedPoint = MathHelper.GetNewGeoPoint(_gpsPoint, _bearing, FORECASTE_DISTANCE);
 #endif
 
 

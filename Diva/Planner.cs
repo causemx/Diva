@@ -3082,7 +3082,11 @@ namespace Diva
                     updateText(d);
 
                 #region --FlytoDerive--
+#if DEBUG
                 if (e.LastMode == (uint)COPTER_MODE.AUTO && e.CurrentMode == (uint)COPTER_MODE.RTL)
+#else
+                if (e.LastMode == (uint)PLANE_MODE.AUTO && e.CurrentMode == (uint)PLANE_MODE.RTL)
+#endif
                 {
                     log.Debug("Detect the mode change from AUTO -> RTL");
                     flytoPipe = new FlytoPipe(d);

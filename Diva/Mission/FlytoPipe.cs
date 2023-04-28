@@ -2,15 +2,8 @@
 using Diva.Utilities;
 using GMap.NET;
 using log4net;
-using SharpKml.Base;
 using System;
-using System.Data;
-using System.Diagnostics;
 using System.Reflection;
-using System.Security.Policy;
-using System.Threading;
-using System.Threading.Tasks;
-using static System.Windows.Forms.AxHost;
 
 namespace Diva.Mission
 {
@@ -61,8 +54,6 @@ namespace Diva.Mission
         {
             // flyTo = FlyTo.GetFlyToFrom(drone);
             flyTo = new FlyTo(drone);
-            planner.BackgroundTimer -= ModeWatcher;
-            planner.BackgroundTimer += ModeWatcher;
             try
             {
                 if (flyTo.SetDestination(destinations[round]))
@@ -90,7 +81,6 @@ namespace Diva.Mission
             {
                 flyTo.Stop();
                 flyTo.Dispose();
-                planner.BackgroundTimer -= ModeWatcher;
                 FloatMessage.NewMessage(
                     drone.Name,
                     (int)MAVLink.MAV_SEVERITY.INFO,
@@ -106,19 +96,6 @@ namespace Diva.Mission
                 
             nextTime = DateTime.Now.AddMilliseconds(_timeSpan);
             return true;
-        }
-
-        private void ModeWatcher(Object sender, EventArgs e)
-        {
-            if (!drone.IsMode("GUIDED"))
-            {
-                if (Delay(2000))
-                {
-                    Console.WriteLine($"Drone is Guided mode? {drone.IsMode("GUIDED")}");
-                    drone.SetMode("GUIDED");
-                }
-            }
-            
         }
 
         public void Stop()
