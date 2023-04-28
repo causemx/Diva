@@ -11,6 +11,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.Win32;
 using SharpKml.Dom;
 using System;
 using System.Collections;
@@ -3082,7 +3083,7 @@ namespace Diva
                     updateText(d);
 
                 #region --FlytoDerive--
-#if DEBUG
+#if !DEBUG
                 if (e.LastMode == (uint)COPTER_MODE.AUTO && e.CurrentMode == (uint)COPTER_MODE.RTL)
 #else
                 if (e.LastMode == (uint)PLANE_MODE.AUTO && e.CurrentMode == (uint)PLANE_MODE.RTL)
@@ -3568,6 +3569,9 @@ namespace Diva
             log.Debug("ws_server has closed.");
         }
 
+
+        public event EventHandler DerivedChanged;
+        private void NumericUpDownDerived_ValueChanged(object sender, EventArgs e) => DerivedChanged?.Invoke(sender, e);
 
         private void DGVWayPoints_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {

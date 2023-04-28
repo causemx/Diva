@@ -167,7 +167,7 @@ namespace Diva.Mavlink
                 frmProgressReporter.UpdateProgressAndStatus(0,
                     Strings.MsgGettingParams.FormatWith(new object[] { SysId, CompId }));
                 // TODO: If wanna be quicker, mark parameter reader.
-#if !DEBUG
+#if DEBUG
                 GetParamListBG();
 #endif
 

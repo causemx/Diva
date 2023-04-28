@@ -99,6 +99,7 @@ namespace Diva
             this.BtnHome = new System.Windows.Forms.Button();
             this.TxtAltitudeValue = new System.Windows.Forms.TextBox();
             this.TTButtonDescription = new System.Windows.Forms.ToolTip(this.components);
+            this.NumericUpDownDerived = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer)).BeginInit();
             this.SplitContainer.Panel1.SuspendLayout();
             this.SplitContainer.Panel2.SuspendLayout();
@@ -106,6 +107,7 @@ namespace Diva
             this.cmMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVWayPoints)).BeginInit();
             this.ActiveDroneInfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDerived)).BeginInit();
             this.SuspendLayout();
             // 
             // SplitContainer
@@ -115,6 +117,7 @@ namespace Diva
             // 
             // SplitContainer.Panel1
             // 
+            this.SplitContainer.Panel1.Controls.Add(this.NumericUpDownDerived);
             this.SplitContainer.Panel1.Controls.Add(this.BtnStrartWsServer);
             this.SplitContainer.Panel1.Controls.Add(this.IconGPSLostWarning);
             this.SplitContainer.Panel1.Controls.Add(this.IconModeWarning);
@@ -715,6 +718,23 @@ namespace Diva
             resources.ApplyResources(this.TxtAltitudeValue, "TxtAltitudeValue");
             this.TxtAltitudeValue.Name = "TxtAltitudeValue";
             // 
+            // NumericUpDownDerived
+            // 
+            resources.ApplyResources(this.NumericUpDownDerived, "NumericUpDownDerived");
+            this.NumericUpDownDerived.Maximum = new decimal(new int[] {
+            2500,
+            0,
+            0,
+            0});
+            this.NumericUpDownDerived.Name = "NumericUpDownDerived";
+            this.TTButtonDescription.SetToolTip(this.NumericUpDownDerived, resources.GetString("NumericUpDownDerived.ToolTip"));
+            this.NumericUpDownDerived.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.NumericUpDownDerived.ValueChanged += new System.EventHandler(this.NumericUpDownDerived_ValueChanged);
+            // 
             // Planner
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -731,6 +751,7 @@ namespace Diva
             ((System.ComponentModel.ISupportInitialize)(this.DGVWayPoints)).EndInit();
             this.ActiveDroneInfoPanel.ResumeLayout(false);
             this.ActiveDroneInfoPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDerived)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -798,5 +819,6 @@ namespace Diva
         private DataGridViewImageColumn colNext;
         private DataGridViewButtonColumn colDelete;
         private DataGridViewTextBoxColumn colTagData;
+        private NumericUpDown NumericUpDownDerived;
     }
 }
